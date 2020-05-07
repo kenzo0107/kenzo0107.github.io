@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html ⚡>
+  <head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="https://kenzo0107.github.io/2016/08/10/2017-08-10-how-to-see-cpu-memory-utili/" >
+    <title>今更聞けない！CPU, Memory 使用率の見方 - 長生村本郷Engineers&#39;Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    
+    <meta property="og:title" content="今更聞けない！CPU, Memory 使用率の見方">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://kenzo0107.github.io/2016/08/10/2017-08-10-how-to-see-cpu-memory-utili/">
+	
+		<meta property="og:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
+	
+	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
+	
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
+	<meta name="twitter:url" content="https://kenzo0107.github.io/2016/08/10/2017-08-10-how-to-see-cpu-memory-utili/">
+	<meta name="twitter:title" content="今更聞けない！CPU, Memory 使用率の見方 - 長生村本郷Engineers&#39;Blog">
+	
+    
+    	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
+	
+	
+	
+    
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style>
+    <noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
+    <!--
+  	<script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js"></script>
+    -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script type="application/ld+json">
+		{
+			"@context": "http://schema.org",
+			"@type": "BlogPosting",
+			"headline": "今更聞けない！CPU, Memory 使用率の見方",
+			
+			"mainEntityOfPage":{
+			    "@type":"WebPage",
+			    "@id":"https://kenzo0107.github.io/2016/08/10/2017-08-10-how-to-see-cpu-memory-utili/"
+			},
+			"datePublished": "2016-08-09T15:00:00.000Z",
+			"dateModified": "2020-05-07T03:41:28.898Z",
+			
+			"image": {
+				"@type": "ImageObject",
+				"url": "/amp-dist/sample/sample-substituteTitleImage.png",
+				"width" : "1024",
+				"height" : "800"
+			},
+			
+			"author": {
+			    "@type": "Person",
+			    "name": "Kenzo Tanaka"
+			},
+			"publisher": {
+			    "@type": "Organization",
+			    "name": "長生村本郷Engineers&#39;Blog"
+			    
+			    ,
+			    "logo": {
+			      "@type": "ImageObject",
+			      "url": "https://kenzo0107.github.io/amp-dist/sample/sample-logo.png",
+			      "width": 600,
+			      "height": 60
+			    }
+			    
+			}
+		}
+	</script>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	
+	<style amp-custom>
+		
+abbr,
+acronym,
+address,
+applet,
+big,
+blockquote,
+body,
+caption,
+cite,
+code,
+dd,
+del,
+dfn,
+div,
+dl,
+dt,
+em,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+html,
+iframe,
+img,
+ins,
+kbd,
+label,
+legend,
+li,
+object,
+ol,
+p,
+pre,
+q,
+s,
+samp,
+small,
+span,
+strike,
+strong,
+sub,
+sup,
+table,
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr,
+tt,
+ul,
+var {
+  border: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  font-style: inherit;
+  font-weight: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+abbr {
+  cursor: help;
+  border-bottom: 1px dotted;
+  font-variant: normal;
+}
+acronym {
+  border-bottom: 1px dotted;
+  font-variant: normal;
+}
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  background: #fff;
+  color: #2d3d40;
+  font-family: sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 2rem;
+  text-rendering: optimizelegibility;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner,
+figure.highlight td,
+.post .entry-content figure.highlight th {
+  border: 0;
+  padding: 0;
+}
+caption,
+table,
+td,
+th {
+  vertical-align: middle;
+}
+caption,
+td,
+th,
+.table-align-left {
+  text-align: left;
+}
+del {
+  text-decoration: line-through;
+}
+html {
+  font-size: 14px;
+}
+:root sub,
+:root sup {
+  vertical-align: baseline;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+a {
+  color: #e91e63;
+  text-decoration: none;
+  -webkit-transition: 0.7s;
+  -ms-transition: 0.7s;
+  -moz-transition: 0.7s;
+  -o-transition: 0.7s;
+  -webkit-transition: 0.7s;
+  -moz-transition: 0.7s;
+  -o-transition: 0.7s;
+  -ms-transition: 0.7s;
+  transition: 0.7s;
+  border: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  font-style: inherit;
+  font-weight: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+a img {
+  border: none;
+}
+a:hover {
+  -webkit-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  -ms-transition: 0.2s;
+  transition: 0.2s;
+  color: #930e3b;
+}
+@media (min-width: 481px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-width: 0px) and (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+}
+.clearfix:after {
+  clear: both;
+  visibility: hidden;
+  content: ".";
+  display: block;
+  height: 0;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.circle {
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.thumbImg-w {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+.thumbImg {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.__web-inspector-hide-shortcut__ {
+  visibility: hidden ;
+}
+button {
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  -o-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  text-align: center;
+  cursor: default;
+  color: buttontext;
+  background-color: buttonface;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 2px 6px 3px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonface;
+  -webkit-border-image: initial;
+  -moz-border-image: initial;
+  -o-border-image: initial;
+  border-image: initial;
+  text-rendering: auto;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em 0em 0em 0em;
+  font: 11px system-ui;
+  -webkit-writing-mode: horizontal-tb;
+  -webkit-appearance: button;
+}
+.hamburger {
+  display: inline-block;
+  background-color: transparent;
+  background-image: url("data:image/svg+xmlutf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-3 -6 24 24\"><path fill=\"#4A4A4A\" d=\"M0 12h18v-2H0v2M0 7h18V5H0v2M0 0v2h18V0H0\"/></svg>");
+  background-repeat: no-repeat;
+  -webkit-background-size: 30px 24px;
+  -moz-background-size: 30px 24px;
+  background-size: 30px 24px;
+  background-position: center center;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  -webkit-align-self: center;
+  align-self: center;
+  -ms-flex-item-align: center;
+}
+.nav ul:after {
+  clear: both;
+  visibility: hidden;
+}
+.nav,
+.nav-icon {
+  position: relative;
+}
+.nav ul {
+  display: block;
+}
+.nav ul li {
+  display: block;
+}
+.nav ul li a {
+  display: block;
+}
+.tab {
+  position: relative;
+  color: #424242;
+  padding: 6px;
+  margin: 0 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: 0.1s ease color;
+  -webkit-transition: 0.1s ease color;
+  -moz-transition: 0.1s ease color;
+  -o-transition: 0.1s ease color;
+  -ms-transition: 0.1s ease color;
+  transition: 0.1s ease color;
+}
+amp-sidebar {
+  width: 200px;
+}
+amp-sidebar ul {
+  padding: 10px 0;
+}
+amp-sidebar li a {
+  display: block;
+  padding: 10px 20px;
+}
+header {
+  height: 60px;
+  background-color: #222f31;
+  -webkit-box-shadow: 0 -1px 0 #3c5155 inset, 0 -3px 0 #1e292b inset;
+  box-shadow: 0 -1px 0 #3c5155 inset, 0 -3px 0 #1e292b inset;
+  -webkit-box-shadow: 0 -1px 0 #3c5155 inset, 0 -3px 0 #1e292b inset;
+}
+header .header-title a {
+  padding: 0 0 0 20px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: 0.2em;
+}
+header .nav-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -o-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+header .left-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-box-pack: start;
+  -moz-box-pack: start;
+  -o-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  font-size: 20px;
+  margin-left: 0;
+  font-weight: 300;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-box-pack: start;
+  -moz-box-pack: start;
+  -o-box-pack: start;
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  text-align: left;
+  width: auto;
+  font-size: 15px;
+}
+header .right {
+  font-size: 15px;
+}
+header .alt {
+  padding: 0;
+  text-align: right;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-box-align: stretch;
+  -moz-box-align: stretch;
+  -o-box-align: stretch;
+  -ms-flex-align: stretch;
+  -webkit-align-items: stretch;
+  align-items: stretch;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.blog-title a {
+  position: relative;
+}
+button {
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  -o-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  text-align: center;
+  cursor: default;
+  color: buttontext;
+  background-color: buttonface;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 2px 6px 3px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonface;
+  -webkit-border-image: initial;
+  -moz-border-image: initial;
+  -o-border-image: initial;
+  border-image: initial;
+  text-rendering: auto;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em 0em 0em 0em;
+  font: 11px system-ui;
+  -webkit-writing-mode: horizontal-tb;
+  -webkit-appearance: button;
+}
+.__web-inspector-hide-shortcut__ {
+  visibility: hidden ;
+}
+.hamburger {
+  display: inline-block;
+  background-color: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-3 -6 24 24\"><path fill=\"#FFF\" d=\"M0 12h18v-2H0v2M0 7h18V5H0v2M0 0v2h18V0H0\"/></svg>");
+  background-repeat: no-repeat;
+  -webkit-background-size: 30px 24px;
+  -moz-background-size: 30px 24px;
+  background-size: 30px 24px;
+  background-position: center center;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  -webkit-align-self: center;
+  align-self: center;
+  -ms-flex-item-align: center;
+}
+.tab {
+  position: relative;
+  color: #2d3d40;
+  padding: 6px;
+  margin: 0 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  -webkit-transition: 0.1s ease color;
+  -webkit-transition: 0.1s ease color;
+  -moz-transition: 0.1s ease color;
+  -o-transition: 0.1s ease color;
+  -ms-transition: 0.1s ease color;
+  transition: 0.1s ease color;
+}
+amp-sidebar {
+  width: 250px;
+  background-color: #182022;
+}
+amp-sidebar ul {
+  padding: 10px 0;
+}
+amp-sidebar li {
+  border-top: 1px solid #2f4043;
+}
+amp-sidebar li:last-child {
+  border-bottom: 1px solid #2f4043;
+}
+amp-sidebar li a {
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  padding: 10px 20px;
+}
+amp-sidebar li a:hover {
+  color: #ccc;
+  background-color: #030404;
+}
+.categories-header {
+  background-color: #2d3d40;
+  padding: 0rem 0.8rem;
+}
+.categories-header a {
+  color: #fff;
+}
+.categories-header a:hover {
+  color: #fff;
+}
+.categories-header .breadcrumb ol li {
+  list-style: none;
+  display: inline-block;
+  margin: 0;
+}
+.categories-header .breadcrumb ol li span {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.categories-header .breadcrumb ol li:after {
+  content: "/";
+  color: #fff;
+  display: inline-block;
+  margin: 0 0.4rem;
+}
+.categories-header .breadcrumb ol li:last-child:after {
+  content: "";
+  margin: 0;
+}
+.entry-header {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.entry-header .flx:first-child {
+  margin: 0 1rem 0 0;
+}
+.header-cap {
+  -webkit-flex-grow: 3;
+  -webkit-box-flex: 3;
+  -moz-box-flex: 3;
+  -o-box-flex: 3;
+  -ms-box-flex: 3;
+  box-flex: 3;
+  -webkit-flex-grow: 3;
+  flex-grow: 3;
+}
+.title-cover {
+  background-color: #fff;
+  color: #2d3d40;
+  padding: 1.5rem 0.8rem 0 0.8rem;
+}
+.title-cover a {
+  font-size: 1.2rem;
+  color: #2d3d40;
+  text-align: left;
+  font-weight: bold;
+}
+.entry-title {
+  margin: 0;
+}
+.entry-meta-header {
+  font-size: 0.85rem;
+  text-align: center;
+}
+.entry-meta-header .date {
+  font-family: sans-serif;
+}
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  color: #2d3d40;
+  text-decoration: none;
+}
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h5 a:hover,
+h6 a:hover {
+  color: #e91e63;
+}
+#container {
+  margin-left: auto;
+  margin-right: auto;
+}
+#main {
+  margin-bottom: 3em;
+  padding-left: 0;
+}
+.post {
+  margin-bottom: 3rem;
+  position: relative;
+}
+.entry-content {
+  margin: 0 0.6rem;
+  font-size: 1rem;
+}
+.entry-content h1 {
+  font-size: 1.7rem;
+  line-height: 1.5;
+  margin: 1em 0 0.8em;
+}
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6,
+.entry-content h2 span,
+.entry-content h3 span,
+.entry-content h4 span,
+.entry-content h5 span,
+.entry-content h6 span {
+  color: #98b8be;
+  font-weight: bold;
+}
+.entry-content h2,
+.entry-content h2 span {
+  font-size: 1.8rem;
+  line-height: 2.6rem;
+  text-align: center;
+}
+.entry-content h2 {
+  border-bottom: 2px solid #cce4e8;
+  margin: 4.5rem 0 0.5em;
+  padding: 0.8em 0;
+}
+.entry-content h3,
+.entry-content h3 span {
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  text-align: center;
+}
+.entry-content h3 {
+  margin: 3.6rem 0.8rem 3rem 0.8rem;
+  padding: 0;
+}
+.entry-content h4,
+.entry-content h4 span {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  text-align: center;
+}
+.entry-content h4 {
+  margin: 3.6rem 0.8rem 3rem 0.8rem;
+  padding: 0;
+}
+.entry-content h5,
+.entry-content h5 span {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  text-align: center;
+}
+.entry-content h5 {
+  margin: 3.6rem 0.8rem 3rem 0.8rem;
+  padding: 0;
+}
+.entry-content h6,
+.entry-content h6 span {
+  font-size: 1.1rem;
+  line-height: 1.6rem;
+  text-align: center;
+}
+.entry-content h6 {
+  margin: 3.6rem 0.8rem 3rem 0.8rem;
+  padding: 0;
+}
+.entry-content p {
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  line-height: 2.2rem;
+  margin: 3rem 0.8rem;
+}
+.entry-content p a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: inline;
+  border-bottom: 1px dashed #f1729d;
+  padding-bottom: 0.3rem;
+}
+.entry-content p a:hover {
+  border-bottom: 1px dashed #9c0f3f;
+  padding-bottom: 0.4rem;
+}
+.entry-content em {
+  background-color: #f9f5d1;
+  color: #886d00;
+  font-style: normal;
+  margin: 0 2px;
+  padding: 0.4em;
+}
+.entry-content strong {
+  color: #871c1c;
+  font-style: normal;
+  margin: 0 2px;
+  padding: 0.4em;
+  background-color: #fadcdc;
+}
+.entry-content hr {
+  border: 0;
+  border-top: 3px solid #cce4e8;
+  margin: 3rem auto;
+  width: 20%;
+}
+.entry-content img,
+.entry-content video {
+  display: block;
+  height: auto;
+  margin: auto;
+  max-width: 100%;
+}
+.entry-content iframe {
+  width: 100% ;
+}
+.entry-content blockquote {
+  margin: 3rem 0.8rem;
+  padding: 1rem 1.8rem;
+  position: relative;
+  background-color: none;
+  border-left: 3px solid #98b8be;
+  font-style: italic;
+}
+.entry-content blockquote p {
+  margin: 0.5rem 0;
+}
+.entry-content blockquote blockquote {
+  border-left: none;
+}
+.entry-content .table-wrapper {
+  margin: 3rem 0.8rem;
+}
+.entry-content table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  overflow: auto;
+  display: block;
+  font-size: 0.85rem;
+  margin: 0 auto;
+  width: auto;
+}
+.entry-content td,
+.entry-content th {
+  line-height: 1.8em;
+  padding: 0.8rem 0.8rem;
+  font-size: 0.85rem;
+}
+.entry-content td em,
+.entry-content th em,
+.entry-content td strong,
+.entry-content th strong,
+.entry-content td a,
+.entry-content th a {
+  font-size: 0.85rem;
+}
+.entry-content td {
+  border: 1px solid #c4c4c4;
+}
+.entry-content th {
+  background-color: #ecf5f7;
+  border: 1px solid #c4c4c4;
+}
+.entry-content .table-align-center {
+  text-align: center;
+}
+.entry-content .table-align-right {
+  text-align: right;
+}
+.entry-content ul,
+.entry-content ol,
+.entry-content dl {
+  margin: 3rem 0 3rem 1.6rem;
+  padding: 0;
+  list-style: none;
+  font-size: 1rem;
+}
+.entry-content ul li,
+.entry-content ol li,
+.entry-content dl li {
+  line-height: 2rem;
+  position: relative;
+  padding: 0;
+}
+.entry-content ul li p,
+.entry-content ol li p,
+.entry-content dl li p {
+  line-height: 2rem;
+  margin: 0;
+}
+.entry-content ul li p:not(:first-child),
+.entry-content ol li p:not(:first-child),
+.entry-content dl li p:not(:first-child) {
+  color: #57767c;
+  margin: 0.5rem;
+}
+.entry-content ul li ul,
+.entry-content ol li ul,
+.entry-content dl li ul,
+.entry-content ul li ol,
+.entry-content ol li ol,
+.entry-content dl li ol,
+.entry-content ul li dl,
+.entry-content ol li dl,
+.entry-content dl li dl {
+  margin: 1rem;
+}
+.entry-content ul li {
+  margin: 0.4rem 0 0.4rem 0.8rem;
+}
+.entry-content ul li::after {
+  position: absolute;
+  display: block;
+  content: '';
+  top: 0.75rem;
+  left: -1rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #cce4e8;
+  border-radius: 100%;
+}
+.entry-content ol {
+  counter-reset: number;
+}
+.entry-content ol li {
+  margin: 0.4rem 0 0.4rem 2rem;
+}
+.entry-content ol li p:first-child {
+  display: inline-block;
+  line-height: 1.6rem;
+  height: 1.6rem;
+}
+.entry-content ol li:before {
+  position: absolute;
+  display: inline-block;
+  float: left;
+  margin: 0 0.2rem 0 0;
+  padding: 0;
+  counter-increment: number;
+  content: counter(number);
+  left: -2.2rem;
+  top: 0.2rem;
+  background-color: #98b8be;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+  line-height: 1.6rem;
+}
+kbd {
+  font-family: sans-serif;
+  text-align: center;
+  display: inline-block;
+  color: #425a5e;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-border-radius: 3px;
+  -webkit-box-shadow: 0 0 10px #e8e8e8 inset, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 3px 3px #333;
+  box-shadow: 0 0 10px #e8e8e8 inset, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 3px 3px #333;
+  -webkit-box-shadow: 0 0 10px #e2e2e2 inset, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 3px 3px #333;
+  -webkit-font-smoothing: subpixel-antialiased;
+  background: #fff;
+  border-left: 1px solid #fff;
+  border-radius: 3px;
+  border-right: 1px solid #e6e6e6;
+  border-top: 1px solid #fff;
+  font-size: 0.85rem;
+  line-height: 1rem;
+  margin: 5px;
+  padding: 6px 8px 3px;
+  text-shadow: 0 1px 0 #fff;
+  vertical-align: baseline;
+  
+}
+img.responsive-img {
+  height: auto;
+  max-width: 100%;
+}
+video.responsive-video {
+  height: auto;
+  max-width: 100%;
+}
+amp-instagram,
+amp-vimeo,
+amp-video,
+amp-youtube,
+amp-twitter,
+.soundcloud-wrapper,
+.amp-img-wrapper,
+.googleAdPost,
+.ad-footer {
+  margin: 3rem 0.8rem;
+}
+code,
+figure.highlight .code,
+pre {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+code,
+pre,
+samp {
+  font-family: Menlo, Consolas, Monaco, Consolas, monospace;
+}
+p code {
+  font-size: 1rem;
+}
+code,
+pre {
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+  background-color: #ecf5f7;
+  color: #007e96;
+}
+code {
+  margin: 0 3px;
+  padding: 0.4em;
+}
+samp {
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+}
+sub,
+sup {
+  font-size: 0.75rem;
+  line-height: 0;
+  position: relative;
+}
+sub {
+  bottom: -0.2em;
+}
+sup {
+  top: -0.5em;
+}
+pre {
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  margin: 0 3px;
+  padding: 15px;
+  -webkit-background-clip: padding;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  border: 0;
+  line-height: 1.3rem;
+  overflow-x: auto;
+}
+pre .addition,
+pre .css .tag,
+pre .keyword,
+pre .method,
+pre .nginx .title,
+pre .request,
+pre .status,
+pre .winutils {
+  color: #66d9ef;
+}
+pre .attr_selector,
+pre .cdata,
+pre .clojure .title,
+pre .diff .change,
+pre .important {
+  color: #9882eb;
+}
+pre .preprocessor {
+  color: #9882eb;
+}
+pre .preprocessor .keyword {
+  color: #9882eb;
+}
+pre .shebang,
+pre .special,
+pre .subst {
+  color: #9882eb;
+}
+pre .symbol {
+  color: #9882eb;
+}
+pre .symbol .string {
+  color: #9882eb;
+}
+pre .attribute,
+pre .class .title,
+pre .constant,
+pre .haskell .type,
+pre .lisp .body,
+pre .parent,
+pre .smalltalk .number,
+pre .variable {
+  color: #a6e22e;
+}
+pre .built_in,
+pre .chunk,
+pre .decorator,
+pre .id,
+pre .identifier,
+pre .literal,
+pre .localvars,
+pre .title,
+pre .vhdl,
+pre .deletion {
+  color: #f92672;
+}
+pre .command,
+pre .hexcolor,
+pre .number,
+pre .phpdoc,
+pre .regexp,
+pre .string,
+pre .tag .value,
+pre .tex .formula {
+  color: #e6db74;
+}
+pre .comment,
+pre .diff .header,
+pre .doctype,
+pre .javadoc,
+pre .lisp .string,
+pre .pi,
+pre .template_comment {
+  color: #75715e;
+  font-weight: normal;
+}
+.line {
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+  line-height: 2rem;
+  color: #f8f8f2;
+}
+.line span {
+  font-size: 0.85rem;
+  letter-spacing: 0.05rem;
+}
+.gist {
+  background: #fff;
+  border: 1px solid color-gutter;
+  color: #f8f8f2;
+  line-height: 1.6rem;
+  margin-top: 15px;
+  overflow: auto;
+  padding: 7px 15px;
+}
+.gist .gist-file {
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  letter-spacing: 0;
+  margin: 0;
+}
+.gist .gist-file .gist-data {
+  background: 0 0;
+  border-bottom: none;
+}
+.gist .gist-file .gist-data pre {
+  font-family: Menlo, Consolas, Monaco, Consolas, monospace;
+  padding: 0 ;
+}
+.gist .gist-file .gist-meta {
+  background: 0 0;
+  color: #f8f8f2;
+  font-size: 1rem;
+  margin-top: 5px;
+  padding: 0;
+}
+.gist .gist-file .gist-meta a {
+  color: #f8f8f2;
+}
+.gist .gist-file .gist-meta a:visited {
+  color: #f8f8f2;
+}
+figure.highlight {
+  font-size: 0.95rem;
+  margin: 3rem 0.8rem;
+  background: #263338;
+  border: 1px solid color-gutter;
+  line-height: 2rem;
+  overflow: auto;
+  position: relative;
+}
+figure.highlight .code {
+  padding: 0 1em 1em 1em;
+  color: #f8f8f2;
+}
+figure.highlight .gutter {
+  display: none;
+}
+figure.highlight figcaption {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #e9e9d6;
+  background-color: #1e282c;
+  padding: 0.6em 1em;
+}
+figure.highlight figcaption a {
+  position: absolute;
+  right: 1rem;
+}
+figure.highlight figcaption:before {
+  content: "\f121";
+  font-family: "fontawesome";
+  text-align: center;
+  display: inline-block;
+  margin-right: 0.6em;
+}
+figure.highlight pre {
+  background: 0 0;
+  border: none;
+  margin: 0;
+  padding: 0.5rem;
+}
+figure.highlight table {
+  border-spacing: 0;
+  margin: 0;
+}
+figure.highlight th {
+  border: 0;
+  font-weight: 400;
+  padding: 0;
+}
+figure.highlight td {
+  border: 0;
+  font-size: 1.1rem;
+  padding: 0;
+}
+.entry-content .toc {
+  background: #fff;
+  padding: 0.5rem;
+  margin: 3rem 0;
+  border: 1px solid #cce4e8;
+  border-radius: 2px;
+}
+.entry-content .toc ul {
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #5d8b93;
+  border-radius: 2px;
+}
+.entry-content .toc ul:first-child {
+  border-top: none;
+}
+.entry-content .toc ul ul,
+.entry-content .toc ul ol {
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0;
+}
+.entry-content .toc ul li {
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #5d8b93;
+}
+.entry-content .toc ul li:first-child {
+  border-top: none;
+}
+.entry-content .toc ul li::after,
+.entry-content .toc ul li::before {
+  content: normal;
+}
+.entry-content .toc ul li a {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: block;
+  padding: 1rem;
+  background-color: #3d5b61;
+  color: #fff;
+  -webkit-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -o-transition: 0.3s;
+  -ms-transition: 0.3s;
+  transition: 0.3s;
+}
+.entry-content .toc ul li a:hover {
+  color: #fff;
+  background-color: #2c4145;
+}
+.entry-content .toc ul li a:before {
+  content: "\f02d";
+  font-family: "fontawesome";
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  margin-right: 0.8rem;
+}
+.entry-content .toc ul li ul,
+.entry-content .toc ul li ol {
+  margin-bottom: 0;
+  padding: 0;
+  margin: 0;
+}
+.entry-content .toc ul li ul li a,
+.entry-content .toc ul li ol li a {
+  padding: 0.5rem 0.75rem 0.5rem 2rem;
+  font-size: 0.9rem;
+  background-color: #416167;
+}
+.entry-content .toc ul li ul li a:before,
+.entry-content .toc ul li ol li a:before {
+  content: "\f0da";
+  font-family: "fontawesome";
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  margin-right: 0.6rem;
+}
+.entry-content .toc ul li ul li ul li a,
+.entry-content .toc ul li ol li ul li a {
+  padding: 0.5rem 0.75rem 0.5rem 4rem;
+}
+.entry-content .toc ul li ul li ul li a:before,
+.entry-content .toc ul li ol li ul li a:before {
+  content: none;
+}
+.meta-content {
+  background-color: #fff;
+  margin: 1.5rem 0.8rem;
+  padding: 0;
+  border-top: 1px dotted #cce4e8;
+  letter-spacing: 0.05rem;
+}
+.meta-wrapper {
+  margin: 3rem 0.8rem;
+  padding: 0;
+  background-color: #fff;
+}
+h6.tag,
+h6.categories {
+  color: #2d3d40;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.article-tag-list {
+  padding: 0;
+}
+.article-tag,
+.article-tag-list,
+.article-categories,
+.article-categories-list {
+  padding: 0;
+  margin: 0;
+}
+.article-categories {
+  margin-bottom: 1.6em;
+}
+.article-tag-list li,
+.article-categories-list li {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0.2rem 0.1rem;
+}
+.article-tag-list li a,
+.article-categories-list li a {
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0.4rem 0.8rem;
+  margin: 0;
+  background-color: #ecf5f7;
+  color: #2d3d40;
+  border-radius: 2px;
+  display: block;
+}
+.article-tag-list li a:before,
+.article-categories-list li a:before {
+  content: "#";
+}
+.article-tag-list li a:hover,
+.article-categories-list li a:hover {
+  color: #fff;
+  background-color: #2d3d40;
+}
+.widget {
+  margin: 1.5rem 0.8rem;
+  padding: 0;
+}
+.widget-h {
+  text-align: center;
+  margin: 1.6rem 0;
+}
+.widget-h h6 {
+  color: #fff;
+  background-color: #2d3d40;
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.posts-list li {
+  list-style: none;
+  margin: 0.8rem 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.posts-list li .posts-list-link {
+  -webkit-flex-grow: 3;
+  -webkit-box-flex: 3;
+  -moz-box-flex: 3;
+  -o-box-flex: 3;
+  -ms-box-flex: 3;
+  box-flex: 3;
+  -webkit-flex-grow: 3;
+  flex-grow: 3;
+}
+.posts-list li .posts-list-link a {
+  color: #2d3d40;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.posts-list li .posts-list-link a:hover {
+  color: #e91e63;
+}
+.posts-list li .posts-list-meta {
+  font-size: 0.7rem;
+}
+.posts-list li .flx:first-child {
+  margin: 0 1rem 0 0;
+}
+.posts-list li amp-img {
+  border-radius: 2px;
+}
+#footer {
+  background-color: #2d3d40;
+  color: #fff;
+  display: block;
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  line-height: 2rem;
+  margin: 3rem 0 0 0;
+  padding: 0;
+}
+.site-author-info {
+  margin: 0;
+  padding: 3rem 1.6rem;
+}
+.site-author-info h6 {
+  font-size: 1rem;
+  color: #fff;
+  font-weight: bold;
+  display: inline-block;
+  background-color: #222f31;
+  padding: 0.4rem 0.8rem;
+}
+.site-author-info-wrapper {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+.site-author-info-wrapper .flx:first-child {
+  margin: 0 1rem 0 0;
+}
+.authorCap-wrapper {
+  -webkit-flex-grow: 3;
+  -webkit-box-flex: 3;
+  -moz-box-flex: 3;
+  -o-box-flex: 3;
+  -ms-box-flex: 3;
+  box-flex: 3;
+  -webkit-flex-grow: 3;
+  flex-grow: 3;
+}
+.authorCap {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.authorReading {
+  font-size: 0.7rem;
+}
+.site-author-desc {
+  font-size: 0.8rem;
+  line-height: 1.6rem;
+  margin: 1.4rem 0;
+}
+.copyright-tool {
+  margin: 0;
+  padding: 1.5rem 1.6rem;
+  border-top: 1px solid #384b4f;
+}
+.copyright-notice p {
+  font-size: 0.6rem;
+  letter-spacing: 0.05rem;
+  line-height: 1.2rem;
+  color: #8ba8ae;
+}
+.copyright-title {
+  font-size: 1rem;
+  text-align: center;
+  margin: 0.8rem 0 0.4rem 0;
+}
+.copyright-license {
+  margin: 0.4rem 0 0.8rem 0;
+  font-size: 0.7rem;
+  text-align: center;
+}
+.copyright-license a {
+  color: #e6e6e6;
+  font-size: 0.7rem;
+}
+.copyright-license a:hover {
+  color: #b3b3b3;
+}
+.sns-link {
+  margin: 0;
+  text-align: center;
+}
+.sns-link a {
+  display: inline-block;
+  font-size: 1.6rem;
+  text-align: center;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 0.6rem;
+  margin: 0 0.1rem;
+  background-color: #222f31;
+  color: #fff;
+  border-radius: 4px;
+}
+.sns-link a:hover {
+  color: #ccc;
+  background-color: #030404;
+}
+.footer-menu {
+  padding: 1.5rem 0.8rem;
+  border-top: 1px solid #384b4f;
+}
+.footer-menu ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.footer-menu ul li a {
+  display: block;
+  padding: 0.6rem;
+  margin: 0.2rem 1.6rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #222f31;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+}
+.footer-menu ul li a:hover {
+  color: #ccc;
+  background-color: #030404;
+}
+.social-share {
+  margin: 1.5rem 0.8rem;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.social-share amp-social-share,
+.social-share .sbtn {
+  margin: 5px;
+}
+.sbtn {
+  padding: 0;
+  width: 4rem;
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 4px;
+}
+.sbtn:hover {
+  color: #fff;
+}
+.tw {
+  background-color: #1cafe8;
+}
+.tw:hover {
+  background-color: #0f6b8f;
+}
+.fb {
+  background-color: #4f677f;
+}
+.fb:hover {
+  background-color: #283440;
+}
+.ht {
+  background-color: #35acda;
+}
+.ht:hover {
+  background-color: #1a6e8f;
+}
+.gp {
+  background-color: #d56153;
+}
+.gp:hover {
+  background-color: #9c3326;
+}
+.tb {
+  background-color: #465f79;
+}
+.tb:hover {
+  background-color: #212c38;
+}
+.icon-hatena:before {
+  content: "B";
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+#totop {
+  position: fixed;
+  bottom: 2rem;
+  right: 1.6rem;
+  font-size: 1.2rem;
+  z-index: 995;
+}
+#totop a {
+  background: rgba(152,184,190,0.6);
+  text-decoration: none;
+  color: #fff;
+  padding: 0.8rem;
+  border-radius: 50%;
+}
+#totop a:before {
+  content: "\f062";
+  font-family: "fontawesome";
+  font-size: 1.2rem;
+}
+#totop a:hover {
+  text-decoration: none;
+  background: #5d8b93;
+  color: #fff;
+  line-height: 2.3em;
+}
+@media (min-width: 800px) {
+  .title-cover,
+  .entry-content,
+  .categories,
+  .meta-content,
+  .site-author-info {
+    width: 780px;
+    margin: 0 auto;
+  }
+  .nav-container {
+    width: 800px;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 0px) and (max-width: 480px) {
+  .site-author-info-wrapper {
+    display: block;
+  }
+  .gravatar-area {
+    text-align: center;
+  }
+  .gravatar-area amp-img {
+    display: inline-block;
+  }
+  .entry-content td,
+  .entry-content th {
+    line-height: 1.8em;
+    padding: 0.6rem 0.6rem;
+    font-size: 0.5rem;
+  }
+  .entry-content td em,
+  .entry-content th em,
+  .entry-content td strong,
+  .entry-content th strong,
+  .entry-content td a,
+  .entry-content th a {
+    font-size: 0.5rem;
+  }
+}
+#hexo-amp-id-1{text-align:center;}#hexo-amp-id-2{text-align:center;}#hexo-amp-id-3{text-align:center;}#hexo-amp-id-4{text-align:center;}#hexo-amp-id-5{text-align:center;}#hexo-amp-id-6{text-align:center;}
+	</style>
+	
+  </head>
+  <body>
+  	
+  	
+  	<!-- google analytics -->
+  	
+  	
+  	
+  	<!-- menu -->
+  	<header>
+  		<div class="nav-container">
+	  		<div class="left-nav">
+	  			<div class="header-title">
+	  				<a href="/">長生村本郷Engineers&#39;Blog</a>
+	  			</div>
+	  		</div>
+	  		
+	  	</div>
+    </header>
+  	
+  	
+  	<!-- sidebar -->
+  	
+  	
+  	<!-- container -->
+  	<div id="container">
+	  	<div id="main">
+		    <article id="post-2017-08-10-how-to-see-cpu-memory-utili" class="post">
+		    
+		   		<!-- categories and bread crumb -->
+		    	
+		    
+		    	<!-- entry title -->
+				<div class="title-cover">
+					<div class="entry-header">
+						
+						
+						
+			          	<div class="header-thumb flx">
+			          		<div class="thumbImg-w circle">
+			          			<amp-img class="thumbImg" layout="fixed" width="128" height="100" src="/amp-dist/sample/sample-substituteTitleImage.png">
+			          			</amp-img>
+			          		</div>
+			          	</div>
+			            
+			            
+			            <div class="header-cap flx">
+							
+							  <h1 class="article-title entry-title" itemprop="name">
+							    <a href="https://kenzo0107.github.io/2016/08/10/2017-08-10-how-to-see-cpu-memory-utili/" target="_blank" itemprop="url">今更聞けない！CPU, Memory 使用率の見方</a>
+							  </h1>
+							
+						</div>
+					</div>
+					
+					<!-- datePublished -->
+					<div class="entry-meta-header">
+						<span class="meta-elements date">
+							<span class="fa fa-fw fa-clock-o"></span>
+							<time datetime="2016-08-10" itemprop="datePublished">2016.08.09</time>
+						</span>
+					</div>
+				</div>
+				
+				
+				
+				<!-- entry content -->
+			    <div class="entry-content ecp">
+			    	<!-- social share button -->
+			    	
+			    	
+			    	
+                    <!-- google Adsense Matched content -->
+                    
+                    
+			    	<!-- content -->
+			  		<p>&#x6C17;&#x6301;&#x3061;&#x3092;&#x6291;&#x3048;&#x3089;&#x308C;&#x305A;&#x3042;&#x308A;&#x304C;&#x3061;&#x306A;&#x30BF;&#x30A4;&#x30C8;&#x30EB;&#x3092;&#x4ED8;&#x3051;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>&#x30B5;&#x30FC;&#x30D0;&#x8CA0;&#x8377;&#x76E3;&#x8996;&#x6642;&#x306E;&#x30DC;&#x30C8;&#x30EB;&#x30CD;&#x30C3;&#x30AF;&#x306E;&#x7279;&#x5B9A;&#x3092;&#x3059;&#x308B;&#x70BA;&#x3001;<br>&#x5B9F;&#x969B;&#x306B;&#x624B;&#x3092;&#x52D5;&#x304B;&#x3057;&#x3066;&#x81EA;&#x5206;&#x3067;&#x898B;&#x3066;&#x89E3;&#x6C7A;&#x3059;&#x308B;&#x3068;&#x3044;&#x3046;&#x30C1;&#x30E5;&#x30FC;&#x30C8;&#x30EA;&#x30A2;&#x30EB;&#x3068;&#x3057;&#x3066;<br>&#x672C;&#x8A18;&#x4E8B;&#x3092;&#x53C2;&#x7167;&#x3044;&#x305F;&#x3060;&#x3051;&#x308C;&#x3070;&#x4F55;&#x3088;&#x308A;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x63A5;&#x7D9A;&#x3057;&#x8F9B;&#x3044;">&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x63A5;&#x7D9A;&#x3057;&#x8F9B;&#x3044;</span></h2><div id="hexo-amp-id-1">
+<div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810141554.png" width="511" height="584" layout="responsive"></amp-img></div>
+</div>
+
+<ul>
+<li>&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089;URL&#x3092;&#x6253;&#x3061;&#x8FBC;&#x307F;&#x30B5;&#x30A4;&#x30C8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x3082;&#x30DA;&#x30FC;&#x30B8;&#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x306A;&#x3044;</li>
+<li>API &#x304C; timeout &#x3059;&#x308B;</li>
+</ul>
+<p>&#x4E0A;&#x8A18;&#x306E;&#x69D8;&#x306A;&#x4E8B;&#x8C61;&#x304C;&#x767A;&#x751F;&#x3057;&#x305F;&#x5834;&#x5408;&#x306F;<br>&#x76E3;&#x8996;&#x30B0;&#x30E9;&#x30D5;&#x306B;&#x7570;&#x5909;&#x304C;&#x8D77;&#x304D;&#x3066;&#x3044;&#x308B;&#x306F;&#x305A;&#x3067;&#x3059;&#x3002;</p>
+<p>&#x305D;&#x306E;&#x76E3;&#x8996;&#x30B0;&#x30E9;&#x30D5;&#x3092;&#x5143;&#x306B;<br>&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3065;&#x3089;&#x304F;&#x306A;&#x3063;&#x305F;&#x5FB4;&#x5019;&#x306E;&#x3042;&#x308B;&#x8CA0;&#x8377;&#x72B6;&#x6CC1;&#x3092;&#x78BA;&#x8A8D;&#x3057;<br>&#x30DC;&#x30C8;&#x30EB;&#x30CD;&#x30C3;&#x30AF;&#x3092;&#x7279;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>&#x4EE5;&#x4E0B;&#x3001;&#x51FA;&#x6765;&#x308B;&#x3060;&#x3051;&#x539F;&#x7406;&#x3092;&#x77E5;&#x308B;&#x4E0A;&#x3067; CLI &#x3092;&#x5143;&#x306B;&#x8A71;&#x3092;&#x9032;&#x3081;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="&#x30B5;&#x30FC;&#x30D0;&#x306B;cpu&#x8CA0;&#x8377;&#x3092;&#x639B;&#x3051;&#x308B;">&#x30B5;&#x30FC;&#x30D0;&#x306B;CPU&#x8CA0;&#x8377;&#x3092;&#x639B;&#x3051;&#x308B;</span></h2><div id="hexo-amp-id-2">
+<div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810142151.jpg" width="332" height="286" layout="responsive"></amp-img></div>
+</div>
+
+<p>CPU&#x8CA0;&#x8377;&#x3092;&#x639B;&#x3051;&#x308B;&#x30C4;&#x30FC;&#x30EB;&#x3068;&#x3057;&#x3066;<a href="http://qiita.com/kunihirotanaka/items/21194f77713aa0663e3b">Linux&#x306E;I/O&#x3084;CPU&#x306E;&#x8CA0;&#x8377;&#x3068;&#x30ED;&#x30FC;&#x30C9;&#x30A2;&#x30D9;&#x30EC;&#x30FC;&#x30B8;&#x306E;&#x95A2;&#x4FC2;&#x3092;&#x8A73;&#x3057;&#x304F;&#x898B;&#x3066;&#x307F;&#x308B;</a>&#x306E;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x3092;&#x62DD;&#x501F;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;<br>&#x203B;&#x3042;&#x308A;&#x304C;&#x3068;&#x3046;&#x3054;&#x3056;&#x3044;&#x307E;&#x3059; @kunihirotanaka &#x793E;&#x9577;&#xFF01;</p>
+<ul>
+<li>loadtest.pl <arg1> <arg2><ul>
+<li>arg1: &#x4E26;&#x5217;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x6570;</li>
+<li>arg2: &#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x30B3;&#x30FC;&#x30EB;&#x3059;&#x308B;&#x30D7;&#x30ED;&#x30B0;&#x30E9;&#x30E0;&#x3092;&#x52D5;&#x4F5C;&#x3055;&#x305B;&#x308B;&#x304B;&#x5224;&#x5B9A;</li>
+</ul>
+</arg2></arg1></li>
+</ul>
+<figure class="highlight perl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/perl</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">my</span> $nprocs = $ARGV[<span class="number">0</span>] || <span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span>( <span class="keyword">my</span> $i=<span class="number">0</span>; $i&lt;$nprocs; $i++ ){</span><br><span class="line">    <span class="keyword">my</span> $pid = <span class="keyword">fork</span>;</span><br><span class="line">    <span class="keyword">die</span> $! <span class="keyword">if</span>( $pid &lt; <span class="number">0</span> );</span><br><span class="line">    <span class="keyword">if</span>( $pid == <span class="number">0</span> ){</span><br><span class="line">        <span class="keyword">while</span>(<span class="number">1</span>){</span><br><span class="line">            <span class="keyword">if</span>( $ARGV[<span class="number">1</span>] ){</span><br><span class="line">                <span class="keyword">open</span>(IN, <span class="string">&quot;&gt;/dev/null&quot;</span>);</span><br><span class="line">                <span class="keyword">close</span>(IN);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"><span class="keyword">wait</span>;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x30ED;&#x30FC;&#x30C9;&#x30A2;&#x30D9;&#x30EC;&#x30FC;&#x30B8;&#x3092; 2 &#x306B;&#x8FD1;&#x3065;&#x3051;&#x308B;&#x69D8;&#x306B;CPU&#x8CA0;&#x8377;&#x3092;&#x639B;&#x3051;&#x308B;</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x ./loadtest.pl</span><br><span class="line">$ ./loadtest.pl 2</span><br></pre></td></tr></tbody></table></figure>
+
+<h2><span id="cpu&#x4F7F;&#x7528;&#x72B6;&#x6CC1;&#x78BA;&#x8A8D;&#x30B3;&#x30DE;&#x30F3;&#x30C9;">CPU&#x4F7F;&#x7528;&#x72B6;&#x6CC1;&#x78BA;&#x8A8D;&#x30B3;&#x30DE;&#x30F3;&#x30C9;</span></h2><ul>
+<li>&#x30EA;&#x30A2;&#x30EB;&#x30BF;&#x30A4;&#x30E0;&#x76E3;&#x8996; &#x2192; <code>top</code>, <code>vmstat</code></li>
+<li>&#x904E;&#x53BB;&#x78BA;&#x8A8D; &#x2192; <code>sar</code></li>
+</ul>
+<h3><span id="&#x30EA;&#x30A2;&#x30EB;&#x30BF;&#x30A4;&#x30E0;&#x76E3;&#x8996;">&#x30EA;&#x30A2;&#x30EB;&#x30BF;&#x30A4;&#x30E0;&#x76E3;&#x8996;</span></h3><h4><span id="top-&#x3067;&#x6982;&#x8981;&#x78BA;&#x8A8D;"><code>top</code> &#x3067;&#x6982;&#x8981;&#x78BA;&#x8A8D;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ top</span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">top - 12:12:39 up 592 days, 18:55,  4 users,  load average: 1.97, 1.13, 0.46</span><br><span class="line">Tasks: 125 total,   3 running, 122 sleeping,   0 stopped,   0 zombie</span><br><span class="line">Cpu(s): 99.7%us,  0.2%sy,  0.0%ni,  0.0%id,  0.0%wa,  0.0%hi,  0.0%si,  0.2%st</span><br><span class="line">Mem:   1020052k total,   943132k used,    76920k free,   144136k buffers</span><br><span class="line">Swap:  2097148k total,   466724k used,  1630424k free,   410784k cached</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span><br><span class="line">29955 mameko_d  20   0 25196  520  184 R 99.9  0.1   4:04.91 loadtest.pl</span><br><span class="line">29956 mameko_d  20   0 25196  516  180 R 99.5  0.1   4:04.86 loadtest.pl</span><br><span class="line">24534 apache    20   0  425m  25m 7480 S  0.3  2.6   1:42.63 httpd</span><br><span class="line">    1 root      20   0 19232  412  224 S  0.0  0.0   0:01.77 init</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x4E0A;&#x8A18;&#x7D50;&#x679C;&#x304B;&#x3089;</p>
+<ul>
+<li>Load Average &#x304C;&#x4E0A;&#x6607;&#x3057;&#x3066;&#x3044;&#x308B;</li>
+<li><code>%CPU</code>, <code>COMMAND</code> &#x304B;&#x3089;&#x4E0A;&#x6607;&#x306E;&#x539F;&#x56E0;&#x306F; <code>loadtest.pl</code></li>
+</ul>
+<p>&#x66AB;&#x5B9A;&#x7684;&#x306A;&#x5BFE;&#x51E6;&#x3068;&#x3057;&#x3066;&#x306F;&#x3053;&#x306E;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3092; kill &#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x8CA0;&#x8377;&#x3092;&#x6B62;&#x3081;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">kill</span> -9 6528</span><br><span class="line">$ <span class="built_in">kill</span> -9 6529</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x51E6;&#x7406;&#x9014;&#x4E2D;&#x3067;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3092; kill &#x3057;&#x3066;&#x3057;&#x307E;&#x3044;&#x4E0D;&#x6574;&#x5408;&#x304C;&#x767A;&#x751F;&#x3059;&#x308B;&#x69D8;&#x306A;&#x51E6;&#x7406;&#x306E;&#x5834;&#x5408;&#x306F;<br>&#x5225;&#x9014;&#x3001;CPU &#x306E;&#x5897;&#x5F37;&#x7B49;&#x3092;&#x691C;&#x8A0E;&#x3059;&#x308B;&#x7B49;&#x3001;&#x72B6;&#x6CC1;&#x306B;&#x3088;&#x308A;&#x307E;&#x3059;&#x304C;&#x5BFE;&#x5FDC;&#x3092;&#x691C;&#x8A0E;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h4><span id="cpu-&#x4F7F;&#x7528;&#x7387;&#x9AD8;&#x3044;&#x30E9;&#x30F3;&#x30AD;&#x30F3;&#x30B0;-top10-&#x8868;&#x793A;">CPU &#x4F7F;&#x7528;&#x7387;&#x9AD8;&#x3044;&#x30E9;&#x30F3;&#x30AD;&#x30F3;&#x30B0; Top10 &#x8868;&#x793A;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps ax --sort=-%cpu -o <span class="built_in">command</span>,pid,pid,%cpu|head -n 11</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x203B; <code>-n 11</code> &#x306A;&#x306E;&#x306F; 1&#x884C;&#x76EE;&#x306F;&#x30AB;&#x30E9;&#x30E0;&#x540D;&#x304C;&#x5165;&#x308B;&#x70BA;</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMMAND                       PID   PID %CPU</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h4><span id="&#x30B0;&#x30E9;&#x30D5;&#x3067;&#x898B;&#x308B;">&#x30B0;&#x30E9;&#x30D5;&#x3067;&#x898B;&#x308B;</span></h4><p>&#x3053;&#x308C;&#x307E;&#x3067; CLI &#x3067;&#x78BA;&#x8A8D;&#x3057;&#x305F;&#x8003;&#x5BDF;&#x306E;&#x7B54;&#x3048;&#x5408;&#x308F;&#x305B;&#x3068;&#x3057;&#x3066;&#x78BA;&#x8A8D;&#x3057;&#x307E;&#x3057;&#x3087;&#x3046;&#x3002;</p>
+<div id="hexo-amp-id-3">
+<div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810121609.png" width="1024" height="552" layout="responsive"></amp-img></div>
+</div>
+
+<ul>
+<li>12:07 &#x8FBA;&#x308A;&#x304B;&#x3089;&#x8CA0;&#x8377;&#x4E0A;&#x6607;</li>
+</ul>
+<ul>
+<li>loadavg5 &#x6025;&#x4E0A;&#x6607;</li>
+<li>CPU user &#x6025;&#x4E0A;&#x6607;&#x3002; CPU system &#x306F;&#x305D;&#x3053;&#x307E;&#x3067;&#x4E0A;&#x304C;&#x3063;&#x3066;&#x3044;&#x306A;&#x3044;&#x3002;<br>&#x2192; &#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x306E;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x304C;CPU&#x3092;&#x98DF;&#x3063;&#x3066;&#x3044;&#x308B;&#x3002;</li>
+<li>memory &#x306F;&#x6D88;&#x8CBB;&#x3057;&#x3066;&#x3044;&#x306A;&#x3044;</li>
+</ul>
+<p>top &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x306E;&#x69D8;&#x306B;&#x3069;&#x306E;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x304C;&#x539F;&#x56E0;&#x304B;&#x307E;&#x3067;&#x306F;&#x30B0;&#x30E9;&#x30D5;&#x304B;&#x3089;&#x306F;&#x4E0D;&#x660E;&#x3067;&#x3059;&#x3002;<br>&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;12:07 &#x3042;&#x305F;&#x308A;&#x304B;&#x3089;&#x306E;&#x30ED;&#x30B0;&#x3092;&#x8ABF;&#x67FB;&#x3059;&#x308B;&#x7B49;&#x539F;&#x56E0;&#x3092;&#x7279;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h5><span id="&#x88DC;&#x8DB3;">&#x88DC;&#x8DB3;</span></h5><p>&#x3061;&#x306A;&#x307F;&#x306B;<br>Apache &#x306E;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x3068;&#x3057;&#x3066; PHP &#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x306F; <code>COMMAND</code> &#x306B; <code>httpd</code> &#x3068;&#x8868;&#x793A;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;<br><code>fluentd</code> &#x306F; ruby &#x3067;&#x5B9F;&#x884C;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x306E;&#x3067; <code>ruby</code> &#x3067;&#x3059;&#x3002;</p>
+<blockquote>
+<p>  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND<br>12376 apache    20   0  833m 115m  19m S  2.4  3.1   0:03.52 httpd<br> 1455 td-agent  20   0  461m  74m    0 S  1.2  2.0   1098:30 ruby</p>
+</blockquote>
+<h4><span id="vmstat-&#x3067;-cpu-&#x4F7F;&#x7528;&#x7387;&#x78BA;&#x8A8D;"><code>vmstat</code> &#x3067; CPU &#x4F7F;&#x7528;&#x7387;&#x78BA;&#x8A8D;</span></h4><p>1&#x79D2;&#x3054;&#x3068;&#x306B;&#x51FA;&#x529B;</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ vmstat 1</span><br><span class="line"></span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----</span><br><span class="line">r  b   swpd   free   buff  cache   si   so    bi    bo   <span class="keyword">in</span>   cs us sy id wa st</span><br><span class="line">0  0 515396  80756  37120 220320    0    0    12     2    0    0  0  0 100  0  0</span><br><span class="line">0  0 515396  80756  37120 220320    0    0     0     0  110  200  0  0 100  0  0</span><br><span class="line">0  0 515396  80756  37120 220320    0    0     0     0  103  205  0  0 100  0  1</span><br><span class="line">0  0 515396  80632  37120 220320    0    0     0     0  121  212  0  0 99  0  0</span><br><span class="line">0  0 515396  80632  37120 220320    0    0     0     0  114  216  0  0 100  0  0</span><br><span class="line">2  0 515328  80648  36944 220432    0    0     0     0 2092  237 100  0  0  0  0</span><br><span class="line">2  0 515328  80648  36944 220432    0    0     0     0 2071  224 100  0  0  0  0</span><br><span class="line">2  0 515328  81020  36952 220432    0    0     0     0 2162  381 100  1  0  0  0</span><br><span class="line">2  0 515328  80896  36952 220432    0    0     0     0 2164  266 100  0  0  0  0</span><br><span class="line">2  0 515328  80756  36952 220432    0    0     0     0 2139  308 100  0  0  0  0</span><br><span class="line">2  0 515328  80772  36952 220432    0    0     0     0 2111  237 100  0  0  0  0</span><br><span class="line">2  0 515328  80772  36952 220432    0    0     0     0 2087  238 100  0  0  0  0</span><br><span class="line">2  0 515328  80772  36952 220432    0    0     0     0 2077  237 100  0  0  0  0</span><br><span class="line">2  0 515328  80772  36952 220432    0    0     0     0 2076  232 99  1  0  0  0</span><br><span class="line">2  0 515328  80772  36952 220432    0    0     0     0 2078  235 100  0  0  0  0</span><br><span class="line">2  0 515328  80904  36952 220432    0    0     0     0 2081  231 85  0  0  0 15</span><br><span class="line">0  0 515328  81448  36952 220432    0    0     0     0  267  254  6  0 94  0  0</span><br><span class="line">0  0 515328  81448  36952 220432    0    0     0     0  151  250  0  0 99  0  0</span><br><span class="line">0  0 515328  81448  36952 220432    0    0     0     0  230  307  0  0 99  0  0</span><br><span class="line">0  0 515328  81456  36952 220432    0    0     0     0  123  230  0  0 100  0  0</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x4E0A;&#x8A18;&#x304B;&#x3089;&#x4EE5;&#x4E0B;&#x306E;&#x3053;&#x3068;&#x304C;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<ul>
+<li><code>./loadtest.pl 2</code> &#x3092;&#x5B9F;&#x884C;&#x4E2D;&#x306F; <code>procs r (&#x5B9F;&#x884C;&#x4E2D;&#x30D7;&#x30ED;&#x30BB;&#x30B9;) = 2</code> &#x3068;&#x306A;&#x3063;&#x3066;&#x3044;&#x308B;</li>
+<li><code>cpu us</code> &#x304C; 100%, <code>cpu id</code> &#x304C; 0%<ul>
+<li><code>cpu id</code> &#x304C;&#x306A;&#x304F;&#x306A;&#x308A;&#x3001;&#x30D7;&#x30ED;&#x30B0;&#x30E9;&#x30E0;&#x304C; 100% CPU &#x3092;&#x98DF;&#x3044;&#x3064;&#x3076;&#x3057;&#x3066;&#x3044;&#x308B;</li>
+</ul>
+</li>
+<li><code>system in</code> (&#x5272;&#x308A;&#x8FBC;&#x307F;&#x56DE;&#x6570;)&#x3001;<code>system cs</code> (&#x30B3;&#x30F3;&#x30C6;&#x30AD;&#x30B9;&#x30C8;&#x30B9;&#x30A4;&#x30C3;&#x30C1;&#x56DE;&#x6570;) &#x304C;&#x5897;&#x52A0;<ul>
+<li>&#x30B3;&#x30F3;&#x30C6;&#x30AD;&#x30B9;&#x30C8;&#x30B9;&#x30A4;&#x30C3;&#x30C1;&#x81EA;&#x4F53;&#x304C; CPU &#x3092;&#x98DF;&#x3044;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x306E;&#x8CA0;&#x8377;&#x3092;&#x4E0A;&#x3052;&#x3066;&#x3044;&#x308B;</li>
+</ul>
+</li>
+</ul>
+<h4><span id="&#x904E;&#x53BB;&#x78BA;&#x8A8D;">&#x904E;&#x53BB;&#x78BA;&#x8A8D;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sar -u -s 21:00:00 -e 22:10:00 -f /var/<span class="built_in">log</span>/sa/sa31</span><br><span class="line"></span><br><span class="line">21:00:01      runq-sz  plist-sz   ldavg-1   ldavg-5  ldavg-15</span><br><span class="line">21:10:01            0       200      0.00      0.04      0.07</span><br><span class="line">21:20:01            0       203      0.00      0.00      0.01</span><br><span class="line">21:30:01            0       203      0.00      0.00      0.00</span><br><span class="line">21:40:01            0       211      0.00      0.03      0.00</span><br><span class="line">21:50:01            0       210      0.65      0.82      0.37</span><br><span class="line">Average:            0       205      0.13      0.18      0.09</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<p>sar &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x306F;&#x904E;&#x53BB;&#x307E;&#x3067;&#x9061;&#x3063;&#x3066;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x308B;&#x306E;&#x3067;&#x4FBF;&#x5229;&#x3067;&#x3059;&#x3002;</p>
+<h5><span id="sar-q-&#x5B9F;&#x884C;&#x7D50;&#x679C;&#x5404;&#x9805;&#x76EE;">sar -q &#x5B9F;&#x884C;&#x7D50;&#x679C;&#x5404;&#x9805;&#x76EE;</span></h5><div class="table-wrapper"><table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Explain</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>runq-sz</td>
+<td>CPU &#x3092;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x70BA;&#x306E;&#x30E1;&#x30E2;&#x30EA;&#x30FC;&#x5185;&#x3067;&#x5F85;&#x6A5F;&#x4E2D;&#x306E;&#x30AB;&#x30FC;&#x30CD;&#x30EB;&#x30B9;&#x30EC;&#x30C3;&#x30C9;&#x6570;&#x3002;<br>&#x901A;&#x5E38;&#x3001;&#x3053;&#x306E;&#x5024;&#x306F; 2 &#x672A;&#x6E80;&#x306B;&#x306A;&#x308B;&#x3002;<br>&#x5024;&#x304C;&#x5E38;&#x306B; 2 &#x3088;&#x308A;&#x5927;&#x304D;&#x3044;&#x5834;&#x5408;&#x306F;&#x3001;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x304C; CPU &#x306E;&#x9650;&#x754C;&#x306B;&#x5230;&#x9054;&#x3057;&#x3066;&#x3044;&#x308B;&#x53EF;&#x80FD;&#x6027;&#x304C;&#x3042;&#x308B;</td>
+</tr>
+<tr>
+<td>plist-sz</td>
+<td>&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x30EA;&#x30B9;&#x30C8;&#x306E;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3068;&#x30B9;&#x30EC;&#x30C3;&#x30C9;&#x6570;</td>
+</tr>
+<tr>
+<td>ldavg-1</td>
+<td>&#x904E;&#x53BB;1&#x5206;&#x9593;&#x306E;&#x30ED;&#x30FC;&#x30C9;&#x30A2;&#x30D9;&#x30EC;&#x30FC;&#x30B8;</td>
+</tr>
+<tr>
+<td>ldavg-5</td>
+<td>&#x904E;&#x53BB;5&#x5206;&#x9593;&#x306E;&#x30ED;&#x30FC;&#x30C9;&#x30A2;&#x30D9;&#x30EC;&#x30FC;&#x30B8;</td>
+</tr>
+<tr>
+<td>ldavg-15</td>
+<td>&#x904E;&#x53BB;15&#x5206;&#x9593;&#x306E;&#x30ED;&#x30FC;&#x30C9;&#x30A2;&#x30D9;&#x30EC;&#x30FC;&#x30B8;</td>
+</tr>
+</tbody></table></div>
+<h4><span id="&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x30B3;&#x30FC;&#x30EB;&#x3092;&#x4F34;&#x3046;cpu&#x8CA0;&#x8377;">&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x30B3;&#x30FC;&#x30EB;&#x3092;&#x4F34;&#x3046;CPU&#x8CA0;&#x8377;</span></h4><p>&#x30ED;&#x30FC;&#x30C9;&#x30A2;&#x30D9;&#x30EC;&#x30FC;&#x30B8;&#x3092; 2 &#x306B;&#x8FD1;&#x3065;&#x3051;&#x308B; &amp; &#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x30B3;&#x30FC;&#x30EB;&#x3059;&#x308B;&#x69D8;&#x306B;CPU&#x8CA0;&#x8377;&#x3092;&#x639B;&#x3051;&#x308B;</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./loadtest.pl 2 1</span><br></pre></td></tr></tbody></table></figure>
+
+<h4><span id="vmstat-&#x3067;&#x76E3;&#x8996;">vmstat &#x3067;&#x76E3;&#x8996;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$ vmstat 1</span><br><span class="line"></span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   <span class="keyword">in</span>   cs us sy id wa st</span><br><span class="line"> 0  0 597832 886856   3808  34844    0    0    12     2    0    0  0  0 100  0  0</span><br><span class="line"> 1  0 597828 886856   3808  34908    0    0     0     0  134  233  1  0 99  0  0</span><br><span class="line"> 0  0 597788 886684   3944  34876   20    0   156     0  238  307  1  1 96  4  0</span><br><span class="line"> 0  0 597788 886684   3944  34904    0    0     0     0  109  219  0  0 100  0  0</span><br><span class="line"> 2  0 597756 884044   3956  36296   96    0  1500     0 1075 1274 18 26 41 15  0  &#x2190; loadtest.pl 2 1 &#x5B9F;&#x884C;&#x958B;&#x59CB;</span><br><span class="line"> 2  0 597756 884044   3956  36296    0    0     0     0 2080 2265 42 58  0  0  0</span><br><span class="line"> 2  0 597756 884076   3956  36296    0    0     0     0 2083 2458 41 60  0  0  0</span><br><span class="line"> 2  0 597756 884200   3964  36292    0    0     0    32 2103 2458 42 59  0  0  0</span><br><span class="line"> 2  0 597756 884200   3964  36296    0    0     0     0 2079 2588 41 60  0  0  0</span><br><span class="line"> 3  0 597756 883952   3964  36296    0    0     0     0 2080 2209 40 60  0  0  1</span><br><span class="line"> 2  0 597756 884216   3964  36296    0    0     0     0 2085 2395 42 58  0  0  0</span><br><span class="line"> 2  0 597756 884216   3964  36296    0    0     0     0 2061 2399 43 57  0  0  0</span><br><span class="line"> 3  0 597756 884092   3964  36296    0    0     0     0 2061 1991 44 57  0  0  0</span><br><span class="line"> 2  0 597756 884216   3964  36296    0    0     0     0 2059 2333 42 58  0  0  1</span><br><span class="line"> 2  0 597756 884216   3964  36296    0    0     0     0 2058 2211 42 58  0  0  1</span><br><span class="line"> 2  0 597756 884092   3964  36296    0    0     0     0 2058 2461 43 58  0  0  0</span><br><span class="line"> 2  0 597756 883844   3964  36296    0    0     0     0 2059 2641 42 58  0  0  0</span><br><span class="line"> 2  0 597756 884216   3964  36296    0    0     0     0 2158 2715 42 59  0  0  0    &#x2190; loadtest.pl 2 1 &#x5B9F;&#x884C;&#x7D42;&#x4E86;</span><br><span class="line"> 0  1 597744 884588   3964  36364   44    0   144     0 1995 2313 37 58  3  2  0</span><br><span class="line"> 0  0 597724 884388   3964  36524  208    0   380     0  173  239  0  1 95  5  0</span><br><span class="line"> 0  0 597724 884388   3964  36568    0    0     0     0  102  196  0  0 100  0  0</span><br><span class="line"> 0  0 597636 884388   3964  36568    0    0     0     0  102  203  0  0 100  0  0</span><br><span class="line"> 0  0 597636 884512   3964  36568    0    0     0     0  104  195  0  0 100  0  1</span><br></pre></td></tr></tbody></table></figure>
+
+
+<ul>
+<li>loadtest.pl &#x304B;&#x3089;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x30B3;&#x30FC;&#x30EB;&#x304C;&#x591A;&#x6570;&#x5B9F;&#x884C;&#x3055;&#x308C;&#x308B;&#x70BA;&#x3001;<code>cpu sy</code> &#x4E0A;&#x6607;&#x3057;&#x3066;&#x3044;&#x308B;&#x3002;</li>
+</ul>
+<h4><span id="&#x30B0;&#x30E9;&#x30D5;&#x3067;&#x898B;&#x308B;">&#x30B0;&#x30E9;&#x30D5;&#x3067;&#x898B;&#x308B;</span></h4><div id="hexo-amp-id-4">
+<!-- This img tag couldn't replace. src: <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810123318.png" width="100%">-->
+</div>
+
+<ul>
+<li>12:25 &#x8FBA;&#x308A;&#x304B;&#x3089;&#x8CA0;&#x8377;&#x6025;&#x4E0A;&#x6607;</li>
+<li>loadavg5 &#x6025;&#x4E0A;&#x6607;</li>
+<li>CPU user, system &#x5171;&#x306B;&#x6025;&#x4E0A;&#x6607;&#x3002; system &#x306E;&#x5272;&#x5408;&#x304C;&#x591A;&#x3044;<br>&#x2192; &#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x30B3;&#x30FC;&#x30EB;&#x3092;&#x4F34;&#x3046;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x306E;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x304C;CPU&#x3092;&#x98DF;&#x3063;&#x3066;&#x3044;&#x308B;&#x3002;</li>
+<li>memory &#x306F;&#x6D88;&#x8CBB;&#x3057;&#x3066;&#x3044;&#x306A;&#x3044;</li>
+</ul>
+<h3><span id="&#x5BFE;&#x5FDC;&#x4F8B;">&#x5BFE;&#x5FDC;&#x4F8B;</span></h3><ul>
+<li>&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x306E;CPU&#x4F7F;&#x7528;&#x7B87;&#x6240;&#x306E;&#x7279;&#x5B9A;<ul>
+<li>datadog, NewRelic &#x7B49;&#x306E; APM(Aplication Performance Management) &#x5C0E;&#x5165;&#x3057;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x306E;&#x30DC;&#x30C8;&#x30EB;&#x30CD;&#x30C3;&#x30AF;&#x62BD;&#x51FA;&#x3057;&#x4FEE;&#x6B63;<ul>
+<li>&#x30B3;&#x30B9;&#x30C8;&#x3053;&#x305D;&#x639B;&#x304B;&#x308A;&#x307E;&#x3059;&#x304C;&#x975E;&#x5E38;&#x306B;&#x6709;&#x7528;&#x3067;&#x3059;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CPU&#x5897;&#x8A2D;</li>
+<li>&#x5BFE;&#x8C61;&#x30A2;&#x30D7;&#x30EA;&#x306E;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3092; kill (&#x5148;&#x307B;&#x3069;&#x306E; &#x30D7;&#x30ED;&#x30BB;&#x30B9; kill )<ul>
+<li>&#x4F8B;&#xFF09;&#x7BA1;&#x7406;&#x753B;&#x9762;&#x3067;&#x96C6;&#x8A08;&#x51E6;&#x7406;&#x3057;&#x3001;DB&#x306B;&#x8CA0;&#x8377;&#x639B;&#x3051;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x306B;&#x5F71;&#x97FF;&#x3057;&#x3066;&#x3057;&#x307E;&#x3063;&#x305F;&#x6642;&#x306B;&#x96C6;&#x8A08;&#x51E6;&#x7406;&#x306E;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3092; kill</li>
+</ul>
+</li>
+</ul>
+<h2><span id="&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x30E1;&#x30E2;&#x30EA;&#x8CA0;&#x8377;&#x3092;&#x639B;&#x3051;&#x308B;">&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x30E1;&#x30E2;&#x30EA;&#x8CA0;&#x8377;&#x3092;&#x639B;&#x3051;&#x308B;</span></h2><div id="hexo-amp-id-5">
+<div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810142217.jpg" width="1024" height="657" layout="responsive"></amp-img></div>
+</div>
+
+<ul>
+<li>memorytest.pl</li>
+</ul>
+<p>1&#x79D2;&#x6BCE;&#x306B; 20MB &#x6D88;&#x8CBB;&#x3059;&#x308B;&#x69D8;&#x306B;&#x8A2D;&#x5B9A;</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/perl</span><br><span class="line"></span><br><span class="line">while(1){</span><br><span class="line">    sleep 1;</span><br><span class="line">    push @h  , 1 x 1024 x 1024 x 20</span><br><span class="line">}</span><br><span class="line">wait;</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>&#x30E1;&#x30E2;&#x30EA;&#x8CA0;&#x8377;&#x5B9F;&#x884C;</li>
+</ul>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x ./memorytest.pl</span><br><span class="line">$ ./memorytest.pl</span><br></pre></td></tr></tbody></table></figure>
+
+<h2><span id="&#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x72B6;&#x6CC1;&#x78BA;&#x8A8D;&#x30B3;&#x30DE;&#x30F3;&#x30C9;">&#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x72B6;&#x6CC1;&#x78BA;&#x8A8D;&#x30B3;&#x30DE;&#x30F3;&#x30C9;</span></h2><ul>
+<li>&#x30EA;&#x30A2;&#x30EB;&#x30BF;&#x30A4;&#x30E0; &#x2192; <code>top -a</code>, <code>free</code></li>
+<li>&#x904E;&#x53BB;&#x78BA;&#x8A8D; &#x2192; <code>sar</code></li>
+</ul>
+<h3><span id="&#x6B8B;&#x30E1;&#x30E2;&#x30EA;&#x78BA;&#x8A8D;">&#x6B8B;&#x30E1;&#x30E2;&#x30EA;&#x78BA;&#x8A8D;</span></h3><h4><span id="top-&#x3067;&#x6982;&#x8981;&#x78BA;&#x8A8D;"><code>top</code> &#x3067;&#x6982;&#x8981;&#x78BA;&#x8A8D;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ top -a</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x3082;&#x3057;&#x304F;&#x306F; top &#x5B9F;&#x884C;&#x5F8C;&#x3001; Shift + m</p>
+<blockquote>
+<p>  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND<br> 6780 mameko_d  20   0  385m 362m 1212 S  5.3 36.4   0:01.88 memorytest.pl</p>
+</blockquote>
+<p>&#x4E0A;&#x8A18;&#x7D50;&#x679C;&#x304B;&#x3089;</p>
+<ul>
+<li><code>%MEM</code>, <code>COMMAND</code> &#x304B;&#x3089;&#x4E0A;&#x6607;&#x306E;&#x539F;&#x56E0;&#x306F; <code>memorytest.pl</code></li>
+</ul>
+<p>&#x66AB;&#x5B9A;&#x7684;&#x306A;&#x5BFE;&#x51E6;&#x3068;&#x3057;&#x3066;&#x306F; loadtest.pl &#x3068;&#x540C;&#x69D8;&#x3001;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3092; kill &#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x8CA0;&#x8377;&#x3092;&#x6B62;&#x3081;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">kill</span> -9 6780</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h4><span id="free-&#x3067;&#x6B8B;&#x30E1;&#x30E2;&#x30EA;&#x78BA;&#x8A8D;"><code>free</code> &#x3067;&#x6B8B;&#x30E1;&#x30E2;&#x30EA;&#x78BA;&#x8A8D;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ free</span><br><span class="line"></span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:       1020052     908664     111388        572      29764     204492</span><br><span class="line">-/+ buffers/cache:     674408     345644</span><br><span class="line">Swap:      2097148     517696    1579452</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x4F55;&#x5EA6;&#x304B;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3068;&#x5F90;&#x3005;&#x306B; <code>Mem</code> &#x306E;</p>
+<ul>
+<li><code>used</code> &#x4E0A;&#x6607;</li>
+<li><code>free</code> &#x6E1B;&#x5C11;</li>
+<li>free &#x6E1B;&#x5C11;&#x306B;&#x5F15;&#x3063;&#x5F35;&#x3089;&#x308C;&#x3066; <code>buffers</code>, <code>cached</code> &#x6E1B;&#x5C11;</li>
+</ul>
+<h5><span id="free-&#x5B9F;&#x884C;&#x7D50;&#x679C;&#x5404;&#x9805;&#x76EE;"><code>free</code> &#x5B9F;&#x884C;&#x7D50;&#x679C;&#x5404;&#x9805;&#x76EE;</span></h5><ul>
+<li>Mem: &#x5B9F;&#x30E1;&#x30E2;&#x30EA;</li>
+<li>Swap: &#x4EEE;&#x60F3;&#x30E1;&#x30E2;&#x30EA;</li>
+</ul>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Explain</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>shared</td>
+<td>&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x9593;&#x3067;&#x5171;&#x6709;&#x3067;&#x304D;&#x308B;&#x9818;&#x57DF;&#x7528;&#x30E1;&#x30E2;&#x30EA;</td>
+</tr>
+<tr>
+<td>buffers</td>
+<td>buffer &#x306B;&#x5229;&#x7528;&#x3055;&#x308C;&#x308B;&#x30E1;&#x30E2;&#x30EA;<br>I/O&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x6642;&#x306B;&#x3001;&#x76F4;&#x63A5;I/O&#x306B;&#x884C;&#x304F;&#x306E;&#x3067;&#x306F;&#x306A;&#x304F;&#x3001;&#x30AD;&#x30E3;&#x30C3;&#x30B7;&#x30E5;&#x7D4C;&#x7531;&#x3067;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3055;&#x305B;&#x308B;&#x70BA;&#x306E;&#x30E1;&#x30E2;&#x30EA;</td>
+</tr>
+<tr>
+<td>cached</td>
+<td>&#x30DA;&#x30FC;&#x30B8;&#x30AD;&#x30E3;&#x30C3;&#x30B7;&#x30E5;&#x7528;&#x30E1;&#x30E2;&#x30EA;<br>&#x30A2;&#x30D7;&#x30EA;&#x3067;&#x5B9F;&#x30E1;&#x30E2;&#x30EA;&#x304C;&#x5FC5;&#x8981;&#x306A;&#x969B;&#x306F;&#x3001; cached &#x306E;&#x30E1;&#x30E2;&#x30EA;&#x304C;&#x7834;&#x68C4;&#x3055;&#x308C;&#x308B;</td>
+</tr>
+</tbody></table></div>
+<h4><span id="&#x78BA;&#x8A8D;&#x89B3;&#x70B9;">&#x78BA;&#x8A8D;&#x89B3;&#x70B9;</span></h4><p>&#x4E0A;&#x8A18; free &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;&#x7D50;&#x679C;&#x304B;&#x3089;&#x89E3;&#x653E;&#x3055;&#x308C;&#x305F;&#x30E1;&#x30E2;&#x30EA;&#x306F;</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mem free 111388 kB = 108 MB</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x3053;&#x308C;&#x3060;&#x3051;&#x3067;&#x306F; <code>108 MB</code> &#x304C;&#x6B8B;&#x308A;&#x3068;&#x601D;&#x3044;&#x304C;&#x3061;&#x3067;&#x3059;&#x304C;<br>&#x901A;&#x5E38;&#x3001;&#x5404;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x306B;&#x30E1;&#x30E2;&#x30EA;&#x5272;&#x308A;&#x632F;&#x3063;&#x305F;&#x6B8B;&#x308A;&#x3092; <code>buffer</code> &#x3068; <code>cache</code> &#x306B;&#x5229;&#x7528;&#x3057;&#x3066; <code>disk I/O</code> &#x3092;&#x8EFD;&#x6E1B;&#x3057;&#x3066;&#x3044;&#x308B;&#x70BA;&#x3001;<br>buffer + cache &#x3082;&#x542B;&#x307E;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<h5><span id="&#x5B9F;&#x8CEA;-&#x6B8B;&#x30E1;&#x30E2;&#x30EA;&#x306F;&#x3069;&#x3053;&#x898B;&#x308C;&#x3070;&#x826F;&#x3044;">&#x5B9F;&#x8CEA;&#x3001;&#x6B8B;&#x30E1;&#x30E2;&#x30EA;&#x306F;&#x3069;&#x3053;&#x898B;&#x308C;&#x3070;&#x826F;&#x3044;&#xFF1F;</span></h5><p><code>free</code> + <code>buffers</code> + <code>cached</code><br>= 111388 + 29764 + 204492 kB<br>= 345644 kB<br>= 338 MB<br>= <code>-/+ buffers/cache free</code></p>
+<p>&#x4EE5;&#x4E0A;&#x304B;&#x3089;<br>&#x6B8B;&#x30E1;&#x30E2;&#x30EA;&#x306E;&#x76EE;&#x5B89;&#x306F; <code>-/+ buffers/cache free</code> &#x78BA;&#x8A8D; or &#x30B9;&#x30E9;&#x30C3;&#x30B7;&#x30F3;&#x30B0;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h5><span id="swap-&#x767A;&#x751F;&#x306F;&#x4F55;&#x3092;&#x898B;&#x308C;&#x3070;&#x308F;&#x304B;&#x308B;">Swap &#x767A;&#x751F;&#x306F;&#x4F55;&#x3092;&#x898B;&#x308C;&#x3070;&#x308F;&#x304B;&#x308B;&#xFF1F;</span></h5><p><code>vmstat</code> &#x5B9F;&#x884C;&#x3057;&#x3066;&#x30B9;&#x30E9;&#x30C3;&#x30B7;&#x30F3;&#x30B0;&#x304C;&#x767A;&#x751F;&#x3057;&#x3066;&#x3044;&#x308B;&#x304B;&#x78BA;&#x8A8D;</p>
+<h5><span id="&#x30B9;&#x30E9;&#x30C3;&#x30B7;&#x30F3;&#x30B0;&#x78BA;&#x8A8D;&#x65B9;&#x6CD5;">&#x30B9;&#x30E9;&#x30C3;&#x30B7;&#x30F3;&#x30B0;&#x78BA;&#x8A8D;&#x65B9;&#x6CD5;</span></h5><ul>
+<li>si (swap in from disk), so (swap out to disk) &#x304C;&#x591A;&#x767A;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x3001;&#x30B9;&#x30E9;&#x30C3;&#x30B7;&#x30F3;&#x30B0;&#x304C;&#x767A;&#x751F;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;</li>
+<li>so &#x304C;&#x6BD4;&#x8F03;&#x7684;&#x9AD8;&#x3044;&#x5834;&#x5408;&#x3001;&#x30E1;&#x30E2;&#x30EA;&#x4E0D;&#x8DB3;&#x306E;&#x53EF;&#x80FD;&#x6027;&#x5927;</li>
+</ul>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ vmstat 1</span><br><span class="line"></span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 0  0 593244 211856   3704  34744    0    0     0     0  236  215  4  2 94  0  0</span><br><span class="line"> 1  0 593244 211876   3704  34744    0    0     0     0  144  216  1  0 98  0  0</span><br><span class="line"> 0  0 593244 160664   3704  34744    0    0     0     0  207  220  4  1 96  0  0</span><br><span class="line"> 0  0 593244 109328   3704  34744    0    0     0     0  227  226  4  2 94  0  0</span><br><span class="line"> 0  1 593052  58900   3704  33312    0    0     0     0  515  241  4  2 59 34  0</span><br><span class="line"> 0  1 618460  55144   1224  15220    0 25416     0 25416 39357  528  5 24 34 37  1  &#x2190; &#x3053;&#x3053;&#x3067; memorytest.pl &#x884C;&#x958B;&#x59CB;</span><br><span class="line"> 0  1 670408  56644   1160  13732    0 51948     0 51948 37384  644  7 22 34 37  1</span><br><span class="line"> 1  1 671048  59256    456  12480    0  640     0   640  182  254  1  1 49 50  0</span><br><span class="line"> 0  0 735892  72040    436  10088    0 64844    96 64844 14559 1044  3 15 67 15  0</span><br><span class="line"> 0  0 786748  71436    436   9596    0 50856   124 50856 13678  745  4 13 69 14  1</span><br><span class="line"> 0  2 830880  63556    436   9504   32 44144   320 44144 15659  636  5 13 54 28  0</span><br><span class="line"> 0  3 849932  48976    436   8652  304 19168  1104 19168 6568  661  6  6 32 55  1</span><br><span class="line"> 0  1 900916  71564    776   8264   88 50992   560 50992 9549  706  1 10 27 62  0</span><br><span class="line"> 0  3 941292  64152   1308   9880   80 40380  2564 40380 10800  622  5 11 29 56  1</span><br><span class="line"> 0  1 993108  69908   1700  10656    0 51820  2024 51852 10208  848  5 12 43 40  1</span><br><span class="line"> 2  0 994168  71536   1700  10428    0 1060     0  1060  216  257  3  1 82 15  0</span><br><span class="line"> 0  0 1045720  71384   1700   9456    0 51552     0 51552 5356  789  2  9 77 12  1</span><br><span class="line"> 0  0 1096468  71468   1332   9012    0 50748     0 50748 15385  857  6 13 72  9  1</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>bo (block out to device) &#x2026; &#x30D6;&#x30ED;&#x30C3;&#x30AF;&#x30C7;&#x30D0;&#x30A4;&#x30B9;&#x306B;&#x9001;&#x3089;&#x308C;&#x305F;&#x30D6;&#x30ED;&#x30C3;&#x30AF;</li>
+<li>bi (block in from device) &#x2026; &#x30D6;&#x30ED;&#x30C3;&#x30AF;&#x30C7;&#x30D0;&#x30A4;&#x30B9;&#x304B;&#x3089;&#x53D7;&#x3051;&#x53D6;&#x3063;&#x305F;&#x30D6;&#x30ED;&#x30C3;&#x30AF;</li>
+</ul>
+<h4><span id="&#x7269;&#x7406;&#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x91CF;resident-set-size&#x9AD8;&#x3044;&#x30E9;&#x30F3;&#x30AD;&#x30F3;&#x30B0;-top10-&#x8868;&#x793A;">&#x7269;&#x7406;&#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x91CF;(Resident Set Size)&#x9AD8;&#x3044;&#x30E9;&#x30F3;&#x30AD;&#x30F3;&#x30B0; Top10 &#x8868;&#x793A;</span></h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps ax --sort=-rss -o command,pid,ppid,vsz,rss|head -n 11</span><br></pre></td></tr></tbody></table></figure>
+
+
+<h4><span id="&#x30B0;&#x30E9;&#x30D5;&#x3067;&#x898B;&#x308B;">&#x30B0;&#x30E9;&#x30D5;&#x3067;&#x898B;&#x308B;</span></h4><div id="hexo-amp-id-6">
+<div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810125452.png" width="1024" height="527" layout="responsive"></amp-img></div>
+</div>
+
+<ul>
+<li>12:35 &#x8FBA;&#x308A;&#x304B;&#x3089;&#x30E1;&#x30E2;&#x30EA;&#x6025;&#x4E0A;&#x6607;</li>
+<li>cached &#x6E1B;&#x3001; used &#x5897;</li>
+</ul>
+<h4><span id="&#x5BFE;&#x5FDC;&#x4F8B;">&#x5BFE;&#x5FDC;&#x4F8B;</span></h4><ul>
+<li>&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x30EC;&#x30D9;&#x30EB;&#x3067;&#x76E3;&#x8996;<ul>
+<li>datadog, mackerel, prometheus, zabbix &#x7B49;&#x76E3;&#x8996;&#x30C4;&#x30FC;&#x30EB;&#x5C0E;&#x5165;</li>
+</ul>
+</li>
+<li>&#x30E1;&#x30E2;&#x30EA;&#x5897;&#x8A2D;</li>
+<li>&#x5BFE;&#x8C61;&#x30A2;&#x30D7;&#x30EA;&#x306E;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3092; kill (&#x5148;&#x307B;&#x3069;&#x306E; &#x30D7;&#x30ED;&#x30BB;&#x30B9; kill )</li>
+</ul>
+<h1><span id="disk-io">Disk I/O</span></h1><h2><span id="io&#x30C7;&#x30A3;&#x30B9;&#x30AF;&#x5229;&#x7528;&#x72B6;&#x6CC1;-&#x78BA;&#x8A8D;">I/O&#x30C7;&#x30A3;&#x30B9;&#x30AF;&#x5229;&#x7528;&#x72B6;&#x6CC1; &#x78BA;&#x8A8D;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sar -b -s 13:00:00 -e 14:00:00 -f /var/log/sa/sa31</span><br><span class="line"></span><br><span class="line">13:00:01          tps      rtps      wtps   bread/s   bwrtn/s</span><br><span class="line">13:10:01         0.28      0.01      0.27      0.11      2.90</span><br><span class="line">13:20:01         0.28      0.00      0.28      0.05      2.99</span><br><span class="line">13:30:01         0.22      0.00      0.22      0.00      2.30</span><br><span class="line">13:40:01         0.24      0.00      0.24      0.00      2.50</span><br><span class="line">13:50:01         0.23      0.00      0.23      0.03      2.35</span><br><span class="line">Average:         0.25      0.00      0.25      0.04      2.61</span><br></pre></td></tr></tbody></table></figure>
+
+<h4><span id="sar-b-&#x5B9F;&#x884C;&#x7D50;&#x679C;&#x9805;&#x76EE;"><code>sar -b</code> &#x5B9F;&#x884C;&#x7D50;&#x679C;&#x9805;&#x76EE;</span></h4><div class="table-wrapper"><table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Explain</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>tps</td>
+<td>&#xFF11;&#x79D2;&#x3042;&#x305F;&#x308A;&#x306E;&#x8EE2;&#x9001; (&#x30C7;&#x30D0;&#x30A4;&#x30B9;&#x306B;&#x5BFE;&#x3059;&#x308B;IO&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;) &#x6570;&#x306E;&#x5408;&#x8A08;</td>
+</tr>
+<tr>
+<td>rtps</td>
+<td>&#xFF11;&#x79D2;&#x3042;&#x305F;&#x308A;&#x306E;&#x8AAD;&#x307F;&#x8FBC;&#x307F;IO&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x56DE;&#x6570;&#x306E;&#x5408;&#x8A08;</td>
+</tr>
+<tr>
+<td>wtps</td>
+<td>&#xFF11;&#x79D2;&#x3042;&#x305F;&#x308A;&#x306E;&#x66F8;&#x304D;&#x8FBC;&#x307F;IO&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x56DE;&#x6570;&#x306E;&#x5408;&#x8A08;</td>
+</tr>
+<tr>
+<td>bread/s</td>
+<td>&#xFF11;&#x79D2;&#x3042;&#x305F;&#x308A;&#x306E;&#xFF08;&#x30D6;&#x30ED;&#x30C3;&#x30AF;&#x5358;&#x4F4D;&#xFF09;&#x8AAD;&#x307F;&#x8FBC;&#x307F;IO&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x91CF;&#x306E;&#x5408;&#x8A08;</td>
+</tr>
+<tr>
+<td>bwrtn/s</td>
+<td>&#xFF11;&#x79D2;&#x3042;&#x305F;&#x308A;&#x306E;&#xFF08;&#x30D6;&#x30ED;&#x30C3;&#x30AF;&#x5358;&#x4F4D;&#xFF09;&#x66F8;&#x304D;&#x8FBC;&#x307F;IO&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x91CF;&#x306E;&#x5408;&#x8A08;</td>
+</tr>
+</tbody></table></div>
+<h4><span id="&#x78BA;&#x8A8D;&#x89B3;&#x70B9;">&#x78BA;&#x8A8D;&#x89B3;&#x70B9;</span></h4><ul>
+<li>I/O &#x5F85;&#x3061;&#x5897;&#x52A0;&#x3059;&#x308B;&#x539F;&#x7406;</li>
+</ul>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x306E;&#x30E1;&#x30E2;&#x30EA;&#x6D88;&#x8CBB;&#x91CF;&#x5897;</span><br><span class="line">&#x2193;</span><br><span class="line">&#x30AD;&#x30E3;&#x30C3;&#x30B7;&#x30E5;&#x306B;&#x30E1;&#x30E2;&#x30EA;&#x304C;&#x4F7F;&#x3048;&#x306A;&#x304F;&#x306A;&#x308B;</span><br><span class="line">&#x2193;</span><br><span class="line">Disk I/O &#x306B;&#x30E1;&#x30E2;&#x30EA;&#x304C;&#x4F7F;&#x3048;&#x306A;&#x304F;&#x306A;&#x308B;</span><br><span class="line">&#x2193;</span><br><span class="line">Disk I/O &#x5897;&#x52A0;</span><br><span class="line">&#x2193;</span><br><span class="line">I/O &#x5F85;&#x3061;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x5897;&#x52A0;</span><br></pre></td></tr></tbody></table></figure>
+
+<h4><span id="&#x5BFE;&#x7B56;">&#x5BFE;&#x7B56;</span></h4><ul>
+<li>&#x30E1;&#x30E2;&#x30EA;&#x306E;&#x4F7F;&#x7528;&#x72B6;&#x6CC1;&#x3068; Swap &#x78BA;&#x8A8D;</li>
+</ul>
+<h2><span id="&#x307E;&#x3068;&#x3081;">&#x307E;&#x3068;&#x3081;</span></h2><p>CPU, Memory &#x4F7F;&#x7528;&#x7387;&#x304C;&#x4E0A;&#x6607;&#x3059;&#x308B;&#x539F;&#x7406;&#x3092;&#x77E5;&#x3063;&#x305F;&#x4E0A;&#x3067;&#x76E3;&#x8996;&#x3092;&#x3059;&#x308B;&#x3068;<br>&#x5168;&#x7136;&#x30B0;&#x30E9;&#x30D5;&#x306E;&#x898B;&#x3048;&#x65B9;&#x304C;&#x9055;&#x3046;&#x3053;&#x3068;&#x3092;&#x5B9F;&#x611F;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>&#x672C;&#x6765;&#x306F;&#x30B0;&#x30E9;&#x30D5;&#x304B;&#x3089;&#x898B;&#x308B;&#x3053;&#x3068;&#x306B;&#x306A;&#x308B;&#x304B;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;<br>&#x305D;&#x306E;&#x969B;&#x306B; <code>top</code>, <code>vmstat</code>, <code>sar</code> &#x3092;&#x5B9F;&#x884C;&#x3057;&#x305F;&#x6642;&#x306E;&#x6570;&#x5024;&#x306E;&#x5909;&#x5316;&#x306E;&#x4ED5;&#x65B9;&#x3092;&#x30A4;&#x30E1;&#x30FC;&#x30B8;&#x3059;&#x308B;&#x3068;<br>&#x3088;&#x308A;&#x539F;&#x56E0;&#x8FFD;&#x53CA;&#x306B;&#x5927;&#x304D;&#x306A;&#x4E00;&#x6B69;&#x3068;&#x306A;&#x308B;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>&#x4EE5;&#x4E0A;<br>&#x5C11;&#x3057;&#x3067;&#x3082;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="reference">Reference</span></h2><ul>
+<li><a href="https://blogs.oracle.com/yappri/vmstat">vmstat &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x306E;&#x8AAD;&#x307F;&#x65B9;</a></li>
+<li><a href="http://tetsuyai.hatenablog.com/entry/20120105/1325750731">&#x5358;&#x72EC;&#x306E;&#x30B5;&#x30FC;&#x30D0;&#x30FC;&#x306E;&#x300C;&#x8CA0;&#x8377;&#x300D;&#x306E;&#x6B63;&#x4F53;&#x3092;&#x7A81;&#x304D;&#x6B62;&#x3081;&#x308B;</a></li>
+<li><a href="https://media.accel-brain.com/server-overload-pattern/">&#x300C;&#x975E;&#x30A8;&#x30F3;&#x30B8;&#x30CB;&#x30A2;&#x300D;&#x3067;&#x3082;&#x3067;&#x304D;&#x308B;&#x30B5;&#x30FC;&#x30D0;&#x904E;&#x8CA0;&#x8377;&#x5BFE;&#x7B56;&#x3002;&#x30ED;&#x30FC;&#x30C9;&#x30A2;&#x30D9;&#x30EC;&#x30FC;&#x30B8;&#x3001;CPU&#x4F7F;&#x7528;&#x7387;&#x3001;I/O&#x30C7;&#x30A3;&#x30B9;&#x30AF;&#x5229;&#x7528;&#x72B6;&#x6CC1;&#x3001;&#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x91CF;&#x306E;&#x8ABF;&#x67FB;&#x65B9;&#x6CD5;</a></li>
+<li><a href="http://beyondjapan.com/blog/2016/02/where-is-server-stress">&#x30B5;&#x30FC;&#x30D0;&#x8CA0;&#x8377;&#x306E;&#x539F;&#x56E0;&#x3092;&#x63A2;&#x308B;&#x65B9;&#x6CD5;</a></li>
+<li><a href="https://www.thomas-krenn.com/en/wiki/Linux_Performance_Measurements_using_vmstat">Linux Performance Measurements using vmstat</a></li>
+<li><a href="http://qiita.com/kunihirotanaka/items/21194f77713aa0663e3b">Linux&#x306E;I/O&#x3084;CPU&#x306E;&#x8CA0;&#x8377;&#x3068;&#x30ED;&#x30FC;&#x30C9;&#x30A2;&#x30D9;&#x30EC;&#x30FC;&#x30B8;&#x306E;&#x95A2;&#x4FC2;&#x3092;&#x8A73;&#x3057;&#x304F;&#x898B;&#x3066;&#x307F;&#x308B;</a></li>
+</ul>
+<h2><span id="&#x88DC;&#x8DB3;">&#x88DC;&#x8DB3;</span></h2><h4><span id="swap-&#x3068;&#x306F;">Swap &#x3068;&#x306F;&#xFF1F;</span></h4><p>&#x30AB;&#x30FC;&#x30CD;&#x30EB;&#x304C;&#x307B;&#x307C;&#x5229;&#x7528;&#x3055;&#x308C;&#x3066;&#x3044;&#x306A;&#x3044;&#x30E1;&#x30E2;&#x30EA;&#x3092;&#x691C;&#x51FA;&#x3057;&#x3066;&#x6392;&#x9664;&#x3057;&#x3066;&#x3044;&#x308B;&#x72B6;&#x614B;&#x3092;&#x8868;&#x793A;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<ol>
+<li>&#x30E1;&#x30E2;&#x30EA;&#x306E;&#x7A7A;&#x304D;&#x3092;&#x5165;&#x51FA;&#x529B;&#x306E;&#x30D0;&#x30C3;&#x30D5;&#x30A1;&#x3068;&#x30AD;&#x30E3;&#x30C3;&#x30B7;&#x30E5;&#x306B;&#x4F7F;&#x7528;</li>
+<li>&#x3055;&#x3089;&#x306B;&#x6D3B;&#x52D5;&#x304C;&#x5C11;&#x306A;&#x3044;&#x90E8;&#x5206;&#x3092;&#x30E1;&#x30E2;&#x30EA;&#x304B;&#x3089;&#x6392;&#x9664;&#x3057;&#x3066; swap &#x3078;&#x62BC;&#x3057;&#x51FA;&#x3059;</li>
+<li>swap &#x304B;&#x3089;&#x30D0;&#x30C3;&#x30D5;&#x30A1;&#x3084;&#x30AD;&#x30E3;&#x30C3;&#x30B7;&#x30E5;&#x306B;&#x8EE2;&#x7528;</li>
+</ol>
+<p>&#x305D;&#x306E;&#x70BA;&#x3001; swap &#x304C;&#x767A;&#x751F;&#x3057;&#x3066;&#x3044;&#x308B;&#x3001;&#x3068;&#x3044;&#x3063;&#x3066;&#x614C;&#x3066;&#x306A;&#x3044;&#x3002;</p>
+<h4><span id="swap-&#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x610F;&#x7FA9;">Swap &#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x610F;&#x7FA9;</span></h4><p>&#x30E1;&#x30E2;&#x30EA;&#x4E0D;&#x8DB3;&#x3067;&#x3082;&#x30E1;&#x30E2;&#x30EA;&#x306E;&#x4E00;&#x90E8;&#x3092;&#x30C7;&#x30A3;&#x30B9;&#x30AF;&#x306B;&#x9000;&#x907F;&#x3055;&#x305B;&#x3066;&#x8A08;&#x7B97;&#x3057;&#x7D9A;&#x3051;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;<br>&#x30E1;&#x30E2;&#x30EA;&#x3092;&#x4F7F;&#x3044;&#x5207;&#x3063;&#x305F;&#x69D8;&#x306B;&#x898B;&#x305B;&#x3064;&#x3064;&#x3082;&#x307E;&#x3060;&#x4F7F;&#x3048;&#x308B;&#x4ED5;&#x7D44;&#x307F;&#x3092; <code>&#x4EEE;&#x60F3;&#x30E1;&#x30E2;&#x30EA;</code> &#x3068;&#x8A00;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h4><span id="&#x30B9;&#x30E9;&#x30C3;&#x30B7;&#x30F3;&#x30B0;&#x3068;&#x306F;">&#x30B9;&#x30E9;&#x30C3;&#x30B7;&#x30F3;&#x30B0;&#x3068;&#x306F;&#xFF1F;</span></h4><p>&#x5B9F;&#x30E1;&#x30E2;&#x30EA; &#x3068; Swap &#x306E;&#x30E1;&#x30E2;&#x30EA;&#x306E;&#x79FB;&#x52D5;&#x304C;&#x5927;&#x91CF;&#x767A;&#x751F;&#x3057;&#x51E6;&#x7406;&#x304C;&#x9045;&#x5EF6;&#x3059;&#x308B;&#x73FE;&#x8C61;&#x3067;&#x3059;&#x3002;</p>
+<h4><span id="sar-&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x304C;&#x306A;&#x3044;&#x5834;&#x5408;&#x306F;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">sar &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x304C;&#x306A;&#x3044;&#x5834;&#x5408;&#x306F;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// CentOS</span><br><span class="line">$ yum install -y sysstat</span><br><span class="line"></span><br><span class="line">// Ubuntu</span><br><span class="line">$ apt-get install -y sysstat</span><br></pre></td></tr></tbody></table></figure>
+
+			  		
+			  		<!-- google Adsense -->
+			  		
+					
+					
+					
+					
+			    	
+					
+					<!-- google Adsense Matched content -->
+			  		
+			  	</div>
+				
+		  	</article>
+		  	
+		  	
+		  	<!-- TAGS -->
+		  	
+		  	<div class="meta-content">
+				
+				<div class="widget">
+				  	<h6 class="tag"><span class="fa fa-fw fa-tag"></span>TAGS</h6>
+				  	<div class="article-tag">
+						<ul class="article-tag-list">
+							
+					    		<li class="article-tag-list-item">
+					    			<a class="article-tag-list-link" href="/tags/Linux/">
+					    				Linux
+					    			</a>
+					    		</li>
+							
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		  	
+		  	
+		  	<!-- Categories posts -->
+		  	
+		  	
+		  	
+		  	<!-- Detailed categories  posts -->
+		  	
+		  	
+		  	
+		  	<!-- Latests -->
+		  	
+			
+		</div>
+		
+		
+		<footer id="footer">
+		
+			
+			
+			
+			
+			<div class="copyright-tool">
+				
+				
+				
+				<div class="copyright-title">
+					<span>
+					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					</span>
+				</div>
+				
+				<div class="copyright-license">
+					<aside>
+						Powered by <a href="https://hexo.io/">Hexo</a>. <a href="https://github.com/tea3/hexo-generator-amp">AMP-Theme</a> designed by <a href="https://github.com/tea3/">tea</a>.
+					</aside>
+				</div>
+			</div>
+			
+		</footer>
+
+
+  	<div id="totop"><a href="#"></a></div>
+
+
+  </body>
+</html>
