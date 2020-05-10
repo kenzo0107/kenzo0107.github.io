@@ -142,6 +142,118 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/2016/06/21/2016-06-21-ansible-vagrant-prometheus/" class="image is-8by1">
+        <img class="thumbnail" src="http://i.imgur.com/pfazhaR.png" alt="Ansible+Vagrant でシンプルなPrometheusモニタリング環境構築">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-06-20T15:00:00.000Z">2016-06-21</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/06/21/2016-06-21-ansible-vagrant-prometheus/">Ansible+Vagrant でシンプルなPrometheusモニタリング環境構築</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p><a href="https://prometheus.io/docs/introduction/getting_started/">Prometheus入門</a> にあるチュートリアルを<br>Ansibleで簡単に構築できるようにした、<br>というものです。</p>
+<p>先日2016年6月14日、<br>LINE株式会社での<a href="http://connpass.com/event/32859/">Prometheus Casual Talks #1</a>に参加し<br>ナレッジのおさらいなどしたく、<br>構築法をまとめました。</p>
+<h2><span id="prometheusとは">Prometheusとは</span></h2><p>最近話題のPull型のQuery Filtering可能で Grafana等と連携できる モニタリング/Alertツールです。</p>
+<h2><span id="構成">構成</span></h2><p><img src="http://i.imgur.com/pfazhaR.png" alt="Imgur"></p>
+<ul>
+<li>Prometheus Server × 1</li>
+<li>Prometheus Client × 2</li>
+</ul>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS 6.5</li>
+<li>Prometheus Server 0.20.0</li>
+<li>Supervisor 3.3.0</li>
+<li>Go 1.6.2</li>
+<li>Ansibl 2.1.0.0</li>
+<li>Vagrant 1.8.1</li>
+<li>MacOSX 10.11.5</li>
+</ul>
+<h2><span id="前提条件">前提条件</span></h2><p>以下ツールをインストールしておいてください。</p>
+<ul>
+<li>VirtualBox</li>
+<li>Vagrant</li>
+<li>Ansible</li>
+</ul>
+<h2><span id="使い方">使い方</span></h2><h3><span id="1-git-repository-を-clone">1. git repository を clone</span></h3><p>[<a href="https://github.com/kenzo0107/Vagrant-Prometheus]">https://github.com/kenzo0107/Vagrant-Prometheus]</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https:&#x2F;&#x2F;github.com&#x2F;kenzo0107&#x2F;Vagrant-Prometheus</span><br></pre></td></tr></table></figure>
+
+<h2><span id="2-vagrant-vm-起動">2. Vagrant VM 起動</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd Vagrant-Prometheus</span><br><span class="line">$ vagrant up</span><br></pre></td></tr></table></figure>
+
+<p>3 node running !</p>
+<ul>
+<li>1 node: Prometheus Server</li>
+<li><ul>
+<li>192.168.11.30</li>
+</ul>
+</li>
+<li>other 2 nodes: Prometheus Client Server</li>
+<li><ul>
+<li>192.168.33.31</li>
+</ul>
+</li>
+<li><ul>
+<li>192.168.33.32</li>
+</ul>
+</li>
+</ul>
+<h2><span id="3-sshconfig-追加">3. ssh.config 追加</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh-config &gt; ssh.config</span><br></pre></td></tr></table></figure>
+
+<h2><span id="4-ping-疎通試験">4. ping 疎通試験</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ansible default -m ping</span><br><span class="line"></span><br><span class="line">server | SUCCESS &#x3D;&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">client1 | SUCCESS &#x3D;&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br><span class="line">client2 | SUCCESS &#x3D;&gt; &#123;</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ok, success.</p>
+<h2><span id="5-2node-に-prometheusclient-設定">5. 2node に PrometheusClient 設定</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook set_clients_prometheus.yml</span><br></pre></td></tr></table></figure>
+
+<h2><span id="6-prometheusclient-の起動確認">6. PrometheusClient の起動確認</span></h2><p>以下PrometheusClientを起動しているサーバにアクセスし<br>起動されているか確認します。</p>
+<ul>
+<li><a href="http://192.168.11.31:8080/metrics">http://192.168.11.31:8080/metrics</a></li>
+<li><a href="http://192.168.11.32:8080/metrics">http://192.168.11.32:8080/metrics</a></li>
+</ul>
+<p>以下のように表示されれば成功です。</p>
+<img src="http://i.imgur.com/igPci2Z.png" width="400px">
+
+
+<h2><span id="7-prometheusserver-設定">7. PrometheusServer 設定</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook set_server_prometheus.yml</span><br></pre></td></tr></table></figure>
+
+<h2><span id="8-prometheusserver-確認">8. PrometheusServer 確認</span></h2><p><a href="http://192.168.33.30:9090">http://192.168.33.30:9090</a> にアクセス</p>
+<p>以下のように表示されれば成功です。</p>
+<img src="http://i.imgur.com/XDTarz3.png" width="400px">
+
+<p>是非多少なりとも一助となれば何よりです！<br>いじくり倒してみてください！</p>
+<p>以上</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/2016/06/01/2016-06-01-jenkins-short-cycles-in-the-day-of-month-field-will-behave-oddly-near-the-end-of-a-month/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160601/20160601191107.png" alt="Jenkins - Short cycles in the day-of-month field will behave oddly near the end of a month">
         </a>
@@ -934,90 +1046,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2016/03/28/2016-03-28-awk-shapes-csv/" class="image is-8by1">
-        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160328/20160328190207.png" alt="awk で CSV の特定列を整形 〜数値を文字列扱いする〜">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-03-27T15:00:00.000Z">2016-03-28</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/03/28/2016-03-28-awk-shapes-csv/">awk で CSV の特定列を整形 〜数値を文字列扱いする〜</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="概要">概要</span></h2><p>ある顧客データを抽出してレポートしたい、というときに<br>CSVファイルで “090” などと携帯電話があると ExcelでCSVファイルを開いたときに<br>“90” になってしまうということがあるかと思います。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160328/20160328190207.png" width="100%">
-</div>
-
-<p>そんなときの為に特定列のみ数値を文字列扱いにしたときの内容まとめです。</p>
-<h2><span id="excelで数値を文字列扱いするには">Excelで数値を文字列扱いするには</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;090&quot;</span><br></pre></td></tr></table></figure>
-
-<p>とあったとすると</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x3D;&quot;090&quot;</span><br></pre></td></tr></table></figure>
-
-<p>のように整形することで文字列扱いになります。</p>
-<p>例)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;デミスハサビス&quot;,&#x3D;&quot;09099999999&quot;,&quot;DeepMind&quot;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="整形してみる">整形してみる</span></h2><ul>
-<li>例）以下のような tmp.csv があるとします。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;デミスハサビス&quot;,&quot;09099999999&quot;,&quot;DeepMind&quot;</span><br><span class="line">&quot;いとうせいこう&quot;,&quot;08088888888&quot;,&quot;エムパイヤ・スネーク・ビルディング&quot;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>2つ目のカラムのみ =を左端に追加します<br>※”(ダブルクォテーション)で囲まれた値の左側に「=」を追加します。<br>※あえて分かりやすく $1, $2, $3 の項目を明示的に指定してみました。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ awk -F &#39;,&#39; &#39;&#123;print $1 &quot;,&#x3D;&quot;$2&quot;,&quot;$3&#125;&#39; tmp.csv</span><br><span class="line">&quot;デミスハサビス&quot;,&#x3D;&quot;09099999999&quot;,&quot;DeepMind&quot;</span><br><span class="line">&quot;いとうせいこう&quot;,&#x3D;&quot;08088888888&quot;,&quot;エムパイヤ・スネーク・ビルディング&quot;</span><br></pre></td></tr></table></figure>
-
-<p>上記のように 「=」 が追加されました。</p>
-<ul>
-<li>出力先を指定</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ awk -F &#39;,&#39; &#39;&#123;print $1 &quot;,&#x3D;&quot;$2&quot;,&quot;$3&#125;&#39; tmp.csv &gt; output.csv</span><br><span class="line">$ cat output.csv</span><br><span class="line">&quot;デミスハサビス&quot;,&#x3D;&quot;09099999999&quot;,&quot;DeepMind&quot;</span><br><span class="line">&quot;いとうせいこう&quot;,&#x3D;&quot;08088888888&quot;,&quot;エムパイヤ・スネーク・ビルディング&quot;</span><br></pre></td></tr></table></figure>
-
-<p>output.csv を Excelで開いてみます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160328/20160328190448.png" width="100%">
-</div>
-
-<p>できました♪</p>
-<h2><span id="おまけ">おまけ</span></h2><p>Excelを開く際、Windowsではデフォルト SJISなので文字コードがUTF8の場合、文字化けします。<br>以下CSVファイルをSJISに文字コード変換します。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nkf -sLw output.csv &gt; output_sjis.csv</span><br></pre></td></tr></table></figure>
-
-<p>以上です。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1042,7 +1070,7 @@
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/19/">19</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/20/">20</a></li>
             
         </ul>
     </nav>
@@ -1084,7 +1112,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            190
+                            191
                         </p>
                     </a>
                 </div>
@@ -1158,6 +1186,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
@@ -1225,25 +1272,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
                     <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-go-multierr/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="go.uber.org/multierr で error をまとめる">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-go-multierr/" class="title has-link-black-ter is-size-6 has-text-weight-normal">go.uber.org/multierr で error をまとめる</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1419,7 +1447,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 

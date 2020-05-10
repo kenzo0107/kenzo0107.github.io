@@ -141,6 +141,75 @@
     
 <div class="card">
     
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2019-01-09T15:00:00.000Z">2019-01-10</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2019/01/10/2019-01-10-ecs-ec2-datadog-agent-unhealthy/">ECS EC2 上で起動する Datadog Agent コンテナが unhealthy になる時の処方箋</a>
+            
+        </h1>
+        <div class="content">
+            <div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190110/20190110112818.png" width="100%">
+</div>
+
+<h2><span id="概要">概要</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line"></span><br><span class="line">CONTAINER ID        IMAGE                            COMMAND                  CREATED             STATUS                    PORTS                NAMES</span><br><span class="line">8baa0e2cff47        datadog/docker-dd-agent:latest   <span class="string">"/entrypoint.sh supe…"</span>   31 hours ago        Up 31 hours (unhealthy)   8125/udp, 8126/tcp   ecs-dd-agent-task-1-dd-agent-f6d3d5eb9febcab9c601</span><br></pre></td></tr></table></figure>
+
+<p>ある日、ECS で起動させている Datadog Agent コンテナが unhealthy になってしまう事象が発生しました。<br>その原因と対応法をまとめました。</p>
+<h2><span id="結論">結論</span></h2><p>Datadog Agent イメージを現時点の最新バージョン 6 系にすることで解決できました。</p>
+<p>Datadog サポートに問い合わせた所、<br>今回のケースでは Datadog Agent イメージのバージョンが 5 系だったことに起因していました。</p>
+<h3><span id="datadogdocker-dd-agentlatest-は-5系の最新だった">datadog/docker-dd-agent:latest は 5系の最新だった！</span></h3><p>バージョン5が最新だった時には設定手続きは以下に沿って実施していました。<br><a href="https://docs.datadoghq.com/integrations/faq/agent-5-amazon-ecs/">https://docs.datadoghq.com/integrations/faq/agent-5-amazon-ecs/</a></p>
+<p>上記手順にて登場する datadog agent の ECS での起動用タスクが以下になります。<br>ここで指定しているイメージ (datadog/docker-dd-agent:latest) が 5系でした。</p>
+<p><a href="https://docs.datadoghq.com/json/dd-agent-ecs.json">https://docs.datadoghq.com/json/dd-agent-ecs.json</a></p>
+<p><code>datadog/docker-dd-agent:latest</code> は 5系の最新だった！</p>
+<h3><span id="datadogagentlatest-が-20190110-時点最新の-6系">datadog/agent:latest が 2019.01.10 時点最新の 6系 ！</span></h3><p>現最新バージョン 6系を扱うには以下設定手続きを参照します。<br><a href="https://docs.datadoghq.com/integrations/amazon_ecs">https://docs.datadoghq.com/integrations/amazon_ecs</a></p>
+<p>手続きで変更点はタスク定義の変更くらいです。</p>
+<p><a href="https://docs.datadoghq.com/json/datadog-agent-ecs.json">https://docs.datadoghq.com/json/datadog-agent-ecs.json</a></p>
+<p>今の所、<code>datadog/agent:latest</code> が6系の最新になっています。<br>7系になった際には是非とも互換維持してほしいです。</p>
+<h2><span id="おまけ">おまけ</span></h2><h3><span id="サポートへの問い合わせ">サポートへの問い合わせ</span></h3><p>サポートに問い合わせると、 caseID という問い合わせの ID をいただけます。<br>その後、caseID を設定し、起動時のログファイル (tar.gz) を取得し、サポート宛に添付しました。</p>
+<p>ECS の管理下にある EC2 に ssh ログインし以下実行します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --rm -v /tmp:/tmp -e API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx datadog/docker-dd-agent:latest /etc/init.d/datadog-agent flare &lt;caseID&gt;</span><br><span class="line"></span><br><span class="line">2019-01-03 12:27:44,472 | ERROR | dd.collector | utils.dockerutil(dockerutil.py:148) | Failed to initialize the docker client. Docker-related features will fail. Will retry 0 time(s). Error: Error <span class="keyword">while</span> fetching server API version: (<span class="string">'Connection aborted.'</span>, error(2, <span class="string">'No such file or directory'</span>))</span><br><span class="line">...</span><br><span class="line">2019-01-03 12:27:45,807 | INFO | dd.collector | utils.flare(flare.py:161) | Saving all files to /tmp/datadog-agent-2019-01-03-12-27-44.tar.bz2</span><br><span class="line">/tmp/datadog-agent-2019-01-03-12-27-44.tar.bz2 is going to be uploaded to Datadog.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>EC2 ホスト上に <code>/tmp/datadog-agent-2019-01-03-12-27-44.tar.bz2</code> ファイルが取得できるので、それをサポート宛にメール添付しました。</p>
+<p>上記でログも含めサポートに連絡した所、API バージョンにより接続中止されている、という指摘を受け、バージョン上げて！という話になりました。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2019-01-03 12:27:44,472 | ERROR | dd.collector | utils.dockerutil(dockerutil.py:148) | Failed to initialize the docker client. Docker-related features will fail. Will retry 0 time(s). Error: Error <span class="keyword">while</span> fetching server API version: (<span class="string">'Connection aborted.'</span>, error(2, <span class="string">'No such file or directory'</span>))</span><br></pre></td></tr></table></figure>
+
+
+<p>サポートさんありがとう♪</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190110/20190110112453.png" width="100%">
+</div>
+
+<p>以上です。<br>参考になれば幸いです。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
     <div class="card-image">
         <a href="/2018/12/06/2018-12-06-boto3-assumerole-credentials-mfa/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20181206/20181206121637.png" alt="boto3 の AssumeRole をしたアカウントスイッチ credentials 利用時の MFA 突破対応">
@@ -687,61 +756,6 @@ WebCamera で撮影した 動画+音声付き を HLS 配信する際の手順�
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2018/07/30/2018-07-30-datadog_ntp_alert/" class="image is-8by1">
-        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180730/20180730133759.jpg" alt="Datadog NTP 監視でアラート鳴りまくり対応">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2018-07-29T15:00:00.000Z">2018-07-30</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2018/07/30/2018-07-30-datadog_ntp_alert/">Datadog NTP 監視でアラート鳴りまくり対応</a>
-            
-        </h1>
-        <div class="content">
-            <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>サーバ時刻の監視を Datadog で実施する際、標準時刻の参照先が異なることで<br>不要なアラートが発生する事象がありました。</p>
-<p>Datadog はデフォルトで  <code>pool.ntp.org</code> を参照しています。</p>
-<p>AWS EC2 に設定した Chrony ではデフォルトで <code>ntp.nict.jp</code> を参照する様にしていた為、ある日突然アラートがなりまくる事象がありました。</p>
-<p>この対策として、<br> Datadog と Chrony の参照先を統一して管理する様に設定しました。</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                    <a class="button is-size-7 is-light"
-                        href="/2018/07/30/2018-07-30-datadog_ntp_alert/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -766,7 +780,7 @@ WebCamera で撮影した 動画+音声付き を HLS 配信する際の手順�
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/19/">19</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/20/">20</a></li>
             
         </ul>
     </nav>
@@ -808,7 +822,7 @@ WebCamera で撮影した 動画+音声付き を HLS 配信する際の手順�
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            190
+                            191
                         </p>
                     </a>
                 </div>
@@ -882,6 +896,25 @@ WebCamera で撮影した 動画+音声付き を HLS 配信する際の手順�
         
         <article class="media">
             
+            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
@@ -949,25 +982,6 @@ WebCamera で撮影した 動画+音声付き を HLS 配信する際の手順�
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
                     <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-go-multierr/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="go.uber.org/multierr で error をまとめる">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-go-multierr/" class="title has-link-black-ter is-size-6 has-text-weight-normal">go.uber.org/multierr で error をまとめる</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1143,7 +1157,7 @@ WebCamera で撮影した 動画+音声付き を HLS 配信する際の手順�
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 

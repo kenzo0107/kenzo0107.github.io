@@ -152,6 +152,75 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/2017/04/27/2017-04-27-peco/" class="image is-8by1">
+        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170427/20170427172718.jpg" alt="peco 小技シリーズ  〜多段ssh + peco, ghq + peco + atom〜">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-04-26T15:00:00.000Z">2017-04-27</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/04/27/2017-04-27-peco/">peco 小技シリーズ  〜多段ssh + peco, ghq + peco + atom〜</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>本当に小技です。<br>が、割と使ってみると作業時間の短縮となって便利という声を頂き<br>peco 関連でよく使うものを記事にしました。</p>
+<h2><span id="peco-インストール">peco インストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS %$ brew install peco</span><br></pre></td></tr></table></figure>
+
+<h2><span id="ssh-ログインする-host-を検索して選択">ssh ログインする Host を検索して選択</span></h2><p>前提条件として <code>~/.ssh/config</code> で接続ホストを管理しています。</p>
+<script src="//gist.github.com/kenzo0107/06b3b1e202f36b70815cfe0207292a66.js"></script>
+
+<p>上記を <code>~/.bashrc</code> などに貼り付けて <code>source ~/.bashrc</code> すれば使えます♪</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">macOS %$ git clone https:&#x2F;&#x2F;gist.github.com&#x2F;kenzo0107&#x2F;06b3b1e202f36b70815cfe0207292a66</span><br><span class="line">macOS %$ cd 06b3b1e202f36b70815cfe0207292a66</span><br><span class="line">macOS %$ cat peco-sshconfig-ssh.sh &gt;&gt; ~&#x2F;.bashrc</span><br><span class="line">macOS %$ source ~&#x2F;.bashrc</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; sshc 実行！</span><br><span class="line">macOS %$ sshc</span><br></pre></td></tr></table></figure>
+
+<p>上記の様に順調に進むと候補がリストされます。<br>モザイクしかなくすいません (&gt;_&lt;)</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170427/20170427171121.png" width="100%">
+</div>
+
+<h2><span id="ghq-で管理している-repository-を検索して選択し-atom-で開く">ghq で管理している repository を検索して選択し atom で開く</span></h2><script src="//gist.github.com/kenzo0107/e460e31ae2478341cc7a39859ad7fefd.js"></script>
+
+<p>こちらも同様、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">macOS %$ git clone https:&#x2F;&#x2F;gist.github.com&#x2F;kenzo0107&#x2F;e460e31ae2478341cc7a39859ad7fefd</span><br><span class="line">macOS %$ cd e460e31ae2478341cc7a39859ad7fefd</span><br><span class="line">macOS %$ cat peco-git-atom.sh &gt;&gt; ~&#x2F;.bashrc</span><br><span class="line">macOS %$ source ~&#x2F;.bashrc</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; opg 実行！</span><br><span class="line">macOS %$ opg</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170427/20170427171728.png" width="100%">
+</div>
+
+<p>他にも様々な箇所で peco を利用させて頂いてます。<br>こんな peco の使い所あるよーという方、是非教えてください♪</p>
+<h2><span id="参照">参照</span></h2><p>zsh ですが dotfile をまとめてます。</p>
+<a href="https://github.com/kenzo0107/dotfiles" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://avatars0.githubusercontent.com/u/6197906?s=400&v=4"></div><div class="descriptions"><div class="og-title">kenzo0107/dotfiles</div><div class="og-description">dotfile setting. Contribute to kenzo0107/dotfiles development by creating an account on GitHub.</div></div></div></a>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/2017/02/03/2017-02-03-standard-instalation-golang/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170203/20170203124749.png" alt="標準的な Golang インストール方法">
         </a>
@@ -675,67 +744,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-08-11T15:00:00.000Z">2015-08-12</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/08/12/2015-08-21-go-revel-fw-hotdeploy/">Golang Revelフレームワーク ホットデプロイ方法</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="概要">概要</span></h2><p>Revel Officialサイトにあるデプロイ方法を検証しました。</p>
-<p><a href="https://revel.github.io/manual/deployment.html">Revel Deployment</a></p>
-<ol>
-<li>ローカルでアプリをビルドしサーバにコピーする</li>
-<li>サーバーで更新したコードをpullし、ビルド・起動する</li>
-<li>Heroku を利用しデプロイ管理する</li>
-</ol>
-<h2><span id="1-ローカルビルド">1. ローカルビルド</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># アプリを実行しテストする</span><br><span class="line">$ revel run import&#x2F;path&#x2F;to&#x2F;app</span><br><span class="line"></span><br><span class="line"># パッケージ化</span><br><span class="line">$ revel package import&#x2F;path&#x2F;to&#x2F;app</span><br><span class="line">Your archive is ready: app.tar.gz</span><br><span class="line"></span><br><span class="line"># 対象マシンへコピー</span><br><span class="line">$ scp app.tar.gz target:&#x2F;srv&#x2F;</span><br><span class="line"></span><br><span class="line"># ターゲットマシンで起動</span><br><span class="line">$ ssh target</span><br><span class="line">$ cd &#x2F;srv&#x2F;</span><br><span class="line">$ tar xzvf app.tar.gz</span><br><span class="line">$ bash run.sh</span><br></pre></td></tr></table></figure>
-
-<p>開発しているアーキテクチャと同じ環境へデプロイする場合、<br>もしくは go インストールを設定し、デフォルトで希望するアーキテクチャへビルドするための唯一の方法です。</p>
-<h2><span id="2-追加デプロイメント">2. 追加デプロイメント</span></h2><p>フルセットアセット付きの静的にリンクされたバイナリが巨大になる可能性があるので、<br>追加デプロイをサポートしています。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># アプリを一時ディレクトリにビルド</span><br><span class="line">$ revel build import&#x2F;path&#x2F;to&#x2F;app &#x2F;tmp&#x2F;app</span><br><span class="line"></span><br><span class="line"># サーバのhomeディレクトリにその一時ディレクトリにrsync</span><br><span class="line">$ rsync -vaz --rsh&#x3D;&quot;ssh&quot; &#x2F;tmp&#x2F;app server</span><br><span class="line"></span><br><span class="line"># サーバーに接続しアプリを再起動</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>rsyncはsshでのコピーをサポートしているので、以下のように複雑にはなりますがデプロイ可能です。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># カスタム証明書、ログイン名、対象ディレクトリを指定しrsync</span><br><span class="line">$ rsync -vaz --rsh&#x3D;&quot;ssh -i .ssh&#x2F;go.pem&quot; &#x2F;tmp&#x2F;myapp2 ubuntu@ec2-50-16-80-4.compute-1.amazonaws.com:~&#x2F;rsync</span><br></pre></td></tr></table></figure>
-
-<h2><span id="3-サーバでビルド">3. サーバでビルド</span></h2><p>この方法はバージョンコントロールシステムに依存します。<br>Goをインストールしているサーバーが必要です。<br>その代わり、クロスコンパイルを回避することができます。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ssh server</span><br><span class="line">... install go ...</span><br><span class="line">... configure your app repository ...</span><br><span class="line"></span><br><span class="line"># appディレクトリに移動し pullしサーバー起動する</span><br><span class="line">$ cd gocode&#x2F;src&#x2F;import&#x2F;path&#x2F;to&#x2F;app</span><br><span class="line">$ git pull</span><br><span class="line">$ revel run import&#x2F;path&#x2F;to&#x2F;app prod</span><br></pre></td></tr></table></figure>
-
-<h2><span id="総評">総評</span></h2><p>現在社内では、<code>1. ローカルビルド</code> のデプロイ方法を選択しています。</p>
-<p><code>2. 追加デプロイメント</code> は、再起動時の瞬断が懸念されます。<br>大規模アクセスを捌く目的で利用するGoには向いていないと思います。</p>
-<p><code>3. サーバでビルド</code> は、運用方法にもよりますが、<br>本番環境でコンフリクトが起きてしまったらコンパイルもストップしてしまう懸念があります。</p>
-<p><code>1. ローカルビルド</code>方法をJenkinsで管理して運用しており<br>現状特に問題ないです。</p>
-<p>Jenkinsの設定等まとめてから公開したいと思います。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -743,7 +751,7 @@
         <div class="pagination-previous">
             <a class="is-flex-grow has-text-black-ter" href="/tags/Go/">前</a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
+        <div class="pagination-next">
             <a class="is-flex-grow has-text-black-ter" href="/tags/Go/page/3/">次</a>
         </div>
         <ul class="pagination-list is-hidden-mobile">
@@ -751,6 +759,8 @@
             <li><a class="pagination-link has-text-black-ter" href="/tags/Go/">1</a></li>
             
             <li><a class="pagination-link is-current" href="/tags/Go/page/2/">2</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/tags/Go/page/3/">3</a></li>
             
         </ul>
     </nav>
@@ -792,7 +802,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            190
+                            191
                         </p>
                     </a>
                 </div>
@@ -866,6 +876,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
@@ -933,25 +962,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
                     <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-go-multierr/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="go.uber.org/multierr で error をまとめる">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-go-multierr/" class="title has-link-black-ter is-size-6 has-text-weight-normal">go.uber.org/multierr で error をまとめる</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1127,7 +1137,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 

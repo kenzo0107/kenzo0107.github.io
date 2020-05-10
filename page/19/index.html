@@ -146,6 +146,69 @@
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2015-08-19T15:00:00.000Z">2015-08-20</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/08/20/2015-08-20-install-nginx-on-centos7/">CentOS7 に Nginx インストール</a>
+            
+        </h1>
+        <div class="content">
+            <p>Kibana構築用に書いときました。</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS7</li>
+</ul>
+<h2><span id="nginxインストール">Nginxインストール</span></h2><ul>
+<li>Nginx用リポジトリ作成</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim &#x2F;etc&#x2F;yum.repos.d&#x2F;nginx.repo</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>以下追記</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[nginx]</span><br><span class="line">name&#x3D;nginx repo</span><br><span class="line">baseurl&#x3D;http:&#x2F;&#x2F;nginx.org&#x2F;packages&#x2F;mainline&#x2F;centos&#x2F;7&#x2F;$basearch&#x2F;</span><br><span class="line">gpgcheck&#x3D;0</span><br><span class="line">enabled&#x3D;1</span><br></pre></td></tr></table></figure>
+
+<h4><span id="nginx-モジュールインストール">Nginx モジュールインストール</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install --enablerepo&#x3D;nginx nginx</span><br></pre></td></tr></table></figure>
+
+<h5><span id="サービス登録">サービス登録</span></h5><p>サーバ起動時・再起動時にNginxが起動するようにします。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl disable httpd</span><br><span class="line">$ sudo systemctl enable nginx</span><br><span class="line">$ sudo systemctl start nginx</span><br><span class="line">$ systemctl status nginx</span><br><span class="line"></span><br><span class="line">nginx.service - nginx - high performance web server</span><br><span class="line">   Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;nginx.service; enabled)</span><br><span class="line">   Active: active (running) since Mon 2015-08-03 06:07:44 UTC; 2s ago</span><br><span class="line">     Docs: http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;docs&#x2F;</span><br><span class="line">  Process: 12642 ExecStart&#x3D;&#x2F;usr&#x2F;sbin&#x2F;nginx -c &#x2F;etc&#x2F;nginx&#x2F;nginx.conf (code&#x3D;exited, status&#x3D;0&#x2F;SUCCESS)</span><br><span class="line">  Process: 12641 ExecStartPre&#x3D;&#x2F;usr&#x2F;sbin&#x2F;nginx -t -c &#x2F;etc&#x2F;nginx&#x2F;nginx.conf (code&#x3D;exited, status&#x3D;0&#x2F;SUCCESS)</span><br><span class="line"> Main PID: 12645 (nginx)</span><br><span class="line">   CGroup: &#x2F;system.slice&#x2F;nginx.service</span><br><span class="line">           ├─12645 nginx: master process &#x2F;usr&#x2F;sbin&#x2F;nginx -c &#x2F;etc&#x2F;nginx&#x2F;nginx....</span><br><span class="line">           └─12646 nginx: worker process</span><br><span class="line"></span><br><span class="line">Aug 03 06:07:44 ip-172-31-19-253 systemd[1]: Starting nginx - high performan....</span><br><span class="line">Aug 03 06:07:44 ip-172-31-19-253 nginx[12641]: nginx: the configuration file...k</span><br><span class="line">Aug 03 06:07:44 ip-172-31-19-253 nginx[12641]: nginx: configuration file &#x2F;et...l</span><br><span class="line">Aug 03 06:07:44 ip-172-31-19-253 systemd[1]: Failed to read PID from file &#x2F;r...t</span><br><span class="line">Aug 03 06:07:44 ip-172-31-19-253 systemd[1]: Started nginx - high performanc....</span><br><span class="line">Hint: Some lines were ellipsized, use -l to show in full.</span><br></pre></td></tr></table></figure>
+
+<h2><span id="アクセス確認">アクセス確認</span></h2><p>http://&lt;IPアドレス or ドメイン&gt;</p>
+<p>以下のように表示されればOK</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150820/20150820232103.png" width="100%">
+</div>
+
+<p>以上です。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2015-08-18T15:00:00.000Z">2015-08-19</time>
                 
                 
@@ -781,168 +844,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2014/05/30/2014-05-30-vagrant-chef/" class="image is-8by1">
-        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140530/20140530224409.png" alt="Vagrant + Chef ⇒ LAMP環境構築">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-05-29T15:00:00.000Z">2014-05-30</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/05/30/2014-05-30-vagrant-chef/">Vagrant + Chef ⇒ LAMP環境構築</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="目的">目的</span></h2><p>Vagrant と Chef を利用して LAMP環境をローカルの仮想環境で実現する</p>
-<h2><span id="経緯">経緯</span></h2><p>同一サーバ上で作業している場合に<br><span style="color: #e2241a">MySQLのバージョンアップしてパフォーマンステストしたりしたいなぁ</span>、<br>でも、他のみんなに迷惑かかっちゃうよ or  サーバ買ってもらえないし、<br>というときなんかに<br>ローカル環境で試せるね</p>
-<p>ってことで導入しました。</p>
-<h2><span id="環境">環境</span></h2><ul>
-<li>MacOSX Marvericks</li>
-<li>Vagrant</li>
-<li>VirtualBox</li>
-</ul>
-<h2><span id="前提">前提</span></h2><p>以下がインストールされていること</p>
-<ul>
-<li>Vagrant</li>
-<li>VirtualBox</li>
-<li>Chef</li>
-<li>knife-solo</li>
-</ul>
-<p>↑ 最下の「あとがき」にあるドットインストールで導入手順を参考にしました。</p>
-<h2><span id="1-knife-solo初期化">1. knife-solo初期化</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife configure</span><br></pre></td></tr></table></figure>
-<p>色々尋ねられますが、基本、[Enter]連打で問題ありません。</p>
-<h2><span id="2-box追加">2. BOX追加</span></h2><p>BOXとは、<b>仮想マシン起動の際にベースとなるイメージファイル</b>です。</p>
-<p><b>centos64</b> という名前でboxを追加します。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant box add centos64 http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-i386-v20131103.box</span><br></pre></td></tr></table></figure>
-
-
-<p>※利用しているサーバ環境と合わせたい場合は、<br>お使いのサーバにログインして以下実行で環境情報を調べるのが良いでしょう。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ uname -a</span><br></pre></td></tr></table></figure>
-
-<p>boxは以下からURLを選べます。<br><a href="http://www.vagrantbox.es/">http://www.vagrantbox.es/</a></p>
-<h2><span id="3-仮想環境-初期化">3. 仮想環境 初期化</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir [vagrant用ディレクトリ]</span><br><span class="line">$ <span class="built_in">cd</span>  [vagrant用ディレクトリ]</span><br><span class="line">$ vagrant init centos64</span><br></pre></td></tr></table></figure>
-
-<p>成功すると<b>Vagrantfile</b>ができているのがわかります。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">$ Vagrantfile</span><br></pre></td></tr></table></figure>
-
-
-<h2><span id="4-vagrantfile修正">4. Vagrantfile修正</span></h2><p>private networkの設定をして<br>ローカル環境からアクセス出来る様にします。</p>
-<p>MacOS → VirtualBox<br>へのアクセスです。</p>
-<p>以下のようにコメントアウトを外すのみ！</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#config.vm.network :private_network, ip: "192.168.33.10"</span></span><br><span class="line">config.vm.network :private_network, ip: <span class="string">"192.168.33.10"</span></span><br></pre></td></tr></table></figure>
-
-
-<h2><span id="5-仮想環境-起動">5. 仮想環境 起動</span></h2><p>Vagrantfileのあるパスで以下実行</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant up</span><br></pre></td></tr></table></figure>
-
-<p>以下実行で「running(virtualbox)」を実行すると、起動中であることを確認できる。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant status</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Current machine states:</span><br><span class="line"></span><br><span class="line">default                   running (virtualbox)</span><br><span class="line"></span><br><span class="line">The VM is running. To stop this VM, you can run `vagrant halt` to</span><br><span class="line">shut it down forcefully, or you can run `vagrant <span class="built_in">suspend</span>` to simply</span><br><span class="line"><span class="built_in">suspend</span> the virtual machine. In either <span class="keyword">case</span>, to restart it again,</span><br><span class="line">simply run `vagrant up`.</span><br></pre></td></tr></table></figure>
-
-
-<p>以下実行でログイン</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh</span><br></pre></td></tr></table></figure>
-
-<p>ログインした後、ログアウトしたい場合に以下実行</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="6-sshエイリアス作成">6. sshエイリアス作成</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh-config --host [sshエイリアス] &gt;&gt; ~/.ssh/config</span><br></pre></td></tr></table></figure>
-
-<p>以下実行でアクセスできる。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh [sshエイリアス]</span><br></pre></td></tr></table></figure>
-
-<p>また、以下実行でsshのconfigに書き込まれていることを確認できる。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/.ssh/config</span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="7-chefリポジトリ作成">7. Chefリポジトリ作成</span></h2><p>以下のような構成が管理しやすいかなと思いますので、<br>以下のように作ります。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|</span><br><span class="line">+---  [vagrant用ディレクトリ]</span><br><span class="line">|</span><br><span class="line">+---  [chef-repo]</span><br></pre></td></tr></table></figure>
-
-<p>[vagrant用ディレクトリ]の１つ上の階層に移動しておいて<br>以下実行</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife solo init [Chefのリポジトリ名]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="8-仮想マシンをchef対応させる">8. 仮想マシンをchef対応させる</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> [Chefのリポジトリ名]</span><br><span class="line">$ knife solo prepare [sshエイリアス]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="9-cookbook作成">9. cookbook作成</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife cookbook create [cookbook名] -o site_cookbooks/</span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="10-cookbookに構築する環境の設定記述">10.  cookbookに構築する環境の設定記述</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chefのリポジトリ名]/[cookbook名]/recipe/default.rb</span><br></pre></td></tr></table></figure>
-
-<h2><span id="11-実行recipe指定">11. 実行recipe指定</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chefのリポジトリ名]/nodes/[sshエイリアス名].json</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"run_list"</span>: [</span><br><span class="line">          <span class="string">"recipe[[cookbook名]]"</span></span><br><span class="line">     ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-<h2><span id="12-テンプレートを作成">12. テンプレートを作成</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chefリポジトリ名]\[cookbookの名前]\template\default\index.html.erb</span><br></pre></td></tr></table></figure>
-
-<p>index.html.erbの中身は自由に編集してください。</p>
-<p>例として</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, World<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="13-cookbookをvagrant仮想環境へ反映">13. cookbookをvagrant仮想環境へ反映</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife solo cook [sshエイリアス名]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="13-設定した仮想環境のwebサーバへアクセスする">13. 設定した仮想環境のWebサーバへアクセスする</span></h2><p>ブラウザで <a href="http://192.168.33.10">http://192.168.33.10</a> へアクセス</p>
-<p>ブラウザに以下が表示されることを確認！</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, World</span><br></pre></td></tr></table></figure>
-
-
-<p>また、仮想環境にアクセスすると以下ファイルができていることを確認できるので<br>試してみてください。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh</span><br><span class="line">$ <span class="built_in">cd</span> /var/www/html/</span><br><span class="line">$ ls</span><br><span class="line"></span><br><span class="line">index.html</span><br></pre></td></tr></table></figure>
-
-
-
-
-<h2><span id="あとがき">あとがき</span></h2><p>ドットインストールで以下さらっておくととっつきやすいです。</p>
-<ul>
-<li><a href="http://dotinstall.com/lessons/basic_vagrant">essons/basic_vagrant</a></li>
-<li><a href="http://dotinstall.com/lessons/basic_chef">lessons/basic_chef</a></li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -950,7 +851,7 @@
         <div class="pagination-previous">
             <a class="is-flex-grow has-text-black-ter" href="/page/18/">前</a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
+        <div class="pagination-next">
             <a class="is-flex-grow has-text-black-ter" href="/page/20/">次</a>
         </div>
         <ul class="pagination-list is-hidden-mobile">
@@ -962,6 +863,8 @@
             <li><a class="pagination-link has-text-black-ter" href="/page/18/">18</a></li>
             
             <li><a class="pagination-link is-current" href="/page/19/">19</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/20/">20</a></li>
             
         </ul>
     </nav>
@@ -1003,7 +906,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            190
+                            191
                         </p>
                     </a>
                 </div>
@@ -1077,6 +980,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
@@ -1144,25 +1066,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
                     <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-go-multierr/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="go.uber.org/multierr で error をまとめる">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-go-multierr/" class="title has-link-black-ter is-size-6 has-text-weight-normal">go.uber.org/multierr で error をまとめる</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1338,7 +1241,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 

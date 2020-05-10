@@ -142,6 +142,212 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/2017/10/02/2017-10-02-elasticsearch-service-version-up/" class="image is-8by1">
+        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170924/20170924222936.png" alt="AWS Elasticsearch Service バージョンアップ 2.2 → 5.5">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-01T15:00:00.000Z">2017-10-02</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/02/2017-10-02-elasticsearch-service-version-up/">AWS Elasticsearch Service バージョンアップ 2.2 → 5.5</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>AWS Elasticsearch Service (ES) 2.3 → 5.5 へバージョンアップを実施に際して<br>以下記事をまとめました。</p>
+<h2><span id="大まかな流れ">大まかな流れ</span></h2><ol>
+<li>ESバージョン2.3のドメインからSnapshot取得</li>
+<li>ESバージョン5.5のドメイン作成</li>
+<li>アプリの fluentd の向け先をESバージョン5.5へ変更</li>
+<li>ESバージョン5.5のドメインにデータリストア</li>
+<li>ESバージョン2.3のドメイン削除</li>
+</ol>
+<h2><span id="現状バージョン確認">現状バージョン確認</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span> : <span class="string">"Jackdaw"</span>,</span><br><span class="line">  <span class="string">"cluster_name"</span> : <span class="string">"&lt;Account ID&gt;:xxxxxxxxxx"</span>,</span><br><span class="line">  <span class="string">"version"</span> : &#123;</span><br><span class="line">    <span class="string">"number"</span> : <span class="string">"2.3.2"</span>,</span><br><span class="line">    <span class="string">"build_hash"</span> : <span class="string">"72aa8010df1a4fc849da359c9c58acba6c4d9518"</span>,</span><br><span class="line">    <span class="string">"build_timestamp"</span> : <span class="string">"2016-11-14T15:59:50Z"</span>,</span><br><span class="line">    <span class="string">"build_snapshot"</span> : <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"lucene_version"</span> : <span class="string">"5.5.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"tagline"</span> : <span class="string">"You Know, for Search"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="その他-aws-console-のクラスターの設定確認">その他、AWS console のクラスターの設定確認</span></h3><p>その他クラスターへ設定している情報をメモ</p>
+<ul>
+<li>インスタンスタイプ</li>
+<li>アクセスポリシーの確認</li>
+</ul>
+<h1><span id="aws-elasticsearch-service-スナップショットを-s3-で管理する">AWS Elasticsearch Service スナップショットを S3 で管理する</span></h1><h2><span id="iam-role-作成">IAM role 作成</span></h2><ul>
+<li>ec2 タイプで作成</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170924/20170924221853.png" width="100%">
+</div>
+
+<ul>
+<li>アクセス権限は特に設定せず 「次のステップ」ボタンクリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925113614.png" width="100%">
+</div>
+
+
+<ul>
+<li>ロール名を <b><span style="color: #1464b3">es-index-backups</span></b> とし作成</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925113908.png" width="100%">
+</div>
+
+<p>ロールARN arn:aws:iam::<account id>:role/es-index-backups で作成されていることが確認できる</account></p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925114402.png" width="100%">
+</div>
+
+<ul>
+<li>信頼関係の編集</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925114635.png" width="100%">
+</div>
+
+<p>Service を es.amazonaws.com に編集</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"Version"</span>: <span class="string">"2012-10-17"</span>,</span><br><span class="line">  <span class="string">"Statement"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"Sid"</span>: <span class="string">""</span>,</span><br><span class="line">      <span class="string">"Effect"</span>: <span class="string">"Allow"</span>,</span><br><span class="line">      <span class="string">"Principal"</span>: &#123;</span><br><span class="line">        <span class="string">"Service"</span>: <span class="string">"es.amazonaws.com"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">"Action"</span>: <span class="string">"sts:AssumeRole"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="iam-user-作成">IAM User 作成</span></h2><ul>
+<li>ユーザ &gt; ユーザ追加 選択</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925114822.png" width="100%">
+</div>
+
+<br>
+<br>
+
+<ul>
+<li>ユーザ名 <code>es-index-backup-user</code> とし プログラムによるアクセスにチェックを入れて <code>次のステップ</code> クリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925115200.png" width="100%">
+</div>
+
+<br>
+<br>
+
+<ul>
+<li>特にポリシーをアタッチせず <code>次のステップ</code> クリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925115357.png" width="100%">
+</div>
+
+<ul>
+<li><code>es-index-backup-user</code> を作成し独自ポリシーで先ほど作成した role へのアクセス許可設定をアタッチします。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"Version"</span>: <span class="string">"2012-10-17"</span>,</span><br><span class="line">    <span class="string">"Statement"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"Effect"</span>: <span class="string">"Allow"</span>,</span><br><span class="line">            <span class="string">"Action"</span>: [</span><br><span class="line">                <span class="string">"iam:PassRole"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">"Resource"</span>: <span class="string">"arn:aws:iam::&lt;Account ID&gt;:role/es-index-backups"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ul>
+<li>発行されたアクセスキー、シークレットアクセスキーをメモしておきます。</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925120635.png" width="100%">
+</div>
+
+
+<h2><span id="s3-バケット作成">S3 バケット作成</span></h2><p>S3 &gt; <code>バケットを作成する</code> でバケット作成してください。</p>
+<h2><span id="elasticsearch-にてスナップショットリポジトリ作成">Elasticsearch にてスナップショットリポジトリ作成</span></h2><p>スナップショットを管理するリポジトリを Elasticsearch に作成する必要があります。</p>
+<p>Elasticsearch へのアクセス可能なサーバにて以下スクリプト実行します。</p>
+<ul>
+<li>register_es_repository.py</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> boto.connection <span class="keyword">import</span> AWSAuthConnection</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ESConnection</span><span class="params">(AWSAuthConnection)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, region, **kwargs)</span>:</span></span><br><span class="line">        super(ESConnection, self).__init__(**kwargs)</span><br><span class="line">        self._set_auth_region_name(region)</span><br><span class="line">        self._set_auth_service_name(<span class="string">"es"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_required_auth_capability</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> [<span class="string">'hmac-v4'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    client = ESConnection(</span><br><span class="line">            region=<span class="string">'ap-northeast-1'</span>,</span><br><span class="line">            host=<span class="string">'&lt;Elasticsearch 2.3 Endpoint Domain&gt;'</span>,</span><br><span class="line">            aws_access_key_id=<span class="string">'&lt;ACCESS KEY ID&gt;'</span>,</span><br><span class="line">            aws_secret_access_key=<span class="string">'&lt;SECRET ACCESS KEY&gt;'</span>, is_secure=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    resp = client.make_request(</span><br><span class="line">        method=<span class="string">'POST'</span>,</span><br><span class="line">        path=<span class="string">'/_snapshot/index-backups'</span>,</span><br><span class="line">        data=<span class="string">'&#123;"type": "s3","settings": &#123; "bucket": "&lt;bucket name&gt;","region": "ap-northeast-1","role_arn": "arn:aws:iam::&lt;Account ID&gt;:role/es-index-backups"&#125;&#125;'</span></span><br><span class="line">    )</span><br><span class="line">    body = resp.read()</span><br><span class="line">    <span class="keyword">print</span> body</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x register_es_repository.py</span><br><span class="line"></span><br><span class="line">$ python register_es_repository.py</span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"acknowledged"</span>:<span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>リポジトリ登録完了しました。</p>
+<h2><span id="snapshot-取得">Snapshot 取得</span></h2><p>snapshot 名を <code>20170926</code> とします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XPUT <span class="string">"https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;/_snapshot/index-backups/20170926"</span></span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"accepted"</span>:<span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="snapshot-一覧">Snapshot 一覧</span></h2><p><code>20170926</code> という snapshot 名で取得したことが確認できます。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ curl -s -XGET <span class="string">"https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;/_snapshot/index-backups/_all"</span> | jq .</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"snapshots"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"snapshot"</span>: <span class="string">"20170926"</span>,</span><br><span class="line">      <span class="string">"version_id"</span>: 2030299,</span><br><span class="line">      <span class="string">"version"</span>: <span class="string">"2.3.2"</span>,</span><br><span class="line">      <span class="string">"indices"</span>: [</span><br><span class="line">        <span class="string">"nginx-access-2017.09.09"</span>,</span><br><span class="line">        <span class="string">"nginx-access-2017.09.07"</span>,</span><br><span class="line">        <span class="string">"nginx-access-2017.09.08"</span>,</span><br><span class="line">        <span class="string">"nginx-error-2017.08.24"</span>,</span><br><span class="line">        <span class="string">"nginx-error-2017.08.23"</span>,</span><br><span class="line">        <span class="string">".kibana-4"</span>,</span><br><span class="line">...</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"state"</span>: <span class="string">"IN_PROGRESS"</span>,</span><br><span class="line">      <span class="string">"start_time"</span>: <span class="string">"2017-09-26T03:58:51.040Z"</span>,</span><br><span class="line">      <span class="string">"start_time_in_millis"</span>: 1506398331040,</span><br><span class="line">      <span class="string">"failures"</span>: [],</span><br><span class="line">      <span class="string">"shards"</span>: &#123;</span><br><span class="line">        <span class="string">"total"</span>: 0,</span><br><span class="line">        <span class="string">"failed"</span>: 0,</span><br><span class="line">        <span class="string">"successful"</span>: 0</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="snapshot-削除">Snapshot 削除</span></h2><p>スナップショット <code>20170926</code> を削除する場合、DELETE メソッドを実行します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XDELETE https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;/_snapshot/index-backups/20170926</span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"acknowledged"</span>:<span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="s3-確認">S3 確認</span></h2><p>以下が作成されているのがわかります。</p>
+<ul>
+<li>indices/*</li>
+<li>meta-*</li>
+<li>snap-*</li>
+</ul>
+<p>はじめ meta-* が作成できたら完了なのかなと思いきや<br>snap-* も作られるまで待つ必要がありました。</p>
+<ul>
+<li>CLI 上でスナップショット完了確認した方が確実です。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ curl -s -GET https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;/_snapshot/index-backups/20170926</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">      <span class="string">"state"</span>: <span class="string">"SUCCESS"</span>,</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2><span id="elasticsearch-55-service-新規ドメイン作成">Elasticsearch 5.5 Service 新規ドメイン作成</span></h2><p>Elasticsearch 2.3 の設定に倣って作成します。</p>
+<h2><span id="リポジトリ作成">リポジトリ作成</span></h2><ul>
+<li>register_es55_repository.py</li>
+</ul>
+<p>register_es_repository.py の host 部分を新規ドメインに修正します。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> boto.connection <span class="keyword">import</span> AWSAuthConnection</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ESConnection</span><span class="params">(AWSAuthConnection)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, region, **kwargs)</span>:</span></span><br><span class="line">        super(ESConnection, self).__init__(**kwargs)</span><br><span class="line">        self._set_auth_region_name(region)</span><br><span class="line">        self._set_auth_service_name(<span class="string">"es"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_required_auth_capability</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> [<span class="string">'hmac-v4'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    client = ESConnection(</span><br><span class="line">            region=<span class="string">'ap-northeast-1'</span>,</span><br><span class="line">            host=<span class="string">'&lt;Elasticsearch 5.5 Endpoint Domain&gt;'</span>,</span><br><span class="line">            aws_access_key_id=<span class="string">'&lt;ACCESS KEY ID&gt;'</span>,</span><br><span class="line">            aws_secret_access_key=<span class="string">'&lt;SECRET ACCESS KEY&gt;'</span>, is_secure=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Registering Snapshot Repository'</span></span><br><span class="line">    resp = client.make_request(</span><br><span class="line">        method=<span class="string">'POST'</span>,</span><br><span class="line">        path=<span class="string">'/_snapshot/index-backups'</span>,</span><br><span class="line">        data=<span class="string">'&#123;"type": "s3","settings": &#123; "bucket": "&lt;bucket name&gt;","region": "ap-northeast-1","role_arn": "arn:aws:iam::&lt;Account ID&gt;:role/es-index-backups"&#125;&#125;'</span></span><br><span class="line">    )</span><br><span class="line">    body = resp.read()</span><br><span class="line">    <span class="keyword">print</span> body</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x register_es55_repository.py</span><br><span class="line"></span><br><span class="line">$ python register_es55_repository.py</span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"acknowledged"</span>:<span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="スナップショットからリストア">スナップショットからリストア</span></h2><p><code>20170926</code> のスナップショットをリストアします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XPOST <span class="string">"https://&lt;Elasticsearch 5.5 Endpoint Domain&gt;/_snapshot/index-backups/20170926/_restore"</span></span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"accepted"</span>: <span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="リストア確認">リストア確認</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XGET <span class="string">"https://&lt;Elasticsearch 5.5 Endpoint Domain&gt;/_cat/indices"</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="スナップショットに失敗するケース">スナップショットに失敗するケース</span></h2><ul>
+<li>.kibana index が既に存在しており、リストアできない。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"error"</span>:&#123;</span><br><span class="line">        <span class="string">"root_cause"</span>:[</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"type"</span>:<span class="string">"snapshot_restore_exception"</span>,</span><br><span class="line">                <span class="string">"reason"</span>:<span class="string">"[index-backups:20170926/Hc4rLIoARCWqpyJXeP7edw] cannot restore index [.kibana] because it's open"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"type"</span>:<span class="string">"snapshot_restore_exception"</span>,</span><br><span class="line">        <span class="string">"reason"</span>:<span class="string">"[index-backups:20170926/Hc4rLIoARCWqpyJXeP7edw] cannot restore index [.kibana] because it's open"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"status"</span>:<span class="number">500</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="対応策">対応策</span></h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST https://&lt;Elasticsearch 5.5 Endpoint Domain&gt;/_snapshot/index-backups/20170926/_restore -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">	"indices": "nginx-*"</span></span><br><span class="line"><span class="string">&#125;'</span> | jq .</span><br></pre></td></tr></table></figure>
+
+<p><code>indices</code> を用い、スナップショット内のインデックスの中からマッチする正規表現のみをリストアできます。</p>
+<p>自身ではこの様な解決法を実施し回避できました。<br>その他良い方法があれば御指南いただけますと幸いです。</p>
+<h2><span id="ちなみに">ちなみに</span></h2><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171002/20171002144856.png" width="100%">
+</div>
+
+<p>Terraform で ES 2.2 → 5.5 バージョンアップを実施した所<br>1時間以上経過してようやくアップデートが完了しました。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aws_elasticsearch_domain.elasticsearch: Still destroying... (ID: arn:aws:es:ap-northeast-1:xxxxxxxxxxxx:domain&#x2F;***, 59m11s elapsed)</span><br><span class="line">aws_elasticsearch_domain.elasticsearch: Still destroying... (ID: arn:aws:es:ap-northeast-1:xxxxxxxxxxxx:domain&#x2F;***, 59m21s elapsed)</span><br><span class="line">aws_elasticsearch_domain.elasticsearch: Still destroying... (ID: arn:aws:es:ap-northeast-1:xxxxxxxxxxxx:domain&#x2F;***, 59m31s elapsed)</span><br><span class="line">aws_elasticsearch_domain.elasticsearch: Destruction complete after 59m41s</span><br></pre></td></tr></table></figure>
+
+<p>これは辛い (&gt;_&lt;)</p>
+<p>Terraform で管理している場合、<br>スナップショットを取得したら aws console 上でドメイン削除した方が早い。</p>
+<p>ブルーグリーン的に ES 5.5 作成して ES 2.2 から乗り換えて<br>しばらく運用して問題なければ ES 2.2 を削除する方法が一番確実だなと思いました。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/2017/09/13/2017-09-13-docker-compose-rails5-nginx-mysql-on-vagrant/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170708/20170708204516.png" alt="docker-comopse で Rails 5 (Puma) + Nginx + Mysql 構築 on Vagrant(Ubuntu)">
         </a>
@@ -1041,118 +1247,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2017/06/13/2017-06-13-update-apache-php/" class="image is-8by1">
-        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170613/20170613223736.jpg" alt="Apache 2.2.15 → 2.4.25   PHP 5.6 → 7 へアップデート on CentOS 6.9">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-06-12T15:00:00.000Z">2017-06-13</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/06/13/2017-06-13-update-apache-php/">Apache 2.2.15 → 2.4.25   PHP 5.6 → 7 へアップデート on CentOS 6.9</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="概要">概要</span></h2><p>PHP5 利用していますか？</p>
-<p>PHP5.6 のセキュリティサポート期限は <code>31 Dec 2018</code> 迄<br>※ <a href="http://php.net/supported-versions.php">Supported Versions</a> 参考</p>
-<p>Apache/PHP アップデート、腰が重かったのですが<br>個人契約サーバなら誰にも迷惑かけないしいいか♪</p>
-<p>ということで<br>放置気味にされた Apache2.2.15/PHP5.6 の個人のサーバを<br>アップデートすべく実施した内容をまとめました。</p>
-<h2><span id="三行まとめ">三行まとめ</span></h2><ul>
-<li>SoftwareCollection を利用し現存Apache/PHPを残したまま、アップデート版を共存させ切り替え。のち古い Apache/PHP 削除</li>
-<li>必要モジュール (MySQLi, PHPRedis)インストール</li>
-<li>PHP 7 で廃止された PHP5.6 機能やシンタックスを修正</li>
-</ul>
-<h2><span id="softwarecollection-とは">SoftwareCollection とは？</span></h2><div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170613/20170613224451.png" width="100%">
-</div>
-
-
-<p><a href="https://www.softwarecollections.org/en/">公式サイト</a> によると<br>以下の様に説明されています。</p>
-<ul>
-<li><p>英語</p>
-<blockquote>
-<p>Software Collections give you the power to build, install, and use multiple versions of software on the same system, without affecting system-wide installed packages.</p>
-</blockquote>
-</li>
-<li><p>日本語</p>
-<blockquote>
-<p>ソフトウェアコレクションは、システム全体でインストールされたパッケージに影響を与えることなく、同じシステム上に複数のバージョンのソフトウェアを構築、インストール、使用する能力を提供します。</p>
-</blockquote>
-</li>
-</ul>
-<p>同じシステム上に複数バージョンのソフトウェアをインストールできる様になる、<br>ということです。</p>
-<h2><span id="softwarecollection-インストール">SoftwareCollection インストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install centos-release-scl</span><br></pre></td></tr></table></figure>
-
-<h2><span id="httpd24-関連のモジュールインストール">httpd24 関連のモジュールインストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --enable rhel-server-rhscl-6-rpms</span><br><span class="line">$ sudo yum install httpd24-httpd httpd24-httpd-devel httpd24-mod_proxy_html httpd24-mod_session httpd24-mod_ssl</span><br><span class="line">$ sudo scl enable httpd24 bash</span><br><span class="line">$ sudo service httpd graceful</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ httpd -v</span><br><span class="line">Server version: Apache&#x2F;2.4.25 (Red Hat)</span><br><span class="line">Server built:   Apr 12 2017 06:35:50</span><br></pre></td></tr></table></figure>
-
-<h2><span id="rhscl-リポジトリ利用可設定">RHSCL リポジトリ利用可設定</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum-config-manager --enable rhel-server-rhscl-7-rpms</span><br></pre></td></tr></table></figure>
-
-<h2><span id="php7-関連モジュールをインストール">php7 関連モジュールをインストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># yum install -y scl-utils</span><br><span class="line"># yum install -y https:&#x2F;&#x2F;dl.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;epel-release-latest-7.noarch.rpm</span><br><span class="line"># yum install -y http:&#x2F;&#x2F;rpms.remirepo.net&#x2F;enterprise&#x2F;remi-release-7.rpm</span><br><span class="line"># yum install -y php70</span><br><span class="line"># yum install -y php70-php-mysqlnd</span><br><span class="line"># yum install -y php70-php-curl</span><br><span class="line"># yum install -y php70-php-simplexml</span><br><span class="line"># yum install -y php70-php-devel php70-php-gd php70-php-json php70-php-mcrypt php70-php-mbstring php70-php-opcache php70-php-pear php70-php-pecl-apcu php70-php-pecl-geoip php70-php-pecl-imagick php70-php-pecl-json-post php70-php-pecl-memcache php70-php-pecl-xmldiff php70-php-pecl-zip php70-php-pspell php70-php-soap php70-php-tidy php70-php-xml php70-php-xmlrpc</span><br></pre></td></tr></table></figure>
-
-<h2><span id="mysqli-インストール">mysqli インストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum --enablerepo&#x3D;remi-php70 install php-mysqli</span><br></pre></td></tr></table></figure>
-
-<h2><span id="php7-用-phpredis-インストール">PHP7 用 phpredis インストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># cd &#x2F;usr&#x2F;local&#x2F;src</span><br><span class="line"># git clone https:&#x2F;&#x2F;github.com&#x2F;phpredis&#x2F;phpredis.git</span><br><span class="line"># cd phpredis</span><br><span class="line"># git checkout php7</span><br><span class="line"># phpize</span><br><span class="line"># .&#x2F;configure</span><br><span class="line"># make</span><br><span class="line"># make install</span><br><span class="line"># echo &#39;extension&#x3D;redis.so&#39; &gt; &#x2F;etc&#x2F;opt&#x2F;rh&#x2F;rh-php70&#x2F;php.d&#x2F;redis.ini</span><br></pre></td></tr></table></figure>
-
-<h2><span id="php-fpm-再起動">php-fpm 再起動</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#x2F;etc&#x2F;init.d&#x2F;php70-php-fpm restart</span><br></pre></td></tr></table></figure>
-
-<h2><span id="httpd-再起動">httpd 再起動</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># &#x2F;etc&#x2F;init.d&#x2F;httpd24-httpd restart</span><br></pre></td></tr></table></figure>
-
-<p>ここまでで PHP7 で動作する環境が整っているかと思います。<br>エラーログを見ながら修正に当たってください。</p>
-<h2><span id="php-7-で廃止された構文を修正">PHP 7 で廃止された構文を修正</span></h2><h3><span id="php-parse-error-syntax-error-unexpected-new-t_new">PHP Parse error:  syntax error, unexpected ‘new’ (T_NEW)</span></h3><ul>
-<li><code>&amp;= new &lt;クラス名&gt;</code> の指定が不可となり、 <code>= new &lt;クラス名&gt;</code> にする必要があります。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&amp;&#x3D; new Class</span><br><span class="line">↓</span><br><span class="line">&#x3D; new Class</span><br></pre></td></tr></table></figure>
-
-<h3><span id="php-fatal-error-cannot-use-string-as-class-name-as-it-is-reserved">PHP Fatal error:  Cannot use ‘String’ as class name as it is reserved</span></h3><ul>
-<li>PHP7 では class String, Int と型名の Class を作成できなくなりました。</li>
-</ul>
-<p>自分は以下の様に修正しました。<br>※ 適宜プロジェクトのコーディングルールに則ってご変更ください。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class String &#123;</span><br><span class="line">↓</span><br><span class="line">class Stringer &#123;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Int &#123;</span><br><span class="line">↓</span><br><span class="line">class Intger &#123;</span><br></pre></td></tr></table></figure>
-
-<p>プロジェクトによってはもっと色々出てくると思いますので<br>適宜修正ください。</p>
-<h2><span id="総評">総評</span></h2><p>放置されがちになるミドルウェアのアップデートは小まめにやっておきたいですね。<br>脆弱性の定期的な棚卸しせねば</p>
-<p>業務でアップデートするのであれば<br>アップデートする環境を別途用意してアップデートする、<br>そこでミドルウェア、アプリケーションのコードレベルでのアップデート手順をまとめ<br>本番環境で実施。</p>
-<p>機能(url)毎に正しく動いたものだけプロキシで PHP7 へ流す<br>というのもアリかなと思います。</p>
-<p>以上です。</p>
-<h2><span id="参考">参考</span></h2><ul>
-<li><a href="http://php.net/manual/ja/migration70.php">PHP 5.6.x から PHP 7.0.x への移行</a></li>
-<li><a href="https://itpropartners.com/blog/9235/">PHP5.6からPHP７にアップデートする上で気をつけるコト</a></li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1177,7 +1271,7 @@
             
             <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
             
-            <li><a class="pagination-link has-text-black-ter" href="/page/19/">19</a></li>
+            <li><a class="pagination-link has-text-black-ter" href="/page/20/">20</a></li>
             
         </ul>
     </nav>
@@ -1219,7 +1313,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            190
+                            191
                         </p>
                     </a>
                 </div>
@@ -1293,6 +1387,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
@@ -1360,25 +1473,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
                     <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-go-multierr/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="go.uber.org/multierr で error をまとめる">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-go-multierr/" class="title has-link-black-ter is-size-6 has-text-weight-normal">go.uber.org/multierr で error をまとめる</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1554,7 +1648,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 

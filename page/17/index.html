@@ -141,6 +141,102 @@
     
 <div class="card">
     
+    <div class="card-image">
+        <a href="/2015/11/17/2015-11-17-versionup-nginx-without-maintenance/" class="image is-8by1">
+        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160810/20160810163018.png" alt="運用中のNginxをノーメンテでバージョンアップ&amp;HTTP2.0モジュールを導入">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-11-16T15:00:00.000Z">2015-11-17</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/11/17/2015-11-17-versionup-nginx-without-maintenance/">運用中のNginxをノーメンテでバージョンアップ&amp;HTTP2.0モジュールを導入</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>運用中の Nginx に HTTP2.0モジュール <code>http_v2_module</code> を導入し<br>サイトのパフォーマンス向上を図ります。</p>
+<p>※ Nginx 1.9.5 から <code>http_spdy_module</code> は <code>http_v2_module</code> に変更しています。</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS Linux release 7.1.1503 (Core)</li>
+<li>Nginx 1.9.3 インストール済み/稼働中</li>
+</ul>
+<h2><span id="したいこと">したいこと</span></h2><ul>
+<li>Nginx のバージョンアップ (1.9.5以上)</li>
+<li>http_v2_module インストール</li>
+</ul>
+<h2><span id="現状確認">現状確認</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># nginx -V</span><br><span class="line"></span><br><span class="line">nginx version: nginx&#x2F;1.9.3</span><br><span class="line">built by gcc 4.8.3 20140911 (Red Hat 4.8.3-9) (GCC)</span><br><span class="line">built with OpenSSL 1.0.1e-fips 11 Feb 2013</span><br><span class="line">TLS SNI support enabled</span><br><span class="line">configure arguments: --prefix&#x3D;&#x2F;etc&#x2F;nginx --sbin-path&#x3D;&#x2F;usr&#x2F;sbin&#x2F;nginx --conf-path&#x3D;&#x2F;etc&#x2F;nginx&#x2F;nginx.conf --error-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log --http-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log --pid-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx.pid --lock-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx.lock --http-client-body-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;client_temp --http-proxy-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;proxy_temp --http-fastcgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;fastcgi_temp --http-uwsgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;uwsgi_temp --http-scgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;scgi_temp --user&#x3D;nginx --group&#x3D;nginx --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-threads --with-stream --with-stream_ssl_module --with-mail --with-mail_ssl_module --with-file-aio --with-ipv6 --with-http_spdy_module --with-cc-opt&#x3D;&#39;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE&#x3D;2 -fexceptions -fstack-protector-strong --param&#x3D;ssp-buffer-size&#x3D;4 -grecord-gcc-switches -m64 -mtune&#x3D;generic&#39;</span><br></pre></td></tr></table></figure>
+
+<p>※moduleやlog, pidのパスは各環境に毎に異なります。</p>
+<p>まずは 1.9.5以上にバージョンアップして <code>http_v2_module</code> を導入したいと思います。</p>
+<h2><span id="nginx-196-インストール">Nginx 1.9.6 インストール</span></h2><p>今回は <b>2015.11.17</b> 時点で最新の <code>1.9.6</code> をインストールします。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># cd &#x2F;usr&#x2F;local&#x2F;src</span><br><span class="line"># wget http:&#x2F;&#x2F;nginx.org&#x2F;download&#x2F;nginx-1.9.6.tar.gz</span><br><span class="line"># tar xvf load&#x2F;nginx-1.9.6.tar.gz</span><br><span class="line"># cd nginx-1.9.6</span><br><span class="line"># .&#x2F;configure --prefix&#x3D;&#x2F;etc&#x2F;nginx --sbin-path&#x3D;&#x2F;usr&#x2F;sbin&#x2F;nginx --conf-path&#x3D;&#x2F;etc&#x2F;nginx&#x2F;nginx.conf --error-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log --http-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log --pid-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx.pid --lock-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx.lock --http-client-body-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;client_temp --http-proxy-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;proxy_temp --http-fastcgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;fastcgi_temp --http-uwsgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;uwsgi_temp --http-scgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;scgi_temp --user&#x3D;nginx --group&#x3D;nginx --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-threads --with-stream --with-stream_ssl_module --with-mail --with-mail_ssl_module --with-file-aio --with-ipv6 --with-http_v2_module --with-cc-opt&#x3D;&#39;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE&#x3D;2 -fexceptions -fstack-protector-strong --param&#x3D;ssp-buffer-size&#x3D;4 -grecord-gcc-switches -m64 -mtune&#x3D;generic&#39;</span><br><span class="line"></span><br><span class="line"># make</span><br><span class="line"># make install</span><br><span class="line"></span><br><span class="line">   ~~~ インストール完了 ~~~</span><br><span class="line"></span><br><span class="line"># nginx -V</span><br><span class="line">nginx version: nginx&#x2F;1.9.6</span><br><span class="line">built by gcc 4.8.3 20140911 (Red Hat 4.8.3-9) (GCC)</span><br><span class="line">built with OpenSSL 1.0.1e-fips 11 Feb 2013</span><br><span class="line">TLS SNI support enabled</span><br><span class="line">configure arguments: --prefix&#x3D;&#x2F;etc&#x2F;nginx --sbin-path&#x3D;&#x2F;usr&#x2F;sbin&#x2F;nginx --conf-path&#x3D;&#x2F;etc&#x2F;nginx&#x2F;nginx.conf --error-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log --http-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log --pid-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx.pid --lock-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx.lock --http-client-body-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;client_temp --http-proxy-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;proxy_temp --http-fastcgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;fastcgi_temp --http-uwsgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;uwsgi_temp --http-scgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;scgi_temp --user&#x3D;nginx --group&#x3D;nginx --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-mail --with-mail_ssl_module --with-file-aio --with-ipv6 --with-http_v2_module --with-http_geoip_module --with-cc-opt&#x3D;&#39;-O2 -g -pipe -Wp,-D_FORTIFY_SOURCE&#x3D;2 -fexceptions -fstack-protector --param&#x3D;ssp-buffer-size&#x3D;4 -m64 -mtune&#x3D;generic&#39;</span><br></pre></td></tr></table></figure>
+
+<p>version が 1.9.6 となり<br>configure arguments に <code>--with-http_v2_module</code> が追加されていることがわかります。</p>
+<p>要点は元々導入済み <code>http_spdy_module</code> を <code>http_v2_module</code> に変更しビルドです。<br><code>--with-http_spdy_module</code> がなければ <code>--with-http_v2_module</code> 追加です。</p>
+<h2><span id="nginx-serverディレクティブ修正">nginx serverディレクティブ修正</span></h2><p>ssl http2.0対応する様、修正します</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">-    listen 443;</span><br><span class="line">+    listen 443 ssl http2;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="nginx-configure-test-amp-reload">Nginx configure test &amp; reload</span></h2><ul>
+<li>configure test 実施します。</li>
+<li>以下のように <code>syntax is ok</code> が出ない場合は設定に誤りがあるので修正してください。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># nginx -t</span><br><span class="line"></span><br><span class="line">nginx: the configuration file &#x2F;etc&#x2F;nginx&#x2F;nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file &#x2F;etc&#x2F;nginx&#x2F;nginx.conf test is successful</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>設定を再読み込みします。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p>上記で設定完了です。<br>これまでノーメンテでバージョンアップし、http_v2_moduleインストールができました。</p>
+<p>早速httpsスキーマとなるページにアクセスしてみましょう。</p>
+<h2><span id="http20設定確認">http2.0設定確認</span></h2><ul>
+<li>Chrome ブラウザの Extension SPDYインディケータで確認</li>
+<li>FireFox 開発ツール&gt; ネットワーク &gt; ヘッダから確認</li>
+</ul>
+<h4><span id="spdyインディケータで確認">SPDYインディケータで確認</span></h4><p><a href="https://chrome.google.com/webstore/detail/http2-and-spdy-indicator/mpbpobfflnpcgagjijhmgnchggcjblin?hl=ja">HTTP/2 and SPDY indicator</a></p>
+<p>拡張モジュールをインストールして確認してみると<br>SPDYインディケータが青くなっていることが確認できます。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151117/20151117105049.png" width="100%">
+</div>
+
+<h4><span id="firefox-開発ツールgt-ネットワーク-gt-ヘッダから確認">FireFox 開発ツール&gt; ネットワーク &gt; ヘッダから確認</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151117/20151117105530.png" width="100%">
+</div>
+
+<h2><span id="参考サイト">参考サイト</span></h2><ul>
+<li><a href="http://qiita.com/takapan/items/756be5b47134f9e51a11">nginxでHTTP2接続(not spdy3.1)の検証</a></li>
+<li><a href="http://qiita.com/tatsuhiro-t/items/6cbe5b095e24d7feb381">HTTP/2, SPDY 対応の負荷テストツール h2load</a></li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -701,71 +797,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-10-04T15:00:00.000Z">2015-10-05</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/10/05/2015-10-05-nginx-error-duplicate-mime-type-text-html/">Nginxエラー調査 「duplicate MIME type &#39;text/html&#39; in /etc/nginx/nginx.conf」</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="概要">概要</span></h2><p>エラーログをslackに通知させるようにしてるとほんと便利。</p>
-<a href="http://kenzo0107.hatenablog.com/entry/2015/09/24/011418" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="http://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150924/20150924011032.png"></div><div class="descriptions"><div class="og-title">エラーログをSlack通知する - 長生村本郷Engineers&#39;Blog</div><div class="og-description">環境 CentOS Linux release 7.1.1503 (Core) td-agent: 0.12.12 Nginx: 1.8.0 概要 社内でSlackによる連携が進み ログ管理もfluentdにまとめつつあるので エラーログで何かあったらSlack通知させようと思い…</div></div></div></a>
-
-
-
-<p>時たまなんですが、なんだこれ？というのが送られてくる。</p>
-<p>その一つが掲題のエラー。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">duplicate MIME type &quot;text&#x2F;html&quot; in &#x2F;etc&#x2F;nginx&#x2F;nginx.conf</span><br></pre></td></tr></table></figure>
-
-<p>nginx.confを見てみると<br>gzip_typesで設定した <code>text/html</code> でした。</p>
-<p>直訳すると</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;nginx&#x2F;nginx.confでMIMEタイプ「text&#x2F;html」が重複しています。</span><br></pre></td></tr></table></figure>
-
-<p>じゃ、消せばいいかなってことなので消せば解決しました。</p>
-<p>/etc/nginx/nginx.conf</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">gzip              on;</span><br><span class="line">gzip_static       on;</span><br><span class="line">gzip_http_version 1.0;</span><br><span class="line">gzip_types        text&#x2F;plain</span><br><span class="line">                  text&#x2F;html</span><br><span class="line">                  text&#x2F;xml</span><br><span class="line">                  text&#x2F;css</span><br><span class="line">                  application&#x2F;xml</span><br><span class="line">                  application&#x2F;xhtml+xml</span><br><span class="line">                  application&#x2F;rss+xml</span><br><span class="line">                  application&#x2F;atom_xml</span><br><span class="line">                  application&#x2F;javascript</span><br><span class="line">                  application&#x2F;x-javascript;</span><br><span class="line">gzip_disable      &quot;MSIE [1-11]\.(?!.*SV1)&quot;;</span><br><span class="line">gzip_disable      &quot;Mozilla&#x2F;4&quot;;</span><br><span class="line">gzip_comp_level   9;</span><br><span class="line">gzip_vary         on;</span><br></pre></td></tr></table></figure>
-
-
-<h2><span id="別にどこかで指定されているの">別にどこかで指定されているの？</span></h2><p>結論を言うと</p>
-<ul>
-<li><code>ngx_http_gzip_module</code>をインストールしており</li>
-<li><code>gzip on</code> としている<br>と、デフォルトで<code>text/html</code>がMIMEタイプが指定されます。</li>
-</ul>
-<p>以下公式サイトを見るとわかります。</p>
-<p><a href="http://nginx.org/en/docs/http/ngx_http_gzip_module.html#gzip_types">gzip_types</a></p>
-<p><code>text/html</code>タイプは常に圧縮対象としているそうです。</p>
-<p>なので、gzip で圧縮処理をする場合は<br><code>text/html</code>が不要です。</p>
-<p>ということでした。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -789,6 +820,8 @@
             <li><a class="pagination-link has-text-black-ter" href="/page/18/">18</a></li>
             
             <li><a class="pagination-link has-text-black-ter" href="/page/19/">19</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/20/">20</a></li>
             
         </ul>
     </nav>
@@ -830,7 +863,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            190
+                            191
                         </p>
                     </a>
                 </div>
@@ -904,6 +937,25 @@
         
         <article class="media">
             
+            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
@@ -971,25 +1023,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
                     <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-go-multierr/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="go.uber.org/multierr で error をまとめる">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-go-multierr/" class="title has-link-black-ter is-size-6 has-text-weight-normal">go.uber.org/multierr で error をまとめる</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1165,7 +1198,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">20</span>
+                        <span class="tag is-grey">21</span>
                     </a>
                 </div>
                 
