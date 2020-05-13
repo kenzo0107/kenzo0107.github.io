@@ -188,7 +188,7 @@ pi$ git clone https://github.com/kenzo0107/dishwasher</pre>
 <pre class="code" data-lang="" data-unlink>readonly LINENOTIFY_TOKEN=&#34;&lt;please change yours&gt;&#34;</pre>
 
 
-## 起動スクリプト設定 &amp; 実行
+## 起動スクリプト設定 & 実行
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo cp bluebutton.service /etc/systemd/system/
 pi$ sudo systemctl daemon-reload

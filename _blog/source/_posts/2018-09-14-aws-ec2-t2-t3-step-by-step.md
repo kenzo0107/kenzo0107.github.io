@@ -86,7 +86,7 @@ pv の場合は、 hvm の移行を検討する必要があります。</p>
 
 ## Ubuntu での拡張ネットワーキングの有効化
 
-<pre class="code" data-lang="" data-unlink>ubuntu:~$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y linux-aws</pre>
+<pre class="code" data-lang="" data-unlink>ubuntu:~$ sudo apt-get update && sudo apt-get upgrade -y linux-aws</pre>
 
 
 <p>他OSの対応法も先ほどの <a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/enhanced-networking-ena.html#enhanced-networking-ena-ubuntu">Linux インスタンスにおける Elastic Network Adapter (ENA) を使用した拡張ネットワーキングの有効化</a> に記載されています。</p>

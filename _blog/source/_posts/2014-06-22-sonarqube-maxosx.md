@@ -167,7 +167,7 @@ vi （Sonar-Runnerのパス）/conf/sonar-runner.properties
 #No information about specific project should appear here
 
 #----- MySQL
-sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
+sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&characterEncoding=utf8
 
 #----- Global database settings
 sonar.jdbc.username=sonar

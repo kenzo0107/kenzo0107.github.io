@@ -161,7 +161,7 @@ Service Worker で一度キャッシュさせた後はオフラインでも動�
 ```
 /ts?circuit_id=1&station_id=1 はアクセスしたけど
 /ts?circuit_id=1&station_id=2 はアクセスしてない
-という場合はオフラインにしたら /ts?circuit_id=1&amp;station_id=2 は閲覧できなくなる
+という場合はオフラインにしたら /ts?circuit_id=1&station_id=2 は閲覧できなくなる
 ```
 
 また、POST method は Service Worker は未対応で <a href="https://github.com/w3c/ServiceWorker/issues/693">issue</a> が上がっているようです。

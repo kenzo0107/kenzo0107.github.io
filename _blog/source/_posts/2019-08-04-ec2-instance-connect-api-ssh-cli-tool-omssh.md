@@ -45,7 +45,7 @@ mssh ubuntu@&lt;EC2 Instance ID&gt; --profile &lt;profile&gt;</pre>
 
 <pre class="code" data-lang="" data-unlink>$ git clone https://github.com/kenzo0107/omssh
 $ cd omssh
-$ make build &amp;&amp; make install</pre>
+$ make build && make install</pre>
 
 
 ## 今後

@@ -66,7 +66,7 @@ $ sudo pip install ec2instanceconnectcli-latest.tar.gz</pre>
 
 <p>ec2-instance-connect をインストールしておく必要があります。</p>
 
-<pre class="code" data-lang="" data-unlink>$ sudo apt-get update &amp;&amp; sudo apt-get install ec2-instance-connect</pre>
+<pre class="code" data-lang="" data-unlink>$ sudo apt-get update && sudo apt-get install ec2-instance-connect</pre>
 
 
 
