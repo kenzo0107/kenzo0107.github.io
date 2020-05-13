@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://kenzo0107.github.io/2019/11/11/2019-11-11-golang/</loc>
+        <lastmod>2020-05-13T08:51:33.292Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://kenzo0107.github.io/2014/06/22/2014-06-22-sonarqube-maxosx/</loc>
         <lastmod>2020-05-13T08:31:24.163Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -57,14 +65,6 @@
 
     <url>
         <loc>https://kenzo0107.github.io/2019/08/04/2019-08-04-ec2-instance-connect-api-ssh-cli-tool-omssh/</loc>
-        <lastmod>2020-05-13T08:31:24.140Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://kenzo0107.github.io/2019/11/11/2019-11-11-golang/</loc>
         <lastmod>2020-05-13T08:31:24.140Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
