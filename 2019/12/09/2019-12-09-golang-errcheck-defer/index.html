@@ -11,16 +11,16 @@
 <title>Golang errcheck による defer 警告対応 - 長生村本郷Engineers&#39;Blog</title>
 
 
-<meta name="description" content="概要このようなコードを書いていると errcheck を実行した場合、 defer f.Close() と指摘されてしまいます。 1234567f, err :&#x3D; os.Open(fpath)if err !&#x3D; nil &amp;#123;    log.Println(err)    return hoge, err&amp;#125;defer f.Close()  f.Close() は返り値が error">
+<meta name="description" content="概要このようなコードを書いていると errcheck を実行した場合、 defer f.Close() と指摘されてしまいます。 12345678910func hoge() error &amp;#123;    ...    f, err :&#x3D; os.Open(fpath)    if err !&#x3D; nil &amp;#123;        return err    &amp;#125;    defer f.C">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Golang errcheck による defer 警告対応">
 <meta property="og:url" content="https://kenzo0107.github.io/2019/12/09/2019-12-09-golang-errcheck-defer/index.html">
 <meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
-<meta property="og:description" content="概要このようなコードを書いていると errcheck を実行した場合、 defer f.Close() と指摘されてしまいます。 1234567f, err :&#x3D; os.Open(fpath)if err !&#x3D; nil &amp;#123;    log.Println(err)    return hoge, err&amp;#125;defer f.Close()  f.Close() は返り値が error">
+<meta property="og:description" content="概要このようなコードを書いていると errcheck を実行した場合、 defer f.Close() と指摘されてしまいます。 12345678910func hoge() error &amp;#123;    ...    f, err :&#x3D; os.Open(fpath)    if err !&#x3D; nil &amp;#123;        return err    &amp;#125;    defer f.C">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://kenzo0107.github.io/images/og_image.png">
 <meta property="article:published_time" content="2019-12-08T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-07T03:41:30.670Z">
+<meta property="article:modified_time" content="2020-05-19T02:08:29.198Z">
 <meta property="article:author" content="Kenzo Tanaka">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -162,15 +162,26 @@
             
         </h1>
         <div class="content">
-            <h2><span id="概要">概要</span></h2><p>このようなコードを書いていると errcheck を実行した場合、 <code>defer f.Close()</code> と指摘されてしまいます。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f, err := os.Open(fpath)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Println(err)</span><br><span class="line">    <span class="keyword">return</span> hoge, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">defer</span> f.Close()</span><br></pre></td></tr></table></figure>
+            <h2><span id="概要">概要</span></h2><p>このようなコードを書いていると <code>errcheck</code> を実行した場合、 <code>defer f.Close()</code> と指摘されてしまいます。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hoge</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    f, err := os.Open(fpath)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> f.Close()</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>f.Close() は返り値が error であり、その error の返り値をハンドリングしていない、という警告です。</p>
+<p><code>f.Close()</code> は返り値が <code>error</code> であり、その <code>error</code> の返り値をチェックしていない、という警告です。</p>
 <a id="more"></a>
 
 <h2><span id="対応">対応</span></h2><p>その為、以下のように修正することで回避</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">f, err := os.Open(fpath)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Println(err)</span><br><span class="line">    <span class="keyword">return</span> hoge, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    err = f.Close()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalln(err)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hoge</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    f, err := os.Open(fpath)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        err = f.Close()</span><br><span class="line">        <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">            log.Fatalln(err)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>但し、上記の場合だと <code>error</code> 発生した時に <code>panic</code> が発生します。</p>
+<p><code>log.Println</code> すると <code>error</code> がログ出力こそされますが、その <code>error</code> によって後続の処理をハンドリングすることができません。</p>
+<p>その為、さらに以下の様に修正してみました。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hoge</span><span class="params">()</span> <span class="params">(err error)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">	f, err := os.Open(filepath.Clean(fpath))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        err = f.Close()</span><br><span class="line">    &#125;()</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下対応手順で <code>f.Close()</code> の <code>error</code> を <code>hoge()</code> の戻り値として返すことができます。</p>
+<ul>
+<li><code>hoge()</code> 関数の戻り値で <code>err error</code> と変数名を指定する</li>
+<li><code>defer</code> している <code>func(){}</code> 内で <code>f.Close()</code> の戻り値 <code>error</code> を <code>err</code> に格納する</li>
+</ul>
+<p><a href="https://play.golang.org/p/cV03BwnnPd1">Go Playground</a></p>
 <h2><span id="参考">参考</span></h2><p>随分前に既に掲題について話をしていた</p>
 <p><a href="https://github.com/kisielk/errcheck/issues/55">ignore defer calls #55</a></p>
 
@@ -1202,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

@@ -53,7 +53,7 @@
 			    "@id":"https://kenzo0107.github.io/2020/05/07/2020-05-07-go-json/"
 			},
 			"datePublished": "2020-05-06T15:00:00.000Z",
-			"dateModified": "2020-05-13T05:23:58.437Z",
+			"dateModified": "2020-05-14T05:25:59.703Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1824,6 +1824,7 @@ h6.categories {
 <li><a href="#&#x3084;&#x308A;&#x305F;&#x3044;&#x3053;&#x3068;">&#x3084;&#x308A;&#x305F;&#x3044;&#x3053;&#x3068;</a></li>
 <li><a href="#json-&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x8AAD;&#x307F;&#x8FBC;&#x307F;">Json &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x8AAD;&#x307F;&#x8FBC;&#x307F;</a></li>
 <li><a href="#struct-&#x306B;&#x683C;&#x7D0D;&#x3059;&#x308B;">struct &#x306B;&#x683C;&#x7D0D;&#x3059;&#x308B;</a></li>
+<li><a href="#json-&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x51FA;&#x529B;">Json &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x51FA;&#x529B;</a></li>
 <li><a href="#&#x4F59;&#x8AC7;">&#x4F59;&#x8AC7;</a></li>
 </ul>
 <!-- tocstop -->
@@ -1834,6 +1835,7 @@ h6.categories {
 <h2><span id="&#x3084;&#x308A;&#x305F;&#x3044;&#x3053;&#x3068;">&#x3084;&#x308A;&#x305F;&#x3044;&#x3053;&#x3068;</span></h2><ul>
 <li>Json &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x8AAD;&#x307F;&#x8FBC;&#x307F;&#x30FB;&#x69CB;&#x9020;&#x4F53;&#x306B;&#x683C;&#x7D0D;</li>
 <li>Json &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x66F8;&#x304D;&#x8FBC;&#x307F;&#x6642;&#x306E;&#x30A8;&#x30B9;&#x30B1;&#x30FC;&#x30D7;&#x51E6;&#x7406;&#x5BFE;&#x5FDC;</li>
+<li>Json &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x51FA;&#x529B;</li>
 </ul>
 <h2><span id="json-&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x8AAD;&#x307F;&#x8FBC;&#x307F;">Json &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x8AAD;&#x307F;&#x8FBC;&#x307F;</span></h2><ul>
 <li>hoge.json</li>
@@ -1860,6 +1862,12 @@ h6.categories {
 <p><code>json.Unmarshal(b, &amp;hoge)</code> &#x3067; json &#x30C7;&#x30FC;&#x30BF;&#x3092; hoge &#x306B;&#x683C;&#x7D0D;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
 <p>&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3068;&#x3001;&#x3061;&#x3083;&#x3093;&#x3068;&#x53D6;&#x308C;&#x3066;&#x307E;&#x3059;&#x3002;</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2020/05/10 23:48:01 Title: &quot;Hello, Gopher&quot;</span><br></pre></td></tr></tbody></table></figure>
+
+<h2><span id="json-&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x51FA;&#x529B;">Json &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x51FA;&#x529B;</span></h2><p><code>map[int]int</code> &#x578B;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3092; <code>hoge.json</code> &#x306B;&#x66F8;&#x304D;&#x51FA;&#x3057;&#x3066;&#x307F;&#x307E;&#x3059;&#x3002;</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> {</span><br><span class="line">	a := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br><span class="line">	a[<span class="number">1</span>] = <span class="number">2</span></span><br><span class="line">	a[<span class="number">10</span>] = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">	b, err := json.MarshalIndent(a, <span class="string">&quot;&quot;</span>, <span class="string">&quot; &quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		log.Fatal(errors.Wrap(err, <span class="string">&quot;failed json.MarshalIndent&quot;</span>))</span><br><span class="line">	}</span><br><span class="line">	jsonFpath := filepath.Join(filepath.Clean(<span class="string">&quot;hoge.json&quot;</span>))</span><br><span class="line">	<span class="keyword">if</span> err := ioutil.WriteFile(jsonFpath, b, <span class="number">0644</span>); err != <span class="literal">nil</span> {</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	}</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p><code>hoge.json</code> &#x304C;&#x51FA;&#x529B;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x304C;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line"> <span class="attr">&quot;1&quot;</span>: <span class="number">2</span>,</span><br><span class="line"> <span class="attr">&quot;10&quot;</span>: <span class="number">100</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <h2><span id="&#x4F59;&#x8AC7;">&#x4F59;&#x8AC7;</span></h2><p><code>json.Unmarshal</code> &#x306E; error &#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3092;&#x3057;&#x306A;&#x3044;&#x5B9F;&#x88C5;&#x3092;&#x3088;&#x304F;&#x898B;&#x304B;&#x3051;&#x307E;&#x3059;&#x3002;</p>
 <p>&#x5B9F;&#x88C5;&#x4E0A;&#x3001;&#x5931;&#x6557;&#x3057;&#x305F;&#x3068;&#x3066;&#x3001;&#x554F;&#x984C;&#x306A;&#x3044;&#x5834;&#x5408;&#x304C;&#x3042;&#x308B;&#x306E;&#x3067;&#x3042;&#x308C;&#x3070;&#x3001;&#x826F;&#x3044;&#x3067;&#x3059;&#x304C;&#x3001;&#x57FA;&#x672C;&#x7701;&#x7565;&#x3059;&#x3079;&#x304D;&#x3067;&#x306A;&#x3044;&#x3067;&#x3059;&#x3002;</p>

@@ -251,10 +251,10 @@
             
         </h1>
         <div class="content">
-            <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>このようなコードを書いていると errcheck を実行した場合、 <code>defer f.Close()</code> と指摘されてしまいます。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">f, err := os.Open(fpath)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    log.Println(err)</span><br><span class="line">    <span class="keyword">return</span> hoge, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">defer</span> f.Close()</span><br></pre></td></tr></table></figure>
+            <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>このようなコードを書いていると <code>errcheck</code> を実行した場合、 <code>defer f.Close()</code> と指摘されてしまいます。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hoge</span><span class="params">()</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    f, err := os.Open(fpath)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> f.Close()</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>f.Close() は返り値が error であり、その error の返り値をハンドリングしていない、という警告です。</p>
+<p><code>f.Close()</code> は返り値が <code>error</code> であり、その <code>error</code> の返り値をチェックしていない、という警告です。</p>
         </div>
         
         
@@ -1637,7 +1637,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
