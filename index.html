@@ -161,7 +161,7 @@
         <div class="content">
             <div class="toc">
 <div class="toc-content">
-<h3 class="menu-label"><span id="toc">ToC</span></h3>
+<h3 class="menu-label">ToC</h3>
 
 <!-- toc -->
 
@@ -176,56 +176,17 @@
 
 </div>
 </div>
-
-<h2><span id="やりたいこと">やりたいこと</span></h2><ul>
-<li>Json ファイルの読み込み・構造体に格納</li>
-<li>Json ファイルの書き込み時のエスケープ処理対応</li>
-<li>Json ファイル出力</li>
-</ul>
-<h2><span id="json-ファイルの読み込み">Json ファイルの読み込み</span></h2><ul>
-<li>hoge.json</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"results"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"id"</span>: <span class="number">123456</span>,</span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"Hello, Gopher"</span>,</span><br><span class="line">            <span class="string">"active"</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>main.go</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="params">()</span></span> &#123;</span><br><span class="line">    fpath := filepath.Join(<span class="string">"hoge.json"</span>)</span><br><span class="line">    b, err := ioutil.ReadFile(filepath.Clean(fpath))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatal(err)</span><br><span class="line">    &#125;</span><br><span class="line">    log.Println(<span class="keyword">string</span>(b))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>ioutil.ReadFile(fpath)</code> でなく <code>ioutil.ReadFile(filepath.Clean(fpath))</code> としている理由は以下参照してください。</p>
-<a href="https://kenzo0107.github.io/2019/12/09/2019-12-09-gosec-os-open/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://kenzo0107.github.io/images/og_image.png"></div><div class="descriptions"><div class="og-title">gosec で警告される os.Open() 対応</div><div class="og-description">gosec で警告される os.Open() に対応した話です。</div></div></div></a>
-
-<p>読み取れました！</p>
-<p>でも、この results[] の中の id が使いたいんだけどなぁ…<br>と思っても、このままだと id の値を取得できません。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"results"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"id"</span>: <span class="number">123456</span>,</span><br><span class="line">            <span class="string">"title"</span>: <span class="string">"Hello, Gopher"</span>,</span><br><span class="line">            <span class="string">"active"</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="struct-に格納する">struct に格納する</span></h2><p><a href="https://mholt.github.io/json-to-go/">JSON-to-Go</a> に json を貼り付けるとサクッと struct が生成されます。</p>
-<img src="https://i.imgur.com/65VPxYP.png" width="100%">
-
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Hoge : -</span></span><br><span class="line"><span class="keyword">type</span> Hoge <span class="keyword">struct</span> &#123;</span><br><span class="line">	Results []<span class="keyword">struct</span> &#123;</span><br><span class="line">		ID     <span class="keyword">int</span>    <span class="string">`json:"id"`</span></span><br><span class="line">		Title  <span class="keyword">string</span> <span class="string">`json:"title"`</span></span><br><span class="line">		Active <span class="keyword">bool</span>   <span class="string">`json:"active"`</span></span><br><span class="line">	&#125; <span class="string">`json:"results"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fpath := filepath.Join(<span class="string">"test"</span>, <span class="string">"hoge.json"</span>)</span><br><span class="line">	b, err := ioutil.ReadFile(filepath.Clean(fpath))</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> hoge Hoge</span><br><span class="line">	<span class="keyword">if</span> err := json.Unmarshal(b, &amp;hoge); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">	log.Printf(<span class="string">"Title: %#v"</span>, hoge.Results[<span class="number">0</span>].Title)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>json.Unmarshal(b, &amp;hoge)</code> で json データを hoge に格納しています。</p>
-<p>実行すると、ちゃんと取れてます。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2020&#x2F;05&#x2F;10 23:48:01 Title: &quot;Hello, Gopher&quot;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="json-ファイル出力">Json ファイル出力</span></h2><p><code>map[int]int</code> 型のデータを <code>hoge.json</code> に書き出してみます。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	a := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>)</span><br><span class="line">	a[<span class="number">1</span>] = <span class="number">2</span></span><br><span class="line">	a[<span class="number">10</span>] = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">	b, err := json.MarshalIndent(a, <span class="string">""</span>, <span class="string">" "</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(errors.Wrap(err, <span class="string">"failed json.MarshalIndent"</span>))</span><br><span class="line">	&#125;</span><br><span class="line">	jsonFpath := filepath.Join(filepath.Clean(<span class="string">"hoge.json"</span>))</span><br><span class="line">	<span class="keyword">if</span> err := ioutil.WriteFile(jsonFpath, b, <span class="number">0644</span>); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		log.Fatal(err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>hoge.json</code> が出力されていることが確認できます。</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="attr">"1"</span>: <span class="number">2</span>,</span><br><span class="line"> <span class="attr">"10"</span>: <span class="number">100</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="余談">余談</span></h2><p><code>json.Unmarshal</code> の error チェックをしない実装をよく見かけます。</p>
-<p>実装上、失敗したとて、問題ない場合があるのであれば、良いですが、基本省略すべきでないです。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hoge Hoge</span><br><span class="line">json.Unmarshal(b, &amp;hoge)</span><br></pre></td></tr></table></figure>
-
-<p>その他、実は error 型返す関数をチェックしてないということがあるので、以下 module で対処する様にしています。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com&#x2F;kisielk&#x2F;errcheck</span><br><span class="line">errcheck .&#x2F;...</span><br></pre></td></tr></table></figure>
-
-<p>Go プロジェクトでは、必ず、GitHub Actions でも、ローカルでも実行する様にしています。</p>
-<p>以上<br>参考になれば幸いです。</p>
-
         </div>
         
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <a class="button is-size-7 is-light"
+                        href="/2020/05/07/2020-05-07-go-json/#more">Read More</a>
+                </div>
+            </div>
+        </div>
         
         
     </div>
@@ -1710,7 +1671,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
