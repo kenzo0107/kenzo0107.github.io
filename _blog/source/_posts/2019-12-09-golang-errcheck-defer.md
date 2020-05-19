@@ -64,7 +64,9 @@ func hoge() (err error) {
     }
 
     defer func() {
-        err = f.Close()
+        if er := f.Close(); er != nil {
+            err = er
+        }
     }()
     ...
 }

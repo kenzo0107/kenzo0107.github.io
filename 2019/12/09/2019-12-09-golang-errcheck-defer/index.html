@@ -20,7 +20,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://kenzo0107.github.io/images/og_image.png">
 <meta property="article:published_time" content="2019-12-08T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-19T02:08:29.198Z">
+<meta property="article:modified_time" content="2020-05-19T14:50:40.479Z">
 <meta property="article:author" content="Kenzo Tanaka">
 <meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
@@ -174,7 +174,7 @@
 <p>但し、上記の場合だと <code>error</code> 発生した時に <code>panic</code> が発生します。</p>
 <p><code>log.Println</code> すると <code>error</code> がログ出力こそされますが、その <code>error</code> によって後続の処理をハンドリングすることができません。</p>
 <p>その為、さらに以下の様に修正してみました。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hoge</span><span class="params">()</span> <span class="params">(err error)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">	f, err := os.Open(filepath.Clean(fpath))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        err = f.Close()</span><br><span class="line">    &#125;()</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hoge</span><span class="params">()</span> <span class="params">(err error)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">	f, err := os.Open(filepath.Clean(fpath))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> er := f.Close(); er != <span class="literal">nil</span> &#123;</span><br><span class="line">            err = er</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;()</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>以下対応手順で <code>f.Close()</code> の <code>error</code> を <code>hoge()</code> の戻り値として返すことができます。</p>
 <ul>
@@ -1213,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
+<a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
