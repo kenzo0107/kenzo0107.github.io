@@ -2,7 +2,7 @@
 title: Go で時刻を json.Unmarshal する際の注意点
 tags:
 - Go
-date: 2020-05-07
+date: 2020-05-20
 ---
 
 <div class="toc">
