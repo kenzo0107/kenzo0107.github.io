@@ -2,6 +2,7 @@
 layout: post
 title: Go+Revelフレームワーク 非同期でS3へ画像リサイズ/アップロード
 date: 2017-08-09
+category: Go
 tags:
 - Go
 ---

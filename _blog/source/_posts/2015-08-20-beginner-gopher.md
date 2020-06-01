@@ -2,6 +2,7 @@
 layout: post
 title: Go初心者におすすめ本
 date: 2015-08-20
+category: Go
 tags:
 - Go
 ---

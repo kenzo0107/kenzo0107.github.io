@@ -1,5 +1,6 @@
 ---
 title: Go 静的解析 & 単体テスト on GitHub Actions
+category: Go
 tags:
 - Go
 date: 2019-12-26

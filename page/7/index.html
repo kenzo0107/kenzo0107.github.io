@@ -142,6 +142,203 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/2017/10/08/2017-10-08-waf-cloudfront-referer-check/" class="image is-8by1">
+        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180531.png" alt="WAF+CloudFront でリファラチェック (直リンク禁止)">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-07T15:00:00.000Z">2017-10-08</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/08/2017-10-08-waf-cloudfront-referer-check/">WAF+CloudFront でリファラチェック (直リンク禁止)</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>AWS WAF (Web Application Firewall) を利用し Cloudfront でのリファラ制御を実装しましたのでそのまとめです。</p>
+<p>直リンク禁止対策として導入しました。</p>
+<p>以下手順になります。</p>
+<h3><span id="go-to-aws-waf-ボタンクリック">Go to AWS WAF ボタンクリック</span></h3><p>サービス &gt; WAF &amp; Shield と辿り Go to AWS WAF クリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005174955.png" width="100%">
+</div>
+
+<h3><span id="configure-web-acl-ボタンクリック">Configure Web ACL ボタンクリック</span></h3><p>ACL (Access Control List) を設定していきます。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180856.png" width="100%">
+</div>
+
+<h3><span id="概要確認">概要確認</span></h3><p>特にチェックせず Next ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181044.png" width="100%">
+</div>
+
+<h3><span id="web-acl-設定">web ACL 設定</span></h3><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181315.png" width="100%">
+</div>
+
+<p>以下、設定項目を設定し、Next ボタンクリック</p>
+<table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Value</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Web ACL name</td>
+<td>(任意) 例ではCloudfront の CNAME を設定しています。</td>
+</tr>
+<tr>
+<td>CloudWatch metric name</td>
+<td>Web ACL name を入力すると自動で入力される。変更したい場合のみ変更</td>
+</tr>
+<tr>
+<td>Region</td>
+<td>Global(CloudFront) 選択</td>
+</tr>
+<tr>
+<td>AWS resource to associate</td>
+<td>対象となるCloudfrontを選択する箇所。運用中の Cloudfront を対象とすると場合は後々設定。</td>
+</tr>
+</tbody></table>
+<h3><span id="条件作成">条件作成</span></h3><p>今回は文字列一致を条件とする為、 String match conditions にて <code>Create condition</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181800.png" width="100%">
+</div>
+
+<h3><span id="string-match-condition-作成">string match condition 作成</span></h3><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181926.png" width="100%">
+</div>
+
+<p>以下設定し <code>Add filter</code> ボタンクリック。<br>複数 filter がある場合、Add filter を繰り返します。</p>
+<table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Value</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Name</td>
+<td>(任意)</td>
+</tr>
+<tr>
+<td>Part of the request to filter on</td>
+<td>Header</td>
+</tr>
+<tr>
+<td>Header</td>
+<td>Referer</td>
+</tr>
+<tr>
+<td>Match type</td>
+<td>Contains</td>
+</tr>
+<tr>
+<td>Transformation</td>
+<td>Convert to lowercase</td>
+</tr>
+<tr>
+<td>Value to match</td>
+<td>対象となるドメイン設定</td>
+</tr>
+</tbody></table>
+<br>
+
+<h4><span id="add-filter-後-create-ボタンクリック"><code>Add filter</code> 後、 <code>Create</code> ボタンクリック。</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182327.png" width="100%">
+</div>
+
+<h4><span id="next-ボタンクリック">Next ボタンクリック</span></h4><p>追加したもののすぐに反映されていない。<br>そのまま <code>Next</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182446.png" width="100%">
+</div>
+
+<h3><span id="ルール作成">ルール作成</span></h3><p><code>Create rule</code> ボタンクリック。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182608.png" width="100%">
+</div>
+
+<h4><span id="ルールに条件を紐付け">ルールに条件を紐付け</span></h4><p>Name, Cloudwatch metric name を設定し<br>Add conditions で条件を追加します。</p>
+<p>その後、<code>Create</code> ボタンクリック。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182641.png" width="100%">
+</div>
+
+<h3><span id="ルール以外のリクエストのアクセス禁止">ルール以外のリクエストのアクセス禁止</span></h3><p>やはり Rule は反映されていない。ですが、続けて<br><code>Block all requests that don&#39;t match any rules</code> をチェックし <code>Review and create</code> ボタンクリック。</p>
+<p>※対象のCloudfront に反映させたくない場合は、Cloudfront を選択したリソースを解除する必要があります。<br><span style="color: #ff0000">※最後に関連付けができるのでここではするべきではないと思います。</span></p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182806.png" width="100%">
+</div>
+
+<h3><span id="確認ページで入力内容確認後作成">確認ページで入力内容確認後作成</span></h3><p><code>Confirm and create</code> ボタンクリック。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183423.png" width="100%">
+</div>
+
+<h3><span id="対象の-web-acl-を編集">対象の web ACL を編集</span></h3><p>WEB ACLs より選択し <code>Edit web ACL</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183628.png" width="100%">
+</div>
+
+<h4><span id="web-acl-編集">web ACL 編集</span></h4><ol>
+<li>作成したルールを選択</li>
+<li><code>Add rule to web ACL</code> ボタンクリック</li>
+<li>Allow 選択</li>
+<li><code>Update</code> ボタンクリック</li>
+</ol>
+<p>[f:id:kenzo0107:20171005183720p:plain]</p>
+<h3><span id="cloudfront-関連付け">Cloudfront 関連付け</span></h3><p><code>Add association</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183720.png" width="100%">
+</div>
+
+<h4><span id="web-acl-に-cloudfront-を関連付け">Web ACL に Cloudfront を関連付け</span></h4><p>Resource で 対象の Cloudfront を選択し <code>Add</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005184119.png" width="100%">
+</div>
+
+<p>以上で数分後 WAF+CloudFront によるリファラチェックが確認できる状態になります。</p>
+<h3><span id="アクセス確認">アクセス確認</span></h3><p>自環境では<br>ローカルの /etc/hosts 修正し対象ドメインから Cloudfront CNAME へのリンクを貼って確認しました。</p>
+<p>Cloudfront CNAME ドメインでのリソースを直接アクセスすると<br>以下の様な エラーページが表示されることが確認できました。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005184505.png" width="100%">
+</div>
+
+<h3><span id="もう少しユーザフレンドリーに">もう少しユーザフレンドリーに</span></h3><p>上記のエラーページは Cloudfront &gt; Error Pages で  <code>Create Custom Error Response</code> で S3 上のパスを指定することでカスタマイズが可能です。</p>
+<p>是非サイトコンセプトに合ったエラーページをご用意されるとよりユーザフレンドリーな配信になるかと思います。</p>
+<p>以上<br>ご参考になれば幸いです。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/2017/10/02/2017-10-02-elasticsearch-service-version-up/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170924/20170924222936.png" alt="AWS Elasticsearch Service バージョンアップ 2.2 → 5.5">
         </a>
@@ -571,6 +768,10 @@
             <div class="level-left">
                 <time class="level-item has-text-grey"
                     datetime="2017-08-08T15:00:00.000Z">2017-08-09</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Go/">Go</a>
+                </div>
                 
                 
                 
@@ -1153,100 +1354,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2017/07/07/2017-07-07-flask/" class="image is-8by1">
-        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170707/20170707233203.png" alt="Flask Python3 で 戸田市 tocoちゃんバスあと何分？ Webアプリ作成♪">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-07-06T15:00:00.000Z">2017-07-07</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/07/07/2017-07-07-flask/">Flask Python3 で 戸田市 tocoちゃんバスあと何分？ Webアプリ作成♪</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="flaskフラスク-とは">Flask(フラスク) とは</span></h2><p><a href="http://flask.pocoo.org/">Flask Official Site</a> を参照すると冒頭に以下の文章があります。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Flask is a microframework for Python based on Werkzeug, Jinja 2 and good intentions</span><br></pre></td></tr></table></figure>
-
-<p>Flask は Python の小規模なフレームワークで、 Werkzug や Jinja 2 をベースとしています。</p>
-<ul>
-<li>Made by Armin Ronacher (Australian)</li>
-<li>Bottle（ボトル）に対する言葉遊びで命名。（Flask: フラスコ）</li>
-<li>2010年のエイプリルフールのジョークが始まり</li>
-<li><a href="http://www.sejuku.net/blog/3713">2017年大注目のPython！WEBフレームワーク3つを徹底比較</a> を見ると次第に人気が高まっている（給与も良さそう？）</li>
-</ul>
-<h2><span id="何がいいの">何がいいの？</span></h2><p>最小限の構成で簡単な Web アプリケーションが作成できることです。<br>django, Rails でも簡単に出来なくもないですが、さらに手順は短く容易です。</p>
-<h3><span id="チュートリアル">チュートリアル</span></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route("/")</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Hello World!"</span></span><br></pre></td></tr></table></figure>
-
-<h2><span id="flaskを利用する判断基準">Flaskを利用する判断基準</span></h2><ul>
-<li>大規模なプロジェクトでない。（ファイル構成は自分 or チームで決定する必要がある為）</li>
-<li>DB を使わない。使うにしても複雑なDB設計でない。</li>
-<li>利用するライブラリが Python 製でそのgatewayとして利用したい。</li>
-</ul>
-<h2><span id="手始めに">手始めに！</span></h2><p>初心者向け記事は多数あるので割愛し<br>学習がてら Web アプリケーション作ったのでそちらをどうぞ♪</p>
-<p>実際動くものとそのソースを見た方がイメージ湧くと思います。</p>
-<p><a href="http://toda-tocochan-bus.tk">tocoちゃんバス あと何分？</a></p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170707/20170707232036.png" width="100%">
-</div>
-
-<p>戸田市のローカルバス toco ちゃんバスの停留所を指定しあと何分で来るかをカウントダウンするアプリです。<br>自分が使うので作ったら割と広まってきて嬉しい限り♪</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">※ちなみに戸田市役所に確認し非公式ではありますが公開許可をいただいております。</span><br><span class="line">※戸田市役所ご担当者様より「可能であれば最新の迂回情報なども載せていただけたら〜」という要望も頂きました♪</span><br></pre></td></tr></table></figure>
-
-<h2><span id="ソースはこちら">ソースはこちら♪</span></h2><a href="https://github.com/kenzo0107/toda-tocochan-bus" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://avatars0.githubusercontent.com/u/6197906?s=400&v=4"></div><div class="descriptions"><div class="og-title">kenzo0107/toda-tocochan-bus</div><div class="og-description">Contribute to kenzo0107/toda-tocochan-bus development by creating an account on GitHub.</div></div></div></a>
-
-<p>ソースを参照頂けるとやってみたことがわかりやすいと思います。</p>
-<h3><span id="やってみたこと">やってみたこと</span></h3><ul>
-<li>docker で flask ローカル開発環境作成</li>
-<li>config ファイルからデータ呼び出し (config.py)</li>
-<li>session 機能</li>
-<li>Bootstrap 適用</li>
-<li>superagent.js で非同期通信</li>
-<li>flickity.js でフリッカブルに</li>
-</ul>
-<h3><span id="本番動作環境">本番動作環境</span></h3><ul>
-<li>さくらVPS CentOS 6</li>
-<li>httpd2.4 + wsgi + virtualenv + python3</li>
-</ul>
-<p>さくらVPSには CakePHP や SpringBoot のプロジェクトが乗っかっていたりとやりたい放題の環境として所持しています。</p>
-<h3><span id="開発期間">開発期間</span></h3><p>ほぼほぼ 1週間。仕事の昼休みと日曜大工で 10時間足らずで公開出来ました。<br>どちらかというと js 側の学習コストが掛かった感じ。</p>
-<h2><span id="総評">総評</span></h2><p>今回作成したユーザ情報を管理しない、<br>DBを持たないアプリにはうってつけでした。<br>構成が複雑になりすぎず丁度良かったです。</p>
-<p>やはり大きな規模のプロジェクトには django が適しています。</p>
-<p>個人的に戸田市役所に電話してWebアプリ公開の許可を頂く、<br>という承認申請が出来、地域貢献できる喜びが非常に大きかったです。</p>
-<p>今後、バージョンアップしたいと思います。</p>
-<p>Flask 利用に際して参考になれば何よりです。</p>
-<p>以上です。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1313,7 +1420,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            191
+                            192
                         </p>
                     </a>
                 </div>
@@ -1325,7 +1432,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            0
+                            1
                         </p>
                     </a>
                 </div>
@@ -1398,6 +1505,25 @@
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
                     <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
                     <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/07/2020-05-20-go-json-time/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
+                    <p class="is-size-7 is-uppercase">
                         
                     </p>
                 </div>
@@ -1417,7 +1543,7 @@
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-29T15:00:00.000Z">2020-04-30</time></div>
                     <a href="/2020/04/30/2020-04-30-typing-game-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go でタイピングゲーム作った</a>
                     <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
                 </div>
             </div>
@@ -1454,25 +1580,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-15T15:00:00.000Z">2020-04-16</time></div>
                     <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Lambda Edge で Basic 認証 や CSP 対応</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-buildspec-env/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1648,7 +1755,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">21</span>
+                        <span class="tag is-grey">22</span>
                     </a>
                 </div>
                 
@@ -2247,7 +2354,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

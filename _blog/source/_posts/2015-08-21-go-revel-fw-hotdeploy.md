@@ -2,6 +2,7 @@
 layout: post
 title: Golang Revelフレームワーク ホットデプロイ方法
 date: 2015-08-12
+category: Go
 tags:
 - Go
 ---

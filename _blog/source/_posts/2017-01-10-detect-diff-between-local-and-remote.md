@@ -2,6 +2,7 @@
 layout: post
 title: リモートサーバとローカルサーバとの差分のあるファイル情報を取得するツール作ってみた
 date: 2017-01-10
+category: Go
 tags:
 - Go
 thumbnail: http://i.imgur.com/4tGwrRf.png

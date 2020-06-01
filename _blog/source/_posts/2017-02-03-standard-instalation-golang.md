@@ -2,6 +2,7 @@
 layout: post
 title: 標準的な Golang インストール方法
 date: 2017-02-03
+category: Go
 tags:
 - Go
 thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170203/20170203124749.png

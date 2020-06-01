@@ -141,6 +141,58 @@
     
 <div class="card">
     
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-09-27T15:00:00.000Z">2016-09-28</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/09/28/2016-09-28-error-rpc-failed-curl-56-sslread-return-on-macos/">error RPC failed; curl 56 SSLRead() return on MacOS Sierra</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>みんなのGo言語を購入しまして<br>ghq でGit管理してみよう！<br>と心動いた方は多いはず</p>
+<p>昔から peco で Git Repository 移動コマンドはしてたけど、<br>ghq を利用したリポジトリ管理は便利ですね。</p>
+<p>そんな折、<br>ghq コマンドで git repository をクローンしようとした際に<br>掲題のエラーが発生しましたので備忘録。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ghq get &lt;git repository&gt;</span><br><span class="line">...</span><br><span class="line">error: RPC failed; curl 56 SSLRead() <span class="built_in">return</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>利用している git  が SSL 対応していないようです。</p>
+<h2><span id="対応">対応</span></h2><ul>
+<li>git を openssl, curl 付きで再インストール</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew reinstall git --with-brewed-curl --with-brewed-openssl</span><br></pre></td></tr></table></figure>
+
+<h2><span id="再度実行">再度実行</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ghq get &lt;git repository&gt;</span><br><span class="line">remote: Total 74442 (delta 145), reused 0 (delta 0), pack-reused 74160</span><br><span class="line">Receiving objects: 100% (74442/74442), 701.45 MiB | 1.42 MiB/s, <span class="keyword">done</span>.</span><br><span class="line">Resolving deltas: 100% (50571/50571), <span class="keyword">done</span>.</span><br><span class="line">Checking out files: 100% (11350/11350), <span class="keyword">done</span>.</span><br></pre></td></tr></table></figure>
+
+<p>無事できた♪</p>
+<h2><span id="参照">参照</span></h2><p><a href="https://forums.meteor.com/t/curl-56-sslread-return-error-9806-need-help-please/21913">Curl: (56) SSLRead() return error -9806 - Need Help please slight_smile</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
     <div class="card-image">
         <a href="/2016/09/21/2016-09-21-heavy-load-the-reason/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160921/20160921223252.png" alt="負荷監視とその原因調査">
@@ -1165,236 +1217,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2016/08/10/2017-11-13-prometheus-remote-storage/" class="image is-8by1">
-        <img class="thumbnail" src="https://i.imgur.com/zFciewX.png" alt="Prometheus2.0 remote storage 検証">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-08-09T15:00:00.000Z">2016-08-10</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/08/10/2017-11-13-prometheus-remote-storage/">Prometheus2.0 remote storage 検証</a>
-            
-        </h1>
-        <div class="content">
-            <p>いよいよ出ました Prometheus 2.0 ！</p>
-<p><a href="https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/">Announcing Prometheus 2.0 | Prometheus</a></p>
-<p>先日<a href="https://mackerel-ug.connpass.com/event/68478/">モニタリング勉強会</a>でも Paul Taylor さんの LT を拝聴させて頂き<br>パフォーマンス向上とストレージフォーマット変更による圧縮・バックアップがしやすくなった等、<br>良い話がたくさん出ていました。</p>
-<p><a href="https://www.slideshare.net/PaulTraylor/20171027-81281205">Operating Prometheus</a></p>
-<p>中でも最も期待していた機能が Remote Long-Term Storage、<br>長期保存機能には歓喜しました♪</p>
-<p>1系以下では、短期間用と長期間用の Prometheus を別途用意する等、対策が必要で<br>冗長な作りを余儀なくされたところがありましたが<br>2.0 リリースでついに！</p>
-<p>早速試してみたく使用感をまとめました。</p>
-<h2><span id="今回やりたかったことまとめ">今回やりたかったことまとめ</span></h2><ul>
-<li>Prometheus 2.0 リリースに際して期待の長期保存機能 (Remote long-term storage) を早速試す！</li>
-<li>実際にローカル環境で構築してみて1系からの変更箇所を確認</li>
-<li>DB 側にどんなデータが入るのか確認</li>
-</ul>
-<h2><span id="システム概要">システム概要</span></h2><p>あくまで使用感の検証をしたかったので docker-compose でお手軽に作れる環境にしました。</p>
-<div style="text-align:center;">
-<img src="https://i.imgur.com/zFciewX.png" width="100%">
-</div>
-
-<h2><span id="前提条件">前提条件</span></h2><p>以下を Vagrant にインストール</p>
-<ul>
-<li>Ubuntu 16.04.3 LTS \n \l</li>
-<li>Docker version 17.09.0-ce, build afdb6d4</li>
-<li>docker-compose version 1.12.0, build b31ff33</li>
-</ul>
-<h2><span id="起動する-docker-container">起動する Docker Container</span></h2><ul>
-<li>Prometheus 2.0.0</li>
-<li>Node Exporter 0.15.1</li>
-<li>AlertManager 0.9.1</li>
-<li>cAdvisor 0.28.0</li>
-<li>Prometheu Adapter</li>
-<li>PostgreSQL 9.6.3</li>
-<li>Grafana 4.6.1</li>
-<li>Nginx 1.13.6</li>
-<li>Adminer</li>
-</ul>
-<h2><span id="使い方">使い方</span></h2><p>以下手順通りです。</p>
-<p><a href="https://github.com/kenzo0107/vagrant-docker/tree/vagrant-docker-ubuntu16.04/docker/prometheus-grafana-on-ubuntu">kenzo0107/vagrant-docker/tree/vagrant-docker-ubuntu16.04/docker/prometheus-grafana-on-ubuntu</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ git <span class="built_in">clone</span> https://github.com/kenzo0107/vagrant-docker</span><br><span class="line">macOS%$ <span class="built_in">cd</span> vagrant-docker</span><br><span class="line">macOS%$ vagrant up</span><br><span class="line"></span><br><span class="line">// Install docker, docker-compose</span><br><span class="line">macOS%$ vagrant provision</span><br><span class="line">macOS%$ vagrant ssh</span><br><span class="line">vagrant%$ <span class="built_in">cd</span> /vagrant/prometheus-grafana-on-ubuntu</span><br><span class="line">vagrant%$ sudo docker-compose up -d</span><br><span class="line"></span><br><span class="line">Name                             Command                            State                             Ports</span><br><span class="line">-------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">adapter                           /prometheus-postgresql-ada ...    Up</span><br><span class="line">adminer                           entrypoint.sh docker-php<span class="_">-e</span> ...    Up                                8080/tcp</span><br><span class="line">alertmanager                      /bin/alertmanager -config. ...    Up                                9093/tcp</span><br><span class="line">cadvisor                          /usr/bin/cadvisor -logtost ...    Up                                8080/tcp</span><br><span class="line">grafana                           /run.sh                           Up                                3000/tcp</span><br><span class="line">nginx                             nginx -g daemon off;              Up                                0.0.0.0:18080-&gt;18080/tcp,</span><br><span class="line">                                                                                         0.0.0.0:3000-&gt;3000/tcp, 80/tcp,</span><br><span class="line">                                                                                         0.0.0.0:8080-&gt;8080/tcp,</span><br><span class="line">                                                                                         0.0.0.0:9090-&gt;9090/tcp</span><br><span class="line">node-exporter                     /bin/node_exporter                Up                                9100/tcp</span><br><span class="line">pgsql                             docker-entrypoint.sh -csyn ...    Up                                5432/tcp</span><br><span class="line">prometheus                        /bin/prometheus --config.f ...    Up                                9090/tcp</span><br></pre></td></tr></table></figure>
-
-<h2><span id="アクセスしてみる">アクセスしてみる</span></h2><h3><span id="prometheus">Prometheus</span></h3><ul>
-<li><a href="http://192.168.35.101:9090">http://192.168.35.101:9090</a>.</li>
-</ul>
-<div style="text-align:center;">
-<img src="https://i.imgur.com/rg53Xa1.png" width="100%">
-</div>
-
-<h3><span id="grafana">Grafana</span></h3><ul>
-<li><a href="http://192.168.35.101:13000">http://192.168.35.101:13000</a>.</li>
-<li>ユーザアカウントが <code>./grafana/env</code> にあります.</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GF_SECURITY_ADMIN_USER=admin-user</span><br><span class="line">GF_SECURITY_ADMIN_PASSWORD=admin-pass</span><br></pre></td></tr></table></figure>
-
-<div style="text-align:center;">
-<img src="https://i.imgur.com/fDXVySw.png" width="100%">
-</div>
-
-<ul>
-<li>Datasource 設定</li>
-</ul>
-<div style="text-align:center;">
-<img src="https://i.imgur.com/8SKvdxJ.png" width="100%">
-</div>
-
-<p>Datasource 設定フォームに以下情報を入力し <code>Add</code> ボタンをクリックします。</p>
-<table>
-<thead>
-<tr>
-<th><em>Item</em></th>
-<th><em>Value</em></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Name</td>
-<td>Prometheus</td>
-</tr>
-<tr>
-<td>Type</td>
-<td>Prometheus</td>
-</tr>
-<tr>
-<td>URL</td>
-<td><a href="http://prometheus:9090">http://prometheus:9090</a></td>
-</tr>
-<tr>
-<td>Access</td>
-<td>proxy</td>
-</tr>
-</tbody></table>
-<div style="text-align:center;">
-<img src="https://i.imgur.com/6Cr4WTn.png" width="100%">
-</div>
-
-<ul>
-<li>Dashboard.json インポート</li>
-</ul>
-<div style="text-align:center;">
-<img src="https://i.imgur.com/cew58vF.png" width="100%">
-</div>
-
-<p>グラフが表示されます。</p>
-<div style="text-align:center;">
-<img src="https://i.imgur.com/IicXL5e.png" width="100%">
-</div>
-
-
-<h3><span id="cadvisor">cAdvisor</span></h3><ul>
-<li><a href="http://192.168.35.101:8080">http://192.168.35.101:8080</a>.</li>
-</ul>
-<div style="text-align:center;">
-<img src="https://i.imgur.com/ZDH3zmI.png" width="100%">
-</div>
-
-<h2><span id="adminer">Adminer</span></h2><div style="text-align:center;">
-<img src="https://i.imgur.com/uWT7sDC.png" width="100%">
-</div>
-
-<p>ログインフォームに以下情報を入力します。</p>
-<table>
-<thead>
-<tr>
-<th><em>Item</em></th>
-<th><em>Value</em></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Server</td>
-<td>pgsql</td>
-</tr>
-<tr>
-<td>Username</td>
-<td>prometheus</td>
-</tr>
-<tr>
-<td>Password</td>
-<td>password</td>
-</tr>
-<tr>
-<td>Database</td>
-<td>postgres</td>
-</tr>
-</tbody></table>
-<ul>
-<li>PostgreSQL に保存されているメトリクス情報が確認できます。</li>
-</ul>
-<p>PostgreSQL &gt;&gt; pgsql &gt;&gt; postgres &gt;&gt; prometheus &gt;&gt; Select: metrics</p>
-<div style="text-align:center;">
-<img src="https://i.imgur.com/cyPrvqC.png" width="100%">
-</div>
-
-
-<h2><span id="alertmanager-でアラート通知してみる">AlertManager でアラート通知してみる</span></h2><p>例として node-exporter を停止</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant%$ sudo docker-compose stop node-exporter</span><br></pre></td></tr></table></figure>
-
-<p><code>./alertmanager/config.yml</code> で設定した Slack Channel にちゃんと通知がきました。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171113/20171113021331.png" width="100%">
-</div>
-
-
-<h2><span id="所感">所感</span></h2><ul>
-<li><p>2.0 になって設定の仕方が諸々変わり、公式サイトじっくり見る必要あります。</p>
-<ul>
-<li>と思ったら、早速まとめ出てました！ありがとうございます！<ul>
-<li><a href="https://qiita.com/tkusumi/items/293174826a8a5d47d186">Prometheus 2.0 の変更点と移行</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>今回は Prometheus ×1 台構成ですが、2台以上で冗長化する構成も試してみたい。</p>
-</li>
-</ul>
-<h2><span id="余談">余談</span></h2><ul>
-<li>バグなのか google/cadvisor で検出するメトリクスが重複表示されて grafana で絞るのに困りました。<ul>
-<li>Issue これ？<ul>
-<li><a href="https://github.com/google/cadvisor/issues/1704">Inconsistent container metrics in prometheus route #1704</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2><span id="あとがき">あとがき</span></h2><p>Mackerel の様なマネージドな監視サービスで運用コストを削減する以上に<br>Prometheus をマネージドすれば、さらにトータルコストを抑えられる様になる、<br>と睨んでます。</p>
-<p>ですが、Datadog は APM 付きプランも適度なコスト感で提供しておりマネージドサービスの魅力は尚大きいです。</p>
-<p>モニタリングの棲み分けをできる様にするにも、<br>選択肢の一つにするにも Prometheus 挑戦しがいがあるのでは？<br>と思っています。</p>
-<p>Prometheus、今後さらに広まることを期待しています。</p>
-<h2><span id="参考">参考</span></h2><ul>
-<li><a href="https://prometheus.io/docs/prometheus/2.0/configuration/configuration/">Configuration | Prometheus</a></li>
-<li><a href="https://github.com/prometheus/prometheus/blob/release-2.0/config/testdata/conf.good.yml">prometheus/config/testdata/conf.good.yml</a></li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1461,7 +1283,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            191
+                            192
                         </p>
                     </a>
                 </div>
@@ -1473,7 +1295,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            0
+                            1
                         </p>
                     </a>
                 </div>
@@ -1546,6 +1368,25 @@
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
                     <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
                     <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/07/2020-05-20-go-json-time/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
+                    <p class="is-size-7 is-uppercase">
                         
                     </p>
                 </div>
@@ -1565,7 +1406,7 @@
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-29T15:00:00.000Z">2020-04-30</time></div>
                     <a href="/2020/04/30/2020-04-30-typing-game-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go でタイピングゲーム作った</a>
                     <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
                 </div>
             </div>
@@ -1602,25 +1443,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-15T15:00:00.000Z">2020-04-16</time></div>
                     <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Lambda Edge で Basic 認証 や CSP 対応</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-buildspec-env/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1796,7 +1618,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">21</span>
+                        <span class="tag is-grey">22</span>
                     </a>
                 </div>
                 
@@ -2395,7 +2217,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

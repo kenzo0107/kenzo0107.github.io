@@ -2,6 +2,7 @@
 layout: post
 title: Golang errcheck による defer 警告対応
 date: 2019-12-09
+category: Go
 tags:
 - Go
 ---

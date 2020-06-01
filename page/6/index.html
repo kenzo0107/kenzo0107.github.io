@@ -142,6 +142,57 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/2018/04/18/2018-04-18-ftps-by-curl/" class="image is-8by1">
+        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180418/20180418082402.png" alt="curl で FTPS (File Transfer Protocol over SSL/TLS) 接続確認">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2018-04-17T15:00:00.000Z">2018-04-18</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2018/04/18/2018-04-18-ftps-by-curl/">curl で FTPS (File Transfer Protocol over SSL/TLS) 接続確認</a>
+            
+        </h1>
+        <div class="content">
+            <p>以下コマンドで FTPS 接続確認ができます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -u &lt;user&gt; --ftp-ssl -k ftp:&#x2F;&#x2F;&lt;ftp domain&gt;&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="概要">概要</span></h2><p>備忘録記事です。</p>
+<p>社外向けに FTPS で接続許可をする必要があり設定しました。</p>
+<p>単純に作成・更新した user, password で認証をパスできるか、<br>の確認だけができれば良いので、その確認方法を模索している時に<br>程よいコマンドがありました。</p>
+<p>その接続確認を FileZilla, Cyberduck でしましたが<br>どうもうまくいかず。。</p>
+<p>改めて、 <code>lftp</code> とか色々 ftp だけでもコマンドは多々あるんだなと実感しました。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/2018/03/07/2018-03-07-change-ruby-version-via-rbenv/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180307/20180307225204.png" alt="Linux に rbenv をセットアップして ruby バージョンを切り替える">
         </a>
@@ -989,203 +1040,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2017/10/08/2017-10-08-waf-cloudfront-referer-check/" class="image is-8by1">
-        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180531.png" alt="WAF+CloudFront でリファラチェック (直リンク禁止)">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-10-07T15:00:00.000Z">2017-10-08</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/10/08/2017-10-08-waf-cloudfront-referer-check/">WAF+CloudFront でリファラチェック (直リンク禁止)</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="概要">概要</span></h2><p>AWS WAF (Web Application Firewall) を利用し Cloudfront でのリファラ制御を実装しましたのでそのまとめです。</p>
-<p>直リンク禁止対策として導入しました。</p>
-<p>以下手順になります。</p>
-<h3><span id="go-to-aws-waf-ボタンクリック">Go to AWS WAF ボタンクリック</span></h3><p>サービス &gt; WAF &amp; Shield と辿り Go to AWS WAF クリック</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005174955.png" width="100%">
-</div>
-
-<h3><span id="configure-web-acl-ボタンクリック">Configure Web ACL ボタンクリック</span></h3><p>ACL (Access Control List) を設定していきます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180856.png" width="100%">
-</div>
-
-<h3><span id="概要確認">概要確認</span></h3><p>特にチェックせず Next ボタンクリック</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181044.png" width="100%">
-</div>
-
-<h3><span id="web-acl-設定">web ACL 設定</span></h3><div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181315.png" width="100%">
-</div>
-
-<p>以下、設定項目を設定し、Next ボタンクリック</p>
-<table>
-<thead>
-<tr>
-<th><em>Item</em></th>
-<th><em>Value</em></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Web ACL name</td>
-<td>(任意) 例ではCloudfront の CNAME を設定しています。</td>
-</tr>
-<tr>
-<td>CloudWatch metric name</td>
-<td>Web ACL name を入力すると自動で入力される。変更したい場合のみ変更</td>
-</tr>
-<tr>
-<td>Region</td>
-<td>Global(CloudFront) 選択</td>
-</tr>
-<tr>
-<td>AWS resource to associate</td>
-<td>対象となるCloudfrontを選択する箇所。運用中の Cloudfront を対象とすると場合は後々設定。</td>
-</tr>
-</tbody></table>
-<h3><span id="条件作成">条件作成</span></h3><p>今回は文字列一致を条件とする為、 String match conditions にて <code>Create condition</code> ボタンクリック</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181800.png" width="100%">
-</div>
-
-<h3><span id="string-match-condition-作成">string match condition 作成</span></h3><div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181926.png" width="100%">
-</div>
-
-<p>以下設定し <code>Add filter</code> ボタンクリック。<br>複数 filter がある場合、Add filter を繰り返します。</p>
-<table>
-<thead>
-<tr>
-<th><em>Item</em></th>
-<th><em>Value</em></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Name</td>
-<td>(任意)</td>
-</tr>
-<tr>
-<td>Part of the request to filter on</td>
-<td>Header</td>
-</tr>
-<tr>
-<td>Header</td>
-<td>Referer</td>
-</tr>
-<tr>
-<td>Match type</td>
-<td>Contains</td>
-</tr>
-<tr>
-<td>Transformation</td>
-<td>Convert to lowercase</td>
-</tr>
-<tr>
-<td>Value to match</td>
-<td>対象となるドメイン設定</td>
-</tr>
-</tbody></table>
-<br>
-
-<h4><span id="add-filter-後-create-ボタンクリック"><code>Add filter</code> 後、 <code>Create</code> ボタンクリック。</span></h4><div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182327.png" width="100%">
-</div>
-
-<h4><span id="next-ボタンクリック">Next ボタンクリック</span></h4><p>追加したもののすぐに反映されていない。<br>そのまま <code>Next</code> ボタンクリック</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182446.png" width="100%">
-</div>
-
-<h3><span id="ルール作成">ルール作成</span></h3><p><code>Create rule</code> ボタンクリック。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182608.png" width="100%">
-</div>
-
-<h4><span id="ルールに条件を紐付け">ルールに条件を紐付け</span></h4><p>Name, Cloudwatch metric name を設定し<br>Add conditions で条件を追加します。</p>
-<p>その後、<code>Create</code> ボタンクリック。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182641.png" width="100%">
-</div>
-
-<h3><span id="ルール以外のリクエストのアクセス禁止">ルール以外のリクエストのアクセス禁止</span></h3><p>やはり Rule は反映されていない。ですが、続けて<br><code>Block all requests that don&#39;t match any rules</code> をチェックし <code>Review and create</code> ボタンクリック。</p>
-<p>※対象のCloudfront に反映させたくない場合は、Cloudfront を選択したリソースを解除する必要があります。<br><span style="color: #ff0000">※最後に関連付けができるのでここではするべきではないと思います。</span></p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182806.png" width="100%">
-</div>
-
-<h3><span id="確認ページで入力内容確認後作成">確認ページで入力内容確認後作成</span></h3><p><code>Confirm and create</code> ボタンクリック。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183423.png" width="100%">
-</div>
-
-<h3><span id="対象の-web-acl-を編集">対象の web ACL を編集</span></h3><p>WEB ACLs より選択し <code>Edit web ACL</code> ボタンクリック</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183628.png" width="100%">
-</div>
-
-<h4><span id="web-acl-編集">web ACL 編集</span></h4><ol>
-<li>作成したルールを選択</li>
-<li><code>Add rule to web ACL</code> ボタンクリック</li>
-<li>Allow 選択</li>
-<li><code>Update</code> ボタンクリック</li>
-</ol>
-<p>[f:id:kenzo0107:20171005183720p:plain]</p>
-<h3><span id="cloudfront-関連付け">Cloudfront 関連付け</span></h3><p><code>Add association</code> ボタンクリック</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183720.png" width="100%">
-</div>
-
-<h4><span id="web-acl-に-cloudfront-を関連付け">Web ACL に Cloudfront を関連付け</span></h4><p>Resource で 対象の Cloudfront を選択し <code>Add</code> ボタンクリック</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005184119.png" width="100%">
-</div>
-
-<p>以上で数分後 WAF+CloudFront によるリファラチェックが確認できる状態になります。</p>
-<h3><span id="アクセス確認">アクセス確認</span></h3><p>自環境では<br>ローカルの /etc/hosts 修正し対象ドメインから Cloudfront CNAME へのリンクを貼って確認しました。</p>
-<p>Cloudfront CNAME ドメインでのリソースを直接アクセスすると<br>以下の様な エラーページが表示されることが確認できました。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005184505.png" width="100%">
-</div>
-
-<h3><span id="もう少しユーザフレンドリーに">もう少しユーザフレンドリーに</span></h3><p>上記のエラーページは Cloudfront &gt; Error Pages で  <code>Create Custom Error Response</code> で S3 上のパスを指定することでカスタマイズが可能です。</p>
-<p>是非サイトコンセプトに合ったエラーページをご用意されるとよりユーザフレンドリーな配信になるかと思います。</p>
-<p>以上<br>ご参考になれば幸いです。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1252,7 +1106,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            191
+                            192
                         </p>
                     </a>
                 </div>
@@ -1264,7 +1118,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            0
+                            1
                         </p>
                     </a>
                 </div>
@@ -1337,6 +1191,25 @@
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
                     <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
                     <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/05/07/2020-05-20-go-json-time/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
+                    <a href="/2020/05/07/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
+                    <p class="is-size-7 is-uppercase">
                         
                     </p>
                 </div>
@@ -1356,7 +1229,7 @@
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-29T15:00:00.000Z">2020-04-30</time></div>
                     <a href="/2020/04/30/2020-04-30-typing-game-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go でタイピングゲーム作った</a>
                     <p class="is-size-7 is-uppercase">
-                        
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
                 </div>
             </div>
@@ -1393,25 +1266,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-15T15:00:00.000Z">2020-04-16</time></div>
                     <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Lambda Edge で Basic 認証 や CSP 対応</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/03/31/2020-03-31-buildspec-env/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-30T15:00:00.000Z">2020-03-31</time></div>
-                    <a href="/2020/03/31/2020-03-31-buildspec-env/" class="title has-link-black-ter is-size-6 has-text-weight-normal">CodePipeline で CodeBuild へ環境変数を渡し、上書きすることで CodeBuild を再利用する</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1587,7 +1441,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">21</span>
+                        <span class="tag is-grey">22</span>
                     </a>
                 </div>
                 
@@ -2186,7 +2040,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

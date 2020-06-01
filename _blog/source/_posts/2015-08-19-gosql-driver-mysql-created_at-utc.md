@@ -2,6 +2,7 @@
 layout: post
 title: go-sql-driver/mysqlでcreated_at (datetime) がUTCで登録されてしまう件
 date: 2015-08-19
+category: Go
 tags:
 - Go
 thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150819/20150819234635.gif
