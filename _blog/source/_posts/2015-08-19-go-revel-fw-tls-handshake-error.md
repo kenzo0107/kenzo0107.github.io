@@ -3,6 +3,7 @@ layout: post
 title: "Golang Revelフレームワークエラー 「server.go:1775: http: TLS handshake error from 127.0.0.1:36799: tls: first record does not look like a TLS handshake」対応"
 date: 2015-08-19
 category: Go
+category: Go
 tags:
 - Go
 ---

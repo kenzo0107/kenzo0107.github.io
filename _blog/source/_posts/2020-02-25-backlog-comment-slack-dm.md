@@ -1,6 +1,7 @@
 ---
 title: Backlog でコメント追加時に 「お知らせしたいユーザ」に Slack DM する
 category: Go
+category: Go
 tags:
 - Go
 date: 2020-02-25

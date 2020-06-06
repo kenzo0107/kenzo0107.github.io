@@ -1,5 +1,6 @@
 ---
 title: Go で時刻を json.Unmarshal する際の注意点
+category: Go
 tags:
 - Go
 date: 2020-05-20

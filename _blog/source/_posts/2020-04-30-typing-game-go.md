@@ -1,6 +1,7 @@
 ---
 title: Go でタイピングゲーム作った
 category: Go
+category: Go
 tags:
 - Go
 date: 2020-04-30

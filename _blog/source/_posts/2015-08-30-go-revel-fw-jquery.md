@@ -3,6 +3,7 @@ layout: post
 title: Go Revelフレームワーク jQuery非同期処理
 date: 2015-08-30
 category: Go
+category: Go
 tags:
 - Go
 ---
