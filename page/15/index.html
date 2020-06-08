@@ -146,6 +146,184 @@
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2016-02-24T15:00:00.000Z">2016-02-25</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/02/25/2016-02-25-get-a-plus-ssl-quality/">無料SSL証明書発行しセキュリティでA+を取る！ 〜Apache編〜</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>ベリトランスモジュールバージョンアップに際して<br>SHA256で発行したSSL証明書が必須となりました。</p>
+<p>テスト環境でベリトランスモジュールバージョンアップ試験を行う際に<br>SSL証明書導入する必要が生じました。</p>
+<p>本番環境と同じ有料SSLを導入するまでとはいかずとも<br>近しい状況を構築する必要があったので無料SSL証明書を発行し導入しました。</p>
+<p>上記の手順をまとめましたので以下に記載します。</p>
+<h2><span id="環境">環境</span></h2><p>AWS Marketplace:  CentOS 6 (x86_64) - with Updates HVM を利用しています。</p>
+<ul>
+<li>CentOS release 6.7 (Final)</li>
+<li>Apache 2.4.12</li>
+</ul>
+<h2><span id="手順">手順</span></h2><h3><span id="csr生成">CSR生成</span></h3><p>事前準備として、SSLインストール対象サーバで<br>CSRを生成しておきます。</p>
+<p>SHA256 対応のCSR生成方法について以下ご参考ください。</p>
+<a href="http://kenzo0107.hatenablog.com/entry/2015/03/01/010130" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="http://ecx.images-amazon.com/images/I/4165T404E2L.jpg"></div><div class="descriptions"><div class="og-title">Apache + OpenSSL でSHA256対応CSR生成 - 長生村本郷Engineers&#39;Blog</div><div class="og-description">ドメイン登録者情報確認 ※特にドメイン登録者を明確に指定する必要がなければ、「手順」へ進んでください。企業認証周りが必要な場合は 事前にWHOIS(フーイズ)でドメイン登録者情報を確認しておくとスムーズです。JPRS WHOIS /JPRS検索ワードにドメイン入力して検索すると登…</div></div></div></a>
+
+
+<h3><span id="startcomに登録">StartComに登録</span></h3><h4><span id="ヘッダーメニューの-sign-up-クリック">ヘッダーメニューの Sign-up クリック</span></h4><p><a href="https://startssl.com/">StartSSL</a></p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160224/20160224185554.png" width="100%">
+</div>
+
+<h4><span id="必要事項登録しsend-verification-codeボタンクリック">必要事項登録し「send verification code」ボタンクリック</span></h4><p>登録E-mail宛に verification codeが送付されます。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160224/20160224185554.png" width="100%">
+</div>
+
+<h4><span id="こんな感じのメールが来ます">こんな感じのメールが来ます。</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160224/20160224190645.png" width="100%">
+</div>
+
+<h4><span id="verfication-codeを入力し登録完了">verfication codeを入力し登録完了</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160224/20160224190947.png" width="100%">
+</div>
+
+
+
+
+<h3><span id="ssl発行手続き">SSL発行手続き</span></h3><h4><span id="無料版選択">無料版選択</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160224/20160224191318.png" width="100%">
+</div>
+
+<h4><span id="sslのweb-server-用を選択">SSLのWeb Server 用を選択</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225103836.png" width="100%">
+</div>
+
+<h4><span id="domain-validation">Domain Validation</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225103958.png" width="100%">
+</div>
+
+<h4><span id="sslインストール対象サーバのドメイン入力">SSLインストール対象サーバのドメイン入力</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225104510.png" width="100%">
+</div>
+
+<h4><span id="メール送信による認証">メール送信による認証</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225105201.png" width="100%">
+</div>
+
+<p><b>startSSL側で指定するメールアドレスで受信可能な状態にする</b>必要があります。</p>
+<p>ec2インスタンスのメール受信設定は以下記事が参考になりました。ありがとうございます。</p>
+<p><a href="https://github.com/mechamogera/MyTips/wiki/AWS%E4%B8%8A%E3%81%AEpostfix%E3%81%A7%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%92%E5%8F%97%E4%BF%A1%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B">AWS上のpostfixでメールを受信してみる</a></p>
+<blockquote>
+<p>上記記事中の注意点として<br>インスタンス作成直後に <code>yum update</code> 分にはいいですが<br>時にAWSで <code>yum update</code> をするとkernel panicを起こすことがあります。<br>pythonをyumでなくソースから独自に入れ直したり、色々してたせいか…</p>
+<p>原因は追い切れていませんが、経年運用したインスタンスについては yum update は控えたいと思います。</p>
+</blockquote>
+<h5><span id="うまく受信設定できない場合">うまく受信設定できない場合</span></h5><ul>
+<li><p>/var/log/maillog を 常に tailしてログ確認。</p>
+</li>
+<li><p>受信可能なメールアドレスが既にあれば aliases で向け先変える。<br>postmaster@(domain) → root@(domain)</p>
+</li>
+<li><p>メールボックスで Permission denied で<br>受信メールを保存できない場合は以下強引にメールディレクトリを変更する。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;etc&#x2F;postfix&#x2F;main.cf</span><br><span class="line"></span><br><span class="line">- home_mailbox &#x3D; Maildir&#x2F;</span><br><span class="line">+ home_mailbox &#x3D; ..&#x2F;home&#x2F;ec2-user&#x2F;Maildir&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="ssl証明書-注文へ進む">SSL証明書 注文へ進む</span></h4><p>メール受信による認証がクリア後、SSL証明書注文へ進みます。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225114419.png" width="100%">
+</div>
+
+<h4><span id="認証情報作成">認証情報作成</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225114811.png" width="100%">
+</div>
+
+<p>情報入力後、 (domain).zip がダウンロードされる。<br>※ 今回は WebServer が Apache なので ApacheServer を参照します。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225115225.png" width="100%">
+</div>
+
+<p>解凍した zipファイルの ApacheServer 内の以下2ファイルを任意のディレクトリにアップしましょう。</p>
+<ul>
+<li>1_root_bundle.crt</li>
+<li>2_(domain).crt</li>
+</ul>
+<p>今回アップ先ディレクトリは server.key 等のあるパス (/etc/httpd/conf/ssl.csr/) にします。</p>
+<h4><span id="sslconf設定">ssl.conf設定</span></h4><p>SSL証明書のインストールとは<br>Apacheの設定ファイルとして指定ディレクティブで読み込ませる<br>ことです。</p>
+<p>主な設定は以下です。</p>
+<p>| <em>Item</em>                  | <em>Value</em>                                   | <em>Explain</em>                         |<br>| ———————– | —————————————– |<br>| SSLCertificateChainFile | /etc/httpd/conf/ssl.csr/1_root_bundle.crt | 中間証明書                        |<br>| SSLCertificateFile      | /etc/httpd/conf/ssl.csr/2_(domain).crt    | SSLサーバ証明書                   |<br>| SSLCertificateKeyFile   | /etc/httpd/conf/ssl.csr/server.key        | SSLサーバ証明書とペアになる秘密鍵 |</p>
+<p>以下URLで各WebServerとopensslバージョンにより最適な設定方法を示唆いただけます。</p>
+<p><a href="https://ssl-config.mozilla.org/">https://ssl-config.mozilla.org/</a></p>
+<p>/etc/httpd/conf.d/ssl.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">LoadModule ssl_module modules&#x2F;mod_ssl.so</span><br><span class="line"></span><br><span class="line">Listen 443</span><br><span class="line"></span><br><span class="line">AddType application&#x2F;x-x509-ca-cert .crt</span><br><span class="line">AddType application&#x2F;x-pkcs7-crl    .crl</span><br><span class="line"></span><br><span class="line">SSLPassPhraseDialog  builtin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">SSLSessionCache         shmcb:&#x2F;var&#x2F;cache&#x2F;mod_ssl&#x2F;scache(512000)</span><br><span class="line">SSLSessionCacheTimeout  300</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#SSLMutex default</span><br><span class="line">Mutex default ssl-cache</span><br><span class="line"></span><br><span class="line">SSLRandomSeed startup file:&#x2F;dev&#x2F;urandom  256</span><br><span class="line">SSLRandomSeed connect builtin</span><br><span class="line">#SSLRandomSeed startup file:&#x2F;dev&#x2F;random  512</span><br><span class="line">#SSLRandomSeed connect file:&#x2F;dev&#x2F;random  512</span><br><span class="line">#SSLRandomSeed connect file:&#x2F;dev&#x2F;urandom 512</span><br><span class="line"></span><br><span class="line">SSLCryptoDevice builtin</span><br><span class="line"></span><br><span class="line">&lt;VirtualHost _default_:443&gt;</span><br><span class="line"></span><br><span class="line">  DocumentRoot &quot;&#x2F;var&#x2F;www&#x2F;html&quot;</span><br><span class="line">  ServerName (domain):443</span><br><span class="line"></span><br><span class="line">  ErrorLog &#x2F;var&#x2F;log&#x2F;ssl_error_log</span><br><span class="line">  TransferLog &#x2F;var&#x2F;log&#x2F;ssl_access_log</span><br><span class="line">  LogLevel warn</span><br><span class="line"></span><br><span class="line">  SSLEngine on</span><br><span class="line">  SSLCertificateFile &#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;ssl.csr&#x2F;2_(domain).crt</span><br><span class="line">  SSLCertificateKeyFile &#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;ssl.csr&#x2F;server.key</span><br><span class="line">  SSLCertificateChainFile &#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;ssl.csr&#x2F;1_root_bundle.crt</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  &lt;Files ~ &quot;\.(cgi|shtml|phtml|php3?)$&quot;&gt;</span><br><span class="line">    SSLOptions +StdEnvVars</span><br><span class="line">  &lt;&#x2F;Files&gt;</span><br><span class="line">  &lt;Directory &quot;&#x2F;var&#x2F;www&#x2F;cgi-bin&quot;&gt;</span><br><span class="line">    SSLOptions +StdEnvVars</span><br><span class="line">  &lt;&#x2F;Directory&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  SetEnvIf User-Agent &quot;.*MSIE.*&quot; \</span><br><span class="line">         nokeepalive ssl-unclean-shutdown \</span><br><span class="line">         downgrade-1.0 force-response-1.0</span><br><span class="line"></span><br><span class="line">  CustomLog logs&#x2F;ssl_request_log \</span><br><span class="line">          &quot;%t %h %&#123;SSL_PROTOCOL&#125;x %&#123;SSL_CIPHER&#125;x \&quot;%r\&quot; %b&quot;</span><br><span class="line"></span><br><span class="line">  &lt;Directory &quot;&#x2F;var&#x2F;www&#x2F;html&quot;&gt;</span><br><span class="line">    AllowOverride All</span><br><span class="line">    Options -Indexes +FollowSymLinks +Includes +ExecCGI</span><br><span class="line">    Order allow,deny</span><br><span class="line">    Allow from all</span><br><span class="line">  &lt;&#x2F;Directory&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;VirtualHost&gt;</span><br><span class="line"></span><br><span class="line">SSLProtocol all -SSLv2 -SSLv3</span><br><span class="line"></span><br><span class="line">SSLCipherSuite ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS</span><br><span class="line"></span><br><span class="line">SSLHonorCipherOrder on</span><br><span class="line"></span><br><span class="line">SSLCompression off</span><br><span class="line">SSLSessionTickets off</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>パフォーマンスチューニングを一切していません。<br>あくまで SSL証明書インストールを対象としていますのでご注意ください。</p>
+</blockquote>
+<h4><span id="設定ファイルの構文確認">設定ファイルの構文確認</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 構文チェック</span><br><span class="line"># httpd -t</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 構文エラーがない場合は以下のように表示されます。</span><br><span class="line">Syntax OK</span><br></pre></td></tr></table></figure>
+
+<p>構文エラーが発生している場合は対象箇所が表示されますのでチェックし直してください。<br>但し、構文エラーがないからと言ってApache再読み込み時にエラーが発生しないとは限らないので<br>万が一の為、即元に戻せるようなコマンドを作っておくと良いでしょう。</p>
+<p>例えば<br>ssl.conf を ssl.conf.bk にリネームして Apacheの設定ファイルとして見ないようにさせるなど。</p>
+<h4><span id="apache-設定ファイル再読み込み">Apache 設定ファイル再読み込み</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># service httpd reload</span><br><span class="line">Reloading httpd:             [  OK  ]</span><br></pre></td></tr></table></figure>
+
+<h4><span id="ブラウザからアクセス">ブラウザからアクセス</span></h4><p>Chromeでアクセスしました。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225122555.png" width="100%">
+</div>
+
+<ul>
+<li>認証の詳細な情報</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225123052.png" width="100%">
+</div>
+
+
+
+
+<h4><span id="セキュリティチェック">セキュリティチェック</span></h4><p>以下サイトで診断できます。<br><a href="https://www.ssllabs.com/ssltest/index.html">QUALYS SSL LABS</a></p>
+<p>「A」が取れました！</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225130720.png" width="100%">
+</div>
+
+
+<p>ちなみに<br>常に https通信で問題ないサイトであれば以下のように設定すると</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:443&gt;</span><br><span class="line">  ...</span><br><span class="line">  Header always set Strict-Transport-Security &quot;max-age&#x3D;15768000&quot;</span><br><span class="line">  ...</span><br><span class="line">&lt;&#x2F;VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+
+<p>「A+」取得できました！</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160225/20160225131401.png" width="100%">
+</div>
+
+<p>常時httpsはセキュアではありますがサイトの仕様次第なところもあるので状況によりけりです。</p>
+<p>以上</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2016-02-22T15:00:00.000Z">2016-02-23</time>
                 
                 
@@ -732,161 +910,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-01-12T15:00:00.000Z">2016-01-13</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/01/13/2016-01-13-hubot-slack-on-amazonlinux/">Hubot + Slack on Amazon Linux</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="prerequisite">Prerequisite</span></h2><ul>
-<li>Amazon Linux AMI 2015.09.1 (HVM), SSD Volume Type(t2.nano)</li>
-<li>npm 1.3.6</li>
-<li>hubot 2.17.0</li>
-<li>coffeescript 1.10.0</li>
-</ul>
-<p>I use t2.nano released at December 2015.</p>
-<h2><span id="first-to-do">first to do.</span></h2><ul>
-<li>summarized in the following site.</li>
-</ul>
-<p><a href="http://qiita.com/yangci/items/ef2ab9b6f0d28bad0881">AWS EC2 Amazon Linuxインスタンス起動後、最初にやることまとめ</a></p>
-<h2><span id="install-npm">Install npm</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y npm --enablerepo&#x3D;epel</span><br><span class="line"></span><br><span class="line">$ npm -v</span><br><span class="line">1.3.6</span><br></pre></td></tr></table></figure>
-
-<h2><span id="install-hubot-coffee-script-yo-generator-hubot">Install hubot, coffee-script, yo, generator-hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install -g hubot coffee-script yo generator-hubot</span><br><span class="line"></span><br><span class="line">$ hubot -v</span><br><span class="line">2.17.0</span><br><span class="line"></span><br><span class="line">$ coffee -v</span><br><span class="line">CoffeeScript version 1.10.0</span><br></pre></td></tr></table></figure>
-
-<h2><span id="create-hubot">create hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir mybot</span><br><span class="line">$ cd mybot</span><br><span class="line">$ yo hubot</span><br><span class="line"></span><br><span class="line">? &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">We&#39;re constantly looking for ways to make yo better!</span><br><span class="line">May we anonymously report usage statistics to improve the tool over time?</span><br><span class="line">More info: https:&#x2F;&#x2F;github.com&#x2F;yeoman&#x2F;insight &amp; http:&#x2F;&#x2F;yeoman.io</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; (Y&#x2F;n) n</span><br><span class="line">                     _____________________________</span><br><span class="line">                    &#x2F;                             \</span><br><span class="line">   &#x2F;&#x2F;\              |      Extracting input for    |</span><br><span class="line">  &#x2F;&#x2F;&#x2F;&#x2F;\    _____    |   self-replication process   |</span><br><span class="line"> &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;\  &#x2F;_____\   \                             &#x2F;</span><br><span class="line"> &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; |[^_&#x2F;\_]|   &#x2F;----------------------------</span><br><span class="line">  |   | _|___@@__|__</span><br><span class="line">  +&#x3D;&#x3D;&#x3D;+&#x2F;  &#x2F;&#x2F;&#x2F;     \_\</span><br><span class="line">   | |_\ &#x2F;&#x2F;&#x2F; HUBOT&#x2F;\\</span><br><span class="line">   |___&#x2F;\&#x2F;&#x2F;      &#x2F;  \\</span><br><span class="line">         \      &#x2F;   +---+</span><br><span class="line">          \____&#x2F;    |   |</span><br><span class="line">           | &#x2F;&#x2F;|    +&#x3D;&#x3D;&#x3D;+</span><br><span class="line">            \&#x2F;&#x2F;      |xx|</span><br><span class="line"></span><br><span class="line">? Owner (User &lt;user@example.com&gt;) tech@xxxxxxxx.jp</span><br><span class="line">? Bot name (mybot) hubot</span><br><span class="line">? Description xxxxxxx&#39;s hubot</span><br><span class="line">? Bot adapter slack</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">hubot-maps@0.0.2 node_modules&#x2F;hubot-maps</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">Procfile   bin                    hubot-scripts.json  package.json</span><br><span class="line">README.md  external-scripts.json  node_modules        scripts</span><br></pre></td></tr></table></figure>
-
-<h3><span id="こんなエラーが出たときは">こんなエラーが出たときは</span></h3><p>/root/.config へのアクセス権限がないと言われています。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Error: EACCES, permission denied &#39;&#x2F;root&#x2F;.config&#39;</span><br><span class="line">    at Object.fs.mkdirSync (fs.js:654:18)</span><br><span class="line">    at sync (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;configstore&#x2F;node_modules&#x2F;mkdirp&#x2F;index.js:71:13)</span><br><span class="line">    at Function.sync (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;configstore&#x2F;node_modules&#x2F;mkdirp&#x2F;index.js:77:24)</span><br><span class="line">    at Object.create.all.get (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;configstore&#x2F;index.js:38:13)</span><br><span class="line">    at Object.Configstore (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;configstore&#x2F;index.js:27:44)</span><br><span class="line">    at new Insight (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;insight&#x2F;lib&#x2F;index.js:37:34)</span><br><span class="line">    at Object.&lt;anonymous&gt; (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;lib&#x2F;cli.js:156:11)</span><br><span class="line">    at Module._compile (module.js:456:26)</span><br><span class="line">    at Object.Module._extensions..js (module.js:474:10)</span><br><span class="line">    at Module.load (module.js:356:32)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>全権限付与</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mkdir &#x2F;root&#x2F;.config</span><br><span class="line"># chmod -R 0777 &#x2F;root&#x2F;.config</span><br></pre></td></tr></table></figure>
-
-<p>上記で問題なくyo コマンドが通りました。ほっ(-o-)</p>
-<ul>
-<li>Initial setting hubot.</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th><em>Item</em></th>
-<th><em>Value</em></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Owner</td>
-<td>E-mail address</td>
-</tr>
-<tr>
-<td>Bot name</td>
-<td>same the hubot integrated slack</td>
-</tr>
-<tr>
-<td>Descriiption</td>
-<td>-</td>
-</tr>
-<tr>
-<td>Bot adapter</td>
-<td>slack</td>
-</tr>
-</tbody></table>
-<p><img src="http://i.imgur.com/AdyvxbZ.png" alt="Imgur"></p>
-<h2><span id="install-hubot-slack">Install hubot-slack</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install hubot-slack --save</span><br></pre></td></tr></table></figure>
-
-<h2><span id="modify-external-scriptsjson">modify external-scripts.json</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ echo &#39;[]&#39; &gt; external-scripts.json</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; confirm setting.</span><br><span class="line">$ cat external-scripts.json</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
-
-<h2><span id="add-to-binhubot">Add to bin/hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim bin&#x2F;hubot</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>run hubot via port 80</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line"></span><br><span class="line">set -e</span><br><span class="line"></span><br><span class="line">npm install</span><br><span class="line">export PATH&#x3D;&quot;node_modules&#x2F;.bin:node_modules&#x2F;hubot&#x2F;node_modules&#x2F;.bin:$PATH&quot;</span><br><span class="line"></span><br><span class="line"># add start</span><br><span class="line">export HUBOT_SLACK_TOKEN&#x3D;xoxb-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><br><span class="line">export PORT&#x3D;80</span><br><span class="line"># add end</span><br><span class="line"></span><br><span class="line">exec node_modules&#x2F;.bin&#x2F;hubot --name &quot;hubot&quot; &quot;$@&quot;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="creat-hubot-script">creat hubot script</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim scripts&#x2F;hello.coffee</span><br></pre></td></tr></table></figure>
-
-<p>save the belowing scripts as scripts/hello.coffee</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># Description:</span><br><span class="line">#   hubot basic command.</span><br><span class="line">#</span><br><span class="line"># Commands:</span><br><span class="line">#   hubot who are you - I&#39;m hubot!</span><br><span class="line">#   hubot hello</span><br><span class="line">#   hubot who am I - You are &lt;user_name&gt;</span><br><span class="line">#   hubot what is this &lt;*&gt; - This is &lt;$1&gt;</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; (robot) -&gt;</span><br><span class="line">  robot.respond &#x2F;who are you&#x2F;i, (msg) -&gt;</span><br><span class="line">    msg.send &quot;I&#39;m hubot!&quot;</span><br><span class="line"></span><br><span class="line">  robot.hear &#x2F;HELLO$&#x2F;i, (msg) -&gt;</span><br><span class="line">    msg.send &quot;hello!&quot;</span><br><span class="line"></span><br><span class="line">  robot.respond &#x2F;who am I&#x2F;i, (msg) -&gt;</span><br><span class="line">    msg.send &quot;You are #&#123;msg.message.user.name&#125;&quot;</span><br><span class="line"></span><br><span class="line">  robot.respond &#x2F;what is this (.*)&#x2F;i, (msg) -&gt;</span><br><span class="line">    msg.send &quot;This is #&#123;msg.match[1]&#125;&quot;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="run-hubot">run hubot</span></h2><p><code>sudo</code> is required and in order to access http port.<br>You will require hubot integrated with outside site - ex) JIRA etc…</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo bin&#x2F;hubot -a slack</span><br><span class="line"></span><br><span class="line">[Wed Jan 13 2016 13:43:08 GMT+0900 (JST)] INFO Connecting...</span><br><span class="line">[Wed Jan 13 2016 13:43:10 GMT+0900 (JST)] INFO Logged in as hubot of RUBY GROUPE, but not yet connected</span><br><span class="line">[Wed Jan 13 2016 13:43:11 GMT+0900 (JST)] INFO Slack client now connected</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>no sudo execution result …(&gt;_&lt;)<br>Error occured!!</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ bin&#x2F;hubot -a slack</span><br><span class="line"></span><br><span class="line">[Wed Jan 13 2016 16:40:59 GMT+0900 (JST)] INFO Connecting...</span><br><span class="line">[Wed Jan 13 2016 16:40:59 GMT+0900 (JST)] ERROR Error: listen EACCES</span><br><span class="line">  at errnoException (net.js:905:11)</span><br><span class="line">  at Server._listen2 (net.js:1024:19)</span><br><span class="line">  at listen (net.js:1065:10)</span><br><span class="line">  at net.js:1147:9</span><br><span class="line">  at dns.js:72:18</span><br><span class="line">  at process._tickCallback (node.js:442:13)</span><br><span class="line"></span><br><span class="line">[Wed Jan 13 2016 16:41:00 GMT+0900 (JST)] INFO Logged in as hubot of RUBY GROUPE, but not yet connected</span><br><span class="line">[Wed Jan 13 2016 16:41:02 GMT+0900 (JST)] INFO Slack client now connected</span><br></pre></td></tr></table></figure>
-
-<h2><span id="invite-hubot-at-slack">Invite hubot at Slack</span></h2><p>ex) botname=hubot</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;invite @hubot</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://i.imgur.com/v3MK8VL.png" alt="Imgur"></p>
-<h2><span id="input-text-at-slack">Input text at Slack</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[me]    hubot hello</span><br><span class="line">[hubot] hello!</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://i.imgur.com/in4XiYj.png" alt="Imgur"></p>
-<hr>
-<h1><span id="daemonize-hubot">daemonize hubot</span></h1><h2><span id="install-forever">Install forever</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install --save forever</span><br><span class="line"></span><br><span class="line">$ forever --version</span><br><span class="line">v0.15.1</span><br></pre></td></tr></table></figure>
-
-<h2><span id="set-path-as-not-root-user">set path as not root user.</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo &#39;export PATH&#x3D;$PATH:&#x2F;home&#x2F;&lt;user&gt;&#x2F;mybot&#x2F;node_modules&#x2F;forever&#x2F;bin&#39; &gt;&gt; ~&#x2F;.bashrc</span><br><span class="line">$ source ~&#x2F;.bashrc</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>root user too.</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; change to super user.</span><br><span class="line">$ sudo su</span><br><span class="line"># echo &#39;export PATH&#x3D;$PATH:&#x2F;home&#x2F;&lt;user&gt;&#x2F;mybot&#x2F;node_modules&#x2F;forever&#x2F;bin&#39; &gt;&gt; ~&#x2F;.bashrc</span><br><span class="line"># source ~&#x2F;.bashrc</span><br><span class="line"># echo $PATH</span><br><span class="line">.......:&#x2F;home&#x2F;&lt;user&gt;&#x2F;mybot&#x2F;node_modules&#x2F;forever&#x2F;bin:......</span><br></pre></td></tr></table></figure>
-
-<h2><span id="modify-binhubot">Modify bin/hubot</span></h2><script src="//gist.github.com/kenzo0107/c6c713835918c3a75159.js"></script>
-
-
-
-<h2><span id="daemonize-start-hubot-sudo-binhubot-a-slack">daemonize start hubot - <code>sudo bin/hubot -a slack</code></span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo bin&#x2F;hubot start</span><br></pre></td></tr></table></figure>
-
-<h2><span id="stop-daemonized-hubot">stop daemonized hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo bin&#x2F;hubot stop</span><br></pre></td></tr></table></figure>
-
-<h2><span id="restart-hubot">restart hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo bin&#x2F;hubot restart</span><br></pre></td></tr></table></figure>
-
-<h2><span id="check-forever-list">check forever list</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su</span><br><span class="line"># forever list</span><br><span class="line"></span><br><span class="line">info:    Forever processes running</span><br><span class="line">data:        uid  command script                           forever pid   id logfile                 uptime</span><br><span class="line">data:    [0] sICk coffee  node_modules&#x2F;.bin&#x2F;hubot -a slack 30494   30496    &#x2F;root&#x2F;.forever&#x2F;sICk.log 0:0:5:35.399</span><br></pre></td></tr></table></figure>
-
-<h2><span id="another-way-stop-forever-process">another way stop forever process</span></h2><ul>
-<li>check process. kill -9 process</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux | grep hubot | grep -v grep</span><br><span class="line"></span><br><span class="line">root     31144  0.3  3.1 723820 32392 ?        Ssl  17:58   0:00 &#x2F;usr&#x2F;bin&#x2F;node &#x2F;home&#x2F;hu&#x2F;mybot&#x2F;node_modules&#x2F;forever&#x2F;bin&#x2F;monitor node_modules&#x2F;.bin&#x2F;hubot</span><br><span class="line">root     31146  1.1  6.7 979588 69196 ?        Sl   17:58   0:00 node node_modules&#x2F;hubot&#x2F;node_modules&#x2F;.bin&#x2F;coffee &#x2F;home&#x2F;hu&#x2F;mybot&#x2F;node_modules&#x2F;.bin&#x2F;hubot -a slack</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; kill forcibly process</span><br><span class="line">$ sudo kill -9 31146</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>another one.</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ps aux | grep hubot | grep -v grep | awk &#39;&#123;print &quot;kill -9&quot;, $2&#125;&#39; | sh</span><br></pre></td></tr></table></figure>
-
-<p>Thanks.</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -953,7 +976,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            192
+                            193
                         </p>
                     </a>
                 </div>
@@ -1033,7 +1056,7 @@
                 <span class="level-item">Go</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">22</span>
+                <span class="level-item tag">23</span>
             </span>
         </a></li>
             </ul>
@@ -1046,6 +1069,25 @@
         <h3 class="menu-label">
             最近の記事
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-05T15:00:00.000Z">2020-06-06</time></div>
+                    <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1116,25 +1158,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-24T15:00:00.000Z">2020-04-25</time></div>
                     <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://docs.aws.amazon.com/ja_jp/AmazonCloudFront/latest/DeveloperGuide/images/cloudfront-events-that-trigger-lambda-functions.png" alt="Lambda Edge で Basic 認証 や CSP 対応">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-15T15:00:00.000Z">2020-04-16</time></div>
-                    <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Lambda Edge で Basic 認証 や CSP 対応</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1310,7 +1333,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">22</span>
+                        <span class="tag is-grey">23</span>
                     </a>
                 </div>
                 
@@ -1909,7 +1932,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

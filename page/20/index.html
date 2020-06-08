@@ -146,6 +146,64 @@
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2014-06-17T15:00:00.000Z">2014-06-18</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2014/06/18/2014-06-18-install-wget-on-macosx/">Mac OS X に wget インストール</a>
+            
+        </h1>
+        <div class="content">
+            <p>ターミナルから以下実行</p>
+<h3><span id="curlコマンドで圧縮されたwgetモジュールwget-xxxtargzをダウンロードする">curlコマンドで圧縮されたwgetモジュール（wget-x.x.x.tar.gz）をダウンロードする。</span></h3><p>curl -Oオプション 出力をオリジナルのシステムと同名のファイルに保存する</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -O http://ftp.gnu.org/pub/gnu/wget/wget-1.13.4.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3><span id="解凍">解凍</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar zxvf wget-1.13.4.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h3><span id="ディレクトリ内へ移動">ディレクトリ内へ移動</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> wget-1.13.4</span><br></pre></td></tr></table></figure>
+
+
+<h3><span id="makefileを作成">Makefileを作成</span></h3><p>Makefile … インストール対象となるシステム特有の機能／情報のチェック状況を記述している</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./configure –with-ssl=openssl</span><br></pre></td></tr></table></figure>
+
+<p>–with-ssl=openssl<br>のオプションを付けないと以下のようなエラーが出てインストールできない<br>configure: error: –with-ssl was given, but GNUTLS is not available.</p>
+<h3><span id="makefileを元にソースファイルのコンパイル">Makefileを元にソースファイルのコンパイル</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make</span><br></pre></td></tr></table></figure>
+
+<h3><span id="インストール">インストール</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+
+
+<p>試しに以下実行して、「index.html」がDLされていればOK !</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://yahoo.co.jp</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2014-06-15T15:00:00.000Z">2014-06-16</time>
                 
                 
@@ -424,7 +482,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            192
+                            193
                         </p>
                     </a>
                 </div>
@@ -504,7 +562,7 @@
                 <span class="level-item">Go</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">22</span>
+                <span class="level-item tag">23</span>
             </span>
         </a></li>
             </ul>
@@ -517,6 +575,25 @@
         <h3 class="menu-label">
             最近の記事
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-05T15:00:00.000Z">2020-06-06</time></div>
+                    <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -587,25 +664,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-24T15:00:00.000Z">2020-04-25</time></div>
                     <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://docs.aws.amazon.com/ja_jp/AmazonCloudFront/latest/DeveloperGuide/images/cloudfront-events-that-trigger-lambda-functions.png" alt="Lambda Edge で Basic 認証 や CSP 対応">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-15T15:00:00.000Z">2020-04-16</time></div>
-                    <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Lambda Edge で Basic 認証 や CSP 対応</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -781,7 +839,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">22</span>
+                        <span class="tag is-grey">23</span>
                     </a>
                 </div>
                 
@@ -1380,7 +1438,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

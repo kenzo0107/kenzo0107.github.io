@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://kenzo0107.github.io/2020/06/06/2020-06-06-backlog-api-go/</loc>
+        <lastmod>2020-06-08T14:40:17.898Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://kenzo0107.github.io/2020/05/20/2020-05-20-go-json-time/</loc>
         <lastmod>2020-06-03T01:40:54.556Z</lastmod>
         <changefreq>weekly</changefreq>

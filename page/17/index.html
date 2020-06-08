@@ -141,6 +141,54 @@
     
 <div class="card">
     
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2015-11-25T15:00:00.000Z">2015-11-26</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/11/26/2015-11-26-cleanup-yum-cache/">意外と容量食ってた yum cache</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="yum-cache-容量">yum cache 容量</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># du -sh &#x2F;var&#x2F;cache&#x2F;yum</span><br><span class="line">155M    &#x2F;var&#x2F;cache&#x2F;yum</span><br></pre></td></tr></table></figure>
+
+<p>155MByteある汗</p>
+<h2><span id="yum-cache-削除">yum cache 削除</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># yum clean all</span><br><span class="line">読み込んだプラグイン:fastestmirror</span><br><span class="line">リポジトリーを清掃しています: base epel extras mysql-connectors-community mysql-tools-community mysql56-community nginx treasuredata updates</span><br><span class="line">Cleaning up everything</span><br><span class="line">Cleaning up list of fastest mirrors</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="yum-cache容量確認">yum cache容量確認</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># du -sh &#x2F;var&#x2F;cache&#x2F;yum</span><br><span class="line">8.0K    &#x2F;var&#x2F;cache&#x2F;yum</span><br></pre></td></tr></table></figure>
+
+<p>スッキリ！</p>
+<p>サーバから容量不足のアラートで少しでも容量減らしたいときに<br>役立ちました。</p>
+<p>潤沢にサーバスペックを用意できるクライアントでない場合もあるので<br>地道に必要な知識だと感じました。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
     <div class="card-image">
         <a href="/2015/11/24/2015-11-24-kibana-regex-pattern-match/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151124/20151124123137.png" alt="Kibana4 検索窓での検索 正規表現パターンマッチ等">
@@ -732,87 +780,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-10-07T15:00:00.000Z">2015-10-08</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/10/08/2015-10-08-elasticsearch-index-mapping/">Elasticsearch インデックス一覧・マッピング一覧・マッピング設定</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="前提">前提</span></h2><p>Elasticsearch のインストールされているサーバ内での作業を想定しています。</p>
-<h2><span id="インデックス一覧">インデックス一覧</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET localhost:9200&#x2F;_aliases?pretty</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;logstash-2015.09.22&quot; : &#123;</span><br><span class="line">    &quot;aliases&quot; : &#123; &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;logstash-2015.09.21&quot; : &#123;</span><br><span class="line">    &quot;aliases&quot; : &#123; &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>pretty</code>をクエリストリングに指定すると<br>jsonが整形されて表示されます。</li>
-</ul>
-<h2><span id="インデックスのマッピング一覧">インデックスのマッピング一覧</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XGET localhost:9200&#x2F;_mapping?pretty</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"logstash-2015.09.22"</span> : &#123;</span><br><span class="line">    <span class="string">"mappings"</span> : &#123;</span><br><span class="line">      <span class="string">"project_production_nginx"</span> : &#123;</span><br><span class="line">        <span class="string">"properties"</span> : &#123;</span><br><span class="line">          <span class="string">"@log_name"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"@timestamp"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"date"</span>,</span><br><span class="line">            <span class="string">"format"</span> : <span class="string">"dateOptionalTime"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"body_bytes_sent"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"bytes_sent"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"forwardedfor"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"host"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"https"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"log_level"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"message"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"pid"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"query_string"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"referer"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"remote_addr"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"request_length"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"request_method"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"request_time"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"double"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"request_uri"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"status"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"tid"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"upstream_response_time"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"uri"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"useragent"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="マッピング設定">マッピング設定</span></h2><h3><span id="jsonファイル作成">jsonファイル作成</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd &#x2F;etc&#x2F;elasticsearch&#x2F;</span><br><span class="line">$ vim el_mapping.json</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>el_mapping.json</li>
-</ul>
-<p>以下のように設定し保存</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"template"</span>: <span class="string">"logstash-*"</span>,</span><br><span class="line">    <span class="string">"mappings"</span> : &#123;</span><br><span class="line">      <span class="string">"_default_"</span> : &#123;</span><br><span class="line">        <span class="string">"dynamic_templates"</span>:[&#123;</span><br><span class="line">            <span class="string">"string_template"</span>:&#123;</span><br><span class="line">                <span class="string">"match"</span>:<span class="string">"*"</span>,</span><br><span class="line">                <span class="string">"mapping"</span>:&#123;</span><br><span class="line">                    <span class="string">"type"</span>:<span class="string">"string"</span>,</span><br><span class="line">                    <span class="string">"index"</span>:<span class="string">"not_analyzed"</span></span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="string">"match_mapping_type"</span>:<span class="string">"string"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;],</span><br><span class="line">        <span class="string">"properties"</span> : &#123;</span><br><span class="line">          <span class="string">"@timestamp"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"date"</span>,</span><br><span class="line">            <span class="string">"format"</span> : <span class="string">"dateOptionalTime"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"body_bytes_sent"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"bytes_sent"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"geoip"</span> : &#123;</span><br><span class="line">            <span class="string">"properties"</span> : &#123;</span><br><span class="line">              <span class="string">"location"</span> : &#123;</span><br><span class="line">                <span class="string">"type"</span> : <span class="string">"geo_point"</span>,</span><br><span class="line">                <span class="string">"lat_lon"</span> : <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"geohash"</span> : <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"geohash_prefix"</span> : <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"geohash_precision"</span> : <span class="number">10</span></span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"request_length"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"request_time"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"double"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"status"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"upstream_response_time"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"long"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"coordinate"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"double"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"country"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"lat"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"double"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"location_properties"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"geo_point"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">"lon"</span> : &#123;</span><br><span class="line">            <span class="string">"type"</span> : <span class="string">"double"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3><span id="マッピング設定実行">マッピング設定実行</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT localhost:9200&#x2F;_template&#x2F;template_1 --data @el_mapping.json</span><br></pre></td></tr></table></figure>
-
-<h3><span id="マッピング設定一覧">マッピング設定一覧</span></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET localhost:<span class="number">9200</span>/_template/?pretty</span><br><span class="line"></span><br><span class="line"># 一覧が出力される</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">&#125;,</span><br><span class="line">  <span class="string">"template_1"</span> : &#123;</span><br><span class="line">    <span class="string">"order"</span> : <span class="number">0</span>,</span><br><span class="line">    <span class="string">"template"</span> : <span class="string">"flag_prd.accesslog-*"</span>,</span><br><span class="line">    <span class="string">"settings"</span> : &#123; &#125;,</span><br><span class="line">    <span class="string">"mappings"</span> : &#123;</span><br><span class="line">      <span class="string">"_default_"</span> : &#123;</span><br><span class="line">        <span class="string">"dynamic_templates"</span> : [ &#123;</span><br><span class="line">          <span class="string">"string_template"</span> : &#123;</span><br><span class="line">            <span class="string">"mapping"</span> : &#123;</span><br><span class="line">              <span class="string">"index"</span> : <span class="string">"not_analyzed"</span>,</span><br><span class="line">              <span class="string">"type"</span> : <span class="string">"string"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"match_mapping_type"</span> : <span class="string">"string"</span>,</span><br><span class="line">            <span class="string">"match"</span> : <span class="string">"*"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125; ],</span><br><span class="line">        <span class="string">"properties"</span> : &#123;</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h3><span id="マッピング設定削除">マッピング設定削除</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X DELETE localhost:9200&#x2F;_template&#x2F;template_1</span><br></pre></td></tr></table></figure>
-
-<h3><span id="string型はまとめてdynamic_templatesで定義してます">string型はまとめてdynamic_templatesで定義してます。</span></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"dynamic_templates"</span>:[&#123;</span><br><span class="line">    <span class="string">"string_template"</span>:&#123;</span><br><span class="line">        <span class="string">"match"</span>:<span class="string">"*"</span>,</span><br><span class="line">        <span class="string">"mapping"</span>:&#123;</span><br><span class="line">            <span class="string">"type"</span>:<span class="string">"string"</span>,</span><br><span class="line">            <span class="string">"index"</span>:<span class="string">"not_analyzed"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"match_mapping_type"</span>:<span class="string">"string"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;],</span><br></pre></td></tr></table></figure>
-
-<h2><span id="インデックス削除">インデックス削除</span></h2><p>インデックスを指定し削除します。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X DELETE localhost:9200&#x2F;logstash-2015.09.22</span><br><span class="line"></span><br><span class="line">&#123;&quot;acknowledged&quot;:true&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2><span id="インデックス全削除">インデックス全削除</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XDELETE &#39;http:&#x2F;&#x2F;localhost:9200&#x2F;*&#39;</span><br><span class="line"></span><br><span class="line">&#123;&quot;acknowledged&quot;:true&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>サービス開始前で試行錯誤してるときに何度か利用しました。<br>極力使わない。</p>
-<h2><span id="指定インデックス削除">指定インデックス削除</span></h2><ul>
-<li>例) .kibana インデックス削除</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XDELETE &#39;http:&#x2F;&#x2F;localhost:9200&#x2F;.kibana&#39;</span><br></pre></td></tr></table></figure>
-
-<p>各フィールド設定は以下まとめていただいている方がいらっしゃいました。<br>ありがとうございます♪</p>
-<p><a href="https://qiita.com/harukasan/items/4ec517d8d96f557367e1">Kibana+Elasticsearchで文字列の完全一致と部分一致検索の両方を実現する</a></p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -879,7 +846,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            192
+                            193
                         </p>
                     </a>
                 </div>
@@ -959,7 +926,7 @@
                 <span class="level-item">Go</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">22</span>
+                <span class="level-item tag">23</span>
             </span>
         </a></li>
             </ul>
@@ -972,6 +939,25 @@
         <h3 class="menu-label">
             最近の記事
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-05T15:00:00.000Z">2020-06-06</time></div>
+                    <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1042,25 +1028,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-24T15:00:00.000Z">2020-04-25</time></div>
                     <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://docs.aws.amazon.com/ja_jp/AmazonCloudFront/latest/DeveloperGuide/images/cloudfront-events-that-trigger-lambda-functions.png" alt="Lambda Edge で Basic 認証 や CSP 対応">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-15T15:00:00.000Z">2020-04-16</time></div>
-                    <a href="/2020/04/16/2020-04-16-cloudfront-csp/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Lambda Edge で Basic 認証 や CSP 対応</a>
                     <p class="is-size-7 is-uppercase">
                         
                     </p>
@@ -1236,7 +1203,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Go/">
                         <span class="tag">Go</span>
-                        <span class="tag is-grey">22</span>
+                        <span class="tag is-grey">23</span>
                     </a>
                 </div>
                 
@@ -1835,7 +1802,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
