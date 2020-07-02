@@ -104,3 +104,37 @@ sudo find . -xdev -type f | cut -d "/" -f 2 | sort | uniq -c | sort -r
 以下記事に救われました。ありがとうございます。
 
 [古いカーネルの削除方法メモ](https://qiita.com/ytkumasan/items/d6cc70f151f130d58e9b)
+
+### 追記 2020-07-02
+
+linux-headers-*** ファイルの削除について、不要な利用されていないファイルを削除するには以下コマンドで削除されます。
+
+```
+sudo apt autoremove
+```
+
+#### 自動的に削除したい場合
+
+```
+// 自動アップデートパッケージインストール
+$ sudo apt-get install -y unattended-upgrades
+
+// 自動アップデート有効化
+$ sudo dpkg-reconfigure -plow unattended-upgrades
+Yes を選択
+```
+
+`/etc/apt/apt.conf.d/50unattended-upgrades` を以下の様に編集し、 unattended-upgrade 時に autoremove する処理を追加する。
+
+```
+sudo vim /etc/apt/apt.conf.d/50unattended-upgrades
+```
+
+```
+//Unattended-Upgrade::Remove-Unused-Dependencies "false";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+```
+
+自動アップデートのログは `/var/log/unattended-upgrades/` に出力される。
+
+以上です。

@@ -146,6 +146,56 @@
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2015-10-18T15:00:00.000Z">2015-10-19</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/10/19/2015-10-19-nginx-error-a-client-request-body-is-buffered-to-a-temporary-file/">Nginxエラー対策 a client request body is buffered to a temporary file</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>Nginxで以下のようなエラーが発生</p>
+<p><code>[warn]</code>とあるしものものしさは否めない汗</p>
+<p>要求されるバッファサイズが設定量より多く、一時ファイルを利用しますよ、<br>という警告です。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[warn] 1493#1493: *210 a client request body is buffered to a temporary file &#x2F;var&#x2F;cache&#x2F;nginx&#x2F;client_temp&#x2F;0000000001 ... request: &quot;POST &#x2F;article&#x2F;save HTTP&#x2F;1.1&quot;,</span><br></pre></td></tr></table></figure>
+
+<p>そのバッファサイズの<code>設定量</code>を変更をしてまず対策しました。</p>
+<p>取り急ぎ、t2.microで最小構成でとりあえず作れ！というミッションだったので<br>50kくらいにしておきました。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    client_body_buffer_size 50k;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>取り急ぎは上記設定でwarn は吐き出されないようになりました。</p>
+<p>もしまた吐き出されるようになった場合は、<br>その数値を元にインスタンスのスケールアップも検討しようと思います。</p>
+<p>ちなみにバッファのキャッシュ先ディレクトリ(<code>client_body_temp_path</code>)はデフォルトで<code>/var/cache/nginx/client</code>となっていたので設定しませんでした。</p>
+<p>以上です。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2015-10-07T15:00:00.000Z">2015-10-08</time>
                 
                 
@@ -750,93 +800,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-08-20T15:00:00.000Z">2015-08-21</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/08/21/2015-08-21-fluentd-failpattern/">fluentd設定ハマった所あるある</a>
-            
-        </h1>
-        <div class="content">
-            <p>以下随時追加。</p>
-<h2><span id="環境">環境</span></h2><ul>
-<li>CentOS Linux release 7.1.1503 (Core)</li>
-<li>Fluentd 0.12.12</li>
-<li>Nginx 1.8.0</li>
-</ul>
-<h2><span id="permission-denined">Permission denined</span></h2><ul>
-<li>パーミッションエラー！</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># tail -f &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;td-agent.log</span><br><span class="line"></span><br><span class="line">2015-08-19 14:17:14 +0900 [error]: Permission denied @ xxxxxxx - &#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log</span><br><span class="line">  2015-08-19 14:17:14 +0900 [error]: suppressed same stacktrace</span><br></pre></td></tr></table></figure>
-
-<h3><span id="対策">対策</span></h3><p>td-agent実行ユーザを<code>root</code>に変更する。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim &#x2F;etc&#x2F;init.d&#x2F;td-agent</span><br><span class="line"></span><br><span class="line">- TD_AGENT_USER&#x3D;td-agent</span><br><span class="line">- TD_AGENT_GROUP&#x3D;td-agent</span><br><span class="line"></span><br><span class="line">+ TD_AGENT_USER&#x3D;root</span><br><span class="line">+ TD_AGENT_GROUP&#x3D;root</span><br></pre></td></tr></table></figure>
-
-<p>デーモンリロード</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
-
-<h3><span id="動作確認">動作確認</span></h3><p>以下のように<code>tail</code>が正しく実行できていることが確認できます。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># tail -f &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;td-agent.log</span><br><span class="line"></span><br><span class="line">2015-08-19 14:17:15 +0900 [info]: following tail of &#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</span><br><span class="line">2015-08-19 14:17:15 +0900 [info]: following tail of &#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log</span><br></pre></td></tr></table></figure>
-
-
-<h2><span id="warn-pattern-not-match">[warn]: pattern not match</span></h2><p>これかなりハマりました。</p>
-<p>Nginxのlogを流すときに以下のようにfomatするように書かれている記事を多く見たので<br>設定してみたらエラー発生(; &gt;_&lt;)</p>
-<ul>
-<li>/etc/td-agent/td-agent.conf</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type tail</span><br><span class="line">  format nginx</span><br><span class="line">  path &#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</span><br><span class="line">  pos_file &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;nginx-access.pos</span><br><span class="line">  tag nginx.access</span><br><span class="line">&lt;&#x2F;source&gt;</span><br></pre></td></tr></table></figure>
-
-<h3><span id="対策">対策</span></h3><p>以下のように修正</p>
-<ul>
-<li>/etc/td-agent/td-agent.conf</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type tail</span><br><span class="line">  format &#x2F;^(?&lt;remote&gt;[^ ]*) (?&lt;host&gt;[^ ]*) (?&lt;user&gt;[^ ]*) \[(?&lt;time&gt;[^\]]*)\] &quot;(?&lt;method&gt;\S+)(?: +(?&lt;path&gt;[^ ]*) +\S*)?&quot; (?&lt;code&gt;[^ ]*) (?&lt;size&gt;[^ ]*)(?: &quot;(?&lt;referer&gt;[^\&quot;]*)&quot; &quot;(?&lt;agent&gt;[^\&quot;]*)&quot; &quot;(?&lt;forwarder&gt;[^\&quot;]*)&quot;)?&#x2F;</span><br><span class="line">  time_format %d&#x2F;%b&#x2F;%Y:%H:%M:%S %z</span><br><span class="line">  path &#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</span><br><span class="line">  pos_file &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;nginx-access.pos</span><br><span class="line">  tag nginx.access</span><br><span class="line">&lt;&#x2F;source&gt;</span><br></pre></td></tr></table></figure>
-
-<p>td-agent再起動</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart td-agent</span><br></pre></td></tr></table></figure>
-
-<p>これで大丈夫。</p>
-<h2><span id="buffer_path-重複">buffer_path 重複</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[error]: failed to configure sub output redshift: Other &#39;&#39; plugin already use same buffer_path: type &#x3D; , buffer_path &#x3D; *</span><br></pre></td></tr></table></figure>
-
-<p>元々の設定は以下の様にしていました。<br>td-agent の送信先にトラブルがあり buffer が溜まり重複しエラーとなっていました。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buffer_path &#x2F;logs&#x2F;td-agent&#x2F;nginx&#x2F;logs</span><br></pre></td></tr></table></figure>
-
-<p>例）以下の様な tag があった場合、buffer_path は同じく <code>/logs/td-agent/nginx/logs</code> となってしまう</p>
-<p>hogehoge.20170101.log<br>hogehoge.20170102.log</p>
-<h3><span id="対策">対策</span></h3><p>tag_parts を用い、以下の様に tag 毎に buffer_path をユニークにすることで解決</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buffer_path &#x2F;logs&#x2F;td-agent&#x2F;nginx&#x2F;logs_$&#123;tag_parts[0]&#125;_$&#123;tag_parts[1]&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>引き続き何か発生したら追記していきます。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -901,7 +864,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            193
+                            194
                         </p>
                     </a>
                 </div>
@@ -997,6 +960,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
@@ -1071,25 +1053,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.imgur.com/PRuN9u8.png" alt="Terraform ベストプラクティス 2020 春 ~moduleやめてみた~">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-24T15:00:00.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1118,7 +1081,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/AWS/">
                         <span class="tag">AWS</span>
-                        <span class="tag is-grey">24</span>
+                        <span class="tag is-grey">25</span>
                     </a>
                 </div>
                 

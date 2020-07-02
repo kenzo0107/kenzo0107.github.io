@@ -141,6 +141,59 @@
     
 <div class="card">
     
+    <div class="card-image">
+        <a href="/2016/03/09/2016-03-09-android-studio-avd-from-desktop-to-localhost/" class="image is-8by1">
+        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160309/20160309222944.png" alt="Android Studio AVD (エミュレータ) からデスクトップのローカルホストに接続させる設定">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2016-03-08T15:00:00.000Z">2016-03-09</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2016/03/09/2016-03-09-android-studio-avd-from-desktop-to-localhost/">Android Studio AVD (エミュレータ) からデスクトップのローカルホストに接続させる設定</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>MacOSX 上で Android Studio で Androidアプリ開発中です。</p>
+<p>AVD(Android Virtual Device) から VolleyでAPIの繋ぎこみ先を<br>MAMPやVagrant、Docker等ローカル環境で構築したサーバに<br>接続するようにしています。</p>
+<p>単純に emulator上で 地球儀マークのWebブラウザ開いて<br>ローカルホスト を指定しても接続できません。</p>
+<p>その際に一手間必要でしたので以下手順です。</p>
+<h2><span id="設定">設定</span></h2><ul>
+<li>AndroidStudioで<span style="color: #ff0000">AVD起動中</span>に以下Shellを実行してください。</li>
+</ul>
+<script src="//gist.github.com/kenzo0107/7a51b8055e32ebcf87df.js"></script>
+
+<p>以上です。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -865,51 +918,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2016-01-14T15:00:00.000Z">2016-01-15</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2016/01/15/2016-01-15-mysql-error-1045-28000-access-denied-for-user/">MySQLトラブルシューティング - ERROR 1045 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: NO)</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="概要">概要</span></h2><p>ローカルでMacOSXでMAMPを使っていてある日誤った操作により以下のようなエラーが発生した為<br>対応まとめました。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mysql -u root</span><br><span class="line">ERROR 1045 (28000): Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: NO)</span><br></pre></td></tr></table></figure>
-
-<p>ローカル環境でrootユーザのアクセス権を誤って削除してしまったときなどに発生します。</p>
-<h2><span id="対策">対策</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; mysql停止</span><br><span class="line">$ service mysqld stop</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; rootユーザのアクセス権限が失われている</span><br><span class="line">&#x2F;&#x2F; → テーブル権限をスキップ(無視)して作業するオプション付きでセーフモードでmysql起動</span><br><span class="line">$ mysqld_safe --skip-grant-tables &amp;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; rootユーザでアクセス</span><br><span class="line">$ mysql -u root</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 現状の権限設定テーブルを空にする</span><br><span class="line">mysql&gt; TRUNCATE TABLE mysql.user;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 権限反映</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; rootユーザにlocalhostの全DBアクセス権限付与</span><br><span class="line">mysql&gt; GRANT ALL PRIVILEGES on *.* to root@localhost IDENTIFIED BY &#39;(root&#39;s password)&#39; WITH GRANT OPTION;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 権限反映</span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 権限設定確認</span><br><span class="line">mysql&gt; SELECT host, user FROM mysql.user;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; mysql CLIモード停止 (Ctl+c)でもOK</span><br><span class="line">mysql&gt; quit;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; safe modeで起動させたmysql 関連psをkillする</span><br><span class="line">$ ps aux | grep mysql | grep -v grep | awk &#39;&#123;print &quot;kill -9&quot;, $2&#125;&#39;|sh</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; mysql 起動</span><br><span class="line">$ service mysqld start</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; rootユーザでmysqlアクセス</span><br><span class="line">$ mysql -u root -p(root&#39;s password)</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-
-<p>rootユーザに権限が失われお手上げ状態になったとき、困ったときに <code>safe_mode</code> 使えます。</p>
-<p>以上</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -976,7 +984,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            193
+                            194
                         </p>
                     </a>
                 </div>
@@ -1072,6 +1080,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
@@ -1146,25 +1173,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.imgur.com/PRuN9u8.png" alt="Terraform ベストプラクティス 2020 春 ~moduleやめてみた~">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-24T15:00:00.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1193,7 +1201,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/AWS/">
                         <span class="tag">AWS</span>
-                        <span class="tag is-grey">24</span>
+                        <span class="tag is-grey">25</span>
                     </a>
                 </div>
                 

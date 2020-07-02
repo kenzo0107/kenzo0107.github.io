@@ -146,6 +146,93 @@
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2015-08-20T15:00:00.000Z">2015-08-21</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/08/21/2015-08-21-fluentd-failpattern/">fluentd設定ハマった所あるある</a>
+            
+        </h1>
+        <div class="content">
+            <p>以下随時追加。</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS Linux release 7.1.1503 (Core)</li>
+<li>Fluentd 0.12.12</li>
+<li>Nginx 1.8.0</li>
+</ul>
+<h2><span id="permission-denined">Permission denined</span></h2><ul>
+<li>パーミッションエラー！</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># tail -f &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;td-agent.log</span><br><span class="line"></span><br><span class="line">2015-08-19 14:17:14 +0900 [error]: Permission denied @ xxxxxxx - &#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log</span><br><span class="line">  2015-08-19 14:17:14 +0900 [error]: suppressed same stacktrace</span><br></pre></td></tr></table></figure>
+
+<h3><span id="対策">対策</span></h3><p>td-agent実行ユーザを<code>root</code>に変更する。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim &#x2F;etc&#x2F;init.d&#x2F;td-agent</span><br><span class="line"></span><br><span class="line">- TD_AGENT_USER&#x3D;td-agent</span><br><span class="line">- TD_AGENT_GROUP&#x3D;td-agent</span><br><span class="line"></span><br><span class="line">+ TD_AGENT_USER&#x3D;root</span><br><span class="line">+ TD_AGENT_GROUP&#x3D;root</span><br></pre></td></tr></table></figure>
+
+<p>デーモンリロード</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<h3><span id="動作確認">動作確認</span></h3><p>以下のように<code>tail</code>が正しく実行できていることが確認できます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># tail -f &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;td-agent.log</span><br><span class="line"></span><br><span class="line">2015-08-19 14:17:15 +0900 [info]: following tail of &#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</span><br><span class="line">2015-08-19 14:17:15 +0900 [info]: following tail of &#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="warn-pattern-not-match">[warn]: pattern not match</span></h2><p>これかなりハマりました。</p>
+<p>Nginxのlogを流すときに以下のようにfomatするように書かれている記事を多く見たので<br>設定してみたらエラー発生(; &gt;_&lt;)</p>
+<ul>
+<li>/etc/td-agent/td-agent.conf</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type tail</span><br><span class="line">  format nginx</span><br><span class="line">  path &#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</span><br><span class="line">  pos_file &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;nginx-access.pos</span><br><span class="line">  tag nginx.access</span><br><span class="line">&lt;&#x2F;source&gt;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="対策">対策</span></h3><p>以下のように修正</p>
+<ul>
+<li>/etc/td-agent/td-agent.conf</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type tail</span><br><span class="line">  format &#x2F;^(?&lt;remote&gt;[^ ]*) (?&lt;host&gt;[^ ]*) (?&lt;user&gt;[^ ]*) \[(?&lt;time&gt;[^\]]*)\] &quot;(?&lt;method&gt;\S+)(?: +(?&lt;path&gt;[^ ]*) +\S*)?&quot; (?&lt;code&gt;[^ ]*) (?&lt;size&gt;[^ ]*)(?: &quot;(?&lt;referer&gt;[^\&quot;]*)&quot; &quot;(?&lt;agent&gt;[^\&quot;]*)&quot; &quot;(?&lt;forwarder&gt;[^\&quot;]*)&quot;)?&#x2F;</span><br><span class="line">  time_format %d&#x2F;%b&#x2F;%Y:%H:%M:%S %z</span><br><span class="line">  path &#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</span><br><span class="line">  pos_file &#x2F;var&#x2F;log&#x2F;td-agent&#x2F;nginx-access.pos</span><br><span class="line">  tag nginx.access</span><br><span class="line">&lt;&#x2F;source&gt;</span><br></pre></td></tr></table></figure>
+
+<p>td-agent再起動</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart td-agent</span><br></pre></td></tr></table></figure>
+
+<p>これで大丈夫。</p>
+<h2><span id="buffer_path-重複">buffer_path 重複</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[error]: failed to configure sub output redshift: Other &#39;&#39; plugin already use same buffer_path: type &#x3D; , buffer_path &#x3D; *</span><br></pre></td></tr></table></figure>
+
+<p>元々の設定は以下の様にしていました。<br>td-agent の送信先にトラブルがあり buffer が溜まり重複しエラーとなっていました。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buffer_path &#x2F;logs&#x2F;td-agent&#x2F;nginx&#x2F;logs</span><br></pre></td></tr></table></figure>
+
+<p>例）以下の様な tag があった場合、buffer_path は同じく <code>/logs/td-agent/nginx/logs</code> となってしまう</p>
+<p>hogehoge.20170101.log<br>hogehoge.20170102.log</p>
+<h3><span id="対策">対策</span></h3><p>tag_parts を用い、以下の様に tag 毎に buffer_path をユニークにすることで解決</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buffer_path &#x2F;logs&#x2F;td-agent&#x2F;nginx&#x2F;logs_$&#123;tag_parts[0]&#125;_$&#123;tag_parts[1]&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>引き続き何か発生したら追記していきます。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2015-08-19T15:00:00.000Z">2015-08-20</time>
                 
                 <div class="level-item">
@@ -740,221 +827,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2014-06-21T15:00:00.000Z">2014-06-22</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2014/06/22/2014-06-22-sonarqube-maxosx/">Mac OS X に SonarQube 導入 - UnityのC#コーディング規約チェック</a>
-            
-        </h1>
-        <div class="content">
-            <p>[f:id:kenzo0107:20140620233131p:plain]</p>
-<h2><span id="環境">環境</span></h2><ul>
-<li>Mac OS X 10.9.3 (Marvericks)</li>
-<li>SonarQube 4.3.1</li>
-<li>SonarRunner 2.4</li>
-</ul>
-<h2><span id="概要">概要</span></h2><ul>
-<li>C#のコーディング規約チェック管理ツールを導入します。</li>
-</ul>
-<h2><span id="導入手順">導入手順</span></h2><h3><span id="1sonarqube-sonarrunnerをダウンロード">①SonarQube, SonarRunnerをダウンロード</span></h3><p>以下SonarQube公式サイトより<br>SonarQube, SonarRunnerをダウンロードして下さい。<br>※フォルダはどこに配置しても構いません。</p>
-<p><a href="http://www.sonarqube.org/downloads/">http://www.sonarqube.org/downloads/</a></p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140620/20140620232146.png" width="100%">
-</div>
-
-
-<p><span style="color: #e2241a">※2014.06.20現在、SonarQube4.2, MySQL5.6 では起動しないことを確認しています。</span><br>Homebrewでのインストールはバージョンが古いアプリケーションをDLする可能性があり、<br>動作保証が取れない場合があります。</p>
-<h3><span id="2mysql-macosにインストール">②MySQL MacOSにインストール</span></h3><p>以下ブログが非常にわかりやすかったです。</p>
-<p><a href="http://blog.hyec.jp/2014/02/mac-os-x-mavericksmysql.html">http://blog.hyec.jp/2014/02/mac-os-x-mavericksmysql.html</a></p>
-<p>念の為、懸念箇所はここ！</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Installing MySQL, administrator password required ...</span><br><span class="line">Password:（ログインユーザのパスワードを入力）</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>上記で入力したパスワードを元にパスワードファイルが作成されます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140621/20140621002204.png" width="100%">
-</div>
-
-<p>※ちなみに「seaside99」(九十九里浜)と入力しました。</p>
-<p>ファイルを開くと「seaside99」でなく文字化け？という文字列が並んでいますが、<br><span style="color: #e2241a">これがrootアカウントのパスワードです</span>。<br>[f:id:kenzo0107:20140621002405p:plain]</p>
-<p>MySQLインストールが完了できたでしょうか？<br>以下実行し、MySQLを起動しましょう。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/<span class="built_in">local</span>/mysql/support-files/mysql.server start</span><br></pre></td></tr></table></figure>
-
-<h3><span id="3sonarqube用のdatabase作成">③SonarQube用のDatabase作成</span></h3><ul>
-<li><ol>
-<li>以下実行し、MySQLにログイン</li>
-</ol>
-</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/<span class="built_in">local</span>/mysql/bin/mysql -u root -p(MYSQL_PASSWORD記載のパスワード)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><ol start="2">
-<li>「sonar」データベース作成<br>以下実行でデータベース「sonar」作成</li>
-</ol>
-</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE sonar;</span><br></pre></td></tr></table></figure>
-
-<p>以下実行し、Databaseに「sonar」が追加されていることを確認する。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW databases;</span><br></pre></td></tr></table></figure>
-
-<p>実行結果</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW databases;</span><br><span class="line"> +--------------------+</span><br><span class="line"> | Database           |</span><br><span class="line"> +--------------------+</span><br><span class="line"> | information_schema |</span><br><span class="line"> | mysql              |</span><br><span class="line"> | performance_schema |</span><br><span class="line"> | sonar              |</span><br><span class="line"> | <span class="built_in">test</span>               |</span><br><span class="line"> +--------------------+</span><br><span class="line"> 5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><ol start="3">
-<li>「sonar」ユーザを作成し、全権限を委譲<br>・ID:sonar PW:sonar のユーザ作成</li>
-</ol>
-</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER <span class="string">'sonar'</span>@<span class="string">'localhost'</span> IDENTIFIED BY <span class="string">'sonar'</span>;</span><br></pre></td></tr></table></figure>
-
-<p>・sonarユーザに全権限付与</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON sonar.* TO <span class="string">'sonar'</span>@<span class="string">'localhost'</span>;</span><br></pre></td></tr></table></figure>
-
-<p>・権限反映</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
-
-<p>・設定完了したので終わり</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="built_in">exit</span>;</span><br><span class="line">Bye</span><br></pre></td></tr></table></figure>
-
-
-<h3><span id="4sonarproperties編集">④sonar.properties編集</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim (SonarQubeのパス)/conf/sonar.properties</span><br></pre></td></tr></table></figure>
-
-<p>※「4.2」ディレクトリはバージョンなのでバージョンアップ時は変更してください。</p>
-<p>以下Sonarが参照するMySQLのDB設定の為、「sonar.jdbc.url」のコメントアウトを外して有効化してください。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Comment the embedded database and uncomment the following line to use MySQL</span></span><br><span class="line">&lt;span style=<span class="string">"color: #e2241a"</span>&gt;sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=<span class="literal">true</span>&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=<span class="literal">true</span>&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-
-
-<h3><span id="5sonar-runnerproperties編集">⑤sonar-runner.properties編集</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi （Sonar-Runnerのパス）/conf/sonar-runner.properties</span><br></pre></td></tr></table></figure>
-
-<p>以下SonarRunnerが参照するDB設定、アカウント情報についてコメントアウトを外し有効化してください。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Configure here general information about the environment, such as SonarQube DB details for example</span></span><br><span class="line"><span class="comment">#No information about specific project should appear here</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#----- MySQL</span></span><br><span class="line">sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=<span class="literal">true</span>&amp;characterEncoding=utf8</span><br><span class="line"></span><br><span class="line"><span class="comment">#----- Global database settings</span></span><br><span class="line">sonar.jdbc.username=sonar</span><br><span class="line">sonar.jdbc.password=sonar</span><br><span class="line"></span><br><span class="line"><span class="comment">#----- Default source code encoding</span></span><br><span class="line">sonar.sourceEncoding=UTF-8</span><br><span class="line"></span><br><span class="line"><span class="comment">#----- Security (when 'sonar.forceAuthentication' is set to 'true')</span></span><br><span class="line">sonar.login=admin</span><br><span class="line">sonar.password=admin</span><br></pre></td></tr></table></figure>
-
-
-<p>上記設定完了後、<br>SonarQubeを起動します。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ (SonarQubeパス)/bin/macosx-universal-64/sonar.sh console</span><br><span class="line">Running SonarQube...</span><br><span class="line">wrapper  | --&gt; Wrapper Started as Console</span><br><span class="line">wrapper  | Launching a JVM...</span><br><span class="line">jvm 1    | Wrapper (Version 3.2.3) http://wrapper.tanukisoftware.org</span><br><span class="line">jvm 1    |   Copyright 1999-2006 Tanuki Software, Inc.  All Rights Reserved.</span><br><span class="line">jvm 1    |</span><br><span class="line">jvm 1    | 2014.06.25 11:00:48 INFO  Web server is started</span><br></pre></td></tr></table></figure>
-
-<p>以上で MySQL, SonarQube が起動している状態になりました。</p>
-<h3><span id="6sonarqubeでのプラグイン設定">⑥SonarQubeでのプラグイン設定</span></h3><ul>
-<li><ol>
-<li>以下URLにアクセス<br>[<a href="http://localhost:9000]">http://localhost:9000]</a></li>
-</ol>
-</li>
-</ul>
-<p>以下のようなページが表示されます。<br>右上のLoginリンク押下します。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622005937.png" width="100%">
-</div>
-
-<ul>
-<li><ol start="2">
-<li>Loginします<br>Login : admin<br>Password : admin</li>
-</ol>
-</li>
-</ul>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622005509.png" width="100%">
-</div>
-
-<ul>
-<li><ol start="3">
-<li>規約チェックするプラグインを設定する<br>Settingリンク押下します。</li>
-</ol>
-</li>
-</ul>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622010808.png" width="100%">
-</div>
-
-<p>設定ページが表示されます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622011717.png" width="100%">
-</div>
-
-<p>Pluginをインストールします。<br>・C#<br>・ReSharper<br>・StyleCop<br>・Japanese Pack</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622013057.png" width="100%">
-</div>
-
-<p>各リンクを押下し、installボタン押下</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622013057.png" width="100%">
-</div>
-
-<p>上記全Pluginをインストールすると以下のように表示されます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622014025.png" width="100%">
-</div>
-
-<p><span style="color: #e2241a">この状態では、まだインストールが完了していません。</span><br>一度、SonarQubeを再起動させる必要があります。</p>
-<p>「sonar.sh console」を実行したターミナルで<br>一度Ctr+CでSonarQubeをストップさせると以下結果が出力されます。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wrapper  | INT trapped.  Shutting down.</span><br><span class="line">jvm 1    | 2014.06.22 01:48:15 INFO  Web server is stopped</span><br><span class="line">wrapper  | &lt;-- Wrapper Stopped</span><br></pre></td></tr></table></figure>
-
-
-<p>再度「sonar.sh console」を実行させ<br>SonarQubeにアクセス</p>
-<p><a href="http://localhost:9000">http://localhost:9000</a></p>
-<p><b>アップデートセンター＞Installed Plugins</b><br>先ほどのPluginがインストール済みであることが確認できます。<br>※日本語化されてます。<br>[f:id:kenzo0107:20140622015442p:plain]</p>
-<h3><span id="7コーディング規約チェックをしたいプロジェクト決定">⑦コーディング規約チェックをしたいプロジェクト決定</span></h3><p>例として、以下にUnityプロジェクトを配置しているとします。<br>~/Desktop/UnityProject/</p>
-<p>同階層に「sonar-project.properties」作成します。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim sonar-project.properties</span><br></pre></td></tr></table></figure>
-
-<p>内容は以下を入力してください。<br>※sonar.sources=（Unityのcsファイル格納パスを指定してください）</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Project identification</span></span><br><span class="line">sonar.projectKey=Unity:DemoApp</span><br><span class="line">sonar.projectVersion=1.0</span><br><span class="line">sonar.projectName=AppliName</span><br><span class="line"></span><br><span class="line"><span class="comment"># Info required for Sonar</span></span><br><span class="line">sonar.sources=~/Desktop/UnityProject/Assets/Scripts</span><br><span class="line"></span><br><span class="line"><span class="comment"># Comma-separated paths to directories with sources (required)</span></span><br><span class="line">sonar.language=cs</span><br><span class="line"></span><br><span class="line"><span class="comment">#----- Default source code encoding</span></span><br><span class="line">sonar.sourceEncoding=UTF-8</span><br></pre></td></tr></table></figure>
-
-<h3><span id="8sonarrunner実行">⑧SonarRunner実行</span></h3><p>例として、以下にSonarRunnerを配置しているとします。<br>~/Desktop/sonar-runner-dist-2.4/</p>
-<p>sonar-project.properties作成した同階層で<br>sonar-runnerを実行</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/Desktop/sonar-runner-dist-2.4/bin/sonar-runner</span><br></pre></td></tr></table></figure>
-
-<p>ターミナルに以下が表示されると成功</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">INFO  - 37/37 <span class="built_in">source</span> files analyzed</span><br><span class="line">02:37:00.544 INFO  - Sensor org.sonar.plugins.csharp.squid.CSharpSquidSensor@625cb0bb <span class="keyword">done</span>: 1476 ms</span><br><span class="line">02:37:01.246 INFO  - Execute decorators...</span><br><span class="line">02:37:05.536 INFO  - Store results <span class="keyword">in</span> database</span><br><span class="line">02:37:05.839 INFO  - ANALYSIS SUCCESSFUL, you can browse http://localhost:9000/dashboard/index/Unity:DemoApp</span><br><span class="line">02:37:05.945 INFO  - Executing post-job class org.sonar.plugins.core.issue.notification.SendIssueNotificationsPostJob</span><br><span class="line">02:37:05.974 INFO  - Executing post-job class org.sonar.plugins.core.batch.IndexProjectPostJob</span><br><span class="line">02:37:06.539 INFO  - Executing post-job class org.sonar.plugins.dbcleaner.ProjectPurgePostJob</span><br><span class="line">02:37:06.552 INFO  - -&gt; Keep one snapshot per day between 2014-05-25 and 2014-06-21</span><br><span class="line">02:37:06.553 INFO  - -&gt; Keep one snapshot per week between 2013-06-23 and 2014-05-25</span><br><span class="line">02:37:06.554 INFO  - -&gt; Keep one snapshot per month between 2009-06-28 and 2013-06-23</span><br><span class="line">02:37:06.554 INFO  - -&gt; Delete data prior to: 2009-06-28</span><br><span class="line">02:37:06.560 INFO  - -&gt; Clean AppliName [id=371]</span><br><span class="line">INFO: ------------------------------------------------------------------------</span><br><span class="line">INFO: EXECUTION SUCCESS</span><br><span class="line">INFO: ------------------------------------------------------------------------</span><br><span class="line">Total time: 24.508s</span><br><span class="line">Final Memory: 6M/87M</span><br><span class="line">INFO: ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
-
-
-<p>SonarQubeにアクセスするとProjects項目に<br>sonar-project.propertiesで指定した<br>sonar.projectNameリンクが表示されているので<br>リンク押下</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622024118.png" width="100%">
-</div>
-
-<p>コーディング規約のチェックが表示されます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140622/20140622024427.png" width="100%">
-</div>
-
-<p>まずここまで出来たらあとは規約のカスタマイズになります。<br>本件は以上までとします。</p>
-<p>カスタマイズはメニューの<br>品質プロファイル＞ Sonar Way<br>と進み、設定変更してみましょう。</p>
-<h2><span id="補足">補足</span></h2><p>元々UnityのC#コーディング規約チェック実施する為に導入を試みましたが、<br>C#だけでなくJava, PHP, Python等かなり守備範囲が広いです。</p>
-<p>他ブログではWindowsが多く、推奨環境としてはWindowsですが<br>MacOS Xで利用したい場合を本記事はまとめました。</p>
-<p>Jenkins用Plugin [Sonar Plugin]も用意されており<br>定期チェックや他Jobと組み合わせてキックが可能です。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1017,7 +889,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            193
+                            194
                         </p>
                     </a>
                 </div>
@@ -1113,6 +985,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
@@ -1187,25 +1078,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.imgur.com/PRuN9u8.png" alt="Terraform ベストプラクティス 2020 春 ~moduleやめてみた~">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-24T15:00:00.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1234,7 +1106,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/AWS/">
                         <span class="tag">AWS</span>
-                        <span class="tag is-grey">24</span>
+                        <span class="tag is-grey">25</span>
                     </a>
                 </div>
                 

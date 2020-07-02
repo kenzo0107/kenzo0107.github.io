@@ -142,6 +142,109 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/2017/10/29/2017-10-29-toda-tocochan-bus-flask-on-ibm-bluemix/" class="image is-8by1">
+        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171029/20171029095513.png" alt="toda-tocochan-bus flask on IBM Bluemix へ引っ越し">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-10-28T15:00:00.000Z">2017-10-29</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/10/29/2017-10-29-toda-tocochan-bus-flask-on-ibm-bluemix/">toda-tocochan-bus flask on IBM Bluemix へ引っ越し</a>
+            
+        </h1>
+        <div class="content">
+            <p>GCP から IBM Bluemix へ引っ越しました！</p>
+<p><a href="https://toda-tocochan-bus.mybluemix.net/">toco ちゃんバス あと何分？</a></p>
+<h2><span id="概要">概要</span></h2><p>さくらVPS から GCP、<br>そして今度は GCP から IBM Bluemix に引越ししました。</p>
+<p>以前 GCP 運用時の話はコチラ</p>
+<a href="https://kenzo0107.github.io/2017/08/03/2017-08-03-tutorial-of-gke" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://kenzo0107.github.io/images/og_image.png"></div><div class="descriptions"><div class="og-title">GKEチュートリアルでサイト構築・運用</div><div class="og-description">概要以前さくらVPS上で tocoちゃんバスアプリを作成しました。 Flask Python3 で 戸田市 tocoちゃんバスあと何分？ Webアプリ作成♪ - 長生村本郷Engineers&#39;BlogFlask(フラスク) とは Flask Official Site を参照する…</div></div></div></a>
+
+
+<p>GCP は GKE に LB かましたら価格がバコッと上がってしまい<br>無料枠を逸脱してしまいました (&gt;_&lt;)</p>
+<p>なんとか低価格で運用したいという目論見です。</p>
+<h2><span id="何故-heroku-でなく-ibm-bluemix">何故 Heroku でなく IBM Bluemix ？</span></h2><p>IBM Bluemix の良い所は機能が充実している所です。<br>無料・デフォルトで kibana が見れます。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171029/20171029101148.png" width="100%">
+</div>
+
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171029/20171029101853.png" width="100%">
+</div>
+
+<p>その他 Git との連携も可です。</p>
+<p>以下 Mac で作業することを前提に手順まとめました。</p>
+<h2><span id="事前準備">事前準備</span></h2><ul>
+<li>IBM Bluemix に Sign Up しときます</li>
+</ul>
+<p><a href="https://console.bluemix.net/registration/">Signup IBM Bluemix</a></p>
+<ul>
+<li>clone</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ git <span class="built_in">clone</span> https://github.com/kenzo0107/toda-tocochan-bus-on-ibmbluemix</span><br><span class="line">macOS%$ <span class="built_in">cd</span> toda-tocochan-bus-on-ibmbluemix</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>cloudfoundry の CLI インストール</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ brew tap cloudfoundry/tap</span><br><span class="line">macOS%$ brew install cf-cli</span><br></pre></td></tr></table></figure>
+
+<h2><span id="デプロイ">デプロイ</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ cf api https://api.ng.bluemix.net</span><br><span class="line">macOS%$ cf login</span><br><span class="line">macOS%$ cf push &lt;application name&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>API は Region によって変わります。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Region</th>
+<th>API URL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>米国南部</td>
+<td><a href="https://api.ng.bluemix.net">https://api.ng.bluemix.net</a></td>
+</tr>
+<tr>
+<td>英国</td>
+<td><a href="https://api.eu-gb.bluemix.net">https://api.eu-gb.bluemix.net</a></td>
+</tr>
+</tbody></table>
+<h2><span id="総評">総評</span></h2><p>Cloudfoundry の CLI のお陰で引っ越しも簡単でした♪</p>
+<p>セキュリティとして特定 IP やドメインからアクセスさせないとか出来たら<br>商用のメソッドとして利用出来そうかなと思いました。</p>
+<p>その点質問してみましたが2週間ほど連絡がないので再度連絡してみます。<br>↑質問は英語限定でした！</p>
+<p>サポートが強化されると有難いなと思いました。</p>
+<p>以上<br>ご参考になれば幸いです。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/2017/10/25/2017-10-25-casperjs-phantomjs-github-organization/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171025/20171025214738.png" alt="CasperJS+PhantomJS で Github Organization 移行">
         </a>
@@ -1304,74 +1407,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2017/07/14/2017-07-14-monitor-state-of-docker-by-mackerel/" class="image is-8by1">
-        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714223239.png" alt="Mackerel で Docker の起動状態確認">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-07-13T15:00:00.000Z">2017-07-14</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/07/14/2017-07-14-monitor-state-of-docker-by-mackerel/">Mackerel で Docker の起動状態確認</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="概要">概要</span></h2><p>Docker コンテナがいつの間にか Exit していた！<br>なんてことを防ぐ為の Mackerel Agent の設定です。</p>
-<h2><span id="mackerel-plugin-docker-state-インストール">mackerel-plugin-docker-state インストール</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkdir -p /etc/mackerel-agent/conf.d</span><br><span class="line">$ sudo curl https://raw.githubusercontent.com/ABCanG/mackerel-plugin-docker-state/master/mackerel-plugin-docker-state -o /etc/mackerel-agent/conf.d/mackerel-plugin-docker-state</span><br><span class="line">$ sudo chmod +x /etc/mackerel-agent/conf.d/mackerel-plugin-docker-state</span><br><span class="line">$ sudo cat &lt;&lt;<span class="string">'EOF'</span>&gt;/etc/mackerel-agent/conf.d/docker-state.conf</span><br><span class="line">[plugin.metrics.docker-state]</span><br><span class="line"><span class="built_in">command</span> = <span class="string">"/etc/mackerel-agent/conf.d/mackerel-plugin-docker-state"</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-<h2><span id="mackerel-agentconf-に-include-設定追加">mackerel-agent.conf に include 設定追加</span></h2><ul>
-<li>/etc/mackerel-agent/mackerel-agent.conf</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pidfile = <span class="string">"/var/run/mackerel-agent.pid"</span></span><br><span class="line">root = <span class="string">"/var/lib/mackerel-agent"</span></span><br><span class="line">verbose = <span class="literal">false</span></span><br><span class="line">apikey = <span class="string">"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"</span></span><br><span class="line">diagnostic = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">roles = [<span class="string">"xxxxxxxx:xxx"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># include conf.d/*.conf</span></span><br><span class="line">include = <span class="string">"/etc/mackerel-agent/conf.d/*.conf"</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2><span id="mackrel-agent-再起動">Mackrel Agent 再起動</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service mackerel-agent restart</span><br></pre></td></tr></table></figure>
-
-<h2><span id="グラフ確認">グラフ確認</span></h2><p>しばらくするとグラフが表示されます。<br>※0 or 1 のみのグラフなので積み重ねグラフの方が見やすかったです</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714222015.png" width="100%">
-</div>
-
-<p>※上記グラフではコンテナ2つが起動しています。</p>
-<h2><span id="新規監視ルールを作成">新規監視ルールを作成</span></h2><p>running で検索すると出てきます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714223652.png" width="100%">
-</div>
-
-<p>3分間の平均が1 より低くなったら<br>コンテナが停止(Exit)と見なし通知する様にしました。</p>
-<h2><span id="総評">総評</span></h2><p>今回たまたま Mackerel の入ったサービスを触る機会を頂きました。</p>
-<p>Mackerel の様なマネージドサービスを利用するメリットは<br>監視サーバを監視しないで良い、<br>という省運用コストだなぁと改めて実感。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1438,7 +1473,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            193
+                            194
                         </p>
                     </a>
                 </div>
@@ -1534,6 +1569,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
@@ -1608,25 +1662,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.imgur.com/PRuN9u8.png" alt="Terraform ベストプラクティス 2020 春 ~moduleやめてみた~">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-24T15:00:00.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1655,7 +1690,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/AWS/">
                         <span class="tag">AWS</span>
-                        <span class="tag is-grey">24</span>
+                        <span class="tag is-grey">25</span>
                     </a>
                 </div>
                 

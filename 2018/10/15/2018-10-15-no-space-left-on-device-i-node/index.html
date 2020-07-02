@@ -20,7 +20,7 @@
 <meta property="og:locale" content="ja_JP">
 <meta property="og:image" content="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20181015/20181015001102.jpg">
 <meta property="article:published_time" content="2018-10-14T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-07T03:41:29.665Z">
+<meta property="article:modified_time" content="2020-07-02T05:46:42.134Z">
 <meta property="article:author" content="Kenzo Tanaka">
 <meta property="article:tag" content="i-node">
 <meta name="twitter:card" content="summary">
@@ -198,6 +198,18 @@
 <h2><span id="実際にあった-i-node-枯渇原因">実際にあった i-node 枯渇原因</span></h2><p>/usr ディレクトリ以下に linux-headers-*** ファイルが溜まっており、30% 近く食ってました。</p>
 <p>以下記事に救われました。ありがとうございます。</p>
 <p><a href="https://qiita.com/ytkumasan/items/d6cc70f151f130d58e9b">古いカーネルの削除方法メモ</a></p>
+<h3><span id="追記-2020-07-02">追記 2020-07-02</span></h3><p>linux-headers-*** ファイルの削除について、不要な利用されていないファイルを削除するには以下コマンドで削除されます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt autoremove</span><br></pre></td></tr></table></figure>
+
+<h4><span id="自動的に削除したい場合">自動的に削除したい場合</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 自動アップデートパッケージインストール</span><br><span class="line">$ sudo apt-get install -y unattended-upgrades</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 自動アップデート有効化</span><br><span class="line">$ sudo dpkg-reconfigure -plow unattended-upgrades</span><br><span class="line">Yes を選択</span><br></pre></td></tr></table></figure>
+
+<p><code>/etc/apt/apt.conf.d/50unattended-upgrades</code> を以下の様に編集し、 unattended-upgrade 時に autoremove する処理を追加する。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim &#x2F;etc&#x2F;apt&#x2F;apt.conf.d&#x2F;50unattended-upgrades</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;Unattended-Upgrade::Remove-Unused-Dependencies &quot;false&quot;;</span><br><span class="line">Unattended-Upgrade::Remove-Unused-Dependencies &quot;true&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>自動アップデートのログは <code>/var/log/unattended-upgrades/</code> に出力される。</p>
+<p>以上です。</p>
 
         </div>
         
@@ -293,7 +305,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            193
+                            194
                         </p>
                     </a>
                 </div>
@@ -389,6 +401,25 @@
         
         <article class="media">
             
+            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
+                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
@@ -463,25 +494,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://i.imgur.com/PRuN9u8.png" alt="Terraform ベストプラクティス 2020 春 ~moduleやめてみた~">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-24T15:00:00.000Z">2020-04-25</time></div>
-                    <a href="/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</a>
-                    <p class="is-size-7 is-uppercase">
-                        
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -510,7 +522,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/AWS/">
                         <span class="tag">AWS</span>
-                        <span class="tag is-grey">24</span>
+                        <span class="tag is-grey">25</span>
                     </a>
                 </div>
                 
