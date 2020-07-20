@@ -14,7 +14,11 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
-		<meta property="og:description" content="&lt;p&gt;以前 terraform で workspace 毎に tfstate 管理する方法を執筆しましたが、実運用上いくつかの問題がありました。&lt;/p&gt;
+		<meta property="og:description" content="&lt;p&gt;&lt;span style=&#34;color: #ff0000&#34;&gt;&lt;b&gt;2020-05-05 追記&lt;/b&gt;&lt;/span&gt; 2020年春のベストプラクティス更新しています。&lt;/p&gt;
+&lt;a href=&#34;https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/&#34; class=&#34;link-preview&#34; target=&#34;_blank&#34;&gt;&lt;div class=&#34;link-area&#34;&gt;&lt;div class=&#34;og-image&#34;&gt;&lt;img src=&#34;https://i.imgur.com/PRuN9u8.png&#34;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&#34;descriptions&#34;&gt;&lt;div class=&#34;og-title&#34;&gt;Terraform ベストプラクティス 2020 春 ~moduleやめてみた~&lt;/div&gt;&lt;div class=&#34;og-description&#34;&gt;ToC     概要 結論 module やめてみた これ modules/stg, modules/common どっち？ 問題   そもそも何故分けた？ だから module やめてみた module が便利な例 ベストプラクティスを探す旅は続く       概要#Infra…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
+
+&lt;hr&gt;
+&lt;p&gt;以前 terraform で workspace 毎に tfstate 管理する方法を執筆しましたが、実運用上いくつかの問題がありました。&lt;/p&gt;
 &lt;p&gt;結論、現在は workspace 運用をやめています。&lt;/p&gt;
 
 &lt;a href=&#34;https://kenzo0107.github.io/2017/12/05/2017-12-05-terraform-workspace-tfsate/&#34; class=&#34;link-preview&#34; target=&#34;_blank&#34;&gt;&lt;div class=&#34;link-area&#34;&gt;&lt;div class=&#34;og-image&#34;&gt;&lt;img src=&#34;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205214728.jpg&#34;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&#34;descriptions&#34;&gt;&lt;div class=&#34;og-title&#34;&gt;terraform workspace で環境毎に tfsate 管理&lt;/div&gt;&lt;div class=&#34;og-description&#34;&gt;terraform workspace で環境毎に tfsate 管理した話です。 追記 2019/04/17追記時点で workspace は運用時点の問題が多くあった為、利用していません。以下記事ご参考いただければと思います。 Terraform 運用ベストプラクティス 20…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
@@ -28,7 +32,11 @@
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2019/04/17/2019-04-17-terraform-2019-workspace/">
 	<meta name="twitter:title" content="Terraform 運用ベストプラクティス 2019 ~workspace をやめてみた等諸々~ - 長生村本郷Engineers&#39;Blog">
 	
-		<meta name="twitter:description" content="&lt;p&gt;以前 terraform で workspace 毎に tfstate 管理する方法を執筆しましたが、実運用上いくつかの問題がありました。&lt;/p&gt;
+		<meta name="twitter:description" content="&lt;p&gt;&lt;span style=&#34;color: #ff0000&#34;&gt;&lt;b&gt;2020-05-05 追記&lt;/b&gt;&lt;/span&gt; 2020年春のベストプラクティス更新しています。&lt;/p&gt;
+&lt;a href=&#34;https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/&#34; class=&#34;link-preview&#34; target=&#34;_blank&#34;&gt;&lt;div class=&#34;link-area&#34;&gt;&lt;div class=&#34;og-image&#34;&gt;&lt;img src=&#34;https://i.imgur.com/PRuN9u8.png&#34;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&#34;descriptions&#34;&gt;&lt;div class=&#34;og-title&#34;&gt;Terraform ベストプラクティス 2020 春 ~moduleやめてみた~&lt;/div&gt;&lt;div class=&#34;og-description&#34;&gt;ToC     概要 結論 module やめてみた これ modules/stg, modules/common どっち？ 問題   そもそも何故分けた？ だから module やめてみた module が便利な例 ベストプラクティスを探す旅は続く       概要#Infra…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
+
+&lt;hr&gt;
+&lt;p&gt;以前 terraform で workspace 毎に tfstate 管理する方法を執筆しましたが、実運用上いくつかの問題がありました。&lt;/p&gt;
 &lt;p&gt;結論、現在は workspace 運用をやめています。&lt;/p&gt;
 
 &lt;a href=&#34;https://kenzo0107.github.io/2017/12/05/2017-12-05-terraform-workspace-tfsate/&#34; class=&#34;link-preview&#34; target=&#34;_blank&#34;&gt;&lt;div class=&#34;link-area&#34;&gt;&lt;div class=&#34;og-image&#34;&gt;&lt;img src=&#34;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205214728.jpg&#34;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&#34;descriptions&#34;&gt;&lt;div class=&#34;og-title&#34;&gt;terraform workspace で環境毎に tfsate 管理&lt;/div&gt;&lt;div class=&#34;og-description&#34;&gt;terraform workspace で環境毎に tfsate 管理した話です。 追記 2019/04/17追記時点で workspace は運用時点の問題が多くあった為、利用していません。以下記事ご参考いただければと思います。 Terraform 運用ベストプラクティス 20…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
@@ -66,7 +74,11 @@
 			"@type": "BlogPosting",
 			"headline": "Terraform 運用ベストプラクティス 2019 ~workspace をやめてみた等諸々~",
 			
-			"description": "&lt;p&gt;以前 terraform で workspace 毎に tfstate 管理する方法を執筆しましたが、実運用上いくつかの問題がありました。&lt;/p&gt;
+			"description": "&lt;p&gt;&lt;span style=&#34;color: #ff0000&#34;&gt;&lt;b&gt;2020-05-05 追記&lt;/b&gt;&lt;/span&gt; 2020年春のベストプラクティス更新しています。&lt;/p&gt;
+&lt;a href=&#34;https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/&#34; class=&#34;link-preview&#34; target=&#34;_blank&#34;&gt;&lt;div class=&#34;link-area&#34;&gt;&lt;div class=&#34;og-image&#34;&gt;&lt;img src=&#34;https://i.imgur.com/PRuN9u8.png&#34;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&#34;descriptions&#34;&gt;&lt;div class=&#34;og-title&#34;&gt;Terraform ベストプラクティス 2020 春 ~moduleやめてみた~&lt;/div&gt;&lt;div class=&#34;og-description&#34;&gt;ToC     概要 結論 module やめてみた これ modules/stg, modules/common どっち？ 問題   そもそも何故分けた？ だから module やめてみた module が便利な例 ベストプラクティスを探す旅は続く       概要#Infra…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
+
+&lt;hr&gt;
+&lt;p&gt;以前 terraform で workspace 毎に tfstate 管理する方法を執筆しましたが、実運用上いくつかの問題がありました。&lt;/p&gt;
 &lt;p&gt;結論、現在は workspace 運用をやめています。&lt;/p&gt;
 
 &lt;a href=&#34;https://kenzo0107.github.io/2017/12/05/2017-12-05-terraform-workspace-tfsate/&#34; class=&#34;link-preview&#34; target=&#34;_blank&#34;&gt;&lt;div class=&#34;link-area&#34;&gt;&lt;div class=&#34;og-image&#34;&gt;&lt;img src=&#34;https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205214728.jpg&#34;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&#34;descriptions&#34;&gt;&lt;div class=&#34;og-title&#34;&gt;terraform workspace で環境毎に tfsate 管理&lt;/div&gt;&lt;div class=&#34;og-description&#34;&gt;terraform workspace で環境毎に tfsate 管理した話です。 追記 2019/04/17追記時点で workspace は運用時点の問題が多くあった為、利用していません。以下記事ご参考いただければと思います。 Terraform 運用ベストプラクティス 20…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
@@ -80,7 +92,7 @@
 			    "@id":"https://kenzo0107.github.io/2019/04/17/2019-04-17-terraform-2019-workspace/"
 			},
 			"datePublished": "2019-04-16T15:00:00.000Z",
-			"dateModified": "2020-05-07T03:41:29.960Z",
+			"dateModified": "2020-07-20T13:29:58.805Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1762,7 +1774,7 @@ h6.categories {
     font-size: 0.5rem;
   }
 }
-#hexo-amp-id-1{color: #d32f2f}
+#hexo-amp-id-1{color: #ff0000}#hexo-amp-id-2{color: #d32f2f}
 	</style>
 	
   </head>
@@ -1841,7 +1853,11 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4EE5;&#x524D; terraform &#x3067; workspace &#x6BCE;&#x306B; tfstate &#x7BA1;&#x7406;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x3092;&#x57F7;&#x7B46;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x5B9F;&#x904B;&#x7528;&#x4E0A;&#x3044;&#x304F;&#x3064;&#x304B;&#x306E;&#x554F;&#x984C;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<p><span id="hexo-amp-id-1"><b>2020-05-05 &#x8FFD;&#x8A18;</b></span> 2020&#x5E74;&#x6625;&#x306E;&#x30D9;&#x30B9;&#x30C8;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9;&#x66F4;&#x65B0;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<a href="https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/PRuN9u8.png" width="620" height="590" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Terraform &#x30D9;&#x30B9;&#x30C8;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9; 2020 &#x6625; ~module&#x3084;&#x3081;&#x3066;&#x307F;&#x305F;~</div><div class="og-description">ToC     &#x6982;&#x8981; &#x7D50;&#x8AD6; module &#x3084;&#x3081;&#x3066;&#x307F;&#x305F; &#x3053;&#x308C; modules/stg, modules/common &#x3069;&#x3063;&#x3061;&#xFF1F; &#x554F;&#x984C;   &#x305D;&#x3082;&#x305D;&#x3082;&#x4F55;&#x6545;&#x5206;&#x3051;&#x305F;&#xFF1F; &#x3060;&#x304B;&#x3089; module &#x3084;&#x3081;&#x3066;&#x307F;&#x305F; module &#x304C;&#x4FBF;&#x5229;&#x306A;&#x4F8B; &#x30D9;&#x30B9;&#x30C8;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9;&#x3092;&#x63A2;&#x3059;&#x65C5;&#x306F;&#x7D9A;&#x304F;       &#x6982;&#x8981;#Infra&#x2026;</div></div></div></a>
+
+<hr>
+<p>&#x4EE5;&#x524D; terraform &#x3067; workspace &#x6BCE;&#x306B; tfstate &#x7BA1;&#x7406;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x3092;&#x57F7;&#x7B46;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x5B9F;&#x904B;&#x7528;&#x4E0A;&#x3044;&#x304F;&#x3064;&#x304B;&#x306E;&#x554F;&#x984C;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
 <p>&#x7D50;&#x8AD6;&#x3001;&#x73FE;&#x5728;&#x306F; workspace &#x904B;&#x7528;&#x3092;&#x3084;&#x3081;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
 
 <a href="https://kenzo0107.github.io/2017/12/05/2017-12-05-terraform-workspace-tfsate/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205214728.jpg" width="512" height="512" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">terraform workspace &#x3067;&#x74B0;&#x5883;&#x6BCE;&#x306B; tfsate &#x7BA1;&#x7406;</div><div class="og-description">terraform workspace &#x3067;&#x74B0;&#x5883;&#x6BCE;&#x306B; tfsate &#x7BA1;&#x7406;&#x3057;&#x305F;&#x8A71;&#x3067;&#x3059;&#x3002; &#x8FFD;&#x8A18; 2019/04/17&#x8FFD;&#x8A18;&#x6642;&#x70B9;&#x3067; workspace &#x306F;&#x904B;&#x7528;&#x6642;&#x70B9;&#x306E;&#x554F;&#x984C;&#x304C;&#x591A;&#x304F;&#x3042;&#x3063;&#x305F;&#x70BA;&#x3001;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x307E;&#x305B;&#x3093;&#x3002;&#x4EE5;&#x4E0B;&#x8A18;&#x4E8B;&#x3054;&#x53C2;&#x8003;&#x3044;&#x305F;&#x3060;&#x3051;&#x308C;&#x3070;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002; Terraform &#x904B;&#x7528;&#x30D9;&#x30B9;&#x30C8;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9; 20&#x2026;</div></div></div></a>
@@ -1917,7 +1933,7 @@ terraform init </pre>
 
 <p>&#x3053;&#x3061;&#x3089;&#x3092;&#x904B;&#x7528;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x3066;&#x307F;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x554F;&#x984C;&#x306B;&#x3076;&#x3064;&#x304B;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
 
-<h2><span id="&#x5B9F;&#x904B;&#x7528;&#x3068;&#x306E;&#x76F8;&#x6027;&#x304C;&#x60AA;&#x3044;">&#x5B9F;&#x904B;&#x7528;&#x3068;&#x306E;&#x76F8;&#x6027;&#x304C;&#x60AA;&#x3044;</span></h2><p><span id="hexo-amp-id-1"><b>&#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x306E;&#x307F;&#x306B;&#x53CD;&#x6620;&#x3055;&#x305B;&#x305F;&#x3044;</b></span>&#x3001;&#x3068;&#x3044;&#x3046;&#x6642;&#x306B;&#x3069;&#x3046;&#x904B;&#x7528;&#x3057;&#x305F;&#x3089;&#x826F;&#x3044;&#x3067;&#x3057;&#x3087;&#x3046;&#x304B;&#x3002;</p>
+<h2><span id="&#x5B9F;&#x904B;&#x7528;&#x3068;&#x306E;&#x76F8;&#x6027;&#x304C;&#x60AA;&#x3044;">&#x5B9F;&#x904B;&#x7528;&#x3068;&#x306E;&#x76F8;&#x6027;&#x304C;&#x60AA;&#x3044;</span></h2><p><span id="hexo-amp-id-2"><b>&#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x306E;&#x307F;&#x306B;&#x53CD;&#x6620;&#x3055;&#x305B;&#x305F;&#x3044;</b></span>&#x3001;&#x3068;&#x3044;&#x3046;&#x6642;&#x306B;&#x3069;&#x3046;&#x904B;&#x7528;&#x3057;&#x305F;&#x3089;&#x826F;&#x3044;&#x3067;&#x3057;&#x3087;&#x3046;&#x304B;&#x3002;</p>
 
 <p>&#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x7528;&#x3001;&#x672C;&#x756A;&#x7528;&#x306B;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3001;&#x30D7;&#x30EB;&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x304C;&#x901A;&#x3063;&#x3066;&#x3001;&#x30B5;&#x30F3;&#x30D7;&#x30EB;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x3092; master &#x306B;&#x30DE;&#x30FC;&#x30B8;&#x3057;&#x3066;&#x3044;&#x305F;&#x3089;&#x3069;&#x3046;&#x3067;&#x3057;&#x3087;&#x3046;&#xFF1F;</p>
 

@@ -7,6 +7,12 @@ tags:
 thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190417/20190417103456.png
 ---
 
+<span style="color: #ff0000"><b>2020-05-05 追記</b></span> 2020年春のベストプラクティス更新しています。
+
+{% linkPreview https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/ _blank %}
+
+---
+
 以前 terraform で workspace 毎に tfstate 管理する方法を執筆しましたが、実運用上いくつかの問題がありました。
 
 <p>結論、現在は workspace 運用をやめています。</p>
