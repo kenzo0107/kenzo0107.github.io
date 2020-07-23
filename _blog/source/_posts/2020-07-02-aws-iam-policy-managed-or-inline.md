@@ -16,6 +16,8 @@ date: 2020-07-02
 
 IAM Policy で、管理ポリシーとインラインポリシーってどういう違いがあって、どっちを使うべきなのだろう？と調べてみました。
 
+<!-- more -->
+
 ## 結論、インラインポリシーを控え、管理ポリシーを積極的に使おう
 
 [管理ポリシーとインラインポリシー](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/access_policies_managed-vs-inline.html)

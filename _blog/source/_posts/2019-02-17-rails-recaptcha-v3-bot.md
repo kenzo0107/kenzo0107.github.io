@@ -28,9 +28,9 @@ v2 は `I'm not a robot` チェックボックスにチェックを入れた後�
 
 ## v3 だと嬉しいことは何？
 
-<p>v3 <a href="#f-6cff6d12" name="fn-6cff6d12" title="2019年2月現在最新バージョン">*1</a> は設置したページのユーザ行動をスコア化し bot か判断します。</p>
+v3 <a href="#f-6cff6d12" name="fn-6cff6d12" title="2019年2月現在最新バージョン">*1</a> は設置したページのユーザ行動をスコア化し bot か判断します。
 
-<p>アクセスが増えるとより精度が高まってくる、という仕様です。</p>
+アクセスが増えるとより精度が高まってくる、という仕様です。
 
 <p>非 bot ユーザへの負担は全くなく、 bot を遮断できる様になるという、世の中進んでるなぁ感満載です。</p>
 
@@ -42,10 +42,9 @@ v2 は `I'm not a robot` チェックボックスにチェックを入れた後�
 
 というのも、 以下理由からでした。
 
-<ul>
-<li>`gem 'recaptcha'` が v3 非対応。</li>
-<li>`gem 'new_google_recaptcha'` は v3 対応してますが、スコアが返ってこないのでテストし辛い。</li>
-</ul>
+
+* `gem 'recaptcha'` が v3 非対応。
+* `gem 'new_google_recaptcha'` は v3 対応してますが、スコアが返ってこないのでテストし辛い。
 
 
 その他に既にあるのかもわかりませんが、記事執筆時には探し出すことはできませんでした。
@@ -54,9 +53,9 @@ v2 は `I'm not a robot` チェックボックスにチェックを入れた後�
 
 以下 reCAPTCHA コンソールにアクセスし発行してください。
 
-<a href="https://g.co/recaptcha/v3">https://g.co/recaptcha/v3</a>
+[https://g.co/recaptcha/v3](https://g.co/recaptcha/v3)
 
-<p>v3 を選択し、今回導入するドメインを登録します。<a href="#f-a2800b5a" name="fn-a2800b5a" title="ドメインは複数登録可能です。ドメイン毎に集計や、 bot 対策の傾向を変えたい場合は、個々に発行します。 また、 RAILS_ENV = production とそれ以外で発行する方が本番への影響がないので推奨されます。">*2</a></p>
+v3 を選択し、今回導入するドメインを登録します。<a href="#f-a2800b5a" name="fn-a2800b5a" title="ドメインは複数登録可能です。ドメイン毎に集計や、 bot 対策の傾向を変えたい場合は、個々に発行します。 また、 RAILS_ENV = production とそれ以外で発行する方が本番への影響がないので推奨されます。">*2</a>
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216214351.png" width="100%">
