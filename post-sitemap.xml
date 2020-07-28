@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://kenzo0107.github.io/2020/06/01/2020-06-01-terraform-sensitive-data/</loc>
+        <lastmod>2020-07-28T01:24:13.872Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://kenzo0107.github.io/2019/02/17/2019-02-17-rails-recaptcha-v3-bot/</loc>
         <lastmod>2020-07-21T07:36:48.814Z</lastmod>
         <changefreq>weekly</changefreq>

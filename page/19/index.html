@@ -146,6 +146,75 @@
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2015-08-29T15:00:00.000Z">2015-08-30</time>
+                
+                <div class="level-item">
+                    <a class="has-link-grey -link" href="/categories/Go/">Go</a>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2015/08/30/2015-08-30-go-revel-fw-jquery/">Go Revelフレームワーク jQuery非同期処理</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="概要">概要</span></h2><p>Go RevelフレームワークでAjax非同期処理を実装します。</p>
+<h2><span id="csrf-対策">CSRF 対策</span></h2><p>以下コマンドにより<br>RevelフレームワークでCSFR対策する為のライブラリをインストール</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go get github.com&#x2F;cbonello&#x2F;revel-csrf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>app/init.go</li>
+</ul>
+<p>ajax実行時にCSRFチェックする為、init.goでのチェックを外すように設定</p>
+<a href="https://gist.github.com/kenzo0107/2cc980f35c8753f7ccdf" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://github.githubassets.com/images/modules/gists/gist-og-image.png"></div><div class="descriptions"><div class="og-title">init.go</div><div class="og-description">GitHub Gist: instantly share code, notes, and snippets.</div></div></div></a>
+
+
+
+<p>以下CSRFのFilter設定</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line">    revel.Filters = []revel.Filter&#123;</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">        csrf.CSRFFilter,               <span class="comment">// CSRF prevention.</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<p><code>conf/routes</code> で実行するAPIのURLはAjax実行時にCSRFチェックする為、<br>init.goではチェックを対象外とする様に設定</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">csrf.ExemptedFullPath(<span class="string">"/api_execute"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="view側の設定">View側の設定</span></h2><ul>
+<li>views/header.html</li>
+</ul>
+<p><code>&lt;head&gt;〜&lt;/head&gt;</code> 内にCSRFチェック用ハッシュ値をmeta情報として埋め込みます。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"csrf-token"</span> <span class="attr">content</span>=<span class="string">"&#123;&#123; .csrf_token &#125;&#125;"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="jqueryファイル">jQueryファイル</span></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setAjaxToken</span>(<span class="params"> token </span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ajax --- start --------------------------------------------------</span></span><br><span class="line">    $.ajaxSetup(&#123;</span><br><span class="line">    	crossDomain: <span class="literal">false</span>,</span><br><span class="line">    	beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!csrfSafeMethod(settings.type)) &#123;</span><br><span class="line">                xhr.setRequestHeader(<span class="string">"X-CSRFToken"</span>, token );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="built_in">document</span>).on(<span class="string">"click"</span>, <span class="string">".ajax_execute"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">	event.preventDefault();</span><br><span class="line"></span><br><span class="line">    	setAjaxToken( postData[<span class="string">'_token'</span>] );</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> ajaxParamas = &#123;&#125;;</span><br><span class="line">    	ajaxParamas[<span class="string">"type"</span>]		= <span class="string">"POST"</span>;</span><br><span class="line">    	ajaxParamas[<span class="string">"url"</span>]		= action;</span><br><span class="line">    	ajaxParamas[<span class="string">"data"</span>]		= postData;</span><br><span class="line">    	ajaxParamas[<span class="string">"cache"</span>]	= <span class="literal">false</span>;</span><br><span class="line">    	ajaxParamas[<span class="string">"dataType"</span>]	= <span class="string">"json"</span>;</span><br><span class="line"></span><br><span class="line">        $.ajax(ajaxParamas)</span><br><span class="line">        .success( <span class="function"><span class="keyword">function</span>(<span class="params">res</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"(^-^) OK"</span>)</span><br><span class="line">        &#125;).error ( <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"(&gt;_&lt;) NG"</span>)</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>簡単…とは行ってない気がしますが<br>CSRF対策ができました。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2015-08-20T15:00:00.000Z">2015-08-21</time>
                 
                 
@@ -783,50 +852,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2015-02-28T15:00:00.000Z">2015-03-01</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2015/03/01/2015-03-01-apache-openssl-sha256/">Apache + OpenSSL でSHA256対応CSR生成</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="ドメイン登録者情報確認">ドメイン登録者情報確認</span></h2><p>※特にドメイン登録者を明確に指定する必要がなければ、「手順」へ進んでください。</p>
-<p>企業認証周りが必要な場合は<br>事前にWHOIS(フーイズ)でドメイン登録者情報を確認しておくとスムーズです。</p>
-<p><a href="http://whois.jprs.jp/">http://whois.jprs.jp/</a></p>
-<p>検索ワードにドメイン入力して検索すると登録者情報を確認できます。</p>
-<h2><span id="csr生成手順">CSR生成手順</span></h2><script src="//gist.github.com/kenzo0107/781b81a6916fbb2b8533.js"></script>
-
-<script src="//gist.github.com/kenzo0107/781b81a6916fbb2b8533.js"></script>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -889,7 +914,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            194
+                            195
                         </p>
                     </a>
                 </div>
@@ -1023,6 +1048,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="aws_ssm_parameter の value を ignore_change に指定しない">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-31T15:00:00.000Z">2020-06-01</time></div>
+                    <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/20/2020-05-20-go-json-time/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
@@ -1059,25 +1103,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-29T15:00:00.000Z">2020-04-30</time></div>
-                    <a href="/2020/04/30/2020-04-30-typing-game-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go でタイピングゲーム作った</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1106,7 +1131,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/AWS/">
                         <span class="tag">AWS</span>
-                        <span class="tag is-grey">25</span>
+                        <span class="tag is-grey">26</span>
                     </a>
                 </div>
                 

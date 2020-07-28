@@ -142,6 +142,114 @@
 <div class="card">
     
     <div class="card-image">
+        <a href="/2017/07/21/2017-07-21-commit-to-phinx-migration-tool/" class="image is-8by1">
+        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170721/20170721210050.png" alt="I used Phinx, DB migration Tool on Docker!">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
+                    datetime="2017-07-20T15:00:00.000Z">2017-07-21</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2017/07/21/2017-07-21-commit-to-phinx-migration-tool/">I used Phinx, DB migration Tool on Docker!</a>
+            
+        </h1>
+        <div class="content">
+            <h2><span id="overview">Overview</span></h2><p>This is Sandbox for DB Migration Tool <code>Phinx</code>.</p>
+<h2><span id="preparation">Preparation</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/kenzo0107/phinx-mysql</span><br><span class="line">$ <span class="built_in">cd</span> phinx-mysql</span><br></pre></td></tr></table></figure>
+
+<h3><span id="create-and-run-containers-of-phinx-db-mysql">Create and Run Containers of Phinx, DB (MySQL).</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make build</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose ps</span><br><span class="line"></span><br><span class="line">         Name                       Command             State     Ports</span><br><span class="line">-------------------------------------------------------------------------</span><br><span class="line">phinxmysql_db-migrate_1   phinx --<span class="built_in">help</span>                  Exit 0</span><br><span class="line">phinxmysql_db_1           docker-entrypoint.sh mysqld   Up       3306/tcp</span><br></pre></td></tr></table></figure>
+
+<p>The Container <code>db-migrate</code> is used as for one-off container, so its state is <code>Exit 0</code>.</p>
+<h2><span id="initialize-phinx-project">Initialize Phinx Project</span></h2><p>Phinx creates a default file called <code>phinx.yml</code>.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make init</span><br></pre></td></tr></table></figure>
+
+<p>In default setting, phinx select <code>development</code> environment.</p>
+<h2><span id="1-create-table">1. Create Table</span></h2><h3><span id="create-phinx-definition-file">Create phinx definition file</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ make create DB=hogehoge CLASS=CreateTableUsers</span><br><span class="line">$ make create DB=mogemoge CLASS=CreateTableMembers</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">created db/migrations/hogehoge/20170724065658_create_table_users.php</span><br><span class="line">created db/migrations/mogemoge/20170724065738_create_table_members.php</span><br></pre></td></tr></table></figure>
+
+<h3><span id="edit-phinx-definition-file">Edit phinx definition file</span></h3><ul>
+<li>db/migrations/hogehoge/20170724065658_create_table_users.php</li>
+</ul>
+<p><a href="http://docs.phinx.org/en/latest/migrations.html">Writing Migrations</a></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Phinx</span>\<span class="title">Migration</span>\<span class="title">AbstractMigration</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Phinx</span>\<span class="title">Db</span>\<span class="title">Adapter</span>\<span class="title">MysqlAdapter</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateTableUsers</span> <span class="keyword">extends</span> <span class="title">AbstractMigration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// Automatically generated id is excluded, and primary key is set as user_id</span></span><br><span class="line">        $t = <span class="keyword">$this</span>-&gt;table(<span class="string">'users'</span>, [<span class="string">'id'</span> =&gt; <span class="string">'user_id'</span>]);</span><br><span class="line"></span><br><span class="line">        $t-&gt;addColumn(<span class="string">'last_name'</span>,       <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'姓'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'first_name'</span>,      <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'名'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'last_kana_name'</span>,  <span class="string">'string'</span>,     [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>, <span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'姓（カナ）'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'first_kana_name'</span>, <span class="string">'string'</span>,     [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>, <span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'名（カナ）'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'username'</span>,        <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">20</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'ユーザ名'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'password'</span>,        <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">40</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'パスワード'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'email'</span>,           <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">100</span>, <span class="string">'comment'</span> =&gt; <span class="string">'Email'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'postcode'</span>,        <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'郵便番号'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'birthday'</span>,        <span class="string">'date'</span>,       [<span class="string">'comment'</span> =&gt; <span class="string">'誕生日'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'gender'</span>,          <span class="string">'integer'</span>,    [<span class="string">'limit'</span> =&gt; MysqlAdapter::INT_TINY, <span class="string">'comment'</span> =&gt; <span class="string">'性別(1:男 2:女 3:その他)'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'card_number'</span>,     <span class="string">'string'</span>,     [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>, <span class="string">'limit'</span> =&gt; <span class="number">20</span>,  <span class="string">'comment'</span> =&gt;<span class="string">'クレジットカードNo'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'description'</span>,     <span class="string">'text'</span>,       [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>, <span class="string">'limit'</span> =&gt; MysqlAdapter::TEXT_LONG, <span class="string">'comment'</span> =&gt;<span class="string">'説明'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'created'</span>,         <span class="string">'timestamp'</span>,  [<span class="string">'default'</span> =&gt; <span class="string">'CURRENT_TIMESTAMP'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'updated'</span>,         <span class="string">'datetime'</span>,   [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>])</span><br><span class="line">          -&gt;addIndex([<span class="string">'username'</span>, <span class="string">'email'</span>],     [<span class="string">'unique'</span> =&gt; <span class="keyword">true</span>])</span><br><span class="line">          -&gt;create();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;dropTable(<span class="string">'users'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>db/migrations/mogemoge/20170724065738_create_table_members.php</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Phinx</span>\<span class="title">Migration</span>\<span class="title">AbstractMigration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateTableMembers</span> <span class="keyword">extends</span> <span class="title">AbstractMigration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $t = <span class="keyword">$this</span>-&gt;table(<span class="string">'members'</span>);</span><br><span class="line">        $t-&gt;addColumn(<span class="string">'member_code'</span>, <span class="string">'string'</span>,    [<span class="string">'limit'</span> =&gt; <span class="number">20</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'会員コード'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'created'</span>,     <span class="string">'timestamp'</span>, [<span class="string">'default'</span> =&gt; <span class="string">'CURRENT_TIMESTAMP'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'updated'</span>,     <span class="string">'datetime'</span>,  [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>])</span><br><span class="line">          -&gt;addIndex([<span class="string">'member_code'</span>], [<span class="string">'unique'</span> =&gt; <span class="keyword">true</span>])</span><br><span class="line">          -&gt;create();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;dropTable(<span class="string">'members'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="2-add-column">2. Add Column</span></h2><h3><span id="create-phinx-definition-file">Create phinx definition file</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ make create CLASS=AddTableUsersColumnsCity</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">created db/migrations/hogehoge/20170724065838_add_table_users_columns_city.php</span><br></pre></td></tr></table></figure>
+
+<h3><span id="edit-phinx-definition-file">Edit phinx definition file</span></h3><ul>
+<li>db/migrations/hogehoge/20170724065838_add_table_users_columns_city.php</li>
+</ul>
+<p>Add the column <code>city</code> after the column <code>email</code>.</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Phinx</span>\<span class="title">Migration</span>\<span class="title">AbstractMigration</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddTableUsersColumnsCity</span> <span class="keyword">extends</span> <span class="title">AbstractMigration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $t = <span class="keyword">$this</span>-&gt;table(<span class="string">'users'</span>);</span><br><span class="line">        $t-&gt;addColumn(<span class="string">'city'</span>, <span class="string">'string'</span>, [<span class="string">'limit'</span> =&gt; <span class="number">10</span>, <span class="string">'comment'</span> =&gt; <span class="string">'都市'</span>, <span class="string">'after'</span> =&gt; <span class="string">'postcode'</span>])</span><br><span class="line">          -&gt;update();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $t = <span class="keyword">$this</span>-&gt;table(<span class="string">'users'</span>);</span><br><span class="line">        $t-&gt;removeColumn(<span class="string">'city'</span>)</span><br><span class="line">          -&gt;save();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="migration">Migration</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make migrate</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Result</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use hogehoge</span><br><span class="line">mysql&gt; show full columns from users;</span><br><span class="line">+-----------------+--------------+-----------------+------+-----+-------------------+----------------+---------------------------------+---------------------------------+</span><br><span class="line">| Field           | Type         | Collation       | Null | Key | Default           | Extra| Privileges                      | Comment                         |</span><br><span class="line">+-----------------+--------------+-----------------+------+-----+-------------------+----------------+---------------------------------+---------------------------------+</span><br><span class="line">| user_id         | int(11)      | NULL            | NO   | PRI | NULL              | auto_increment| select,insert,update,references |                                 |</span><br><span class="line">| last_name       | varchar(10)  | utf8_general_ci | NO   |     | NULL              || select,insert,update,references | 姓                              |</span><br><span class="line">| first_name      | varchar(10)  | utf8_general_ci | NO   |     | NULL              || select,insert,update,references | 名                              |</span><br><span class="line">| last_kana_name  | varchar(10)  | utf8_general_ci | YES  |     | NULL              || select,insert,update,references | 姓（カナ）                      |</span><br><span class="line">| first_kana_name | varchar(10)  | utf8_general_ci | YES  |     | NULL              || select,insert,update,references | 名（カナ）                      |</span><br><span class="line">| username        | varchar(20)  | utf8_general_ci | NO   | MUL | NULL              || select,insert,update,references | ユーザ名                        |</span><br><span class="line">| password        | varchar(40)  | utf8_general_ci | NO   |     | NULL              || select,insert,update,references | パスワード                      |</span><br><span class="line">| email           | varchar(100) | utf8_general_ci | NO   |     | NULL              || select,insert,update,references | Email                           |</span><br><span class="line">| city            | varchar(255) | utf8_general_ci | NO   |     | NULL              || select,insert,update,references |                                 |</span><br><span class="line">| postcode        | varchar(10)  | utf8_general_ci | NO   |     | NULL              || select,insert,update,references | 郵便番号                        |</span><br><span class="line">| birthday        | date         | NULL            | NO   |     | NULL              || select,insert,update,references | 誕生日                          |</span><br><span class="line">| gender          | tinyint(4)   | NULL            | NO   |     | NULL              || select,insert,update,references | 性別(1:男 2:女 3:その他)        |</span><br><span class="line">| card_number     | varchar(20)  | utf8_general_ci | YES  |     | NULL              || select,insert,update,references | クレジットカードNo              |</span><br><span class="line">| description     | longtext     | utf8_general_ci | YES  |     | NULL              || select,insert,update,references | 説明                            |</span><br><span class="line">| created         | timestamp    | NULL            | NO   |     | CURRENT_TIMESTAMP || select,insert,update,references |                                 |</span><br><span class="line">| updated         | datetime     | NULL            | YES  |     | NULL              || select,insert,update,references |                                 |</span><br><span class="line">+-----------------+--------------+-----------------+------+-----+-------------------+----------------+---------------------------------+---------------------------------+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; use mogemoge</span><br><span class="line">mysql&gt; show full columns from members;</span><br><span class="line">+-------------+-------------+-----------------+------+-----+-------------------+----------------+---------------------------------+-----------------+</span><br><span class="line">| Field       | Type        | Collation       | Null | Key | Default           | Extra          | Privileges                      | Comment         |</span><br><span class="line">+-------------+-------------+-----------------+------+-----+-------------------+----------------+---------------------------------+-----------------+</span><br><span class="line">| id          | int(11)     | NULL            | NO   | PRI | NULL              | auto_increment | select,insert,update,references |                 |</span><br><span class="line">| member_code | varchar(20) | utf8_general_ci | NO   | UNI | NULL              |                | select,insert,update,references | 会員コード      |</span><br><span class="line">| created     | timestamp   | NULL            | NO   |     | CURRENT_TIMESTAMP |                | select,insert,update,references |                 |</span><br><span class="line">| updated     | datetime    | NULL            | YES  |     | NULL              |                | select,insert,update,references |                 |</span><br><span class="line">+-------------+-------------+-----------------+------+-----+-------------------+----------------+---------------------------------+-----------------+</span><br></pre></td></tr></table></figure>
+
+<h3><span id="rollback">Rollback</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make rollback</span><br></pre></td></tr></table></figure>
+
+<h2><span id="3-create-sample-seeds-for-multi-databases">3. Create sample seeds for Multi Databases;</span></h2><h3><span id="create-phinx-definition-file">Create phinx definition file</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ make seed_create DB=hogehoge CLASS=UserSeeder</span><br><span class="line">$ make seed_create DB=mogemoge CLASS=MembersSeeder</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">created ./db/seeds/hogehoge/UsersSeeder.php</span><br><span class="line">created ./db/seeds/mogemoge/MembersSeeder.php</span><br></pre></td></tr></table></figure>
+
+<h3><span id="edit-phinx-definition-file">Edit phinx definition file</span></h3><ul>
+<li>./db/seeds/hogehoge/UsersSeeder.php</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Phinx</span>\<span class="title">Seed</span>\<span class="title">AbstractSeed</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UsersSeeder</span> <span class="keyword">extends</span> <span class="title">AbstractSeed</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $t = <span class="keyword">$this</span>-&gt;table(<span class="string">'users'</span>);</span><br><span class="line">        $t-&gt;truncate();</span><br><span class="line"></span><br><span class="line">        $genders = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">        $faker = Faker\Factory::create(<span class="string">'ja_JP'</span>);</span><br><span class="line">        $d = [];</span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; <span class="number">10</span>; $i++) &#123;</span><br><span class="line">            $d[] = [</span><br><span class="line">                <span class="string">'last_name'</span>        =&gt; $faker-&gt;lastName(<span class="number">10</span>),</span><br><span class="line">                <span class="string">'first_name'</span>       =&gt; $faker-&gt;firstName(<span class="number">10</span>),</span><br><span class="line">                <span class="string">'last_kana_name'</span>   =&gt; $faker-&gt;lastKanaName(<span class="number">10</span>),</span><br><span class="line">                <span class="string">'first_kana_name'</span>  =&gt; $faker-&gt;firstKanaName(<span class="number">10</span>),</span><br><span class="line">                <span class="string">'username'</span>         =&gt; $faker-&gt;userName(<span class="number">20</span>),</span><br><span class="line">                <span class="string">'password'</span>         =&gt; sha1($faker-&gt;password),</span><br><span class="line">                <span class="string">'email'</span>            =&gt; $faker-&gt;email,</span><br><span class="line">                <span class="string">'postcode'</span>         =&gt; $faker-&gt;postcode,</span><br><span class="line">                <span class="string">'city'</span>             =&gt; $faker-&gt;city,</span><br><span class="line">                <span class="string">'birthday'</span>         =&gt; $faker-&gt;date($format=<span class="string">'Y-m-d'</span>,$max=<span class="string">'now'</span>),</span><br><span class="line">                <span class="string">'gender'</span>           =&gt; $faker-&gt;randomElement($genders),</span><br><span class="line">                <span class="string">'card_number'</span>      =&gt; $faker-&gt;creditCardNumber,</span><br><span class="line">                <span class="string">'description'</span>      =&gt; $faker-&gt;text(<span class="number">200</span>),</span><br><span class="line">                <span class="string">'created'</span>          =&gt; date(<span class="string">'Y-m-d H:i:s'</span>),</span><br><span class="line">                <span class="string">'updated'</span>          =&gt; date(<span class="string">'Y-m-d H:i:s'</span>),</span><br><span class="line">            ];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">$this</span>-&gt;insert(<span class="string">'users'</span>, $d);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>./db/seeds/hogehoge/MembersSeeder.php</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Phinx</span>\<span class="title">Seed</span>\<span class="title">AbstractSeed</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MembersSeeder</span> <span class="keyword">extends</span> <span class="title">AbstractSeed</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $t = <span class="keyword">$this</span>-&gt;table(<span class="string">'members'</span>);</span><br><span class="line">        $t-&gt;truncate();</span><br><span class="line"></span><br><span class="line">        $faker = Faker\Factory::create(<span class="string">'ja_JP'</span>);</span><br><span class="line">        $d = [];</span><br><span class="line">        <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; <span class="number">10</span>; $i++) &#123;</span><br><span class="line">            $d[] = [</span><br><span class="line">                <span class="string">'member_code'</span>  =&gt; $faker-&gt;regexify(<span class="string">'[0-9]&#123;20&#125;'</span>),</span><br><span class="line">                <span class="string">'created'</span>   =&gt; date(<span class="string">'Y-m-d H:i:s'</span>),</span><br><span class="line">                <span class="string">'updated'</span>   =&gt; date(<span class="string">'Y-m-d H:i:s'</span>),</span><br><span class="line">            ];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">$this</span>-&gt;insert(<span class="string">'members'</span>, $d);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="run-seed">Run seed</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make seed</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Result</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use hogehoge;</span><br><span class="line">mysql&gt; select * from users;</span><br><span class="line">+---------+-----------+------------+-----------------+-----------------+-------------+------------------------------------------+------------------------------+----------+--------------+------------+--------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+</span><br><span class="line">| user_id | last_name | first_name | last_kana_name  | first_kana_name | username    | password                                 | email          | postcode | city         | birthday   | gender | card_number      | description                                                                                                                    | created             | updated           |</span><br><span class="line">+---------+-----------+------------+-----------------+-----------------+-------------+------------------------------------------+------------------------------+----------+--------------+------------+--------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+</span><br><span class="line">|       1 | 佐々木    | 零         | ヤマダ          | カナ            | akira97     | e270038c94f231da7bca25dead3e386ba3984491 | hirokawa.rika@hotmail.co.jp  | 1867251  | 佐々木市     | 1987-09-25 |      1 | 4024007116991463 | Dolor reiciendis fuga fugiat id molestiae eos. Dolores sint rem repudiandae perspiciatis. Ducimus aut mollitia aut asperiores laboriosam.                                                 | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       2 | 宮沢      | 千代       | ノムラ          | ヨウイチ        | nagisa.taro | 695a90d1b84cf004357aad3eb37697b51afbf5cc | tanabe.hiroshi@kudo.org      | 8639535  | 江古田市     | 1977-06-01 |      3 | 344103919563863  | Doloribus et recusandae quam accusantium pariatur nobis reiciendis quo. Eos quae et commodi quos accusamus ex. Ullam repellendus maiores vero sit sit et.                                 | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       3 | 斉藤      | 充         | ミヤケ          | オサム          | kana.suzuki | f309f34d08b4d0d686863fa38ed3d3af5e0b2104 | kana.kudo@mail.goo.ne.jp     | 2763622  | 青田市       | 1997-01-30 |      1 | 4716886227252    | Veritatis voluptatem pariatur libero aut quia. Facere nemo quos enim amet ut ipsum sequi. Nobis natus et aspernatur aut. Natus pariatur deserunt voluptatum deserunt.                     | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       4 | 吉田      | 太郎       | ウノ            | ツバサ          | naoko.uno   | 45d04bda7ac79244c90a33ff68798b979138054a | taro.nagisa@hirokawa.com     | 6099661  | 江古田市     | 2006-03-19 |      2 | 5372535333698250 | Nostrum velit nostrum eos magni. Reiciendis quos enim adipisci quisquam sed voluptas. Necessitatibus sint qui dolorem animi impedit consectetur commodi.                                  | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       5 | 野村      | 亮介       | サトウ          | ミノル          | rika.tanabe | dd3d50714c0775bfee453f7d9a9815ce26ba57db | wkudo@hotmail.co.jp          | 6966314  | 渡辺市       | 1985-12-21 |      1 | 4929108488987091 | Id atque molestiae expedita omnis libero natus et. Repellendus ut tenetur molestias voluptas. Perspiciatis nisi et illum aut aut vel repudiandae.                                         | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       6 | 木村      | 裕美子     | タナカ          | ヒロキ          | hiroshi53   | 033bfd0493b72efd0ff60bc15c7eeb3b2e054501 | ztanabe@tanabe.biz          | 3155238  | 山田市       | 1996-01-02 |      3 | 5476616628100007 | Assumenda consectetur ea sed et omnis <span class="built_in">alias</span> fugiat quo. Porro nihil similique sint laudantium asperiores blanditiis. Error dolores vitae quia explicabo facilis deleniti distinctio.      | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       7 | 吉本      | 陽一       | キムラ          | ヒデキ          | akira27     | 51de6afc65f535ae58f927d698f07e60e04c7746 | rika59@suzuki.com          | 6457702  | 田辺市       | 2010-04-12 |      2 | 5388155063289311 | Nesciunt qui beatae ut officia qui error autem. Temporibus <span class="built_in">alias</span> earum ullam incidunt quo recusandae enim qui. Sed atque veritatis sed ad ullam qui. Repellendus est nostrum et pariatur. | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       8 | 渡辺      | 翔太       | ササダ          | クミコ          | uno.momoko  | fa2d16d5f2acffd5aeeaab6791fe64c9f70a9b2f | stanabe@uno.com          | 5849600  | 伊藤市       | 2012-06-09 |      1 | 5274550197820022 | Odio quasi sunt tempora. Molestias aut qui sed quos beatae eum accusantium. Non dolores quam veniam et ab quidem nostrum repellendus. Qui ducimus et optio et.                            | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       9 | 坂本      | 翔太       | ナカツガワ      | ナオキ          | akira.kudo  | 4af41e536bf19fa3cb0527304adad0de76260e82 | suzuki.momoko@mail.goo.ne.jp | 8609563  | 宮沢市       | 2005-10-23 |      3 | 5231530310398512 | Qui id neque molestiae facere aut et consequatur. Delectus ea voluptatibus provident atque assumenda maxime eum. At quidem sint accusamus. Eaque sed voluptate quo sint non non.          | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|      10 | 野村      | 翼         | ヒロカワ        | ナオコ          | taro.kudo   | f8a63d0010c99d6403e0c1f458005b934ec03f8c | kana.tanabe@mail.goo.ne.jp   | 5804069  | 桐山市       | 1988-12-25 |      2 | 5140671281503530 | Dolorem consequatur nulla <span class="built_in">alias</span> perspiciatis ut. Tenetur modi cumque incidunt dolor.                                                                                                      | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">+---------+-----------+------------+-----------------+-----------------+-------------+------------------------------------------+------------------------------+----------+--------------+------------+--------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; use mogemoge;</span><br><span class="line">mysql&gt; select * from members;</span><br><span class="line"></span><br><span class="line">+----+----------------------+---------------------+---------------------+</span><br><span class="line">| id | member_code          | created             | updated             |</span><br><span class="line">+----+----------------------+---------------------+---------------------+</span><br><span class="line">|  1 | 86190539096622228312 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  2 | 77322186584623078448 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  3 | 17169562241415794809 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  4 | 86738824931379981947 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  5 | 23125815173540252188 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  6 | 81839177491562485300 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  7 | 82938165381845652192 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  8 | 87208503292784158954 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  9 | 80172779107984112104 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">| 10 | 22825755425594828330 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">+----+----------------------+---------------------+---------------------+</span><br></pre></td></tr></table></figure>
+
+<h2><span id="reference">Reference</span></h2><ul>
+<li><a href="https://github.com/fzaninotto/Faker">fzaninotto/Faker</a></li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-image">
         <a href="/2017/07/14/2017-07-14-monitor-state-of-docker-by-mackerel/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714223239.png" alt="Mackerel で Docker の起動状態確認">
         </a>
@@ -1033,108 +1141,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/2017/04/21/2017-04-21-fke-on-docker-compose/" class="image is-8by1">
-        <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421221055.png" alt="docker-compose で開発環境構築 〜Nginx アクセスログ(ltsv) を fluentd + elasticsearch + kibana で可視化〜">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2017-04-20T15:00:00.000Z">2017-04-21</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2017/04/21/2017-04-21-fke-on-docker-compose/">docker-compose で開発環境構築 〜Nginx アクセスログ(ltsv) を fluentd + elasticsearch + kibana で可視化〜</a>
-            
-        </h1>
-        <div class="content">
-            <h2><span id="概要">概要</span></h2><p>前回構築した Vagrant 環境上で docker-compose による開発環境構築をします。</p>
-<a href="http://kenzo0107.hatenablog.com/entry/2017/04/13/225610" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170413/20170413222957.png"></div><div class="descriptions"><div class="og-title">Vagrant (Ubuntu) に Docker, Docker Compose インストール - 長生村本郷Engineers&#39;Blog</div><div class="og-description">概要 開発環境構築用に作成した、 Vagrant (Ubuntu) に Docker と Docker Compose をインストールする手順をまとめました。 Vagrantfile 作成 かなりシンプルにしてます。 Vagrantfile # -*- mode: ruby -*…</div></div></div></a>
-
-<p>今回は前回の続きで Nginx のアクセスログを Elasticsearch + Fluentd + Kibana で可視化してみます。<br>アプリ</p>
-<h2><span id="簡単構築手順">簡単構築手順</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">macOS% $ git clone https:&#x2F;&#x2F;github.com&#x2F;kenzo0107&#x2F;vagrant-docker</span><br><span class="line">macOS% $ cd vagrant-docker</span><br><span class="line">macOS% $ vagrant up</span><br><span class="line">macOS% $ vagrant ssh</span><br><span class="line">vagrant% $ cd &#x2F;vagrant&#x2F;nginx-efk</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; -d デタッチモードでないのは各コンテナの起動状況がログで見える為です。</span><br><span class="line">vagrant% $ docker-compose up</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h2><span id="docker-compose-構成">docker-compose 構成</span></h2><p>Git にまとめています。</p>
-<a href="https://github.com/kenzo0107/vagrant-docker/tree/master/docker/nginx-efk" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://avatars0.githubusercontent.com/u/6197906?s=400&v=4"></div><div class="descriptions"><div class="og-title">kenzo0107/vagrant-docker</div><div class="og-description">Docker on Vagrant(ubuntu). Contribute to kenzo0107/vagrant-docker development by creating an account on GitHub.</div></div></div></a>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">├── docker-compose.yml</span><br><span class="line">├── fluentd</span><br><span class="line">│   ├── conf</span><br><span class="line">│   │   ├── conf.d</span><br><span class="line">│   │   │   └── nginx.log.conf</span><br><span class="line">│   │   └── fluent.conf</span><br><span class="line">│   └── Dockerfile</span><br><span class="line">└── nginx</span><br><span class="line">    └── conf</span><br><span class="line">        └── nginx.conf</span><br></pre></td></tr></table></figure>
-
-<h3><span id="ポイント">ポイント</span></h3><ul>
-<li>nginx のログ格納場所を <code>volume</code> 指定しホスト側とシンク。 それを fluentd 側でも <code>volume</code> 指定し tail するようにしました。</li>
-</ul>
-<p>以下のようなイメージです。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421221055.png" width="100%">
-</div>
-
-<h2><span id="ブラウザから-nginx-起動確認">ブラウザから Nginx 起動確認</span></h2><p>ブラウザから <code>http://192.168.35.101/</code> にアクセスすると<br>Nginx の Welcome ページが確認できます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421222343.png" width="100%">
-</div>
-
-
-<p>先程の <code>docker-compose up</code> 後に以下のようなログが見え<br>fluentd が Nginx アクセスログを捕まえているのがわかります。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421222937.png" width="100%">
-</div>
-
-<h2><span id="kibana-にアクセス">Kibana にアクセス</span></h2><p>ブラウザから <code>http://192.168.35.101:5601</code> にアクセスすると<br>Kibana ページが表示されます。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421223008.png" width="100%">
-</div>
-
-<ol>
-<li><p>Index name or pattern</p>
-<ul>
-<li>fluentd-* 指定</li>
-</ul>
-</li>
-<li><p>Time-field name</p>
-<ul>
-<li>@timestamp 指定</li>
-</ul>
-</li>
-<li><p>Create ボタン押下</p>
-</li>
-<li><p>レフトメニューから <code>Discover</code> クリック</p>
-</li>
-</ol>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421223626.png" width="100%">
-</div>
-
-<h2><span id="macos-からログ確認">macOS からログ確認</span></h2><p>当然ながら macOS と vagrant とシンクしているので<br>macOS 上からもログが tail できます。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ tail -f &lt;path&#x2F;to&#x2F;vagrant-docker&gt;&#x2F;docker&#x2F;nginx-efk&#x2F;_log&#x2F;nginx&#x2F;access.log</span><br></pre></td></tr></table></figure>
-
-<p>以上です。<br>参考になれば幸いです。</p>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1201,7 +1207,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            194
+                            195
                         </p>
                     </a>
                 </div>
@@ -1335,6 +1341,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="aws_ssm_parameter の value を ignore_change に指定しない">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-31T15:00:00.000Z">2020-06-01</time></div>
+                    <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/20/2020-05-20-go-json-time/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
@@ -1371,25 +1396,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-29T15:00:00.000Z">2020-04-30</time></div>
-                    <a href="/2020/04/30/2020-04-30-typing-game-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go でタイピングゲーム作った</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1418,7 +1424,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/AWS/">
                         <span class="tag">AWS</span>
-                        <span class="tag is-grey">25</span>
+                        <span class="tag is-grey">26</span>
                     </a>
                 </div>
                 

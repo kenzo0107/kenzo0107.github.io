@@ -280,6 +280,74 @@
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
                 <time class="level-item has-text-grey"
+                    datetime="2020-05-31T15:00:00.000Z">2020-06-01</time>
+                
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+            <a class="has-link-black-ter" href="/2020/06/01/2020-06-01-terraform-sensitive-data/">aws_ssm_parameter の value を ignore_change に指定しない</a>
+            
+        </h1>
+        <div class="content">
+            <div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#概要">概要</a></li>
+<li><a href="#対応ステップ">対応ステップ</a></li>
+<li><a href="#まとめ">まとめ</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>これまで秘密情報は以下の様な取り扱いをしていることが多かったです。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">resource</span> <span class="string">"aws_ssm_parameter"</span> <span class="string">"master_password"</span> <span class="string">&#123;</span></span><br><span class="line">  <span class="string">name</span>  <span class="string">=</span> <span class="string">"master_password"</span></span><br><span class="line">  <span class="string">type</span>  <span class="string">=</span> <span class="string">"SecureString"</span></span><br><span class="line">  <span class="string">value</span> <span class="string">=</span> <span class="string">"dummy"</span></span><br><span class="line"></span><br><span class="line">  <span class="string">lifecycle</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="string">ignore_changes</span> <span class="string">=</span> <span class="string">[value]</span></span><br><span class="line">  <span class="string">&#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">data</span> <span class="string">"aws_ssm_parameter"</span> <span class="string">"master_password"</span> <span class="string">&#123;</span></span><br><span class="line">  <span class="string">name</span> <span class="string">=</span> <span class="string">"master_password"</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>上記いずれの場合にも、事前に Parameter Store への登録が必須です。<br>つまり、terraform で管理されない作業が発生していることになります。</p>
+<h2 id="対応ステップ"><a href="#対応ステップ" class="headerlink" title="対応ステップ"></a>対応ステップ</h2><p>terraform で完結させる方法としては、パラメータストアに登録する value を暗号化して登録することです。</p>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                    <a class="button is-size-7 is-light"
+                        href="/2020/06/01/2020-06-01-terraform-sensitive-data/#more">Read More</a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey"
                     datetime="2020-05-19T15:00:00.000Z">2020-05-20</time>
                 
                 <div class="level-item">
@@ -694,53 +762,6 @@
 
 
 
-    
-<div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey"
-                    datetime="2020-03-23T15:00:00.000Z">2020-03-24</time>
-                
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-            <a class="has-link-black-ter" href="/2020/03/24/2020-03-24-serverlessfw-environment/">Serverless Framework の設定値の上書き・追加 方法</a>
-            
-        </h1>
-        <div class="content">
-            <p>Serverless Framework での上書き設定について詰まった点をまとめました。</p>
-<p>基本的には以下公式ドキュメントを参考にしつつ、いくつか実装パターンを試験しました。</p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                    <a class="button is-size-7 is-light"
-                        href="/2020/03/24/2020-03-24-serverlessfw-environment/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -801,7 +822,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            194
+                            195
                         </p>
                     </a>
                 </div>
@@ -935,6 +956,25 @@
         
         <article class="media">
             
+            <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="aws_ssm_parameter の value を ignore_change に指定しない">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-31T15:00:00.000Z">2020-06-01</time></div>
+                    <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/05/20/2020-05-20-go-json-time/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
@@ -971,25 +1011,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/04/30/2020-04-30-typing-game-go/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/kenzo0107/typing-game-go/raw/master/logo.png" alt="Go でタイピングゲーム作った">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-04-29T15:00:00.000Z">2020-04-30</time></div>
-                    <a href="/2020/04/30/2020-04-30-typing-game-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go でタイピングゲーム作った</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Go/">Go</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
     
@@ -1018,7 +1039,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/AWS/">
                         <span class="tag">AWS</span>
-                        <span class="tag is-grey">25</span>
+                        <span class="tag is-grey">26</span>
                     </a>
                 </div>
                 
