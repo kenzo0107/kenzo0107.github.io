@@ -17,7 +17,7 @@ jobs:
         with:
           path: node_modules
           key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
-        working-directory: ./_blog
+          working-directory: ./_blog
       - name: Build
         run: npm run build && npm run deploy
         working-directory: ./_blog
