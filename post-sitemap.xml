@@ -8,8 +8,40 @@
     </url>
 
     <url>
+        <loc>https://kenzo0107.github.io/2019/04/17/2019-04-17-terraform-2019-workspace/</loc>
+        <lastmod>2020-07-29T14:53:39.141Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kenzo0107.github.io/2019/10/01/2019-10-01-terraform-0-11-github-actions-tflint/</loc>
+        <lastmod>2020-07-29T14:53:32.597Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/</loc>
+        <lastmod>2020-07-29T14:53:22.522Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://kenzo0107.github.io/2020/06/01/2020-06-01-terraform-sensitive-data/</loc>
-        <lastmod>2020-07-28T01:24:13.872Z</lastmod>
+        <lastmod>2020-07-29T14:53:07.195Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kenzo0107.github.io/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/</loc>
+        <lastmod>2020-07-29T14:53:02.813Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -18,22 +50,6 @@
     <url>
         <loc>https://kenzo0107.github.io/2019/02/17/2019-02-17-rails-recaptcha-v3-bot/</loc>
         <lastmod>2020-07-21T07:36:48.814Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://kenzo0107.github.io/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/</loc>
-        <lastmod>2020-07-20T15:33:29.035Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://kenzo0107.github.io/2019/04/17/2019-04-17-terraform-2019-workspace/</loc>
-        <lastmod>2020-07-20T13:29:58.805Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -338,14 +354,6 @@
     <url>
         <loc>https://kenzo0107.github.io/2019/10/17/2019-10-17-datadog-agent-for-ecs-launch-type-ec2/</loc>
         <lastmod>2020-05-07T03:41:30.380Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://kenzo0107.github.io/2019/10/01/2019-10-01-terraform-0-11-github-actions-tflint/</loc>
-        <lastmod>2020-05-07T03:41:30.326Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -1554,14 +1562,6 @@
     <url>
         <loc>https://kenzo0107.github.io/2014/05/30/2014-05-30-vagrant-chef/</loc>
         <lastmod>2020-05-07T03:41:23.130Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/</loc>
-        <lastmod>2020-05-07T03:39:09.137Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

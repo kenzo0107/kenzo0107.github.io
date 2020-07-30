@@ -2,6 +2,7 @@
 layout: post
 title: terraform 0.11 系に対応した GitHub Actions 作った &  tflint も入れてみた♪
 date: 2019-10-01
+category: Terraform
 tags:
 - Terraform
 ---

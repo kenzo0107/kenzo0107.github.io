@@ -1,5 +1,6 @@
 ---
 title: AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう
+category: Terraform
 tags:
 - AWS
 date: 2020-07-02

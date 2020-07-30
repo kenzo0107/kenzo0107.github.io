@@ -1,5 +1,6 @@
 ---
 title: aws_ssm_parameter の value を ignore_change に指定しない
+category: Terraform
 tags:
 - AWS
 date: 2020-06-01

@@ -1,5 +1,6 @@
 ---
 title: Terraform ベストプラクティス 2020 春 ~moduleやめてみた~
+category: Terraform
 tags:
 - Terraform
 toc: true

@@ -2,6 +2,7 @@
 layout: post
 title: Terraform 運用ベストプラクティス 2019 ~workspace をやめてみた等諸々~
 date: 2019-04-17
+category: Terraform
 tags:
 - Terraform
 thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190417/20190417103456.png
