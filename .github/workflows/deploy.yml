@@ -16,5 +16,8 @@ jobs:
         working-directory: ./_blog
       - run: npm install -g hexo
         working-directory: ./_blog
+      - run: |
+          git config --global user.email "${{ secrets.EMAIL }}"
+          git config --global user.name "${{ github.actor }}"
       - run: hexo generate && hexo deploy
         working-directory: ./_blog
