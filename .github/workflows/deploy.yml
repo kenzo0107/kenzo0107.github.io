@@ -19,5 +19,6 @@ jobs:
       - run: |
           git config --global user.email "${{ secrets.EMAIL }}"
           git config --global user.name "${{ github.actor }}"
+          git remote set-url origin https://:${{ secrets.PASS }}@github.com/kenzo0107/kenzo0107.github.io
       - run: hexo generate && hexo deploy
         working-directory: ./_blog
