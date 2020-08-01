@@ -12,13 +12,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '13.x'
-      - run: npm install
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
         working-directory: ./_blog
-      - run: npm install -g hexo
+      - run: yarn global hexo
         working-directory: ./_blog
-      - run: npm install hexo-deployer-git --save
-        working-directory: ./_blog
-      - run: npm run build
+      - run: yarn run build
         working-directory: ./_blog
       - name: deploy
         uses: peaceiris/actions-gh-pages@v2.5.0
