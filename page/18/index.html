@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 4.2.0" />
+<meta name="generator" content="Hexo 5.0.0" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -155,7 +155,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/10/19/2015-10-19-allow-specified-ip-nginx/">Nginx Basic認証設定、社内IPなど特定ipのみ許可</a>
+            <a class="has-link-black-ter" href="/2015/10/18/2015-10-19-allow-specified-ip-nginx/">Nginx Basic認証設定、社内IPなど特定ipのみ許可</a>
             
         </h1>
         <div class="content">
@@ -209,7 +209,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/10/19/2015-10-19-nginx-error-a-client-request-body-is-buffered-to-a-temporary-file/">Nginxエラー対策 a client request body is buffered to a temporary file</a>
+            <a class="has-link-black-ter" href="/2015/10/18/2015-10-19-nginx-error-a-client-request-body-is-buffered-to-a-temporary-file/">Nginxエラー対策 a client request body is buffered to a temporary file</a>
             
         </h1>
         <div class="content">
@@ -259,7 +259,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/10/08/2015-10-08-elasticsearch-index-mapping/">Elasticsearch インデックス一覧・マッピング一覧・マッピング設定</a>
+            <a class="has-link-black-ter" href="/2015/10/07/2015-10-08-elasticsearch-index-mapping/">Elasticsearch インデックス一覧・マッピング一覧・マッピング設定</a>
             
         </h1>
         <div class="content">
@@ -306,7 +306,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XDELETE &#39;http:&#x2F;&#x2F;localhost:9200&#x2F;.kibana&#39;</span><br></pre></td></tr></table></figure>
 
 <p>各フィールド設定は以下まとめていただいている方がいらっしゃいました。<br>ありがとうございます♪</p>
-<p><a href="https://qiita.com/harukasan/items/4ec517d8d96f557367e1">Kibana+Elasticsearchで文字列の完全一致と部分一致検索の両方を実現する</a></p>
+<p><a target="_blank" rel="noopener" href="https://qiita.com/harukasan/items/4ec517d8d96f557367e1">Kibana+Elasticsearchで文字列の完全一致と部分一致検索の両方を実現する</a></p>
 
         </div>
         
@@ -340,7 +340,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/10/07/2015-10-07-kibana-error-discover-an-error-occured-with-your-request/">Kibana エラー対応 - Discover: An error occurred with your request. Reset your inputs and try again.</a>
+            <a class="has-link-black-ter" href="/2015/10/06/2015-10-07-kibana-error-discover-an-error-occured-with-your-request/">Kibana エラー対応 - Discover: An error occurred with your request. Reset your inputs and try again.</a>
             
         </h1>
         <div class="content">
@@ -359,7 +359,7 @@
 </ol>
 <p>これで治った！</p>
 <p>GithubでもClose Issueとして残ってましたね。</p>
-<p><a href="https://github.com/elastic/kibana/issues/4593">Auto detect field type when sorting on unmapped_type fields</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/elastic/kibana/issues/4593">Auto detect field type when sorting on unmapped_type fields</a></p>
 
         </div>
         
@@ -393,7 +393,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/10/05/2015-10-05-nginx-error-duplicate-mime-type-text-html/">Nginxエラー調査 「duplicate MIME type &#39;text/html&#39; in /etc/nginx/nginx.conf」</a>
+            <a class="has-link-black-ter" href="/2015/10/04/2015-10-05-nginx-error-duplicate-mime-type-text-html/">Nginxエラー調査 「duplicate MIME type &#39;text/html&#39; in /etc/nginx/nginx.conf」</a>
             
         </h1>
         <div class="content">
@@ -421,7 +421,7 @@
 <li><code>gzip on</code> としている<br>と、デフォルトで<code>text/html</code>がMIMEタイプが指定されます。</li>
 </ul>
 <p>以下公式サイトを見るとわかります。</p>
-<p><a href="http://nginx.org/en/docs/http/ngx_http_gzip_module.html#gzip_types">gzip_types</a></p>
+<p><a target="_blank" rel="noopener" href="http://nginx.org/en/docs/http/ngx_http_gzip_module.html#gzip_types">gzip_types</a></p>
 <p><code>text/html</code>タイプは常に圧縮対象としているそうです。</p>
 <p>なので、gzip で圧縮処理をする場合は<br><code>text/html</code>が不要です。</p>
 <p>ということでした。</p>
@@ -458,7 +458,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/10/01/2015-10-01-nginx-geip/">NginxでGeoIP設定しアクセスログにアクセスポイントを追加する</a>
+            <a class="has-link-black-ter" href="/2015/09/30/2015-10-01-nginx-geip/">NginxでGeoIP設定しアクセスログにアクセスポイントを追加する</a>
             
         </h1>
         <div class="content">
@@ -511,7 +511,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/10/01/2015-10-01-nginx-geoip-library/">インストール済みNginx にgeoIP Library追加</a>
+            <a class="has-link-black-ter" href="/2015/09/30/2015-10-01-nginx-geoip-library/">インストール済みNginx にgeoIP Library追加</a>
             
         </h1>
         <div class="content">
@@ -538,7 +538,7 @@
 <h2><span id="geoip-libraryインストール">GeoIP Libraryインストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y GeoIP GeoIP-devel</span><br></pre></td></tr></table></figure>
 
 <h2><span id="同バージョンのnginxのtargzをダウンロード">同バージョンのNginxのtar.gzをダウンロード</span></h2><ul>
-<li>以下からダウンロード<br><a href="http://nginx.org/en/download.html">Nginx Download</a></li>
+<li>以下からダウンロード<br><a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">Nginx Download</a></li>
 </ul>
 <p>※今回はNginxは1.8.0なのでnginx-1.8.0.tar.gzをダウンロードします。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd &#x2F;usr&#x2F;local&#x2F;src</span><br><span class="line">$ wget http:&#x2F;&#x2F;nginx.org&#x2F;download&#x2F;nginx-1.8.0.tar.gz</span><br><span class="line">$ tar zxvf nginx-1.8.0.tar.gz</span><br><span class="line">$ cd nginx-1.8.0</span><br></pre></td></tr></table></figure>
@@ -586,7 +586,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/09/24/2015-09-24-errorlog-to-slack/">エラーログをSlack通知する</a>
+            <a class="has-link-black-ter" href="/2015/09/23/2015-09-24-errorlog-to-slack/">エラーログをSlack通知する</a>
             
         </h1>
         <div class="content">
@@ -608,9 +608,9 @@
 
 
 <h2><span id="利用するfluentd-plugin">利用するfluentd Plugin</span></h2><ul>
-<li><a href="https://github.com/sowawa/fluent-plugin-slack">sowawa/fluent-plugin-slack</a></li>
-<li><a href="https://github.com/sonots/fluent-plugin-record-reformer">sonots/fluent-plugin-record-reformer</a></li>
-<li><a href="https://github.com/fluent/fluent-plugin-rewrite-tag-filter">fluent/fluent-plugin-rewrite-tag-filter</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sowawa/fluent-plugin-slack">sowawa/fluent-plugin-slack</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sonots/fluent-plugin-record-reformer">sonots/fluent-plugin-record-reformer</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fluent/fluent-plugin-rewrite-tag-filter">fluent/fluent-plugin-rewrite-tag-filter</a></li>
 </ul>
 <h2><span id="td-agentconf設定">td-agent.conf設定</span></h2><script src="//gist.github.com/kenzo0107/8dd7e6f07158987e8b4d.js"></script>
 
@@ -659,9 +659,9 @@
 
 
 <h2><span id="余談">余談</span></h2><p>Slackに通知しても休日で業務連絡を見ないということは往々にしてあるので<br>Twillioで電話通知するpluginもあります。</p>
-<p><a href="https://github.com/y-ken/fluent-plugin-twilio">y-ken/fluent-plugin-twilio</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/y-ken/fluent-plugin-twilio">y-ken/fluent-plugin-twilio</a></p>
 <p>株式会社KDDIウェブコミュニケーションズが提供する有料サービスです。<br>比較的安価なので導入検討してみてください。</p>
-<h3><span id="twillio-料金表">Twillio 料金表</span></h3><p><a href="http://twilio.kddi-web.com/price/">twilio price</a></p>
+<h3><span id="twillio-料金表">Twillio 料金表</span></h3><p><a target="_blank" rel="noopener" href="http://twilio.kddi-web.com/price/">twilio price</a></p>
 <p>かつての「メール見てませんでした💦」<br>なんてことがなくなりそうなのは良いですね</p>
 <p>以上です。</p>
 
@@ -697,7 +697,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/09/19/2015-09-19-install-td-agent2-centos7/">3分で出来る！ AWS EC2(CentOS7)に td-agent2インストール</a>
+            <a class="has-link-black-ter" href="/2015/09/18/2015-09-19-install-td-agent2-centos7/">3分で出来る！ AWS EC2(CentOS7)に td-agent2インストール</a>
             
         </h1>
         <div class="content">
@@ -752,7 +752,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2015/09/14/2015-09-14-nginx-redirect-https/">Nginx ssl.conf設定 特定ページのみhttpsへリダイレクトさせる設定</a>
+            <a class="has-link-black-ter" href="/2015/09/13/2015-09-14-nginx-redirect-https/">Nginx ssl.conf設定 特定ページのみhttpsへリダイレクトさせる設定</a>
             
         </h1>
         <div class="content">
@@ -953,7 +953,7 @@
         
         <article class="media">
             
-            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+            <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
                 </p>
@@ -962,7 +962,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
-                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -972,7 +972,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
+            <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
                 </p>
@@ -981,7 +981,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-05T15:00:00.000Z">2020-06-06</time></div>
-                    <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
+                    <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -991,7 +991,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="media-left">
+            <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="aws_ssm_parameter の value を ignore_change に指定しない">
                 </p>
@@ -1000,7 +1000,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-31T15:00:00.000Z">2020-06-01</time></div>
-                    <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
+                    <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -1010,7 +1010,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/20/2020-05-20-go-json-time/" class="media-left">
+            <a href="/2020/05/19/2020-05-20-go-json-time/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
                 </p>
@@ -1019,7 +1019,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-19T15:00:00.000Z">2020-05-20</time></div>
-                    <a href="/2020/05/20/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
+                    <a href="/2020/05/19/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1029,7 +1029,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+            <a href="/2020/05/06/2020-05-07-go-json/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
                 </p>
@@ -1038,7 +1038,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
-                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <a href="/2020/05/06/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1773,7 +1773,7 @@ var IcarusThemeSettings = {
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
@@ -1813,7 +1813,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

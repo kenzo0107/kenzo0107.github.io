@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 4.2.0" />
+<meta name="generator" content="Hexo 5.0.0" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -165,7 +165,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/08/03/2017-08-03-tutorial-of-gke/">GKEチュートリアルでサイト構築・運用</a>
+            <a class="has-link-black-ter" href="/2017/08/02/2017-08-03-tutorial-of-gke/">GKEチュートリアルでサイト構築・運用</a>
             
         </h1>
         <div class="content">
@@ -231,7 +231,7 @@
 
 <h2><span id="container-registory-登録">Container Registory 登録</span></h2><p>ローカルで起動したコンテナからイメージ作成し<br>GCP 上の Private な Docker リポジトリである Container Registory に登録します。</p>
 <p>以下リポジトリを利用します。</p>
-<p><a href="https://github.com/kenzo0107/toda-tocochan-bus">https://github.com/kenzo0107/toda-tocochan-bus</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kenzo0107/toda-tocochan-bus">https://github.com/kenzo0107/toda-tocochan-bus</a></p>
 <ul>
 <li>Docker コンテナ起動</li>
 </ul>
@@ -422,7 +422,7 @@
 <p>以降、以下コマンドで OK !</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl create -f all.yaml --record</span><br></pre></td></tr></table></figure>
 
-<h2><span id="ドメイン取得">ドメイン取得</span></h2><p><code>toda-tocochan-bus.tk</code> は <a href="http://www.freenom.com/ja/index.html">freenom</a> で無料ドメイン取得し<br>Ingress の IP を設定し公開しています。</p>
+<h2><span id="ドメイン取得">ドメイン取得</span></h2><p><code>toda-tocochan-bus.tk</code> は <a target="_blank" rel="noopener" href="http://www.freenom.com/ja/index.html">freenom</a> で無料ドメイン取得し<br>Ingress の IP を設定し公開しています。</p>
 <h2><span id="総評">総評</span></h2><p>ローカルで開発して〜デプロイ、という流れが本当に簡単になりました。<br>コンテナの理念遂行に kubernetes は大きく寄与しているなぁと実感しました。</p>
 <p>以上です。<br>参考になれば幸いです。</p>
 
@@ -445,7 +445,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2017/07/21/2017-07-21-commit-to-phinx-migration-tool/" class="image is-8by1">
+        <a href="/2017/07/20/2017-07-21-commit-to-phinx-migration-tool/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170721/20170721210050.png" alt="I used Phinx, DB migration Tool on Docker!">
         </a>
     </div>
@@ -464,7 +464,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/07/21/2017-07-21-commit-to-phinx-migration-tool/">I used Phinx, DB migration Tool on Docker!</a>
+            <a class="has-link-black-ter" href="/2017/07/20/2017-07-21-commit-to-phinx-migration-tool/">I used Phinx, DB migration Tool on Docker!</a>
             
         </h1>
         <div class="content">
@@ -486,7 +486,7 @@
 <h3><span id="edit-phinx-definition-file">Edit phinx definition file</span></h3><ul>
 <li>db/migrations/hogehoge/20170724065658_create_table_users.php</li>
 </ul>
-<p><a href="http://docs.phinx.org/en/latest/migrations.html">Writing Migrations</a></p>
+<p><a target="_blank" rel="noopener" href="http://docs.phinx.org/en/latest/migrations.html">Writing Migrations</a></p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Phinx</span>\<span class="title">Migration</span>\<span class="title">AbstractMigration</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">Phinx</span>\<span class="title">Db</span>\<span class="title">Adapter</span>\<span class="title">MysqlAdapter</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateTableUsers</span> <span class="keyword">extends</span> <span class="title">AbstractMigration</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">up</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">// Automatically generated id is excluded, and primary key is set as user_id</span></span><br><span class="line">        $t = <span class="keyword">$this</span>-&gt;table(<span class="string">'users'</span>, [<span class="string">'id'</span> =&gt; <span class="string">'user_id'</span>]);</span><br><span class="line"></span><br><span class="line">        $t-&gt;addColumn(<span class="string">'last_name'</span>,       <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'姓'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'first_name'</span>,      <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'名'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'last_kana_name'</span>,  <span class="string">'string'</span>,     [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>, <span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'姓（カナ）'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'first_kana_name'</span>, <span class="string">'string'</span>,     [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>, <span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'名（カナ）'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'username'</span>,        <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">20</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'ユーザ名'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'password'</span>,        <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">40</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'パスワード'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'email'</span>,           <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">100</span>, <span class="string">'comment'</span> =&gt; <span class="string">'Email'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'postcode'</span>,        <span class="string">'string'</span>,     [<span class="string">'limit'</span> =&gt; <span class="number">10</span>,  <span class="string">'comment'</span> =&gt; <span class="string">'郵便番号'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'birthday'</span>,        <span class="string">'date'</span>,       [<span class="string">'comment'</span> =&gt; <span class="string">'誕生日'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'gender'</span>,          <span class="string">'integer'</span>,    [<span class="string">'limit'</span> =&gt; MysqlAdapter::INT_TINY, <span class="string">'comment'</span> =&gt; <span class="string">'性別(1:男 2:女 3:その他)'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'card_number'</span>,     <span class="string">'string'</span>,     [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>, <span class="string">'limit'</span> =&gt; <span class="number">20</span>,  <span class="string">'comment'</span> =&gt;<span class="string">'クレジットカードNo'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'description'</span>,     <span class="string">'text'</span>,       [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>, <span class="string">'limit'</span> =&gt; MysqlAdapter::TEXT_LONG, <span class="string">'comment'</span> =&gt;<span class="string">'説明'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'created'</span>,         <span class="string">'timestamp'</span>,  [<span class="string">'default'</span> =&gt; <span class="string">'CURRENT_TIMESTAMP'</span>])</span><br><span class="line">          -&gt;addColumn(<span class="string">'updated'</span>,         <span class="string">'datetime'</span>,   [<span class="string">'null'</span> =&gt; <span class="keyword">true</span>])</span><br><span class="line">          -&gt;addIndex([<span class="string">'username'</span>, <span class="string">'email'</span>],     [<span class="string">'unique'</span> =&gt; <span class="keyword">true</span>])</span><br><span class="line">          -&gt;create();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">down</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">$this</span>-&gt;dropTable(<span class="string">'users'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -531,7 +531,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use hogehoge;</span><br><span class="line">mysql&gt; select * from users;</span><br><span class="line">+---------+-----------+------------+-----------------+-----------------+-------------+------------------------------------------+------------------------------+----------+--------------+------------+--------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+</span><br><span class="line">| user_id | last_name | first_name | last_kana_name  | first_kana_name | username    | password                                 | email          | postcode | city         | birthday   | gender | card_number      | description                                                                                                                    | created             | updated           |</span><br><span class="line">+---------+-----------+------------+-----------------+-----------------+-------------+------------------------------------------+------------------------------+----------+--------------+------------+--------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+</span><br><span class="line">|       1 | 佐々木    | 零         | ヤマダ          | カナ            | akira97     | e270038c94f231da7bca25dead3e386ba3984491 | hirokawa.rika@hotmail.co.jp  | 1867251  | 佐々木市     | 1987-09-25 |      1 | 4024007116991463 | Dolor reiciendis fuga fugiat id molestiae eos. Dolores sint rem repudiandae perspiciatis. Ducimus aut mollitia aut asperiores laboriosam.                                                 | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       2 | 宮沢      | 千代       | ノムラ          | ヨウイチ        | nagisa.taro | 695a90d1b84cf004357aad3eb37697b51afbf5cc | tanabe.hiroshi@kudo.org      | 8639535  | 江古田市     | 1977-06-01 |      3 | 344103919563863  | Doloribus et recusandae quam accusantium pariatur nobis reiciendis quo. Eos quae et commodi quos accusamus ex. Ullam repellendus maiores vero sit sit et.                                 | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       3 | 斉藤      | 充         | ミヤケ          | オサム          | kana.suzuki | f309f34d08b4d0d686863fa38ed3d3af5e0b2104 | kana.kudo@mail.goo.ne.jp     | 2763622  | 青田市       | 1997-01-30 |      1 | 4716886227252    | Veritatis voluptatem pariatur libero aut quia. Facere nemo quos enim amet ut ipsum sequi. Nobis natus et aspernatur aut. Natus pariatur deserunt voluptatum deserunt.                     | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       4 | 吉田      | 太郎       | ウノ            | ツバサ          | naoko.uno   | 45d04bda7ac79244c90a33ff68798b979138054a | taro.nagisa@hirokawa.com     | 6099661  | 江古田市     | 2006-03-19 |      2 | 5372535333698250 | Nostrum velit nostrum eos magni. Reiciendis quos enim adipisci quisquam sed voluptas. Necessitatibus sint qui dolorem animi impedit consectetur commodi.                                  | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       5 | 野村      | 亮介       | サトウ          | ミノル          | rika.tanabe | dd3d50714c0775bfee453f7d9a9815ce26ba57db | wkudo@hotmail.co.jp          | 6966314  | 渡辺市       | 1985-12-21 |      1 | 4929108488987091 | Id atque molestiae expedita omnis libero natus et. Repellendus ut tenetur molestias voluptas. Perspiciatis nisi et illum aut aut vel repudiandae.                                         | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       6 | 木村      | 裕美子     | タナカ          | ヒロキ          | hiroshi53   | 033bfd0493b72efd0ff60bc15c7eeb3b2e054501 | ztanabe@tanabe.biz          | 3155238  | 山田市       | 1996-01-02 |      3 | 5476616628100007 | Assumenda consectetur ea sed et omnis <span class="built_in">alias</span> fugiat quo. Porro nihil similique sint laudantium asperiores blanditiis. Error dolores vitae quia explicabo facilis deleniti distinctio.      | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       7 | 吉本      | 陽一       | キムラ          | ヒデキ          | akira27     | 51de6afc65f535ae58f927d698f07e60e04c7746 | rika59@suzuki.com          | 6457702  | 田辺市       | 2010-04-12 |      2 | 5388155063289311 | Nesciunt qui beatae ut officia qui error autem. Temporibus <span class="built_in">alias</span> earum ullam incidunt quo recusandae enim qui. Sed atque veritatis sed ad ullam qui. Repellendus est nostrum et pariatur. | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       8 | 渡辺      | 翔太       | ササダ          | クミコ          | uno.momoko  | fa2d16d5f2acffd5aeeaab6791fe64c9f70a9b2f | stanabe@uno.com          | 5849600  | 伊藤市       | 2012-06-09 |      1 | 5274550197820022 | Odio quasi sunt tempora. Molestias aut qui sed quos beatae eum accusantium. Non dolores quam veniam et ab quidem nostrum repellendus. Qui ducimus et optio et.                            | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|       9 | 坂本      | 翔太       | ナカツガワ      | ナオキ          | akira.kudo  | 4af41e536bf19fa3cb0527304adad0de76260e82 | suzuki.momoko@mail.goo.ne.jp | 8609563  | 宮沢市       | 2005-10-23 |      3 | 5231530310398512 | Qui id neque molestiae facere aut et consequatur. Delectus ea voluptatibus provident atque assumenda maxime eum. At quidem sint accusamus. Eaque sed voluptate quo sint non non.          | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">|      10 | 野村      | 翼         | ヒロカワ        | ナオコ          | taro.kudo   | f8a63d0010c99d6403e0c1f458005b934ec03f8c | kana.tanabe@mail.goo.ne.jp   | 5804069  | 桐山市       | 1988-12-25 |      2 | 5140671281503530 | Dolorem consequatur nulla <span class="built_in">alias</span> perspiciatis ut. Tenetur modi cumque incidunt dolor.                                                                                                      | 2017-07-25 12:22:50 | 2017-07-25 12:22:50 |</span><br><span class="line">+---------+-----------+------------+-----------------+-----------------+-------------+------------------------------------------+------------------------------+----------+--------------+------------+--------+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; use mogemoge;</span><br><span class="line">mysql&gt; select * from members;</span><br><span class="line"></span><br><span class="line">+----+----------------------+---------------------+---------------------+</span><br><span class="line">| id | member_code          | created             | updated             |</span><br><span class="line">+----+----------------------+---------------------+---------------------+</span><br><span class="line">|  1 | 86190539096622228312 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  2 | 77322186584623078448 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  3 | 17169562241415794809 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  4 | 86738824931379981947 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  5 | 23125815173540252188 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  6 | 81839177491562485300 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  7 | 82938165381845652192 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  8 | 87208503292784158954 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">|  9 | 80172779107984112104 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">| 10 | 22825755425594828330 | 2017-07-25 12:22:51 | 2017-07-25 12:22:51 |</span><br><span class="line">+----+----------------------+---------------------+---------------------+</span><br></pre></td></tr></table></figure>
 
 <h2><span id="reference">Reference</span></h2><ul>
-<li><a href="https://github.com/fzaninotto/Faker">fzaninotto/Faker</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/fzaninotto/Faker">fzaninotto/Faker</a></li>
 </ul>
 
         </div>
@@ -553,7 +553,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2017/05/16/2017-05-16-gke-kubernetes-hubot/" class="image is-8by1">
+        <a href="/2017/05/15/2017-05-16-gke-kubernetes-hubot/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170604/20170604224801.png" alt="無料枠で運用！ GKE + Kubernetes で Hubot 〜独自ネットワーク作成、設定ファイルから起動編〜">
         </a>
     </div>
@@ -572,7 +572,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/05/16/2017-05-16-gke-kubernetes-hubot/">無料枠で運用！ GKE + Kubernetes で Hubot 〜独自ネットワーク作成、設定ファイルから起動編〜</a>
+            <a class="has-link-black-ter" href="/2017/05/15/2017-05-16-gke-kubernetes-hubot/">無料枠で運用！ GKE + Kubernetes で Hubot 〜独自ネットワーク作成、設定ファイルから起動編〜</a>
             
         </h1>
         <div class="content">
@@ -652,7 +652,7 @@
 
 <h2><span id="総評">総評</span></h2><p>ネットワークのファイアウォール設定してコンテナ起動したが動かなかった所、かなり詰まりました (; <del>_</del>)<br>Stackoverflow にたまたま同様のイシューをあげている方がおり参考にさせて頂きました。<br>助かった汗</p>
 <p>これから Nginx + Rails 等、よくありそうなケースで GKE + Kubernetes を試して運用してみたいと思います。<br>まとまったらまた追記します！</p>
-<h2><span id="参考">参考</span></h2><p><a href="http://stackoverflow.com/questions/38057066/unable-to-launch-a-gke-google-container-engine-cluster-with-a-custom-network">Unable to launch a GKE (Google Container Engine) cluster with a custom network</a></p>
+<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/38057066/unable-to-launch-a-gke-google-container-engine-cluster-with-a-custom-network">Unable to launch a GKE (Google Container Engine) cluster with a custom network</a></p>
 
         </div>
         
@@ -673,7 +673,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2017/05/10/2017-05-10-gke-kubernetes-hubot-cli/" class="image is-8by1">
+        <a href="/2017/05/09/2017-05-10-gke-kubernetes-hubot-cli/" class="image is-8by1">
         <img class="thumbnail" src="http://i.imgur.com/Vvmetu1.png" alt="無料枠で運用！ GKE + Kubernetes で Hubot 〜CLIから実行編〜">
         </a>
     </div>
@@ -692,7 +692,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/05/10/2017-05-10-gke-kubernetes-hubot-cli/">無料枠で運用！ GKE + Kubernetes で Hubot 〜CLIから実行編〜</a>
+            <a class="has-link-black-ter" href="/2017/05/09/2017-05-10-gke-kubernetes-hubot-cli/">無料枠で運用！ GKE + Kubernetes で Hubot 〜CLIから実行編〜</a>
             
         </h1>
         <div class="content">
@@ -700,7 +700,7 @@
 <li>無料枠を使って Slack 連携する Hubot を GKE で構築します。</li>
 <li>おまけで JIRA 連携も</li>
 </ul>
-<h2><span id="google-cloud-sdk-のインストール方法と初期化">Google Cloud SDK のインストール方法と初期化</span></h2><p><a href="https://cloud.google.com/sdk/docs/quickstart-mac-os-x">Mac OS X 用クイックスタート</a> を参照して SDK をダウンロードします。</p>
+<h2><span id="google-cloud-sdk-のインストール方法と初期化">Google Cloud SDK のインストール方法と初期化</span></h2><p><a target="_blank" rel="noopener" href="https://cloud.google.com/sdk/docs/quickstart-mac-os-x">Mac OS X 用クイックスタート</a> を参照して SDK をダウンロードします。</p>
 <ul>
 <li>Mac OS X (x86_64), (x86) かは以下コマンドで確認</li>
 </ul>
@@ -716,7 +716,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud auth login</span><br><span class="line">macOS%$ gcloud config set project hubot-167007</span><br><span class="line">macOS%$ gcloud config set compute&#x2F;region us-west1</span><br><span class="line">macOS%$ gcloud config set compute&#x2F;zone us-west1-b</span><br></pre></td></tr></table></figure>
 
 
-<p><a href="https://cloud.google.com/free/">Google Cloud Platform の無料階層</a> 参照してください。</p>
+<p><a target="_blank" rel="noopener" href="https://cloud.google.com/free/">Google Cloud Platform の無料階層</a> 参照してください。</p>
 <h2><span id="クラスタ作成">クラスタ作成</span></h2><ul>
 <li>無料枠を利用するべく f1-micro で 30GB 設定</li>
 <li>でも作成時は 3 ノード必須</li>
@@ -752,7 +752,7 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud container clusters describe hubot-cluster-free</span><br></pre></td></tr></table></figure>
 
-<h2><span id="ローカルの-docker-起動">ローカルの Docker 起動</span></h2><p>[<a href="https://github.com/kenzo0107/hubot-slack-on-docker:embed:cite]">https://github.com/kenzo0107/hubot-slack-on-docker:embed:cite]</a></p>
+<h2><span id="ローカルの-docker-起動">ローカルの Docker 起動</span></h2><p>[<a target="_blank" rel="noopener" href="https://github.com/kenzo0107/hubot-slack-on-docker:embed:cite]">https://github.com/kenzo0107/hubot-slack-on-docker:embed:cite]</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ git clone https:&#x2F;&#x2F;github.com&#x2F;kenzo0107&#x2F;hubot-slack-on-docker</span><br><span class="line">macOS%$ cd hubot-slack-on-docker</span><br><span class="line">macOS%$ docker-compose up -d</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ docker ps</span><br><span class="line"></span><br><span class="line">CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS                              NAMES</span><br><span class="line">12f77feb09b4        hubotslackondocker_hubot   &quot;&#x2F;bin&#x2F;sh -c &#39;bash ...&quot;   24 minutes ago      Up 24 minutes       6379&#x2F;tcp, 0.0.0.0:8080-&gt;8080&#x2F;tcp   hubotslackondocker_hubot_1</span><br></pre></td></tr></table></figure>
@@ -766,7 +766,7 @@
 
 
 
-<h2><span id="gke-registory-に-push">gke registory に push</span></h2><p>参考: <a href="https://cloud.google.com/container-registry/docs/pushing?hl=ja&_ga=1.49491107.421538973.1494071894">Container Registry への push</a></p>
+<h2><span id="gke-registory-に-push">gke registory に push</span></h2><p>参考: <a target="_blank" rel="noopener" href="https://cloud.google.com/container-registry/docs/pushing?hl=ja&_ga=1.49491107.421538973.1494071894">Container Registry への push</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud docker -- push gcr.io&#x2F;hubot-167007&#x2F;hubot:latest</span><br><span class="line"></span><br><span class="line">The push refers to a repository [gcr.io&#x2F;hubot-167007&#x2F;hubot]</span><br><span class="line">0569b419082b: Pushed</span><br><span class="line">a7637cfcdfba: Pushed</span><br><span class="line">9f0bdbb7b1fa: Pushed</span><br><span class="line">f1d85eafc75a: Pushed</span><br><span class="line">c2c2b58591f2: Pushed</span><br><span class="line">51c94eacef50: Pushed</span><br><span class="line">69e7fcf7ba41: Pushed</span><br><span class="line">293d09ca6a9d: Pushed</span><br><span class="line">247e72dfcaf5: Pushed</span><br><span class="line">8c2bc9bf1f19: Pushed</span><br><span class="line">40907ce0d959: Pushed</span><br><span class="line">bfba578a7fbe: Pushed</span><br><span class="line">561cbcaac156: Pushed</span><br><span class="line">293a1e72e88b: Pushed</span><br><span class="line">ae09eb3da3dc: Pushed</span><br><span class="line">c06c14d7f919: Pushed</span><br><span class="line">e14577d2cac5: Layer already exists</span><br><span class="line">e8829d5bbd2c: Layer already exists</span><br><span class="line">674ce3c5d814: Layer already exists</span><br><span class="line">308b39a73046: Layer already exists</span><br><span class="line">638903ee8579: Layer already exists</span><br><span class="line"></span><br><span class="line">latest: digest: sha256:0c3b29d18b64c1f8ecc1a1bf67462c84d5915a4a708fe87df714d09198eb5fa1 size: 4704</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -842,8 +842,8 @@
 <h2><span id="総評">総評</span></h2><p>GKEは概念が多く、一概に deployment, pod, service, kubernetes 等覚えることが多いですが<br>動かしつつ学ぶのは楽しいです。</p>
 <p>ほぼ手元の Mac で設定できました！<br>手元で済むから <code>macOS%$</code> は不要だった。。</p>
 <p>今回作成した service だと外部に 8080 ポート全開です。</p>
-<p><a href="http://kenzo0107.hatenablog.com/entry/2017/05/16/222815">次回</a>はアクセス元を制限したポートアクセスやコンテナのアップデートについてまとめます。</p>
-<p>[<a href="http://kenzo0107.hatenablog.com/entry/2017/05/16/222815:embed:cite]">http://kenzo0107.hatenablog.com/entry/2017/05/16/222815:embed:cite]</a></p>
+<p><a target="_blank" rel="noopener" href="http://kenzo0107.hatenablog.com/entry/2017/05/16/222815">次回</a>はアクセス元を制限したポートアクセスやコンテナのアップデートについてまとめます。</p>
+<p>[<a target="_blank" rel="noopener" href="http://kenzo0107.hatenablog.com/entry/2017/05/16/222815:embed:cite]">http://kenzo0107.hatenablog.com/entry/2017/05/16/222815:embed:cite]</a></p>
 
         </div>
         
@@ -1001,7 +1001,7 @@
         
         <article class="media">
             
-            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+            <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
                 </p>
@@ -1010,7 +1010,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
-                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -1020,7 +1020,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
+            <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
                 </p>
@@ -1029,7 +1029,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-05T15:00:00.000Z">2020-06-06</time></div>
-                    <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
+                    <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1039,7 +1039,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="media-left">
+            <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="aws_ssm_parameter の value を ignore_change に指定しない">
                 </p>
@@ -1048,7 +1048,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-31T15:00:00.000Z">2020-06-01</time></div>
-                    <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
+                    <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -1058,7 +1058,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/20/2020-05-20-go-json-time/" class="media-left">
+            <a href="/2020/05/19/2020-05-20-go-json-time/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
                 </p>
@@ -1067,7 +1067,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-19T15:00:00.000Z">2020-05-20</time></div>
-                    <a href="/2020/05/20/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
+                    <a href="/2020/05/19/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1077,7 +1077,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+            <a href="/2020/05/06/2020-05-07-go-json/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
                 </p>
@@ -1086,7 +1086,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
-                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <a href="/2020/05/06/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1821,7 +1821,7 @@ var IcarusThemeSettings = {
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
@@ -1861,7 +1861,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 4.2.0" />
+<meta name="generator" content="Hexo 5.0.0" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -152,7 +152,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/05/21/2016-05-21-jenkins-sonarqube-php-code-metrics/" class="image is-8by1">
+        <a href="/2016/05/20/2016-05-21-jenkins-sonarqube-php-code-metrics/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521003213.png" alt="Jenkins + SonarQube で PHPコードメトリクス計測！">
         </a>
     </div>
@@ -171,7 +171,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/05/21/2016-05-21-jenkins-sonarqube-php-code-metrics/">Jenkins + SonarQube で PHPコードメトリクス計測！</a>
+            <a class="has-link-black-ter" href="/2016/05/20/2016-05-21-jenkins-sonarqube-php-code-metrics/">Jenkins + SonarQube で PHPコードメトリクス計測！</a>
             
         </h1>
         <div class="content">
@@ -305,7 +305,7 @@
 </div>
 
 <h3><span id="2-sonarqube-scanner-インストール">2. SonarQube Scanner インストール</span></h3><p>以下オフィシャルダウンロードページからリンク取得</p>
-<p><a href="http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner">Analyzing+with+SonarQube+Scanner</a></p>
+<p><a target="_blank" rel="noopener" href="http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner">Analyzing+with+SonarQube+Scanner</a></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /var/lib/jenkins</span><br><span class="line">$ wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.6.1.zip</span><br><span class="line">$ unzip sonar-scanner-2.6.1.zip</span><br><span class="line">$ ln -s sonar-scanner-2.6.1 sonar-scanner</span><br></pre></td></tr></table></figure>
 
 <h3><span id="3-jenkinsシステム設定">3. Jenkinsシステム設定</span></h3><ul>
@@ -370,7 +370,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/05/19/2016-05-19-install-sonarqube-on-centos7/" class="image is-8by1">
+        <a href="/2016/05/18/2016-05-19-install-sonarqube-on-centos7/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520164314.png" alt="CentOS7にSonarQubeをインストールしアクセス確認まで">
         </a>
     </div>
@@ -389,11 +389,11 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/05/19/2016-05-19-install-sonarqube-on-centos7/">CentOS7にSonarQubeをインストールしアクセス確認まで</a>
+            <a class="has-link-black-ter" href="/2016/05/18/2016-05-19-install-sonarqube-on-centos7/">CentOS7にSonarQubeをインストールしアクセス確認まで</a>
             
         </h1>
         <div class="content">
-            <h2><span id="概要">概要</span></h2><p><a href="http://www.sonarqube.org/">sonarqube</a> は<br>Java, Python, Ruby, PHP等、複数言語のコードメトリクス集計ができる<br>優れものです。</p>
+            <h2><span id="概要">概要</span></h2><p><a target="_blank" rel="noopener" href="http://www.sonarqube.org/">sonarqube</a> は<br>Java, Python, Ruby, PHP等、複数言語のコードメトリクス集計ができる<br>優れものです。</p>
 <p>以前 MacOSXローカル環境で<br>Unityプロジェクト C#コードのコードメトリクス抽出方法をまとめました。</p>
 <a href="https://kenzo0107.github.io/2014/06/22/2014-06-22-sonarqube-maxosx" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://kenzo0107.github.io/images/og_image.png"></div><div class="descriptions"><div class="og-title">Mac OS X に SonarQube 導入 - UnityのC#コーディング規約チェック</div><div class="og-description">[f:id:kenzo0107:20140620233131p:plain] 環境 Mac OS X 10.9.3 (Marvericks) SonarQube 4.3.1 SonarRunner 2.4  概要 C#のコーディング規約チェック管理ツールを導入します。  導入手順…</div></div></div></a>
 
@@ -416,7 +416,7 @@
 <h2><span id="mysqlインストール">MySQLインストール</span></h2><p>今回は同一サーバにMySQLインストールしています。<br>別途MySQLサーバを立てる場合は不要です。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm</span></span><br><span class="line"><span class="comment"># yum -y install mysql-community-server</span></span><br><span class="line"><span class="comment"># chown -R mysql:mysql /var/lib/mysql/*</span></span><br><span class="line"><span class="comment"># systemctl start mysqld</span></span><br><span class="line"><span class="comment"># chkconfig mysqld on</span></span><br><span class="line"></span><br><span class="line">// 以下 DB名: sonar, DB User: sonar, DB Pass: sonar で設定</span><br><span class="line"><span class="comment"># mysql -u root</span></span><br><span class="line"></span><br><span class="line">mysql&gt; CREATE DATABASE sonar;</span><br><span class="line">mysql&gt; CREATE USER <span class="string">'sonar'</span>@<span class="string">'localhost'</span> IDENTIFIED by <span class="string">'sonar'</span>;</span><br><span class="line">mysql&gt; GRANT ALL PRIVILEGES ON sonar.* TO <span class="string">'sonar'</span>@<span class="string">'localhost'</span>;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
 
-<h2><span id="sonarqube-インストール">SonarQube インストール</span></h2><p>以下サイトにてダウンロードzipを取得します。<br><a href="http://www.sonarqube.org/downloads/">SonarQube Donwloads</a></p>
+<h2><span id="sonarqube-インストール">SonarQube インストール</span></h2><p>以下サイトにてダウンロードzipを取得します。<br><a target="_blank" rel="noopener" href="http://www.sonarqube.org/downloads/">SonarQube Donwloads</a></p>
 <p><img src="http://i.imgur.com/etIqshd.png" alt="Imgur"></p>
 <p>※ 2016-05-19 時点 最新は ver 5.5</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /usr/local/sonarqube</span></span><br><span class="line"><span class="comment"># cd /usr/local/sonarqube</span></span><br><span class="line"><span class="comment"># wget https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-5.5.zip</span></span><br><span class="line"><span class="comment"># unzip sonarqube-5.5.zip</span></span><br><span class="line"><span class="comment"># ln -s sonarqube-5.5 sonar</span></span><br></pre></td></tr></table></figure>
@@ -490,7 +490,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2014/06/22/2014-06-22-sonarqube-maxosx/">Mac OS X に SonarQube 導入 - UnityのC#コーディング規約チェック</a>
+            <a class="has-link-black-ter" href="/2014/06/21/2014-06-22-sonarqube-maxosx/">Mac OS X に SonarQube 導入 - UnityのC#コーディング規約チェック</a>
             
         </h1>
         <div class="content">
@@ -504,7 +504,7 @@
 <li>C#のコーディング規約チェック管理ツールを導入します。</li>
 </ul>
 <h2><span id="導入手順">導入手順</span></h2><h3><span id="1sonarqube-sonarrunnerをダウンロード">①SonarQube, SonarRunnerをダウンロード</span></h3><p>以下SonarQube公式サイトより<br>SonarQube, SonarRunnerをダウンロードして下さい。<br>※フォルダはどこに配置しても構いません。</p>
-<p><a href="http://www.sonarqube.org/downloads/">http://www.sonarqube.org/downloads/</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.sonarqube.org/downloads/">http://www.sonarqube.org/downloads/</a></p>
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140620/20140620232146.png" width="100%">
 </div>
@@ -512,7 +512,7 @@
 
 <p><span style="color: #e2241a">※2014.06.20現在、SonarQube4.2, MySQL5.6 では起動しないことを確認しています。</span><br>Homebrewでのインストールはバージョンが古いアプリケーションをDLする可能性があり、<br>動作保証が取れない場合があります。</p>
 <h3><span id="2mysql-macosにインストール">②MySQL MacOSにインストール</span></h3><p>以下ブログが非常にわかりやすかったです。</p>
-<p><a href="http://blog.hyec.jp/2014/02/mac-os-x-mavericksmysql.html">http://blog.hyec.jp/2014/02/mac-os-x-mavericksmysql.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.hyec.jp/2014/02/mac-os-x-mavericksmysql.html">http://blog.hyec.jp/2014/02/mac-os-x-mavericksmysql.html</a></p>
 <p>念の為、懸念箇所はここ！</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Installing MySQL, administrator password required ...</span><br><span class="line">Password:（ログインユーザのパスワードを入力）</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
@@ -640,7 +640,7 @@
 
 
 <p>再度「sonar.sh console」を実行させ<br>SonarQubeにアクセス</p>
-<p><a href="http://localhost:9000">http://localhost:9000</a></p>
+<p><a target="_blank" rel="noopener" href="http://localhost:9000">http://localhost:9000</a></p>
 <p><b>アップデートセンター＞Installed Plugins</b><br>先ほどのPluginがインストール済みであることが確認できます。<br>※日本語化されてます。<br>[f:id:kenzo0107:20140622015442p:plain]</p>
 <h3><span id="7コーディング規約チェックをしたいプロジェクト決定">⑦コーディング規約チェックをしたいプロジェクト決定</span></h3><p>例として、以下にUnityプロジェクトを配置しているとします。<br>~/Desktop/UnityProject/</p>
 <p>同階層に「sonar-project.properties」作成します。</p>
@@ -829,7 +829,7 @@
         
         <article class="media">
             
-            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+            <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
                 </p>
@@ -838,7 +838,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
-                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -848,7 +848,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
+            <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
                 </p>
@@ -857,7 +857,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-05T15:00:00.000Z">2020-06-06</time></div>
-                    <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
+                    <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -867,7 +867,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="media-left">
+            <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="aws_ssm_parameter の value を ignore_change に指定しない">
                 </p>
@@ -876,7 +876,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-31T15:00:00.000Z">2020-06-01</time></div>
-                    <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
+                    <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -886,7 +886,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/20/2020-05-20-go-json-time/" class="media-left">
+            <a href="/2020/05/19/2020-05-20-go-json-time/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
                 </p>
@@ -895,7 +895,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-19T15:00:00.000Z">2020-05-20</time></div>
-                    <a href="/2020/05/20/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
+                    <a href="/2020/05/19/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -905,7 +905,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+            <a href="/2020/05/06/2020-05-07-go-json/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
                 </p>
@@ -914,7 +914,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
-                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <a href="/2020/05/06/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1649,7 +1649,7 @@ var IcarusThemeSettings = {
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
@@ -1689,7 +1689,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

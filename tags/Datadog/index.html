@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 4.2.0" />
+<meta name="generator" content="Hexo 5.0.0" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -152,7 +152,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2019/10/17/2019-10-17-datadog-agent-for-ecs-launch-type-ec2/" class="image is-8by1">
+        <a href="/2019/10/16/2019-10-17-datadog-agent-for-ecs-launch-type-ec2/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20191017/20191017124709.png" alt="Datadog Agent for ECS Launch Type=EC2">
         </a>
     </div>
@@ -171,7 +171,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2019/10/17/2019-10-17-datadog-agent-for-ecs-launch-type-ec2/">Datadog Agent for ECS Launch Type=EC2</a>
+            <a class="has-link-black-ter" href="/2019/10/16/2019-10-17-datadog-agent-for-ecs-launch-type-ec2/">Datadog Agent for ECS Launch Type=EC2</a>
             
         </h1>
         <div class="content">
@@ -184,7 +184,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <a class="button is-size-7 is-light"
-                        href="/2019/10/17/2019-10-17-datadog-agent-for-ecs-launch-type-ec2/#more">Read More</a>
+                        href="/2019/10/16/2019-10-17-datadog-agent-for-ecs-launch-type-ec2/#more">Read More</a>
                 </div>
             </div>
         </div>
@@ -218,7 +218,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2019/01/10/2019-01-10-ecs-ec2-datadog-agent-unhealthy/">ECS EC2 上で起動する Datadog Agent コンテナが unhealthy になる時の処方箋</a>
+            <a class="has-link-black-ter" href="/2019/01/09/2019-01-10-ecs-ec2-datadog-agent-unhealthy/">ECS EC2 上で起動する Datadog Agent コンテナが unhealthy になる時の処方箋</a>
             
         </h1>
         <div class="content">
@@ -231,13 +231,13 @@
 <p>ある日、ECS で起動させている Datadog Agent コンテナが unhealthy になってしまう事象が発生しました。<br>その原因と対応法をまとめました。</p>
 <h2><span id="結論">結論</span></h2><p>Datadog Agent イメージを現時点の最新バージョン 6 系にすることで解決できました。</p>
 <p>Datadog サポートに問い合わせた所、<br>今回のケースでは Datadog Agent イメージのバージョンが 5 系だったことに起因していました。</p>
-<h3><span id="datadogdocker-dd-agentlatest-は-5系の最新だった">datadog/docker-dd-agent:latest は 5系の最新だった！</span></h3><p>バージョン5が最新だった時には設定手続きは以下に沿って実施していました。<br><a href="https://docs.datadoghq.com/integrations/faq/agent-5-amazon-ecs/">https://docs.datadoghq.com/integrations/faq/agent-5-amazon-ecs/</a></p>
+<h3><span id="datadogdocker-dd-agentlatest-は-5系の最新だった">datadog/docker-dd-agent:latest は 5系の最新だった！</span></h3><p>バージョン5が最新だった時には設定手続きは以下に沿って実施していました。<br><a target="_blank" rel="noopener" href="https://docs.datadoghq.com/integrations/faq/agent-5-amazon-ecs/">https://docs.datadoghq.com/integrations/faq/agent-5-amazon-ecs/</a></p>
 <p>上記手順にて登場する datadog agent の ECS での起動用タスクが以下になります。<br>ここで指定しているイメージ (datadog/docker-dd-agent:latest) が 5系でした。</p>
-<p><a href="https://docs.datadoghq.com/json/dd-agent-ecs.json">https://docs.datadoghq.com/json/dd-agent-ecs.json</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.datadoghq.com/json/dd-agent-ecs.json">https://docs.datadoghq.com/json/dd-agent-ecs.json</a></p>
 <p><code>datadog/docker-dd-agent:latest</code> は 5系の最新だった！</p>
-<h3><span id="datadogagentlatest-が-20190110-時点最新の-6系">datadog/agent:latest が 2019.01.10 時点最新の 6系 ！</span></h3><p>現最新バージョン 6系を扱うには以下設定手続きを参照します。<br><a href="https://docs.datadoghq.com/integrations/amazon_ecs">https://docs.datadoghq.com/integrations/amazon_ecs</a></p>
+<h3><span id="datadogagentlatest-が-20190110-時点最新の-6系">datadog/agent:latest が 2019.01.10 時点最新の 6系 ！</span></h3><p>現最新バージョン 6系を扱うには以下設定手続きを参照します。<br><a target="_blank" rel="noopener" href="https://docs.datadoghq.com/integrations/amazon_ecs">https://docs.datadoghq.com/integrations/amazon_ecs</a></p>
 <p>手続きで変更点はタスク定義の変更くらいです。</p>
-<p><a href="https://docs.datadoghq.com/json/datadog-agent-ecs.json">https://docs.datadoghq.com/json/datadog-agent-ecs.json</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.datadoghq.com/json/datadog-agent-ecs.json">https://docs.datadoghq.com/json/datadog-agent-ecs.json</a></p>
 <p>今の所、<code>datadog/agent:latest</code> が6系の最新になっています。<br>7系になった際には是非とも互換維持してほしいです。</p>
 <h2><span id="おまけ">おまけ</span></h2><h3><span id="サポートへの問い合わせ">サポートへの問い合わせ</span></h3><p>サポートに問い合わせると、 caseID という問い合わせの ID をいただけます。<br>その後、caseID を設定し、起動時のログファイル (tar.gz) を取得し、サポート宛に添付しました。</p>
 <p>ECS の管理下にある EC2 に ssh ログインし以下実行します。</p>
@@ -274,7 +274,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2018/07/30/2018-07-30-datadog_ntp_alert/" class="image is-8by1">
+        <a href="/2018/07/29/2018-07-30-datadog_ntp_alert/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180730/20180730133759.jpg" alt="Datadog NTP 監視でアラート鳴りまくり対応">
         </a>
     </div>
@@ -293,7 +293,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2018/07/30/2018-07-30-datadog_ntp_alert/">Datadog NTP 監視でアラート鳴りまくり対応</a>
+            <a class="has-link-black-ter" href="/2018/07/29/2018-07-30-datadog_ntp_alert/">Datadog NTP 監視でアラート鳴りまくり対応</a>
             
         </h1>
         <div class="content">
@@ -308,7 +308,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <a class="button is-size-7 is-light"
-                        href="/2018/07/30/2018-07-30-datadog_ntp_alert/#more">Read More</a>
+                        href="/2018/07/29/2018-07-30-datadog_ntp_alert/#more">Read More</a>
                 </div>
             </div>
         </div>
@@ -329,7 +329,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2018/01/10/2018-01-10-update-datadog-and-try-loggin-feature/" class="image is-8by1">
+        <a href="/2018/01/09/2018-01-10-update-datadog-and-try-loggin-feature/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180110/20180110145104.png" alt="Datadog Agent 6系にアップデートして Logging 機能を試す！">
         </a>
     </div>
@@ -348,7 +348,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2018/01/10/2018-01-10-update-datadog-and-try-loggin-feature/">Datadog Agent 6系にアップデートして Logging 機能を試す！</a>
+            <a class="has-link-black-ter" href="/2018/01/09/2018-01-10-update-datadog-and-try-loggin-feature/">Datadog Agent 6系にアップデートして Logging 機能を試す！</a>
             
         </h1>
         <div class="content">
@@ -391,7 +391,7 @@
 <ul>
 <li>dd-agent configcheck に該当するコマンドが見当たらない？<br>どこにあるのか教えてください(;&gt;_&lt;)</li>
 </ul>
-<h2><span id="5系からのアップグレード方法">5系からのアップグレード方法</span></h2><p><a href="https://github.com/DataDog/datadog-agent/blob/master/docs/beta.md">https://github.com/DataDog/datadog-agent/blob/master/docs/beta.md</a></p>
+<h2><span id="5系からのアップグレード方法">5系からのアップグレード方法</span></h2><p><a target="_blank" rel="noopener" href="https://github.com/DataDog/datadog-agent/blob/master/docs/beta.md">https://github.com/DataDog/datadog-agent/blob/master/docs/beta.md</a></p>
 <p>自身の環境は Ubuntu 16.04.2 LTS だったので以下方法でアップグレードしました。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ DD_UPGRADE=<span class="literal">true</span> bash -c <span class="string">"<span class="variable">$(curl -L https://raw.githubusercontent.com/DataDog/datadog-agent/master/cmd/agent/install_script.sh)</span>"</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">Error: /etc/datadog-agent/datadog.yaml seems to contain a valid configuration, run the <span class="built_in">command</span> again with --force or -f to overwrite it</span><br><span class="line">Automatic import failed, you can still try to manually run: datadog-agent import /etc/dd-agent /etc/datadog-agent</span><br></pre></td></tr></table></figure>
 
@@ -455,7 +455,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2017/12/23/2017-12-23-monitoring-rails-unicorn-by-datadog-using-mackerel/" class="image is-8by1">
+        <a href="/2017/12/22/2017-12-23-monitoring-rails-unicorn-by-datadog-using-mackerel/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171223/20171223193555.png" alt="Datadog で Rails Unicorn の Memory, Idle|Busy Worker 監視 〜呉越同舟〜">
         </a>
     </div>
@@ -474,7 +474,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2017/12/23/2017-12-23-monitoring-rails-unicorn-by-datadog-using-mackerel/">Datadog で Rails Unicorn の Memory, Idle|Busy Worker 監視 〜呉越同舟〜</a>
+            <a class="has-link-black-ter" href="/2017/12/22/2017-12-23-monitoring-rails-unicorn-by-datadog-using-mackerel/">Datadog で Rails Unicorn の Memory, Idle|Busy Worker 監視 〜呉越同舟〜</a>
             
         </h1>
         <div class="content">
@@ -483,7 +483,7 @@
 <h2><span id="独自スクリプトを書こうとしてたら">独自スクリプトを書こうとしてたら…</span></h2><p>同僚「Mackerel なら plugin ありますよ？」</p>
 <p>自分「えっ？…」</p>
 <h2><span id="mackerel-入ってる">Mackerel 入ってる</span></h2><p>Mackerel に unicorn 監視用の plugin がありました。</p>
-<p><a href="https://github.com/mackerelio/mackerel-agent-plugins/tree/master/mackerel-plugin-unicorn">mackerel-plugin-unicorn</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mackerelio/mackerel-agent-plugins/tree/master/mackerel-plugin-unicorn">mackerel-plugin-unicorn</a></p>
 <p>はてなさんもOSSで出して頂いている、<br>車輪の再開発は時間の無駄、<br>人生は一度しかないのでこの Mackerel プラグインを Datadog で使わせて頂こうと思いました。</p>
 <h2><span id="mackerel-datadog-呉越同舟スクリプト">Mackerel + Datadog 呉越同舟スクリプト</span></h2><ul>
 <li>/etc/dd-agent/unicorn_check.py</li>
@@ -666,7 +666,7 @@
         
         <article class="media">
             
-            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+            <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
                 </p>
@@ -675,7 +675,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
-                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -685,7 +685,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
+            <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
                 </p>
@@ -694,7 +694,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-05T15:00:00.000Z">2020-06-06</time></div>
-                    <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
+                    <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -704,7 +704,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="media-left">
+            <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="aws_ssm_parameter の value を ignore_change に指定しない">
                 </p>
@@ -713,7 +713,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-31T15:00:00.000Z">2020-06-01</time></div>
-                    <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
+                    <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -723,7 +723,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/20/2020-05-20-go-json-time/" class="media-left">
+            <a href="/2020/05/19/2020-05-20-go-json-time/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
                 </p>
@@ -732,7 +732,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-19T15:00:00.000Z">2020-05-20</time></div>
-                    <a href="/2020/05/20/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
+                    <a href="/2020/05/19/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -742,7 +742,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+            <a href="/2020/05/06/2020-05-07-go-json/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
                 </p>
@@ -751,7 +751,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
-                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <a href="/2020/05/06/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1486,7 +1486,7 @@ var IcarusThemeSettings = {
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
@@ -1526,7 +1526,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>

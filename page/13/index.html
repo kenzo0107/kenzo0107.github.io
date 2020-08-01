@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
 
-<meta name="generator" content="Hexo 4.2.0" />
+<meta name="generator" content="Hexo 5.0.0" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
@@ -142,7 +142,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/07/11/2016-07-11-install-pip-on-centos5/" class="image is-8by1">
+        <a href="/2016/07/10/2016-07-11-install-pip-on-centos5/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160711/20160711114558.jpg" alt="CentOS5 系 に pip インストール">
         </a>
     </div>
@@ -161,7 +161,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/07/11/2016-07-11-install-pip-on-centos5/">CentOS5 系 に pip インストール</a>
+            <a class="has-link-black-ter" href="/2016/07/10/2016-07-11-install-pip-on-centos5/">CentOS5 系 に pip インストール</a>
             
         </h1>
         <div class="content">
@@ -212,7 +212,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/06/27/2016-06-27-each-table-mysql/">MySQL テーブル単位の容量確認</a>
+            <a class="has-link-black-ter" href="/2016/06/26/2016-06-27-each-table-mysql/">MySQL テーブル単位の容量確認</a>
             
         </h1>
         <div class="content">
@@ -247,7 +247,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/06/27/2016-06-27-ssl-qualys-get-a-plus/" class="image is-8by1">
+        <a href="/2016/06/26/2016-06-27-ssl-qualys-get-a-plus/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627140744.png" alt="2016年5月現在、SSL評価Fを取らない為に">
         </a>
     </div>
@@ -266,11 +266,11 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/06/27/2016-06-27-ssl-qualys-get-a-plus/">2016年5月現在、SSL評価Fを取らない為に</a>
+            <a class="has-link-black-ter" href="/2016/06/26/2016-06-27-ssl-qualys-get-a-plus/">2016年5月現在、SSL評価Fを取らない為に</a>
             
         </h1>
         <div class="content">
-            <p>それは、ある日 <a href="https://www.ssllabs.com/ssltest/index.html">QUALYS SSL LABS</a> でSSLチェックしたとき</p>
+            <p>それは、ある日 <a target="_blank" rel="noopener" href="https://www.ssllabs.com/ssltest/index.html">QUALYS SSL LABS</a> でSSLチェックしたとき</p>
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627140744.png" width="100%">
 </div>
@@ -296,7 +296,7 @@
 </ul>
 <p>※試験OS環境:  CentOS7</p>
 <p>以下記事では 「OpenSSLのバージョンを1.0.2h/1.0.1tにあげてください。」とありますが、</p>
-<p><a href="https://oss.sios.com/security/general-security-20160504">general-security-20160504</a></p>
+<p><a target="_blank" rel="noopener" href="https://oss.sios.com/security/general-security-20160504">general-security-20160504</a></p>
 <p>段階的に試した所<br>以下コマンドでopenssl のバージョンアップをした所<br>エラーが消え B となりました。</p>
 <p>事前にNginx を 1.11.1 にアップデートした為でしょうか汗</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># yum upgrade openssl -y</span><br><span class="line"></span><br><span class="line"># openssl version</span><br><span class="line">OpenSSL 1.0.1e-fips 11 Feb 2013</span><br></pre></td></tr></table></figure>
@@ -305,7 +305,7 @@
 <li>ssl_ciphers の設定変更</li>
 </ul>
 <p>config generator で 生成される ssl_ciphers ディレクティブをそのまま設定すると評価がB止まりでした。</p>
-<p><a href="https://ssl-config.mozilla.org/">https://ssl-config.mozilla.org/</a></p>
+<p><a target="_blank" rel="noopener" href="https://ssl-config.mozilla.org/">https://ssl-config.mozilla.org/</a></p>
 <p>諸々含めたくない暗号化法があるようです。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssl_ciphers &#39;ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS&#39;;</span><br></pre></td></tr></table></figure>
 
@@ -339,7 +339,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/06/27/2016-06-27-versionup-nginx/" class="image is-8by1">
+        <a href="/2016/06/26/2016-06-27-versionup-nginx/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627150549.png" alt="Nginx 1.9.6 → 1.11.1 へバージョンアップ 脆弱性対応">
         </a>
     </div>
@@ -358,12 +358,12 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/06/27/2016-06-27-versionup-nginx/">Nginx 1.9.6 → 1.11.1 へバージョンアップ 脆弱性対応</a>
+            <a class="has-link-black-ter" href="/2016/06/26/2016-06-27-versionup-nginx/">Nginx 1.9.6 → 1.11.1 へバージョンアップ 脆弱性対応</a>
             
         </h1>
         <div class="content">
             <p>脆弱性CVE-2016-4450 に対応した Nginx 1.11.1 が 2016-05-31 リリースされたということで<br>早速バージョンアップを試みました。</p>
-<p><a href="https://oss.sios.com/yorozu-blog/nginx-release-information-20160601">SIOS Tech. Lab - エンジニアのためになる技術トピックス</a></p>
+<p><a target="_blank" rel="noopener" href="https://oss.sios.com/yorozu-blog/nginx-release-information-20160601">SIOS Tech. Lab - エンジニアのためになる技術トピックス</a></p>
 <p>ダウンタイムゼロで実行できました。</p>
 <h2><span id="現状の-nginx-configure-確認">現状の Nginx configure 確認</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># nginx -V</span><br><span class="line">nginx version: nginx&#x2F;1.9.6</span><br><span class="line"></span><br><span class="line">configure arguments: --prefix&#x3D;&#x2F;etc&#x2F;nginx --sbin-path&#x3D;&#x2F;usr&#x2F;sbin&#x2F;nginx --modules-path&#x3D;&#x2F;usr&#x2F;lib64&#x2F;nginx&#x2F;modules --conf-path&#x3D;&#x2F;etc&#x2F;nginx&#x2F;nginx.conf --error-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log --http-log-path&#x3D;&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log --pid-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx.pid --lock-path&#x3D;&#x2F;var&#x2F;run&#x2F;nginx.lock --http-client-body-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;client_temp --http-proxy-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;proxy_temp --http-fastcgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;fastcgi_temp --http-uwsgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;uwsgi_temp --http-scgi-temp-path&#x3D;&#x2F;var&#x2F;cache&#x2F;nginx&#x2F;scgi_temp --user&#x3D;nginx --group&#x3D;nginx --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-http_xslt_module&#x3D;dynamic --with-http_image_filter_module&#x3D;dynamic --with-http_geoip_module&#x3D;dynamic --with-http_perl_module&#x3D;dynamic --add-dynamic-module&#x3D;njs-1c50334fbea6&#x2F;nginx --with-threads --with-stream --with-stream_ssl_module --with-http_slice_module --with-mail --with-mail_ssl_module --with-file-aio --with-ipv6 --with-http_v2_module --with-cc-opt&#x3D;&#39;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE&#x3D;2 -fexceptions -fstack-protector-strong --param&#x3D;ssp-buffer-size&#x3D;4 -grecord-gcc-switches -m64 -mtune&#x3D;generic&#39;</span><br></pre></td></tr></table></figure>
 
@@ -430,7 +430,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/06/21/2016-06-21-ansible-vagrant-prometheus/" class="image is-8by1">
+        <a href="/2016/06/20/2016-06-21-ansible-vagrant-prometheus/" class="image is-8by1">
         <img class="thumbnail" src="http://i.imgur.com/pfazhaR.png" alt="Ansible+Vagrant でシンプルなPrometheusモニタリング環境構築">
         </a>
     </div>
@@ -449,12 +449,12 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/06/21/2016-06-21-ansible-vagrant-prometheus/">Ansible+Vagrant でシンプルなPrometheusモニタリング環境構築</a>
+            <a class="has-link-black-ter" href="/2016/06/20/2016-06-21-ansible-vagrant-prometheus/">Ansible+Vagrant でシンプルなPrometheusモニタリング環境構築</a>
             
         </h1>
         <div class="content">
-            <h2><span id="概要">概要</span></h2><p><a href="https://prometheus.io/docs/introduction/getting_started/">Prometheus入門</a> にあるチュートリアルを<br>Ansibleで簡単に構築できるようにした、<br>というものです。</p>
-<p>先日2016年6月14日、<br>LINE株式会社での<a href="http://connpass.com/event/32859/">Prometheus Casual Talks #1</a>に参加し<br>ナレッジのおさらいなどしたく、<br>構築法をまとめました。</p>
+            <h2><span id="概要">概要</span></h2><p><a target="_blank" rel="noopener" href="https://prometheus.io/docs/introduction/getting_started/">Prometheus入門</a> にあるチュートリアルを<br>Ansibleで簡単に構築できるようにした、<br>というものです。</p>
+<p>先日2016年6月14日、<br>LINE株式会社での<a target="_blank" rel="noopener" href="http://connpass.com/event/32859/">Prometheus Casual Talks #1</a>に参加し<br>ナレッジのおさらいなどしたく、<br>構築法をまとめました。</p>
 <h2><span id="prometheusとは">Prometheusとは</span></h2><p>最近話題のPull型のQuery Filtering可能で Grafana等と連携できる モニタリング/Alertツールです。</p>
 <h2><span id="構成">構成</span></h2><p><img src="http://i.imgur.com/pfazhaR.png" alt="Imgur"></p>
 <ul>
@@ -476,7 +476,7 @@
 <li>Vagrant</li>
 <li>Ansible</li>
 </ul>
-<h2><span id="使い方">使い方</span></h2><h3><span id="1-git-repository-を-clone">1. git repository を clone</span></h3><p>[<a href="https://github.com/kenzo0107/Vagrant-Prometheus]">https://github.com/kenzo0107/Vagrant-Prometheus]</a></p>
+<h2><span id="使い方">使い方</span></h2><h3><span id="1-git-repository-を-clone">1. git repository を clone</span></h3><p>[<a target="_blank" rel="noopener" href="https://github.com/kenzo0107/Vagrant-Prometheus]">https://github.com/kenzo0107/Vagrant-Prometheus]</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https:&#x2F;&#x2F;github.com&#x2F;kenzo0107&#x2F;Vagrant-Prometheus</span><br></pre></td></tr></table></figure>
 
 <h2><span id="2-vagrant-vm-起動">2. Vagrant VM 起動</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd Vagrant-Prometheus</span><br><span class="line">$ vagrant up</span><br></pre></td></tr></table></figure>
@@ -507,8 +507,8 @@
 
 <h2><span id="6-prometheusclient-の起動確認">6. PrometheusClient の起動確認</span></h2><p>以下PrometheusClientを起動しているサーバにアクセスし<br>起動されているか確認します。</p>
 <ul>
-<li><a href="http://192.168.11.31:8080/metrics">http://192.168.11.31:8080/metrics</a></li>
-<li><a href="http://192.168.11.32:8080/metrics">http://192.168.11.32:8080/metrics</a></li>
+<li><a target="_blank" rel="noopener" href="http://192.168.11.31:8080/metrics">http://192.168.11.31:8080/metrics</a></li>
+<li><a target="_blank" rel="noopener" href="http://192.168.11.32:8080/metrics">http://192.168.11.32:8080/metrics</a></li>
 </ul>
 <p>以下のように表示されれば成功です。</p>
 <img src="http://i.imgur.com/igPci2Z.png" width="400px">
@@ -516,7 +516,7 @@
 
 <h2><span id="7-prometheusserver-設定">7. PrometheusServer 設定</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook set_server_prometheus.yml</span><br></pre></td></tr></table></figure>
 
-<h2><span id="8-prometheusserver-確認">8. PrometheusServer 確認</span></h2><p><a href="http://192.168.33.30:9090">http://192.168.33.30:9090</a> にアクセス</p>
+<h2><span id="8-prometheusserver-確認">8. PrometheusServer 確認</span></h2><p><a target="_blank" rel="noopener" href="http://192.168.33.30:9090">http://192.168.33.30:9090</a> にアクセス</p>
 <p>以下のように表示されれば成功です。</p>
 <img src="http://i.imgur.com/XDTarz3.png" width="400px">
 
@@ -542,7 +542,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/06/01/2016-06-01-jenkins-short-cycles-in-the-day-of-month-field-will-behave-oddly-near-the-end-of-a-month/" class="image is-8by1">
+        <a href="/2016/05/31/2016-06-01-jenkins-short-cycles-in-the-day-of-month-field-will-behave-oddly-near-the-end-of-a-month/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160601/20160601191107.png" alt="Jenkins - Short cycles in the day-of-month field will behave oddly near the end of a month">
         </a>
     </div>
@@ -561,7 +561,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/06/01/2016-06-01-jenkins-short-cycles-in-the-day-of-month-field-will-behave-oddly-near-the-end-of-a-month/">Jenkins - Short cycles in the day-of-month field will behave oddly near the end of a month</a>
+            <a class="has-link-black-ter" href="/2016/05/31/2016-06-01-jenkins-short-cycles-in-the-day-of-month-field-will-behave-oddly-near-the-end-of-a-month/">Jenkins - Short cycles in the day-of-month field will behave oddly near the end of a month</a>
             
         </h1>
         <div class="content">
@@ -620,7 +620,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/05/26/2016-05-26-ruby-30-sec-cooking-get-access-ip-from-japan/">日本国内からアクセスされるIP取得スクリプト Ruby 30秒クッキング</a>
+            <a class="has-link-black-ter" href="/2016/05/25/2016-05-26-ruby-30-sec-cooking-get-access-ip-from-japan/">日本国内からアクセスされるIP取得スクリプト Ruby 30秒クッキング</a>
             
         </h1>
         <div class="content">
@@ -651,7 +651,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/05/21/2016-05-21-jenkins-sonarqube-php-code-metrics/" class="image is-8by1">
+        <a href="/2016/05/20/2016-05-21-jenkins-sonarqube-php-code-metrics/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521003213.png" alt="Jenkins + SonarQube で PHPコードメトリクス計測！">
         </a>
     </div>
@@ -670,7 +670,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/05/21/2016-05-21-jenkins-sonarqube-php-code-metrics/">Jenkins + SonarQube で PHPコードメトリクス計測！</a>
+            <a class="has-link-black-ter" href="/2016/05/20/2016-05-21-jenkins-sonarqube-php-code-metrics/">Jenkins + SonarQube で PHPコードメトリクス計測！</a>
             
         </h1>
         <div class="content">
@@ -804,7 +804,7 @@
 </div>
 
 <h3><span id="2-sonarqube-scanner-インストール">2. SonarQube Scanner インストール</span></h3><p>以下オフィシャルダウンロードページからリンク取得</p>
-<p><a href="http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner">Analyzing+with+SonarQube+Scanner</a></p>
+<p><a target="_blank" rel="noopener" href="http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner">Analyzing+with+SonarQube+Scanner</a></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /var/lib/jenkins</span><br><span class="line">$ wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.6.1.zip</span><br><span class="line">$ unzip sonar-scanner-2.6.1.zip</span><br><span class="line">$ ln -s sonar-scanner-2.6.1 sonar-scanner</span><br></pre></td></tr></table></figure>
 
 <h3><span id="3-jenkinsシステム設定">3. Jenkinsシステム設定</span></h3><ul>
@@ -869,7 +869,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/05/20/2016-05-20-mysql-cannot-allocate-memory-for-the-buffer-pool/" class="image is-8by1">
+        <a href="/2016/05/19/2016-05-20-mysql-cannot-allocate-memory-for-the-buffer-pool/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520103201.jpg" alt="MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool">
         </a>
     </div>
@@ -888,7 +888,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/05/20/2016-05-20-mysql-cannot-allocate-memory-for-the-buffer-pool/">MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool</a>
+            <a class="has-link-black-ter" href="/2016/05/19/2016-05-20-mysql-cannot-allocate-memory-for-the-buffer-pool/">MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool</a>
             
         </h1>
         <div class="content">
@@ -948,7 +948,7 @@
 <div class="card">
     
     <div class="card-image">
-        <a href="/2016/05/19/2016-05-19-install-sonarqube-on-centos7/" class="image is-8by1">
+        <a href="/2016/05/18/2016-05-19-install-sonarqube-on-centos7/" class="image is-8by1">
         <img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520164314.png" alt="CentOS7にSonarQubeをインストールしアクセス確認まで">
         </a>
     </div>
@@ -967,11 +967,11 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-            <a class="has-link-black-ter" href="/2016/05/19/2016-05-19-install-sonarqube-on-centos7/">CentOS7にSonarQubeをインストールしアクセス確認まで</a>
+            <a class="has-link-black-ter" href="/2016/05/18/2016-05-19-install-sonarqube-on-centos7/">CentOS7にSonarQubeをインストールしアクセス確認まで</a>
             
         </h1>
         <div class="content">
-            <h2><span id="概要">概要</span></h2><p><a href="http://www.sonarqube.org/">sonarqube</a> は<br>Java, Python, Ruby, PHP等、複数言語のコードメトリクス集計ができる<br>優れものです。</p>
+            <h2><span id="概要">概要</span></h2><p><a target="_blank" rel="noopener" href="http://www.sonarqube.org/">sonarqube</a> は<br>Java, Python, Ruby, PHP等、複数言語のコードメトリクス集計ができる<br>優れものです。</p>
 <p>以前 MacOSXローカル環境で<br>Unityプロジェクト C#コードのコードメトリクス抽出方法をまとめました。</p>
 <a href="https://kenzo0107.github.io/2014/06/22/2014-06-22-sonarqube-maxosx" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://kenzo0107.github.io/images/og_image.png"></div><div class="descriptions"><div class="og-title">Mac OS X に SonarQube 導入 - UnityのC#コーディング規約チェック</div><div class="og-description">[f:id:kenzo0107:20140620233131p:plain] 環境 Mac OS X 10.9.3 (Marvericks) SonarQube 4.3.1 SonarRunner 2.4  概要 C#のコーディング規約チェック管理ツールを導入します。  導入手順…</div></div></div></a>
 
@@ -994,7 +994,7 @@
 <h2><span id="mysqlインストール">MySQLインストール</span></h2><p>今回は同一サーバにMySQLインストールしています。<br>別途MySQLサーバを立てる場合は不要です。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm</span></span><br><span class="line"><span class="comment"># yum -y install mysql-community-server</span></span><br><span class="line"><span class="comment"># chown -R mysql:mysql /var/lib/mysql/*</span></span><br><span class="line"><span class="comment"># systemctl start mysqld</span></span><br><span class="line"><span class="comment"># chkconfig mysqld on</span></span><br><span class="line"></span><br><span class="line">// 以下 DB名: sonar, DB User: sonar, DB Pass: sonar で設定</span><br><span class="line"><span class="comment"># mysql -u root</span></span><br><span class="line"></span><br><span class="line">mysql&gt; CREATE DATABASE sonar;</span><br><span class="line">mysql&gt; CREATE USER <span class="string">'sonar'</span>@<span class="string">'localhost'</span> IDENTIFIED by <span class="string">'sonar'</span>;</span><br><span class="line">mysql&gt; GRANT ALL PRIVILEGES ON sonar.* TO <span class="string">'sonar'</span>@<span class="string">'localhost'</span>;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
 
-<h2><span id="sonarqube-インストール">SonarQube インストール</span></h2><p>以下サイトにてダウンロードzipを取得します。<br><a href="http://www.sonarqube.org/downloads/">SonarQube Donwloads</a></p>
+<h2><span id="sonarqube-インストール">SonarQube インストール</span></h2><p>以下サイトにてダウンロードzipを取得します。<br><a target="_blank" rel="noopener" href="http://www.sonarqube.org/downloads/">SonarQube Donwloads</a></p>
 <p><img src="http://i.imgur.com/etIqshd.png" alt="Imgur"></p>
 <p>※ 2016-05-19 時点 最新は ver 5.5</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /usr/local/sonarqube</span></span><br><span class="line"><span class="comment"># cd /usr/local/sonarqube</span></span><br><span class="line"><span class="comment"># wget https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-5.5.zip</span></span><br><span class="line"><span class="comment"># unzip sonarqube-5.5.zip</span></span><br><span class="line"><span class="comment"># ln -s sonarqube-5.5 sonar</span></span><br></pre></td></tr></table></figure>
@@ -1221,7 +1221,7 @@
         
         <article class="media">
             
-            <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
+            <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう">
                 </p>
@@ -1230,7 +1230,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-07-01T15:00:00.000Z">2020-07-02</time></div>
-                    <a href="/2020/07/02/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
+                    <a href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/" class="title has-link-black-ter is-size-6 has-text-weight-normal">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -1240,7 +1240,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="media-left">
+            <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Backlog API in Go 作りました">
                 </p>
@@ -1249,7 +1249,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-06-05T15:00:00.000Z">2020-06-06</time></div>
-                    <a href="/2020/06/06/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
+                    <a href="/2020/06/05/2020-06-06-backlog-api-go/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Backlog API in Go 作りました</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1259,7 +1259,7 @@
         
         <article class="media">
             
-            <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="media-left">
+            <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="aws_ssm_parameter の value を ignore_change に指定しない">
                 </p>
@@ -1268,7 +1268,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-31T15:00:00.000Z">2020-06-01</time></div>
-                    <a href="/2020/06/01/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
+                    <a href="/2020/05/31/2020-06-01-terraform-sensitive-data/" class="title has-link-black-ter is-size-6 has-text-weight-normal">aws_ssm_parameter の value を ignore_change に指定しない</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Terraform/">Terraform</a>
                     </p>
@@ -1278,7 +1278,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/20/2020-05-20-go-json-time/" class="media-left">
+            <a href="/2020/05/19/2020-05-20-go-json-time/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で時刻を json.Unmarshal する際の注意点">
                 </p>
@@ -1287,7 +1287,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-19T15:00:00.000Z">2020-05-20</time></div>
-                    <a href="/2020/05/20/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
+                    <a href="/2020/05/19/2020-05-20-go-json-time/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で時刻を json.Unmarshal する際の注意点</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -1297,7 +1297,7 @@
         
         <article class="media">
             
-            <a href="/2020/05/07/2020-05-07-go-json/" class="media-left">
+            <a href="/2020/05/06/2020-05-07-go-json/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="Go で Json 取扱">
                 </p>
@@ -1306,7 +1306,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-05-06T15:00:00.000Z">2020-05-07</time></div>
-                    <a href="/2020/05/07/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
+                    <a href="/2020/05/06/2020-05-07-go-json/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Go で Json 取扱</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Go/">Go</a>
                     </p>
@@ -2041,7 +2041,7 @@ var IcarusThemeSettings = {
 
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
-    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update
             my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
 </div>
@@ -2081,7 +2081,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<a id="back-to-top" title="Back to Top" href="javascript:;">
+<a id="back-to-top" title="Zurück nach oben" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/js/back-to-top.js" defer></script>
