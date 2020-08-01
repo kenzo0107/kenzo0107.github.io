@@ -18,14 +18,11 @@ jobs:
         working-directory: ./_blog
       - run: npm install hexo-deployer-git --save
         working-directory: ./_blog
-      - run: |
-          mkdir -p /home/runner/.ssh/
-          echo "${{ secrets.DEPLOY_KEY }}" > /home/runner/.ssh/id_rsa
-          chmod 600 /home/runner/.ssh/id_rsa
-          ssh-keyscan -t rsa github.com >> /home/runner/.ssh/known_hosts
-          git config --global user.name "kenzo0107"
-          git config --global user.email "${{ secrets.EMAIL }}"
       - run: npm run build
         working-directory: ./_blog
-      - run: npm run deploy
-        working-directory: ./_blog
+      - name: deploy
+        uses: peaceiris/actions-gh-pages@v2.5.0
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          PUBLISH_BRANCH: master
+          PUBLISH_DIR: .
