@@ -14,8 +14,6 @@ jobs:
           node-version: '13.x'
       - run: npm install
         working-directory: ./_blog
-      - run: npm install -g hexo
-        working-directory: ./_blog
       - run: npm run build
         working-directory: ./_blog
       - name: deploy
