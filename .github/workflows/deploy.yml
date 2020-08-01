@@ -25,5 +25,7 @@ jobs:
           ssh-keyscan -t rsa github.com >> /home/runner/.ssh/known_hosts
           git config --global user.name "kenzo0107"
           git config --global user.email "${{ secrets.EMAIL }}"
-      - run: hexo generate && hexo deploy
+      - run: npm run build
+        working-directory: ./_blog
+      - run: npm run deploy
         working-directory: ./_blog
