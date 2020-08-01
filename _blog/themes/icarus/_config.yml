@@ -75,7 +75,7 @@ navbar:
     menu:
         Home: /
         Archives: /archives
-        PrivacyPolicy: /privacy_policy
+        PrivacyPolicy: /2013/12/31/PrivacyPolicy/
     # Links to be shown on the right of the navigation bar
     links:
         Download on GitHub:
