@@ -16,9 +16,14 @@ jobs:
         working-directory: ./_blog
       - run: npm install -g hexo
         working-directory: ./_blog
+      - run: npm install hexo-deployer-git --save
+        working-directory: ./_blog
       - run: |
+          mkdir -p /root/.ssh/
+          echo "${{ secrets.DEPLOY_KEY }}" > /root/.ssh/id_rsa
+          chmod 600 /root/.ssh/id_rsa
+          ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
+          git config --global user.name "kenzo0107"
           git config --global user.email "${{ secrets.EMAIL }}"
-          git config --global user.name "${{ github.actor }}"
-          git remote set-url origin https://kenzo0107:${{ secrets.PASS }}@github.com/kenzo0107/kenzo0107.github.io
       - run: hexo generate && hexo deploy
         working-directory: ./_blog
