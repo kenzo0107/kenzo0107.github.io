@@ -12,13 +12,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '13.x'
-      - run: npm install
+      - run: npm ci
         working-directory: ./_blog
       - run: npm run build
         working-directory: ./_blog
-      - name: deploy
-        uses: peaceiris/actions-gh-pages@v2.5.0
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-          PUBLISH_BRANCH: master
-          PUBLISH_DIR: .
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
