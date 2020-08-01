@@ -16,8 +16,6 @@ jobs:
         working-directory: ./_blog
       - run: npm install -g hexo
         working-directory: ./_blog
-      - run: npm install hexo-deployer-git --save
-        working-directory: ./_blog
       - run: npm run build
         working-directory: ./_blog
       - name: deploy
