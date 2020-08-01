@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
         working-directory: ./_blog
-      - run: yarn global hexo
+      - run: yarn global add hexo
         working-directory: ./_blog
       - run: yarn run build
         working-directory: ./_blog
