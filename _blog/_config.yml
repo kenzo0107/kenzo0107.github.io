@@ -121,6 +121,6 @@ theme: icarus
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://kenzo0107@github.com/kenzo0107/kenzo0107.github.io
+  repo: https://github.com/kenzo0107/kenzo0107.github.io
   branch: master
   message: update
