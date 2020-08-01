@@ -1,7 +1,7 @@
 common:
     archive:
-        one: 'Archive'
-        other: 'Archive'
+        one: 'アーカイブ'
+        other: 'アーカイブ'
     category:
         one: 'カテゴリ'
         other: 'カテゴリ'
