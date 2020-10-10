@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>SendGrid メール送信できるまで &amp; なりすまし対策 - 長生村本郷Engineers&#039;Blog</title><meta description="ToC     概要 メール送信設定手続き SubUser 作成 Username Email I.P. ADDRESSES   Domain Authentication 設定 Domain Authenticationとは？ 設定手順   API Key 作成 Rails で SendGrid を利用しメール送信する設定 DMARC 設定 集計先メールアドレスを外部委託する場合 p タグの"><meta property="og:type" content="blog"><meta property="og:title" content="SendGrid メール送信できるまで &amp; なりすまし対策"><meta property="og:url" content="https://kenzo0107.github.io/2020/10/07/2020-10-08-sendgrid-settings/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="ToC     概要 メール送信設定手続き SubUser 作成 Username Email I.P. ADDRESSES   Domain Authentication 設定 Domain Authenticationとは？ 設定手順   API Key 作成 Rails で SendGrid を利用しメール送信する設定 DMARC 設定 集計先メールアドレスを外部委託する場合 p タグの"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://i.imgur.com/4NdER1F.png"><meta property="article:published_time" content="2020-10-07T15:00:00.000Z"><meta property="article:modified_time" content="2020-10-10T15:45:35.719Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="SendGrid"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://i.imgur.com/4NdER1F.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2020/10/07/2020-10-08-sendgrid-settings/"},"headline":"長生村本郷Engineers'Blog","image":["https://i.imgur.com/4NdER1F.png"],"datePublished":"2020-10-07T15:00:00.000Z","dateModified":"2020-10-10T15:45:35.719Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"description":"ToC     概要 メール送信設定手続き SubUser 作成 Username Email I.P. ADDRESSES   Domain Authentication 設定 Domain Authenticationとは？ 設定手順   API Key 作成 Rails で SendGrid を利用しメール送信する設定 DMARC 設定 集計先メールアドレスを外部委託する場合 p タグの"}</script><link rel="canonical" href="https://kenzo0107.github.io/2020/10/07/2020-10-08-sendgrid-settings/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/PrivacyPolicy/">PrivacyPolicy</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="https://i.imgur.com/4NdER1F.png" alt="SendGrid メール送信できるまで &amp; なりすまし対策"></span></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-10-07T15:00:00.000Z" title="2020-10-07T15:00:00.000Z">2020-10-08</time><span class="level-item">19分 read (About 2814 words)</span></div></div><h1 class="title is-3 is-size-4-mobile">SendGrid メール送信できるまで &amp; なりすまし対策</h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%81%E4%BF%A1%E8%A8%AD%E5%AE%9A%E6%89%8B%E7%B6%9A%E3%81%8D">メール送信設定手続き</a><ul>
+<li><a href="#subuser-%E4%BD%9C%E6%88%90httpssendgridkkecojpdocsuser_manual_jpsettingssubusersindexhtml">SubUser 作成</a><ul>
+<li><a href="#username">Username</a></li>
+<li><a href="#email">Email</a></li>
+<li><a href="#ip-addresses">I.P. ADDRESSES</a></li>
+</ul>
+</li>
+<li><a href="#domain-authentication-%E8%A8%AD%E5%AE%9Ahttpssendgridkkecojpdocsuser_manual_jpsettingssender_authenticationhow_to_set_up_domain_authenticationhtml">Domain Authentication 設定</a><ul>
+<li><a href="#domain-authentication%E3%81%A8%E3%81%AF">Domain Authenticationとは？</a></li>
+<li><a href="#%E8%A8%AD%E5%AE%9A%E6%89%8B%E9%A0%86">設定手順</a></li>
+</ul>
+</li>
+<li><a href="#api-key-%E4%BD%9C%E6%88%90">API Key 作成</a></li>
+<li><a href="#rails-%E3%81%A7-sendgrid-%E3%82%92%E5%88%A9%E7%94%A8%E3%81%97%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E8%A8%AD%E5%AE%9A">Rails で SendGrid を利用しメール送信する設定</a></li>
+<li><a href="#dmarc-%E8%A8%AD%E5%AE%9Ahttpssendgridkkecojpblogp1781">DMARC 設定</a><ul>
+<li><a href="#%E9%9B%86%E8%A8%88%E5%85%88%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%82%92%E5%A4%96%E9%83%A8%E5%A7%94%E8%A8%97%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">集計先メールアドレスを外部委託する場合</a></li>
+<li><a href="#p-%E3%82%BF%E3%82%B0%E3%81%AE%E6%89%B1%E3%81%84%E6%B3%A8%E6%84%8F">p タグの扱い注意</a></li>
+</ul>
+</li>
+<li><a href="#spf-%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E7%99%BB%E9%8C%B2">SPF レコード登録</a><ul>
+<li><a href="#spf-%E3%81%AE%E4%BB%95%E7%B5%84%E3%81%BF">SPF の仕組み</a></li>
+<li><a href="#sendgrid-%E3%81%A7%E3%81%AE-spf-%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E8%A8%AD%E5%AE%9A-%E6%8C%87%E9%87%9D">SendGrid での SPF レコード設定 指針</a></li>
+</ul>
+</li>
+<li><a href="#%E3%82%B9%E3%83%91%E3%83%A0%E3%83%A1%E3%83%BC%E3%83%AB%E6%89%B1%E3%81%84%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E3%81%8B%E3%83%86%E3%82%B9%E3%83%88%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95">スパムメール扱いされていないかテストする方法</a></li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<h1><span id="概要">概要</span></h1><p>SendGrid ダッシュボードで設定する手続きを運用上のフィードバックを入れつつまとめました。</p>
+<h1><span id="メール送信設定手続き">メール送信設定手続き</span></h1><h2><span id="subuser-作成"></span></h2><ul>
+<li>サブユーザは、メール送信やAPIの処理を分けて管理ができる。</li>
+<li>Subuser Stats によって、Subuser 毎の集計が SendGrid ダッシュボードで確認できる。</li>
+<li>サブユーザの最大作成数は15で、それ以上作成したい場合はサポート問い合わせ必要。</li>
+</ul>
+<p><img src="https://i.imgur.com/NN7NOIT.png"></p>
+<a id="more"></a>
+
+<p>基本以下設定し、「Create Subuser」ボタンをクリックする。<br>（他は設定しなくても良い。）</p>
+<p><img src="https://i.imgur.com/s1j6nLh.png"></p>
+<h3><span id="username">Username</span></h3><ul>
+<li>環境毎(stg, prd 等)に作成すると Subuser 毎に SendGrid ダッシュボードの Stats の確認ができるなどのメリットがあり、管理しやすいので以下例の様に指定しています。</li>
+<li>例: <code>&lt;env&gt;-&lt;service name&gt;</code><ul>
+<li>stg-hogehoge</li>
+<li>prd-hogehoge</li>
+</ul>
+</li>
+</ul>
+<h3><span id="email">Email</span></h3><p>Gmail を利用している場合は、メールアドレスのエイリアスを設定すると送信先が1つにまとまり管理しやすいです。</p>
+<ul>
+<li>例: <code>sample+&lt;subuser name&gt;@&lt;your domain&gt;</code></li>
+</ul>
+<h3><span id="ip-addresses">I.P. ADDRESSES</span></h3><p>チェックを入れる。</p>
+<p>10 以上の subuser 間で共通の IP を指定して運用していますが、現状特段問題はない。</p>
+<p>各独自ドメイン毎に IP を指定したい所。追加時は 3,700円/月/1ドメイン。<br>到達率がどこまで上がるかは未検証です。</p>
+<p>コスト的に問題なければ、ドメイン毎に IP 指定しておくのが良さそう。</p>
+<p>参考: <a href="https://support.sendgrid.kke.co.jp/hc/ja/articles/202688589-%E5%9B%BA%E5%AE%9AIP%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88%E3%81%AF%E4%BD%95%E3%81%A7%E3%81%97%E3%82%87%E3%81%86%E3%81%8B-">固定IPアドレスを利用するメリットは何でしょうか？</a></p>
+<h2><span id="domain-authentication-設定"></span></h2><h3><span id="domain-authenticationとは">Domain Authenticationとは？</span></h3><ul>
+<li>SendGridがユーザの許可を得てメール送信していることを証明する機能。</li>
+<li>設定しておかないと「なりすまし」として扱われ、迷惑メールに振り分けられる可能性が高くなる。</li>
+</ul>
+<h3><span id="設定手順">設定手順</span></h3><p>使用している DNS を選択します。<br><img src="https://i.imgur.com/kKjpVre.png"></p>
+<p><img src="https://i.imgur.com/XIKpTtB.png"></p>
+<p>設定項目</p>
+<ul>
+<li>From Domain に メールのドメインパート（送信者のメールアドレスの@以降）を指定する。</li>
+<li>Advanced Settings &gt; Use automated security にチェック（デフォルトでチェック）<ul>
+<li>Use automated security … SPF/DKIMに関するレコードの制御をSendGridに任せるかどうかを指定する機能です。</li>
+</ul>
+</li>
+<li>Assign to a subuser<ul>
+<li>stg, prd で共通のドメインパートを指定する場合は、チェックを外す。<ul>
+<li>stg, prd 各 subuser で Domain Authentication を指定する必要がある。</li>
+</ul>
+</li>
+<li>stg, prd で異なるドメインパートを指定する場合は subuser 紐付け。</li>
+</ul>
+</li>
+</ul>
+<p>発行された DNS レコードを DNS に登録する。<br><img src="https://i.imgur.com/TdlBOAQ.png"></p>
+<p>AWS なら Route53 にレコードを登録します。</p>
+<p>「Verify」をボタンをクリック</p>
+<ul>
+<li>レコード登録しただけでは自動で認証せず、「Verify」ボタンをクリックする必要があるので注意！</li>
+</ul>
+<h2><span id="api-key-作成">API Key 作成</span></h2><p>先ほど作成した Subuser に切り替えます。</p>
+<p><img src="https://i.imgur.com/6CEjSOJ.png"></p>
+<p>「Create API Key」クリック</p>
+<p><img src="https://i.imgur.com/1Luebo0.png"></p>
+<p>どの権限を持った API Key を発行するか決定します。<br>メールを送信するだけであれば、基本的に <code>Restricted Access</code> で Mail Send の Full Access のみあれば良い。</p>
+<p><img src="https://i.imgur.com/oOBAOml.png"></p>
+<p>「Create &amp; View」ボタンクリックで API Key が発行されます。</p>
+<h2><span id="rails-で-sendgrid-を利用しメール送信する設定">Rails で SendGrid を利用しメール送信する設定</span></h2><p>gem <a href="https://github.com/eddiezane/sendgrid-actionmailer">sendgrid-actionmailer</a> をインストールして利用しています。</p>
+<ul>
+<li>Gemfile</li>
+</ul>
+<p>development, test では利用しない為、 staging, production のみにしています。こちらは適宜変更してください。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:staging</span>, <span class="symbol">:production</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">'sendgrid-actionmailer'</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>production.credentials.enc, staging.credentials.enc</p>
+<ul>
+<li>prd, stg 用にそれぞれ別に発行した API Key を credentials に設定します。</li>
+</ul>
+</li>
+<li><p>sconfig/environments/production.rb</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">config.action_mailer.delivery_method = <span class="symbol">:sendgrid_actionmailer</span></span><br><span class="line">config.action_mailer.sendgrid_actionmailer_settings = &#123;</span><br><span class="line">  <span class="symbol">api_key:</span> Rails.application.credentials[<span class="symbol">:sendgrid_api_key</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上でメール送信ができる状態にはなりました。</p>
+<p>以降は送信者のドメイン認証によるメールが届かない問題への対応になります。</p>
+<h2><span id="dmarc-設定"></span></h2><p>DMARC (Domain-based Message Authentication, Reporting, and Conformance) は送信ドメイン認証技術の1つで、SPF, DKIM 等の送信者ドメイン認証に失敗したメールの振る舞いを送信者が指定できるものです。</p>
+<p><img src="https://i.imgur.com/z07TUlW.png"></p>
+<p>主に以下3つの役割があります。</p>
+<ol>
+<li>メール送信者が認証失敗したメールの取り扱いを指定できる<ul>
+<li>認証失敗したら迷惑メールボックスに入れる or そもそも受信拒否させることができる。</li>
+</ul>
+</li>
+<li>メール送信者が認証結果をメール受信者から受け取れる<ul>
+<li>なりすましたメール送信者を把握できる。</li>
+</ul>
+</li>
+<li>第三者署名（代理署名）を許容しない<ul>
+<li>なりすましと判断されたメールを受信できない様にする。</li>
+</ul>
+</li>
+</ol>
+<p>つまり、DMARC 設定していないと？、第三者がなりすましたメールをユーザは疑いなく受信できてしまい、また、送信者はそのことを知る術がありません。</p>
+<p>DMARC 設定として、以下レコードを登録します。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_dmarc.example.com    CNAME    v&#x3D;DMARC1;p&#x3D;quarantine;rua&#x3D;mailto:dmarc.rua@example.com</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Value</em></th>
+<th><em>Explain</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>v=DMARC1</td>
+<td>プロトコルバージョン</td>
+<td>バージョン 1 のみ存在する為、 DMARC1 を指定する。</td>
+</tr>
+<tr>
+<td>p=quarantine</td>
+<td>DMARCレコードのポリシー</td>
+<td>p=quarantine 指定で迷惑メールに振り分ける。</td>
+</tr>
+<tr>
+<td>pct=100</td>
+<td>DMARCを適用する割合</td>
+<td>pct=100 or pct タグを削除しないとなりすまし攻撃に晒される危険性がある為、pct タグを削除しとく。</td>
+</tr>
+<tr>
+<td>rua=mailto:…</td>
+<td>集計レポートの報告先URI</td>
+<td>集計レポートの通知先。事前に通知先をアプリケーション担当者に確認しておく。</td>
+</tr>
+</tbody></table>
+<h3><span id="集計先メールアドレスを外部委託する場合">集計先メールアドレスを外部委託する場合</span></h3><p>DMARC レコードの設定ドメイン (example.com) と 集計先の mailto で指定しているドメイン (hogehoge.jp) が異なる場合、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_dmarc.example.com    CNAME    v&#x3D;DMARC1;p&#x3D;quarantine;rua&#x3D;mailto:dmarc.rua@hogehoge.jp</span><br></pre></td></tr></table></figure>
+
+<p>以下のレコードを集計先ドメイン (hogehoge.jp) で登録し、ドメインの関連性を示す必要があります。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example.com._report._dmarc.hogehoge.jp IN TXT &quot;v&#x3D;DMARC1&quot;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="p-タグの扱い注意">p タグの扱い注意</span></h3><p>p=quarantine のみで pct タグは削除が良さそう。</p>
+<ul>
+<li><p>p=reject</p>
+<ul>
+<li><code>p=reject</code> にしてしまうと未認証メールは受信サーバは拒否する。</li>
+</ul>
+</li>
+<li><p><code>p=quarantine</code> 且つ、 <code>pct=0~99</code></p>
+<ul>
+<li>pct=100 でない場合は、なりすましの危険性に晒される可能性がある。<br>  参考: <a href="https://www.valimail.com/blog/what-you-need-to-know-about-the-pct-tag-in-dmarc-records/">https://www.valimail.com/blog/what-you-need-to-know-about-the-pct-tag-in-dmarc-records/</a><blockquote>
+<p>However, this can still leave your domain open to impersonation attacks until you set pct=100 or remove the pct tag entirely.</p>
+</blockquote>
+</li>
+<li>pct はデフォルト 100。pct を削除することでデフォルトの 100 が適用される。</li>
+</ul>
+</li>
+</ul>
+<h2><span id="spf-レコード登録">SPF レコード登録</span></h2><h3><span id="spf-の仕組み">SPF の仕組み</span></h3><p>SPF（Sender Policy Framework）は、DMARC 同様、送信ドメイン認証技術の1つです。</p>
+<p>送信者のメールアドレスのドメイン情報のある DNS に SPF レコードを登録し、<br>受信者が正しい送信元からの配信かをその SPF レコードを元に確認できる仕組みです。</p>
+<p>送信者は上記の仕組みで、受信者に「なりすましでないこと」を証明する一連の仕組みを SPF と呼びます。</p>
+<h3><span id="sendgrid-での-spf-レコード設定-指針">SendGrid での SPF レコード設定 指針</span></h3><p>SendGrid で独自ドメイン <code>hogehoge.jp</code> を SendGrid ドメイン認証しメール送信すると<br>Gmail のソース等で Return-Path を見ると <code>em1234.hogehoge.jp</code> の様にサブドメインが付与されていることがわかります。</p>
+<p>From で設定しているドメイン <code>hogehoge.jp</code> と エンベロープFrom の<code>em1234.hogehoge.jp</code> が異なる為、 Sender ID や docomo の独自認証がパスしない場合があります。</p>
+<p>その対応として、以下 SPF レコードで以下を登録します。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;v&#x3D;spf1 include:em1234.hogehoge.jp ~all&quot;</span><br></pre></td></tr></table></figure>
+
+<p>参考</p>
+<ul>
+<li><a href="https://support.sendgrid.kke.co.jp/hc/ja/articles/360000226322">SendGrid - エンベロープFromを変更したいのですが？</a></li>
+<li><a href="https://techracho.bpsinc.jp/baba/2018_12_16/65691">SendGridで独自ドメインからdocomo宛に送信するときの注意点</a></li>
+</ul>
+<h2><span id="スパムメール扱いされていないかテストする方法">スパムメール扱いされていないかテストする方法</span></h2><p>以下、送信元メールアカウントの評価サービスを利用できます。</p>
+<p><a href="https://www.mail-tester.com/">https://www.mail-tester.com/</a></p>
+<p><img src="https://i.imgur.com/IbAz71X.png"></p>
+<p>上記の場合、 <code>test-00a9mdjzu@svr1.mail-tester.com</code> にメールを送ると、送信者を評価してくれます。</p>
+<p>以下結果を元に、対処する項目を定めます。</p>
+<p><img src="https://i.imgur.com/clKGETd.png"></p>
+<h2><span id="まとめ">まとめ</span></h2><p>SendGrid には SPF/DKIM の独自ドメイン化を支援する Domain Authentication 機能等、迷惑メール扱い防止対策があります。</p>
+<p>これらを適切に設定しないと迷惑メールに振り分けられたり、そもそもメールが拒否されたりということが起こりえる為、注意が必要です。</p>
+<p>以下の送信ドメイン認証の仕組みを把握しつつ設定を進めると、より理解を深めることができました。</p>
+<ul>
+<li>SPF（Sender Policy Framework）</li>
+<li>DKIM (DomainKeys Identified Mail)</li>
+<li>DMARC (Domain-based Message Authentication, Reporting, and Conformance)</li>
+</ul>
+<p>さらに到達率を上げる為に、気づいた対策があれば追記して参ります。<br>また、ご指摘いただけますと幸いです。</p>
+<p>以上<br>ご参考になれば幸いです。</p>
+</div><div class="article-tags size-small mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/SendGrid/">SendGrid</a></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_dd" href="https://www.addtoany.com/share"></a><a class="a2a_button_facebook"></a><a class="a2a_button_twitter"></a><a class="a2a_button_telegram"></a><a class="a2a_button_whatsapp"></a><a class="a2a_button_reddit"></a></div><script src="https://static.addtoany.com/menu/page.js" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Gefällt Ihnen der Artikel? Unterstützen Sie den Autor mit</h3><div class="buttons is-centered"><a class="button is-danger donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/10/05/2020-10-06-aws-startup/"><span class="level-item">You are not subscribed to this service</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3"><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="kenzo0107"></figure><p class="title is-size-4 is-block line-height-inherit">kenzo0107</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">投稿</p><a href="/archives"><p class="title">200</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">カテゴリ</p><a href="/categories"><p class="title">2</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">タグ</p><a href="/tags"><p class="title">88</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/kenzo0107" target="_blank" rel="noopener">フォローする</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">カテゴリ</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/Go/"><span class="level-start"><span class="level-item">Go</span></span><span class="level-end"><span class="level-item tag">23</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Terraform/"><span class="level-start"><span class="level-item">Terraform</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最近の記事</h3><article class="media"><a class="media-left" href="/2020/10/07/2020-10-08-sendgrid-settings/"><p class="image is-64x64"><img class="thumbnail" src="https://i.imgur.com/4NdER1F.png" alt="SendGrid メール送信できるまで &amp; なりすまし対策"></p></a><div class="media-content size-small"><p><time dateTime="2020-10-07T15:00:00.000Z">2020-10-08</time></p><p class="title is-6"><a class="link-muted" href="/2020/10/07/2020-10-08-sendgrid-settings/">SendGrid メール送信できるまで &amp; なりすまし対策</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-10-05T15:00:00.000Z">2020-10-06</time></p><p class="title is-6"><a class="link-muted" href="/2020/10/05/2020-10-06-aws-startup/">You are not subscribed to this service</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-08-13T15:00:00.000Z">2020-08-14</time></p><p class="title is-6"><a class="link-muted" href="/2020/08/13/2020-08-14-aws-kms-encrypt-decrypt/">aws-cli KMS で暗号化・復号</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-08-12T15:00:00.000Z">2020-08-13</time></p><p class="title is-6"><a class="link-muted" href="/2020/08/12/2020-08-13-external-s3-bucket/">AWS S3 Bucket の特定フォルダ以下を社外に共有する際のポイント</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Terraform/">Terraform</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2020-07-01T15:00:00.000Z">2020-07-02</time></p><p class="title is-6"><a class="link-muted" href="/2020/07/01/2020-07-02-aws-iam-policy-managed-or-inline/">AWS IAM Policy はインラインでなく、管理ポリシーを積極的に使おう</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/Terraform/">Terraform</a></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">タグ</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/htaccess/"><span class="tag">.htaccess</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ALB/"><span class="tag">ALB</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/AWS/"><span class="tag">AWS</span><span class="tag is-grey-lightest">29</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Ansible/"><span class="tag">Ansible</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/AntiVirus/"><span class="tag">AntiVirus</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Apache/"><span class="tag">Apache</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Chef/"><span class="tag">Chef</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CodeBuild/"><span class="tag">CodeBuild</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Cookie/"><span class="tag">Cookie</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Corosync/"><span class="tag">Corosync</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Datadog/"><span class="tag">Datadog</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Docker/"><span class="tag">Docker</span><span class="tag is-grey-lightest">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ECR/"><span class="tag">ECR</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ECS/"><span class="tag">ECS</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ElastiCache/"><span class="tag">ElastiCache</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Elasticsearch/"><span class="tag">Elasticsearch</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Email/"><span class="tag">Email</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/FTPS/"><span class="tag">FTPS</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Fluentd/"><span class="tag">Fluentd</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GKE/"><span class="tag">GKE</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GitHub-Actions/"><span class="tag">GitHub Actions</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Go/"><span class="tag">Go</span><span class="tag is-grey-lightest">23</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GooglePlay/"><span class="tag">GooglePlay</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hubot/"><span class="tag">Hubot</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JavaScript/"><span class="tag">JavaScript</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Jenkins/"><span class="tag">Jenkins</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Kibana/"><span class="tag">Kibana</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/LINE-Notify/"><span class="tag">LINE Notify</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Lambda/"><span class="tag">Lambda</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Let-s-encrypt/"><span class="tag">Let&#039;s encrypt</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MachineLearning/"><span class="tag">MachineLearning</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Monitoring/"><span class="tag">Monitoring</span><span class="tag is-grey-lightest">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MySQL/"><span class="tag">MySQL</span><span class="tag is-grey-lightest">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nginx/"><span class="tag">Nginx</span><span class="tag is-grey-lightest">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenSSL/"><span class="tag">OpenSSL</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Outlook/"><span class="tag">Outlook</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PHP/"><span class="tag">PHP</span><span class="tag is-grey-lightest">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Pacemaker/"><span class="tag">Pacemaker</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Prometheus/"><span class="tag">Prometheus</span><span class="tag is-grey-lightest">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ProxySQL/"><span class="tag">ProxySQL</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Puppeteer/"><span class="tag">Puppeteer</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag is-grey-lightest">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Rails/"><span class="tag">Rails</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RaspberryPI/"><span class="tag">RaspberryPI</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Reactio/"><span class="tag">Reactio</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Ruby/"><span class="tag">Ruby</span><span class="tag is-grey-lightest">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/S3/"><span class="tag">S3</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SSL/"><span class="tag">SSL</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Security/"><span class="tag">Security</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SendGrid/"><span class="tag">SendGrid</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Slack/"><span class="tag">Slack</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SonarQube/"><span class="tag">SonarQube</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/StatsBot/"><span class="tag">StatsBot</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Swift/"><span class="tag">Swift</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Terraform/"><span class="tag">Terraform</span><span class="tag is-grey-lightest">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Twilio/"><span class="tag">Twilio</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Unity/"><span class="tag">Unity</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Vagrant/"><span class="tag">Vagrant</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Vault/"><span class="tag">Vault</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/WAF/"><span class="tag">WAF</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zabbix/"><span class="tag">Zabbix</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/awk/"><span class="tag">awk</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/casperjs/"><span class="tag">casperjs</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cpu/"><span class="tag">cpu</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/csv/"><span class="tag">csv</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flask/"><span class="tag">flask</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/git/"><span class="tag">git</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/i-node/"><span class="tag">i-node</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iftop/"><span class="tag">iftop</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ipinfo/"><span class="tag">ipinfo</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iptable/"><span class="tag">iptable</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kibana/"><span class="tag">kibana</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/macos/"><span class="tag">macos</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nginx/"><span class="tag">nginx</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/no-ip/"><span class="tag">no-ip</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ping/"><span class="tag">ping</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pip/"><span class="tag">pip</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/reCAPTCHA/"><span class="tag">reCAPTCHA</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sftp/"><span class="tag">sftp</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/spam/"><span class="tag">spam</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ssh/"><span class="tag">ssh</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/vim/"><span class="tag">vim</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/wget/"><span class="tag">wget</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/yum/"><span class="tag">yum</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/zsh/"><span class="tag">zsh</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Advertisement</h3><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6265337967545472" data-ad-slot="9975280607" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="size-small"><span>&copy; 2020 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'https://kenzo0107.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"投稿","pages":"Pages","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>
