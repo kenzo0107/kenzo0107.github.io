@@ -143,6 +143,8 @@ end
 
 以降は送信者のドメイン認証によるメールが届かない問題への対応になります。
 
+# なりすまし対策
+
 ## [DMARC 設定](https://sendgrid.kke.co.jp/blog/?p=1781)
 
 DMARC (Domain-based Message Authentication, Reporting, and Conformance) は送信ドメイン認証技術の1つで、SPF, DKIM 等の送信者ドメイン認証に失敗したメールの振る舞いを送信者が指定できるものです。
