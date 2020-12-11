@@ -13,7 +13,7 @@ date: 2020-12-11
 </div>
 </div>
 
-# 概要
+## 概要
 
 ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。
 
@@ -47,7 +47,7 @@ Redis Client Library として [redis/redis-rb](https://github.com/redis/redis-r
 redis = Redis.new(cluster: ["rediss://<elasticache configuration endpoint>:6379"])
 ```
 
-ちなみに `rediss://` はミスでなく、ElastiCache Redis の設定にある通信時(in transit), 保管時(in rest) に暗号化した際に redis-rb の SSL/TLS Support 機能を使用しています。
+ちなみに `rediss://` はミスでなく、ElastiCache Redis の設定にある通信時(in transit), 保管時(in rest) に暗号化した際に redis-rb の SSL/TLS Support を利用すべく設定しています。
 
 参考: https://github.com/redis/redis-rb#ssltls-support
 

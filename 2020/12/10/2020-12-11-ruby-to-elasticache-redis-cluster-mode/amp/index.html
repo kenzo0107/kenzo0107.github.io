@@ -21,7 +21,7 @@
 &lt;!-- toc --&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%9A%E7%B5%90%E8%AB%96&#34;&gt;まず結論&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E6%8E%A5%E7%B6%9A%E8%A8%AD%E5%AE%9A&#34;&gt;接続設定&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#redis-cluster-%E3%81%AE%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%83%8F%E3%83%9E%E3%81%A3%E3%81%9F&#34;&gt;Redis Cluster の接続でハマった。&lt;/a&gt;&lt;/li&gt;
@@ -32,14 +32,12 @@
 &lt;li&gt;&lt;a href=&#34;#sidekiq-%E3%81%A7%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF&#34;&gt;sidekiq で利用するには&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E5%8F%82%E8%80%83&#34;&gt;参考&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;h1 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h1&gt;&lt;p&gt;ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。&lt;/p&gt;
+&lt;h2 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。&lt;/p&gt;
 &lt;h2 id=&#34;まず結論&#34;&gt;&lt;a href=&#34;#まず結論&#34; class=&#34;headerlink&#34; title=&#34;まず結論&#34;&gt;&lt;/a&gt;まず結論&lt;/h2&gt;&lt;p&gt;検証終わり、以下のコードにまとめました。&lt;/p&gt;
 &lt;figure class=&#34;highlight ruby&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;require&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&#39;redis&#39;&lt;/span&gt; &lt;span class=&#34;comment&#34;&gt;# redis/redis-rb を利用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# 接続先は Configuration Endpoint のみ指定すれば、 cluster でよしなに、 node にアクセスしてくれた♪&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# 通信時(in transit), 保管時(in rest) に暗号化する様にすると`rediss://｀を指定する必要がある。 (s が1つ多い)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis = Redis.new(&lt;span class=&#34;symbol&#34;&gt;cluster:&lt;/span&gt; [&lt;span class=&#34;string&#34;&gt;&#34;rediss://&amp;lt;elasticache configuration endpoint&amp;gt;:6379&#34;&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis.set(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;hogehoge&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis.set(&lt;span class=&#34;string&#34;&gt;&#39;key2&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;mogemoge&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;p redis.get(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;) &lt;span class=&#34;comment&#34;&gt;# =&amp;gt; hogehoge&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;p redis.mget(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;key2&#39;&lt;/span&gt;)  &lt;span class=&#34;comment&#34;&gt;# =&amp;gt; Redis::CommandError (CROSSSLOT Keys in request don&#39;t hash to the same slot)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;">
 	
@@ -55,7 +53,7 @@
 &lt;!-- toc --&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%9A%E7%B5%90%E8%AB%96&#34;&gt;まず結論&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E6%8E%A5%E7%B6%9A%E8%A8%AD%E5%AE%9A&#34;&gt;接続設定&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#redis-cluster-%E3%81%AE%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%83%8F%E3%83%9E%E3%81%A3%E3%81%9F&#34;&gt;Redis Cluster の接続でハマった。&lt;/a&gt;&lt;/li&gt;
@@ -66,14 +64,12 @@
 &lt;li&gt;&lt;a href=&#34;#sidekiq-%E3%81%A7%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF&#34;&gt;sidekiq で利用するには&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E5%8F%82%E8%80%83&#34;&gt;参考&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;h1 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h1&gt;&lt;p&gt;ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。&lt;/p&gt;
+&lt;h2 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。&lt;/p&gt;
 &lt;h2 id=&#34;まず結論&#34;&gt;&lt;a href=&#34;#まず結論&#34; class=&#34;headerlink&#34; title=&#34;まず結論&#34;&gt;&lt;/a&gt;まず結論&lt;/h2&gt;&lt;p&gt;検証終わり、以下のコードにまとめました。&lt;/p&gt;
 &lt;figure class=&#34;highlight ruby&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;require&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&#39;redis&#39;&lt;/span&gt; &lt;span class=&#34;comment&#34;&gt;# redis/redis-rb を利用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# 接続先は Configuration Endpoint のみ指定すれば、 cluster でよしなに、 node にアクセスしてくれた♪&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# 通信時(in transit), 保管時(in rest) に暗号化する様にすると`rediss://｀を指定する必要がある。 (s が1つ多い)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis = Redis.new(&lt;span class=&#34;symbol&#34;&gt;cluster:&lt;/span&gt; [&lt;span class=&#34;string&#34;&gt;&#34;rediss://&amp;lt;elasticache configuration endpoint&amp;gt;:6379&#34;&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis.set(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;hogehoge&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis.set(&lt;span class=&#34;string&#34;&gt;&#39;key2&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;mogemoge&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;p redis.get(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;) &lt;span class=&#34;comment&#34;&gt;# =&amp;gt; hogehoge&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;p redis.mget(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;key2&#39;&lt;/span&gt;)  &lt;span class=&#34;comment&#34;&gt;# =&amp;gt; Redis::CommandError (CROSSSLOT Keys in request don&#39;t hash to the same slot)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;">
 	
@@ -113,7 +109,7 @@
 &lt;!-- toc --&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%9A%E7%B5%90%E8%AB%96&#34;&gt;まず結論&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E6%8E%A5%E7%B6%9A%E8%A8%AD%E5%AE%9A&#34;&gt;接続設定&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#redis-cluster-%E3%81%AE%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%83%8F%E3%83%9E%E3%81%A3%E3%81%9F&#34;&gt;Redis Cluster の接続でハマった。&lt;/a&gt;&lt;/li&gt;
@@ -124,14 +120,12 @@
 &lt;li&gt;&lt;a href=&#34;#sidekiq-%E3%81%A7%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF&#34;&gt;sidekiq で利用するには&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#%E5%8F%82%E8%80%83&#34;&gt;参考&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
 &lt;!-- tocstop --&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;h1 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h1&gt;&lt;p&gt;ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。&lt;/p&gt;
+&lt;h2 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。&lt;/p&gt;
 &lt;h2 id=&#34;まず結論&#34;&gt;&lt;a href=&#34;#まず結論&#34; class=&#34;headerlink&#34; title=&#34;まず結論&#34;&gt;&lt;/a&gt;まず結論&lt;/h2&gt;&lt;p&gt;検証終わり、以下のコードにまとめました。&lt;/p&gt;
 &lt;figure class=&#34;highlight ruby&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;require&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&#39;redis&#39;&lt;/span&gt; &lt;span class=&#34;comment&#34;&gt;# redis/redis-rb を利用&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# 接続先は Configuration Endpoint のみ指定すれば、 cluster でよしなに、 node にアクセスしてくれた♪&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# 通信時(in transit), 保管時(in rest) に暗号化する様にすると`rediss://｀を指定する必要がある。 (s が1つ多い)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis = Redis.new(&lt;span class=&#34;symbol&#34;&gt;cluster:&lt;/span&gt; [&lt;span class=&#34;string&#34;&gt;&#34;rediss://&amp;lt;elasticache configuration endpoint&amp;gt;:6379&#34;&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis.set(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;hogehoge&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;redis.set(&lt;span class=&#34;string&#34;&gt;&#39;key2&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;mogemoge&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;p redis.get(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;) &lt;span class=&#34;comment&#34;&gt;# =&amp;gt; hogehoge&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;p redis.mget(&lt;span class=&#34;string&#34;&gt;&#39;key1&#39;&lt;/span&gt;, &lt;span class=&#34;string&#34;&gt;&#39;key2&#39;&lt;/span&gt;)  &lt;span class=&#34;comment&#34;&gt;# =&amp;gt; Redis::CommandError (CROSSSLOT Keys in request don&#39;t hash to the same slot)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;",
 			
@@ -140,7 +134,7 @@
 			    "@id":"https://kenzo0107.github.io/2020/12/10/2020-12-11-ruby-to-elasticache-redis-cluster-mode/"
 			},
 			"datePublished": "2020-12-10T15:00:00.000Z",
-			"dateModified": "2020-12-11T07:51:18.603Z",
+			"dateModified": "2020-12-11T08:11:41.539Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1908,7 +1902,7 @@ h6.categories {
 <!-- toc -->
 
 <ul>
-<li><a href="#%E6%A6%82%E8%A6%81">&#x6982;&#x8981;</a><ul>
+<li><a href="#%E6%A6%82%E8%A6%81">&#x6982;&#x8981;</a></li>
 <li><a href="#%E3%81%BE%E3%81%9A%E7%B5%90%E8%AB%96">&#x307E;&#x305A;&#x7D50;&#x8AD6;</a></li>
 <li><a href="#%E6%8E%A5%E7%B6%9A%E8%A8%AD%E5%AE%9A">&#x63A5;&#x7D9A;&#x8A2D;&#x5B9A;</a><ul>
 <li><a href="#redis-cluster-%E3%81%AE%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%83%8F%E3%83%9E%E3%81%A3%E3%81%9F">Redis Cluster &#x306E;&#x63A5;&#x7D9A;&#x3067;&#x30CF;&#x30DE;&#x3063;&#x305F;&#x3002;</a></li>
@@ -1919,14 +1913,12 @@ h6.categories {
 <li><a href="#sidekiq-%E3%81%A7%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E3%81%AB%E3%81%AF">sidekiq &#x3067;&#x5229;&#x7528;&#x3059;&#x308B;&#x306B;&#x306F;</a></li>
 <li><a href="#%E5%8F%82%E8%80%83">&#x53C2;&#x8003;</a></li>
 </ul>
-</li>
-</ul>
 <!-- tocstop -->
 
 </div>
 </div>
 
-<h1><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h1><p>ruby &#x3067; ElastiCache Redis &#xFF08;&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x30FC;&#x30E2;&#x30FC;&#x30C9;&#x6709;&#x52B9;&#xFF09;&#x3092;&#x5229;&#x7528;&#x3057;&#x305F;&#x969B;&#x306B;&#x30CF;&#x30DE;&#x3063;&#x305F;&#x3053;&#x3068;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>ruby &#x3067; ElastiCache Redis &#xFF08;&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x30FC;&#x30E2;&#x30FC;&#x30C9;&#x6709;&#x52B9;&#xFF09;&#x3092;&#x5229;&#x7528;&#x3057;&#x305F;&#x969B;&#x306B;&#x30CF;&#x30DE;&#x3063;&#x305F;&#x3053;&#x3068;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3059;&#x3002;</p>
 <h2><span id="&#x307E;&#x305A;&#x7D50;&#x8AD6;">&#x307E;&#x305A;&#x7D50;&#x8AD6;</span></h2><p>&#x691C;&#x8A3C;&#x7D42;&#x308F;&#x308A;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x306B;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
 <figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> <span class="string">&apos;redis&apos;</span> <span class="comment"># redis/redis-rb &#x3092;&#x5229;&#x7528;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x63A5;&#x7D9A;&#x5148;&#x306F; Configuration Endpoint &#x306E;&#x307F;&#x6307;&#x5B9A;&#x3059;&#x308C;&#x3070;&#x3001; cluster &#x3067;&#x3088;&#x3057;&#x306A;&#x306B;&#x3001; node &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x304F;&#x308C;&#x305F;&#x266A;</span></span><br><span class="line"><span class="comment"># &#x901A;&#x4FE1;&#x6642;(in transit), &#x4FDD;&#x7BA1;&#x6642;(in rest) &#x306B;&#x6697;&#x53F7;&#x5316;&#x3059;&#x308B;&#x69D8;&#x306B;&#x3059;&#x308B;&#x3068;`rediss://&#xFF40;&#x3092;&#x6307;&#x5B9A;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308B;&#x3002; (s &#x304C;1&#x3064;&#x591A;&#x3044;)</span></span><br><span class="line">redis = Redis.new(<span class="symbol">cluster:</span> [<span class="string">&quot;rediss://&lt;elasticache configuration endpoint&gt;:6379&quot;</span>])</span><br><span class="line"></span><br><span class="line">redis.set(<span class="string">&apos;key1&apos;</span>, <span class="string">&apos;hogehoge&apos;</span>)</span><br><span class="line">redis.set(<span class="string">&apos;key2&apos;</span>, <span class="string">&apos;mogemoge&apos;</span>)</span><br><span class="line"></span><br><span class="line">p redis.get(<span class="string">&apos;key1&apos;</span>) <span class="comment"># =&gt; hogehoge</span></span><br><span class="line">p redis.mget(<span class="string">&apos;key1&apos;</span>, <span class="string">&apos;key2&apos;</span>)  <span class="comment"># =&gt; Redis::CommandError (CROSSSLOT Keys in request don&apos;t hash to the same slot)</span></span><br></pre></td></tr></tbody></table></figure>
 
@@ -1936,7 +1928,7 @@ h6.categories {
 <h2><span id="&#x63A5;&#x7D9A;&#x8A2D;&#x5B9A;">&#x63A5;&#x7D9A;&#x8A2D;&#x5B9A;</span></h2><p>&#x6700;&#x7D42;&#x7684;&#x306B; ElastiCache Redis &#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x30FC;&#x30E2;&#x30FC;&#x30C9;&#x6709;&#x52B9;&#x5316;&#x6642;&#x306B;&#x767A;&#x884C;&#x3055;&#x308C;&#x308B; <code>Configuration Endpoint</code> &#x3092; <code>cluster:</code> &#x3067;&#x6307;&#x5B9A;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x89E3;&#x6C7A;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
 <figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis = Redis.new(<span class="symbol">cluster:</span> [<span class="string">&quot;rediss://&lt;elasticache configuration endpoint&gt;:6379&quot;</span>])</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3061;&#x306A;&#x307F;&#x306B; <code>rediss://</code> &#x306F;&#x30DF;&#x30B9;&#x3067;&#x306A;&#x304F;&#x3001;ElastiCache Redis &#x306E;&#x8A2D;&#x5B9A;&#x306B;&#x3042;&#x308B;&#x901A;&#x4FE1;&#x6642;(in transit), &#x4FDD;&#x7BA1;&#x6642;(in rest) &#x306B;&#x6697;&#x53F7;&#x5316;&#x3057;&#x305F;&#x969B;&#x306B; redis-rb &#x306E; SSL/TLS Support &#x6A5F;&#x80FD;&#x3092;&#x4F7F;&#x7528;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>&#x3061;&#x306A;&#x307F;&#x306B; <code>rediss://</code> &#x306F;&#x30DF;&#x30B9;&#x3067;&#x306A;&#x304F;&#x3001;ElastiCache Redis &#x306E;&#x8A2D;&#x5B9A;&#x306B;&#x3042;&#x308B;&#x901A;&#x4FE1;&#x6642;(in transit), &#x4FDD;&#x7BA1;&#x6642;(in rest) &#x306B;&#x6697;&#x53F7;&#x5316;&#x3057;&#x305F;&#x969B;&#x306B; redis-rb &#x306E; SSL/TLS Support &#x3092;&#x5229;&#x7528;&#x3059;&#x3079;&#x304F;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
 <p>&#x53C2;&#x8003;: <a href="https://github.com/redis/redis-rb#ssltls-support">https://github.com/redis/redis-rb#ssltls-support</a></p>
 <p>ElastiCache &gt; Redis &#x306E;&#x6697;&#x53F7;&#x5316;&#x8A2D;&#x5B9A;<br></p><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/mESrwk7.png" width="1108" height="832" layout="responsive"></amp-img></div>
 <p>redis-rb &#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x9650;&#x308A;&#x3001;&#x6697;&#x53F7;&#x5316;&#x3057;&#x305F;&#x3053;&#x3068;&#x3067;&#x5229;&#x7528;&#x3057;&#x306B;&#x304F;&#x3044;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x306F;&#x306A;&#x304B;&#x3063;&#x305F;&#x306E;&#x3067;&#x3001;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x5411;&#x4E0A;&#x306E;&#x6069;&#x6075;&#x3092;&#x53D7;&#x3051;&#x308B;&#x3053;&#x3068;&#x3092;&#x63A8;&#x5968;&#x3057;&#x307E;&#x3059;&#x3002;</p>
