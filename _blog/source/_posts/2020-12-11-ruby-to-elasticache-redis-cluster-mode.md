@@ -1,5 +1,5 @@
 ---
-title: ruby で ElastiCache Redis クラスターモード有効 利用でハマった所
+title: ruby で ElastiCache Redis （クラスターモード有効） 利用でハマった所
 tags:
 - AWS
 - Ruby
@@ -54,7 +54,7 @@ redis = Redis.new(cluster: ["rediss://<elasticache configuration endpoint>:6379"
 ElastiCache > Redis の暗号化設定
 ![](https://i.imgur.com/mESrwk7.png)
 
-redis-rb 利用している限り、暗号化したことで利用しにくいということはなかったので、セキュリティ向上の恩恵を受けることを推奨します。
+redis-rb を利用していて、暗号化したことで利用しにくいということはなかったので、セキュリティ向上の恩恵を受けることを推奨します。
 
 
 ### Redis Cluster の接続でハマった。
@@ -136,7 +136,7 @@ https://github.com/mperham/sidekiq/wiki/Using-Redis#architecture
 
 redis-rb + ElastiCache Redis クラスターモード有効 だけの対処では、対応できないので、別途準備が必要です。
 
-現状、 sidekiq 利用する際には、 クラスターモードは有効にせず、使用しています。
+現状、 sidekiq 利用する際には、 クラスターモードは有効にせず使用しています。
 
 ## 参考
 
