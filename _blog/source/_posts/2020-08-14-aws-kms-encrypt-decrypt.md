@@ -9,8 +9,16 @@ date: 2020-08-14
 
 ### 暗号化
 
+aws cli ver.1
+
 ```
 aws kms encrypt --key-id alias/<kms鍵> --plaintext "<暗号化したい文字列>" --output text --query CiphertextBlob
+```
+
+aws cli ver.2
+
+```
+aws kms encrypt --key-id alias/<kms鍵> --plaintext "$(echo '<暗号化したい文字列>' | base64)" --output text --query CiphertextBlob
 ```
 
 ### 復号
