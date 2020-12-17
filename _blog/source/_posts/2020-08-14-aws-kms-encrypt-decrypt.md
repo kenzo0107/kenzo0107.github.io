@@ -18,7 +18,7 @@ aws kms encrypt --key-id alias/<kms鍵> --plaintext "<暗号化したい文字�
 aws cli ver.2
 
 ```
-aws kms encrypt --key-id alias/<kms鍵> --plaintext "$(echo '<暗号化したい文字列>' | base64)" --output text --query CiphertextBlob
+aws kms encrypt --key-id alias/<kms鍵> --plaintext "$(echo -n '<暗号化したい文字列>' | base64)" --output text --query CiphertextBlob
 ```
 
 ### 復号
