@@ -60,9 +60,9 @@ aws ecs update-service \
 
 直ちに強制デプロイが実行され、ダウンタイムなく CapacityProviderStrategy が適用されます。
 
-## ダウンタイムなしで切り替える手順
+## ダウンタイムなしで切り替え tfstate 更新手順
 
-以下の手続きでダウンタイムなしで切り替えできました。
+terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。
 
 1. aws-cli で更新
 2. terraform apply で tfstate 更新
