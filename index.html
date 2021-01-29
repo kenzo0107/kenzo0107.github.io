@@ -3,7 +3,7 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
     
-        gtag('config', 'UA-162026478-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/PrivacyPolicy/">PrivacyPolicy</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-01-28T15:00:00.000Z" title="2021-01-28T15:00:00.000Z">2021-01-29</time><span class="level-item"><a class="link-muted" href="/categories/Terraform/">Terraform</a></span><span class="level-item">2分 read (About 299 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/01/28/2021-01-29-apply-fargate-spot-for-existed-fargate/">既存 ECS Service の Fargate Spot への切り替え方法</a></h1><div class="content"><div class="toc">
+        gtag('config', 'UA-162026478-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/PrivacyPolicy/">PrivacyPolicy</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-01-28T15:00:00.000Z" title="2021-01-28T15:00:00.000Z">2021-01-29</time><span class="level-item"><a class="link-muted" href="/categories/Terraform/">Terraform</a></span><span class="level-item">3分 read (About 521 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/01/28/2021-01-29-apply-fargate-spot-for-existed-fargate/">既存 ECS Service の Fargate Spot への切り替え方法</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
 <h3 class="menu-label"><span id="toc">ToC</span></h3>
 
@@ -11,7 +11,10 @@
 
 <ul>
 <li><a href="#terraform-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">terraform で切り替える</a></li>
-<li><a href="#aws-cli-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">aws-cli で切り替える</a></li>
+<li><a href="#aws-cli-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">aws-cli で切り替える</a><ul>
+<li><a href="#codedeploy-%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%E3%83%BC%E3%81%A7%E7%AE%A1%E7%90%86%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E5%A0%B4%E5%90%88">CodeDeploy デプロイコントローラーで管理されている場合</a></li>
+</ul>
+</li>
 <li><a href="#%E3%83%80%E3%82%A6%E3%83%B3%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%AA%E3%81%97%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88-tfstate-%E6%9B%B4%E6%96%B0%E6%89%8B%E9%A0%86">ダウンタイムなしで切り替え tfstate 更新手順</a></li>
 </ul>
 <!-- tocstop -->
@@ -34,6 +37,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws ecs update-service \</span><br><span class="line">	--capacity-provider-strategy capacityProvider&#x3D;FARGATE,weight&#x3D;0  capacityProvider&#x3D;FARGATE_SPOT,weight&#x3D;100 \</span><br><span class="line">     --cluster &lt;ecs cluster name&gt; \</span><br><span class="line">     --service &lt;ecs service name&gt; \</span><br><span class="line">     --force-new-deployment</span><br></pre></td></tr></table></figure>
 
 <p>直ちに強制デプロイが実行され、ダウンタイムなく CapacityProviderStrategy が適用されます。</p>
+<h3><span id="codedeploy-デプロイコントローラーで管理されている場合">CodeDeploy デプロイコントローラーで管理されている場合</span></h3><p>CodeDeploy デプロイコントローラーでデプロイを管理されている ECS Service に対して<br><code>aws ecs update-service</code> で capacity provider strategy を指定しようとすると以下エラーが発生します。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An error occurred (InvalidParameterException) when calling the UpdateService operation: Cannot force a new deployment on services with a CODE_DEPLOY deployment controller. Use AWS CodeDeploy to trigger a new deployment.</span><br></pre></td></tr></table></figure>
+
+<p>そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できません。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html">Amazon ECS キャパシティープロバイダー</a></p>
+<blockquote>
+<p>サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。</p>
+</blockquote>
 <h2><span id="ダウンタイムなしで切り替え-tfstate-更新手順">ダウンタイムなしで切り替え tfstate 更新手順</span></h2><p>terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。</p>
 <ol>
 <li>aws-cli で更新</li>

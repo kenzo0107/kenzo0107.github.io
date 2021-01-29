@@ -53,7 +53,7 @@
 			    "@id":"https://kenzo0107.github.io/2021/01/28/2021-01-29-apply-fargate-spot-for-existed-fargate/"
 			},
 			"datePublished": "2021-01-28T15:00:00.000Z",
-			"dateModified": "2021-01-29T04:22:55.942Z",
+			"dateModified": "2021-01-29T04:37:08.985Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1851,7 +1851,10 @@ h6.categories {
 
 <ul>
 <li><a href="#terraform-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">terraform &#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;</a></li>
-<li><a href="#aws-cli-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">aws-cli &#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;</a></li>
+<li><a href="#aws-cli-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">aws-cli &#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;</a><ul>
+<li><a href="#codedeploy-%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%E3%83%BC%E3%81%A7%E7%AE%A1%E7%90%86%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E5%A0%B4%E5%90%88">CodeDeploy &#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x3067;&#x7BA1;&#x7406;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;</a></li>
+</ul>
+</li>
 <li><a href="#%E3%83%80%E3%82%A6%E3%83%B3%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%AA%E3%81%97%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88-tfstate-%E6%9B%B4%E6%96%B0%E6%89%8B%E9%A0%86">&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048; tfstate &#x66F4;&#x65B0;&#x624B;&#x9806;</a></li>
 </ul>
 <!-- tocstop -->
@@ -1874,6 +1877,14 @@ h6.categories {
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws ecs update-service \</span><br><span class="line">	--capacity-provider-strategy capacityProvider=FARGATE,weight=0  capacityProvider=FARGATE_SPOT,weight=100 \</span><br><span class="line">     --cluster &lt;ecs cluster name&gt; \</span><br><span class="line">     --service &lt;ecs service name&gt; \</span><br><span class="line">     --force-new-deployment</span><br></pre></td></tr></tbody></table></figure>
 
 <p>&#x76F4;&#x3061;&#x306B;&#x5F37;&#x5236;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x304C;&#x5B9F;&#x884C;&#x3055;&#x308C;&#x3001;&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x304F; CapacityProviderStrategy &#x304C;&#x9069;&#x7528;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="codedeploy-&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x3067;&#x7BA1;&#x7406;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;">CodeDeploy &#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x3067;&#x7BA1;&#x7406;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;</span></h3><p>CodeDeploy &#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x3067;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x3092;&#x7BA1;&#x7406;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B; ECS Service &#x306B;&#x5BFE;&#x3057;&#x3066;<br><code>aws ecs update-service</code> &#x3067; capacity provider strategy &#x3092;&#x6307;&#x5B9A;&#x3057;&#x3088;&#x3046;&#x3068;&#x3059;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An error occurred (InvalidParameterException) when calling the UpdateService operation: Cannot force a new deployment on services with a CODE_DEPLOY deployment controller. Use AWS CodeDeploy to trigger a new deployment.</span><br></pre></td></tr></tbody></table></figure>
+
+<p>&#x305D;&#x3082;&#x305D;&#x3082; CodeDeploy &#x3067;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x7BA1;&#x7406;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x3001; FargateSpot &#x3092;&#x5229;&#x7528;&#x3067;&#x304D;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html">Amazon ECS &#x30AD;&#x30E3;&#x30D1;&#x30B7;&#x30C6;&#x30A3;&#x30FC;&#x30D7;&#x30ED;&#x30D0;&#x30A4;&#x30C0;&#x30FC;</a></p>
+<blockquote>
+<p>&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3067; Blue/Green &#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30BF;&#x30A4;&#x30D7;&#x3092;&#x4F7F;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x3001;&#x30AD;&#x30E3;&#x30D1;&#x30B7;&#x30C6;&#x30A3;&#x30FC;&#x30D7;&#x30ED;&#x30D0;&#x30A4;&#x30C0;&#x30FC;&#x306E;&#x4F7F;&#x7528;&#x306F;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x3055;&#x308C;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+</blockquote>
 <h2><span id="&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;-tfstate-&#x66F4;&#x65B0;&#x624B;&#x9806;">&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048; tfstate &#x66F4;&#x65B0;&#x624B;&#x9806;</span></h2><p>terraform &#x3067;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x7BA1;&#x7406;&#x3092;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x624B;&#x7D9A;&#x304D;&#x3067;&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
 <ol>
 <li>aws-cli &#x3067;&#x66F4;&#x65B0;</li>
