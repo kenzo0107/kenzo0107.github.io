@@ -60,22 +60,6 @@ aws ecs update-service \
 
 直ちに強制デプロイが実行され、ダウンタイムなく CapacityProviderStrategy が適用されます。
 
-### CodeDeploy デプロイコントローラーで管理されている場合
-
-CodeDeploy デプロイコントローラーでデプロイを管理されている ECS Service に対して
-`aws ecs update-service` で capacity provider strategy を指定しようとすると以下エラーが発生します。
-
-```
-An error occurred (InvalidParameterException) when calling the UpdateService operation: Cannot force a new deployment on services with a CODE_DEPLOY deployment controller. Use AWS CodeDeploy to trigger a new deployment.
-```
-
-そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できません。
-
-[Amazon ECS キャパシティープロバイダー](https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html)
-
-> サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。
-
-
 ## ダウンタイムなしで切り替え tfstate 更新手順
 
 terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。
