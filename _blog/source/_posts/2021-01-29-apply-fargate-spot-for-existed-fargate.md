@@ -13,6 +13,8 @@ date: 2021-01-29
 </div>
 </div>
 
+## 概要
+
 既存 ECS Service の Farate Spot への切り替え方法は 2 つあります。
 
 * terraform
@@ -60,6 +62,19 @@ aws ecs update-service \
 
 直ちに強制デプロイが実行され、ダウンタイムなく CapacityProviderStrategy が適用されます。
 
+### CodeDeploy のデプロイコントローラーで管理されている場合
+
+以下エラーが発生します。
+
+```
+An error occurred (InvalidParameterException) when calling the UpdateService operation: Cannot force a new deployment on services with a CODE_DEPLOY deployment controller. Use AWS CodeDeploy to trigger a new deployment.
+```
+
+そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できない。
+https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html
+> サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。
+
+
 ## ダウンタイムなしで切り替え tfstate 更新手順
 
 terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。
@@ -68,6 +83,27 @@ terraform でリソース管理をしている場合、以下の手続きでダ�
 2. terraform apply で tfstate 更新
 
 terraform での管理もでき、且つ、ダウンタイムなしに更新ができます。
+
+
+## 余談
+
+terraform で ECS Service 新規作成時だと CodeDeploy と CapacityProviderStrategy を両方指定できてしまいます。
+
+以下画像だけ見るとできるの？と思ってしまいます。
+![](https://i.imgur.com/r0W6OnK.png)
+
+これっぽい！
+
+{% twitter https://twitter.com/t2ynkmr/status/1325684369416024065 %}
+
+
+
+AWS Console 上で ECS Service 構築時に capacity provider strategy を指定していると
+`Deployment type` は `Rolling update` しか選択できない様になっています。
+
+![](https://i.imgur.com/Qei5oJi.png)
+
+![](https://i.imgur.com/mFMDfzc.png)
 
 以上
 ご参考になれば幸いです。
