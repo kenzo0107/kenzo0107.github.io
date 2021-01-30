@@ -97,6 +97,15 @@ terraform で ECS Service 新規作成時だと CodeDeploy と CapacityProviderS
 {% twitter https://twitter.com/t2ynkmr/status/1325684369416024065 %}
 
 
+CodeDeploy のデプロイコントローラー管理を残し CapacityProviderStrategy を外そうとすると
+再作成するしか今の所、対処法がなさそうです。
+
+
+aws-cli で
+launch_type → capacity_provider_strategy はできるけど、
+逆はできない。
+
+### ちなみに
 
 AWS Console 上で ECS Service 構築時に capacity provider strategy を指定していると
 `Deployment type` は `Rolling update` しか選択できない様になっています。
