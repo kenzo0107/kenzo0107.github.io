@@ -75,7 +75,7 @@ https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capaci
 > サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。
 
 
-## ダウンタイムなしで切り替え tfstate 更新手順
+## ダウンタイムなしで切り替え & tfstate 更新手順
 
 terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。
 
@@ -113,6 +113,17 @@ AWS Console 上で ECS Service 構築時に capacity provider strategy を指定
 ![](https://i.imgur.com/Qei5oJi.png)
 
 ![](https://i.imgur.com/mFMDfzc.png)
+
+## 余談2
+
+今回の実装例にある FargateSpot weight 100% だと起動できなくなります。
+非商用環境ではコスト削減の為、Spot化したくなりますが注意が必要です。
+
+以下 issue で Fargate Spot 枯渇時に Fargate へ切り替え、最低限起動できる様にする、という対処が進んでいる様です。
+
+https://github.com/aws/containers-roadmap/issues/773
+https://github.com/aws/containers-roadmap/issues/852
+
 
 以上
 ご参考になれば幸いです。
