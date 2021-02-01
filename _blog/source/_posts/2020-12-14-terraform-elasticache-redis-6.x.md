@@ -18,6 +18,8 @@ thumbnail: https://i.imgur.com/aCEdhs4.png
 
 terraform で ElastiCache redis 6 系を利用時に通る儀式があったので、備忘録
 
+<!-- more -->
+
 ## redis engine_version = 6.x 指定時の問題点
 
 ElastiCache > Redis を 6 系で構築するには以下の様に `engine_version = "6.x"` と指定する必要があります。

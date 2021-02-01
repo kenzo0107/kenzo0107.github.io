@@ -17,6 +17,8 @@ date: 2020-11-20
 
 Terraform で管理する CodePipeline で GitHub 認証エラーが発生した為、その回避方法をまとめます。
 
+<!-- more -->
+
 terraform-provider-aws v3.0.0 で以下対応がされましたが、別の問題が発生している様です。
 
 > resource/aws_codepipeline: Removes GITHUB_TOKEN environment variable (#14175)
