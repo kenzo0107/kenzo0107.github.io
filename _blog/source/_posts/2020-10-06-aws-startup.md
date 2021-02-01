@@ -5,10 +5,19 @@ tags:
 date: 2020-10-06
 ---
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
 ## 概要
 
 「AWS アカウント開設完了しました！」と言われ、terraform 流してみたら以下の様なエラーが発生。
 その時対処した内容を備忘録としてまとめます。
+
+<!-- more -->
 
 ```
 Error: Error fetching Availability Zones: OptInRequired: You are not subscribed to this service. Please go to http://aws.amazon.com to subscribe.

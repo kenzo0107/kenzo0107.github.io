@@ -14,6 +14,8 @@ thumbnail: https://i.imgur.com/YWgqCWD.png
 </div>
 </div>
 
+<!-- more -->
+
 ## 概要
 
 AWS Lambda Go プロジェクトを SAM で構築していた際、

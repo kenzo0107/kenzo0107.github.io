@@ -14,10 +14,40 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%9A%97%E5%8F%B7%E5%8C%96&#34;&gt;暗号化&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%BE%A9%E5%8F%B7&#34;&gt;復号&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2020/08/13/2020-08-14-aws-kms-encrypt-decrypt/">
 	<meta name="twitter:title" content="aws-cli KMS で暗号化・復号 - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%9A%97%E5%8F%B7%E5%8C%96&#34;&gt;暗号化&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%BE%A9%E5%8F%B7&#34;&gt;復号&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -48,12 +78,27 @@
 			"@type": "BlogPosting",
 			"headline": "aws-cli KMS で暗号化・復号",
 			
+			"description": "&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%9A%97%E5%8F%B7%E5%8C%96&#34;&gt;暗号化&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%BE%A9%E5%8F%B7&#34;&gt;復号&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2020/08/13/2020-08-14-aws-kms-encrypt-decrypt/"
 			},
 			"datePublished": "2020-08-13T15:00:00.000Z",
-			"dateModified": "2021-02-01T15:10:30.105Z",
+			"dateModified": "2021-02-01T15:58:06.971Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1814,7 +1859,24 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x5099;&#x5FD8;&#x9332;&#x3067;&#x3059;&#x3002;</p>
+			  		<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%9A%97%E5%8F%B7%E5%8C%96">&#x6697;&#x53F7;&#x5316;</a></li>
+<li><a href="#%E5%BE%A9%E5%8F%B7">&#x5FA9;&#x53F7;</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
+<p>&#x5099;&#x5FD8;&#x9332;&#x3067;&#x3059;&#x3002;</p>
 <h3><span id="&#x6697;&#x53F7;&#x5316;">&#x6697;&#x53F7;&#x5316;</span></h3><p>aws cli ver.1</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws kms encrypt --key-id alias/&lt;kms&#x9375;&gt; --plaintext &quot;&lt;&#x6697;&#x53F7;&#x5316;&#x3057;&#x305F;&#x3044;&#x6587;&#x5B57;&#x5217;&gt;&quot; --output text --query CiphertextBlob</span><br></pre></td></tr></tbody></table></figure>
 

@@ -13,13 +13,13 @@ date: 2020-06-06
 </div>
 </div>
 
+<!-- more -->
+
 ## Backlog API in Go 作りました
 
 {% linkPreview https://github.com/kenzo0107/backlog _blank %}
 
 只今、サポートする API を増やしております。
-
-<!-- more -->
 
 ## Backlog API を作る経緯
 

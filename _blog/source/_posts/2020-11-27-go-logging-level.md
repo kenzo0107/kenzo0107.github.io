@@ -13,6 +13,8 @@ date: 2020-11-27
 </div>
 </div>
 
+<!-- more -->
+
 # 概要
 
 Go の [sirupsen/logrus](https://github.com/sirupsen/logrus) が便利でよかったので、備忘録として残しておきます。
