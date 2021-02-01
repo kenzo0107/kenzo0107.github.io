@@ -4,6 +4,7 @@ category: Terraform
 tags:
 - AWS
 date: 2020-12-14
+thumbnail: https://i.imgur.com/aCEdhs4.png
 ---
 
 <div class="toc">
