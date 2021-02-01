@@ -26,6 +26,8 @@ AWS Lambda Go プロジェクトを SAM で構築していた際、
 https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html
 > 実行環境の再利用を活用して関数のパフォーマンスを向上させます。 関数ハンドラー外で SDK クライアントとデータベース接続を初期化し、静的なアセットを /tmp ディレクトリにローカルにキャッシュします。関数の同じインスタンスで処理された後続の呼び出しは、これらのリソースを再利用できます。これにより、実行時間とコストが節約されます。
 
+以下の様に `init()` でパラメータストアから秘匿情報を取得する処理をキャッシュし、コスト節約したいと考えました。
+
 ```main.go
 func init() {
 	sess := session.Must(session.NewSession(&aws.Config{
@@ -44,7 +46,8 @@ func init() {
 	}
 ```
 
-GitHub Actions で `go test` を実行しテストをしていますが、その際に
+上記コードについて
+GitHub Actions で `go test` を実行しテストをしていますが、
 `log.Fatal` で `os.Exit(1)` 発生し処理が停止します。
 
 credentials が設定されてないというエラーです。
@@ -56,15 +59,17 @@ NoCredentialProviders: no valid providers in chain. Deprecated.
 GitHub Actions でダミーの credentials を設定しても失敗します。
 
 ```
-        run: go test -v -count=1 -race -cover -coverprofile=coverage ./...
-        env:
-          AWS_ACCESS_KEY_ID: ADUMMYDUMMYDUMMYDUMD
-          AWS_SECRET_ACCESS_KEY: DummyDummyDummyDummyDummyDummyDummyDummy
+run: go test -v -count=1 -race -cover -coverprofile=coverage ./...
+env:
+    AWS_ACCESS_KEY_ID: ADUMMYDUMMYDUMMYDUMD
+    AWS_SECRET_ACCESS_KEY: DummyDummyDummyDummyDummyDummyDummyDummy
 ```
 
 `init()` でのキャッシュを諦めて、 `handler` で処理するとハンドリングは簡単です。
 
-`go test` 実行する時だけでも、この `os.Exit(1)` を回避できないものか？ということで検証してみます。
+ですが、「コスト節約」が頭から離れません。自分は弱い人間です。
+
+`go test` 実行する時だけでも、この `os.Exit(1)` を回避できないものか？ということで検証してみました。
 
 ## 検証
 
@@ -178,12 +183,9 @@ func TestMain(m *testing.M) {
 ## テスト実行時のみ環境変数で制御する
 
 ```
-var n = 0
-
 func init() {
-    if err := doSomething(); err != nil {
-        logFatal("error")
-    }
+    ...
+    logFatal("error")
 }
 
 func logFatal(err error) {
@@ -194,12 +196,7 @@ func logFatal(err error) {
 	os.Exit(1)
 }
 
-func doSomething() error {
-    if n == 0 {
-        return errors.New("error")
-    }
-    return nil
-}
+...
 ```
 
 `log.Fatal` を `logFatal` という関数に置換し、以下処理を実行する様にします。
@@ -269,3 +266,4 @@ AWS 公式のドキュメントだと `init()` で err を握り潰している�
 https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/golang-handler.html
 
 エラーが発生する場合のテストどうするつもりだろう？
+絶対エラー起きないんで！って言われるかな〜
