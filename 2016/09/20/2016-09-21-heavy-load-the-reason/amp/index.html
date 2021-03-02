@@ -1814,7 +1814,7 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x65B0;&#x5352;&#x5411;&#x3051;&#x306E;&#x8AAC;&#x660E;&#x3068;&#x3057;&#x3066;&#x7C21;&#x5358;&#x306A;&#x5099;&#x5FD8;&#x9332;&#x3067;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>新卒向けの説明として簡単な備忘録です。</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1824,54 +1824,54 @@ h6.categories {
 </thead>
 <tbody><tr>
 <td>%user</td>
-<td>&#x30E6;&#x30FC;&#x30B5;&#x3099;&#x30FC;&#x7A7A;&#x9593;&#x3066;&#x3099;&#x306E; CPU &#x4F7F;&#x7528;&#x7387;</td>
+<td>ユーザー空間での CPU 使用率</td>
 </tr>
 <tr>
 <td>%system</td>
-<td>&#x30AB;&#x30FC;&#x30CD;&#x30EB;&#x7A7A;&#x9593;&#x3066;&#x3099;&#x306E; CPU &#x4F7F;&#x7528;&#x7387;</td>
+<td>カーネル空間での CPU 使用率</td>
 </tr>
 <tr>
 <td>%iowait</td>
-<td>I/O &#x5F85;&#x3061;&#x6642;&#x9593;&#x306E;&#x5272;&#x5408;</td>
+<td>I/O 待ち時間の割合</td>
 </tr>
 <tr>
 <td>%idle</td>
-<td>I/O &#x5F85;&#x3061;&#x4EE5;&#x5916;&#x3066;&#x3099; CPU &#x304B;&#x3099;&#x4F55;&#x3082;&#x3057;&#x3066;&#x3044;&#x306A;&#x3044;&#x6642;&#x9593;&#x306E;&#x5272;&#x5408;</td>
+<td>I/O 待ち以外で CPU が何もしていない時間の割合</td>
 </tr>
 </tbody></table></div>
-<h2><span id="&#x3042;&#x308B;&#x65E5;&#x306E;-zabbix-grafana-&#x306E;cpu&#x95A2;&#x9023;&#x306E;&#x30B0;&#x30E9;&#x30D5;&#x304B;&#x3089;&#x539F;&#x56E0;&#x3092;&#x8ABF;&#x67FB;&#x3059;&#x308B;">&#x3042;&#x308B;&#x65E5;&#x306E; Zabbix + Grafana &#x306E;CPU&#x95A2;&#x9023;&#x306E;&#x30B0;&#x30E9;&#x30D5;&#x304B;&#x3089;&#x539F;&#x56E0;&#x3092;&#x8ABF;&#x67FB;&#x3059;&#x308B;&#x3002;</span></h2><div id="hexo-amp-id-1">
+<h2><span id="ある日の-zabbix-grafana-のcpu関連のグラフから原因を調査する">ある日の Zabbix + Grafana のCPU関連のグラフから原因を調査する。</span></h2><div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160921/20160921223252.png" width="1024" height="254" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="1-iowait-&#x304C;&#x98DB;&#x3073;&#x629C;&#x3051;&#x3066;&#x9AD8;&#x3044;">&#x2460; %iowait &#x304C;&#x98DB;&#x3073;&#x629C;&#x3051;&#x3066;&#x9AD8;&#x3044;</span></h2><ul>
-<li>%iowait &#x9AD8;</li>
-<li>%user &#x4F4E;</li>
-<li>%system &#x4F4E;</li>
+<h2><span id="1-iowait-が飛び抜けて高い">① %iowait が飛び抜けて高い</span></h2><ul>
+<li>%iowait 高</li>
+<li>%user 低</li>
+<li>%system 低</li>
 </ul>
-<h3><span id="&#x539F;&#x56E0;">&#x539F;&#x56E0;</span></h3><p>&#x30B9;&#x30EF;&#x30C3;&#x30D7;&#x304C;&#x5927;&#x91CF;&#x306B;&#x767A;&#x751F;&#x3057;&#x3066;&#x3044;&#x308B;&#x53EF;&#x80FD;&#x6027;&#x304C;&#x3042;&#x308B;&#x3002;</p>
-<h3><span id="&#x8ABF;&#x67FB;&#x624B;&#x9806;">&#x8ABF;&#x67FB;&#x624B;&#x9806;</span></h3><h4><span id="1-swapin-amp-swapout-&#x78BA;&#x8A8D;">1. SwapIn &amp; SwapOut &#x78BA;&#x8A8D;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sar -W</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="原因">原因</span></h3><p>スワップが大量に発生している可能性がある。</p>
+<h3><span id="調査手順">調査手順</span></h3><h4><span id="1-swapin-amp-swapout-確認">1. SwapIn &amp; SwapOut 確認</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sar -W</span><br></pre></td></tr></tbody></table></figure>
 
-<h4><span id="2-&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x5168;&#x4F53;&#x306E;&#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x72B6;&#x6CC1;">2. &#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x5168;&#x4F53;&#x306E;&#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x72B6;&#x6CC1;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ free</span><br></pre></td></tr></tbody></table></figure>
+<h4><span id="2-システム全体のメモリ使用状況">2. システム全体のメモリ使用状況</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ free</span><br></pre></td></tr></tbody></table></figure>
 
-<h4><span id="3-&#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x7387;&#x9806;&#x3067;&#x30BD;&#x30FC;&#x30C8;&#x5F8C;&#x30E1;&#x30E2;&#x30EA;&#x3092;&#x6D88;&#x8CBB;&#x3057;&#x3066;&#x3044;&#x308B;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3092;&#x7279;&#x5B9A;&#x3059;&#x308B;">3. &#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x7387;&#x9806;&#x3067;&#x30BD;&#x30FC;&#x30C8;&#x5F8C;&#x30E1;&#x30E2;&#x30EA;&#x3092;&#x6D88;&#x8CBB;&#x3057;&#x3066;&#x3044;&#x308B;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x3092;&#x7279;&#x5B9A;&#x3059;&#x308B;</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ top</span><br></pre></td></tr></tbody></table></figure>
-
-<ul>
-<li>Shift+p: CPU&#x4F7F;&#x7528;&#x7387;&#x9806;&#x306B;&#x30BD;&#x30FC;&#x30C8;</li>
-<li>Shift+m: &#x30E1;&#x30E2;&#x30EA;&#x4F7F;&#x7528;&#x7387;&#x9806;&#x306B;&#x30BD;&#x30FC;&#x30C8;</li>
-</ul>
-<h5><span id="&#x5B9F;&#x969B;&#x306E;&#x539F;&#x56E0;">&#x5B9F;&#x969B;&#x306E;&#x539F;&#x56E0;</span></h5><p>&#x5B9A;&#x671F;&#x7684;&#x306B;&#x540C;&#x6642;&#x523B;&#x306B;&#x767A;&#x751F;&#x3057;&#x305F;&#x70BA;<br><code>crontab -l</code> &#x3067;&#x30AF;&#x30FC;&#x30ED;&#x30F3;&#x8A2D;&#x5B9A;&#x78BA;&#x8A8D;&#x3057;&#x305F;&#x3089;<br>&#x8AB0;&#x3082;&#x77E5;&#x3089;&#x306A;&#x3044;&#x30D0;&#x30C3;&#x30C1;&#x304C;&#x52D5;&#x3044;&#x3066;&#x3044;&#x305F;&#x6C57;</p>
-<h2><span id="2-user&#x304C;&#x98DB;&#x3073;&#x629C;&#x3051;&#x3066;&#x9AD8;&#x3044;">&#x2461; %user&#x304C;&#x98DB;&#x3073;&#x629C;&#x3051;&#x3066;&#x9AD8;&#x3044;</span></h2><ul>
-<li>%iowait &#x4F4E;</li>
-<li>%user &#x9AD8;</li>
-<li>%system &#x4F4E;</li>
-</ul>
-<h3><span id="&#x539F;&#x56E0;">&#x539F;&#x56E0;</span></h3><p>CPU&#x4F7F;&#x7528;&#x7387;&#x304C;&#x9AD8;&#x3044;&#x3002;</p>
-<h3><span id="&#x8ABF;&#x67FB;&#x624B;&#x9806;">&#x8ABF;&#x67FB;&#x624B;&#x9806;</span></h3><h4><span id="1-cpu&#x4F7F;&#x7528;&#x7387;&#x306E;&#x9AD8;&#x3044;&#x9806;&#x306B;&#x30BD;&#x30FC;&#x30C8;&#x3057;&#x3066;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x7279;&#x5B9A;">1. CPU&#x4F7F;&#x7528;&#x7387;&#x306E;&#x9AD8;&#x3044;&#x9806;&#x306B;&#x30BD;&#x30FC;&#x30C8;&#x3057;&#x3066;&#x30D7;&#x30ED;&#x30BB;&#x30B9;&#x7279;&#x5B9A;</span></h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ top</span><br></pre></td></tr></tbody></table></figure>
+<h4><span id="3-メモリ使用率順でソート後メモリを消費しているプロセスを特定する">3. メモリ使用率順でソート後メモリを消費しているプロセスを特定する</span></h4><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ top</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>Shift+p: CPU&#x4F7F;&#x7528;&#x7387;&#x9806;&#x306B;&#x30BD;&#x30FC;&#x30C8;</li>
+<li>Shift+p: CPU使用率順にソート</li>
+<li>Shift+m: メモリ使用率順にソート</li>
 </ul>
-<p>&#x307B;&#x3093;&#x306E;&#x4E00;&#x90E8;&#x5206;&#x3067;&#x3059;&#x304C;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x4F55;&#x3088;&#x308A;&#x3067;&#x3059;&#x3002;<br>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;</p>
+<h5><span id="実際の原因">実際の原因</span></h5><p>定期的に同時刻に発生した為<br><code>crontab -l</code> でクーロン設定確認したら<br>誰も知らないバッチが動いていた汗</p>
+<h2><span id="2-userが飛び抜けて高い">② %userが飛び抜けて高い</span></h2><ul>
+<li>%iowait 低</li>
+<li>%user 高</li>
+<li>%system 低</li>
+</ul>
+<h3><span id="原因">原因</span></h3><p>CPU使用率が高い。</p>
+<h3><span id="調査手順">調査手順</span></h3><h4><span id="1-cpu使用率の高い順にソートしてプロセス特定">1. CPU使用率の高い順にソートしてプロセス特定</span></h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ top</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>Shift+p: CPU使用率順にソート</li>
+</ul>
+<p>ほんの一部分ですが参考になれば何よりです。<br>以上です。</p>
 
 			  		
 			  		<!-- google Adsense -->

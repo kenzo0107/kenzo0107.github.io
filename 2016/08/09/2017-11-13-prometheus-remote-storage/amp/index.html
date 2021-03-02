@@ -1814,30 +1814,30 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x3044;&#x3088;&#x3044;&#x3088;&#x51FA;&#x307E;&#x3057;&#x305F; Prometheus 2.0 &#xFF01;</p>
+			  		<p>いよいよ出ました Prometheus 2.0 ！</p>
 <p><a href="https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/">Announcing Prometheus 2.0 | Prometheus</a></p>
-<p>&#x5148;&#x65E5;<a href="https://mackerel-ug.connpass.com/event/68478/">&#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;&#x52C9;&#x5F37;&#x4F1A;</a>&#x3067;&#x3082; Paul Taylor &#x3055;&#x3093;&#x306E; LT &#x3092;&#x62DD;&#x8074;&#x3055;&#x305B;&#x3066;&#x9802;&#x304D;<br>&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x5411;&#x4E0A;&#x3068;&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B8;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30C3;&#x30C8;&#x5909;&#x66F4;&#x306B;&#x3088;&#x308B;&#x5727;&#x7E2E;&#x30FB;&#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;&#x304C;&#x3057;&#x3084;&#x3059;&#x304F;&#x306A;&#x3063;&#x305F;&#x7B49;&#x3001;<br>&#x826F;&#x3044;&#x8A71;&#x304C;&#x305F;&#x304F;&#x3055;&#x3093;&#x51FA;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>先日<a href="https://mackerel-ug.connpass.com/event/68478/">モニタリング勉強会</a>でも Paul Taylor さんの LT を拝聴させて頂き<br>パフォーマンス向上とストレージフォーマット変更による圧縮・バックアップがしやすくなった等、<br>良い話がたくさん出ていました。</p>
 <p><a href="https://www.slideshare.net/PaulTraylor/20171027-81281205">Operating Prometheus</a></p>
-<p>&#x4E2D;&#x3067;&#x3082;&#x6700;&#x3082;&#x671F;&#x5F85;&#x3057;&#x3066;&#x3044;&#x305F;&#x6A5F;&#x80FD;&#x304C; Remote Long-Term Storage&#x3001;<br>&#x9577;&#x671F;&#x4FDD;&#x5B58;&#x6A5F;&#x80FD;&#x306B;&#x306F;&#x6B53;&#x559C;&#x3057;&#x307E;&#x3057;&#x305F;&#x266A;</p>
-<p>1&#x7CFB;&#x4EE5;&#x4E0B;&#x3067;&#x306F;&#x3001;&#x77ED;&#x671F;&#x9593;&#x7528;&#x3068;&#x9577;&#x671F;&#x9593;&#x7528;&#x306E; Prometheus &#x3092;&#x5225;&#x9014;&#x7528;&#x610F;&#x3059;&#x308B;&#x7B49;&#x3001;&#x5BFE;&#x7B56;&#x304C;&#x5FC5;&#x8981;&#x3067;<br>&#x5197;&#x9577;&#x306A;&#x4F5C;&#x308A;&#x3092;&#x4F59;&#x5100;&#x306A;&#x304F;&#x3055;&#x308C;&#x305F;&#x3068;&#x3053;&#x308D;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x304C;<br>2.0 &#x30EA;&#x30EA;&#x30FC;&#x30B9;&#x3067;&#x3064;&#x3044;&#x306B;&#xFF01;</p>
-<p>&#x65E9;&#x901F;&#x8A66;&#x3057;&#x3066;&#x307F;&#x305F;&#x304F;&#x4F7F;&#x7528;&#x611F;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x4ECA;&#x56DE;&#x3084;&#x308A;&#x305F;&#x304B;&#x3063;&#x305F;&#x3053;&#x3068;&#x307E;&#x3068;&#x3081;">&#x4ECA;&#x56DE;&#x3084;&#x308A;&#x305F;&#x304B;&#x3063;&#x305F;&#x3053;&#x3068;&#x307E;&#x3068;&#x3081;</span></h2><ul>
-<li>Prometheus 2.0 &#x30EA;&#x30EA;&#x30FC;&#x30B9;&#x306B;&#x969B;&#x3057;&#x3066;&#x671F;&#x5F85;&#x306E;&#x9577;&#x671F;&#x4FDD;&#x5B58;&#x6A5F;&#x80FD; (Remote long-term storage) &#x3092;&#x65E9;&#x901F;&#x8A66;&#x3059;&#xFF01;</li>
-<li>&#x5B9F;&#x969B;&#x306B;&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x74B0;&#x5883;&#x3067;&#x69CB;&#x7BC9;&#x3057;&#x3066;&#x307F;&#x3066;1&#x7CFB;&#x304B;&#x3089;&#x306E;&#x5909;&#x66F4;&#x7B87;&#x6240;&#x3092;&#x78BA;&#x8A8D;</li>
-<li>DB &#x5074;&#x306B;&#x3069;&#x3093;&#x306A;&#x30C7;&#x30FC;&#x30BF;&#x304C;&#x5165;&#x308B;&#x306E;&#x304B;&#x78BA;&#x8A8D;</li>
+<p>中でも最も期待していた機能が Remote Long-Term Storage、<br>長期保存機能には歓喜しました♪</p>
+<p>1系以下では、短期間用と長期間用の Prometheus を別途用意する等、対策が必要で<br>冗長な作りを余儀なくされたところがありましたが<br>2.0 リリースでついに！</p>
+<p>早速試してみたく使用感をまとめました。</p>
+<h2><span id="今回やりたかったことまとめ">今回やりたかったことまとめ</span></h2><ul>
+<li>Prometheus 2.0 リリースに際して期待の長期保存機能 (Remote long-term storage) を早速試す！</li>
+<li>実際にローカル環境で構築してみて1系からの変更箇所を確認</li>
+<li>DB 側にどんなデータが入るのか確認</li>
 </ul>
-<h2><span id="&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x6982;&#x8981;">&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x6982;&#x8981;</span></h2><p>&#x3042;&#x304F;&#x307E;&#x3067;&#x4F7F;&#x7528;&#x611F;&#x306E;&#x691C;&#x8A3C;&#x3092;&#x3057;&#x305F;&#x304B;&#x3063;&#x305F;&#x306E;&#x3067; docker-compose &#x3067;&#x304A;&#x624B;&#x8EFD;&#x306B;&#x4F5C;&#x308C;&#x308B;&#x74B0;&#x5883;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="システム概要">システム概要</span></h2><p>あくまで使用感の検証をしたかったので docker-compose でお手軽に作れる環境にしました。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/zFciewX.png" width="960" height="540" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x524D;&#x63D0;&#x6761;&#x4EF6;">&#x524D;&#x63D0;&#x6761;&#x4EF6;</span></h2><p>&#x4EE5;&#x4E0B;&#x3092; Vagrant &#x306B;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</p>
+<h2><span id="前提条件">前提条件</span></h2><p>以下を Vagrant にインストール</p>
 <ul>
 <li>Ubuntu 16.04.3 LTS \n \l</li>
 <li>Docker version 17.09.0-ce, build afdb6d4</li>
 <li>docker-compose version 1.12.0, build b31ff33</li>
 </ul>
-<h2><span id="&#x8D77;&#x52D5;&#x3059;&#x308B;-docker-container">&#x8D77;&#x52D5;&#x3059;&#x308B; Docker Container</span></h2><ul>
+<h2><span id="起動する-docker-container">起動する Docker Container</span></h2><ul>
 <li>Prometheus 2.0.0</li>
 <li>Node Exporter 0.15.1</li>
 <li>AlertManager 0.9.1</li>
@@ -1848,11 +1848,11 @@ h6.categories {
 <li>Nginx 1.13.6</li>
 <li>Adminer</li>
 </ul>
-<h2><span id="&#x4F7F;&#x3044;&#x65B9;">&#x4F7F;&#x3044;&#x65B9;</span></h2><p>&#x4EE5;&#x4E0B;&#x624B;&#x9806;&#x901A;&#x308A;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="使い方">使い方</span></h2><p>以下手順通りです。</p>
 <p><a href="https://github.com/kenzo0107/vagrant-docker/tree/vagrant-docker-ubuntu16.04/docker/prometheus-grafana-on-ubuntu">kenzo0107/vagrant-docker/tree/vagrant-docker-ubuntu16.04/docker/prometheus-grafana-on-ubuntu</a></p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ git <span class="built_in">clone</span> https://github.com/kenzo0107/vagrant-docker</span><br><span class="line">macOS%$ <span class="built_in">cd</span> vagrant-docker</span><br><span class="line">macOS%$ vagrant up</span><br><span class="line"></span><br><span class="line">// Install docker, docker-compose</span><br><span class="line">macOS%$ vagrant provision</span><br><span class="line">macOS%$ vagrant ssh</span><br><span class="line">vagrant%$ <span class="built_in">cd</span> /vagrant/prometheus-grafana-on-ubuntu</span><br><span class="line">vagrant%$ sudo docker-compose up -d</span><br><span class="line"></span><br><span class="line">Name                             Command                            State                             Ports</span><br><span class="line">-------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">adapter                           /prometheus-postgresql-ada ...    Up</span><br><span class="line">adminer                           entrypoint.sh docker-php<span class="_">-e</span> ...    Up                                8080/tcp</span><br><span class="line">alertmanager                      /bin/alertmanager -config. ...    Up                                9093/tcp</span><br><span class="line">cadvisor                          /usr/bin/cadvisor -logtost ...    Up                                8080/tcp</span><br><span class="line">grafana                           /run.sh                           Up                                3000/tcp</span><br><span class="line">nginx                             nginx -g daemon off;              Up                                0.0.0.0:18080-&gt;18080/tcp,</span><br><span class="line">                                                                                         0.0.0.0:3000-&gt;3000/tcp, 80/tcp,</span><br><span class="line">                                                                                         0.0.0.0:8080-&gt;8080/tcp,</span><br><span class="line">                                                                                         0.0.0.0:9090-&gt;9090/tcp</span><br><span class="line">node-exporter                     /bin/node_exporter                Up                                9100/tcp</span><br><span class="line">pgsql                             docker-entrypoint.sh -csyn ...    Up                                5432/tcp</span><br><span class="line">prometheus                        /bin/prometheus --config.f ...    Up                                9090/tcp</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x308B;">&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x308B;</span></h2><h3><span id="prometheus">Prometheus</span></h3><ul>
+<h2><span id="アクセスしてみる">アクセスしてみる</span></h2><h3><span id="prometheus">Prometheus</span></h3><ul>
 <li><a href="http://192.168.35.101:9090">http://192.168.35.101:9090</a>.</li>
 </ul>
 <div id="hexo-amp-id-2">
@@ -1861,7 +1861,7 @@ h6.categories {
 
 <h3><span id="grafana">Grafana</span></h3><ul>
 <li><a href="http://192.168.35.101:13000">http://192.168.35.101:13000</a>.</li>
-<li>&#x30E6;&#x30FC;&#x30B6;&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;&#x304C; <code>./grafana/env</code> &#x306B;&#x3042;&#x308A;&#x307E;&#x3059;.</li>
+<li>ユーザアカウントが <code>./grafana/env</code> にあります.</li>
 </ul>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GF_SECURITY_ADMIN_USER=admin-user</span><br><span class="line">GF_SECURITY_ADMIN_PASSWORD=admin-pass</span><br></pre></td></tr></tbody></table></figure>
 
@@ -1870,13 +1870,13 @@ h6.categories {
 </div>
 
 <ul>
-<li>Datasource &#x8A2D;&#x5B9A;</li>
+<li>Datasource 設定</li>
 </ul>
 <div id="hexo-amp-id-4">
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/8SKvdxJ.png" width="1296" height="1310" layout="responsive"></amp-img></div>
 </div>
 
-<p>Datasource &#x8A2D;&#x5B9A;&#x30D5;&#x30A9;&#x30FC;&#x30E0;&#x306B;&#x4EE5;&#x4E0B;&#x60C5;&#x5831;&#x3092;&#x5165;&#x529B;&#x3057; <code>Add</code> &#x30DC;&#x30BF;&#x30F3;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>Datasource 設定フォームに以下情報を入力し <code>Add</code> ボタンをクリックします。</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1906,13 +1906,13 @@ h6.categories {
 </div>
 
 <ul>
-<li>Dashboard.json &#x30A4;&#x30F3;&#x30DD;&#x30FC;&#x30C8;</li>
+<li>Dashboard.json インポート</li>
 </ul>
 <div id="hexo-amp-id-6">
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/cew58vF.png" width="688" height="842" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x30B0;&#x30E9;&#x30D5;&#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<p>グラフが表示されます。</p>
 <div id="hexo-amp-id-7">
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/IicXL5e.png" width="1708" height="1946" layout="responsive"></amp-img></div>
 </div>
@@ -1929,7 +1929,7 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/uWT7sDC.png" width="1264" height="838" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x30D5;&#x30A9;&#x30FC;&#x30E0;&#x306B;&#x4EE5;&#x4E0B;&#x60C5;&#x5831;&#x3092;&#x5165;&#x529B;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>ログインフォームに以下情報を入力します。</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1955,7 +1955,7 @@ h6.categories {
 </tr>
 </tbody></table></div>
 <ul>
-<li>PostgreSQL &#x306B;&#x4FDD;&#x5B58;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x60C5;&#x5831;&#x304C;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</li>
+<li>PostgreSQL に保存されているメトリクス情報が確認できます。</li>
 </ul>
 <p>PostgreSQL &gt;&gt; pgsql &gt;&gt; postgres &gt;&gt; prometheus &gt;&gt; Select: metrics</p>
 <div id="hexo-amp-id-10">
@@ -1963,41 +1963,41 @@ h6.categories {
 </div>
 
 
-<h2><span id="alertmanager-&#x3067;&#x30A2;&#x30E9;&#x30FC;&#x30C8;&#x901A;&#x77E5;&#x3057;&#x3066;&#x307F;&#x308B;">AlertManager &#x3067;&#x30A2;&#x30E9;&#x30FC;&#x30C8;&#x901A;&#x77E5;&#x3057;&#x3066;&#x307F;&#x308B;</span></h2><p>&#x4F8B;&#x3068;&#x3057;&#x3066; node-exporter &#x3092;&#x505C;&#x6B62;</p>
+<h2><span id="alertmanager-でアラート通知してみる">AlertManager でアラート通知してみる</span></h2><p>例として node-exporter を停止</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant%$ sudo docker-compose stop node-exporter</span><br></pre></td></tr></tbody></table></figure>
 
-<p><code>./alertmanager/config.yml</code> &#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x305F; Slack Channel &#x306B;&#x3061;&#x3083;&#x3093;&#x3068;&#x901A;&#x77E5;&#x304C;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p><code>./alertmanager/config.yml</code> で設定した Slack Channel にちゃんと通知がきました。</p>
 <div id="hexo-amp-id-11">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171113/20171113021331.png" width="1024" height="122" layout="responsive"></amp-img></div>
 </div>
 
 
-<h2><span id="&#x6240;&#x611F;">&#x6240;&#x611F;</span></h2><ul>
-<li><p>2.0 &#x306B;&#x306A;&#x3063;&#x3066;&#x8A2D;&#x5B9A;&#x306E;&#x4ED5;&#x65B9;&#x304C;&#x8AF8;&#x3005;&#x5909;&#x308F;&#x308A;&#x3001;&#x516C;&#x5F0F;&#x30B5;&#x30A4;&#x30C8;&#x3058;&#x3063;&#x304F;&#x308A;&#x898B;&#x308B;&#x5FC5;&#x8981;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="所感">所感</span></h2><ul>
+<li><p>2.0 になって設定の仕方が諸々変わり、公式サイトじっくり見る必要あります。</p>
 <ul>
-<li>&#x3068;&#x601D;&#x3063;&#x305F;&#x3089;&#x3001;&#x65E9;&#x901F;&#x307E;&#x3068;&#x3081;&#x51FA;&#x3066;&#x307E;&#x3057;&#x305F;&#xFF01;&#x3042;&#x308A;&#x304C;&#x3068;&#x3046;&#x3054;&#x3056;&#x3044;&#x307E;&#x3059;&#xFF01;<ul>
-<li><a href="https://qiita.com/tkusumi/items/293174826a8a5d47d186">Prometheus 2.0 &#x306E;&#x5909;&#x66F4;&#x70B9;&#x3068;&#x79FB;&#x884C;</a></li>
+<li>と思ったら、早速まとめ出てました！ありがとうございます！<ul>
+<li><a href="https://qiita.com/tkusumi/items/293174826a8a5d47d186">Prometheus 2.0 の変更点と移行</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><p>&#x4ECA;&#x56DE;&#x306F; Prometheus &#xD7;1 &#x53F0;&#x69CB;&#x6210;&#x3067;&#x3059;&#x304C;&#x3001;2&#x53F0;&#x4EE5;&#x4E0A;&#x3067;&#x5197;&#x9577;&#x5316;&#x3059;&#x308B;&#x69CB;&#x6210;&#x3082;&#x8A66;&#x3057;&#x3066;&#x307F;&#x305F;&#x3044;&#x3002;</p>
+<li><p>今回は Prometheus ×1 台構成ですが、2台以上で冗長化する構成も試してみたい。</p>
 </li>
 </ul>
-<h2><span id="&#x4F59;&#x8AC7;">&#x4F59;&#x8AC7;</span></h2><ul>
-<li>&#x30D0;&#x30B0;&#x306A;&#x306E;&#x304B; google/cadvisor &#x3067;&#x691C;&#x51FA;&#x3059;&#x308B;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x304C;&#x91CD;&#x8907;&#x8868;&#x793A;&#x3055;&#x308C;&#x3066; grafana &#x3067;&#x7D5E;&#x308B;&#x306E;&#x306B;&#x56F0;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;<ul>
-<li>Issue &#x3053;&#x308C;&#xFF1F;<ul>
+<h2><span id="余談">余談</span></h2><ul>
+<li>バグなのか google/cadvisor で検出するメトリクスが重複表示されて grafana で絞るのに困りました。<ul>
+<li>Issue これ？<ul>
 <li><a href="https://github.com/google/cadvisor/issues/1704">Inconsistent container metrics in prometheus route #1704</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<h2><span id="&#x3042;&#x3068;&#x304C;&#x304D;">&#x3042;&#x3068;&#x304C;&#x304D;</span></h2><p>Mackerel &#x306E;&#x69D8;&#x306A;&#x30DE;&#x30CD;&#x30FC;&#x30B8;&#x30C9;&#x306A;&#x76E3;&#x8996;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3067;&#x904B;&#x7528;&#x30B3;&#x30B9;&#x30C8;&#x3092;&#x524A;&#x6E1B;&#x3059;&#x308B;&#x4EE5;&#x4E0A;&#x306B;<br>Prometheus &#x3092;&#x30DE;&#x30CD;&#x30FC;&#x30B8;&#x30C9;&#x3059;&#x308C;&#x3070;&#x3001;&#x3055;&#x3089;&#x306B;&#x30C8;&#x30FC;&#x30BF;&#x30EB;&#x30B3;&#x30B9;&#x30C8;&#x3092;&#x6291;&#x3048;&#x3089;&#x308C;&#x308B;&#x69D8;&#x306B;&#x306A;&#x308B;&#x3001;<br>&#x3068;&#x7768;&#x3093;&#x3067;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x3067;&#x3059;&#x304C;&#x3001;Datadog &#x306F; APM &#x4ED8;&#x304D;&#x30D7;&#x30E9;&#x30F3;&#x3082;&#x9069;&#x5EA6;&#x306A;&#x30B3;&#x30B9;&#x30C8;&#x611F;&#x3067;&#x63D0;&#x4F9B;&#x3057;&#x3066;&#x304A;&#x308A;&#x30DE;&#x30CD;&#x30FC;&#x30B8;&#x30C9;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x306E;&#x9B45;&#x529B;&#x306F;&#x5C1A;&#x5927;&#x304D;&#x3044;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;&#x306E;&#x68F2;&#x307F;&#x5206;&#x3051;&#x3092;&#x3067;&#x304D;&#x308B;&#x69D8;&#x306B;&#x3059;&#x308B;&#x306B;&#x3082;&#x3001;<br>&#x9078;&#x629E;&#x80A2;&#x306E;&#x4E00;&#x3064;&#x306B;&#x3059;&#x308B;&#x306B;&#x3082; Prometheus &#x6311;&#x6226;&#x3057;&#x304C;&#x3044;&#x304C;&#x3042;&#x308B;&#x306E;&#x3067;&#x306F;&#xFF1F;<br>&#x3068;&#x601D;&#x3063;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>Prometheus&#x3001;&#x4ECA;&#x5F8C;&#x3055;&#x3089;&#x306B;&#x5E83;&#x307E;&#x308B;&#x3053;&#x3068;&#x3092;&#x671F;&#x5F85;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</span></h2><ul>
+<h2><span id="あとがき">あとがき</span></h2><p>Mackerel の様なマネージドな監視サービスで運用コストを削減する以上に<br>Prometheus をマネージドすれば、さらにトータルコストを抑えられる様になる、<br>と睨んでます。</p>
+<p>ですが、Datadog は APM 付きプランも適度なコスト感で提供しておりマネージドサービスの魅力は尚大きいです。</p>
+<p>モニタリングの棲み分けをできる様にするにも、<br>選択肢の一つにするにも Prometheus 挑戦しがいがあるのでは？<br>と思っています。</p>
+<p>Prometheus、今後さらに広まることを期待しています。</p>
+<h2><span id="参考">参考</span></h2><ul>
 <li><a href="https://prometheus.io/docs/prometheus/2.0/configuration/configuration/">Configuration | Prometheus</a></li>
 <li><a href="https://github.com/prometheus/prometheus/blob/release-2.0/config/testdata/conf.good.yml">prometheus/config/testdata/conf.good.yml</a></li>
 </ul>

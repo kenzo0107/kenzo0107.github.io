@@ -104,7 +104,7 @@
 			    "@id":"https://kenzo0107.github.io/2020/12/13/2020-12-14-terraform-elasticache-redis-6.x/"
 			},
 			"datePublished": "2020-12-13T15:00:00.000Z",
-			"dateModified": "2021-02-01T15:58:06.975Z",
+			"dateModified": "2021-03-02T00:38:06.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1901,34 +1901,34 @@ h6.categories {
 <!-- toc -->
 
 <ul>
-<li><a href="#%E6%A6%82%E8%A6%81">&#x6982;&#x8981;</a></li>
-<li><a href="#redis-engine_version-6x-%E6%8C%87%E5%AE%9A%E6%99%82%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9">redis engine_version = 6.x &#x6307;&#x5B9A;&#x6642;&#x306E;&#x554F;&#x984C;&#x70B9;</a></li>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#redis-engine_version-6x-%E6%8C%87%E5%AE%9A%E6%99%82%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9">redis engine_version = 6.x 指定時の問題点</a></li>
 </ul>
 <!-- tocstop -->
 
 </div>
 </div>
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>terraform &#x3067; ElastiCache redis 6 &#x7CFB;&#x3092;&#x5229;&#x7528;&#x6642;&#x306B;&#x901A;&#x308B;&#x5100;&#x5F0F;&#x304C;&#x3042;&#x3063;&#x305F;&#x306E;&#x3067;&#x3001;&#x5099;&#x5FD8;&#x9332;</p>
+<h2><span id="概要">概要</span></h2><p>terraform で ElastiCache redis 6 系を利用時に通る儀式があったので、備忘録</p>
 <a id="more"></a>
 
-<h2><span id="redis-engine_version-6x-&#x6307;&#x5B9A;&#x6642;&#x306E;&#x554F;&#x984C;&#x70B9;">redis engine_version = 6.x &#x6307;&#x5B9A;&#x6642;&#x306E;&#x554F;&#x984C;&#x70B9;</span></h2><p>ElastiCache &gt; Redis &#x3092; 6 &#x7CFB;&#x3067;&#x69CB;&#x7BC9;&#x3059;&#x308B;&#x306B;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B; <code>engine_version = &quot;6.x&quot;</code> &#x3068;&#x6307;&#x5B9A;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_elasticache_replication_group&quot; &quot;cache_store&quot; {</span><br><span class="line">    engine         = &quot;redis&quot;</span><br><span class="line">    engine_version = &quot;6.x&quot;</span><br><span class="line">  ...</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="redis-engine_version-6x-指定時の問題点">redis engine_version = 6.x 指定時の問題点</span></h2><p>ElastiCache &gt; Redis を 6 系で構築するには以下の様に <code>engine_version = "6.x"</code> と指定する必要があります。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">resource "aws_elasticache_replication_group" "cache_store" {</span><br><span class="line">    engine         = "redis"</span><br><span class="line">    engine_version = "6.x"</span><br><span class="line">  ...</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x305D;&#x3057;&#x3066;&#x3001;&#x69CB;&#x7BC9;&#x5F8C;&#x306B; <code>terraform plan</code> &#x3092;&#x3059;&#x308B;&#x3068;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x5909;&#x66F4;&#x304C;&#x751F;&#x3058;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ resource &quot;aws_elasticache_replication_group&quot; &quot;cache_store&quot; {</span><br><span class="line">    engine         = &quot;redis&quot;</span><br><span class="line">  ~ engine_version = &quot;6.0.5&quot; -&gt; &quot;6.x&quot;</span><br></pre></td></tr></tbody></table></figure>
+<p>そして、構築後に <code>terraform plan</code> をすると、以下の様な変更が生じます。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~ resource "aws_elasticache_replication_group" "cache_store" {</span><br><span class="line">    engine         = "redis"</span><br><span class="line">  ~ engine_version = "6.0.5" -&gt; "6.x"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3053;&#x306E;&#x4E8B;&#x8C61;&#x306B;&#x3064;&#x3044;&#x3066; issue &#x304C;&#x4E0A;&#x304C;&#x3063;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>この事象について issue が上がっていました。</p>
 <p><a href="https://github.com/hashicorp/terraform-provider-aws/issues/15625">https://github.com/hashicorp/terraform-provider-aws/issues/15625</a></p>
-<p>&#x5BFE;&#x5FDC;&#x306E;&#x4E00;&#x624B;&#x3068;&#x3057;&#x3066; <code>ignore_changes = [engine_version]</code> &#x3092;&#x52A0;&#x3048;&#x308B;&#x306E;&#x306F;&#x6975;&#x529B;&#x907F;&#x3051;&#x305F;&#x3044;&#x3002;<br><a href="https://github.com/hashicorp/terraform-provider-aws/issues/15625#issuecomment-727759811">https://github.com/hashicorp/terraform-provider-aws/issues/15625#issuecomment-727759811</a></p>
-<p>&#x73FE;&#x72B6;&#x306F;&#x3001;&#x4F5C;&#x6210;&#x5F8C;&#x306B;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B; <code>engine_version = &quot;6.0.5&quot;</code> &#x3092;&#x6307;&#x5B9A;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x5BFE;&#x5FDC;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_elasticache_replication_group&quot; &quot;cache_store&quot; {</span><br><span class="line">    engine         = &quot;redis&quot;</span><br><span class="line">    engine_version = &quot;6.0.5&quot;</span><br></pre></td></tr></tbody></table></figure>
+<p>対応の一手として <code>ignore_changes = [engine_version]</code> を加えるのは極力避けたい。<br><a href="https://github.com/hashicorp/terraform-provider-aws/issues/15625#issuecomment-727759811">https://github.com/hashicorp/terraform-provider-aws/issues/15625#issuecomment-727759811</a></p>
+<p>現状は、作成後に以下の様に <code>engine_version = "6.0.5"</code> を指定することで対応しています。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">resource "aws_elasticache_replication_group" "cache_store" {</span><br><span class="line">    engine         = "redis"</span><br><span class="line">    engine_version = "6.0.5"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x69CB;&#x7BC9;&#x6642;&#x306B; <code>engine_version = &quot;6.0.5&quot;</code> &#x3063;&#x3066;&#x6307;&#x5B9A;&#x3057;&#x305F;&#x3089;&#x3044;&#x3044;&#x3058;&#x3083;&#x306A;&#x3044;&#x304B;&#xFF01;&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x305D;&#x308C;&#x3060;&#x3068;&#x30A8;&#x30E9;&#x30FC;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x306A;&#x306E;&#x3067;&#x3001;&#x69CB;&#x7BC9;&#x6642;&#x306B;&#x306F;&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x3092;&#x5165;&#x308C;&#x3066;&#x304A;&#x304F;&#x3068;&#x30EC;&#x30D3;&#x30E5;&#x30EF;&#x30FC;&#x306B;&#x512A;&#x3057;&#x3044;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_elasticache_replication_group&quot; &quot;cache_store&quot; {</span><br><span class="line">    engine         = &quot;redis&quot;</span><br><span class="line">    # TODO: &#x69CB;&#x7BC9;&#x5F8C;&#x306B;&#x63A1;&#x7528;&#x3055;&#x308C;&#x305F;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x306B;&#x5909;&#x66F4;&#x3059;&#x308B;&#x3002;</span><br><span class="line">    #       &#x69CB;&#x7BC9;&#x5F8C;&#x306B; terraform plan &#x3067; engine_version &#x306E;&#x5DEE;&#x5206;&#x304C;&#x751F;&#x3058;&#x308B;&#x70BA;&#x3067;&#x3059;&#x3002;</span><br><span class="line">    # see: https://github.com/hashicorp/terraform-provider-aws/issues/15625</span><br><span class="line">    engine_version = &quot;6.x&quot;</span><br></pre></td></tr></tbody></table></figure>
+<p>構築時に <code>engine_version = "6.0.5"</code> って指定したらいいじゃないか！と思いましたが、それだとエラーになります。</p>
+<p>なので、構築時にはコメントを入れておくとレビュワーに優しい。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">resource "aws_elasticache_replication_group" "cache_store" {</span><br><span class="line">    engine         = "redis"</span><br><span class="line">    # TODO: 構築後に採用されたバージョンに変更する。</span><br><span class="line">    #       構築後に terraform plan で engine_version の差分が生じる為です。</span><br><span class="line">    # see: https://github.com/hashicorp/terraform-provider-aws/issues/15625</span><br><span class="line">    engine_version = "6.x"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;<br>&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以上<br>参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->

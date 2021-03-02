@@ -1814,13 +1814,13 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B; mysqldump &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;&#x6642;&#x306B;&#x63B2;&#x984C;&#x306E;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump --lock-all-tables --events -h &lt;host_name&gt; -u &lt;user&gt; -p&lt;password&gt; --no-create-info &lt;db_name&gt; &lt;table, ...&gt; &gt; output.sql</span><br><span class="line"></span><br><span class="line">mysqldump: Couldn<span class="string">&apos;t execute &apos;</span>FLUSH TABLES<span class="string">&apos;: Access denied; you need (at least one of) the RELOAD privilege(s) for this operation (1227)</span></span><br></pre></td></tr></tbody></table></figure>
+			  		<h2><span id="概要">概要</span></h2><p>以下のように mysqldump コマンド実行時に掲題のエラーが発生しました。</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump --lock-all-tables --events -h &lt;host_name&gt; -u &lt;user&gt; -p&lt;password&gt; --no-create-info &lt;db_name&gt; &lt;table, ...&gt; &gt; output.sql</span><br><span class="line"></span><br><span class="line">mysqldump: Couldn<span class="string">'t execute '</span>FLUSH TABLES<span class="string">': Access denied; you need (at least one of) the RELOAD privilege(s) for this operation (1227)</span></span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x5BFE;&#x7B56;">&#x5BFE;&#x7B56;</span></h2><p>&#x30A8;&#x30E9;&#x30FC;&#x6587;&#x306E;&#x901A;&#x308A;&#x3001;RELOAD&#x6A29;&#x9650;&#x3092;&#x4ED8;&#x4E0E;&#x3059;&#x308B;&#x3002;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; GRANT RELOAD ON *.* TO <span class="string">&apos;&lt;user&gt;&apos;</span>@<span class="string">&apos;&lt;host_name&gt;&apos;</span>;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="対策">対策</span></h2><p>エラー文の通り、RELOAD権限を付与する。</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; GRANT RELOAD ON *.* TO <span class="string">'&lt;user&gt;'</span>@<span class="string">'&lt;host_name&gt;'</span>;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;</p>
+<p>以上</p>
 
 			  		
 			  		<!-- google Adsense -->

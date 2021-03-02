@@ -1814,55 +1814,55 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x305D;&#x308C;&#x306F;&#x3001;&#x3042;&#x308B;&#x65E5; <a href="https://www.ssllabs.com/ssltest/index.html">QUALYS SSL LABS</a> &#x3067;SSL&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3057;&#x305F;&#x3068;&#x304D;</p>
+			  		<p>それは、ある日 <a href="https://www.ssllabs.com/ssltest/index.html">QUALYS SSL LABS</a> でSSLチェックしたとき</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627140744.png" width="1024" height="477" layout="responsive"></amp-img></div>
 </div>
 
-<p>F &#x306B;&#x306A;&#x3063;&#x3066;&#x308B;&#x2026;</p>
+<p>F になってる…</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627141207.jpg" width="358" height="126" layout="responsive"></amp-img></div>
 </div>
 
 
-<p>&#x5E38;&#x306B; A+ &#x3092;&#x4FDD;&#x3063;&#x3066;&#x3044;&#x305F;&#x306E;&#x306B;&#x2026;</p>
-<p>&#x3069;&#x3046;&#x3084;&#x3089; 2016/5/3 &#x6642;&#x70B9;&#x3067;&#x65B0;&#x305F;&#x306B;&#x8106;&#x5F31;&#x6027;&#x304C;&#x767A;&#x898B;&#x3055;&#x308C;&#x305F;&#x3068;&#x306E;&#x3053;&#x3068;&#x3002;</p>
-<a href="https://oss.sios.com/security/general-security-20160504" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://tech-lab.sios.jp/wp-content/uploads/2018/05/sios_tech_lab_image.png" width="846" height="565" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">SIOS Tech. Lab</div><div class="og-description">&#x30A8;&#x30F3;&#x30B8;&#x30CB;&#x30A2;&#x306E;&#x30BF;&#x30E1;&#x306B;&#x306A;&#x308B;OSS&#x30FB;&#x30AF;&#x30E9;&#x30A6;&#x30C9;&#x30FB;&#x8A8D;&#x8A3C;&#x306E;&#x6280;&#x8853;&#x30C8;&#x30D4;&#x30C3;&#x30AF;&#x30B9;</div></div></div></a>
+<p>常に A+ を保っていたのに…</p>
+<p>どうやら 2016/5/3 時点で新たに脆弱性が発見されたとのこと。</p>
+<a href="https://oss.sios.com/security/general-security-20160504" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://tech-lab.sios.jp/wp-content/uploads/2018/05/sios_tech_lab_image.png" width="846" height="565" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">SIOS Tech. Lab</div><div class="og-description">エンジニアのタメになるOSS・クラウド・認証の技術トピックス</div></div></div></a>
 
 
-<p>&#x4ECA;&#x56DE;&#x6307;&#x6458;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B; <code>CVE-2016-2107</code> :</p>
+<p>今回指摘されている <code>CVE-2016-2107</code> :</p>
 <blockquote>
-<p>AES-NI CBC MAC&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3067;MITM&#x653B;&#x6483;&#x8005;&#x304C;&#x30D1;&#x30C7;&#x30A3;&#x30F3;&#x30B0;&#x30AA;&#x30E9;&#x30AF;&#x30EB;&#x653B;&#x6483;&#x53EF;&#x80FD;&#x306A;&#x3053;&#x3068;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;&#x3053;&#x306E;&#x554F;&#x984C;&#x306F;&#x3001;CVE-2013-0169(Lucky 13&#x30D1;&#x30C7;&#x30A3;&#x30F3;&#x30B0;)&#x306E;&#x4FEE;&#x6B63;&#x306E;&#x305F;&#x3081;&#x306B;&#x5C0E;&#x5165;&#x3055;&#x308C;&#x305F;&#x7B87;&#x6240;&#x306E;&#x4E0D;&#x5177;&#x5408;&#x304B;&#x3089;&#x767A;&#x751F;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>AES-NI CBC MACチェックでMITM攻撃者がパディングオラクル攻撃可能なことがわかりました。この問題は、CVE-2013-0169(Lucky 13パディング)の修正のために導入された箇所の不具合から発生しました。</p>
 </blockquote>
-<p>&#x4E0A;&#x8A18;&#x5BFE;&#x5FDC;&#x7B56;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x5BFE;&#x5FDC;&#x7B56;">&#x5BFE;&#x5FDC;&#x7B56;</span></h2><ul>
+<p>上記対応策をまとめました。</p>
+<h2><span id="対応策">対応策</span></h2><ul>
 <li>OpenSSL version up</li>
 </ul>
-<p>&#x203B;&#x8A66;&#x9A13;OS&#x74B0;&#x5883;:  CentOS7</p>
-<p>&#x4EE5;&#x4E0B;&#x8A18;&#x4E8B;&#x3067;&#x306F; &#x300C;OpenSSL&#x306E;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x3092;1.0.2h/1.0.1t&#x306B;&#x3042;&#x3052;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;&#x300D;&#x3068;&#x3042;&#x308A;&#x307E;&#x3059;&#x304C;&#x3001;</p>
+<p>※試験OS環境:  CentOS7</p>
+<p>以下記事では 「OpenSSLのバージョンを1.0.2h/1.0.1tにあげてください。」とありますが、</p>
 <p><a href="https://oss.sios.com/security/general-security-20160504">general-security-20160504</a></p>
-<p>&#x6BB5;&#x968E;&#x7684;&#x306B;&#x8A66;&#x3057;&#x305F;&#x6240;<br>&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3067;openssl &#x306E;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x3092;&#x3057;&#x305F;&#x6240;<br>&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x6D88;&#x3048; B &#x3068;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4E8B;&#x524D;&#x306B;Nginx &#x3092; 1.11.1 &#x306B;&#x30A2;&#x30C3;&#x30D7;&#x30C7;&#x30FC;&#x30C8;&#x3057;&#x305F;&#x70BA;&#x3067;&#x3057;&#x3087;&#x3046;&#x304B;&#x6C57;</p>
+<p>段階的に試した所<br>以下コマンドでopenssl のバージョンアップをした所<br>エラーが消え B となりました。</p>
+<p>事前にNginx を 1.11.1 にアップデートした為でしょうか汗</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># yum upgrade openssl -y</span><br><span class="line"></span><br><span class="line"># openssl version</span><br><span class="line">OpenSSL 1.0.1e-fips 11 Feb 2013</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>ssl_ciphers &#x306E;&#x8A2D;&#x5B9A;&#x5909;&#x66F4;</li>
+<li>ssl_ciphers の設定変更</li>
 </ul>
-<p>config generator &#x3067; &#x751F;&#x6210;&#x3055;&#x308C;&#x308B; ssl_ciphers &#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C6;&#x30A3;&#x30D6;&#x3092;&#x305D;&#x306E;&#x307E;&#x307E;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x3068;&#x8A55;&#x4FA1;&#x304C;B&#x6B62;&#x307E;&#x308A;&#x3067;&#x3057;&#x305F;&#x3002;</p>
+<p>config generator で 生成される ssl_ciphers ディレクティブをそのまま設定すると評価がB止まりでした。</p>
 <p><a href="https://ssl-config.mozilla.org/">https://ssl-config.mozilla.org/</a></p>
-<p>&#x8AF8;&#x3005;&#x542B;&#x3081;&#x305F;&#x304F;&#x306A;&#x3044;&#x6697;&#x53F7;&#x5316;&#x6CD5;&#x304C;&#x3042;&#x308B;&#x3088;&#x3046;&#x3067;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssl_ciphers &apos;ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS&apos;;</span><br></pre></td></tr></tbody></table></figure>
+<p>諸々含めたくない暗号化法があるようです。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssl_ciphers 'ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS';</span><br></pre></td></tr></tbody></table></figure>
 
-<p><em>&#x4EE5;&#x4E0B;&#x6700;&#x7D42;&#x7684;&#x306B;&#x8A2D;&#x5B9A;&#x3057;&#x305F; ssl_ciphers</em> &#x3059;&#x308B;&#x3068; A+ &#x306B;&#x623B;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssl_ciphers &apos;ECDH !aNULL !eNULL !SSLv2 !SSLv3&apos;;</span><br></pre></td></tr></tbody></table></figure>
+<p><em>以下最終的に設定した ssl_ciphers</em> すると A+ に戻りました。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssl_ciphers 'ECDH !aNULL !eNULL !SSLv2 !SSLv3';</span><br></pre></td></tr></tbody></table></figure>
 
 <div id="hexo-amp-id-3">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627143218.png" width="1024" height="431" layout="responsive"></amp-img></div>
 </div>
 
-<p>OpenSSL&#x306E;&#x8106;&#x5F31;&#x6027;&#x306F;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3057;&#x7D9A;&#x3051;&#x3066;&#x3044;&#x304B;&#x306D;&#x3070;</p>
-<h2><span id="&#x88DC;&#x8DB3;">&#x88DC;&#x8DB3;</span></h2><p>HTTP Strict Transport Security &#x3092; &#x6709;&#x52B9;&#x5316; (&#x5E38;&#x6642;SSL) &#x306B;&#x3057;&#x306A;&#x3044;&#x3068;<br>A+ &#x306F;&#x53D6;&#x308C;&#x307E;&#x305B;&#x3093;&#x3002;</p>
-<p>&#x5E38;&#x6642;SSL&#x306F;&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x306B;&#x3082;&#x5F71;&#x97FF;&#x3059;&#x308B;&#x306E;&#x3067;<br>&#x305B;&#x3081;&#x3066; A &#x307E;&#x3067;&#x53D6;&#x308B;&#x3001;&#x3068;&#x3044;&#x3046;&#x6307;&#x91DD;&#x3092;&#x6C7A;&#x3081;&#x3066;&#x304B;&#x3089;&#x7740;&#x624B;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<p>OpenSSLの脆弱性はチェックし続けていかねば</p>
+<h2><span id="補足">補足</span></h2><p>HTTP Strict Transport Security を 有効化 (常時SSL) にしないと<br>A+ は取れません。</p>
+<p>常時SSLはパフォーマンスにも影響するので<br>せめて A まで取る、という指針を決めてから着手してください。</p>
 
 			  		
 			  		<!-- google Adsense -->

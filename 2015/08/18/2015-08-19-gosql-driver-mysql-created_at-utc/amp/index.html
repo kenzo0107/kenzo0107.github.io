@@ -1843,14 +1843,14 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+			  		<h2><span id="環境">環境</span></h2><ul>
 <li>go-sql-driver/mysql version 1.2</li>
 </ul>
-<h2><span id="&#x7D50;&#x8AD6;">&#x7D50;&#x8AD6;</span></h2><p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B; <code>parseTime=true</code>&#x3068;<code>loc=Asia%2FTokyo</code>&#x3092;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db, err := sql.Open(&quot;mysql&quot;, &quot;user:passward@/dbname?parseTime=true&amp;loc=Asia%2FTokyo&quot;)</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="結論">結論</span></h2><p>以下のように <code>parseTime=true</code>と<code>loc=Asia%2FTokyo</code>を設定する。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db, err := sql.Open("mysql", "user:passward@/dbname?parseTime=true&amp;loc=Asia%2FTokyo")</span><br></pre></td></tr></tbody></table></figure>
 
-<p><code>loc=xxxx</code>&#x306E;&#x6307;&#x5B9A;&#x304C;&#x306A;&#x3044;&#x5834;&#x5408;&#x3001;<code>local</code>&#x304C;&#x6307;&#x5B9A;&#x3055;&#x308C;&#x3001;<br>datetime&#x306B;time.Now()&#x3092;&#x6307;&#x5B9A;&#x3057;&#x3066;INSERT&#x3057;&#x3066;&#x3082;<br>UTC&#x6642;&#x9593;&#x306B;&#x66F8;&#x304D;&#x76F4;&#x3055;&#x308C;&#x3066;&#x3057;&#x307E;&#x3046;&#x3002;</p>
-<p>&#x3061;&#x3087;&#x3063;&#x3068;&#x30CF;&#x30DE;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p><code>loc=xxxx</code>の指定がない場合、<code>local</code>が指定され、<br>datetimeにtime.Now()を指定してINSERTしても<br>UTC時間に書き直されてしまう。</p>
+<p>ちょっとハマりました。</p>
 
 			  		
 			  		<!-- google Adsense -->

@@ -1795,36 +1795,36 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>Dockerfile &#x5185;&#x306B;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B; shell &#x306E;&#x5B9F;&#x884C;&#x3092;&#x8A18;&#x8FF0;&#x3057;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>Dockerfile 内に以下のように shell の実行を記述していました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RUN chmod +x hoge.sh \</span><br><span class="line">  &amp;&amp; hoge.sh</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x8A18;&#x8FF0;&#x306E;&#x3042;&#x308B;&#x72B6;&#x614B;&#x3067; <code>docker build</code> &#x5B9F;&#x884C;&#x3057;&#x305F;&#x6240;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x30A8;&#x30E9;&#x30FC;&#x306B;&#x906D;&#x9047;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>上記記述のある状態で <code>docker build</code> 実行した所、以下のようなエラーに遭遇しました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/sh: hoge.sh: Text file busy</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="what-is-text-file-busy">What is Text file busy ?</span></h2><p>&#x66F8;&#x304D;&#x8FBC;&#x307F;&#x306E;&#x305F;&#x3081;&#x306B;&#x73FE;&#x5728;&#x958B;&#x3044;&#x3066;&#x3044;&#x308B;&#x624B;&#x7D9A;&#x304D;&#x306E;&#x307F;&#x306E; (&#x5171;&#x7528;&#x30C6;&#x30AD;&#x30B9;&#x30C8;) &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x5B9F;&#x884C;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x305F;&#x5834;&#x5408;&#x3084;&#x3001;&#x5B9F;&#x884C;&#x4E2D;&#x306E;&#x624B;&#x7D9A;&#x304D;&#x306E;&#x307F;&#x306E;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x66F8;&#x304D;&#x8FBC;&#x307F;&#x306E;&#x305F;&#x3081;&#x306B;&#x958B;&#x3053;&#x3046;&#x3068;&#x3057;&#x305F;&#x308A;&#x3001;&#x524A;&#x9664;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x305F;&#x308A;&#x3059;&#x308B;&#x5834;&#x5408;&#x306B;&#x767A;&#x751F;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4E0A;&#x8A18;&#x9451;&#x307F;&#x308B;&#x3068;<br><code>chmod +x hoge.sh</code> &#x5B9F;&#x884C;&#x4E2D;&#x306B; <code>hoge.sh</code> &#x3092;&#x5B9F;&#x884C;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x305F;&#x304C;&#x70BA;&#x306B;&#x767A;&#x751F;&#x3057;&#x3066;&#x3044;&#x308B;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#xFF1F;&#xFF1F;<br>&#x3068;&#x63A8;&#x6E2C;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;&#x60C5;&#x5831;">&#x74B0;&#x5883;&#x60C5;&#x5831;</span></h2><ul>
+<h2><span id="what-is-text-file-busy">What is Text file busy ?</span></h2><p>書き込みのために現在開いている手続きのみの (共用テキスト) ファイルを実行しようとした場合や、実行中の手続きのみのファイルを書き込みのために開こうとしたり、削除しようとしたりする場合に発生します。</p>
+<p>上記鑑みると<br><code>chmod +x hoge.sh</code> 実行中に <code>hoge.sh</code> を実行しようとしたが為に発生しているということ？？<br>と推測。</p>
+<h2><span id="環境情報">環境情報</span></h2><ul>
 <li>Ubuntu 14.04.5 LTS \n \l</li>
 <li>Docker version 17.05.0-ce, build 89658be</li>
 <li>Base Image: ruby:2.5-alpine</li>
 </ul>
-<h2><span id="&#x5BFE;&#x7B56;">&#x5BFE;&#x7B56;</span></h2><p>&#x4EE5;&#x4E0B; sync &#x51E6;&#x7406;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x7121;&#x4E8B;&#x554F;&#x984C;&#x89E3;&#x6C7A;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="対策">対策</span></h2><p>以下 sync 処理を追加し無事問題解決できました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RUN chmod +x hoge.sh \</span><br><span class="line">  &amp;&amp; sync \</span><br><span class="line">  &amp;&amp; hoge.sh</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="what-is-sync-command">What is sync command ?</span></h2><a href="http://kazmax.zpp.jp/cmd/s/sync.8.html" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img></div><div class="descriptions"><div class="og-title">sync - &#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x7BA1;&#x7406;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x306E;&#x8AAC;&#x660E; - Linux &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x96C6; &#x4E00;&#x89A7;&#x8868;</div><div class="og-description">sync - &#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x7BA1;&#x7406;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x306E;&#x8AAC;&#x660E;&#x3002;sync - &#x30C7;&#x30A3;&#x30B9;&#x30AF;&#x4E0A;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x3092;&#x30E1;&#x30E2;&#x30EA;&#x3068;&#x540C;&#x671F;&#x3055;&#x305B;&#x308B;&#x3002;</div></div></div></a>
+<h2><span id="what-is-sync-command">What is sync command ?</span></h2><a href="http://kazmax.zpp.jp/cmd/s/sync.8.html" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img></div><div class="descriptions"><div class="og-title">sync - システム管理コマンドの説明 - Linux コマンド集 一覧表</div><div class="og-description">sync - システム管理コマンドの説明。sync - ディスク上のデータをメモリと同期させる。</div></div></div></a>
 
 
 
-<h2><span id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</span></h2>
+<h2><span id="参考">参考</span></h2>
 
-<a href="https://qiita.com/todanano/items/05570fac310d56758888" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://qiita-user-contents.imgix.net/https%3A%2F%2Fcdn.qiita.com%2Fassets%2Fpublic%2Farticle-ogp-background-1150d8b18a7c15795b701a55ae908f94.png?ixlib=rb-1.2.2&amp;w=1200&amp;mark=https%3A%2F%2Fqiita-user-contents.imgix.net%2F~text%3Fixlib%3Drb-1.2.2%26w%3D840%26h%3D380%26txt%3Dcp%25E3%2581%25A8mv%25E3%2581%25A8inode%25E3%2581%25AE%25E8%25A9%25B1%26txt-color%3D%2523333%26txt-font%3DAvenir-Black%26txt-size%3D54%26txt-clip%3Dellipsis%26txt-align%3Dcenter%252Cmiddle%26s%3Dc2b9f61e752bef7aa8e7438a0cc98c90&amp;mark-align=center%2Cmiddle&amp;blend=https%3A%2F%2Fqiita-user-contents.imgix.net%2F~text%3Fixlib%3Drb-1.2.2%26w%3D840%26h%3D500%26txt%3D%2540todanano%26txt-color%3D%2523333%26txt-font%3DAvenir-Black%26txt-size%3D45%26txt-align%3Dright%252Cbottom%26s%3D783d1d275dd22f39f51bf270f3384473&amp;blend-align=center%2Cmiddle&amp;blend-mode=normal&amp;s=1437ceb4aa281c20396246b11938dbae" width="1200" height="630" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">cp&#x3068;mv&#x3068;inode&#x306E;&#x8A71; - Qiita</div><div class="og-description">&#x5B9F;&#x884C;&#x4E2D;&#x306E;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306B;&#x5BFE;&#x3057;&#x3066;&#x3001;
-cp&#x3067;&#x4E0A;&#x66F8;&#x304D;&#x3059;&#x308B;&#x5834;&#x5408;&#x3060;&#x3068;&#x3001;Text file busy&#x3067;&#x7F6E;&#x304D;&#x63DB;&#x3048;&#x3089;&#x308C;&#x305A;&#x3001;
-mv&#x3060;&#x3068;&#x4F55;&#x3082;&#x805E;&#x304B;&#x308C;&#x305A;&#x7F6E;&#x304D;&#x63DB;&#x3048;&#x3089;&#x308C;&#x307E;&#x3059;&#x3002;
+<a href="https://qiita.com/todanano/items/05570fac310d56758888" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://qiita-user-contents.imgix.net/https%3A%2F%2Fcdn.qiita.com%2Fassets%2Fpublic%2Farticle-ogp-background-1150d8b18a7c15795b701a55ae908f94.png?ixlib=rb-1.2.2&amp;w=1200&amp;mark=https%3A%2F%2Fqiita-user-contents.imgix.net%2F~text%3Fixlib%3Drb-1.2.2%26w%3D840%26h%3D380%26txt%3Dcp%25E3%2581%25A8mv%25E3%2581%25A8inode%25E3%2581%25AE%25E8%25A9%25B1%26txt-color%3D%2523333%26txt-font%3DAvenir-Black%26txt-size%3D54%26txt-clip%3Dellipsis%26txt-align%3Dcenter%252Cmiddle%26s%3Dc2b9f61e752bef7aa8e7438a0cc98c90&amp;mark-align=center%2Cmiddle&amp;blend=https%3A%2F%2Fqiita-user-contents.imgix.net%2F~text%3Fixlib%3Drb-1.2.2%26w%3D840%26h%3D500%26txt%3D%2540todanano%26txt-color%3D%2523333%26txt-font%3DAvenir-Black%26txt-size%3D45%26txt-align%3Dright%252Cbottom%26s%3D783d1d275dd22f39f51bf270f3384473&amp;blend-align=center%2Cmiddle&amp;blend-mode=normal&amp;s=1437ceb4aa281c20396246b11938dbae" width="1200" height="630" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">cpとmvとinodeの話 - Qiita</div><div class="og-description">実行中のファイルに対して、
+cpで上書きする場合だと、Text file busyで置き換えられず、
+mvだと何も聞かれず置き換えられます。
 
-&#x3053;&#x306E;&#x6319;&#x52D5;&#x306E;&#x9055;&#x3044;&#x306B;&#x3064;&#x3044;&#x3066;&#x3001;&#x307E;&#x3068;&#x3081;&#x3068;&#x5B9F;&#x9A13;&#x3002;
+この挙動の違いについて、まとめと実験。
 
-inode&#x3092;&#x898B;&#x308B;&#x3068;&#x3001;&#x305D;&#x308C;&#x3068;&#x306A;&#x304F;&#x5206;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;
+inodeを見ると、それとなく分かります。
 
 h...</div></div></div></a>
 

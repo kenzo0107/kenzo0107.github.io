@@ -1820,36 +1820,36 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Basic &#x8A8D;&#x8A3C; &#x3084; CSP &#x5BFE;&#x5FDC;&#x3092; Lambda Edge &#x3067;&#x5BFE;&#x5FDC;&#x3057;&#x305F;&#x8A71;&#x3067;&#x3059;&#x3002;</p>
+			  		<p>Basic 認証 や CSP 対応を Lambda Edge で対応した話です。</p>
 <a id="more"></a>
 
-<h2><span id="csp-&#x3068;&#x306F;">CSP &#x3068;&#x306F;&#xFF1F;</span></h2><ul>
-<li>XSS, Data Injection &#x306E;&#x69D8;&#x306A;&#x7279;&#x5B9A;&#x7A2E;&#x985E;&#x306E;&#x653B;&#x6483;&#x3092;&#x691C;&#x77E5;&#x3057;&#x3001;&#x5F71;&#x97FF;&#x3092;&#x8EFD;&#x6E1B;&#x3059;&#x308B;&#x70BA;&#x306B;&#x8FFD;&#x52A0;&#x3067;&#x304D;&#x308B;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30EC;&#x30A4;&#x30E4;&#x30FC;</li>
+<h2><span id="csp-とは">CSP とは？</span></h2><ul>
+<li>XSS, Data Injection の様な特定種類の攻撃を検知し、影響を軽減する為に追加できるセキュリティレイヤー</li>
 </ul>
-<p>&#x53C2;&#x8003;: <a href="https://developer.mozilla.org/ja/docs/Web/HTTP/CSP">&#x30B3;&#x30F3;&#x30C6;&#x30F3;&#x30C4;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30DD;&#x30EA;&#x30B7;&#x30FC; (CSP)</a></p>
-<h2><span id="&#x3069;&#x3093;&#x306A;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x308B;">&#x3069;&#x3093;&#x306A;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x308B;&#xFF1F;</span></h2><p>&#x30B3;&#x30F3;&#x30C6;&#x30F3;&#x30C4;&#x3092;&#x7279;&#x5B9A;&#x306E;&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x3084;&#x30D7;&#x30ED;&#x30C8;&#x30B3;&#x30EB;&#x3067;&#x306E;&#x307F;&#x5B9F;&#x884C;&#x53EF;&#x80FD;&#x306A;&#x69D8;&#x306B;&#x5236;&#x7D04;&#x3092;&#x304B;&#x3051;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x308B;&#x3002;<br>&#x3053;&#x308C;&#x306B;&#x3088;&#x3063;&#x3066;&#x3001;&#x610F;&#x56F3;&#x3057;&#x306A;&#x3044;&#x901A;&#x4FE1;&#x304C;&#x3067;&#x304D;&#x306A;&#x304F;&#x306A;&#x308B;&#x3002;</p>
-<h2><span id="&#x3069;&#x3046;&#x3059;&#x308C;&#x3070;&#x8A2D;&#x5B9A;&#x3067;&#x304D;&#x308B;">&#x3069;&#x3046;&#x3059;&#x308C;&#x3070;&#x8A2D;&#x5B9A;&#x3067;&#x304D;&#x308B;&#xFF1F;</span></h2><h3><span id="&#x30D8;&#x30C3;&#x30C0;&#x30FC;&#x306B;&#x60C5;&#x5831;&#x8FFD;&#x52A0;">&#x30D8;&#x30C3;&#x30C0;&#x30FC;&#x306B;&#x60C5;&#x5831;&#x8FFD;&#x52A0;</span></h3><p>HTTP &#x30D8;&#x30C3;&#x30C0;&#x30FC;&#x306B; Content-Security-Policy : policy &#x3067;&#x8A2D;&#x5B9A;</p>
-<h3><span id="&#x8981;&#x7D20;&#x3092;&#x7528;&#x3044;&#x3066;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x6307;&#x5B9A;"><meta> &#x8981;&#x7D20;&#x3092;&#x7528;&#x3044;&#x3066;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x6307;&#x5B9A;</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot; policy &quot;&gt;</span><br></pre></td></tr></tbody></table></figure>
+<p>参考: <a href="https://developer.mozilla.org/ja/docs/Web/HTTP/CSP">コンテンツセキュリティポリシー (CSP)</a></p>
+<h2><span id="どんなことができる">どんなことができる？</span></h2><p>コンテンツを特定のドメインやプロトコルでのみ実行可能な様に制約をかけることができる。<br>これによって、意図しない通信ができなくなる。</p>
+<h2><span id="どうすれば設定できる">どうすれば設定できる？</span></h2><h3><span id="ヘッダーに情報追加">ヘッダーに情報追加</span></h3><p>HTTP ヘッダーに Content-Security-Policy : policy で設定</p>
+<h3><span id="要素を用いてポリシー指定"><meta> 要素を用いてポリシー指定</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta http-equiv="Content-Security-Policy" content=" policy "&gt;</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="lambda-edge-&#x3067;&#x3084;&#x308B;&#x7406;&#x7531;">Lambda Edge &#x3067;&#x3084;&#x308B;&#x7406;&#x7531;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudFront --&gt; ALB --&gt; ECS - Rails</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="lambda-edge-でやる理由">Lambda Edge でやる理由</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CloudFront --&gt; ALB --&gt; ECS - Rails</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x666E;&#x6BB5;&#x3001;&#x4E0A;&#x8A18;&#x306E;&#x69CB;&#x6210;&#x3067;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3057;&#x3066;&#x308B;&#x3053;&#x3068;&#x304C;&#x591A;&#x304F;&#x3001;<br>CloudFront &#x304C;&#x30AA;&#x30EA;&#x30B8;&#x30F3;&#x3068;&#x306A;&#x308B; Rails &#x304B;&#x3089;&#x306E;&#x30EC;&#x30B9;&#x30DD;&#x30F3;&#x30B9;&#xFF08;Origin Response&#xFF09;&#x306E;&#x30D8;&#x30C3;&#x30C0;&#x30FC;&#x60C5;&#x5831;&#x306B; CSP policy &#x3092;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x3001;CSP &#x5BFE;&#x7B56;&#x3092;&#x3057;&#x3088;&#x3046;&#x3068;&#x8A66;&#x307F;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>Rails &#x81EA;&#x4F53;&#x3067;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x3082;&#x3042;&#x308A;&#x307E;&#x3059;&#x304C;&#x3001;&#x5F8C;&#x8FF0;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="terraform-&#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x307F;&#x308B;">terraform &#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x307F;&#x308B;</span></h2><p><a href="https://github.com/kenzo0107/sample-lambda-edge">https://github.com/kenzo0107/sample-lambda-edge</a></p>
+<p>普段、上記の構成でサービスしてることが多く、<br>CloudFront がオリジンとなる Rails からのレスポンス（Origin Response）のヘッダー情報に CSP policy を設定することで、CSP 対策をしようと試みました。</p>
+<p>Rails 自体で設定する方法もありますが、後述します。</p>
+<h2><span id="terraform-で設定してみる">terraform で設定してみる</span></h2><p><a href="https://github.com/kenzo0107/sample-lambda-edge">https://github.com/kenzo0107/sample-lambda-edge</a></p>
 <ul>
 <li>templates/csp.js<ul>
-<li>CSP &#x5BFE;&#x7B56; &#x3092; Original Response &#x306B;&#x8A2D;&#x5B9A;</li>
+<li>CSP 対策 を Original Response に設定</li>
 </ul>
 </li>
 <li>templates/basic_auth.js<ul>
-<li>Basic &#x8A8D;&#x8A3C;&#x3092; Vewer Request &#x306B;&#x8A2D;&#x5B9A;</li>
+<li>Basic 認証を Vewer Request に設定</li>
 </ul>
 </li>
 </ul>
-<h2><span id="&#x5B9F;&#x969B;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x307F;&#x3066;&#x3069;&#x3046;">&#x5B9F;&#x969B;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x307F;&#x3066;&#x3069;&#x3046;&#xFF1F;</span></h2><p>Rails &#x3067;&#x30D5;&#x30ED;&#x30F3;&#x30C8;&#x306B; Vue &#x3092;&#x4F7F;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x306B; <code>script-src &apos;unsafe-eval&apos;</code> &#x306E;&#x6307;&#x5B9A;&#x304C;&#x5FC5;&#x8981;&#x3060;&#x3063;&#x305F;&#x308A;&#x3067;&#x3001;&#x30D5;&#x30ED;&#x30F3;&#x30C8;&#x5168;&#x7136;&#x52D5;&#x304B;&#x306A;&#x3044;&#x3001;&#x306A;&#x3093;&#x3066;&#x3053;&#x3068;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4F7F;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x30B5;&#x30FC;&#x30C9;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x3084;&#x30D5;&#x30ED;&#x30F3;&#x30C8;&#x30A8;&#x30F3;&#x30C9;&#x3067; CSP &#x306E;&#x8A2D;&#x5B9A;&#x3067;&#x554F;&#x984C;&#x304C;&#x751F;&#x3058;&#x308B;&#x3053;&#x3068;&#x304C;&#x591A;&#x3005;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x3053;&#x308C;&#x306F; Rails &#x5074;&#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x306A;&#x3044;&#x3068;&#x958B;&#x767A;&#x74B0;&#x5883;&#x3067;&#x306F;&#x52D5;&#x3044;&#x305F;&#x3051;&#x3069;&#x3001;Lambda Edge &#x52B9;&#x3044;&#x3066;&#x308B;&#x74B0;&#x5883;&#x3060;&#x3068;&#x52D5;&#x304B;&#x306A;&#x3044;&#x3001;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x304C;&#x3042;&#x308A;&#x305D;&#x3046;&#x3067; Lambda Edge &#x3067;&#x3067;&#x304D;&#x308B;&#x306B;&#x306F;&#x3067;&#x304D;&#x308B;&#x304C;&#x3001;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x5074;&#x306B;&#x4EFB;&#x305B;&#x308B;&#x65B9;&#x304C;&#x826F;&#x3044;&#x306E;&#x3067;&#x306F;&#xFF1F;<br>&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</span></h2><p><a href="https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Content-Security-Policy">MDN web docs - Content-Security-Policy</a></p>
+<h2><span id="実際設定してみてどう">実際設定してみてどう？</span></h2><p>Rails でフロントに Vue を使用している場合に <code>script-src 'unsafe-eval'</code> の指定が必要だったりで、フロント全然動かない、なんてことありました。</p>
+<p>使用しているサードパーティやフロントエンドで CSP の設定で問題が生じることが多々ありました。</p>
+<p>これは Rails 側で設定しないと開発環境では動いたけど、Lambda Edge 効いてる環境だと動かない、ということがありそうで Lambda Edge でできるにはできるが、アプリケーション側に任せる方が良いのでは？<br>と思いました。</p>
+<h2><span id="参考">参考</span></h2><p><a href="https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Content-Security-Policy">MDN web docs - Content-Security-Policy</a></p>
 
 			  		
 			  		<!-- google Adsense -->

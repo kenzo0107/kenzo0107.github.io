@@ -98,7 +98,7 @@
 			    "@id":"https://kenzo0107.github.io/2020/08/13/2020-08-14-aws-kms-encrypt-decrypt/"
 			},
 			"datePublished": "2020-08-13T15:00:00.000Z",
-			"dateModified": "2021-02-01T15:58:06.971Z",
+			"dateModified": "2021-03-02T00:38:06.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1866,8 +1866,8 @@ h6.categories {
 <!-- toc -->
 
 <ul>
-<li><a href="#%E6%9A%97%E5%8F%B7%E5%8C%96">&#x6697;&#x53F7;&#x5316;</a></li>
-<li><a href="#%E5%BE%A9%E5%8F%B7">&#x5FA9;&#x53F7;</a></li>
+<li><a href="#%E6%9A%97%E5%8F%B7%E5%8C%96">暗号化</a></li>
+<li><a href="#%E5%BE%A9%E5%8F%B7">復号</a></li>
 </ul>
 <!-- tocstop -->
 
@@ -1876,14 +1876,14 @@ h6.categories {
 
 <a id="more"></a>
 
-<p>&#x5099;&#x5FD8;&#x9332;&#x3067;&#x3059;&#x3002;</p>
-<h3><span id="&#x6697;&#x53F7;&#x5316;">&#x6697;&#x53F7;&#x5316;</span></h3><p>aws cli ver.1</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws kms encrypt --key-id alias/&lt;kms&#x9375;&gt; --plaintext &quot;&lt;&#x6697;&#x53F7;&#x5316;&#x3057;&#x305F;&#x3044;&#x6587;&#x5B57;&#x5217;&gt;&quot; --output text --query CiphertextBlob</span><br></pre></td></tr></tbody></table></figure>
+<p>備忘録です。</p>
+<h3><span id="暗号化">暗号化</span></h3><p>aws cli ver.1</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws kms encrypt --key-id alias/&lt;kms鍵&gt; --plaintext "&lt;暗号化したい文字列&gt;" --output text --query CiphertextBlob</span><br></pre></td></tr></tbody></table></figure>
 
 <p>aws cli ver.2</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws kms encrypt --key-id alias/&lt;kms&#x9375;&gt; --plaintext &quot;$(echo -n &apos;&lt;&#x6697;&#x53F7;&#x5316;&#x3057;&#x305F;&#x3044;&#x6587;&#x5B57;&#x5217;&gt;&apos; | base64)&quot; --output text --query CiphertextBlob</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws kms encrypt --key-id alias/&lt;kms鍵&gt; --plaintext "$(echo -n '&lt;暗号化したい文字列&gt;' | base64)" --output text --query CiphertextBlob</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x5FA9;&#x53F7;">&#x5FA9;&#x53F7;</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws kms decrypt --ciphertext-blob fileb://&lt;(echo &apos;&#x6587;&#x5B57;&#x5217;&apos;|base64 -d) | jq .Plaintext --raw-output |base64 -d</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="復号">復号</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws kms decrypt --ciphertext-blob fileb://&lt;(echo '文字列'|base64 -d) | jq .Plaintext --raw-output |base64 -d</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
 			  		<!-- google Adsense -->

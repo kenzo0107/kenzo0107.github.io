@@ -1814,10 +1814,10 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="iftop-&#x6982;&#x8981;">iftop &#x6982;&#x8981;</span></h2><p>CLI&#x4E0A;&#x3067;&#x5229;&#x7528;&#x3067;&#x304D;&#x308B;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x306E;&#x63A5;&#x7D9A;&#x72B6;&#x6CC1;&#x3092;&#x30EA;&#x30A2;&#x30EB;&#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;&#x3059;&#x308B;&#x30C4;&#x30FC;&#x30EB;&#x3067;&#x3059;&#x3002;<br>&#x2192; &#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x306E;&#x30DC;&#x30C8;&#x30EB;&#x30CD;&#x30C3;&#x30AF;&#x3092;&#x7279;&#x5B9A;&#x3059;&#x308B;&#x70BA;&#x306B;&#x5229;&#x7528;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x5358;&#x306B;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x306E;&#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;&#x3067;&#x3042;&#x308C;&#x3070;&#x3001;&#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;&#x30C4;&#x30FC;&#x30EB;&#x3067;&#x826F;&#x3044;&#x3067;&#x3059;&#x304C;</p>
-<p>&#x5177;&#x4F53;&#x7684;&#x306B;&#x3069;&#x3053;&#xFF08;&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x30FB;IP&#x30FB;&#x30DD;&#x30FC;&#x30C8;&#xFF09;&#x306B;&#x3069;&#x308C;&#x304F;&#x3089;&#x3044;&#xFF08;&#x30C7;&#x30FC;&#x30BF;&#x8EE2;&#x9001;&#x91CF;&#xFF09;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x65B9;&#x6CD5;">&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x65B9;&#x6CD5;</span></h2><ul>
+			  		<h2><span id="iftop-概要">iftop 概要</span></h2><p>CLI上で利用できるネットワークの接続状況をリアルモニタリングするツールです。<br>→ ネットワークのボトルネックを特定する為に利用します。</p>
+<p>単にネットワークのモニタリングであれば、モニタリングツールで良いですが</p>
+<p>具体的にどこ（ドメイン・IP・ポート）にどれくらい（データ転送量）がわかります。</p>
+<h2><span id="インストール方法">インストール方法</span></h2><ul>
 <li>Ubuntu</li>
 </ul>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y iftop</span><br></pre></td></tr></tbody></table></figure>
@@ -1827,17 +1827,17 @@ h6.categories {
 </ul>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install epel-release</span><br><span class="line">$ sudo yum -y install iftop</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x4F7F;&#x3044;&#x65B9;">&#x4F7F;&#x3044;&#x65B9;</span></h2><p>&#x3088;&#x304F;&#x5229;&#x7528;&#x3059;&#x308B;&#x306E;&#x306F;&#x3053;&#x3093;&#x306A;&#x5F62;&#x3067;&#x3059;&#x3002;<br>&#x203B;eth0 &#x304C;&#x306A;&#x3044;&#x5834;&#x5408;&#x306F; <code>-i eth0</code> &#x3092;&#x9664;&#x3044;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<h2><span id="使い方">使い方</span></h2><p>よく利用するのはこんな形です。<br>※eth0 がない場合は <code>-i eth0</code> を除いてください。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iftop -i eth0 -B -P -n -N</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>-i &#x30A4;&#x30F3;&#x30BF;&#x30FC;&#x30D5;&#x30A7;&#x30FC;&#x30B9;&#x6307;&#x5B9A;</li>
-<li>-B &#x8868;&#x793A;&#x5358;&#x4F4D;&#x3092; Byte &#x306B;&#x3059;&#x308B;</li>
-<li>-P &#x30D7;&#x30ED;&#x30C8;&#x30B3;&#x30EB; or &#x30DD;&#x30FC;&#x30C8;&#x8868;&#x793A;</li>
-<li>-n &#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x3067;&#x306A;&#x304F; ip &#x3067;&#x8868;&#x793A;</li>
-<li>-N &#x30D7;&#x30ED;&#x30C8;&#x30B3;&#x30EB;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x540D;&#x3067;&#x306A;&#x304F;&#x30DD;&#x30FC;&#x30C8;&#x756A;&#x53F7;&#x3067;&#x8868;&#x793A;</li>
+<li>-i インターフェース指定</li>
+<li>-B 表示単位を Byte にする</li>
+<li>-P プロトコル or ポート表示</li>
+<li>-n ドメインでなく ip で表示</li>
+<li>-N プロトコルサービス名でなくポート番号で表示</li>
 </ul>
-<h3><span id="&#x8868;&#x793A;&#x9805;&#x76EE;">&#x8868;&#x793A;&#x9805;&#x76EE;</span></h3><p><code>=&gt;</code> &#x304C;&#x9001;&#x4FE1;&#x3001;<br><code>&lt;=</code> &#x304C;&#x53D7;&#x4FE1;&#x3067;&#x3059;</p>
+<h3><span id="表示項目">表示項目</span></h3><p><code>=&gt;</code> が送信、<br><code>&lt;=</code> が受信です</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">                           24.4kB                      48.8kB                      73.2kB                      97.7kB                 122kB</span><br><span class="line">+--------------------------+---------------------------+---------------------------+---------------------------+---------------------------</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:http      =&gt; ip-10-13-100-41.ap-northeast-1.compute.internal:62635     559kB   121kB  67.1kB</span><br><span class="line">                                                        &lt;=                                                          3.60kB  1.90kB  1.05kB</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:35244     =&gt; ip-10-13-102-56.ap-northeast-1.compute.internal:mysql       0B   2.18kB  1.21kB</span><br><span class="line">                                                        &lt;=                                                             0B   23.1kB  12.8kB</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:35247     =&gt; ip-10-13-102-56.ap-northeast-1.compute.internal:mysql       0B   2.13kB  1.18kB</span><br><span class="line">                                                        &lt;=                                                             0B   23.0kB  12.8kB</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:http      =&gt; ip-10-13-0-231.ap-northeast-1.compute.internal:8239         0B   7.73kB  4.29kB</span><br><span class="line">                                                        &lt;=                                                             0B   1.16kB   658B</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:ssh       =&gt; ip-10-13-0-11.ap-northeast-1.compute.internal:56320       612B    576B    522B</span><br><span class="line">                                                        &lt;=                                                            26B     26B     32B</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:http      =&gt; ip-10-13-100-41.ap-northeast-1.compute.internal:62657       0B     49B     27B</span><br><span class="line">                                                        &lt;=                                                             0B     92B     51B</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:40069     =&gt; ip-10-13-103-247.ap-northeast-1.compute.internal:6379       0B     99B     55B</span><br><span class="line">                                                        &lt;=                                                             0B     34B     19B</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:40072     =&gt; ip-10-13-103-247.ap-northeast-1.compute.internal:6379       0B     99B     55B</span><br><span class="line">                                                        &lt;=                                                             0B     34B     19B</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:http      =&gt; ip-10-13-100-73.ap-northeast-1.compute.internal:27698       0B     44B     25B</span><br><span class="line">                                                        &lt;=                                                             0B     33B     18B</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:53696     =&gt; ip-10-13-0-2.ap-northeast-1.compute.internal:domain         0B     21B     12B</span><br><span class="line">                                                        &lt;=                                                             0B     31B     17B</span><br><span class="line">ip-10-13-1-101.ap-northeast-1.compute.internal:41975     =&gt; ip-10-13-0-2.ap-northeast-1.compute.internal:domain         0B     21B     12B</span><br><span class="line">                                                        &lt;=                                                             0B     31B     17B</span><br><span class="line">-------------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">TX:             cum:   1.31MB   peak:    560kB                                                             rates:    560kB   134kB  74.7kB</span><br><span class="line">RX:                     505kB            117kB                                                                      3.69kB  49.8kB  28.1kB</span><br><span class="line">TOTAL:                 1.81MB            564kB                                                                       564kB   184kB   103kB</span><br></pre></td></tr></tbody></table></figure>
 
 <div class="table-wrapper"><table>
@@ -1849,50 +1849,50 @@ h6.categories {
 </thead>
 <tbody><tr>
 <td>TX (Transmitter)</td>
-<td>&#x9001;&#x4FE1;&#x91CF;</td>
+<td>送信量</td>
 </tr>
 <tr>
 <td>RX (Receiver)</td>
-<td>&#x53D7;&#x4FE1;&#x91CF;</td>
+<td>受信量</td>
 </tr>
 <tr>
 <td>TOTAL</td>
-<td>iftop &#x8D77;&#x52D5;&#x304B;&#x3089;&#x306E;&#x7DCF;&#x91CF;</td>
+<td>iftop 起動からの総量</td>
 </tr>
 <tr>
 <td>cum</td>
-<td>&#x7DCF;&#x91CF;</td>
+<td>総量</td>
 </tr>
 <tr>
 <td>peak</td>
-<td>&#x6700;&#x5927;</td>
+<td>最大</td>
 </tr>
 <tr>
-<td>&#x53F3;&#x7AEF;3&#x5217; (&#x5404;&#x30C8;&#x30E9;&#x30D5;&#x30A3;&#x30C3;&#x30AF;, rates&#x542B;&#x3080;)</td>
-<td>2&#x79D2;&#x3001;10&#x79D2;&#x3001;40&#x79D2;&#x306E;&#x8EE2;&#x9001;&#x91CF;&#x5E73;&#x5747;&#x5024;</td>
+<td>右端3列 (各トラフィック, rates含む)</td>
+<td>2秒、10秒、40秒の転送量平均値</td>
 </tr>
 </tbody></table></div>
-<p>&#x203B;TX,RX &#x306E; &#x300C;X&#x300D; &#x306F;&#x7701;&#x7565;&#x3057;&#x307E;&#x3059;&#x3088;&#x3068;&#x3044;&#x3046;&#x610F;&#x5473;</p>
-<p>&#x95B2;&#x89A7;&#x3057;&#x7D9A;&#x3051;&#x308B;&#x3068;&#x6C17;&#x306B;&#x306A;&#x308B;&#x51E6;&#x7406;&#x304C;&#x3042;&#x3063;&#x305F;&#x6642;&#x306B;&#x306F;<br><code>Shift + P</code> &#x3067;&#x4E00;&#x65E6;&#x505C;&#x6B62;&#x3055;&#x305B;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x3082;&#x3046;&#x4E00;&#x5EA6;&#x958B;&#x59CB;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;&#x306F; <code>Shift + P</code> &#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x5B9F;&#x969B;&#x306E;cli">&#x5B9F;&#x969B;&#x306E;CLI</span></h2><p>&#x4EE5;&#x4E0B;&#x898B;&#x3066;&#x3044;&#x305F;&#x3060;&#x304F;&#x3068;&#x767D;&#x3044;&#x5E2F;&#x30B0;&#x30E9;&#x30D5;&#x304C;&#x5DE6;&#x304B;&#x3089;&#x4F38;&#x3073;&#x3066;&#x3044;&#x308B;&#x306E;&#x304C;&#x898B;&#x3048;&#x308B;&#x304B;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;<br>&#x3053;&#x306E;&#x6A2A;&#x68D2;&#x304C;&#x4E00;&#x756A;&#x4E0A;&#x306E;&#x30D0;&#x30FC;&#x306E;&#x76EE;&#x76DB;&#x308A;&#x306B;&#x76F8;&#x5FDC;&#x3057;&#x3066;&#x3071;&#x3063;&#x3068;&#x898B;&#x3067;&#x3069;&#x306E;&#x7A0B;&#x5EA6;&#x304B;&#x308F;&#x304B;&#x308B;&#x306E;&#x304C;&#x4FBF;&#x5229;&#x3067;&#x3059;&#x3002;</p>
+<p>※TX,RX の 「X」 は省略しますよという意味</p>
+<p>閲覧し続けると気になる処理があった時には<br><code>Shift + P</code> で一旦停止させます。</p>
+<p>もう一度開始したい場合は <code>Shift + P</code> です。</p>
+<h2><span id="実際のcli">実際のCLI</span></h2><p>以下見ていただくと白い帯グラフが左から伸びているのが見えるかと思います。<br>この横棒が一番上のバーの目盛りに相応してぱっと見でどの程度かわかるのが便利です。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171109/20171109011640.png" width="1024" height="622" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="db-&#x3078;&#x306E;&#x63A5;&#x7D9A;&#x3092;&#x78BA;&#x304B;&#x3081;&#x308B;">DB &#x3078;&#x306E;&#x63A5;&#x7D9A;&#x3092;&#x78BA;&#x304B;&#x3081;&#x308B;</span></h2><p>DB (MySQL) &#x306E;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x30DD;&#x30FC;&#x30C8; 3306 &#x3078;&#x306E;&#x9001;&#x53D7;&#x4FE1;&#x3092;&#x8ABF;&#x3079;&#x305F;&#x3044;&#x3068;&#x304D;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iftop -B -P -n -N -f &quot;port 3306&quot;</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="db-への接続を確かめる">DB への接続を確かめる</span></h2><p>DB (MySQL) のデフォルトポート 3306 への送受信を調べたいとき</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iftop -B -P -n -N -f "port 3306"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x5F53;&#x7136;&#x306A;&#x304C;&#x3089;&#x53D7;&#x4FE1;&#x306E;&#x65B9;&#x304C;&#x5927;&#x304D;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>当然ながら受信の方が大きいです。</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171109/20171109120917.png" width="1024" height="658" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x88DC;&#x8DB3;">&#x88DC;&#x8DB3;</span></h2><p>&#x5B9F;&#x969B;&#x306B;&#x8CA0;&#x8377;&#x304C;&#x9AD8;&#x3044;&#x6642;&#x7B49;&#x3001;&#x7279;&#x5B9A;&#x306E;&#x30A4;&#x30F3;&#x30B7;&#x30C7;&#x30F3;&#x30C8;&#x304C;&#x3042;&#x3063;&#x305F;&#x969B;&#x306B;&#x8FFD;&#x8A18;&#x3057;&#x3066;&#x3044;&#x3053;&#x3046;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x266A;</p>
+<h2><span id="補足">補足</span></h2><p>実際に負荷が高い時等、特定のインシデントがあった際に追記していこうと思います♪</p>
 <h2><span id="reference">Reference</span></h2><ul>
-<li><a href="http://blog.father.gedow.net/2017/10/17/middleware-benchmark/">&#x30DF;&#x30C9;&#x30EB;&#x30A6;&#x30A7;&#x30A2;&#x6027;&#x80FD;&#x691C;&#x8A3C;&#x306E;&#x624B;&#x5F15;&#x304D;</a></li>
-<li><a href="https://blog.bitmeister.jp/?p=3930">Linux&#x4E0A;&#x3067;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x306E;&#x5E2F;&#x57DF;&#x5236;&#x9650;&#x3068;&#x9045;&#x5EF6;&#x3092;&#x8A2D;&#x5B9A;&#x3059;&#x308B;</a></li>
-<li><a href="http://labs.gree.jp/blog/2014/10/11288/">Linux TC (&#x5E2F;&#x57DF;&#x5236;&#x5FA1;&#x3001;&#x5E2F;&#x57DF;&#x4FDD;&#x8A3C;) &#x8A2D;&#x5B9A;&#x30AC;&#x30A4;&#x30C9;&#x30E9;&#x30A4;&#x30F3;</a></li>
+<li><a href="http://blog.father.gedow.net/2017/10/17/middleware-benchmark/">ミドルウェア性能検証の手引き</a></li>
+<li><a href="https://blog.bitmeister.jp/?p=3930">Linux上でネットワークの帯域制限と遅延を設定する</a></li>
+<li><a href="http://labs.gree.jp/blog/2014/10/11288/">Linux TC (帯域制御、帯域保証) 設定ガイドライン</a></li>
 </ul>
 
 			  		

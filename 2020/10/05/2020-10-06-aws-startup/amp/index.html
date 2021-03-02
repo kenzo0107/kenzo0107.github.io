@@ -104,7 +104,7 @@
 			    "@id":"https://kenzo0107.github.io/2020/10/05/2020-10-06-aws-startup/"
 			},
 			"datePublished": "2020-10-05T15:00:00.000Z",
-			"dateModified": "2021-02-01T15:58:06.971Z",
+			"dateModified": "2021-03-02T00:38:06.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1872,21 +1872,21 @@ h6.categories {
 <!-- toc -->
 
 <ul>
-<li><a href="#%E6%A6%82%E8%A6%81">&#x6982;&#x8981;</a></li>
-<li><a href="#%E7%B5%90%E8%AB%96">&#x7D50;&#x8AD6;</a></li>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E7%B5%90%E8%AB%96">結論</a></li>
 </ul>
 <!-- tocstop -->
 
 </div>
 </div>
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x300C;AWS &#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;&#x958B;&#x8A2D;&#x5B8C;&#x4E86;&#x3057;&#x307E;&#x3057;&#x305F;&#xFF01;&#x300D;&#x3068;&#x8A00;&#x308F;&#x308C;&#x3001;terraform &#x6D41;&#x3057;&#x3066;&#x307F;&#x305F;&#x3089;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3002;<br>&#x305D;&#x306E;&#x6642;&#x5BFE;&#x51E6;&#x3057;&#x305F;&#x5185;&#x5BB9;&#x3092;&#x5099;&#x5FD8;&#x9332;&#x3068;&#x3057;&#x3066;&#x307E;&#x3068;&#x3081;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="概要">概要</span></h2><p>「AWS アカウント開設完了しました！」と言われ、terraform 流してみたら以下の様なエラーが発生。<br>その時対処した内容を備忘録としてまとめます。</p>
 <a id="more"></a>
 
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: Error fetching Availability Zones: OptInRequired: You are not subscribed to this service. Please go to http://aws.amazon.com to subscribe.</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x7D50;&#x8AD6;">&#x7D50;&#x8AD6;</span></h2><p>AWS &#x306E;&#x30B5;&#x30A4;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x304C;&#x5B8C;&#x4E86;&#x3057;&#x3066;&#x3044;&#x306A;&#x304B;&#x3063;&#x305F;&#x3053;&#x3068;&#x304C;&#x539F;&#x56E0;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x30E1;&#x30CB;&#x30E5;&#x30FC;&#x304B;&#x3089; <a href="https://console.aws.amazon.com/servicequotas/home">&#x30DE;&#x30A4; Service Quotas</a> &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3001;<br>&#x672C;&#x4EBA;&#x78BA;&#x8A8D;&#x3092;&#x3057;&#x305F;&#x3089;&#x89E3;&#x6C7A;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="結論">結論</span></h2><p>AWS のサインアップが完了していなかったことが原因でした。</p>
+<p>メニューから <a href="https://console.aws.amazon.com/servicequotas/home">マイ Service Quotas</a> にアクセスし、<br>本人確認をしたら解決できました。</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/CWMs1IV.png" width="1582" height="1878" layout="responsive"></amp-img></div>
 
 			  		

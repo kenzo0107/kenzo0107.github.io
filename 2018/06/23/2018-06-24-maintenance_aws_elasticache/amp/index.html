@@ -1825,41 +1825,41 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>2018&#x5E74;6&#x6708;&#x9803; AWS ElastiCache &#x306E;&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B9;&#x901A;&#x77E5;&#x304C;&#x5927;&#x91CF;&#x767A;&#x751F;&#x3057;&#x305F;&#x6642;&#x306E;&#x5099;&#x5FD8;&#x9332;&#x3067;&#x3059;&#x3002;</p>
+			  		<p>2018年6月頃 AWS ElastiCache のメンテナンス通知が大量発生した時の備忘録です。</p>
 <div class="twitter-wrapper"><amp-twitter data-tweetid="1008956888086503425" width="800" height="600" layout="responsive"></amp-twitter></div>
 
 <a id="more"></a>
 
-<h2><span id="&#x30E1;&#x30F3;&#x30C6;&#x6642;&#x306B;&#x53C2;&#x7167;&#x3057;&#x305F;&#x30EA;&#x30F3;&#x30AF;">&#x30E1;&#x30F3;&#x30C6;&#x6642;&#x306B;&#x53C2;&#x7167;&#x3057;&#x305F;&#x30EA;&#x30F3;&#x30AF;</span></h2><p><a href="https://docs.aws.amazon.com/ja_jp/AmazonElastiCache/latest/red-ug/CacheNodes.html#ReplaceStandalone">Redis &#x7528; Amazon ElastiCache</a></p>
-<p>&#x57FA;&#x672C;&#x3001;&#x30CE;&#x30FC;&#x30C9;&#x306E;&#x30EA;&#x30D7;&#x30EC;&#x30A4;&#x30B9;&#x304C;&#x5FC5;&#x8981;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x3001;&#x624B;&#x52D5;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x6642;&#x306E;&#x624B;&#x9806;&#x3067;&#x3059;&#x3002;</p>
-<h3><span id="node-1-&#x306E;&#x5834;&#x5408;">node = 1 &#x306E;&#x5834;&#x5408;</span></h3><p>&#x30B9;&#x30BF;&#x30F3;&#x30C9;&#x30A2;&#x30ED;&#x30FC;&#x30F3;&#x306A; ElastiCache &#x306E;&#x5834;&#x5408;&#x3001;</p>
+<h2><span id="メンテ時に参照したリンク">メンテ時に参照したリンク</span></h2><p><a href="https://docs.aws.amazon.com/ja_jp/AmazonElastiCache/latest/red-ug/CacheNodes.html#ReplaceStandalone">Redis 用 Amazon ElastiCache</a></p>
+<p>基本、ノードのリプレイスが必要です。</p>
+<p>以下、手動実行する時の手順です。</p>
+<h3><span id="node-1-の場合">node = 1 の場合</span></h3><p>スタンドアローンな ElastiCache の場合、</p>
 <ol>
-<li>&#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;&#x3092;&#x3068;&#x308B;</li>
-<li>&#x30EA;&#x30FC;&#x30C9;&#x30EC;&#x30D7;&#x30EA;&#x30AB;&#x3092;&#x8FFD;&#x52A0;</li>
-<li>&#x30EC;&#x30D7;&#x30EA;&#x30AB;&#x3092;&#x6607;&#x683C;&#x3057;&#x30D7;&#x30E9;&#x30A4;&#x30DE;&#x30EA;&#x306B;&#x3059;&#x308B;</li>
-<li>&#x30EC;&#x30D7;&#x30EA;&#x30AB;&#x3068;&#x306A;&#x3063;&#x305F;&#x5143;&#x30CE;&#x30FC;&#x30C9;&#x3092;&#x524A;&#x9664;</li>
+<li>バックアップをとる</li>
+<li>リードレプリカを追加</li>
+<li>レプリカを昇格しプライマリにする</li>
+<li>レプリカとなった元ノードを削除</li>
 </ol>
-<p>&#x3053;&#x308C;&#x3067;&#x30CE;&#x30FC;&#x30C9;&#x306E;&#x30EA;&#x30D7;&#x30EC;&#x30A4;&#x30B9;&#x304C;&#x5B8C;&#x4E86;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h3><span id="node-n-gt2">node = N (&gt;=2)</span></h3><p>&#x8907;&#x6570;&#x30CE;&#x30FC;&#x30C9;&#x3042;&#x308B;&#x5834;&#x5408;&#x3001;</p>
+<p>これでノードのリプレイスが完了しました。</p>
+<h3><span id="node-n-gt2">node = N (&gt;=2)</span></h3><p>複数ノードある場合、</p>
 <ol>
-<li>&#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;&#x3092;&#x3068;&#x308B;</li>
-<li>&#x30D5;&#x30A7;&#x30FC;&#x30EB;&#x30AA;&#x30FC;&#x30D0;&#x30FC;&#x5B9F;&#x65BD;</li>
+<li>バックアップをとる</li>
+<li>フェールオーバー実施</li>
 </ol>
-<p>AWS Support &#x66F0;&#x304F;&#x3001;</p>
+<p>AWS Support 曰く、</p>
 <blockquote>
-<p>&#x30D5;&#x30A7;&#x30FC;&#x30EB;&#x30AA;&#x30FC;&#x30D0;&#x30FC; API &#x306F;&#x969C;&#x5BB3;&#x3092;&#x30B7;&#x30DF;&#x30E5;&#x30EC;&#x30FC;&#x30C8;&#x3059;&#x308B;&#x306E;&#x3067;&#x3001;&#x30D5;&#x30A7;&#x30A4;&#x30EB;&#x30AA;&#x30FC;&#x30D0;&#x30FC;&#x5F8C;&#x306B;&#x30CE;&#x30FC;&#x30C9;&#x306E;&#x7F6E;&#x304D;&#x63DB;&#x3048;&#x3082;&#x884C;&#x308F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<p>フェールオーバー API は障害をシミュレートするので、フェイルオーバー後にノードの置き換えも行われます。</p>
 </blockquote>
-<p>&#x3068;&#x306E;&#x3053;&#x3068;</p>
-<h2><span id="&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B9;&#x5B8C;&#x4E86;&#x306E;&#x78BA;&#x8A8D;&#x65B9;&#x6CD5;">&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B9;&#x5B8C;&#x4E86;&#x306E;&#x78BA;&#x8A8D;&#x65B9;&#x6CD5;</span></h2><p><b>&#x6B63;&#x78BA;&#x306B;&#x30B9;&#x30C6;&#x30FC;&#x30BF;&#x30B9;&#x78BA;&#x8A8D;&#x3059;&#x308B;&#x306B;&#x306F;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x306B;&#x78BA;&#x8A8D;&#x3059;&#x308B;</b>&#x4EE5;&#x5916;&#x306F;&#x306A;&#x3044;&#x304B;&#x306A;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x30A4;&#x30D9;&#x30F3;&#x30C8;&#x306B;&#x306F;&#x64CD;&#x4F5C;&#x30ED;&#x30B0;&#x304C;&#x6B8B;&#x308A;&#x30E1;&#x30F3;&#x30C6;&#x304C;&#x5B9F;&#x65BD;&#x3055;&#x308C;&#x305F;&#x3068;&#x3044;&#x3046;&#x30ED;&#x30B0;&#x306F;&#x4E00;&#x5207;&#x6B8B;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</p>
-<p>&#x307E;&#x305F;&#x3001;&#x30A2;&#x30E9;&#x30FC;&#x30C8;&#x3082;&#x3059;&#x3050;&#x3055;&#x307E;&#x6D88;&#x3048;&#x307E;&#x305B;&#x3093;&#x3002;&#x6B63;&#x78BA;&#x306B;&#x306F;&#x308F;&#x304B;&#x308A;&#x307E;&#x305B;&#x3093;&#x304C;&#x3001;&#x6570;&#x6642;&#x9593;&#x7A0B;&#x5EA6;&#x7D4C;&#x904E;&#x3057;&#x305F;&#x3089;&#x6D88;&#x3048;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>とのこと</p>
+<h2><span id="メンテナンス完了の確認方法">メンテナンス完了の確認方法</span></h2><p><b>正確にステータス確認するにはサポートに確認する</b>以外はないかなと思います。</p>
+<p>イベントには操作ログが残りメンテが実施されたというログは一切残りません。</p>
+<p>また、アラートもすぐさま消えません。正確にはわかりませんが、数時間程度経過したら消えていました。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180624/20180624213819.png" width="356" height="350" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x624B;&#x52D5;&#x5B9F;&#x884C;&#x305B;&#x305A;&#x653E;&#x3063;&#x3066;&#x304A;&#x3044;&#x305F;&#x5834;&#x5408;">&#x624B;&#x52D5;&#x5B9F;&#x884C;&#x305B;&#x305A;&#x653E;&#x3063;&#x3066;&#x304A;&#x3044;&#x305F;&#x5834;&#x5408;</span></h2><p>&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B9;&#x306F;&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B9;&#x30A6;&#x30A3;&#x30F3;&#x30C9;&#x30A6;&#x3067;&#x6307;&#x5B9A;&#x3057;&#x305F;&#x6642;&#x9593;&#x5E2F;&#x306B;&#x5B9F;&#x65BD;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x3061;&#x306A;&#x307F;&#x306B;&#x3001;&#x653E;&#x3063;&#x3066;&#x304A;&#x3044;&#x305F;&#x6642;&#x306E;&#x30A4;&#x30D9;&#x30F3;&#x30C8;&#x30ED;&#x30B0;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x306A;&#x3063;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="手動実行せず放っておいた場合">手動実行せず放っておいた場合</span></h2><p>メンテナンスはメンテナンスウィンドウで指定した時間帯に実施されました。</p>
+<p>ちなみに、放っておいた時のイベントログは以下のようになっていました。</p>
 <p>n = 1</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180624/20180624220417.png" width="1024" height="97" layout="responsive"></amp-img></div>
@@ -1870,9 +1870,9 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180624/20180624220358.png" width="1024" height="165" layout="responsive"></amp-img></div>
 </div>
 
-<p>n= 2 &#x3067;&#x30D5;&#x30A7;&#x30FC;&#x30EB;&#x30AA;&#x30FC;&#x30D0;&#x30FC;&#x304C;&#x81EA;&#x52D5;&#x5B9F;&#x884C;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x306E;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B9;&#x81EA;&#x4F53;&#x306E;&#x7D4C;&#x904E;&#x6642;&#x9593;&#x306F;&#x30C7;&#x30FC;&#x30BF;&#x91CF;&#x306B;&#x3082;&#x3088;&#x308B;&#x306E;&#x3067;&#x4E00;&#x6982;&#x306B;&#x306F;&#x8A00;&#x3048;&#x307E;&#x305B;&#x3093;&#x306E;&#x3067;<br>&#x672C;&#x756A;&#x524D;&#x306B;&#x4E00;&#x5EA6;&#x30EA;&#x30CF;&#x30FC;&#x30B5;&#x30EB;&#x3057;&#x3066;&#x6982;&#x7B97;&#x3068;&#x3063;&#x3066;&#x304A;&#x304F;&#x306E;&#x304C;&#x826F;&#x3044;&#x304B;&#x306A;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;<br>&#x3054;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>n= 2 でフェールオーバーが自動実行されているのがわかります。</p>
+<p>メンテナンス自体の経過時間はデータ量にもよるので一概には言えませんので<br>本番前に一度リハーサルして概算とっておくのが良いかなと思います。</p>
+<p>以上<br>ご参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->

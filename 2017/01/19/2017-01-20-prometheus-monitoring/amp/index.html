@@ -1814,71 +1814,71 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x4EE5;&#x524D; Ansible + Vagrant &#x3067;Prometheus&#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;&#x74B0;&#x5883;&#x69CB;&#x7BC9;&#x306B;&#x3064;&#x3044;&#x3066;&#x66F8;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<a href="http://kenzo0107.hatenablog.com/entry/2016/06/21/003544" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/pfazhaR.png" width="513" height="327" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Ansible+Vagrant &#x3067;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x306A;Prometheus&#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;&#x74B0;&#x5883;&#x69CB;&#x7BC9; - &#x9577;&#x751F;&#x6751;&#x672C;&#x90F7;Engineers&apos;Blog</div><div class="og-description">&#x6982;&#x8981; Prometheus&#x5165;&#x9580; &#x306B;&#x3042;&#x308B;&#x30C1;&#x30E5;&#x30FC;&#x30C8;&#x30EA;&#x30A2;&#x30EB;&#x3092; Ansible&#x3067;&#x7C21;&#x5358;&#x306B;&#x69CB;&#x7BC9;&#x3067;&#x304D;&#x308B;&#x3088;&#x3046;&#x306B;&#x3057;&#x305F;&#x3001; &#x3068;&#x3044;&#x3046;&#x3082;&#x306E;&#x3067;&#x3059;&#x3002; &#x5148;&#x65E5;2016&#x5E74;6&#x6708;14&#x65E5;&#x3001; LINE&#x682A;&#x5F0F;&#x4F1A;&#x793E;&#x3067;&#x306E;Prometheus Casual Talks #1&#x306B;&#x53C2;&#x52A0;&#x3057; &#x30CA;&#x30EC;&#x30C3;&#x30B8;&#x306E;&#x304A;&#x3055;&#x3089;&#x3044;&#x306A;&#x3069;&#x3057;&#x305F;&#x304F;&#x3001; &#x69CB;&#x7BC9;&#x6CD5;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x2026;</div></div></div></a>
+			  		<h2><span id="概要">概要</span></h2><p>以前 Ansible + Vagrant でPrometheusモニタリング環境構築について書きました。</p>
+<a href="http://kenzo0107.hatenablog.com/entry/2016/06/21/003544" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/pfazhaR.png" width="513" height="327" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Ansible+Vagrant でシンプルなPrometheusモニタリング環境構築 - 長生村本郷Engineers'Blog</div><div class="og-description">概要 Prometheus入門 にあるチュートリアルを Ansibleで簡単に構築できるようにした、 というものです。 先日2016年6月14日、 LINE株式会社でのPrometheus Casual Talks #1に参加し ナレッジのおさらいなどしたく、 構築法をまとめまし…</div></div></div></a>
 
 
-<p>&#x4ECA;&#x56DE;&#x306F;&#x5177;&#x4F53;&#x7684;&#x306B;&#x3088;&#x304F;&#x3042;&#x308B;&#x8A2D;&#x5B9A;&#x30E6;&#x30FC;&#x30B9;&#x30B1;&#x30FC;&#x30B9;&#x3092;&#x9806;&#x8FFD;&#x3063;&#x3066;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>今回は具体的によくある設定ユースケースを順追って設定していきます。</p>
 <ol>
-<li><a href="http://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring">Prometheus Server &#x69CB;&#x7BC9;</a></li>
-<li><a href="http://kenzo0107.github.io/2017/01/25/2017-01-25-prometheus-aws-autoscaling">&#x76E3;&#x8996;&#x5BFE;&#x8C61;&#x3067; Node Exporter &#x69CB;&#x7BC9;</a></li>
-<li><a href="http://kenzo0107.github.io/2017/02/02/2017-02-02-prometheus-alertmanager">Alertmanager &#x69CB;&#x7BC9;</a></li>
+<li><a href="http://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring">Prometheus Server 構築</a></li>
+<li><a href="http://kenzo0107.github.io/2017/01/25/2017-01-25-prometheus-aws-autoscaling">監視対象で Node Exporter 構築</a></li>
+<li><a href="http://kenzo0107.github.io/2017/02/02/2017-02-02-prometheus-alertmanager">Alertmanager 構築</a></li>
 </ol>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125134654.png" width="665" height="437" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x4ECA;&#x56DE;&#x3084;&#x308B;&#x3053;&#x3068;-3&#x884C;&#x307E;&#x3068;&#x3081;">&#x4ECA;&#x56DE;&#x3084;&#x308B;&#x3053;&#x3068; 3&#x884C;&#x307E;&#x3068;&#x3081;</span></h2><ul>
-<li>Prometheus Server &#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</li>
-<li>Prometheus Server &#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x4F5C;&#x6210;</li>
-<li>Prometheus Server &#x8D77;&#x52D5;&#x3057;&#x81EA;&#x8EAB;&#x306E;&#x30B5;&#x30FC;&#x30D0;&#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;</li>
+<h2><span id="今回やること-3行まとめ">今回やること 3行まとめ</span></h2><ul>
+<li>Prometheus Server モジュールインストール</li>
+<li>Prometheus Server 起動スクリプト作成</li>
+<li>Prometheus Server 起動し自身のサーバモニタリング</li>
 </ul>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125140715.png" width="665" height="437" layout="responsive"></amp-img></div>
 </div>
 
-<p>Prometheus &#x306E;&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306B;&#x3064;&#x3044;&#x3066;&#x306F;<br>&#x5168;&#x4F53;&#x50CF;&#x3092;&#x7406;&#x89E3;&#x3057;&#x305F;&#x5F8C;&#x304C;&#x826F;&#x3044;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x306E;&#x3067;<br>Node Exporter &#x306E;&#x8A2D;&#x5B9A;&#x306E;&#x5F8C;&#x306B;&#x5B9F;&#x65BD;&#x3057;&#x305F;&#x3044;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<p>Prometheus の設定ファイルについては<br>全体像を理解した後が良いと思いますので<br>Node Exporter の設定の後に実施したいと思います。</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS Linux release 7.3.1611 (Core)</li>
 </ul>
-<h2><span id="prometheus-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Prometheus &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><ul>
-<li>&#x30D1;&#x30C3;&#x30B1;&#x30FC;&#x30B8;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;<br><a href="https://github.com/prometheus/prometheus/releases">&#x6700;&#x65B0;&#x306E;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;</a>&#x3092;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3057;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</li>
+<h2><span id="prometheus-インストール">Prometheus インストール</span></h2><ul>
+<li>パッケージインストール<br><a href="https://github.com/prometheus/prometheus/releases">最新のバージョン</a>をチェックしダウンロードしてください。</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/src</span><br><span class="line">$ sudo wget https://github.com/prometheus/prometheus/releases/download/v1.4.1/prometheus-1.4.1.linux-amd64.tar.gz</span><br><span class="line">$ sudo tar -C /usr/local -xvf prometheus-1.4.1.linux-amd64.tar.gz</span><br><span class="line">$ cd /usr/local</span><br><span class="line">$ sudo mv prometheus-1.4.1.linux-amd64 prometheus-server</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>&#x30B7;&#x30F3;&#x30DC;&#x30EA;&#x30C3;&#x30AF;&#x30EA;&#x30F3;&#x30AF;&#x4F5C;&#x6210;</li>
+<li>シンボリックリンク作成</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ln -s /usr/local/prometheus-server/prometheus /bin/prometheus</span><br><span class="line">$ sudo ln -s /usr/local/prometheus-server/promtool /bin/promtool</span><br><span class="line"></span><br><span class="line">$ prometheus --version</span><br><span class="line">prometheus, version 1.4.1 (branch: master, revision: 2a89e8733f240d3cd57a6520b52c36ac4744ce12)</span><br><span class="line">  build user:       root@e685d23d8809</span><br><span class="line">  build date:       20161128-09:59:22</span><br><span class="line">  go version:       go1.7.3</span><br><span class="line"></span><br><span class="line">$ promtool version</span><br><span class="line">promtool, version 1.4.1 (branch: master, revision: 2a89e8733f240d3cd57a6520b52c36ac4744ce12)</span><br><span class="line">  build user:       root@e685d23d8809</span><br><span class="line">  build date:       20161128-09:59:22</span><br><span class="line">  go version:       go1.7.3</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="prometheus-&#x8D77;&#x52D5;">Prometheus &#x8D77;&#x52D5;</span></h2><p>&#x3068;&#x308A;&#x3042;&#x3048;&#x305A;&#x8D77;&#x52D5;&#x3059;&#x308B;&#x306A;&#x3089;&#x3053;&#x308C;&#x3060;&#x3051;</p>
+<h2><span id="prometheus-起動">Prometheus 起動</span></h2><p>とりあえず起動するならこれだけ</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo prometheus -config.file=/usr/local/prometheus-server/prometheus.yml</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x305F;&#x3060;&#x2191;&#x3053;&#x308C;&#x3092;&#x6BCE;&#x56DE;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x306E;&#x306F;&#x8F9B;&#x3044;&#x306E;&#x3067;&#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x3066;<br>&#x30B5;&#x30FC;&#x30D0;&#x518D;&#x8D77;&#x52D5;&#x6642;&#x306B;&#x81EA;&#x52D5;&#x8D77;&#x52D5;&#x3057;&#x305F;&#x308A;<br><code>systemctl start ...</code> &#x3068;&#x5B9F;&#x884C;&#x3057;&#x305F;&#x3044;&#x3002;</p>
-<h2><span id="&#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x4F5C;&#x6210;">&#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x4F5C;&#x6210;</span></h2><ul>
-<li>Prometheus &#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x4F5C;&#x6210;</li>
+<p>ただ↑これを毎回実行するのは辛いので起動スクリプトを作成して<br>サーバ再起動時に自動起動したり<br><code>systemctl start ...</code> と実行したい。</p>
+<h2><span id="起動スクリプト作成">起動スクリプト作成</span></h2><ul>
+<li>Prometheus オプションファイル作成</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt; &apos;EOF&apos; &gt; /usr/local/prometheus-server/option</span><br><span class="line">OPTIONS=&quot;-config.file=/usr/local/prometheus-server/prometheus.yml -web.console.libraries=/usr/local/prometheus-server/console_libraries -web.console.templates=/usr/local/prometheus-server/consoles&quot;</span><br><span class="line">EOF</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt; 'EOF' &gt; /usr/local/prometheus-server/option</span><br><span class="line">OPTIONS="-config.file=/usr/local/prometheus-server/prometheus.yml -web.console.libraries=/usr/local/prometheus-server/console_libraries -web.console.templates=/usr/local/prometheus-server/consoles"</span><br><span class="line">EOF</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>Prometheus &#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;</li>
+<li>Prometheus 起動スクリプト</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cat &lt;&lt; &apos;EOF&apos; | sudo tee /usr/lib/systemd/system/prometheus.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Prometheus Service</span><br><span class="line">After=syslog.target prometheus.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">EnvironmentFile=-/usr/local/prometheus-server/option</span><br><span class="line">ExecStart=/bin/prometheus $OPTIONS</span><br><span class="line">PrivateTmp=false</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cat &lt;&lt; 'EOF' | sudo tee /usr/lib/systemd/system/prometheus.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Prometheus Service</span><br><span class="line">After=syslog.target prometheus.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">EnvironmentFile=-/usr/local/prometheus-server/option</span><br><span class="line">ExecStart=/bin/prometheus $OPTIONS</span><br><span class="line">PrivateTmp=false</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>&#x8D77;&#x52D5;&#x8A2D;&#x5B9A;</li>
+<li>起動設定</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ sudo systemctl enable prometheus.service</span><br><span class="line">$ sudo systemctl start prometheus.service</span><br><span class="line">$ sudo systemctl status prometheus.service -l</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x308B;">&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x308B;</span></h2><p><code>&lt;IP Address&gt;:9090</code> &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x307E;&#x3059;&#x3002;<br>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x8868;&#x793A;&#x3055;&#x308C;&#x3066;&#x3044;&#x308C;&#x3070; Prometheus &#x8D77;&#x52D5;&#x6210;&#x529F;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="アクセスしてみる">アクセスしてみる</span></h2><p><code>&lt;IP Address&gt;:9090</code> にアクセスします。<br>以下のように表示されていれば Prometheus 起動成功です。</p>
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/1gchGrW.png" width="1486" height="1568" layout="responsive"></amp-img></div>
-<p>&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x8A2D;&#x5B9A;&#x3067;&#x3082;&#x8A2D;&#x5B9A;&#x3057;&#x305F;&#x3001; <code>/usr/local/prometheus-server/consoles</code> &#x306E;&#x5404;html&#x306B;&#x3082;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<p>オプション設定でも設定した、 <code>/usr/local/prometheus-server/consoles</code> の各htmlにもアクセスしてみてください。</p>
 <p><code>&lt;IP Address&gt;:9090/consoles/prometheus-overview.html?instance=localhost%3a9090</code></p>
 <div id="hexo-amp-id-3">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/1gchGrW.png" width="1486" height="1568" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x6B21;&#x56DE;&#x306F; <a href="http://kenzo0107.github.io/2017/01/25/2017-01-25-prometheus-aws-autoscaling">&#x76E3;&#x8996;&#x5BFE;&#x8C61;&#x3067; Node Exporter &#x69CB;&#x7BC9;</a> &#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>次回は <a href="http://kenzo0107.github.io/2017/01/25/2017-01-25-prometheus-aws-autoscaling">監視対象で Node Exporter 構築</a> します。</p>
 
 			  		
 			  		<!-- google Adsense -->

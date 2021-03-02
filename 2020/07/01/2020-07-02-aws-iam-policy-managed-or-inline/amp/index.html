@@ -1919,56 +1919,56 @@ h6.categories {
 <!-- toc -->
 
 <ul>
-<li><a href="#&#x6982;&#x8981;">&#x6982;&#x8981;</a></li>
-<li><a href="#&#x7D50;&#x8AD6;-&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x63A7;&#x3048;-&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x7A4D;&#x6975;&#x7684;&#x306B;&#x4F7F;&#x304A;&#x3046;">&#x7D50;&#x8AD6;&#x3001;&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x63A7;&#x3048;&#x3001;&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x7A4D;&#x6975;&#x7684;&#x306B;&#x4F7F;&#x304A;&#x3046;</a></li>
-<li><a href="#terraform-&#x306E;&#x6C17;&#x6301;&#x3061;&#x306B;&#x306A;&#x3063;&#x3066;&#x307F;&#x308B;">terraform &#x306E;&#x6C17;&#x6301;&#x3061;&#x306B;&#x306A;&#x3063;&#x3066;&#x307F;&#x308B;</a><ul>
-<li><a href="#&#x4F8B;-&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;">&#x4F8B;) &#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</a></li>
-<li><a href="#&#x4F8B;-&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;">&#x4F8B;) &#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</a></li>
+<li><a href="#概要">概要</a></li>
+<li><a href="#結論-インラインポリシーを控え-管理ポリシーを積極的に使おう">結論、インラインポリシーを控え、管理ポリシーを積極的に使おう</a></li>
+<li><a href="#terraform-の気持ちになってみる">terraform の気持ちになってみる</a><ul>
+<li><a href="#例-管理ポリシー">例) 管理ポリシー</a></li>
+<li><a href="#例-インラインポリシー">例) インラインポリシー</a></li>
 </ul>
 </li>
-<li><a href="#&#x307E;&#x3068;&#x3081;">&#x307E;&#x3068;&#x3081;</a></li>
+<li><a href="#まとめ">まとめ</a></li>
 </ul>
 <!-- tocstop -->
 
 </div>
 </div>
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>IAM Policy &#x3067;&#x3001;&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3068;&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3063;&#x3066;&#x3069;&#x3046;&#x3044;&#x3046;&#x9055;&#x3044;&#x304C;&#x3042;&#x3063;&#x3066;&#x3001;&#x3069;&#x3063;&#x3061;&#x3092;&#x4F7F;&#x3046;&#x3079;&#x304D;&#x306A;&#x306E;&#x3060;&#x308D;&#x3046;&#xFF1F;&#x3068;&#x8ABF;&#x3079;&#x3066;&#x307F;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="概要">概要</span></h2><p>IAM Policy で、管理ポリシーとインラインポリシーってどういう違いがあって、どっちを使うべきなのだろう？と調べてみました。</p>
 <a id="more"></a>
 
-<h2><span id="&#x7D50;&#x8AD6;-&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x63A7;&#x3048;-&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x7A4D;&#x6975;&#x7684;&#x306B;&#x4F7F;&#x304A;&#x3046;">&#x7D50;&#x8AD6;&#x3001;&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x63A7;&#x3048;&#x3001;&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x7A4D;&#x6975;&#x7684;&#x306B;&#x4F7F;&#x304A;&#x3046;</span></h2><p><a href="https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/access_policies_managed-vs-inline.html">&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3068;&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</a></p>
-<p>&#x4E0A;&#x8A18;&#x30EA;&#x30F3;&#x30AF;&#x306E; AWS &#x30C9;&#x30AD;&#x30E5;&#x30E1;&#x30F3;&#x30C8;&#x306E; &#x300C;&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3068;&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306E;&#x6BD4;&#x8F03;&#x300D; &#x9805;&#x76EE;&#x3092;&#x898B;&#x308B;&#x3068;&#x3001;&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x30E1;&#x30EA;&#x30C3;&#x30C8;&#x304C;&#x660E;&#x3089;&#x304B;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="結論-インラインポリシーを控え-管理ポリシーを積極的に使おう">結論、インラインポリシーを控え、管理ポリシーを積極的に使おう</span></h2><p><a href="https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/access_policies_managed-vs-inline.html">管理ポリシーとインラインポリシー</a></p>
+<p>上記リンクの AWS ドキュメントの 「管理ポリシーとインラインポリシーの比較」 項目を見ると、管理ポリシーを利用するメリットが明らかです。</p>
 <blockquote>
-<p>&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3067;&#x306F;&#x306A;&#x304F;&#x3001;&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x4F7F;&#x7528;&#x3059;&#x308B;&#x3053;&#x3068;&#x3092;&#x304A;&#x52E7;&#x3081;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306F;&#x6B21;&#x306E;&#x6A5F;&#x80FD;&#x3092;&#x5099;&#x3048;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>インラインポリシーではなく、管理ポリシーを使用することをお勧めします。</p>
+<p>管理ポリシーは次の機能を備えています。</p>
 <ul>
-<li>&#x518D;&#x5229;&#x7528;&#x53EF;&#x80FD;&#x6027;</li>
-<li>&#x4E00;&#x5143;&#x5316;&#x3055;&#x308C;&#x305F;&#x5909;&#x66F4;&#x7BA1;&#x7406;</li>
-<li>&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30CB;&#x30F3;&#x30B0;&#x3068;&#x30ED;&#x30FC;&#x30EB;&#x30D0;&#x30C3;&#x30AF;</li>
-<li>&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x8A31;&#x53EF;&#x7BA1;&#x7406;&#x306E;&#x59D4;&#x4EFB;</li>
-<li>AWS &#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306E;&#x81EA;&#x52D5;&#x66F4;&#x65B0;</li>
+<li>再利用可能性</li>
+<li>一元化された変更管理</li>
+<li>バージョニングとロールバック</li>
+<li>アクセス許可管理の委任</li>
+<li>AWS 管理ポリシーの自動更新</li>
 </ul>
 </blockquote>
-<h2><span id="terraform-&#x306E;&#x6C17;&#x6301;&#x3061;&#x306B;&#x306A;&#x3063;&#x3066;&#x307F;&#x308B;">terraform &#x306E;&#x6C17;&#x6301;&#x3061;&#x306B;&#x306A;&#x3063;&#x3066;&#x307F;&#x308B;</span></h2><p>terraform &#x306E;&#x6C17;&#x6301;&#x3061;&#x306B;&#x306A;&#x3063;&#x3066;&#x5FC5;&#x8981;&#x306A;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x8003;&#x3048;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="terraform-の気持ちになってみる">terraform の気持ちになってみる</span></h2><p>terraform の気持ちになって必要なリソースを考えると以下の様になります。</p>
 <ul>
-<li><p>&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</p>
+<li><p>管理ポリシー</p>
 <ul>
 <li>aws_iam_policy</li>
 <li>aws_iam_user_policy_attachment</li>
 </ul>
 </li>
-<li><p>&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</p>
+<li><p>インラインポリシー</p>
 <ul>
 <li>aws_iam_user_policy</li>
 </ul>
 </li>
 </ul>
-<h4><span id="&#x4F8B;-&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;">&#x4F8B;) &#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</span></h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># IAM User</span><br><span class="line">resource &quot;aws_iam_user&quot; &quot;hoge&quot; {</span><br><span class="line">  name = &quot;hoge&quot;</span><br><span class="line">  path = &quot;/&quot;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># &#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</span><br><span class="line">resource &quot;aws_iam_policy&quot; &quot;hoge&quot; {</span><br><span class="line">  name   = &quot;hoge&quot;</span><br><span class="line">  policy = data.aws_iam_policy_document.hoge.json</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># &#x30DD;&#x30EA;&#x30B7;&#x30FC;</span><br><span class="line">data &quot;aws_iam_policy_document&quot; &quot;hoge&quot; {</span><br><span class="line">  statement {</span><br><span class="line">    ...</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># &#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092; IAM User &#x306B;&#x30A2;&#x30BF;&#x30C3;&#x30C1;</span><br><span class="line">resource &quot;aws_iam_user_policy_attachment&quot; &quot;hoge&quot; {</span><br><span class="line">  user       = aws_iam_user.hoge.name</span><br><span class="line">  policy_arn = aws_iam_policy.hoge.arn</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h4><span id="例-管理ポリシー">例) 管理ポリシー</span></h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># IAM User</span><br><span class="line">resource "aws_iam_user" "hoge" {</span><br><span class="line">  name = "hoge"</span><br><span class="line">  path = "/"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># 管理ポリシー</span><br><span class="line">resource "aws_iam_policy" "hoge" {</span><br><span class="line">  name   = "hoge"</span><br><span class="line">  policy = data.aws_iam_policy_document.hoge.json</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># ポリシー</span><br><span class="line">data "aws_iam_policy_document" "hoge" {</span><br><span class="line">  statement {</span><br><span class="line">    ...</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># ポリシーを IAM User にアタッチ</span><br><span class="line">resource "aws_iam_user_policy_attachment" "hoge" {</span><br><span class="line">  user       = aws_iam_user.hoge.name</span><br><span class="line">  policy_arn = aws_iam_policy.hoge.arn</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<h4><span id="&#x4F8B;-&#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;">&#x4F8B;) &#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</span></h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># IAM User</span><br><span class="line">resource &quot;aws_iam_user&quot; &quot;hoge&quot; {</span><br><span class="line">  name = &quot;hoge&quot;</span><br><span class="line">  path = &quot;/&quot;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># &#x30DD;&#x30EA;&#x30B7;&#x30FC;</span><br><span class="line">data &quot;aws_iam_policy_document&quot; &quot;hoge&quot; {</span><br><span class="line">  statement {</span><br><span class="line">    ...</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># &#x30A4;&#x30F3;&#x30E9;&#x30A4;&#x30F3;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3068;&#x3057;&#x3066; IAM User &#x306B;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3092;&#x30A2;&#x30BF;&#x30C3;&#x30C1;</span><br><span class="line">resource &quot;aws_iam_user_policy&quot; &quot;hoge&quot; {</span><br><span class="line">  name   = &quot;hoge&quot;</span><br><span class="line">  user   = aws_iam_user.hoge.name</span><br><span class="line">  policy = data.aws_iam_policy_document.hoge.json</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h4><span id="例-インラインポリシー">例) インラインポリシー</span></h4><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># IAM User</span><br><span class="line">resource "aws_iam_user" "hoge" {</span><br><span class="line">  name = "hoge"</span><br><span class="line">  path = "/"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># ポリシー</span><br><span class="line">data "aws_iam_policy_document" "hoge" {</span><br><span class="line">  statement {</span><br><span class="line">    ...</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># インラインポリシーとして IAM User にポリシーをアタッチ</span><br><span class="line">resource "aws_iam_user_policy" "hoge" {</span><br><span class="line">  name   = "hoge"</span><br><span class="line">  user   = aws_iam_user.hoge.name</span><br><span class="line">  policy = data.aws_iam_policy_document.hoge.json</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x307E;&#x3068;&#x3081;">&#x307E;&#x3068;&#x3081;</span></h2><p>terraform &#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x30EC;&#x30D3;&#x30E5;&#x30FC;&#x3059;&#x308B;&#x6A5F;&#x4F1A;&#x304C;&#x3042;&#x308B;&#x6298;&#x306B;&#x306F;&#x3001; <code>aws_iam_user_policy</code> &#x3092;&#x898B;&#x3064;&#x3051;&#x305F;&#x3089;&#x662F;&#x975E;&#x3001;&#x76EE;&#x3092;&#x7D30;&#x3081;&#x3066;&#x300C;&#x7BA1;&#x7406;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306E;&#x512A;&#x4F4D;&#x6027;&#x304C;&#x2026;&#x300D;&#x4E91;&#x3005;&#x3092;&#x8A9E;&#x308A;&#x3001;AWS &#x306E;&#x30C9;&#x30AD;&#x30E5;&#x30E1;&#x30F3;&#x30C8;&#x3092;&#x30EA;&#x30F3;&#x30AF;&#x3092;&#x8CBC;&#x3063;&#x3066;&#x307F;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;<br>&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="まとめ">まとめ</span></h2><p>terraform プロジェクトをレビューする機会がある折には、 <code>aws_iam_user_policy</code> を見つけたら是非、目を細めて「管理ポリシーの優位性が…」云々を語り、AWS のドキュメントをリンクを貼ってみてください。</p>
+<p>以上<br>参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->

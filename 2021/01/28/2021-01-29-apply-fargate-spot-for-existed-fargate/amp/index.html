@@ -148,7 +148,7 @@
 			    "@id":"https://kenzo0107.github.io/2021/01/28/2021-01-29-apply-fargate-spot-for-existed-fargate/"
 			},
 			"datePublished": "2021-01-28T15:00:00.000Z",
-			"dateModified": "2021-02-01T15:58:06.975Z",
+			"dateModified": "2021-03-02T00:38:06.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1945,69 +1945,69 @@ h6.categories {
 <!-- toc -->
 
 <ul>
-<li><a href="#%E6%A6%82%E8%A6%81">&#x6982;&#x8981;</a></li>
-<li><a href="#terraform-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">terraform &#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;</a></li>
-<li><a href="#aws-cli-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">aws-cli &#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;</a><ul>
-<li><a href="#codedeploy-%E3%81%AE%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%E3%83%BC%E3%81%A7%E7%AE%A1%E7%90%86%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E5%A0%B4%E5%90%88">CodeDeploy &#x306E;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x3067;&#x7BA1;&#x7406;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;</a></li>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#terraform-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">terraform で切り替える</a></li>
+<li><a href="#aws-cli-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">aws-cli で切り替える</a><ul>
+<li><a href="#codedeploy-%E3%81%AE%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%E3%83%BC%E3%81%A7%E7%AE%A1%E7%90%86%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E5%A0%B4%E5%90%88">CodeDeploy のデプロイコントローラーで管理されている場合</a></li>
 </ul>
 </li>
-<li><a href="#%E3%83%80%E3%82%A6%E3%83%B3%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%AA%E3%81%97%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88-tfstate-%E6%9B%B4%E6%96%B0%E6%89%8B%E9%A0%86">&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048; &amp; tfstate &#x66F4;&#x65B0;&#x624B;&#x9806;</a></li>
-<li><a href="#%E4%BD%99%E8%AB%87">&#x4F59;&#x8AC7;</a><ul>
-<li><a href="#%E3%81%A1%E3%81%AA%E3%81%BF%E3%81%AB">&#x3061;&#x306A;&#x307F;&#x306B;</a></li>
+<li><a href="#%E3%83%80%E3%82%A6%E3%83%B3%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%AA%E3%81%97%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88-tfstate-%E6%9B%B4%E6%96%B0%E6%89%8B%E9%A0%86">ダウンタイムなしで切り替え &amp; tfstate 更新手順</a></li>
+<li><a href="#%E4%BD%99%E8%AB%87">余談</a><ul>
+<li><a href="#%E3%81%A1%E3%81%AA%E3%81%BF%E3%81%AB">ちなみに</a></li>
 </ul>
 </li>
-<li><a href="#%E4%BD%99%E8%AB%872">&#x4F59;&#x8AC7;2</a></li>
+<li><a href="#%E4%BD%99%E8%AB%872">余談2</a></li>
 </ul>
 <!-- tocstop -->
 
 </div>
 </div>
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x65E2;&#x5B58; ECS Service &#x306E; Farate Spot &#x3078;&#x306E;&#x5207;&#x308A;&#x66FF;&#x3048;&#x65B9;&#x6CD5;&#x306F; 2 &#x3064;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="概要">概要</span></h2><p>既存 ECS Service の Farate Spot への切り替え方法は 2 つあります。</p>
 <ul>
 <li>terraform</li>
 <li>aws-cli</li>
 </ul>
 <a id="more"></a>
 
-<h2><span id="terraform-&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;">terraform &#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;</span></h2><p>capacity_provider_strategy &#x3092;&#x8FFD;&#x52A0;&#x3057; 100% FargateSpot &#x3067;&#x8D77;&#x52D5;&#x3055;&#x305B;&#x308B;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_ecs_service&quot; &quot;app&quot; {</span><br><span class="line">-  launch_type = &quot;FARGATE&quot;</span><br><span class="line"></span><br><span class="line">+  capacity_provider_strategy {</span><br><span class="line">+    capacity_provider = &quot;FARGATE_SPOT&quot;</span><br><span class="line">+    weight            = 100</span><br><span class="line">+  }</span><br><span class="line"></span><br><span class="line">+  capacity_provider_strategy {</span><br><span class="line">+    capacity_provider = &quot;FARGATE&quot;</span><br><span class="line">+    weight            = 0</span><br><span class="line">+  }</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="terraform-で切り替える">terraform で切り替える</span></h2><p>capacity_provider_strategy を追加し 100% FargateSpot で起動させるとします。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">resource "aws_ecs_service" "app" {</span><br><span class="line">-  launch_type = "FARGATE"</span><br><span class="line"></span><br><span class="line">+  capacity_provider_strategy {</span><br><span class="line">+    capacity_provider = "FARGATE_SPOT"</span><br><span class="line">+    weight            = 100</span><br><span class="line">+  }</span><br><span class="line"></span><br><span class="line">+  capacity_provider_strategy {</span><br><span class="line">+    capacity_provider = "FARGATE"</span><br><span class="line">+    weight            = 0</span><br><span class="line">+  }</span><br></pre></td></tr></tbody></table></figure>
 
-<p>terraform &#x3067;&#x306F;&#x518D;&#x4F5C;&#x6210;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ terraform plan</span><br><span class="line"></span><br><span class="line"># aws_ecs_service.app must be replaced</span><br><span class="line">-/+ resource &quot;aws_ecs_service&quot; &quot;app&quot; {</span><br></pre></td></tr></tbody></table></figure>
+<p>terraform では再作成されます。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ terraform plan</span><br><span class="line"></span><br><span class="line"># aws_ecs_service.app must be replaced</span><br><span class="line">-/+ resource "aws_ecs_service" "app" {</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="aws-cli-&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;">aws-cli &#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x308B;</span></h2><p>aws-cli &#x3067;&#x306F;&#x518D;&#x4F5C;&#x6210;&#x3059;&#x308B;&#x3053;&#x3068;&#x306A;&#x304F;&#x66F4;&#x65B0;&#x304C;&#x53EF;&#x80FD;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="aws-cli-で切り替える">aws-cli で切り替える</span></h2><p>aws-cli では再作成することなく更新が可能です。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws ecs update-service \</span><br><span class="line">	--capacity-provider-strategy capacityProvider=FARGATE,weight=0  capacityProvider=FARGATE_SPOT,weight=100 \</span><br><span class="line">     --cluster &lt;ecs cluster name&gt; \</span><br><span class="line">     --service &lt;ecs service name&gt; \</span><br><span class="line">     --force-new-deployment</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x76F4;&#x3061;&#x306B;&#x5F37;&#x5236;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x304C;&#x5B9F;&#x884C;&#x3055;&#x308C;&#x3001;&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x304F; CapacityProviderStrategy &#x304C;&#x9069;&#x7528;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<h3><span id="codedeploy-&#x306E;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x3067;&#x7BA1;&#x7406;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;">CodeDeploy &#x306E;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x3067;&#x7BA1;&#x7406;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;</span></h3><p>&#x4EE5;&#x4E0B;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>直ちに強制デプロイが実行され、ダウンタイムなく CapacityProviderStrategy が適用されます。</p>
+<h3><span id="codedeploy-のデプロイコントローラーで管理されている場合">CodeDeploy のデプロイコントローラーで管理されている場合</span></h3><p>以下エラーが発生します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An error occurred (InvalidParameterException) when calling the UpdateService operation: Cannot force a new deployment on services with a CODE_DEPLOY deployment controller. Use AWS CodeDeploy to trigger a new deployment.</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x305D;&#x3082;&#x305D;&#x3082; CodeDeploy &#x3067;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x7BA1;&#x7406;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x3001; FargateSpot &#x3092;&#x5229;&#x7528;&#x3067;&#x304D;&#x306A;&#x3044;&#x3002;<br><a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html">https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html</a></p>
+<p>そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できない。<br><a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html">https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html</a></p>
 <blockquote>
-<p>&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3067; Blue/Green &#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30BF;&#x30A4;&#x30D7;&#x3092;&#x4F7F;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x3001;&#x30AD;&#x30E3;&#x30D1;&#x30B7;&#x30C6;&#x30A3;&#x30FC;&#x30D7;&#x30ED;&#x30D0;&#x30A4;&#x30C0;&#x30FC;&#x306E;&#x4F7F;&#x7528;&#x306F;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x3055;&#x308C;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+<p>サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。</p>
 </blockquote>
-<h2><span id="&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;-amp-tfstate-&#x66F4;&#x65B0;&#x624B;&#x9806;">&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048; &amp; tfstate &#x66F4;&#x65B0;&#x624B;&#x9806;</span></h2><p>terraform &#x3067;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x7BA1;&#x7406;&#x3092;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x624B;&#x7D9A;&#x304D;&#x3067;&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x3067;&#x5207;&#x308A;&#x66FF;&#x3048;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="ダウンタイムなしで切り替え-amp-tfstate-更新手順">ダウンタイムなしで切り替え &amp; tfstate 更新手順</span></h2><p>terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。</p>
 <ol>
-<li>aws-cli &#x3067;&#x66F4;&#x65B0;</li>
-<li>terraform apply &#x3067; tfstate &#x66F4;&#x65B0;</li>
+<li>aws-cli で更新</li>
+<li>terraform apply で tfstate 更新</li>
 </ol>
-<p>terraform &#x3067;&#x306E;&#x7BA1;&#x7406;&#x3082;&#x3067;&#x304D;&#x3001;&#x4E14;&#x3064;&#x3001;&#x30C0;&#x30A6;&#x30F3;&#x30BF;&#x30A4;&#x30E0;&#x306A;&#x3057;&#x306B;&#x66F4;&#x65B0;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x4F59;&#x8AC7;">&#x4F59;&#x8AC7;</span></h2><p>terraform &#x3067; ECS Service &#x65B0;&#x898F;&#x4F5C;&#x6210;&#x6642;&#x3060;&#x3068; CodeDeploy &#x3068; CapacityProviderStrategy &#x3092;&#x4E21;&#x65B9;&#x6307;&#x5B9A;&#x3067;&#x304D;&#x3066;&#x3057;&#x307E;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x753B;&#x50CF;&#x3060;&#x3051;&#x898B;&#x308B;&#x3068;&#x3067;&#x304D;&#x308B;&#x306E;&#xFF1F;&#x3068;&#x601D;&#x3063;&#x3066;&#x3057;&#x307E;&#x3044;&#x307E;&#x3059;&#x3002;<br></p><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/r0W6OnK.png" width="1868" height="1488" layout="responsive"></amp-img></div>
-<p>&#x3053;&#x308C;&#x3063;&#x307D;&#x3044;&#xFF01;</p>
+<p>terraform での管理もでき、且つ、ダウンタイムなしに更新ができます。</p>
+<h2><span id="余談">余談</span></h2><p>terraform で ECS Service 新規作成時だと CodeDeploy と CapacityProviderStrategy を両方指定できてしまいます。</p>
+<p>以下画像だけ見るとできるの？と思ってしまいます。<br></p><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/r0W6OnK.png" width="1868" height="1488" layout="responsive"></amp-img></div>
+<p>これっぽい！</p>
 <div class="twitter-wrapper"><amp-twitter data-tweetid="1325684369416024065" width="800" height="600" layout="responsive"></amp-twitter></div>
 
 
-<p>CodeDeploy &#x306E;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30E9;&#x30FC;&#x7BA1;&#x7406;&#x3092;&#x6B8B;&#x3057; CapacityProviderStrategy &#x3092;&#x5916;&#x305D;&#x3046;&#x3068;&#x3059;&#x308B;&#x3068;<br>&#x518D;&#x4F5C;&#x6210;&#x3059;&#x308B;&#x3057;&#x304B;&#x4ECA;&#x306E;&#x6240;&#x3001;&#x5BFE;&#x51E6;&#x6CD5;&#x304C;&#x306A;&#x3055;&#x305D;&#x3046;&#x3067;&#x3059;&#x3002;</p>
-<p>aws-cli &#x3067;<br>launch_type &#x2192; capacity_provider_strategy &#x306F;&#x3067;&#x304D;&#x308B;&#x3051;&#x3069;&#x3001;<br>&#x9006;&#x306F;&#x3067;&#x304D;&#x306A;&#x3044;&#x3002;</p>
-<h3><span id="&#x3061;&#x306A;&#x307F;&#x306B;">&#x3061;&#x306A;&#x307F;&#x306B;</span></h3><p>AWS Console &#x4E0A;&#x3067; ECS Service &#x69CB;&#x7BC9;&#x6642;&#x306B; capacity provider strategy &#x3092;&#x6307;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x308B;&#x3068;<br><code>Deployment type</code> &#x306F; <code>Rolling update</code> &#x3057;&#x304B;&#x9078;&#x629E;&#x3067;&#x304D;&#x306A;&#x3044;&#x69D8;&#x306B;&#x306A;&#x3063;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>CodeDeploy のデプロイコントローラー管理を残し CapacityProviderStrategy を外そうとすると<br>再作成するしか今の所、対処法がなさそうです。</p>
+<p>aws-cli で<br>launch_type → capacity_provider_strategy はできるけど、<br>逆はできない。</p>
+<h3><span id="ちなみに">ちなみに</span></h3><p>AWS Console 上で ECS Service 構築時に capacity provider strategy を指定していると<br><code>Deployment type</code> は <code>Rolling update</code> しか選択できない様になっています。</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Qei5oJi.png" width="1592" height="620" layout="responsive"></amp-img></div>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/mFMDfzc.png" width="1564" height="486" layout="responsive"></amp-img></div>
-<h2><span id="&#x4F59;&#x8AC7;2">&#x4F59;&#x8AC7;2</span></h2><p>&#x4ECA;&#x56DE;&#x306E;&#x5B9F;&#x88C5;&#x4F8B;&#x306B;&#x3042;&#x308B; FargateSpot weight 100% &#x3060;&#x3068;&#x8D77;&#x52D5;&#x3067;&#x304D;&#x306A;&#x304F;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;<br>&#x975E;&#x5546;&#x7528;&#x74B0;&#x5883;&#x3067;&#x306F;&#x30B3;&#x30B9;&#x30C8;&#x524A;&#x6E1B;&#x306E;&#x70BA;&#x3001;Spot&#x5316;&#x3057;&#x305F;&#x304F;&#x306A;&#x308A;&#x307E;&#x3059;&#x304C;&#x6CE8;&#x610F;&#x304C;&#x5FC5;&#x8981;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B; issue &#x3067; Fargate Spot &#x67AF;&#x6E07;&#x6642;&#x306B; Fargate &#x3078;&#x5207;&#x308A;&#x66FF;&#x3048;&#x3001;&#x6700;&#x4F4E;&#x9650;&#x8D77;&#x52D5;&#x3067;&#x304D;&#x308B;&#x69D8;&#x306B;&#x3059;&#x308B;&#x3001;&#x3068;&#x3044;&#x3046;&#x5BFE;&#x51E6;&#x304C;&#x9032;&#x3093;&#x3067;&#x3044;&#x308B;&#x69D8;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="余談2">余談2</span></h2><p>今回の実装例にある FargateSpot weight 100% だと起動できなくなります。<br>非商用環境ではコスト削減の為、Spot化したくなりますが注意が必要です。</p>
+<p>以下 issue で Fargate Spot 枯渇時に Fargate へ切り替え、最低限起動できる様にする、という対処が進んでいる様です。</p>
 <p><a href="https://github.com/aws/containers-roadmap/issues/773">https://github.com/aws/containers-roadmap/issues/773</a><br><a href="https://github.com/aws/containers-roadmap/issues/852">https://github.com/aws/containers-roadmap/issues/852</a></p>
-<p>&#x4EE5;&#x4E0A;<br>&#x3054;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以上<br>ご参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->

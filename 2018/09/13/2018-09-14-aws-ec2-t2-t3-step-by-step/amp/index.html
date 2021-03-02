@@ -1850,91 +1850,91 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>AWS EC2 &#x306B; t3 &#x7CFB;&#x30A4;&#x30F3;&#x30BF;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x304C;&#x767B;&#x5834;&#x3057;&#x305F;&#x70BA;&#x3001;&#x30B5;&#x30AF;&#x30C3;&#x3068;&#x3067;&#x304D;&#x308B;&#x304B;&#x3068;&#x601D;&#x3044;&#x304D;&#x3084;&#x3001;&#x3064;&#x307E;&#x3065;&#x3044;&#x305F;&#x7B87;&#x6240;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>AWS EC2 に t3 系インタスタンスが登場した為、サクッとできるかと思いきや、つまづいた箇所をまとめました。</p>
 
-<p>&#x4ECA;&#x56DE;&#x5BFE;&#x8C61;&#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306F; HVM &#x3067; ubuntu 16.04.5 LTS &#x3092;&#x4F7F;&#x7528;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>今回対象のインスタンスは HVM で ubuntu 16.04.5 LTS を使用しました。</p>
 
-<h2><span id="t2-&#x3068;&#x6BD4;&#x3079;&#x3066;-t3-&#x306F;&#x4F55;&#x304C;&#x3044;&#x3044;&#x306E;">t2 &#x3068;&#x6BD4;&#x3079;&#x3066; t3 &#x306F;&#x4F55;&#x304C;&#x3044;&#x3044;&#x306E;&#xFF1F;</span></h2><ul>
-<li><a href="https://aws.amazon.com/jp/ec2/pricing/on-demand/">&#x5B89;&#x3044;&#xFF01;</a> <a href="#f-9c1c347d" name="fn-9c1c347d" title="&#x672C;&#x7A3F;&#x57F7;&#x7B46;&#x6642; 2018-09-14">*1</a></li>
-<li>t2.small &#x4EE5;&#x4E0B;&#x306F;&#x4EEE;&#x88C5;&#x30B3;&#x30A2;&#x6570;&#x304C; 1 &#x3067;&#x3057;&#x305F;&#x304C;&#x3001; t3 &#x3067;&#x306F; 2 &#x500D;&#xFF01;</li>
-<li><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/t2-credits-baseline-concepts.html">t2 &#x3068; t3 &#x3001;&#x540C;&#x3058;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x30B5;&#x30A4;&#x30BA;&#x3067;&#x30AF;&#x30EC;&#x30B8;&#x30C3;&#x30C8;&#x304C;&#x500D;&#xFF01;</a></li>
-<li><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/t2-unlimited.html">&#x30AF;&#x30EC;&#x30B8;&#x30C3;&#x30C8;&#x304C;&#x7121;&#x5236;&#x9650;&#x30E2;&#x30FC;&#x30C9;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x3067;&#x6709;&#x52B9;&#xFF01;</a></li>
-<li>EBS &#x6700;&#x9069;&#x5316;&#x304C;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x3067;&#x6709;&#x52B9;</li>
+<h2><span id="t2-と比べて-t3-は何がいいの">t2 と比べて t3 は何がいいの？</span></h2><ul>
+<li><a href="https://aws.amazon.com/jp/ec2/pricing/on-demand/">安い！</a> <a href="#f-9c1c347d" name="fn-9c1c347d" title="本稿執筆時 2018-09-14">*1</a></li>
+<li>t2.small 以下は仮装コア数が 1 でしたが、 t3 では 2 倍！</li>
+<li><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/t2-credits-baseline-concepts.html">t2 と t3 、同じインスタンスサイズでクレジットが倍！</a></li>
+<li><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/t2-unlimited.html">クレジットが無制限モードデフォルトで有効！</a></li>
+<li>EBS 最適化がデフォルトで有効</li>
 </ul>
 
 <a id="more"></a>
 
-<h2><span id="t2-&#x304B;&#x3089;-t3-&#x3078;&#x79FB;&#x884C;&#x3059;&#x308B;&#x5927;&#x307E;&#x304B;&#x306A;&#x6D41;&#x308C;">t2 &#x304B;&#x3089; t3 &#x3078;&#x79FB;&#x884C;&#x3059;&#x308B;&#x5927;&#x307E;&#x304B;&#x306A;&#x6D41;&#x308C;</span></h2><p>&#x8981;&#x306F;&#x3001;ena &#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x3001;EC2 ENA &#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x3092;&#x6709;&#x52B9;&#x5316;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="t2-から-t3-へ移行する大まかな流れ">t2 から t3 へ移行する大まかな流れ</span></h2><p>要は、ena モジュールをインストールし、EC2 ENA サポートを有効化する必要がありました。</p>
 
 <ol>
-<li>t2 &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x505C;&#x6B62;</li>
-<li>AMI &#x4F5C;&#x6210;</li>
-<li>t2 &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x8D77;&#x52D5;</li>
-<li>t2 &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3067;&#x30AB;&#x30FC;&#x30CD;&#x30EB;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;(ena) &#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</li>
-<li>ena &#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x78BA;&#x8A8D;</li>
-<li>t2 &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x505C;&#x6B62;</li>
-<li>&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x30BF;&#x30A4;&#x30D7;&#x3092; t3 &#x3078;&#x5909;&#x66F4; (credit: unlimited &#x3082;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;&#x306F;&#x3053;&#x3053;&#x3067;)</li>
-<li>t3 &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x8D77;&#x52D5;</li>
+<li>t2 インスタンス停止</li>
+<li>AMI 作成</li>
+<li>t2 インスタンス起動</li>
+<li>t2 インスタンスでカーネルモジュール(ena) のインストール</li>
+<li>ena モジュールインストール確認</li>
+<li>t2 インスタンス停止</li>
+<li>インスタンスタイプを t3 へ変更 (credit: unlimited もしたい場合はここで)</li>
+<li>t3 インスタンス起動</li>
 </ol>
 
 
-<h3><span id="ena-&#x3063;&#x3066;">ENA &#x3063;&#x3066;&#xFF1F;</span></h3><p><a href="https://aws.amazon.com/jp/blogs/news/elastic-network-adapter-high-performance-network-interface-for-amazon-ec2/">Elastic Network Adapter &#x2013; Amazon EC2 &#x5411;&#x3051;&#x306E;&#x9AD8;&#x6027;&#x80FD;&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x30A4;&#x30F3;&#x30BF;&#x30FC;&#x30D5;&#x30A7;&#x30A4;&#x30B9;</a></p>
+<h3><span id="ena-って">ENA って？</span></h3><p><a href="https://aws.amazon.com/jp/blogs/news/elastic-network-adapter-high-performance-network-interface-for-amazon-ec2/">Elastic Network Adapter – Amazon EC2 向けの高性能パフォーマンスネットワークインターフェイス</a></p>
 
-<blockquote><p>&#x30D7;&#x30ED;&#x30BB;&#x30C3;&#x30B5;&#x306E;&#x30EF;&#x30FC;&#x30AF;&#x30ED;&#x30FC;&#x30C9;&#x3092;&#x8EFD;&#x304F;&#x3057;&#x3001;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x30D1;&#x30B1;&#x30C3;&#x30C8;&#x3068;&#x751F;&#x6210;&#x307E;&#x305F;&#x306F;&#x51E6;&#x7406;&#x3092;&#x884C;&#x3046; vCPU &#x9593;&#x3067;&#x77ED;&#x304F;&#x52B9;&#x7387;&#x7684;&#x306A;&#x30D1;&#x30B9;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;&#x305F;&#x3081;&#x306B;&#x69CB;&#x7BC9;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p></blockquote>
+<blockquote><p>プロセッサのワークロードを軽くし、ネットワークパケットと生成または処理を行う vCPU 間で短く効率的なパスを作成するために構築されています。</p></blockquote>
 
-<p><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/enhanced-networking-ena.html#enhanced-networking-ena-ubuntu">Linux &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x304A;&#x3051;&#x308B; Elastic Network Adapter (ENA) &#x3092;&#x4F7F;&#x7528;&#x3057;&#x305F;&#x62E1;&#x5F35;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AD;&#x30F3;&#x30B0;&#x306E;&#x6709;&#x52B9;&#x5316;</a> &#x306B;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x8A18;&#x8F09;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/enhanced-networking-ena.html#enhanced-networking-ena-ubuntu">Linux インスタンスにおける Elastic Network Adapter (ENA) を使用した拡張ネットワーキングの有効化</a> には以下のように記載があります。</p>
 
-<blockquote><p>Amazon EC2 &#x306F;&#x3001;Elastic Network Adapter (ENA) &#x3092;&#x4ECB;&#x3057;&#x3066; C5, C5d, F1, G3, H1, I3, m4.16xlarge, M5, M5d, P2, P3, R4, R5, R5d, X1, X1e, and z1d &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x62E1;&#x5F35;&#x3055;&#x308C;&#x305F;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AD;&#x30F3;&#x30B0;&#x6A5F;&#x80FD;&#x3092;&#x63D0;&#x4F9B;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<blockquote><p>Amazon EC2 は、Elastic Network Adapter (ENA) を介して C5, C5d, F1, G3, H1, I3, m4.16xlarge, M5, M5d, P2, P3, R4, R5, R5d, X1, X1e, and z1d インスタンスに拡張されたネットワーキング機能を提供します。</p>
 
-<p>&#x62E1;&#x5F35;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AD;&#x30F3;&#x30B0;&#x306F;&#x3001;Amazon EC2 &#x30B3;&#x30F3;&#x30BD;&#x30FC;&#x30EB;&#x304B;&#x3089;&#x7BA1;&#x7406;&#x3059;&#x308B;&#x3053;&#x3068;&#x306F;&#x3067;&#x304D;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+<p>拡張ネットワーキングは、Amazon EC2 コンソールから管理することはできません。</p>
 
-<p>HVM &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3067;&#x306E;&#x307F;&#x30B5;&#x30DD;&#x30FC;&#x30C8;</p></blockquote>
+<p>HVM インスタンスでのみサポート</p></blockquote>
 
-<h3><span id="&#x307E;&#x3068;&#x3081;&#x308B;&#x3068;">&#x307E;&#x3068;&#x3081;&#x308B;&#x3068;&#x3001;</span></h3><ul>
-<li>Amazon EC2 &#x5411;&#x3051;&#x306E;&#x9AD8;&#x6027;&#x80FD;&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x30A4;&#x30F3;&#x30BF;&#x30FC;&#x30D5;&#x30A7;&#x30A4;&#x30B9;</li>
-<li>HVM (Hardware-assited VM:&#x5B8C;&#x5168;&#x4EEE;&#x60F3;&#x5316;) &#x74B0;&#x5883;&#x3067;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3002;</li>
-<li>PV (ParaVirtual:&#x6E96;&#x4EEE;&#x60F3;&#x5316;) &#x74B0;&#x5883;&#x3067;&#x306F;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x3055;&#x308C;&#x306A;&#x3044;&#x3002;</li>
-<li>ENA &#x3068;&#x3044;&#x3046;&#x30AB;&#x30FC;&#x30CD;&#x30EB;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x3092;&#x4ECB;&#x3059;&#x4E8B;&#x3067;&#x3001;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x62E1;&#x5F35;&#x3055;&#x308C;&#x305F;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AD;&#x30F3;&#x30B0;&#x6A5F;&#x80FD;&#x304C;&#x5229;&#x7528;&#x3067;&#x304D;&#x308B;&#x3002;</li>
+<h3><span id="まとめると">まとめると、</span></h3><ul>
+<li>Amazon EC2 向けの高性能パフォーマンスネットワークインターフェイス</li>
+<li>HVM (Hardware-assited VM:完全仮想化) 環境でサポートされている。</li>
+<li>PV (ParaVirtual:準仮想化) 環境ではサポートされない。</li>
+<li>ENA というカーネルモジュールを介す事で、インスタンスに拡張されたネットワーキング機能が利用できる。</li>
 </ul>
 
 
-<p>pv/hvm &#x306F; AWS &#x30B3;&#x30F3;&#x30BD;&#x30FC;&#x30EB;&#xFF1E;EC2 &#x8AAC;&#x660E;&#x306E;&#x300C;&#x4EEE;&#x60F3;&#x5316;&#x300D;&#x306E;&#x9805;&#x76EE;&#x3067;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;<br>
-pv &#x306E;&#x5834;&#x5408;&#x306F;&#x3001; hvm &#x306E;&#x79FB;&#x884C;&#x3092;&#x691C;&#x8A0E;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>pv/hvm は AWS コンソール＞EC2 説明の「仮想化」の項目で確認できます。<br>
+pv の場合は、 hvm の移行を検討する必要があります。</p>
 
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180914/20180914130817.png" width="990" height="960" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0B;&#x304B;&#x3089;&#x8A2D;&#x5B9A;&#x306B;&#x9032;&#x307F;&#x307E;&#x3059;&#x3002;</p>
+<p>以下から設定に進みます。</p>
 
-<h1><span id="ena-&#x6709;&#x52B9;&#x5316;&#x8A2D;&#x5B9A;&#x624B;&#x9806;">ENA &#x6709;&#x52B9;&#x5316;&#x8A2D;&#x5B9A;&#x624B;&#x9806;</span></h1>
+<h1><span id="ena-有効化設定手順">ENA 有効化設定手順</span></h1>
 
-<p>&#x4EE5;&#x4E0B;&#x524D;&#x63D0;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>以下前提とします。</p>
 
 <ul>
-<li>AMI &#x3092;&#x53D6;&#x308B;&#x7B49;&#x306E;&#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;&#x304C;&#x6E08;&#x3093;&#x3067;&#x3044;&#x308B;&#x3002;</li>
-<li>t2.small &#x304B;&#x3089; t3.small &#x306B;&#x79FB;&#x884C;&#x3059;&#x308B;&#x3002;</li>
+<li>AMI を取る等のバックアップが済んでいる。</li>
+<li>t2.small から t3.small に移行する。</li>
 </ul>
 
 
-<h2><span id="ubuntu-&#x3067;&#x306E;&#x62E1;&#x5F35;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AD;&#x30F3;&#x30B0;&#x306E;&#x6709;&#x52B9;&#x5316;">Ubuntu &#x3067;&#x306E;&#x62E1;&#x5F35;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AD;&#x30F3;&#x30B0;&#x306E;&#x6709;&#x52B9;&#x5316;</span></h2><pre class="code" data-lang data-unlink>ubuntu:~$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y linux-aws</pre>
+<h2><span id="ubuntu-での拡張ネットワーキングの有効化">Ubuntu での拡張ネットワーキングの有効化</span></h2><pre class="code" data-lang="" data-unlink="">ubuntu:~$ sudo apt-get update &amp;&amp; sudo apt-get upgrade -y linux-aws</pre>
 
 
-<p>&#x4ED6;OS&#x306E;&#x5BFE;&#x5FDC;&#x6CD5;&#x3082;&#x5148;&#x307B;&#x3069;&#x306E; <a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/enhanced-networking-ena.html#enhanced-networking-ena-ubuntu">Linux &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x304A;&#x3051;&#x308B; Elastic Network Adapter (ENA) &#x3092;&#x4F7F;&#x7528;&#x3057;&#x305F;&#x62E1;&#x5F35;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AD;&#x30F3;&#x30B0;&#x306E;&#x6709;&#x52B9;&#x5316;</a> &#x306B;&#x8A18;&#x8F09;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>他OSの対応法も先ほどの <a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/enhanced-networking-ena.html#enhanced-networking-ena-ubuntu">Linux インスタンスにおける Elastic Network Adapter (ENA) を使用した拡張ネットワーキングの有効化</a> に記載されています。</p>
 
-<h3><span id="w-mdadm-etcmdadmmdadmconf-defines-no-arrays-&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3057;&#x305F;&#x5834;&#x5408;">W: mdadm: /etc/mdadm/mdadm.conf defines no arrays. &#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3057;&#x305F;&#x5834;&#x5408;</span></h3><p>`/etc/mdadm/mdadm.conf` &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306B;&#x4EE5;&#x4E0B;&#x4E00;&#x6587;&#x3092;&#x8FFD;&#x8A18;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="w-mdadm-etcmdadmmdadmconf-defines-no-arrays-エラーが発生した場合">W: mdadm: /etc/mdadm/mdadm.conf defines no arrays. エラーが発生した場合</span></h3><p>`/etc/mdadm/mdadm.conf` ファイルに以下一文を追記します。</p>
 
-<pre class="code" data-lang data-unlink>ARRAY &lt;ignore&gt; devices=&lt;&#x30EB;&#x30FC;&#x30C8;&#x30C7;&#x30D0;&#x30A4;&#x30B9;&gt;</pre>
-
-
-<p>&#x81EA;&#x5206;&#x306E;&#x5834;&#x5408;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x4E00;&#x6587;&#x3092;&#x4E00;&#x756A;&#x4E0B;&#x306B;&#x8FFD;&#x8A18;&#x3057;&#x3066;&#x3001;&#x3082;&#x3046;&#x4E00;&#x5EA6; &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;&#x3057;&#x305F;&#x3089;&#x901A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-
-<pre class="code" data-lang data-unlink>ARRAY &lt;ignore&gt; devices=/dev/sda1</pre>
+<pre class="code" data-lang="" data-unlink="">ARRAY &lt;ignore&gt; devices=&lt;ルートデバイス&gt;</pre>
 
 
-<h2><span id="ena-&#x30AB;&#x30FC;&#x30CD;&#x30EB;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x306B;&#x95A2;&#x3059;&#x308B;&#x60C5;&#x5831;&#x8868;&#x793A;">ena &#x30AB;&#x30FC;&#x30CD;&#x30EB;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x306B;&#x95A2;&#x3059;&#x308B;&#x60C5;&#x5831;&#x8868;&#x793A;</span></h2><p>`modinfo ena` &#x3092;&#x5B9F;&#x884C;&#x3057;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x8868;&#x793A;&#x3055;&#x308C;&#x308C;&#x3070; OK &#x3067;&#x3059;&#x3002;</p>
+<p>自分の場合は以下の一文を一番下に追記して、もう一度 コマンド実行したら通りました。</p>
 
-<pre class="code" data-lang data-unlink>ubuntu:~$ modinfo ena
+<pre class="code" data-lang="" data-unlink="">ARRAY &lt;ignore&gt; devices=/dev/sda1</pre>
+
+
+<h2><span id="ena-カーネルモジュールに関する情報表示">ena カーネルモジュールに関する情報表示</span></h2><p>`modinfo ena` を実行し以下のように表示されれば OK です。</p>
+
+<pre class="code" data-lang="" data-unlink="">ubuntu:~$ modinfo ena
 
 filename:       /lib/modules/4.4.0-81-generic/kernel/drivers/net/ethernet/amazon/ena/ena.ko
 version:        1.1.2
@@ -1944,30 +1944,30 @@ author:         Amazon.com, Inc. or its affiliates
 ...</pre>
 
 
-<h2><span id="ec2-ena-&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x6709;&#x52B9;&#x5316;">EC2 ENA &#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x6709;&#x52B9;&#x5316;</span></h2><pre class="code" data-lang data-unlink>// &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x505C;&#x6B62;
+<h2><span id="ec2-ena-サポート有効化">EC2 ENA サポート有効化</span></h2><pre class="code" data-lang="" data-unlink="">// インスタンス停止
 macOS%$ aws ec2 stop-instances --instance-ids &lt;instance id&gt;
 
-// ENA &#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x8A2D;&#x5B9A;
+// ENA サポート設定
 macOS%$ aws ec2 modify-instance-attribute --instance-id &lt;instance id&gt; --ena-support true
 
-// EBS &#x6700;&#x9069;&#x5316; (&#x4EFB;&#x610F;)
+// EBS 最適化 (任意)
 macOS%$ aws ec2 modify-instance-attribute --instance-id &lt;instance id&gt; --ebs-optimized
 
-// credit unlimited &#x8A2D;&#x5B9A; (&#x4EFB;&#x610F;)
-macOS%$ aws ec2 modify-instance-credit-specification --instance-credit-specification &quot;InstanceId=i-&lt;instance id&gt;,CpuCredits=unlimited&quot;
+// credit unlimited 設定 (任意)
+macOS%$ aws ec2 modify-instance-credit-specification --instance-credit-specification "InstanceId=i-&lt;instance id&gt;,CpuCredits=unlimited"
 
-// &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x30BF;&#x30A4;&#x30D7;&#x5909;&#x66F4;
+// インスタンスタイプ変更
 macOS%$ aws ec2 modify-instance-attribute --instance-id &lt;instance id&gt; --instance-type t3.small
 
-// &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x8D77;&#x52D5;
+// インスタンス起動
 macOS%$ aws ec2 start-instances --instance-ids &lt;instance id&gt;</pre>
 
 
-<p>&#x3053;&#x308C;&#x3067; t3 &#x30C7;&#x30D3;&#x30E5;&#x30FC;&#x3092;&#x98FE;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x266A;</p>
+<p>これで t3 デビューを飾ることができました♪</p>
 
-<h2><span id="&#x53C2;&#x7167;">&#x53C2;&#x7167;</span></h2><ul>
-<li><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/enhanced-networking-ena.html#enhanced-networking-ena-ubuntu">Linux &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x304A;&#x3051;&#x308B; Elastic Network Adapter (ENA) &#x3092;&#x4F7F;&#x7528;&#x3057;&#x305F;&#x62E1;&#x5F35;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AD;&#x30F3;&#x30B0;&#x306E;&#x6709;&#x52B9;&#x5316;</a></li>
-<li><a href="https://askubuntu.com/questions/834903/i-dont-have-a-raid-but-get-the-warning-mdadm-conf-defines-no-arrays">Stack Exchange:I don&apos;t have a RAID but get the warning mdadm.conf defines no arrays</a></li>
+<h2><span id="参照">参照</span></h2><ul>
+<li><a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/enhanced-networking-ena.html#enhanced-networking-ena-ubuntu">Linux インスタンスにおける Elastic Network Adapter (ENA) を使用した拡張ネットワーキングの有効化</a></li>
+<li><a href="https://askubuntu.com/questions/834903/i-dont-have-a-raid-but-get-the-warning-mdadm-conf-defines-no-arrays">Stack Exchange:I don't have a RAID but get the warning mdadm.conf defines no arrays</a></li>
 </ul>
 
 			  		

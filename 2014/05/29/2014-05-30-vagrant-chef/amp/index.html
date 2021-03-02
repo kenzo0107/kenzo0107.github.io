@@ -1814,121 +1814,121 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x76EE;&#x7684;">&#x76EE;&#x7684;</span></h2><p>Vagrant &#x3068; Chef &#x3092;&#x5229;&#x7528;&#x3057;&#x3066; LAMP&#x74B0;&#x5883;&#x3092;&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x306E;&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x3067;&#x5B9F;&#x73FE;&#x3059;&#x308B;</p>
-<h2><span id="&#x7D4C;&#x7DEF;">&#x7D4C;&#x7DEF;</span></h2><p>&#x540C;&#x4E00;&#x30B5;&#x30FC;&#x30D0;&#x4E0A;&#x3067;&#x4F5C;&#x696D;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x306B;<br><span id="hexo-amp-id-1">MySQL&#x306E;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x3057;&#x3066;&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x30C6;&#x30B9;&#x30C8;&#x3057;&#x305F;&#x308A;&#x3057;&#x305F;&#x3044;&#x306A;&#x3041;</span>&#x3001;<br>&#x3067;&#x3082;&#x3001;&#x4ED6;&#x306E;&#x307F;&#x3093;&#x306A;&#x306B;&#x8FF7;&#x60D1;&#x304B;&#x304B;&#x3063;&#x3061;&#x3083;&#x3046;&#x3088; or  &#x30B5;&#x30FC;&#x30D0;&#x8CB7;&#x3063;&#x3066;&#x3082;&#x3089;&#x3048;&#x306A;&#x3044;&#x3057;&#x3001;<br>&#x3068;&#x3044;&#x3046;&#x3068;&#x304D;&#x306A;&#x3093;&#x304B;&#x306B;<br>&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x74B0;&#x5883;&#x3067;&#x8A66;&#x305B;&#x308B;&#x306D;</p>
-<p>&#x3063;&#x3066;&#x3053;&#x3068;&#x3067;&#x5C0E;&#x5165;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+			  		<h2><span id="目的">目的</span></h2><p>Vagrant と Chef を利用して LAMP環境をローカルの仮想環境で実現する</p>
+<h2><span id="経緯">経緯</span></h2><p>同一サーバ上で作業している場合に<br><span id="hexo-amp-id-1">MySQLのバージョンアップしてパフォーマンステストしたりしたいなぁ</span>、<br>でも、他のみんなに迷惑かかっちゃうよ or  サーバ買ってもらえないし、<br>というときなんかに<br>ローカル環境で試せるね</p>
+<p>ってことで導入しました。</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>MacOSX Marvericks</li>
 <li>Vagrant</li>
 <li>VirtualBox</li>
 </ul>
-<h2><span id="&#x524D;&#x63D0;">&#x524D;&#x63D0;</span></h2><p>&#x4EE5;&#x4E0B;&#x304C;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;</p>
+<h2><span id="前提">前提</span></h2><p>以下がインストールされていること</p>
 <ul>
 <li>Vagrant</li>
 <li>VirtualBox</li>
 <li>Chef</li>
 <li>knife-solo</li>
 </ul>
-<p>&#x2191; &#x6700;&#x4E0B;&#x306E;&#x300C;&#x3042;&#x3068;&#x304C;&#x304D;&#x300D;&#x306B;&#x3042;&#x308B;&#x30C9;&#x30C3;&#x30C8;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3067;&#x5C0E;&#x5165;&#x624B;&#x9806;&#x3092;&#x53C2;&#x8003;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="1-knife-solo&#x521D;&#x671F;&#x5316;">1. knife-solo&#x521D;&#x671F;&#x5316;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife configure</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x8272;&#x3005;&#x5C0B;&#x306D;&#x3089;&#x308C;&#x307E;&#x3059;&#x304C;&#x3001;&#x57FA;&#x672C;&#x3001;[Enter]&#x9023;&#x6253;&#x3067;&#x554F;&#x984C;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</p>
-<h2><span id="2-box&#x8FFD;&#x52A0;">2. BOX&#x8FFD;&#x52A0;</span></h2><p>BOX&#x3068;&#x306F;&#x3001;<b>&#x4EEE;&#x60F3;&#x30DE;&#x30B7;&#x30F3;&#x8D77;&#x52D5;&#x306E;&#x969B;&#x306B;&#x30D9;&#x30FC;&#x30B9;&#x3068;&#x306A;&#x308B;&#x30A4;&#x30E1;&#x30FC;&#x30B8;&#x30D5;&#x30A1;&#x30A4;&#x30EB;</b>&#x3067;&#x3059;&#x3002;</p>
-<p><b>centos64</b> &#x3068;&#x3044;&#x3046;&#x540D;&#x524D;&#x3067;box&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>↑ 最下の「あとがき」にあるドットインストールで導入手順を参考にしました。</p>
+<h2><span id="1-knife-solo初期化">1. knife-solo初期化</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife configure</span><br></pre></td></tr></tbody></table></figure>
+<p>色々尋ねられますが、基本、[Enter]連打で問題ありません。</p>
+<h2><span id="2-box追加">2. BOX追加</span></h2><p>BOXとは、<b>仮想マシン起動の際にベースとなるイメージファイル</b>です。</p>
+<p><b>centos64</b> という名前でboxを追加します。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant box add centos64 http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-i386-v20131103.box</span><br></pre></td></tr></tbody></table></figure>
 
 
-<p>&#x203B;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x30B5;&#x30FC;&#x30D0;&#x74B0;&#x5883;&#x3068;&#x5408;&#x308F;&#x305B;&#x305F;&#x3044;&#x5834;&#x5408;&#x306F;&#x3001;<br>&#x304A;&#x4F7F;&#x3044;&#x306E;&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3057;&#x3066;&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;&#x3067;&#x74B0;&#x5883;&#x60C5;&#x5831;&#x3092;&#x8ABF;&#x3079;&#x308B;&#x306E;&#x304C;&#x826F;&#x3044;&#x3067;&#x3057;&#x3087;&#x3046;&#x3002;</p>
+<p>※利用しているサーバ環境と合わせたい場合は、<br>お使いのサーバにログインして以下実行で環境情報を調べるのが良いでしょう。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ uname -a</span><br></pre></td></tr></tbody></table></figure>
 
-<p>box&#x306F;&#x4EE5;&#x4E0B;&#x304B;&#x3089;URL&#x3092;&#x9078;&#x3079;&#x307E;&#x3059;&#x3002;<br><a href="http://www.vagrantbox.es/">http://www.vagrantbox.es/</a></p>
-<h2><span id="3-&#x4EEE;&#x60F3;&#x74B0;&#x5883;-&#x521D;&#x671F;&#x5316;">3. &#x4EEE;&#x60F3;&#x74B0;&#x5883; &#x521D;&#x671F;&#x5316;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir [vagrant&#x7528;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;]</span><br><span class="line">$ <span class="built_in">cd</span>  [vagrant&#x7528;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;]</span><br><span class="line">$ vagrant init centos64</span><br></pre></td></tr></tbody></table></figure>
+<p>boxは以下からURLを選べます。<br><a href="http://www.vagrantbox.es/">http://www.vagrantbox.es/</a></p>
+<h2><span id="3-仮想環境-初期化">3. 仮想環境 初期化</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir [vagrant用ディレクトリ]</span><br><span class="line">$ <span class="built_in">cd</span>  [vagrant用ディレクトリ]</span><br><span class="line">$ vagrant init centos64</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x6210;&#x529F;&#x3059;&#x308B;&#x3068;<b>Vagrantfile</b>&#x304C;&#x3067;&#x304D;&#x3066;&#x3044;&#x308B;&#x306E;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>成功すると<b>Vagrantfile</b>ができているのがわかります。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">$ Vagrantfile</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="4-vagrantfile&#x4FEE;&#x6B63;">4. Vagrantfile&#x4FEE;&#x6B63;</span></h2><p>private network&#x306E;&#x8A2D;&#x5B9A;&#x3092;&#x3057;&#x3066;<br>&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x74B0;&#x5883;&#x304B;&#x3089;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x51FA;&#x6765;&#x308B;&#x69D8;&#x306B;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>MacOS &#x2192; VirtualBox<br>&#x3078;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x30A2;&#x30A6;&#x30C8;&#x3092;&#x5916;&#x3059;&#x306E;&#x307F;&#xFF01;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#config.vm.network :private_network, ip: &quot;192.168.33.10&quot;</span></span><br><span class="line">config.vm.network :private_network, ip: <span class="string">&quot;192.168.33.10&quot;</span></span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="4-vagrantfile修正">4. Vagrantfile修正</span></h2><p>private networkの設定をして<br>ローカル環境からアクセス出来る様にします。</p>
+<p>MacOS → VirtualBox<br>へのアクセスです。</p>
+<p>以下のようにコメントアウトを外すのみ！</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#config.vm.network :private_network, ip: "192.168.33.10"</span></span><br><span class="line">config.vm.network :private_network, ip: <span class="string">"192.168.33.10"</span></span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="5-&#x4EEE;&#x60F3;&#x74B0;&#x5883;-&#x8D77;&#x52D5;">5. &#x4EEE;&#x60F3;&#x74B0;&#x5883; &#x8D77;&#x52D5;</span></h2><p>Vagrantfile&#x306E;&#x3042;&#x308B;&#x30D1;&#x30B9;&#x3067;&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;</p>
+<h2><span id="5-仮想環境-起動">5. 仮想環境 起動</span></h2><p>Vagrantfileのあるパスで以下実行</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant up</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;&#x3067;&#x300C;running(virtualbox)&#x300D;&#x3092;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3068;&#x3001;&#x8D77;&#x52D5;&#x4E2D;&#x3067;&#x3042;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x308B;&#x3002;</p>
+<p>以下実行で「running(virtualbox)」を実行すると、起動中であることを確認できる。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant status</span><br></pre></td></tr></tbody></table></figure>
 
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Current machine states:</span><br><span class="line"></span><br><span class="line">default                   running (virtualbox)</span><br><span class="line"></span><br><span class="line">The VM is running. To stop this VM, you can run `vagrant halt` to</span><br><span class="line">shut it down forcefully, or you can run `vagrant <span class="built_in">suspend</span>` to simply</span><br><span class="line"><span class="built_in">suspend</span> the virtual machine. In either <span class="keyword">case</span>, to restart it again,</span><br><span class="line">simply run `vagrant up`.</span><br></pre></td></tr></tbody></table></figure>
 
 
-<p>&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;&#x3067;&#x30ED;&#x30B0;&#x30A4;&#x30F3;</p>
+<p>以下実行でログイン</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3057;&#x305F;&#x5F8C;&#x3001;&#x30ED;&#x30B0;&#x30A2;&#x30A6;&#x30C8;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;&#x306B;&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;</p>
+<p>ログインした後、ログアウトしたい場合に以下実行</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">exit</span></span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="6-ssh&#x30A8;&#x30A4;&#x30EA;&#x30A2;&#x30B9;&#x4F5C;&#x6210;">6. ssh&#x30A8;&#x30A4;&#x30EA;&#x30A2;&#x30B9;&#x4F5C;&#x6210;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh-config --host [ssh&#x30A8;&#x30A4;&#x30EA;&#x30A2;&#x30B9;] &gt;&gt; ~/.ssh/config</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="6-sshエイリアス作成">6. sshエイリアス作成</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh-config --host [sshエイリアス] &gt;&gt; ~/.ssh/config</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;&#x3067;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3067;&#x304D;&#x308B;&#x3002;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh [ssh&#x30A8;&#x30A4;&#x30EA;&#x30A2;&#x30B9;]</span><br></pre></td></tr></tbody></table></figure>
+<p>以下実行でアクセスできる。</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh [sshエイリアス]</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x307E;&#x305F;&#x3001;&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;&#x3067;ssh&#x306E;config&#x306B;&#x66F8;&#x304D;&#x8FBC;&#x307E;&#x308C;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x308B;&#x3002;</p>
+<p>また、以下実行でsshのconfigに書き込まれていることを確認できる。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/.ssh/config</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="7-chef&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x4F5C;&#x6210;">7. Chef&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x4F5C;&#x6210;</span></h2><p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x69CB;&#x6210;&#x304C;&#x7BA1;&#x7406;&#x3057;&#x3084;&#x3059;&#x3044;&#x304B;&#x306A;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x306E;&#x3067;&#x3001;<br>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x4F5C;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|</span><br><span class="line">+---  [vagrant&#x7528;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;]</span><br><span class="line">|</span><br><span class="line">+---  [chef-repo]</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="7-chefリポジトリ作成">7. Chefリポジトリ作成</span></h2><p>以下のような構成が管理しやすいかなと思いますので、<br>以下のように作ります。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">|</span><br><span class="line">+---  [vagrant用ディレクトリ]</span><br><span class="line">|</span><br><span class="line">+---  [chef-repo]</span><br></pre></td></tr></tbody></table></figure>
 
-<p>[vagrant&#x7528;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;]&#x306E;&#xFF11;&#x3064;&#x4E0A;&#x306E;&#x968E;&#x5C64;&#x306B;&#x79FB;&#x52D5;&#x3057;&#x3066;&#x304A;&#x3044;&#x3066;<br>&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife solo init [Chef&#x306E;&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x540D;]</span><br></pre></td></tr></tbody></table></figure>
-
-
-
-<h2><span id="8-&#x4EEE;&#x60F3;&#x30DE;&#x30B7;&#x30F3;&#x3092;chef&#x5BFE;&#x5FDC;&#x3055;&#x305B;&#x308B;">8. &#x4EEE;&#x60F3;&#x30DE;&#x30B7;&#x30F3;&#x3092;chef&#x5BFE;&#x5FDC;&#x3055;&#x305B;&#x308B;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> [Chef&#x306E;&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x540D;]</span><br><span class="line">$ knife solo prepare [ssh&#x30A8;&#x30A4;&#x30EA;&#x30A2;&#x30B9;]</span><br></pre></td></tr></tbody></table></figure>
+<p>[vagrant用ディレクトリ]の１つ上の階層に移動しておいて<br>以下実行</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife solo init [Chefのリポジトリ名]</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="9-cookbook&#x4F5C;&#x6210;">9. cookbook&#x4F5C;&#x6210;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife cookbook create [cookbook&#x540D;] -o site_cookbooks/</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="8-仮想マシンをchef対応させる">8. 仮想マシンをchef対応させる</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> [Chefのリポジトリ名]</span><br><span class="line">$ knife solo prepare [sshエイリアス]</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="10-cookbook&#x306B;&#x69CB;&#x7BC9;&#x3059;&#x308B;&#x74B0;&#x5883;&#x306E;&#x8A2D;&#x5B9A;&#x8A18;&#x8FF0;">10.  cookbook&#x306B;&#x69CB;&#x7BC9;&#x3059;&#x308B;&#x74B0;&#x5883;&#x306E;&#x8A2D;&#x5B9A;&#x8A18;&#x8FF0;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chef&#x306E;&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x540D;]/[cookbook&#x540D;]/recipe/default.rb</span><br></pre></td></tr></tbody></table></figure>
-
-<h2><span id="11-&#x5B9F;&#x884C;recipe&#x6307;&#x5B9A;">11. &#x5B9F;&#x884C;recipe&#x6307;&#x5B9A;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chef&#x306E;&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x540D;]/nodes/[ssh&#x30A8;&#x30A4;&#x30EA;&#x30A2;&#x30B9;&#x540D;].json</span><br></pre></td></tr></tbody></table></figure>
-
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    <span class="attr">&quot;run_list&quot;</span>: [</span><br><span class="line">          <span class="string">&quot;recipe[[cookbook&#x540D;]]&quot;</span></span><br><span class="line">     ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="9-cookbook作成">9. cookbook作成</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife cookbook create [cookbook名] -o site_cookbooks/</span><br></pre></td></tr></tbody></table></figure>
 
 
 
+<h2><span id="10-cookbookに構築する環境の設定記述">10.  cookbookに構築する環境の設定記述</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chefのリポジトリ名]/[cookbook名]/recipe/default.rb</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="12-&#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;&#x3092;&#x4F5C;&#x6210;">12. &#x30C6;&#x30F3;&#x30D7;&#x30EC;&#x30FC;&#x30C8;&#x3092;&#x4F5C;&#x6210;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chef&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x540D;]\[cookbook&#x306E;&#x540D;&#x524D;]\template\default\index.html.erb</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="11-実行recipe指定">11. 実行recipe指定</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chefのリポジトリ名]/nodes/[sshエイリアス名].json</span><br></pre></td></tr></tbody></table></figure>
 
-<p>index.html.erb&#x306E;&#x4E2D;&#x8EAB;&#x306F;&#x81EA;&#x7531;&#x306B;&#x7DE8;&#x96C6;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
-<p>&#x4F8B;&#x3068;&#x3057;&#x3066;</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    <span class="attr">"run_list"</span>: [</span><br><span class="line">          <span class="string">"recipe[[cookbook名]]"</span></span><br><span class="line">     ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+
+<h2><span id="12-テンプレートを作成">12. テンプレートを作成</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim [Chefリポジトリ名]\[cookbookの名前]\template\default\index.html.erb</span><br></pre></td></tr></tbody></table></figure>
+
+<p>index.html.erbの中身は自由に編集してください。</p>
+<p>例として</p>
 <figure class="highlight html"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello, World<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="13-cookbook&#x3092;vagrant&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x3078;&#x53CD;&#x6620;">13. cookbook&#x3092;vagrant&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x3078;&#x53CD;&#x6620;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife solo cook [ssh&#x30A8;&#x30A4;&#x30EA;&#x30A2;&#x30B9;&#x540D;]</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="13-cookbookをvagrant仮想環境へ反映">13. cookbookをvagrant仮想環境へ反映</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ knife solo cook [sshエイリアス名]</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="13-&#x8A2D;&#x5B9A;&#x3057;&#x305F;&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x306E;web&#x30B5;&#x30FC;&#x30D0;&#x3078;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;">13. &#x8A2D;&#x5B9A;&#x3057;&#x305F;&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x306E;Web&#x30B5;&#x30FC;&#x30D0;&#x3078;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;</span></h2><p>&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x3067; <a href="http://192.168.33.10">http://192.168.33.10</a> &#x3078;&#x30A2;&#x30AF;&#x30BB;&#x30B9;</p>
-<p>&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x306B;&#x4EE5;&#x4E0B;&#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;&#xFF01;</p>
+<h2><span id="13-設定した仮想環境のwebサーバへアクセスする">13. 設定した仮想環境のWebサーバへアクセスする</span></h2><p>ブラウザで <a href="http://192.168.33.10">http://192.168.33.10</a> へアクセス</p>
+<p>ブラウザに以下が表示されることを確認！</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, World</span><br></pre></td></tr></tbody></table></figure>
 
 
-<p>&#x307E;&#x305F;&#x3001;&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x3067;&#x304D;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x308B;&#x306E;&#x3067;<br>&#x8A66;&#x3057;&#x3066;&#x307F;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<p>また、仮想環境にアクセスすると以下ファイルができていることを確認できるので<br>試してみてください。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh</span><br><span class="line">$ <span class="built_in">cd</span> /var/www/html/</span><br><span class="line">$ ls</span><br><span class="line"></span><br><span class="line">index.html</span><br></pre></td></tr></tbody></table></figure>
 
 
 
 
-<h2><span id="&#x3042;&#x3068;&#x304C;&#x304D;">&#x3042;&#x3068;&#x304C;&#x304D;</span></h2><p>&#x30C9;&#x30C3;&#x30C8;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3067;&#x4EE5;&#x4E0B;&#x3055;&#x3089;&#x3063;&#x3066;&#x304A;&#x304F;&#x3068;&#x3068;&#x3063;&#x3064;&#x304D;&#x3084;&#x3059;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="あとがき">あとがき</span></h2><p>ドットインストールで以下さらっておくととっつきやすいです。</p>
 <ul>
 <li><a href="http://dotinstall.com/lessons/basic_vagrant">essons/basic_vagrant</a></li>
 <li><a href="http://dotinstall.com/lessons/basic_chef">lessons/basic_chef</a></li>

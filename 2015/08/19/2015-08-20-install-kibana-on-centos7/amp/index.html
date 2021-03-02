@@ -1814,121 +1814,121 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x524D;&#x63D0;">&#x524D;&#x63D0;</span></h2><ul>
-<li>Nginx &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x6E08;&#x307F;</li>
+			  		<h2><span id="前提">前提</span></h2><ul>
+<li>Nginx インストール済み</li>
 </ul>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS Linux release 7.0.1406 (Core)</li>
 <li>Nginx 1.9.3</li>
 <li>Kibana 4.1.1</li>
 </ul>
-<h2><span id="kibana-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Kibana &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/src</span><br><span class="line">$ sudo wget https://download.elastic.co/kibana/kibana/kibana-4.1.1-linux-x64.tar.gz</span><br><span class="line">$ sudo tar xvzf kibana-4.1.1-linux-x64.tar.gz</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="kibana-インストール">Kibana インストール</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/src</span><br><span class="line">$ sudo wget https://download.elastic.co/kibana/kibana/kibana-4.1.1-linux-x64.tar.gz</span><br><span class="line">$ sudo tar xvzf kibana-4.1.1-linux-x64.tar.gz</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="kibana-&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x4FEE;&#x6B63;">Kibana &#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x4FEE;&#x6B63;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/src/kibana-4.1.1-linux-x64/config/kibana.yml</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="kibana-設定ファイル修正">Kibana 設定ファイル修正</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/local/src/kibana-4.1.1-linux-x64/config/kibana.yml</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>host&#x6307;&#x5B9A;</li>
+<li>host指定</li>
 </ul>
-<p>&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x3067;&#x306F; <code>0.0.0.0</code> &#x3068;&#x306A;&#x3063;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;<br>&#x4ECA;&#x56DE;&#x306F;&#x540C;&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x69CB;&#x7BC9;&#x3059;&#x308B;&#x306E;&#x3067; localhost &#x3068;&#x3057;&#x4FDD;&#x5B58;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- host: &quot;0.0.0.0&quot;</span><br><span class="line">+ host: &quot;localhost&quot;</span><br></pre></td></tr></tbody></table></figure>
+<p>デフォルトでは <code>0.0.0.0</code> となっています。<br>今回は同サーバに構築するので localhost とし保存します。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- host: "0.0.0.0"</span><br><span class="line">+ host: "localhost"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x306E;&#x8A2D;&#x5B9A;&#x306B;&#x3088;&#x308A;&#x3001;kibana&#x304C;<code>localhost</code>&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3067;&#x304D;&#x308B;&#x3088;&#x3046;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="kibana-&#x5B9F;&#x884C;&#x30D1;&#x30B9;&#x4F5C;&#x6210;">Kibana &#x5B9F;&#x884C;&#x30D1;&#x30B9;&#x4F5C;&#x6210;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkdir -p /opt/kibana</span><br><span class="line">$ sudo cp -R /usr/local/src/kibana-4.1.1-linux-x64/* /opt/kibana/</span><br></pre></td></tr></tbody></table></figure>
+<p>上記の設定により、kibanaが<code>localhost</code>にアクセスできるようになります。</p>
+<h2><span id="kibana-実行パス作成">Kibana 実行パス作成</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkdir -p /opt/kibana</span><br><span class="line">$ sudo cp -R /usr/local/src/kibana-4.1.1-linux-x64/* /opt/kibana/</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x8A2D;&#x5B9A;&#x306B;&#x3088;&#x308A;&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3067;kibana&#x5B9F;&#x884C;&#x53EF;&#x80FD;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>上記設定により以下コマンドでkibana実行可能になります。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/kibana/bin/kibana</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x3067;&#x3082;&#x5341;&#x5206;&#x3067;&#x3059;&#x304C;&#x3001;&#x518D;&#x8D77;&#x52D5;&#x3057;&#x305F;&#x969B;&#x306B;&#x306F;kibana&#x306F;&#x505C;&#x6B62;&#x3057;&#x3066;&#x3057;&#x307E;&#x3044;&#x307E;&#x3059;&#x3002;<br>&#x306A;&#x306E;&#x3067;&#x3001;&#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x3001;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x767B;&#x9332;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x4F5C;&#x6210;">&#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x4F5C;&#x6210;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/systemd/system/kibana4.service</span><br></pre></td></tr></tbody></table></figure>
+<p>上記でも十分ですが、再起動した際にはkibanaは停止してしまいます。<br>なので、起動スクリプトを作成し、サービス登録します。</p>
+<h2><span id="起動スクリプト作成">起動スクリプト作成</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/systemd/system/kibana4.service</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
 <li>kibana4.service</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ExecStart=/opt/kibana/bin/kibana</span><br><span class="line">Restart=always</span><br><span class="line">StandardOutput=syslog</span><br><span class="line">StandardError=syslog</span><br><span class="line">SyslogIdentifier=kibana4</span><br><span class="line">User=root</span><br><span class="line">Group=root</span><br><span class="line">Environment=NODE_ENV=production</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x4FDD;&#x5B58;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x8D77;&#x52D5;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x767B;&#x9332;">&#x8D77;&#x52D5;/&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x767B;&#x9332;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start kibana4</span><br><span class="line">$ sudo systemctl enable kibana4</span><br></pre></td></tr></tbody></table></figure>
+<p>上記保存します。</p>
+<h2><span id="起動サービス登録">起動/サービス登録</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start kibana4</span><br><span class="line">$ sudo systemctl enable kibana4</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="nginx-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Nginx &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><p>&#x4EE5;&#x4E0B;&#x53C2;&#x8003;&#x306B;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
-<a href="http://kenzo0107.hatenablog.com/entry/2015/08/20/232126" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="http://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150820/20150820232103.png" width="609" height="247" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">CentOS7 &#x306B; Nginx &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB; - &#x9577;&#x751F;&#x6751;&#x672C;&#x90F7;Engineers&apos;Blog</div><div class="og-description">Kibana&#x69CB;&#x7BC9;&#x7528;&#x306B;&#x66F8;&#x3044;&#x3068;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002; &#x74B0;&#x5883; CentOS7 Nginx&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB; Nginx&#x7528;&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x4F5C;&#x6210; # vim /etc/yum.repos.d/nginx.repo &#x4EE5;&#x4E0B;&#x8FFD;&#x8A18; [nginx] name=nginx repo baseurl=http://nginx.&#x2026;</div></div></div></a>
+<h2><span id="nginx-インストール">Nginx インストール</span></h2><p>以下参考にしてください。</p>
+<a href="http://kenzo0107.hatenablog.com/entry/2015/08/20/232126" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="http://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150820/20150820232103.png" width="609" height="247" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">CentOS7 に Nginx インストール - 長生村本郷Engineers'Blog</div><div class="og-description">Kibana構築用に書いときました。 環境 CentOS7 Nginxインストール Nginx用リポジトリ作成 # vim /etc/yum.repos.d/nginx.repo 以下追記 [nginx] name=nginx repo baseurl=http://nginx.…</div></div></div></a>
 
 
 
-<h2><span id="nginx&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x4FEE;&#x6B63;">Nginx&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x4FEE;&#x6B63;</span></h2><p>&#x30EA;&#x30FC;&#x30D0;&#x30B9;&#x30D7;&#x30ED;&#x30AD;&#x30B7;&#x3067;Kibana4&#x7528;&#x30DD;&#x30FC;&#x30C8;(5601)&#x3078;&#x5411;&#x3051;&#x308B;&#x3002;</p>
+<h2><span id="nginx設定ファイル修正">Nginx設定ファイル修正</span></h2><p>リーバスプロキシでKibana4用ポート(5601)へ向ける。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/nginx/conf.d/default.conf</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  ec2-xx-xx-xxx-xxx.ap-northeast-1.compute.amazonaws.com;</span><br><span class="line"></span><br><span class="line">    auth_basic &quot;Restricted Access&quot;;</span><br><span class="line">    auth_basic_user_file /etc/nginx/htpasswd.users;</span><br><span class="line"></span><br><span class="line">    location / {</span><br><span class="line">        proxy_pass http://localhost:5601;</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection &apos;upgrade&apos;;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_cache_bypass $http_upgrade;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  ec2-xx-xx-xxx-xxx.ap-northeast-1.compute.amazonaws.com;</span><br><span class="line"></span><br><span class="line">    auth_basic "Restricted Access";</span><br><span class="line">    auth_basic_user_file /etc/nginx/htpasswd.users;</span><br><span class="line"></span><br><span class="line">    location / {</span><br><span class="line">        proxy_pass http://localhost:5601;</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection 'upgrade';</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_cache_bypass $http_upgrade;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;&#x8A2D;&#x5B9A;&#x4FDD;&#x5B58;&#x5F8C;&#x3001;Nginx&#x518D;&#x8D77;&#x52D5;</p>
+<p>以上設定保存後、Nginx再起動</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart nginx</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x78BA;&#x8A8D;">&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x78BA;&#x8A8D;</span></h2><p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x8868;&#x793A;&#x3055;&#x308C;&#x308C;&#x3070;&#x554F;&#x984C;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+<h2><span id="アクセスして確認">アクセスして確認</span></h2><p>以下のように表示されれば問題ありません。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150820/20150820233520.png" width="886" height="739" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;</p>
-<h2><span id="&#x53C2;&#x8003;&#x8A18;&#x4E8B;">&#x53C2;&#x8003;&#x8A18;&#x4E8B;</span></h2><p><a href="https://enakai00.hatenablog.com/entry/20130917/1379374797">Systemd&#x5165;&#x9580;(4) - service&#x30BF;&#x30A4;&#x30D7;Unit&#x306E;&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;</a></p>
-<h4><span id="&#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x306B;&#x3064;&#x3044;&#x3066;-&#x5404;&#x9805;&#x76EE;&#x8AAC;&#x660E;">&#x8D77;&#x52D5;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x306B;&#x3064;&#x3044;&#x3066; &#x5404;&#x9805;&#x76EE;&#x8AAC;&#x660E;</span></h4><h5><span id="unit-&#x306B;&#x3064;&#x3044;&#x3066;">[Unit] &#x306B;&#x3064;&#x3044;&#x3066;</span></h5><div class="table-wrapper"><table>
+<p>以上</p>
+<h2><span id="参考記事">参考記事</span></h2><p><a href="https://enakai00.hatenablog.com/entry/20130917/1379374797">Systemd入門(4) - serviceタイプUnitの設定ファイル</a></p>
+<h4><span id="起動スクリプトについて-各項目説明">起動スクリプトについて 各項目説明</span></h4><h5><span id="unit-について">[Unit] について</span></h5><div class="table-wrapper"><table>
 <thead>
 <tr>
-<th align="left"><em>&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;</em></th>
-<th align="left"><em>&#x8AAC;&#x660E;</em></th>
+<th align="left"><em>オプション</em></th>
+<th align="left"><em>説明</em></th>
 </tr>
 </thead>
 <tbody><tr>
 <td align="left">Description</td>
-<td align="left">Unit&#x306E;&#x8AAC;&#x660E;&#x6587;</td>
+<td align="left">Unitの説明文</td>
 </tr>
 <tr>
 <td align="left">Documentation</td>
-<td align="left">&#x30C9;&#x30AD;&#x30E5;&#x30E1;&#x30F3;&#x30C8;&#x306E;URI</td>
+<td align="left">ドキュメントのURI</td>
 </tr>
 <tr>
 <td align="left">Requires</td>
-<td align="left">&#x3053;&#x306E;Unit&#x304C;&#x5FC5;&#x8981;&#x3068;&#x3059;&#x308B;&#x524D;&#x63D0;Unit</td>
+<td align="left">このUnitが必要とする前提Unit</td>
 </tr>
 <tr>
 <td align="left">Wants</td>
-<td align="left">&#x3053;&#x306E;Unit&#x304C;&#x5FC5;&#x8981;&#x3068;&#x3059;&#x308B;&#x524D;&#x63D0;Unit</td>
+<td align="left">このUnitが必要とする前提Unit</td>
 </tr>
 <tr>
 <td align="left">After</td>
-<td align="left">&#x3053;&#x306E;Unit&#x3088;&#x308A;&#x5148;&#x306B;&#x8D77;&#x52D5;&#x3059;&#x308B;&#x3079;&#x304D;Unit</td>
+<td align="left">このUnitより先に起動するべきUnit</td>
 </tr>
 <tr>
 <td align="left">Before</td>
-<td align="left">&#x3053;&#x306E;Unit&#x3088;&#x308A;&#x5F8C;&#x306B;&#x8D77;&#x52D5;&#x3059;&#x308B;&#x3079;&#x304D;Unit</td>
+<td align="left">このUnitより後に起動するべきUnit</td>
 </tr>
 </tbody></table></div>
-<h5><span id="install-&#x306B;&#x3064;&#x3044;&#x3066;">[Install] &#x306B;&#x3064;&#x3044;&#x3066;</span></h5><div class="table-wrapper"><table>
+<h5><span id="install-について">[Install] について</span></h5><div class="table-wrapper"><table>
 <thead>
 <tr>
-<th align="left"><em>&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;</em></th>
-<th align="left"><em>&#x8AAC;&#x660E;</em></th>
+<th align="left"><em>オプション</em></th>
+<th align="left"><em>説明</em></th>
 </tr>
 </thead>
 <tbody><tr>
 <td align="left">WantedBy</td>
-<td align="left">enable&#x6642;&#x306B;&#x3053;&#x306E;Unit&#x306E;.wants&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x306B;&#x30EA;&#x30F3;&#x30AF;&#x4F5C;&#x6210;</td>
+<td align="left">enable時にこのUnitの.wantsディレクトリにリンク作成</td>
 </tr>
 <tr>
 <td align="left">RequiredBy</td>
-<td align="left">enable&#x6642;&#x306B;&#x3053;&#x306E;Unit&#x306E;.required&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x306B;&#x30EA;&#x30F3;&#x30AF;&#x4F5C;&#x6210;</td>
+<td align="left">enable時にこのUnitの.requiredディレクトリにリンク作成</td>
 </tr>
 <tr>
 <td align="left">Also</td>
-<td align="left">enable/disable&#x6642;&#x306B;&#x540C;&#x6642;&#x306B;enable/disable&#x3059;&#x308B;Unit</td>
+<td align="left">enable/disable時に同時にenable/disableするUnit</td>
 </tr>
 <tr>
 <td align="left">Alias</td>
-<td align="left">enable&#x6642;&#x306B;&#x3053;&#x306E;Unit&#x306E;&#x5225;&#x540D;&#x3092;&#x7528;&#x610F;</td>
+<td align="left">enable時にこのUnitの別名を用意</td>
 </tr>
 </tbody></table></div>
-<p>&#x2193;&#x3053;&#x306E;&#x672C;&#x3068;&#x3063;&#x3066;&#x3082;&#x304A;&#x4E16;&#x8A71;&#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x266A;</p>
-<a href="https://www.amazon.co.jp/exec/obidos/ASIN/4774169838/kenzo0107-22/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img></div><div class="descriptions"><div class="og-title">&#x30B5;&#x30FC;&#x30D0;/&#x30A4;&#x30F3;&#x30D5;&#x30E9;&#x30A8;&#x30F3;&#x30B8;&#x30CB;&#x30A2;&#x990A;&#x6210;&#x8AAD;&#x672C; &#x30ED;&#x30B0;&#x53CE;&#x96C6;~&#x53EF;&#x8996;&#x5316;&#x7DE8; [&#x73FE;&#x5834;&#x4E3B;&#x5C0E;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x5206;&#x6790;&#x74B0;&#x5883;&#x3092;&#x69CB;&#x7BC9;!] (Software Design plus) | &#x9234;&#x6728; &#x5065;&#x592A;, &#x5409;&#x7530; &#x5065;&#x592A;&#x90CE;, &#x5927;&#x8C37; &#x7D14;, &#x9053;&#x4E95; &#x4FCA;&#x4ECB; |&#x672C; | &#x901A;&#x8CA9; | Amazon</div><div class="og-description">Amazon&#x3067;&#x9234;&#x6728; &#x5065;&#x592A;, &#x5409;&#x7530; &#x5065;&#x592A;&#x90CE;, &#x5927;&#x8C37; &#x7D14;, &#x9053;&#x4E95; &#x4FCA;&#x4ECB;&#x306E;&#x30B5;&#x30FC;&#x30D0;/&#x30A4;&#x30F3;&#x30D5;&#x30E9;&#x30A8;&#x30F3;&#x30B8;&#x30CB;&#x30A2;&#x990A;&#x6210;&#x8AAD;&#x672C; &#x30ED;&#x30B0;&#x53CE;&#x96C6;~&#x53EF;&#x8996;&#x5316;&#x7DE8; [&#x73FE;&#x5834;&#x4E3B;&#x5C0E;&#x306E;&#x30C7;&#x30FC;&#x30BF;&#x5206;&#x6790;&#x74B0;&#x5883;&#x3092;&#x69CB;&#x7BC9;!] (Software Design plus)&#x3002;&#x30A2;&#x30DE;&#x30BE;&#x30F3;&#x306A;&#x3089;&#x30DD;&#x30A4;&#x30F3;&#x30C8;&#x9084;&#x5143;&#x672C;&#x304C;&#x591A;&#x6570;&#x3002;&#x9234;&#x6728; &#x5065;&#x592A;, &#x5409;&#x7530; &#x5065;&#x592A;&#x90CE;, &#x5927;&#x8C37; &#x7D14;&#x2026;</div></div></div></a>
+<p>↓この本とってもお世話になりました♪</p>
+<a href="https://www.amazon.co.jp/exec/obidos/ASIN/4774169838/kenzo0107-22/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img></div><div class="descriptions"><div class="og-title">サーバ/インフラエンジニア養成読本 ログ収集~可視化編 [現場主導のデータ分析環境を構築!] (Software Design plus) | 鈴木 健太, 吉田 健太郎, 大谷 純, 道井 俊介 |本 | 通販 | Amazon</div><div class="og-description">Amazonで鈴木 健太, 吉田 健太郎, 大谷 純, 道井 俊介のサーバ/インフラエンジニア養成読本 ログ収集~可視化編 [現場主導のデータ分析環境を構築!] (Software Design plus)。アマゾンならポイント還元本が多数。鈴木 健太, 吉田 健太郎, 大谷 純…</div></div></div></a>
 
 			  		
 			  		<!-- google Adsense -->

@@ -146,7 +146,7 @@
 			    "@id":"https://kenzo0107.github.io/2020/08/12/2020-08-13-external-s3-bucket/"
 			},
 			"datePublished": "2020-08-12T15:00:00.000Z",
-			"dateModified": "2021-02-01T15:58:06.971Z",
+			"dateModified": "2021-03-02T00:38:06.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1943,100 +1943,100 @@ h6.categories {
 <!-- toc -->
 
 <ul>
-<li><a href="#%E6%A6%82%E8%A6%81">&#x6982;&#x8981;</a></li>
-<li><a href="#%E5%85%B1%E6%9C%89%E6%96%B9%E6%B3%95%E6%A1%88">&#x5171;&#x6709;&#x65B9;&#x6CD5;&#x6848;</a><ul>
-<li><a href="#%E6%A1%881-a-%E7%A4%BE%E3%81%AE%E6%89%80%E6%9C%89%E3%81%99%E3%82%8B%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%E6%A8%A9%E9%99%90%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%8F">&#x6848;1. A &#x793E;&#x306E;&#x6240;&#x6709;&#x3059;&#x308B;&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B8;&#x306E;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x6A29;&#x9650;&#x3092;&#x3044;&#x305F;&#x3060;&#x304F;</a></li>
-<li><a href="#%E6%A1%882-rom-%E3%81%AB%E5%85%A5%E3%82%8C%E3%81%A6%E3%81%8A%E6%B8%A1%E3%81%97">&#x6848;2. ROM &#x306B;&#x5165;&#x308C;&#x3066;&#x304A;&#x6E21;&#x3057;</a></li>
-<li><a href="#%E6%A1%883-a-%E7%A4%BE%E3%81%8B%E3%82%89%E5%BC%8A%E7%A4%BE-s3-bucket-%E3%81%B8%E3%81%AE%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%82%92%E8%A8%B1%E5%8F%AF%E3%81%99%E3%82%8B">&#x6848;3. A &#x793E;&#x304B;&#x3089;&#x5F0A;&#x793E; S3 Bucket &#x3078;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3092;&#x8A31;&#x53EF;&#x3059;&#x308B;</a></li>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E5%85%B1%E6%9C%89%E6%96%B9%E6%B3%95%E6%A1%88">共有方法案</a><ul>
+<li><a href="#%E6%A1%881-a-%E7%A4%BE%E3%81%AE%E6%89%80%E6%9C%89%E3%81%99%E3%82%8B%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%E6%A8%A9%E9%99%90%E3%82%92%E3%81%84%E3%81%9F%E3%81%A0%E3%81%8F">案1. A 社の所有するストレージのアップロード権限をいただく</a></li>
+<li><a href="#%E6%A1%882-rom-%E3%81%AB%E5%85%A5%E3%82%8C%E3%81%A6%E3%81%8A%E6%B8%A1%E3%81%97">案2. ROM に入れてお渡し</a></li>
+<li><a href="#%E6%A1%883-a-%E7%A4%BE%E3%81%8B%E3%82%89%E5%BC%8A%E7%A4%BE-s3-bucket-%E3%81%B8%E3%81%AE%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%82%92%E8%A8%B1%E5%8F%AF%E3%81%99%E3%82%8B">案3. A 社から弊社 S3 Bucket へのアクセスを許可する</a></li>
 </ul>
 </li>
-<li><a href="#%E7%B5%90%E8%AB%96-%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%8C%E6%97%A2%E7%9F%A5%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E3%81%A7%E4%BB%98%E4%B8%8E%E3%81%99%E3%82%8B%E6%A8%A9%E9%99%90%E3%81%8C%E5%A4%89%E3%82%8F%E3%82%8B">&#x7D50;&#x8AD6;: &#x5171;&#x6709;&#x3059;&#x308B;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x304C;&#x65E2;&#x77E5;&#x304B;&#x3069;&#x3046;&#x304B;&#x3067;&#x4ED8;&#x4E0E;&#x3059;&#x308B;&#x6A29;&#x9650;&#x304C;&#x5909;&#x308F;&#x308B;&#x3002;</a><ul>
-<li><a href="#a%E7%A4%BE%E3%81%A8%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E6%97%A2%E7%9F%A5%E3%81%A7%E3%81%82%E3%82%8B%E5%A0%B4%E5%90%88">A&#x793E;&#x3068;&#x5171;&#x6709;&#x3059;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x65E2;&#x77E5;&#x3067;&#x3042;&#x308B;&#x5834;&#x5408;</a></li>
-<li><a href="#a%E7%A4%BE%E3%81%A8%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E4%B8%8D%E7%89%B9%E5%AE%9A%E3%81%AE%E5%A0%B4%E5%90%88">A&#x793E;&#x3068;&#x5171;&#x6709;&#x3059;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x4E0D;&#x7279;&#x5B9A;&#x306E;&#x5834;&#x5408;</a><ul>
-<li><a href="#%E4%B8%8A%E8%A8%98%E5%AE%9F%E8%A3%85%E3%81%AB%E8%87%B3%E3%81%A3%E3%81%9F%E7%B5%8C%E7%B7%AF">&#x4E0A;&#x8A18;&#x5B9F;&#x88C5;&#x306B;&#x81F3;&#x3063;&#x305F;&#x7D4C;&#x7DEF;</a></li>
+<li><a href="#%E7%B5%90%E8%AB%96-%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%8C%E6%97%A2%E7%9F%A5%E3%81%8B%E3%81%A9%E3%81%86%E3%81%8B%E3%81%A7%E4%BB%98%E4%B8%8E%E3%81%99%E3%82%8B%E6%A8%A9%E9%99%90%E3%81%8C%E5%A4%89%E3%82%8F%E3%82%8B">結論: 共有するオブジェクトが既知かどうかで付与する権限が変わる。</a><ul>
+<li><a href="#a%E7%A4%BE%E3%81%A8%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E6%97%A2%E7%9F%A5%E3%81%A7%E3%81%82%E3%82%8B%E5%A0%B4%E5%90%88">A社と共有するファイルが既知である場合</a></li>
+<li><a href="#a%E7%A4%BE%E3%81%A8%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E4%B8%8D%E7%89%B9%E5%AE%9A%E3%81%AE%E5%A0%B4%E5%90%88">A社と共有するファイルが不特定の場合</a><ul>
+<li><a href="#%E4%B8%8A%E8%A8%98%E5%AE%9F%E8%A3%85%E3%81%AB%E8%87%B3%E3%81%A3%E3%81%9F%E7%B5%8C%E7%B7%AF">上記実装に至った経緯</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">&#x307E;&#x3068;&#x3081;</a></li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
 </ul>
 <!-- tocstop -->
 
 </div>
 </div>
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>AWS S3 Bucket &#x306E;&#x7279;&#x5B9A;&#x30D1;&#x30B9;&#x3092;&#x793E;&#x5916;&#x306B;&#x5171;&#x6709;&#x3059;&#x308B;&#x969B;&#x306E;&#x30DD;&#x30A4;&#x30F3;&#x30C8;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="概要">概要</span></h2><p>AWS S3 Bucket の特定パスを社外に共有する際のポイントをまとめました。</p>
 <a id="more"></a>
 
-<h2><span id="&#x5171;&#x6709;&#x65B9;&#x6CD5;&#x6848;">&#x5171;&#x6709;&#x65B9;&#x6CD5;&#x6848;</span></h2><p>&#x5171;&#x6709;&#x65B9;&#x6CD5;&#x6848;&#x3068;&#x3057;&#x3066;&#x4EE5;&#x4E0B; 3 &#x6848;&#x3092;&#x8003;&#x3048;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h3><span id="&#x6848;1-a-&#x793E;&#x306E;&#x6240;&#x6709;&#x3059;&#x308B;&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B8;&#x306E;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x6A29;&#x9650;&#x3092;&#x3044;&#x305F;&#x3060;&#x304F;">&#x6848;1. A &#x793E;&#x306E;&#x6240;&#x6709;&#x3059;&#x308B;&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B8;&#x306E;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x6A29;&#x9650;&#x3092;&#x3044;&#x305F;&#x3060;&#x304F;</span></h3><p>&#x3053;&#x3061;&#x3089;&#x306E; S3 Bucket <code>hoge.share</code> &#x3078;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x8A31;&#x53EF;&#x8A2D;&#x5B9A;&#x3092;&#x8FFD;&#x52A0;&#x3059;&#x308B;&#x3053;&#x3068;&#x306A;&#x304F;&#x3001;&#x5F0A;&#x793E;&#x304B;&#x3089;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x3002;</p>
+<h2><span id="共有方法案">共有方法案</span></h2><p>共有方法案として以下 3 案を考えました。</p>
+<h3><span id="案1-a-社の所有するストレージのアップロード権限をいただく">案1. A 社の所有するストレージのアップロード権限をいただく</span></h3><p>こちらの S3 Bucket <code>hoge.share</code> へのアクセス許可設定を追加することなく、弊社からオブジェクトをアップロードする。</p>
 <ul>
-<li>&#x30E1;&#x30EA;&#x30C3;&#x30C8;<ul>
-<li>&#x3053;&#x3061;&#x3089;&#x306E; S3 Bucket &#x3078;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x8A31;&#x53EF;&#x8A2D;&#x5B9A;&#x3092;&#x8FFD;&#x52A0;&#x3059;&#x308B;&#x3053;&#x3068;&#x306A;&#x304F;&#x30BB;&#x30AD;&#x30E5;&#x30A2;&#x3002;</li>
-<li>&#x5171;&#x6709;&#x3057;&#x305F;&#x304F;&#x306A;&#x3044;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x3053;&#x3061;&#x3089;&#x90FD;&#x5408;&#x3067;&#x7CBE;&#x67FB;&#x3067;&#x304D;&#x308B;&#x3002;</li>
+<li>メリット<ul>
+<li>こちらの S3 Bucket へのアクセス許可設定を追加することなくセキュア。</li>
+<li>共有したくないオブジェクトをこちら都合で精査できる。</li>
 </ul>
 </li>
-<li>&#x30C7;&#x30E1;&#x30EA;&#x30C3;&#x30C8;<ul>
-<li>&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x4F5C;&#x696D;&#x30B3;&#x30B9;&#x30C8;&#x304C;&#x767A;&#x751F;&#x3002;</li>
-<li>&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x6570;&#x304C;&#x591A;&#x3044;&#x3068;&#x6642;&#x9593;&#x304C;&#x639B;&#x304B;&#x308B;&#x3002;</li>
-<li>A&#x793E;&#x306E;&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B8;&#x304C; S3 &#x306A;&#x3089; Bucket &#x30B3;&#x30D4;&#x30FC;&#x304C;&#x4F7F;&#x3048;&#x308B;&#x304C;&#x3001;&#x305D;&#x3046;&#x3067;&#x306A;&#x3044;&#x5834;&#x5408;&#x3001;&#x4E00;&#x5EA6;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x4F5C;&#x696D;&#x30B3;&#x30B9;&#x30C8;&#x304C;&#x639B;&#x304B;&#x308B;&#x3002;</li>
+<li>デメリット<ul>
+<li>オブジェクトアップロードする作業コストが発生。</li>
+<li>オブジェクト数が多いと時間が掛かる。</li>
+<li>A社のストレージが S3 なら Bucket コピーが使えるが、そうでない場合、一度ダウンロードする作業コストが掛かる。</li>
 </ul>
 </li>
 </ul>
-<h3><span id="&#x6848;2-rom-&#x306B;&#x5165;&#x308C;&#x3066;&#x304A;&#x6E21;&#x3057;">&#x6848;2. ROM &#x306B;&#x5165;&#x308C;&#x3066;&#x304A;&#x6E21;&#x3057;</span></h3><p>&#x4E00;&#x5EA6;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x3066; CD-ROM &#x306B;&#x5165;&#x308C;&#x3066; A &#x793E;&#x306B;&#x304A;&#x6E21;&#x3057;&#x3002;</p>
-<p>&#xFF08;&#x76E3;&#x67FB;&#x3067; ROM &#x306B;&#x5165;&#x308C;&#x3066;&#x304A;&#x6E21;&#x3057;&#x3001;&#x3068;&#x6307;&#x793A;&#x3055;&#x308C;&#x308B;&#x3053;&#x3068;&#x304C;&#x904E;&#x53BB;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#xFF09;</p>
+<h3><span id="案2-rom-に入れてお渡し">案2. ROM に入れてお渡し</span></h3><p>一度ダウンロードして CD-ROM に入れて A 社にお渡し。</p>
+<p>（監査で ROM に入れてお渡し、と指示されることが過去ありました）</p>
 <ul>
-<li>&#x30E1;&#x30EA;&#x30C3;&#x30C8;<ul>
-<li>&#x6848;1 &#x3068;&#x8FD1;&#x3057;&#x3044;&#x304C;&#x3001;&#x30A4;&#x30F3;&#x30BF;&#x30FC;&#x30CD;&#x30C3;&#x30C8;&#x3092;&#x7D4C;&#x7531;&#x3057;&#x306A;&#x3044;&#x3068;&#x3044;&#x3046;&#x70B9;&#x3067;&#x3088;&#x308A;&#x30BB;&#x30AD;&#x30E5;&#x30A2;</li>
+<li>メリット<ul>
+<li>案1 と近しいが、インターネットを経由しないという点でよりセキュア</li>
 </ul>
 </li>
-<li>&#x30C7;&#x30E1;&#x30EA;&#x30C3;&#x30C8;<ul>
-<li>&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x6570;&#x304C;&#x591A;&#x3044;&#x3068;&#x6642;&#x9593;&#x304C;&#x639B;&#x304B;&#x308B;</li>
-<li>&#x5171;&#x6709;&#x983B;&#x5EA6;&#x304C;&#x9AD8;&#x304F;&#x306A;&#x308B;&#x3068;&#x767A;&#x9001;&#x624B;&#x7D9A;&#x304D;&#x304C;&#x591A;&#x304F;&#x306A;&#x308A;&#x3001;&#x305D;&#x306E;&#x4F5C;&#x696D;&#x30B3;&#x30B9;&#x30C8;&#x304C;&#x639B;&#x304B;&#x308B;&#x3002;</li>
-</ul>
-</li>
-</ul>
-<h3><span id="&#x6848;3-a-&#x793E;&#x304B;&#x3089;&#x5F0A;&#x793E;-s3-bucket-&#x3078;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3092;&#x8A31;&#x53EF;&#x3059;&#x308B;">&#x6848;3. A &#x793E;&#x304B;&#x3089;&#x5F0A;&#x793E; S3 Bucket &#x3078;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3092;&#x8A31;&#x53EF;&#x3059;&#x308B;</span></h3><ul>
-<li>&#x30E1;&#x30EA;&#x30C3;&#x30C8;<ul>
-<li>&#x5F0A;&#x793E;&#x4F5C;&#x696D;&#x30B3;&#x30B9;&#x30C8;&#x304C;&#x5C11;&#x306A;&#x304F;&#x6E08;&#x3080;&#x3002;&#x3053;&#x3061;&#x3089;&#x306F;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x6A29;&#x9650;&#x3092;&#x4ED8;&#x4E0E;&#x3059;&#x308B;&#x306E;&#x307F;</li>
-</ul>
-</li>
-<li>&#x30C7;&#x30E1;&#x30EA;&#x30C3;&#x30C8;<ul>
-<li>A &#x793E;&#x306E;&#x4F5C;&#x696D;&#x5DE5;&#x6570;&#x304C;&#x9AD8;&#x304F;&#x306A;&#x308B;&#x3002;</li>
+<li>デメリット<ul>
+<li>オブジェクト数が多いと時間が掛かる</li>
+<li>共有頻度が高くなると発送手続きが多くなり、その作業コストが掛かる。</li>
 </ul>
 </li>
 </ul>
-<p>&#x6848;1 &#x304C;&#x30BB;&#x30AD;&#x30E5;&#x30A2;&#x3067;&#x826F;&#x3055;&#x305D;&#x3046;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x81EA;&#x5206;&#x304C;&#x5B9F;&#x969B;&#x306E;&#x30BF;&#x30B9;&#x30AF;&#x3067;&#x5BFE;&#x5FDC;&#x3057;&#x305F;&#x306E;&#x306F; &#x6848;3 &#x3067;&#x3057;&#x305F;&#x3002;<br>&#x305D;&#x306E;&#x969B;&#x306F;&#x3001;&#x671F;&#x65E5;&#x304C;&#x975E;&#x5E38;&#x306B;&#x77ED;&#x304F;&#x3001;&#x3053;&#x3061;&#x3089;&#x306E;&#x4F5C;&#x696D;&#x30B3;&#x30B9;&#x30C8;&#x304C;&#x304B;&#x3051;&#x3089;&#x308C;&#x306A;&#x3044;&#x3068;&#x3044;&#x3046;&#x30D3;&#x30B8;&#x30CD;&#x30B9;&#x7684;&#x306A;&#x4E8B;&#x60C5;&#x304B;&#x3089;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x6848;3&#x306B;&#x3064;&#x3044;&#x3066;&#x3001;&#x691C;&#x8A0E;&#x3057;&#x305F;&#x3053;&#x3068;&#x3092;&#x7D50;&#x8AD6;&#x304B;&#x3089;&#x307E;&#x3068;&#x3081;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x7D50;&#x8AD6;-&#x5171;&#x6709;&#x3059;&#x308B;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x304C;&#x65E2;&#x77E5;&#x304B;&#x3069;&#x3046;&#x304B;&#x3067;&#x4ED8;&#x4E0E;&#x3059;&#x308B;&#x6A29;&#x9650;&#x304C;&#x5909;&#x308F;&#x308B;">&#x7D50;&#x8AD6;: &#x5171;&#x6709;&#x3059;&#x308B;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x304C;&#x65E2;&#x77E5;&#x304B;&#x3069;&#x3046;&#x304B;&#x3067;&#x4ED8;&#x4E0E;&#x3059;&#x308B;&#x6A29;&#x9650;&#x304C;&#x5909;&#x308F;&#x308B;&#x3002;</span></h2><p>&#x30E6;&#x30FC;&#x30B9;&#x30B1;&#x30FC;&#x30B9;&#x3068;&#x3057;&#x3066;&#x3001;&#x5F0A;&#x793E;&#x306E; S3 Bucket <code>hoge.share</code> &#x306E;&#x7279;&#x5B9A;&#x30D1;&#x30B9; <code>aaa/bbb</code> &#x4EE5;&#x4E0B;&#x306E;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092; A &#x793E;&#x306B;&#x5171;&#x6709;&#x3059;&#x308B;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h3><span id="a&#x793E;&#x3068;&#x5171;&#x6709;&#x3059;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x65E2;&#x77E5;&#x3067;&#x3042;&#x308B;&#x5834;&#x5408;">A&#x793E;&#x3068;&#x5171;&#x6709;&#x3059;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x65E2;&#x77E5;&#x3067;&#x3042;&#x308B;&#x5834;&#x5408;</span></h3><p>A &#x793E;&#x3068;&#x5171;&#x6709;&#x3059;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x6BCE;&#x56DE; <code>hoge.share</code> &#x306E; <code>aaa/bbb/c.gz</code> &#x3068;&#x53D6;&#x308A;&#x6C7A;&#x3081;&#x304C;&#x3042;&#x308B;&#x5834;&#x5408;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3067; A &#x793E;&#x306E; ip &#x5236;&#x9650;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;Version&quot;</span>:<span class="string">&quot;2012-10-17&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;Statement&quot;</span>:[</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">&quot;Effect&quot;</span>:<span class="string">&quot;Allow&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;Principal&quot;</span>: {</span><br><span class="line">        <span class="attr">&quot;AWS&quot;</span>: [<span class="string">&quot;*&quot;</span>]</span><br><span class="line">      },</span><br><span class="line">      <span class="attr">&quot;Action&quot;</span>: [<span class="string">&quot;s3:GetObject&quot;</span>],</span><br><span class="line">      <span class="attr">&quot;Resource&quot;</span>: [<span class="string">&quot;arn:aws:s3:::hoge.share/aaa/bbb/c.gz&quot;</span>],</span><br><span class="line">      <span class="attr">&quot;Condition&quot;</span>: {</span><br><span class="line">        <span class="attr">&quot;IpAddress&quot;</span>: {</span><br><span class="line">          <span class="attr">&quot;aws:SourceIp&quot;</span>: [<span class="string">&quot;&lt;A&#x793E;IP&gt;/32&quot;</span>]</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="案3-a-社から弊社-s3-bucket-へのアクセスを許可する">案3. A 社から弊社 S3 Bucket へのアクセスを許可する</span></h3><ul>
+<li>メリット<ul>
+<li>弊社作業コストが少なく済む。こちらはアクセス権限を付与するのみ</li>
+</ul>
+</li>
+<li>デメリット<ul>
+<li>A 社の作業工数が高くなる。</li>
+</ul>
+</li>
+</ul>
+<p>案1 がセキュアで良さそうです。</p>
+<p>自分が実際のタスクで対応したのは 案3 でした。<br>その際は、期日が非常に短く、こちらの作業コストがかけられないというビジネス的な事情からでした。</p>
+<p>案3について、検討したことを結論からまとめていきます。</p>
+<h2><span id="結論-共有するオブジェクトが既知かどうかで付与する権限が変わる">結論: 共有するオブジェクトが既知かどうかで付与する権限が変わる。</span></h2><p>ユースケースとして、弊社の S3 Bucket <code>hoge.share</code> の特定パス <code>aaa/bbb</code> 以下のオブジェクトを A 社に共有するとします。</p>
+<h3><span id="a社と共有するファイルが既知である場合">A社と共有するファイルが既知である場合</span></h3><p>A 社と共有するファイルが毎回 <code>hoge.share</code> の <code>aaa/bbb/c.gz</code> と取り決めがある場合、以下の様なポリシーで A 社の ip 制限ができます。</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"Version"</span>:<span class="string">"2012-10-17"</span>,</span><br><span class="line">  <span class="attr">"Statement"</span>:[</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"Effect"</span>:<span class="string">"Allow"</span>,</span><br><span class="line">      <span class="attr">"Principal"</span>: {</span><br><span class="line">        <span class="attr">"AWS"</span>: [<span class="string">"*"</span>]</span><br><span class="line">      },</span><br><span class="line">      <span class="attr">"Action"</span>: [<span class="string">"s3:GetObject"</span>],</span><br><span class="line">      <span class="attr">"Resource"</span>: [<span class="string">"arn:aws:s3:::hoge.share/aaa/bbb/c.gz"</span>],</span><br><span class="line">      <span class="attr">"Condition"</span>: {</span><br><span class="line">        <span class="attr">"IpAddress"</span>: {</span><br><span class="line">          <span class="attr">"aws:SourceIp"</span>: [<span class="string">"&lt;A社IP&gt;/32"</span>]</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>A&#x793E;IP &#x304B;&#x3089;&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3067;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x304C;&#x53EF;&#x80FD;&#x3067;&#x3059;&#x3002;</p>
+<p>A社IP から以下コマンドでダウンロードが可能です。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://s3-ap-northeast-1.amazonaws.com/hoge.share/aaa/bbb/c.gz --output c.gz</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="a&#x793E;&#x3068;&#x5171;&#x6709;&#x3059;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x4E0D;&#x7279;&#x5B9A;&#x306E;&#x5834;&#x5408;">A&#x793E;&#x3068;&#x5171;&#x6709;&#x3059;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x4E0D;&#x7279;&#x5B9A;&#x306E;&#x5834;&#x5408;</span></h3><ul>
-<li>A&#x793E;&#x7528;&#x306E; IAM User (&#x7121;&#x6A29;&#x9650;)&#x3067;&#x4F5C;&#x6210;</li>
-<li>S3 Bucket &#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x3067; A&#x793E;IP &#x3067;&#x5236;&#x9650;&#x3057;&#x3001; A&#x793E;&#x7528; IAM User &#x306B;&#x5BFE;&#x3057; <code>s3:GetObject</code> <code>s3:ListBucket</code> &#x3092;&#x8A31;&#x53EF;</li>
+<h3><span id="a社と共有するファイルが不特定の場合">A社と共有するファイルが不特定の場合</span></h3><ul>
+<li>A社用の IAM User (無権限)で作成</li>
+<li>S3 Bucket ポリシーで A社IP で制限し、 A社用 IAM User に対し <code>s3:GetObject</code> <code>s3:ListBucket</code> を許可</li>
 </ul>
-<h4><span id="&#x4E0A;&#x8A18;&#x5B9F;&#x88C5;&#x306B;&#x81F3;&#x3063;&#x305F;&#x7D4C;&#x7DEF;">&#x4E0A;&#x8A18;&#x5B9F;&#x88C5;&#x306B;&#x81F3;&#x3063;&#x305F;&#x7D4C;&#x7DEF;</span></h4><p><code>aaa/bbb/</code> &#x4EE5;&#x4E0B;&#x306E;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x5168;&#x3066;&#x3092;&#x5171;&#x6709;&#x3059;&#x308B;&#x3001;&#x3068;&#x3044;&#x3046;&#x69D8;&#x306A;&#x5834;&#x5408;&#x306B;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A; <code>curl</code> &#x3067;&#x30EF;&#x30A4;&#x30EB;&#x30C9;&#x30AB;&#x30FC;&#x30C9;&#x3092;&#x6307;&#x5B9A;&#x3057;&#x3066;&#x4E00;&#x62EC;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x306F;&#x3067;&#x304D;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+<h4><span id="上記実装に至った経緯">上記実装に至った経緯</span></h4><p><code>aaa/bbb/</code> 以下のオブジェクト全てを共有する、という様な場合に以下の様な <code>curl</code> でワイルドカードを指定して一括ダウンロードはできません。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://s3-ap-northeast-1.amazonaws.com/hoge.share/aaa/bbb/*</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E00;&#x62EC;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x969B;&#x306B;&#x306F; <code>s3:ListBucket</code> &#x6A29;&#x9650;&#x304C;&#x5FC5;&#x8981;&#x3067;&#x3001;&#x305D;&#x308C;&#x3092;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x304C; IP &#x8A31;&#x53EF;&#x3060;&#x3051;&#x3067;&#x306F;&#x5B9F;&#x73FE;&#x3067;&#x304D;&#x307E;&#x305B;&#x3093;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4F8B;) &#x4E00;&#x62EC;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;</p>
+<p>一括ダウンロードする際には <code>s3:ListBucket</code> 権限が必要で、それをサポートする方法が IP 許可だけでは実現できませんでした。</p>
+<p>例) 一括ダウンロードするコマンド</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws s3 cp --recusive s3://hoge.share/aaa/bbb/ .</span><br></pre></td></tr></tbody></table></figure>
 
-<p>A&#x793E;&#x7528;&#x306E; IAM User &#x306E;&#x4F5C;&#x6210;&#x6642;&#x306B;&#x306F;&#x7121;&#x6A29;&#x9650;&#x3068;&#x3057;&#x3001; S3 Bucket Policy &#x3067;&#x660E;&#x793A;&#x7684;&#x306A; A&#x793E;&#x7528; IAM User &#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x8A31;&#x53EF;&#x3092;&#x5B9A;&#x7FA9;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">&quot;Version&quot;</span>:<span class="string">&quot;2012-10-17&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;Statement&quot;</span>:[</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">&quot;Effect&quot;</span>:<span class="string">&quot;Allow&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;Principal&quot;</span>: {</span><br><span class="line">        <span class="attr">&quot;AWS&quot;</span>: [<span class="string">&quot;&lt;A &#x793E;&#x7528; IAM User ARN&gt;&quot;</span>]</span><br><span class="line">      },</span><br><span class="line">      <span class="attr">&quot;Action&quot;</span>: [<span class="string">&quot;s3:GetObject&quot;</span>],</span><br><span class="line">      <span class="attr">&quot;Resource&quot;</span>: [<span class="string">&quot;arn:aws:s3:::hoge.share/aaa/bbb/*&quot;</span>],</span><br><span class="line">      <span class="attr">&quot;Condition&quot;</span>: {</span><br><span class="line">        <span class="attr">&quot;IpAddress&quot;</span>: {</span><br><span class="line">          <span class="attr">&quot;aws:SourceIp&quot;</span>: [<span class="string">&quot;&lt;A&#x793E;IP&gt;/32&quot;</span>]</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">&quot;Effect&quot;</span>:<span class="string">&quot;Allow&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;Principal&quot;</span>: {</span><br><span class="line">        <span class="attr">&quot;AWS&quot;</span>: [<span class="string">&quot;&lt;A &#x793E;&#x7528; IAM User ARN&gt;&quot;</span>]</span><br><span class="line">      },</span><br><span class="line">      <span class="attr">&quot;Action&quot;</span>: [<span class="string">&quot;s3:ListBucket&quot;</span>],</span><br><span class="line">      <span class="attr">&quot;Resource&quot;</span>: [<span class="string">&quot;arn:aws:s3:::hoge.share&quot;</span>],</span><br><span class="line">      <span class="attr">&quot;Condition&quot;</span>: {</span><br><span class="line">        <span class="attr">&quot;IpAddress&quot;</span>: {</span><br><span class="line">          <span class="attr">&quot;aws:SourceIp&quot;</span>: [<span class="string">&quot;&lt;A&#x793E;IP&gt;/32&quot;</span>]</span><br><span class="line">        },</span><br><span class="line">        <span class="attr">&quot;StringLike&quot;</span>: {</span><br><span class="line">          <span class="attr">&quot;s3:prefix&quot;</span>: [<span class="string">&quot;aaa/bbb/*&quot;</span>]</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>A社用の IAM User の作成時には無権限とし、 S3 Bucket Policy で明示的な A社用 IAM User のアクセス許可を定義しています。</p>
+<figure class="highlight json"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="attr">"Version"</span>:<span class="string">"2012-10-17"</span>,</span><br><span class="line">  <span class="attr">"Statement"</span>:[</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"Effect"</span>:<span class="string">"Allow"</span>,</span><br><span class="line">      <span class="attr">"Principal"</span>: {</span><br><span class="line">        <span class="attr">"AWS"</span>: [<span class="string">"&lt;A 社用 IAM User ARN&gt;"</span>]</span><br><span class="line">      },</span><br><span class="line">      <span class="attr">"Action"</span>: [<span class="string">"s3:GetObject"</span>],</span><br><span class="line">      <span class="attr">"Resource"</span>: [<span class="string">"arn:aws:s3:::hoge.share/aaa/bbb/*"</span>],</span><br><span class="line">      <span class="attr">"Condition"</span>: {</span><br><span class="line">        <span class="attr">"IpAddress"</span>: {</span><br><span class="line">          <span class="attr">"aws:SourceIp"</span>: [<span class="string">"&lt;A社IP&gt;/32"</span>]</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    {</span><br><span class="line">      <span class="attr">"Effect"</span>:<span class="string">"Allow"</span>,</span><br><span class="line">      <span class="attr">"Principal"</span>: {</span><br><span class="line">        <span class="attr">"AWS"</span>: [<span class="string">"&lt;A 社用 IAM User ARN&gt;"</span>]</span><br><span class="line">      },</span><br><span class="line">      <span class="attr">"Action"</span>: [<span class="string">"s3:ListBucket"</span>],</span><br><span class="line">      <span class="attr">"Resource"</span>: [<span class="string">"arn:aws:s3:::hoge.share"</span>],</span><br><span class="line">      <span class="attr">"Condition"</span>: {</span><br><span class="line">        <span class="attr">"IpAddress"</span>: {</span><br><span class="line">          <span class="attr">"aws:SourceIp"</span>: [<span class="string">"&lt;A社IP&gt;/32"</span>]</span><br><span class="line">        },</span><br><span class="line">        <span class="attr">"StringLike"</span>: {</span><br><span class="line">          <span class="attr">"s3:prefix"</span>: [<span class="string">"aaa/bbb/*"</span>]</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x307E;&#x305F;&#x3001;&#x8003;&#x616E;&#x3059;&#x3079;&#x304D;&#x70B9;&#x3068;&#x3057;&#x3066;&#x3001;<br><code>hoge.share</code> &#x3078;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x30ED;&#x30B0;&#x3092;&#x5225;&#x9014;&#x62C5;&#x4FDD;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x305D;&#x308C;&#x3082;&#x542B;&#x3081;&#x3001;&#x5BFE;&#x5FDC;&#x3092;&#x307E;&#x3068;&#x3081;&#x305F;&#x3082;&#x306E;&#x3092; Terraform &#x3067;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>また、考慮すべき点として、<br><code>hoge.share</code> へのアクセスログを別途担保する必要があります。</p>
+<p>それも含め、対応をまとめたものを Terraform でまとめました。</p>
 
 
-<h2><span id="&#x307E;&#x3068;&#x3081;">&#x307E;&#x3068;&#x3081;</span></h2><p>S3 Bucket &#x306E;&#x7279;&#x5B9A;&#x30D5;&#x30A9;&#x30EB;&#x30C0;&#x4EE5;&#x4E0B;&#x3092;&#x5171;&#x6709;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x3092;&#x6539;&#x3081;&#x3066;&#x691C;&#x8A0E;&#x3057;&#x3066;&#x307F;&#x3066;<br>&#x3044;&#x308D;&#x3044;&#x308D;&#x306A;&#x65B9;&#x6CD5;&#x304C;&#x3042;&#x308B;&#x306A;&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x5171;&#x6709;&#x5148;&#x3068;&#x306E;&#x95A2;&#x4FC2;&#x6027;&#x306B;&#x3088;&#x3063;&#x3066;&#x3082;&#x30E1;&#x30EA;&#x30C3;&#x30C8;&#x30FB;&#x30C7;&#x30E1;&#x30EA;&#x30C3;&#x30C8;&#x304C;&#x3042;&#x308D;&#x3046;&#x304B;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x3053;&#x3093;&#x306A;&#x826F;&#x3044;&#x65B9;&#x6CD5;&#x304C;&#x3042;&#x308B;&#x3088;&#xFF01;&#x3068;&#x3044;&#x3046;&#x9023;&#x7D61;&#x304A;&#x5F85;&#x3061;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059; m(_ _)m</p>
+<h2><span id="まとめ">まとめ</span></h2><p>S3 Bucket の特定フォルダ以下を共有する方法を改めて検討してみて<br>いろいろな方法があるなと思いました。</p>
+<p>共有先との関係性によってもメリット・デメリットがあろうかと思います。</p>
+<p>こんな良い方法があるよ！という連絡お待ちしています m(_ _)m</p>
 
 			  		
 			  		<!-- google Adsense -->

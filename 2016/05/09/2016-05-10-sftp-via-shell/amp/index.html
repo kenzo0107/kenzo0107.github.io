@@ -1814,25 +1814,25 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x30C7;&#x30FC;&#x30BF;&#x89E3;&#x6790;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3092;&#x63D0;&#x4F9B;&#x3059;&#x308B;&#x30B5;&#x30FC;&#x30C9;&#x30D1;&#x30FC;&#x30C6;&#x30A3;&#x3067;<br>&#x6307;&#x5B9A;&#x306E; Server, Path &#x306B;&#x6307;&#x5B9A;&#x5F62;&#x5F0F;&#x3067;&#x683C;&#x7D0D;&#x3059;&#x308B;&#x3088;&#x3046;&#x306B;&#x3001;<br>&#x3068;&#x6307;&#x793A;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x307E;&#x305F;&#x3001;<br>&#x300C;Protocol &#x306F; <code>sftp</code> &#x306E;&#x307F;&#x8A31;&#x53EF;&#x3067;&#x304A;&#x9858;&#x3044;&#x3057;&#x307E;&#x3059;&#x300D;<br>&#x3068;&#x3082;&#x3002;</p>
-<p>&#x5B9A;&#x671F;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x3082;&#x3042;&#x3063;&#x305F;&#x305F;&#x3081;<br>&#x30B7;&#x30A7;&#x30EB;&#x3067;&#x66F8;&#x3051;&#x306A;&#x3044;&#x304B;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x3067;&#x3001;<br>&#x4EE5;&#x4E0B;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>データ解析サービスを提供するサードパーティで<br>指定の Server, Path に指定形式で格納するように、<br>と指示がありました。</p>
+<p>また、<br>「Protocol は <code>sftp</code> のみ許可でお願いします」<br>とも。</p>
+<p>定期実行する必要もあったため<br>シェルで書けないかということで、<br>以下まとめました。</p>
 <h2><span id="shell">shell</span></h2>
 
 
 <h3><span id="point">Point</span></h3><ul>
-<li><p>expect &#x3067;&#x901A;&#x5E38;&#x3001;&#x5BFE;&#x8A71;&#x5F62;&#x5F0F;&#x3068;&#x306A;&#x308B;sftp&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x306E;&#x5148;&#x8AAD;&#x307F;&#x3067;&#x30D1;&#x30B9;&#x30EF;&#x30FC;&#x30C9;&#x3092;&#x901A;&#x904E;</p>
+<li><p>expect で通常、対話形式となるsftpコマンドの先読みでパスワードを通過</p>
 </li>
-<li><p>-o&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x3067; <code>bachmode no</code> &#x3092;&#x6307;&#x5B9A;&#x3057;&#x4EE5;&#x4E0B;&#x306E;&#x30A8;&#x30E9;&#x30FC;&#x3092;&#x56DE;&#x907F;</p>
+<li><p>-oオプションで <code>bachmode no</code> を指定し以下のエラーを回避</p>
 </li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Permission denied (publickey,password).</span><br><span class="line">Connection closed</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>-b&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3; &#x30D0;&#x30C3;&#x30C1;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306B;sftp&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x5F8C;&#x306E;&#x5B9F;&#x884C;&#x51E6;&#x7406;&#x3092;&#x8A18;&#x8FF0;</li>
+<li>-bオプション バッチファイルにsftpログイン後の実行処理を記述</li>
 </ul>
-<p>&#x5F53;&#x65B9;&#x3067;&#x306F;&#x3001;Jenkins &#x3084; cron &#x3067;&#x30B7;&#x30A7;&#x30EB;&#x3092;&#x5B9A;&#x671F;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x3063;&#x305F;&#x70BA;<br>&#x660E;&#x793A;&#x7684;&#x306B;&#x30D0;&#x30C3;&#x30C1;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x5185;&#x5BB9;&#x3092;&#x6307;&#x5B9A;&#x3067;&#x304D;&#x308B;&#x3088;&#x3046;&#x306B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;</p>
+<p>当方では、Jenkins や cron でシェルを定期実行する必要があった為<br>明示的にバッチファイルの内容を指定できるようにしています。</p>
+<p>以上です。</p>
 
 			  		
 			  		<!-- google Adsense -->

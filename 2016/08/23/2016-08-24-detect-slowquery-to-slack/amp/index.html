@@ -1814,74 +1814,74 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p><a href="http://kenzo0107.hatenablog.com/entries/2015/09/24">fluentd&#x3067;&#x30A8;&#x30E9;&#x30FC;&#x30ED;&#x30B0;&#x3092;Slack&#x3078;&#x901A;&#x77E5;</a> &#x306E;&#x7D9A;&#x304D;&#x3067;&#x3059;&#x3002;</p>
-<a href="http://kenzo0107.hatenablog.com/entry/2015/09/24/011418" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="http://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150924/20150924011032.png" width="1024" height="287" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">&#x30A8;&#x30E9;&#x30FC;&#x30ED;&#x30B0;&#x3092;Slack&#x901A;&#x77E5;&#x3059;&#x308B; - &#x9577;&#x751F;&#x6751;&#x672C;&#x90F7;Engineers&apos;Blog</div><div class="og-description">&#x74B0;&#x5883; CentOS Linux release 7.1.1503 (Core) td-agent: 0.12.12 Nginx: 1.8.0 &#x6982;&#x8981; &#x793E;&#x5185;&#x3067;Slack&#x306B;&#x3088;&#x308B;&#x9023;&#x643A;&#x304C;&#x9032;&#x307F; &#x30ED;&#x30B0;&#x7BA1;&#x7406;&#x3082;fluentd&#x306B;&#x307E;&#x3068;&#x3081;&#x3064;&#x3064;&#x3042;&#x308B;&#x306E;&#x3067; &#x30A8;&#x30E9;&#x30FC;&#x30ED;&#x30B0;&#x3067;&#x4F55;&#x304B;&#x3042;&#x3063;&#x305F;&#x3089;Slack&#x901A;&#x77E5;&#x3055;&#x305B;&#x3088;&#x3046;&#x3068;&#x601D;&#x3044;&#x2026;</div></div></div></a>
+			  		<p><a href="http://kenzo0107.hatenablog.com/entries/2015/09/24">fluentdでエラーログをSlackへ通知</a> の続きです。</p>
+<a href="http://kenzo0107.hatenablog.com/entry/2015/09/24/011418" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="http://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150924/20150924011032.png" width="1024" height="287" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">エラーログをSlack通知する - 長生村本郷Engineers'Blog</div><div class="og-description">環境 CentOS Linux release 7.1.1503 (Core) td-agent: 0.12.12 Nginx: 1.8.0 概要 社内でSlackによる連携が進み ログ管理もfluentdにまとめつつあるので エラーログで何かあったらSlack通知させようと思い…</div></div></div></a>
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>MySQL DB &#x30B5;&#x30FC;&#x30D0; &#x306E; SlowQuery&#x72B6;&#x6CC1;&#x3092;<br>&#x30EA;&#x30A2;&#x30EB;&#x30BF;&#x30A4;&#x30E0;&#x306B;Slack&#x3067;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x308B;&#x3088;&#x3046;&#x306B;&#x3059;&#x308B;&#x70BA;&#x306B;&#x5C0E;&#x5165;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<h2><span id="概要">概要</span></h2><p>MySQL DB サーバ の SlowQuery状況を<br>リアルタイムにSlackで確認できるようにする為に導入しました。</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS 6.5</li>
 <li>td-agent 0.12.26</li>
 </ul>
-<h2><span id="fluent-plugin-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Fluent Plugin &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><p>&#x4ECA;&#x56DE;&#x5FC5;&#x8981;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="fluent-plugin-インストール">Fluent Plugin インストール</span></h2><p>今回必要モジュールをインストールします。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># td-agent-gem install fluent-plugin-nata2</span></span><br><span class="line"><span class="comment"># td-agent-gem install fluent-plugin-mysql_explain</span></span><br><span class="line"><span class="comment"># td-agent-gem install fluent-plugin-sql_fingerprint</span></span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
 <li><p>fluent-plugin-nata2</p>
 <ul>
-<li>SET timestamp &#x3092;&#x3042;&#x3089;&#x304B;&#x3058;&#x3081;&#x9664;&#x5916;&#x3057;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x3044;&#x308B;DB&#x60C5;&#x5831;&#x3082;&#x4FDD;&#x6301;&#x3057;&#x3066;&#x304F;&#x308C;&#x308B;</li>
+<li>SET timestamp をあらかじめ除外しアクセスしているDB情報も保持してくれる</li>
 <li>[<a href="https://github.com/studio3104/fluent-plugin-nata2]">https://github.com/studio3104/fluent-plugin-nata2]</a></li>
 </ul>
 </li>
 <li><p>fluent-plugin-mysql_explain</p>
 <ul>
-<li>in_mysqlslowquery_ex &#x3067;&#x53D6;&#x5F97;&#x3057;&#x305F;JSON&#x306E; sql &#x5C5E;&#x6027;&#x306B;EXPLAIN &#x5B9F;&#x884C;&#x7D50;&#x679C;&#x3092;&#x53D6;&#x5F97;</li>
+<li>in_mysqlslowquery_ex で取得したJSONの sql 属性にEXPLAIN 実行結果を取得</li>
 <li>[<a href="https://github.com/kikumoto/fluent-plugin-mysql_explain]">https://github.com/kikumoto/fluent-plugin-mysql_explain]</a><br>[<a href="https://github.com/kikumoto/fluent-plugin-sql_fingerprint]">https://github.com/kikumoto/fluent-plugin-sql_fingerprint]</a></li>
 </ul>
 </li>
 <li><p>fluent-plugin-sql_fingerprint</p>
 <ul>
-<li>SQL &#x306E;&#x30D1;&#x30E9;&#x30E1;&#x30FC;&#x30BF;&#x306B;&#x30DE;&#x30B9;&#x30AF;&#x3092;&#x3059;&#x308B;</li>
+<li>SQL のパラメータにマスクをする</li>
 <li>[<a href="https://github.com/kikumoto/fluent-plugin-sql_fingerprint]">https://github.com/kikumoto/fluent-plugin-sql_fingerprint]</a></li>
 </ul>
 </li>
 </ul>
-<h2><span id="percona-tool-kit-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Percona Tool Kit &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><p>fluent-plugin-sql_fingerprint &#x3067;&#x5229;&#x7528;&#x3059;&#x308B; fingersprint &#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="percona-tool-kit-インストール">Percona Tool Kit インストール</span></h2><p>fluent-plugin-sql_fingerprint で利用する fingersprint をインストールします。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rpm -Uhv http://www.percona.com/downloads/percona-release/percona-release-0.0-1.x86_64.rpm</span></span><br><span class="line"><span class="comment"># yum install -y percona-toolkit-2.2.5-2.noarch</span></span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="fluentd-&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x4F5C;&#x6210;">fluentd &#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x4F5C;&#x6210;</span></h2><p>&#x4EE5;&#x4E0B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="fluentd-設定ファイル作成">fluentd 設定ファイル作成</span></h2><p>以下ファイル設定するとします。</p>
 <ul>
 <li>/etc/td-agent/conf.d/mysql.conf</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type mysqlslowquery_ex</span><br><span class="line">  read_from_head</span><br><span class="line">  path /var/lib/mysql/mysql-slow.log</span><br><span class="line">  pos_file /var/log/td-agent/mysql-slow.pos</span><br><span class="line">  tag mysqld.slow_query.bp</span><br><span class="line">  last_dbname_file /tmp/slowquery.log.lastdb</span><br><span class="line">&lt;/source&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter mysqld.slow_query.**&gt;</span><br><span class="line">  type record_transformer</span><br><span class="line">  &lt;record&gt;</span><br><span class="line">    hostname <!--figure2-->#123;hostname}</span><br><span class="line">  &lt;/record&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter mysqld.slow_query.**&gt;</span><br><span class="line">  type     mysql_explain</span><br><span class="line">  host     127.0.0.1</span><br><span class="line">  port     3306</span><br><span class="line">  database &lt;DB_NAME&gt;</span><br><span class="line">  username &lt;DB_USER&gt;</span><br><span class="line">  password &lt;DB_PASSWORD&gt;</span><br><span class="line">  sql_key  sql</span><br><span class="line">  added_key explain</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter mysqld.slow_query.**&gt;</span><br><span class="line">  type sql_fingerprint</span><br><span class="line">  fingerprint_tool_path /usr/bin/pt-fingerprint</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;match mysqld.slow_query.**&gt;</span><br><span class="line"></span><br><span class="line">  type copy</span><br><span class="line"></span><br><span class="line">  &lt;store&gt;</span><br><span class="line">    type slack</span><br><span class="line">    webhook_url &lt;Slack Webhook URL&gt;</span><br><span class="line">    channel &lt;Slack Channel&gt;</span><br><span class="line">    username xxx DB1 [MySQL] Slow Query</span><br><span class="line">    icon_emoji :ghost:</span><br><span class="line">    color danger</span><br><span class="line">    message &quot;*[User]* %s\r\n *[Host]* %s\r\n *[Query Time]* %s\r\n *[Lock Time]* %s\r\n *[Rows sent]* %s\r\n *[Rows Examined]* %s\r\n *[SQL]* %s \r\n *[Explain]* %s \r\n&quot;</span><br><span class="line">    message_keys user,host,query_time,lock_time,rows_sent,rows_examined,fingerprint,explain</span><br><span class="line">    flush_interval 1m</span><br><span class="line">  &lt;/store&gt;</span><br><span class="line"></span><br><span class="line">&lt;/match&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type mysqlslowquery_ex</span><br><span class="line">  read_from_head</span><br><span class="line">  path /var/lib/mysql/mysql-slow.log</span><br><span class="line">  pos_file /var/log/td-agent/mysql-slow.pos</span><br><span class="line">  tag mysqld.slow_query.bp</span><br><span class="line">  last_dbname_file /tmp/slowquery.log.lastdb</span><br><span class="line">&lt;/source&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter mysqld.slow_query.**&gt;</span><br><span class="line">  type record_transformer</span><br><span class="line">  &lt;record&gt;</span><br><span class="line">    hostname <!--figure2-->#123;hostname}</span><br><span class="line">  &lt;/record&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter mysqld.slow_query.**&gt;</span><br><span class="line">  type     mysql_explain</span><br><span class="line">  host     127.0.0.1</span><br><span class="line">  port     3306</span><br><span class="line">  database &lt;DB_NAME&gt;</span><br><span class="line">  username &lt;DB_USER&gt;</span><br><span class="line">  password &lt;DB_PASSWORD&gt;</span><br><span class="line">  sql_key  sql</span><br><span class="line">  added_key explain</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;filter mysqld.slow_query.**&gt;</span><br><span class="line">  type sql_fingerprint</span><br><span class="line">  fingerprint_tool_path /usr/bin/pt-fingerprint</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line"></span><br><span class="line">&lt;match mysqld.slow_query.**&gt;</span><br><span class="line"></span><br><span class="line">  type copy</span><br><span class="line"></span><br><span class="line">  &lt;store&gt;</span><br><span class="line">    type slack</span><br><span class="line">    webhook_url &lt;Slack Webhook URL&gt;</span><br><span class="line">    channel &lt;Slack Channel&gt;</span><br><span class="line">    username xxx DB1 [MySQL] Slow Query</span><br><span class="line">    icon_emoji :ghost:</span><br><span class="line">    color danger</span><br><span class="line">    message "*[User]* %s\r\n *[Host]* %s\r\n *[Query Time]* %s\r\n *[Lock Time]* %s\r\n *[Rows sent]* %s\r\n *[Rows Examined]* %s\r\n *[SQL]* %s \r\n *[Explain]* %s \r\n"</span><br><span class="line">    message_keys user,host,query_time,lock_time,rows_sent,rows_examined,fingerprint,explain</span><br><span class="line">    flush_interval 1m</span><br><span class="line">  &lt;/store&gt;</span><br><span class="line"></span><br><span class="line">&lt;/match&gt;</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x203B;slowquery &#x306E;&#x30D1;&#x30B9;&#x3001;DB&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;&#x306A;&#x3069;&#x306F;&#x5404;&#x74B0;&#x5883;&#x306B;&#x3088;&#x308A;&#x5909;&#x66F4;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
-<h2><span id="td-agent-&#x518D;&#x8D77;&#x52D5;">td-agent &#x518D;&#x8D77;&#x52D5;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># service td-agent restart</span><br></pre></td></tr></tbody></table></figure>
+<p>※slowquery のパス、DBのアクセスアカウントなどは各環境により変更してください。</p>
+<h2><span id="td-agent-再起動">td-agent 再起動</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># service td-agent restart</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x78BA;&#x8A8D;">&#x78BA;&#x8A8D;</span></h2><p>SlowQuery&#x3092;&#x767A;&#x884C;&#x3057;&#x3001;Slack&#x306B;&#x901A;&#x77E5;&#x3055;&#x308C;&#x308B;&#x304B;&#x78BA;&#x8A8D;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="確認">確認</span></h2><p>SlowQueryを発行し、Slackに通知されるか確認します。</p>
 <ul>
-<li>3&#x79D2; sleep &#x3055;&#x305B;&#x3001;my.cnf &#x306B;&#x8A2D;&#x5B9A;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B; long-query-time &#x306E;&#x95BE;&#x5024;&#x306E;&#x79D2;&#x6570;&#x3092;&#x8D85;&#x3048;&#x308B;&#x3088;&#x3046;&#x306B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</li>
+<li>3秒 sleep させ、my.cnf に設定されている long-query-time の閾値の秒数を超えるようにしています。</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; SELECT count(*), sleep(3) FROM &lt;table&gt;;</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>Slack &#x901A;&#x77E5;&#x78BA;&#x8A8D;</li>
+<li>Slack 通知確認</li>
 </ul>
-<p>Slack &#x306B;&#x901A;&#x77E5;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;&#xFF01;</p>
+<p>Slack に通知されました！</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160824/20160824172320.png" width="680" height="242" layout="responsive"></amp-img></div>
 </div>
 
-<p>show more &#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3059;&#x308B;&#x3068; Explain &#x304C;&#x901A;&#x77E5;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x306E;&#x304C;&#x308F;&#x304B;&#x308B;&#x3002;</p>
+<p>show more をクリックすると Explain が通知されているのがわかる。</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160824/20160824172810.png" width="846" height="660" layout="responsive"></amp-img></div>
 </div>
 
 
 
-<h2><span id="&#x7DCF;&#x8A55;">&#x7DCF;&#x8A55;</span></h2><p>&#x30EA;&#x30A2;&#x30EB;&#x30BF;&#x30A4;&#x30E0;&#x901A;&#x77E5;&#x306F;<br>&#x7279;&#x306B;&#x65B0;&#x898F;&#x958B;&#x767A;&#x6642;&#x306B;&#x52B9;&#x679C;&#x7684;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x307E;&#x305F;<br>ElasticSearch &#x3078;&#x84C4;&#x7A4D;&#x3057;&#x6642;&#x9593;&#x8EF8;&#x3067;&#x5206;&#x6790;&#x3059;&#x308B;&#x306E;&#x306F;<br>&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x30A4;&#x30D9;&#x30F3;&#x30C8;&#x3068;&#x306E;&#x76F8;&#x95A2;&#x6027;&#x304C;&#x898B;&#x3048;&#x9762;&#x767D;&#x3044;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x305D;&#x306E;&#x74B0;&#x5883;&#x3068;&#x72B6;&#x6CC1;&#x306B;&#x3088;&#x308A;&#x767A;&#x751F;&#x3059;&#x308B;&#x30B9;&#x30ED;&#x30FC;&#x30AF;&#x30A8;&#x30EA;&#x304C;&#x898B;&#x3048;&#x3066;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="総評">総評</span></h2><p>リアルタイム通知は<br>特に新規開発時に効果的でした。</p>
+<p>また<br>ElasticSearch へ蓄積し時間軸で分析するのは<br>サイトのイベントとの相関性が見え面白いです。</p>
+<p>その環境と状況により発生するスロークエリが見えてきます。</p>
+<p>以上です。</p>
 
 			  		
 			  		<!-- google Adsense -->

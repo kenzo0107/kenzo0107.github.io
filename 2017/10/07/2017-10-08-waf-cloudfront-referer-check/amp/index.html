@@ -1814,29 +1814,29 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>AWS WAF (Web Application Firewall) &#x3092;&#x5229;&#x7528;&#x3057; Cloudfront &#x3067;&#x306E;&#x30EA;&#x30D5;&#x30A1;&#x30E9;&#x5236;&#x5FA1;&#x3092;&#x5B9F;&#x88C5;&#x3057;&#x307E;&#x3057;&#x305F;&#x306E;&#x3067;&#x305D;&#x306E;&#x307E;&#x3068;&#x3081;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x76F4;&#x30EA;&#x30F3;&#x30AF;&#x7981;&#x6B62;&#x5BFE;&#x7B56;&#x3068;&#x3057;&#x3066;&#x5C0E;&#x5165;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x624B;&#x9806;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h3><span id="go-to-aws-waf-&#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">Go to AWS WAF &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h3><p>&#x30B5;&#x30FC;&#x30D3;&#x30B9; &gt; WAF &amp; Shield &#x3068;&#x8FBF;&#x308A; Go to AWS WAF &#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+			  		<h2><span id="概要">概要</span></h2><p>AWS WAF (Web Application Firewall) を利用し Cloudfront でのリファラ制御を実装しましたのでそのまとめです。</p>
+<p>直リンク禁止対策として導入しました。</p>
+<p>以下手順になります。</p>
+<h3><span id="go-to-aws-waf-ボタンクリック">Go to AWS WAF ボタンクリック</span></h3><p>サービス &gt; WAF &amp; Shield と辿り Go to AWS WAF クリック</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005174955.png" width="990" height="1024" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="configure-web-acl-&#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">Configure Web ACL &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h3><p>ACL (Access Control List) &#x3092;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="configure-web-acl-ボタンクリック">Configure Web ACL ボタンクリック</span></h3><p>ACL (Access Control List) を設定していきます。</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180856.png" width="1024" height="572" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="&#x6982;&#x8981;&#x78BA;&#x8A8D;">&#x6982;&#x8981;&#x78BA;&#x8A8D;</span></h3><p>&#x7279;&#x306B;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x305B;&#x305A; Next &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<h3><span id="概要確認">概要確認</span></h3><p>特にチェックせず Next ボタンクリック</p>
 <div id="hexo-amp-id-3">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181044.png" width="1024" height="947" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="web-acl-&#x8A2D;&#x5B9A;">web ACL &#x8A2D;&#x5B9A;</span></h3><div id="hexo-amp-id-4">
+<h3><span id="web-acl-設定">web ACL 設定</span></h3><div id="hexo-amp-id-4">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181315.png" width="1024" height="650" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0B;&#x3001;&#x8A2D;&#x5B9A;&#x9805;&#x76EE;&#x3092;&#x8A2D;&#x5B9A;&#x3057;&#x3001;Next &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<p>以下、設定項目を設定し、Next ボタンクリック</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1846,31 +1846,31 @@ h6.categories {
 </thead>
 <tbody><tr>
 <td>Web ACL name</td>
-<td>(&#x4EFB;&#x610F;) &#x4F8B;&#x3067;&#x306F;Cloudfront &#x306E; CNAME &#x3092;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</td>
+<td>(任意) 例ではCloudfront の CNAME を設定しています。</td>
 </tr>
 <tr>
 <td>CloudWatch metric name</td>
-<td>Web ACL name &#x3092;&#x5165;&#x529B;&#x3059;&#x308B;&#x3068;&#x81EA;&#x52D5;&#x3067;&#x5165;&#x529B;&#x3055;&#x308C;&#x308B;&#x3002;&#x5909;&#x66F4;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;&#x306E;&#x307F;&#x5909;&#x66F4;</td>
+<td>Web ACL name を入力すると自動で入力される。変更したい場合のみ変更</td>
 </tr>
 <tr>
 <td>Region</td>
-<td>Global(CloudFront) &#x9078;&#x629E;</td>
+<td>Global(CloudFront) 選択</td>
 </tr>
 <tr>
 <td>AWS resource to associate</td>
-<td>&#x5BFE;&#x8C61;&#x3068;&#x306A;&#x308B;Cloudfront&#x3092;&#x9078;&#x629E;&#x3059;&#x308B;&#x7B87;&#x6240;&#x3002;&#x904B;&#x7528;&#x4E2D;&#x306E; Cloudfront &#x3092;&#x5BFE;&#x8C61;&#x3068;&#x3059;&#x308B;&#x3068;&#x5834;&#x5408;&#x306F;&#x5F8C;&#x3005;&#x8A2D;&#x5B9A;&#x3002;</td>
+<td>対象となるCloudfrontを選択する箇所。運用中の Cloudfront を対象とすると場合は後々設定。</td>
 </tr>
 </tbody></table></div>
-<h3><span id="&#x6761;&#x4EF6;&#x4F5C;&#x6210;">&#x6761;&#x4EF6;&#x4F5C;&#x6210;</span></h3><p>&#x4ECA;&#x56DE;&#x306F;&#x6587;&#x5B57;&#x5217;&#x4E00;&#x81F4;&#x3092;&#x6761;&#x4EF6;&#x3068;&#x3059;&#x308B;&#x70BA;&#x3001; String match conditions &#x306B;&#x3066; <code>Create condition</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<h3><span id="条件作成">条件作成</span></h3><p>今回は文字列一致を条件とする為、 String match conditions にて <code>Create condition</code> ボタンクリック</p>
 <div id="hexo-amp-id-5">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181800.png" width="455" height="1024" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="string-match-condition-&#x4F5C;&#x6210;">string match condition &#x4F5C;&#x6210;</span></h3><div id="hexo-amp-id-6">
+<h3><span id="string-match-condition-作成">string match condition 作成</span></h3><div id="hexo-amp-id-6">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181926.png" width="650" height="1024" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0B;&#x8A2D;&#x5B9A;&#x3057; <code>Add filter</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3002;<br>&#x8907;&#x6570; filter &#x304C;&#x3042;&#x308B;&#x5834;&#x5408;&#x3001;Add filter &#x3092;&#x7E70;&#x308A;&#x8FD4;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>以下設定し <code>Add filter</code> ボタンクリック。<br>複数 filter がある場合、Add filter を繰り返します。</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
@@ -1880,7 +1880,7 @@ h6.categories {
 </thead>
 <tbody><tr>
 <td>Name</td>
-<td>(&#x4EFB;&#x610F;)</td>
+<td>(任意)</td>
 </tr>
 <tr>
 <td>Part of the request to filter on</td>
@@ -1900,74 +1900,74 @@ h6.categories {
 </tr>
 <tr>
 <td>Value to match</td>
-<td>&#x5BFE;&#x8C61;&#x3068;&#x306A;&#x308B;&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x8A2D;&#x5B9A;</td>
+<td>対象となるドメイン設定</td>
 </tr>
 </tbody></table></div>
 <br>
 
-<h4><span id="add-filter-&#x5F8C;-create-&#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;"><code>Add filter</code> &#x5F8C;&#x3001; <code>Create</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3002;</span></h4><div id="hexo-amp-id-7">
+<h4><span id="add-filter-後-create-ボタンクリック"><code>Add filter</code> 後、 <code>Create</code> ボタンクリック。</span></h4><div id="hexo-amp-id-7">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182327.png" width="1024" height="673" layout="responsive"></amp-img></div>
 </div>
 
-<h4><span id="next-&#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">Next &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h4><p>&#x8FFD;&#x52A0;&#x3057;&#x305F;&#x3082;&#x306E;&#x306E;&#x3059;&#x3050;&#x306B;&#x53CD;&#x6620;&#x3055;&#x308C;&#x3066;&#x3044;&#x306A;&#x3044;&#x3002;<br>&#x305D;&#x306E;&#x307E;&#x307E; <code>Next</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<h4><span id="next-ボタンクリック">Next ボタンクリック</span></h4><p>追加したもののすぐに反映されていない。<br>そのまま <code>Next</code> ボタンクリック</p>
 <div id="hexo-amp-id-8">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182446.png" width="964" height="692" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="&#x30EB;&#x30FC;&#x30EB;&#x4F5C;&#x6210;">&#x30EB;&#x30FC;&#x30EB;&#x4F5C;&#x6210;</span></h3><p><code>Create rule</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3002;</p>
+<h3><span id="ルール作成">ルール作成</span></h3><p><code>Create rule</code> ボタンクリック。</p>
 <div id="hexo-amp-id-9">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182608.png" width="1024" height="933" layout="responsive"></amp-img></div>
 </div>
 
-<h4><span id="&#x30EB;&#x30FC;&#x30EB;&#x306B;&#x6761;&#x4EF6;&#x3092;&#x7D10;&#x4ED8;&#x3051;">&#x30EB;&#x30FC;&#x30EB;&#x306B;&#x6761;&#x4EF6;&#x3092;&#x7D10;&#x4ED8;&#x3051;</span></h4><p>Name, Cloudwatch metric name &#x3092;&#x8A2D;&#x5B9A;&#x3057;<br>Add conditions &#x3067;&#x6761;&#x4EF6;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x305D;&#x306E;&#x5F8C;&#x3001;<code>Create</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3002;</p>
+<h4><span id="ルールに条件を紐付け">ルールに条件を紐付け</span></h4><p>Name, Cloudwatch metric name を設定し<br>Add conditions で条件を追加します。</p>
+<p>その後、<code>Create</code> ボタンクリック。</p>
 <div id="hexo-amp-id-10">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182641.png" width="648" height="1024" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="&#x30EB;&#x30FC;&#x30EB;&#x4EE5;&#x5916;&#x306E;&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x7981;&#x6B62;">&#x30EB;&#x30FC;&#x30EB;&#x4EE5;&#x5916;&#x306E;&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x7981;&#x6B62;</span></h3><p>&#x3084;&#x306F;&#x308A; Rule &#x306F;&#x53CD;&#x6620;&#x3055;&#x308C;&#x3066;&#x3044;&#x306A;&#x3044;&#x3002;&#x3067;&#x3059;&#x304C;&#x3001;&#x7D9A;&#x3051;&#x3066;<br><code>Block all requests that don&apos;t match any rules</code> &#x3092;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3057; <code>Review and create</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3002;</p>
-<p>&#x203B;&#x5BFE;&#x8C61;&#x306E;Cloudfront &#x306B;&#x53CD;&#x6620;&#x3055;&#x305B;&#x305F;&#x304F;&#x306A;&#x3044;&#x5834;&#x5408;&#x306F;&#x3001;Cloudfront &#x3092;&#x9078;&#x629E;&#x3057;&#x305F;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x89E3;&#x9664;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;<br><span id="hexo-amp-id-11">&#x203B;&#x6700;&#x5F8C;&#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x304C;&#x3067;&#x304D;&#x308B;&#x306E;&#x3067;&#x3053;&#x3053;&#x3067;&#x306F;&#x3059;&#x308B;&#x3079;&#x304D;&#x3067;&#x306F;&#x306A;&#x3044;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</span></p>
+<h3><span id="ルール以外のリクエストのアクセス禁止">ルール以外のリクエストのアクセス禁止</span></h3><p>やはり Rule は反映されていない。ですが、続けて<br><code>Block all requests that don't match any rules</code> をチェックし <code>Review and create</code> ボタンクリック。</p>
+<p>※対象のCloudfront に反映させたくない場合は、Cloudfront を選択したリソースを解除する必要があります。<br><span id="hexo-amp-id-11">※最後に関連付けができるのでここではするべきではないと思います。</span></p>
 <div id="hexo-amp-id-12">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182806.png" width="983" height="1024" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="&#x78BA;&#x8A8D;&#x30DA;&#x30FC;&#x30B8;&#x3067;&#x5165;&#x529B;&#x5185;&#x5BB9;&#x78BA;&#x8A8D;&#x5F8C;&#x4F5C;&#x6210;">&#x78BA;&#x8A8D;&#x30DA;&#x30FC;&#x30B8;&#x3067;&#x5165;&#x529B;&#x5185;&#x5BB9;&#x78BA;&#x8A8D;&#x5F8C;&#x4F5C;&#x6210;</span></h3><p><code>Confirm and create</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3002;</p>
+<h3><span id="確認ページで入力内容確認後作成">確認ページで入力内容確認後作成</span></h3><p><code>Confirm and create</code> ボタンクリック。</p>
 <div id="hexo-amp-id-13">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183423.png" width="1024" height="873" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="&#x5BFE;&#x8C61;&#x306E;-web-acl-&#x3092;&#x7DE8;&#x96C6;">&#x5BFE;&#x8C61;&#x306E; web ACL &#x3092;&#x7DE8;&#x96C6;</span></h3><p>WEB ACLs &#x3088;&#x308A;&#x9078;&#x629E;&#x3057; <code>Edit web ACL</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<h3><span id="対象の-web-acl-を編集">対象の web ACL を編集</span></h3><p>WEB ACLs より選択し <code>Edit web ACL</code> ボタンクリック</p>
 <div id="hexo-amp-id-14">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183628.png" width="1024" height="418" layout="responsive"></amp-img></div>
 </div>
 
-<h4><span id="web-acl-&#x7DE8;&#x96C6;">web ACL &#x7DE8;&#x96C6;</span></h4><ol>
-<li>&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30EB;&#x30FC;&#x30EB;&#x3092;&#x9078;&#x629E;</li>
-<li><code>Add rule to web ACL</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</li>
-<li>Allow &#x9078;&#x629E;</li>
-<li><code>Update</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</li>
+<h4><span id="web-acl-編集">web ACL 編集</span></h4><ol>
+<li>作成したルールを選択</li>
+<li><code>Add rule to web ACL</code> ボタンクリック</li>
+<li>Allow 選択</li>
+<li><code>Update</code> ボタンクリック</li>
 </ol>
 <p>[f:id:kenzo0107:20171005183720p:plain]</p>
-<h3><span id="cloudfront-&#x95A2;&#x9023;&#x4ED8;&#x3051;">Cloudfront &#x95A2;&#x9023;&#x4ED8;&#x3051;</span></h3><p><code>Add association</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<h3><span id="cloudfront-関連付け">Cloudfront 関連付け</span></h3><p><code>Add association</code> ボタンクリック</p>
 <div id="hexo-amp-id-15">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183720.png" width="1024" height="315" layout="responsive"></amp-img></div>
 </div>
 
-<h4><span id="web-acl-&#x306B;-cloudfront-&#x3092;&#x95A2;&#x9023;&#x4ED8;&#x3051;">Web ACL &#x306B; Cloudfront &#x3092;&#x95A2;&#x9023;&#x4ED8;&#x3051;</span></h4><p>Resource &#x3067; &#x5BFE;&#x8C61;&#x306E; Cloudfront &#x3092;&#x9078;&#x629E;&#x3057; <code>Add</code> &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<h4><span id="web-acl-に-cloudfront-を関連付け">Web ACL に Cloudfront を関連付け</span></h4><p>Resource で 対象の Cloudfront を選択し <code>Add</code> ボタンクリック</p>
 <div id="hexo-amp-id-16">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005184119.png" width="1024" height="417" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x6570;&#x5206;&#x5F8C; WAF+CloudFront &#x306B;&#x3088;&#x308B;&#x30EA;&#x30D5;&#x30A1;&#x30E9;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x304C;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x308B;&#x72B6;&#x614B;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h3><span id="&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x78BA;&#x8A8D;">&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x78BA;&#x8A8D;</span></h3><p>&#x81EA;&#x74B0;&#x5883;&#x3067;&#x306F;<br>&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x306E; /etc/hosts &#x4FEE;&#x6B63;&#x3057;&#x5BFE;&#x8C61;&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x304B;&#x3089; Cloudfront CNAME &#x3078;&#x306E;&#x30EA;&#x30F3;&#x30AF;&#x3092;&#x8CBC;&#x3063;&#x3066;&#x78BA;&#x8A8D;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>Cloudfront CNAME &#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x3067;&#x306E;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x76F4;&#x63A5;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x3068;<br>&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A; &#x30A8;&#x30E9;&#x30FC;&#x30DA;&#x30FC;&#x30B8;&#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x308B;&#x3053;&#x3068;&#x304C;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>以上で数分後 WAF+CloudFront によるリファラチェックが確認できる状態になります。</p>
+<h3><span id="アクセス確認">アクセス確認</span></h3><p>自環境では<br>ローカルの /etc/hosts 修正し対象ドメインから Cloudfront CNAME へのリンクを貼って確認しました。</p>
+<p>Cloudfront CNAME ドメインでのリソースを直接アクセスすると<br>以下の様な エラーページが表示されることが確認できました。</p>
 <div id="hexo-amp-id-17">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005184505.png" width="1024" height="597" layout="responsive"></amp-img></div>
 </div>
 
-<h3><span id="&#x3082;&#x3046;&#x5C11;&#x3057;&#x30E6;&#x30FC;&#x30B6;&#x30D5;&#x30EC;&#x30F3;&#x30C9;&#x30EA;&#x30FC;&#x306B;">&#x3082;&#x3046;&#x5C11;&#x3057;&#x30E6;&#x30FC;&#x30B6;&#x30D5;&#x30EC;&#x30F3;&#x30C9;&#x30EA;&#x30FC;&#x306B;</span></h3><p>&#x4E0A;&#x8A18;&#x306E;&#x30A8;&#x30E9;&#x30FC;&#x30DA;&#x30FC;&#x30B8;&#x306F; Cloudfront &gt; Error Pages &#x3067;  <code>Create Custom Error Response</code> &#x3067; S3 &#x4E0A;&#x306E;&#x30D1;&#x30B9;&#x3092;&#x6307;&#x5B9A;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x30AB;&#x30B9;&#x30BF;&#x30DE;&#x30A4;&#x30BA;&#x304C;&#x53EF;&#x80FD;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x662F;&#x975E;&#x30B5;&#x30A4;&#x30C8;&#x30B3;&#x30F3;&#x30BB;&#x30D7;&#x30C8;&#x306B;&#x5408;&#x3063;&#x305F;&#x30A8;&#x30E9;&#x30FC;&#x30DA;&#x30FC;&#x30B8;&#x3092;&#x3054;&#x7528;&#x610F;&#x3055;&#x308C;&#x308B;&#x3068;&#x3088;&#x308A;&#x30E6;&#x30FC;&#x30B6;&#x30D5;&#x30EC;&#x30F3;&#x30C9;&#x30EA;&#x30FC;&#x306A;&#x914D;&#x4FE1;&#x306B;&#x306A;&#x308B;&#x304B;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;<br>&#x3054;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<h3><span id="もう少しユーザフレンドリーに">もう少しユーザフレンドリーに</span></h3><p>上記のエラーページは Cloudfront &gt; Error Pages で  <code>Create Custom Error Response</code> で S3 上のパスを指定することでカスタマイズが可能です。</p>
+<p>是非サイトコンセプトに合ったエラーページをご用意されるとよりユーザフレンドリーな配信になるかと思います。</p>
+<p>以上<br>ご参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->

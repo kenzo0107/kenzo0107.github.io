@@ -1814,20 +1814,20 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>Finder&#x3067;&#x30C9;&#x30C3;&#x30C8;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x958B;&#x304D;&#x305F;&#x3044;&#x3068;&#x3044;&#x3046;&#x969B;&#x306B;&#x3084;&#x3063;&#x3066;&#x304A;&#x304F;&#x8A2D;&#x5B9A;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+			  		<h2><span id="概要">概要</span></h2><p>Finderでドットファイルを開きたいという際にやっておく設定</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>MacOSX Yosemite 10.10.3</li>
 </ul>
-<h2><span id="&#x624B;&#x9806;">&#x624B;&#x9806;</span></h2><h3><span id="&#x30BF;&#x30FC;&#x30DF;&#x30CA;&#x30EB;&#x3092;&#x958B;&#x304D;&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;">&#x30BF;&#x30FC;&#x30DF;&#x30CA;&#x30EB;&#x3092;&#x958B;&#x304D;&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults write com.apple.finder AppleShowAllFiles -boolean true</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="手順">手順</span></h2><h3><span id="ターミナルを開き以下コマンド実行">ターミナルを開き以下コマンド実行</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults write com.apple.finder AppleShowAllFiles -boolean true</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="finder&#x30A2;&#x30D7;&#x30EA;&#x518D;&#x8D77;&#x52D5;">Finder&#x30A2;&#x30D7;&#x30EA;&#x518D;&#x8D77;&#x52D5;</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ killall Finder</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="finderアプリ再起動">Finderアプリ再起動</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ killall Finder</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3053;&#x308C;&#x3067;&#x30C9;&#x30C3;&#x30C8;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x53CD;&#x6620;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x5143;&#x306B;&#x623B;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;">&#x5143;&#x306B;&#x623B;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;</span></h2><h3><span id="&#x30BF;&#x30FC;&#x30DF;&#x30CA;&#x30EB;&#x3067;&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;">&#x30BF;&#x30FC;&#x30DF;&#x30CA;&#x30EB;&#x3067;&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults delete com.apple.finder AppleShowAllFiles</span><br></pre></td></tr></tbody></table></figure>
+<p>これでドットファイルが反映されています。</p>
+<h2><span id="元に戻したい場合">元に戻したい場合</span></h2><h3><span id="ターミナルで以下コマンド実行">ターミナルで以下コマンド実行</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults delete com.apple.finder AppleShowAllFiles</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x518D;&#x8D77;&#x52D5;">&#x518D;&#x8D77;&#x52D5;</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ killall Finder</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="再起動">再起動</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ killall Finder</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;</p>
+<p>以上です</p>
 
 			  		
 			  		<!-- google Adsense -->

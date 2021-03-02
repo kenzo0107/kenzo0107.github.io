@@ -104,7 +104,7 @@
 			    "@id":"https://kenzo0107.github.io/2020/11/26/2020-11-27-go-logging-level/"
 			},
 			"datePublished": "2020-11-26T15:00:00.000Z",
-			"dateModified": "2021-02-01T15:58:06.975Z",
+			"dateModified": "2021-03-02T00:38:06.885Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1901,8 +1901,8 @@ h6.categories {
 <!-- toc -->
 
 <ul>
-<li><a href="#%E6%A6%82%E8%A6%81">&#x6982;&#x8981;</a><ul>
-<li><a href="#%E5%AE%9F%E9%9A%9B%E3%81%AB%E5%8B%95%E3%81%8B%E3%81%99%E3%81%A8%E3%82%8F%E3%81%8B%E3%82%8A%E3%82%84%E3%81%99%E3%81%84">&#x5B9F;&#x969B;&#x306B;&#x52D5;&#x304B;&#x3059;&#x3068;&#x308F;&#x304B;&#x308A;&#x3084;&#x3059;&#x3044;&#x3002;</a></li>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a><ul>
+<li><a href="#%E5%AE%9F%E9%9A%9B%E3%81%AB%E5%8B%95%E3%81%8B%E3%81%99%E3%81%A8%E3%82%8F%E3%81%8B%E3%82%8A%E3%82%84%E3%81%99%E3%81%84">実際に動かすとわかりやすい。</a></li>
 </ul>
 </li>
 </ul>
@@ -1913,12 +1913,12 @@ h6.categories {
 
 <a id="more"></a>
 
-<h1><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h1><p>Go &#x306E; <a href="https://github.com/sirupsen/logrus">sirupsen/logrus</a> &#x304C;&#x4FBF;&#x5229;&#x3067;&#x3088;&#x304B;&#x3063;&#x305F;&#x306E;&#x3067;&#x3001;&#x5099;&#x5FD8;&#x9332;&#x3068;&#x3057;&#x3066;&#x6B8B;&#x3057;&#x3066;&#x304A;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<p>Go &#x3067;&#x30C4;&#x30FC;&#x30EB;&#x4F5C;&#x6210;&#x6642;&#x306B;&#x30C7;&#x30D0;&#x30C3;&#x30B0;&#x3057;&#x305F;&#x3044;&#x6642;&#x306B;&#x30EC;&#x30D9;&#x30EB;&#x3092;&#x3055;&#x304F;&#x3063;&#x3068;&#x5909;&#x66F4;&#x3057;&#x305F;&#x3044;&#x6642;&#x304C;&#x3042;&#x308A;&#x3001;&#x305D;&#x306E;&#x969B;&#x306B;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x5B9F;&#x969B;&#x306B;&#x52D5;&#x304B;&#x3059;&#x3068;&#x308F;&#x304B;&#x308A;&#x3084;&#x3059;&#x3044;">&#x5B9F;&#x969B;&#x306B;&#x52D5;&#x304B;&#x3059;&#x3068;&#x308F;&#x304B;&#x308A;&#x3084;&#x3059;&#x3044;&#x3002;</span></h2><p><a href="https://play.golang.org/p/1ew_HBa1H7a">Go Playground</a></p>
-<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	log <span class="string">&quot;github.com/sirupsen/logrus&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> {</span><br><span class="line">	log.SetLevel(log.FatalLevel)</span><br><span class="line"></span><br><span class="line">	log.Trace(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">	log.Debug(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">	log.Info(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">	log.Warn(<span class="string">&quot;4&quot;</span>)</span><br><span class="line">	log.Error(<span class="string">&quot;5&quot;</span>)</span><br><span class="line">	log.Fatal(<span class="string">&quot;6&quot;</span>)</span><br><span class="line">	log.Panic(<span class="string">&quot;7&quot;</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h1><span id="概要">概要</span></h1><p>Go の <a href="https://github.com/sirupsen/logrus">sirupsen/logrus</a> が便利でよかったので、備忘録として残しておきます。</p>
+<p>Go でツール作成時にデバッグしたい時にレベルをさくっと変更したい時があり、その際に利用しています。</p>
+<h2><span id="実際に動かすとわかりやすい">実際に動かすとわかりやすい。</span></h2><p><a href="https://play.golang.org/p/1ew_HBa1H7a">Go Playground</a></p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	log <span class="string">"github.com/sirupsen/logrus"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> {</span><br><span class="line">	log.SetLevel(log.FatalLevel)</span><br><span class="line"></span><br><span class="line">	log.Trace(<span class="string">"1"</span>)</span><br><span class="line">	log.Debug(<span class="string">"2"</span>)</span><br><span class="line">	log.Info(<span class="string">"3"</span>)</span><br><span class="line">	log.Warn(<span class="string">"4"</span>)</span><br><span class="line">	log.Error(<span class="string">"5"</span>)</span><br><span class="line">	log.Fatal(<span class="string">"6"</span>)</span><br><span class="line">	log.Panic(<span class="string">"7"</span>)</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;<br>&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以上です。<br>参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->

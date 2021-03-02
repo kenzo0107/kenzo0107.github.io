@@ -1814,48 +1814,48 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x30E9;&#x30BA;&#x30D1;&#x30A4;&#x4F7F;&#x3063;&#x3066;&#x5BB6;&#x65CF;&#x3068;&#x5224;&#x65AD;&#x3057;&#x305F;&#x3089;<br>&#x300C;&#x3053;&#x3093;&#x306B;&#x3061;&#x306F;&#x3054;&#x4E3B;&#x4EBA;&#x69D8;&#x300D;<br>&#x5BB6;&#x65CF;&#x4EE5;&#x5916;&#x306A;&#x3089;<br>&#x300C;&#x901A;&#x5831;&#x3057;&#x307E;&#x30FC;&#x3059;&#x300D;<br>&#x3068;&#x8A71;&#x3057;&#x3066;&#x304F;&#x308C;&#x308B;&#x304A;&#x3082;&#x3061;&#x3083;&#x3092;<br>&#x4F5C;&#x308D;&#x3046;&#x3068;&#x601D;&#x3063;&#x3066;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x305D;&#x306E;&#x524D;&#x6BB5;&#x306E;&#x524D;&#x6BB5;&#x3068;&#x3057;&#x3066;<br>&#x9759;&#x6B62;&#x753B;&#x3067;&#x9854;&#x691C;&#x51FA;&#x3057;&#x3066;&#x307F;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x3061;&#x306A;&#x307F;&#x306B;&#x9854;&#x691C;&#x51FA;&#x3068;&#x9854;&#x8A8D;&#x8B58;&#x306F;&#x610F;&#x5473;&#x304C;&#x5168;&#x304F;&#x7570;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>ラズパイ使って家族と判断したら<br>「こんにちはご主人様」<br>家族以外なら<br>「通報しまーす」<br>と話してくれるおもちゃを<br>作ろうと思ってます。</p>
+<p>その前段の前段として<br>静止画で顔検出してみます。</p>
+<p>ちなみに顔検出と顔認識は意味が全く異なります。</p>
 <ul>
-<li>&#x9854;&#x691C;&#x51FA; &#x2026; &#x9854;&#x90E8;&#x5206;&#x3092;&#x691C;&#x51FA;&#x3059;&#x308B;&#x3053;&#x3068;&#x3002;</li>
-<li>&#x9854;&#x8A8D;&#x8B58; &#x2026; &#x7279;&#x5B9A;&#x306E;&#x4EBA;&#x7269;&#x306E;&#x9854;&#x3068;&#x5224;&#x65AD;&#x3059;&#x308B;&#x3053;&#x3068;&#x3002;</li>
+<li>顔検出 … 顔部分を検出すること。</li>
+<li>顔認識 … 特定の人物の顔と判断すること。</li>
 </ul>
-<p>&#x74B0;&#x5883;&#x69CB;&#x7BC9;&#x306F;&#x524D;&#x56DE;&#x8A18;&#x4E8B;&#x3092;&#x53C2;&#x7167;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
-<a href="https://kenzo0107.hatenablog.com/entry/2016/07/28/143429" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160728/20160728142804.jpg" width="780" height="350" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">MacOSX &#x306B; Python2, Python3 &#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x69CB;&#x7BC9; - &#x9577;&#x751F;&#x6751;&#x672C;&#x90F7;Engineers&apos;Blog</div><div class="og-description">&#x7D4C;&#x7DEF; MacOSX &#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x3067;&#x306F; python 2&#x7CFB;&#x3002; python 2.7 &#x306F; 2020&#x5E74;&#x307E;&#x3067;&#x306E;&#x30B5;&#x30DD;&#x30FC;&#x30C8; &#x306A;&#x306E;&#x3067; python 3 &#x7CFB; &#x306B;&#x6163;&#x308C;&#x3066;&#x304A;&#x3053;&#x3046;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x3067; 3 &#x7CFB;&#x74B0;&#x5883;&#x3092;&#x69CB;&#x7BC9;&#x3057;&#x3088;&#x3046;&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002; &#x3067;&#x3059;&#x304C; dlib &#x306A;&#x3069; Python 2&#x7CFB;&#x3067;&#x306A;&#x3044;&#x3068;&#x3046;&#x307E;&#x304F;&#x8A2D;&#x5B9A;&#x304C;&#x3067;&#x304D;&#x306A;&#x304B;&#x3063;&#x305F;&#x2026;</div></div></div></a>
+<p>環境構築は前回記事を参照してください。</p>
+<a href="https://kenzo0107.hatenablog.com/entry/2016/07/28/143429" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160728/20160728142804.jpg" width="780" height="350" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">MacOSX に Python2, Python3 仮想環境構築 - 長生村本郷Engineers'Blog</div><div class="og-description">経緯 MacOSX デフォルトでは python 2系。 python 2.7 は 2020年までのサポート なので python 3 系 に慣れておこうということで 3 系環境を構築しようと思いました。 ですが dlib など Python 2系でないとうまく設定ができなかった…</div></div></div></a>
 
 
 
 
 
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<h2><span id="環境">環境</span></h2><ul>
 <li>MacOSX 10.11.5</li>
 <li>Python 3</li>
 </ul>
-<h2><span id="cv2-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">CV2 &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><ul>
-<li>homebrew &#x3067; cv2 &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</li>
+<h2><span id="cv2-インストール">CV2 インストール</span></h2><ul>
+<li>homebrew で cv2 インストール</li>
 </ul>
 <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> brew tap homebrew/science</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> brew install opencv3 --with-python3</span></span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>Python 3 &#x3092;&#x5229;&#x7528;&#x3059;&#x308B;</li>
+<li>Python 3 を利用する</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/py3env/bin/active</span><br><span class="line">(py3env)$</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>cv2.so &#x3092; pip &#x306E; site-package &#x3078;&#x30B3;&#x30D4;&#x30FC;</li>
+<li>cv2.so を pip の site-package へコピー</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(py3env)$ cd ~/py3env/lib/python3.4/site-packages</span><br><span class="line">(py3env)$ cp /usr/local/Cellar/opencv3/3.1.0_3/lib/python3.4/site-packages/cv2.so .</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>cv2 import &#x78BA;&#x8A8D;</li>
+<li>cv2 import 確認</li>
 </ul>
-<p>Version &#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x308C;&#x3070;&#x6210;&#x529F;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(py3env)$ python -c &apos;import cv2; print(cv2.__version__)&apos;</span><br><span class="line">3.1.0</span><br></pre></td></tr></tbody></table></figure>
+<p>Version が表示されれば成功</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(py3env)$ python -c 'import cv2; print(cv2.__version__)'</span><br><span class="line">3.1.0</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(py3env)$ cd ~/py3env</span><br><span class="line">(py3env)$ git clone https://gist.github.com/kenzo0107/5d174797a5a222295b5a39f6fa435777</span><br><span class="line">(py3env)$ cp ./5d174797a5a222295b5a39f6fa435777/trimming.py .</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="スクリプトインストール">スクリプトインストール</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(py3env)$ cd ~/py3env</span><br><span class="line">(py3env)$ git clone https://gist.github.com/kenzo0107/5d174797a5a222295b5a39f6fa435777</span><br><span class="line">(py3env)$ cp ./5d174797a5a222295b5a39f6fa435777/trimming.py .</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x5B9F;&#x884C;">&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x5B9F;&#x884C;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(py3env)$ python trimming.py &lt;img_path&gt;</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="スクリプト実行">スクリプト実行</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(py3env)$ python trimming.py &lt;img_path&gt;</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
 <li><p>Before</p>
@@ -1871,10 +1871,10 @@ h6.categories {
 
 </li>
 </ul>
-<p>&#x9769;&#x30D1;&#x30F3;&#x3082;&#x9854;&#x8A8D;&#x8B58;&#x3055;&#x308C;&#x3066;&#x3057;&#x307E;&#x3046;&#x2026;</p>
-<p>&#x304C;&#x3001;&#x4E00;&#x5FDC;&#x307E;&#x305A;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x4ECA;&#x56DE;&#x306E;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x8981;&#x70B9;">&#x4ECA;&#x56DE;&#x306E;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x8981;&#x70B9;</span></h2><ul>
-<li>&#x6B63;&#x78BA;&#x306A;&#x691C;&#x77E5;&#x6570;&#x3092;&#x5411;&#x4E0A;&#x3055;&#x305B;&#x308B;&#x3079;&#x304F;&#x3001;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x4E0A;&#x306E;&#x4EE5;&#x4E0B; detectMultiScale &#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x306E;&#x30D1;&#x30E9;&#x30E1;&#x30FC;&#x30BF;&#x3092;&#x8ABF;&#x6574;&#x3057;&#x307E;&#x3059;&#x3002;</li>
+<p>革パンも顔認識されてしまう…</p>
+<p>が、一応まずできました。</p>
+<h2><span id="今回のスクリプト要点">今回のスクリプト要点</span></h2><ul>
+<li>正確な検知数を向上させるべく、スクリプト上の以下 detectMultiScale メソッドのパラメータを調整します。</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">facerect = cascade.detectMultiScale(image_gray, scaleFactor=1.02, minNeighbors=3, minSize=(7,7))</span><br></pre></td></tr></tbody></table></figure>
 
@@ -1887,18 +1887,18 @@ h6.categories {
 </thead>
 <tbody><tr>
 <td>scaleFactor</td>
-<td>&#x753B;&#x50CF;&#x89E3;&#x6790;&#x3059;&#x308B;&#x969B;&#x306B;&#x968F;&#x6642;&#x7E2E;&#x5C0F;&#x3057;&#x89E3;&#x6790;&#x3059;&#x308B;&#x305D;&#x306E;&#x5C3A;&#x5EA6;</td>
+<td>画像解析する際に随時縮小し解析するその尺度</td>
 </tr>
 <tr>
 <td>minNeighbors</td>
-<td>&#x6700;&#x5C0F;<a href="http://opencv.jp/opencv-2.2/py/objdetect_cascade_classification.html" target="_blank">&#x8FD1;&#x508D;&#x77E9;&#x5F62;</a>&#x6570;</td>
+<td>最小<a href="http://opencv.jp/opencv-2.2/py/objdetect_cascade_classification.html" target="_blank">近傍矩形</a>数</td>
 </tr>
 <tr>
 <td>minSize</td>
-<td>&#x9854;&#x90E8;&#x5206;&#x3092;&#x8A8D;&#x8B58;&#x3059;&#x308B;&#x305F;&#x3081;&#x306E;&#x30B5;&#x30A4;&#x30BA; (&#x7E26;,&#x6A2A;)</td>
+<td>顔部分を認識するためのサイズ (縦,横)</td>
 </tr>
 </tbody></table></div>
-<p>&#x307E;&#x305A;&#x6700;&#x521D;&#x306E;&#x7B2C;&#x4E00;&#x6B69;&#x304C;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x266A;</p>
+<p>まず最初の第一歩ができました♪</p>
 
 			  		
 			  		<!-- google Adsense -->

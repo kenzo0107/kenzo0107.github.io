@@ -1814,21 +1814,21 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x307F;&#x3093;&#x306A;&#x306E;Go&#x8A00;&#x8A9E;&#x3092;&#x8CFC;&#x5165;&#x3057;&#x307E;&#x3057;&#x3066;<br>ghq &#x3067;Git&#x7BA1;&#x7406;&#x3057;&#x3066;&#x307F;&#x3088;&#x3046;&#xFF01;<br>&#x3068;&#x5FC3;&#x52D5;&#x3044;&#x305F;&#x65B9;&#x306F;&#x591A;&#x3044;&#x306F;&#x305A;</p>
-<p>&#x6614;&#x304B;&#x3089; peco &#x3067; Git Repository &#x79FB;&#x52D5;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x306F;&#x3057;&#x3066;&#x305F;&#x3051;&#x3069;&#x3001;<br>ghq &#x3092;&#x5229;&#x7528;&#x3057;&#x305F;&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x7BA1;&#x7406;&#x306F;&#x4FBF;&#x5229;&#x3067;&#x3059;&#x306D;&#x3002;</p>
-<p>&#x305D;&#x3093;&#x306A;&#x6298;&#x3001;<br>ghq &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3067; git repository &#x3092;&#x30AF;&#x30ED;&#x30FC;&#x30F3;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x305F;&#x969B;&#x306B;<br>&#x63B2;&#x984C;&#x306E;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3057;&#x307E;&#x3057;&#x305F;&#x306E;&#x3067;&#x5099;&#x5FD8;&#x9332;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>みんなのGo言語を購入しまして<br>ghq でGit管理してみよう！<br>と心動いた方は多いはず</p>
+<p>昔から peco で Git Repository 移動コマンドはしてたけど、<br>ghq を利用したリポジトリ管理は便利ですね。</p>
+<p>そんな折、<br>ghq コマンドで git repository をクローンしようとした際に<br>掲題のエラーが発生しましたので備忘録。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ghq get &lt;git repository&gt;</span><br><span class="line">...</span><br><span class="line">error: RPC failed; curl 56 SSLRead() <span class="built_in">return</span></span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B; git  &#x304C; SSL &#x5BFE;&#x5FDC;&#x3057;&#x3066;&#x3044;&#x306A;&#x3044;&#x3088;&#x3046;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x5BFE;&#x5FDC;">&#x5BFE;&#x5FDC;</span></h2><ul>
-<li>git &#x3092; openssl, curl &#x4ED8;&#x304D;&#x3067;&#x518D;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</li>
+<p>利用している git  が SSL 対応していないようです。</p>
+<h2><span id="対応">対応</span></h2><ul>
+<li>git を openssl, curl 付きで再インストール</li>
 </ul>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew reinstall git --with-brewed-curl --with-brewed-openssl</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x518D;&#x5EA6;&#x5B9F;&#x884C;">&#x518D;&#x5EA6;&#x5B9F;&#x884C;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ghq get &lt;git repository&gt;</span><br><span class="line">remote: Total 74442 (delta 145), reused 0 (delta 0), pack-reused 74160</span><br><span class="line">Receiving objects: 100% (74442/74442), 701.45 MiB | 1.42 MiB/s, <span class="keyword">done</span>.</span><br><span class="line">Resolving deltas: 100% (50571/50571), <span class="keyword">done</span>.</span><br><span class="line">Checking out files: 100% (11350/11350), <span class="keyword">done</span>.</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="再度実行">再度実行</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ghq get &lt;git repository&gt;</span><br><span class="line">remote: Total 74442 (delta 145), reused 0 (delta 0), pack-reused 74160</span><br><span class="line">Receiving objects: 100% (74442/74442), 701.45 MiB | 1.42 MiB/s, <span class="keyword">done</span>.</span><br><span class="line">Resolving deltas: 100% (50571/50571), <span class="keyword">done</span>.</span><br><span class="line">Checking out files: 100% (11350/11350), <span class="keyword">done</span>.</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x7121;&#x4E8B;&#x3067;&#x304D;&#x305F;&#x266A;</p>
-<h2><span id="&#x53C2;&#x7167;">&#x53C2;&#x7167;</span></h2><p><a href="https://forums.meteor.com/t/curl-56-sslread-return-error-9806-need-help-please/21913">Curl: (56) SSLRead() return error -9806 - Need Help please slight_smile</a></p>
+<p>無事できた♪</p>
+<h2><span id="参照">参照</span></h2><p><a href="https://forums.meteor.com/t/curl-56-sslread-return-error-9806-need-help-please/21913">Curl: (56) SSLRead() return error -9806 - Need Help please slight_smile</a></p>
 
 			  		
 			  		<!-- google Adsense -->

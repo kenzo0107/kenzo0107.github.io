@@ -1882,39 +1882,39 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p><span id="hexo-amp-id-1"><b>2020-05-05 &#x8FFD;&#x8A18;</b></span> 2020&#x5E74;&#x6625;&#x306E;&#x30D9;&#x30B9;&#x30C8;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9;&#x66F4;&#x65B0;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<a href="https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/PRuN9u8.png" width="620" height="590" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Terraform &#x30D9;&#x30B9;&#x30C8;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9; 2020 &#x6625; ~module&#x3084;&#x3081;&#x3066;&#x307F;&#x305F;~</div><div class="og-description">ToC     &#x6982;&#x8981; &#x7D50;&#x8AD6; module &#x3084;&#x3081;&#x3066;&#x307F;&#x305F; &#x3053;&#x308C; modules/stg, modules/common &#x3069;&#x3063;&#x3061;&#xFF1F; &#x554F;&#x984C;   &#x305D;&#x3082;&#x305D;&#x3082;&#x4F55;&#x6545;&#x5206;&#x3051;&#x305F;&#xFF1F; &#x3060;&#x304B;&#x3089; module &#x3084;&#x3081;&#x3066;&#x307F;&#x305F; module &#x304C;&#x4FBF;&#x5229;&#x306A;&#x4F8B; &#x30D9;&#x30B9;&#x30C8;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9;&#x3092;&#x63A2;&#x3059;&#x65C5;&#x306F;&#x7D9A;&#x304F;       &#x6982;&#x8981;#Infra&#x2026;</div></div></div></a>
+			  		<p><span id="hexo-amp-id-1"><b>2020-05-05 追記</b></span> 2020年春のベストプラクティス更新しています。</p>
+<a href="https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/PRuN9u8.png" width="620" height="590" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Terraform ベストプラクティス 2020 春 ~moduleやめてみた~</div><div class="og-description">ToC     概要 結論 module やめてみた これ modules/stg, modules/common どっち？ 問題   そもそも何故分けた？ だから module やめてみた module が便利な例 ベストプラクティスを探す旅は続く       概要#Infra…</div></div></div></a>
 
 <hr>
-<p>&#x4EE5;&#x524D; terraform &#x3067; workspace &#x6BCE;&#x306B; tfstate &#x7BA1;&#x7406;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x3092;&#x57F7;&#x7B46;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x5B9F;&#x904B;&#x7528;&#x4E0A;&#x3044;&#x304F;&#x3064;&#x304B;&#x306E;&#x554F;&#x984C;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x7D50;&#x8AD6;&#x3001;&#x73FE;&#x5728;&#x306F; workspace &#x904B;&#x7528;&#x3092;&#x3084;&#x3081;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>以前 terraform で workspace 毎に tfstate 管理する方法を執筆しましたが、実運用上いくつかの問題がありました。</p>
+<p>結論、現在は workspace 運用をやめています。</p>
 
-<a href="https://kenzo0107.github.io/2017/12/05/2017-12-05-terraform-workspace-tfsate/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205214728.jpg" width="512" height="512" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">terraform workspace &#x3067;&#x74B0;&#x5883;&#x6BCE;&#x306B; tfsate &#x7BA1;&#x7406;</div><div class="og-description">terraform workspace &#x3067;&#x74B0;&#x5883;&#x6BCE;&#x306B; tfsate &#x7BA1;&#x7406;&#x3057;&#x305F;&#x8A71;&#x3067;&#x3059;&#x3002; &#x8FFD;&#x8A18; 2019/04/17&#x8FFD;&#x8A18;&#x6642;&#x70B9;&#x3067; workspace &#x306F;&#x904B;&#x7528;&#x6642;&#x70B9;&#x306E;&#x554F;&#x984C;&#x304C;&#x591A;&#x304F;&#x3042;&#x3063;&#x305F;&#x70BA;&#x3001;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x307E;&#x305B;&#x3093;&#x3002;&#x4EE5;&#x4E0B;&#x8A18;&#x4E8B;&#x3054;&#x53C2;&#x8003;&#x3044;&#x305F;&#x3060;&#x3051;&#x308C;&#x3070;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002; Terraform &#x904B;&#x7528;&#x30D9;&#x30B9;&#x30C8;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9; 20&#x2026;</div></div></div></a>
+<a href="https://kenzo0107.github.io/2017/12/05/2017-12-05-terraform-workspace-tfsate/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205214728.jpg" width="512" height="512" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">terraform workspace で環境毎に tfsate 管理</div><div class="og-description">terraform workspace で環境毎に tfsate 管理した話です。 追記 2019/04/17追記時点で workspace は運用時点の問題が多くあった為、利用していません。以下記事ご参考いただければと思います。 Terraform 運用ベストプラクティス 20…</div></div></div></a>
 
-<h2><span id="workspace-&#x904B;&#x7528;&#x4F8B;">workspace &#x904B;&#x7528;&#x4F8B;</span></h2><p>&#x307E;&#x305A;&#x306F;&#x5B9F;&#x969B;&#x306E;&#x904B;&#x7528;&#x4F8B;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="workspace-運用例">workspace 運用例</span></h2><p>まずは実際の運用例です。</p>
 
-<p>&#x3082;&#x3063;&#x3068;&#x3046;&#x307E;&#x3044;&#x3053;&#x3068;&#x3084;&#x3063;&#x3066;&#x308B;&#x305E;&#xFF01;&#x3068;&#x3044;&#x3046;&#x8A71;&#x306F;&#x3042;&#x308D;&#x3046;&#x304B;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x304C;&#x3001;&#x307E;&#x305A;&#x306F;&#x3042;&#x308A;&#x304C;&#x3061;&#x306A;&#x30B1;&#x30FC;&#x30B9;&#x3092;&#x7D39;&#x4ECB;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>もっとうまいことやってるぞ！という話はあろうかと思いますが、まずはありがちなケースを紹介します。</p>
 
 <a id="more"></a>
 
-<h3><span id="&#x4F8B;-&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x4F5C;&#x6210;">&#x4F8B;) &#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x4F5C;&#x6210;</span></h3><p>&#x4EE5;&#x4E0B;&#x306E;&#x8981;&#x4EF6;&#x3092;&#x5B9F;&#x73FE;&#x3059;&#x308B;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3092;&#x4F5C;&#x6210;&#x3059;&#x308B;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="例-セキュリティグループ作成">例) セキュリティグループ作成</span></h3><p>以下の要件を実現するセキュリティグループを作成するとします。</p>
 
-<h4><span id="&#x8981;&#x4EF6;">&#x8981;&#x4EF6;</span></h4><ul>
-<li>stg &#x3067;&#x306F;&#x3001;&#x793E;&#x5185;&#x3067; Wifi &#x306E; ip &#x304B;&#x3089;&#x306E;&#x307F;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x53EF;</li>
-<li>prd &#x3067;&#x306F;&#x3001;ip &#x5236;&#x9650;&#x306A;&#x304F;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x53EF;</li>
+<h4><span id="要件">要件</span></h4><ul>
+<li>stg では、社内で Wifi の ip からのみアクセス可</li>
+<li>prd では、ip 制限なくアクセス可</li>
 </ul>
 
 
-<h4><span id="&#x30B5;&#x30F3;&#x30D7;&#x30EB;&#x30B3;&#x30FC;&#x30C9;">&#x30B5;&#x30F3;&#x30D7;&#x30EB;&#x30B3;&#x30FC;&#x30C9;</span></h4><ul>
+<h4><span id="サンプルコード">サンプルコード</span></h4><ul>
 <li>variables.tf</li>
 </ul>
 
 
-<pre class="code" data-lang data-unlink>variable &quot;ips&quot; {
-  type = &quot;map&quot;
+<pre class="code" data-lang="" data-unlink="">variable "ips" {
+  type = "map"
   default = {
-    stg.cidrs    = &quot;12.145.67.89/32,22.145.67.89/32&quot;
-    prod.cidrs   = &quot;0.0.0.0/0&quot;
+    stg.cidrs    = "12.145.67.89/32,22.145.67.89/32"
+    prod.cidrs   = "0.0.0.0/0"
   }
 }</pre>
 
@@ -1924,192 +1924,192 @@ h6.categories {
 </ul>
 
 
-<pre class="code" data-lang data-unlink>resource &quot;aws_security_group&quot; &quot;hoge&quot; {
-  name        = &quot;${terraform.workspace}-hoge-sg&quot;
-  vpc_id      = &quot;${aws_vpc.vpc_main.id}&quot;
+<pre class="code" data-lang="" data-unlink="">resource "aws_security_group" "hoge" {
+  name        = "${terraform.workspace}-hoge-sg"
+  vpc_id      = "${aws_vpc.vpc_main.id}"
 }
 
-resource &quot;aws_security_group_rule&quot; &quot;https&quot; {
-  security_group_id = &quot;${aws_security_group.hoge.id}&quot;
-  type              = &quot;ingress&quot;
+resource "aws_security_group_rule" "https" {
+  security_group_id = "${aws_security_group.hoge.id}"
+  type              = "ingress"
   from_port         = 443
   to_port           = 443
-  protocol          = &quot;tcp&quot;
-  cidr_blocks       = [&quot;${split(&quot;,&quot;, lookup(var.ips, &quot;${terraform.workspace}.cidrs&quot;))}&quot;]
+  protocol          = "tcp"
+  cidr_blocks       = ["${split(",", lookup(var.ips, "${terraform.workspace}.cidrs"))}"]
 }
 
-resource &quot;aws_security_group_rule&quot; &quot;https&quot; {
-  security_group_id = &quot;${aws_security_group.hoge.id}&quot;
-  type              = &quot;egress&quot;
+resource "aws_security_group_rule" "https" {
+  security_group_id = "${aws_security_group.hoge.id}"
+  type              = "egress"
   from_port         = 0
   to_port           = 0
-  protocol          = &quot;-1&quot;
-  cidr_blocks       = [&quot;0.0.0.0/0&quot;]
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
 }</pre>
 
 
-<p>&#x5B9F;&#x969B;&#x306B; terraform &#x3092; plan/apply &#x3059;&#x308B;&#x524D;&#x306B;&#x307E;&#x305A;&#x306F;
-terraform workspace &#x3092;&#x5B9A;&#x7FA9;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>実際に terraform を plan/apply する前にまずは
+terraform workspace を定義する必要があります。</p>
 
-<pre class="code" data-lang data-unlink>terraform workspace new stg // &#x65E2;&#x306B;&#x4F5C;&#x6210;&#x3055;&#x308C;&#x3066;&#x3044;&#x305F;&#x3089;&#x30A8;&#x30E9;&#x30FC;&#x3068;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;
+<pre class="code" data-lang="" data-unlink="">terraform workspace new stg // 既に作成されていたらエラーとなります。
 terraform workspace select stg
 
-// terraform workspace = stg &#x3068;&#x3057;&#x305F;&#x5834;&#x5408;&#x306E; tfstate &#x3092;&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x306E;&#x30E1;&#x30E2;&#x30EA;&#x4E0A;&#x3067;&#x7BA1;&#x7406;&#x3057;&#x307E;&#x3059;&#x3002;
+// terraform workspace = stg とした場合の tfstate をローカルのメモリ上で管理します。
 terraform init </pre>
 
 
-<p>&#x4E0A;&#x8A18;&#x306E;&#x3088;&#x3046;&#x306A;&#x51E6;&#x7406;&#x304C;&#x3042;&#x3063;&#x3066;&#x3001;&#x521D;&#x3081;&#x3066;&#x3001; `variable &quot;ips&quot;` &#x306E; `stg.cidrs`, `prd.cidrs` &#x304C;&#x5229;&#x7528;&#x3067;&#x304D;&#x308B;&#x3088;&#x3046;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>上記のような処理があって、初めて、 `variable "ips"` の `stg.cidrs`, `prd.cidrs` が利用できるようになります。</p>
 
-<p>&#x3053;&#x3061;&#x3089;&#x3092;&#x904B;&#x7528;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x3066;&#x307F;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x554F;&#x984C;&#x306B;&#x3076;&#x3064;&#x304B;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>こちらを運用しようとしてみると以下の様な問題にぶつかりました。</p>
 
-<h2><span id="&#x5B9F;&#x904B;&#x7528;&#x3068;&#x306E;&#x76F8;&#x6027;&#x304C;&#x60AA;&#x3044;">&#x5B9F;&#x904B;&#x7528;&#x3068;&#x306E;&#x76F8;&#x6027;&#x304C;&#x60AA;&#x3044;</span></h2><p><span id="hexo-amp-id-2"><b>&#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x306E;&#x307F;&#x306B;&#x53CD;&#x6620;&#x3055;&#x305B;&#x305F;&#x3044;</b></span>&#x3001;&#x3068;&#x3044;&#x3046;&#x6642;&#x306B;&#x3069;&#x3046;&#x904B;&#x7528;&#x3057;&#x305F;&#x3089;&#x826F;&#x3044;&#x3067;&#x3057;&#x3087;&#x3046;&#x304B;&#x3002;</p>
+<h2><span id="実運用との相性が悪い">実運用との相性が悪い</span></h2><p><span id="hexo-amp-id-2"><b>ステージングのみに反映させたい</b></span>、という時にどう運用したら良いでしょうか。</p>
 
-<p>&#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x7528;&#x3001;&#x672C;&#x756A;&#x7528;&#x306B;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3001;&#x30D7;&#x30EB;&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;&#x304C;&#x901A;&#x3063;&#x3066;&#x3001;&#x30B5;&#x30F3;&#x30D7;&#x30EB;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x3092; master &#x306B;&#x30DE;&#x30FC;&#x30B8;&#x3057;&#x3066;&#x3044;&#x305F;&#x3089;&#x3069;&#x3046;&#x3067;&#x3057;&#x3087;&#x3046;&#xFF1F;</p>
+<p>ステージング用、本番用に設定して、プルリクエストが通って、サンプルのコードを master にマージしていたらどうでしょう？</p>
 
-<p><b>&#x672C;&#x756A;&#x306B;&#x3082;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x3057;&#x3066;&#x826F;&#x3055;&#x305D;&#x3046;&#x306B;&#x898B;&#x3048;&#x307E;&#x3059;&#x3002;</b></p>
+<p><b>本番にもデプロイして良さそうに見えます。</b></p>
 
-<p>&#x3044;&#x3084;&#x3001;&#x3080;&#x3057;&#x308D;&#x53CD;&#x6620;&#x3055;&#x308C;&#x3066;&#x3044;&#x306A;&#x3051;&#x308C;&#x3070;&#x3001;&#x6DF7;&#x4E71;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>いや、むしろ反映されていなければ、混乱します。</p>
 
-<p>&#x305D;&#x306E;&#x5F8C;&#x306B; master &#x306B;&#x30DE;&#x30FC;&#x30B8;&#x3057;&#x3066;&#x3001;&#x672C;&#x756A;&#x306B;&#x53CD;&#x6620;&#x3055;&#x305B;&#x305F;&#x3044;&#x30B3;&#x30FC;&#x30C9;&#x304C;&#x3042;&#x3063;&#x305F;&#x6642;&#x306B;&#x3001;&#x30B5;&#x30F3;&#x30D7;&#x30EB;&#x30B3;&#x30FC;&#x30C9;&#x306E;&#x90E8;&#x5206;&#x306F;&#x53CD;&#x6620;&#x3055;&#x305B;&#x305F;&#x304F;&#x306A;&#x3044;&#xFF01;&#x3068;&#x8A00;&#x3063;&#x3066;&#x3082;&#x53CD;&#x6620;&#x3055;&#x308C;&#x3066;&#x3057;&#x307E;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>その後に master にマージして、本番に反映させたいコードがあった時に、サンプルコードの部分は反映させたくない！と言っても反映されてしまいます。</p>
 
-<p>&#x304B;&#x3068;&#x3044;&#x3063;&#x3066;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x8907;&#x6570;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x306B;&#x5165;&#x308C;&#x3066;&#x3044;&#x304F;&#x306E;&#x306F;&#x3001;&#x4F59;&#x8A08;&#x306A;&#x30B9;&#x30C6;&#x30C3;&#x30D7;&#x6570;&#x3082;&#x5897;&#x3048;&#x3001;&#x8133;&#x5185;&#x3067;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x304C;&#x6D88;&#x8CBB;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;&#x30EC;&#x30D3;&#x30E5;&#x30FC;&#x3059;&#x308B;&#x306E;&#x3082;&#x8F9B;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>かといって、以下の様なコードを複数リソースに入れていくのは、余計なステップ数も増え、脳内でリソースが消費されます。レビューするのも辛いです。</p>
 
-<pre class="code" data-lang data-unlink>count = &quot;${terraform.workspace == &quot;stg&quot; ? 1: 0}&quot;</pre>
+<pre class="code" data-lang="" data-unlink="">count = "${terraform.workspace == "stg" ? 1: 0}"</pre>
 
 
-<p>&#x3067;&#x306F;&#x3001;&#x672C;&#x756A;&#x7528;&#x306F;&#x8A2D;&#x5B9A;&#x3057;&#x306A;&#x3051;&#x308C;&#x3070;&#x3044;&#x3044;&#x3058;&#x3083;&#x306A;&#x3044;&#x304B;&#xFF01;&#x3068;&#x8A00;&#x3063;&#x3066;&#x8A2D;&#x5B9A;&#x3057;&#x306A;&#x3044;&#x3068;&#x3001;&#x672C;&#x756A;&#x7528;&#x306F;&#x30A8;&#x30E9;&#x30FC;&#x3092;&#x51FA;&#x3059;&#x69D8;&#x306B;&#x306A;&#x308A;&#x3001;&#x305D;&#x306E;&#x4ED6;&#x306E;&#x53CD;&#x6620;&#x304C;&#x4F55;&#x3082;&#x3067;&#x304D;&#x306A;&#x304F;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>では、本番用は設定しなければいいじゃないか！と言って設定しないと、本番用はエラーを出す様になり、その他の反映が何もできなくなります。</p>
 
-<p><b>&#x3053;&#x308C;&#x306F;&#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x3082;&#x672C;&#x756A;&#x3082;&#x540C;&#x3058;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x53C2;&#x7167;&#x3057;&#x3066;&#x3044;&#x308B;&#x70BA;&#x306B;&#x767A;&#x751F;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</b></p>
+<p><b>これはステージングも本番も同じファイルを参照している為に発生しています。</b></p>
 
-<p>&#x307E;&#x305F;&#x3001; workspace &#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x554F;&#x984C;&#x3082;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>また、 workspace を利用していると以下の様な問題もありました。</p>
 
-<h2><span id="stg-prd-&#x4EE5;&#x5916;&#x306B;&#x65B0;&#x305F;&#x306B;-workspace-&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;">stg, prd &#x4EE5;&#x5916;&#x306B;&#x65B0;&#x305F;&#x306B; workspace &#x3092;&#x8FFD;&#x52A0;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;</span></h2><p>&#x4EE5;&#x4E0B;&#x8981;&#x671B;&#x304C;&#x3042;&#x3063;&#x305F;&#x5834;&#x5408;&#x306B;&#x3069;&#x3046;&#x3067;&#x3057;&#x3087;&#x3046;&#x304B;&#x3002;</p>
+<h2><span id="stg-prd-以外に新たに-workspace-を追加したい場合">stg, prd 以外に新たに workspace を追加したい場合</span></h2><p>以下要望があった場合にどうでしょうか。</p>
 
 <ul>
-<li>&#x300C;&#x8CA0;&#x8377;&#x8A66;&#x9A13;&#x3092;&#x3059;&#x308B;&#x70BA;&#x306B;&#x672C;&#x756A;&#x540C;&#x69D8;&#x306E;&#x74B0;&#x5883;&#x3092;&#x7528;&#x610F;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x300D;</li>
-<li>&#x300C;&#x5916;&#x90E8; API &#x3068;&#x306E;&#x9023;&#x643A;&#x8A66;&#x9A13;&#x3092;&#x3057;&#x305F;&#x3044;&#x306E;&#x3067;&#x74B0;&#x5883;&#x3092;&#x5225;&#x9014;&#x5897;&#x3084;&#x3057;&#x3066;&#x6B32;&#x3057;&#x3044;&#x3067;&#x3059;&#xFF01;&#x300D;</li>
+<li>「負荷試験をする為に本番同様の環境を用意してください」</li>
+<li>「外部 API との連携試験をしたいので環境を別途増やして欲しいです！」</li>
 </ul>
 
 
-<p>&#x4F8B;&#x3048;&#x3070;&#x3001; &#x8CA0;&#x8377;&#x8A66;&#x9A13;&#x74B0;&#x5883;&#x3092;&#x7528;&#x610F;&#x3057;&#x3088;&#x3046;&#x3068;&#x3059;&#x308B;&#x3068;&#x3001; loadtst &#x3068;&#x3044;&#x3046; workspace &#x3092;&#x7528;&#x610F;&#x3059;&#x308B;&#x3068;&#x3057;&#x305F;&#x3089; variables.tf &#x3092;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x4FEE;&#x6B63;&#x304C;&#x5FC5;&#x8981;&#x3067;&#x3059;&#x3002;</p>
+<p>例えば、 負荷試験環境を用意しようとすると、 loadtst という workspace を用意するとしたら variables.tf を以下のように修正が必要です。</p>
 
-<pre class="code" data-lang data-unlink>variable &quot;ips&quot; {
-  type = &quot;map&quot;
+<pre class="code" data-lang="" data-unlink="">variable "ips" {
+  type = "map"
   default = {
-    loadtst.cidrs = &quot;12.145.67.89/32,22.145.67.89/32&quot; // &#x8FFD;&#x52A0;
-    stg.cidrs     = &quot;12.145.67.89/32,22.145.67.89/32&quot;
-    prod.cidrs    = &quot;0.0.0.0/0&quot;
+    loadtst.cidrs = "12.145.67.89/32,22.145.67.89/32" // 追加
+    stg.cidrs     = "12.145.67.89/32,22.145.67.89/32"
+    prod.cidrs    = "0.0.0.0/0"
   }
 }</pre>
 
 
-<p>&#x4E0A;&#x8A18;&#x4F8B;&#x3067;&#x3059;&#x3068; variable &quot;ips&quot; &#x306B; 1&#x884C;&#x52A0;&#x3048;&#x305F;&#x3060;&#x3051;&#x3067;&#x826F;&#x3044;&#x3067;&#x3059;&#x304C;&#x3001;&#x5B9F;&#x969B;&#x306F;
-&#x3042;&#x3089;&#x3086;&#x308B;&#x5909;&#x6570;&#x306B; `loadtst.*** = ***` &#x3068;&#x3044;&#x3046;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x3066;&#x3044;&#x304F;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>上記例ですと variable "ips" に 1行加えただけで良いですが、実際は
+あらゆる変数に `loadtst.*** = ***` というコードを追加していく必要があります。</p>
 
-<p>workspace &#x304C;&#x5897;&#x3048;&#x308B;&#x6BCE;&#x306B; step &#x6570;&#x304C;&#x5897;&#x3048;&#x3001;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x898B;&#x901A;&#x3057;&#x304C;&#x60AA;&#x304F;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>workspace が増える毎に step 数が増え、ファイルの見通しが悪くなります。</p>
 
-<p>&#x307E;&#x305F;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x30B3;&#x30FC;&#x30C9;&#x304C;&#x3042;&#x308B;&#x3068;&#x3001;&#x3053;&#x3061;&#x3089;&#x3082;&#x8133;&#x5185;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x6D88;&#x8CBB;&#x3057;&#x3001;&#x75B2;&#x5F0A;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>また、以下の様なコードがあると、こちらも脳内リソースを消費し、疲弊します。</p>
 
-<pre class="code" data-lang data-unlink>lookup(var.ips, &quot;${terraform.workspace}.cidrs&quot;)</pre>
-
-
+<pre class="code" data-lang="" data-unlink="">lookup(var.ips, "${terraform.workspace}.cidrs")</pre>
 
 
-<pre class="code" data-lang data-unlink>&quot;${terraform.workspace == &quot;stg&quot; ? hoge: moge}&quot;</pre>
 
 
-<h2><span id="workspace-&#x904B;&#x7528;&#x3092;&#x307E;&#x3068;&#x3081;&#x308B;&#x3068;">workspace &#x904B;&#x7528;&#x3092;&#x307E;&#x3068;&#x3081;&#x308B;&#x3068;</span></h2><p><b>workspace &#x306E;&#x5229;&#x7528;&#x306F;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x8907;&#x6570;&#x74B0;&#x5883;&#x3067;&#x5171;&#x6709;&#x3059;&#x308B;</b> &#x3053;&#x3068;&#x3067;&#x904B;&#x7528;&#x3059;&#x308B;&#x60F3;&#x5B9A;&#x306E;&#x70BA;&#x306B;&#x3001;&#x53EF;&#x8AAD;&#x6027;&#x306E;&#x60AA;&#x5316;&#x3001;&#x5B9F;&#x904B;&#x7528;&#x3068;&#x306E;&#x4E56;&#x96E2;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<pre class="code" data-lang="" data-unlink="">"${terraform.workspace == "stg" ? hoge: moge}"</pre>
+
+
+<h2><span id="workspace-運用をまとめると">workspace 運用をまとめると</span></h2><p><b>workspace の利用はリソースを複数環境で共有する</b> ことで運用する想定の為に、可読性の悪化、実運用との乖離がありました。</p>
 
 <ol>
-<li><p>&#x65B0;&#x305F;&#x306B; workspace &#x8FFD;&#x52A0;&#x3059;&#x308B;&#x969B;&#x306B;&#x3001;&#x5168;&#x3066;&#x306E;&#x5909;&#x6570; map &#x306B;&#x8FFD;&#x52A0;&#x3057;&#x306A;&#x3051;&#x308C;&#x3070;&#x306A;&#x3089;&#x306A;&#x3044;&#x3002;<br>
-&#x2192; &#x30B3;&#x30FC;&#x30C9;&#x306E;&#x898B;&#x901A;&#x3057;&#x304C;&#x60AA;&#x304F;&#x306A;&#x308B;&#x3002;<br>
-&#x2192; &#x65B0;&#x898F;&#x74B0;&#x5883;&#x306E;&#x69CB;&#x7BC9;&#x96E3;&#x6613;&#x5EA6;&#x304C;&#x4E0A;&#x304C;&#x308B;&#x3002;</p></li>
-<li><p>&#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x306E;&#x307F;&#x306B;&#x53CD;&#x6620;&#x3068;&#x3044;&#x3046;&#x6642;&#x306E;&#x5B9F;&#x904B;&#x7528;&#x304C;&#x56F0;&#x96E3;<br>
-&#x2192; &#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x3082;&#x672C;&#x756A;&#x3082;&#x540C;&#x3058;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x53C2;&#x7167;&#x3057;&#x3066;&#x3044;&#x308B;&#x70BA;&#x3001;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x4E2D;&#x3067;&#x30B9;&#x30C6;&#x30FC;&#x30B8;&#x30F3;&#x30B0;&#x306E;&#x5834;&#x5408;&#x306F;&#xFF1F;&#x3068;&#x51E6;&#x7406;&#x3092;&#x5206;&#x3051;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x51FA;&#x3066;&#x304D;&#x3066;&#x3057;&#x307E;&#x3046;&#x3002;</p></li>
-<li><p>&#x4ECA;&#x3001;&#x3069;&#x306E; workspace &#x306A;&#x306E;&#x304B;&#x304C;&#x308F;&#x304B;&#x308A;&#x305A;&#x3089;&#x304F;&#x3001; terraform apply &#x3059;&#x308B;&#x969B;&#x306B;&#x304B;&#x306A;&#x308A;&#x8E8A;&#x8E87;&#x3057;&#x3066;&#x3057;&#x307E;&#x3046;&#x3002;<br>
-&#x2192; &#x5B9F;&#x969B; `terraform apply` &#x5B9F;&#x884C;&#x524D;&#x306B; `terraform workspace show` &#x3067; workspace &#x78BA;&#x8A8D;&#x3057;&#x3066;&#x3082;&#x3001;&#x5B9F;&#x884C;&#x4E2D;&#x3067;&#x5C11;&#x3057;&#x6642;&#x9593;&#x304C;&#x7D4C;&#x3064;&#x3068;&#x3001;&#x300C;&#x3042;&#x308C;&#xFF1F;&#x3069;&#x3063;&#x3061;&#x3060;&#x3063;&#x3051;&#xFF1F;&#x300D;&#x3068;&#x4E0D;&#x5B89;&#x306B;&#x306A;&#x308A;&#x3001; Terminal &#x3092;&#x9061;&#x3063;&#x3066;&#x78BA;&#x8A8D;&#x3059;&#x308B;&#x3053;&#x3068;&#x304C;&#x3042;&#x3063;&#x305F;&#x308A;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p></li>
+<li><p>新たに workspace 追加する際に、全ての変数 map に追加しなければならない。<br>
+→ コードの見通しが悪くなる。<br>
+→ 新規環境の構築難易度が上がる。</p></li>
+<li><p>ステージングのみに反映という時の実運用が困難<br>
+→ ステージングも本番も同じファイルを参照している為、ファイルの中でステージングの場合は？と処理を分ける必要が出てきてしまう。</p></li>
+<li><p>今、どの workspace なのかがわかりずらく、 terraform apply する際にかなり躊躇してしまう。<br>
+→ 実際 `terraform apply` 実行前に `terraform workspace show` で workspace 確認しても、実行中で少し時間が経つと、「あれ？どっちだっけ？」と不安になり、 Terminal を遡って確認することがあったりしました。</p></li>
 </ol>
 
 
-<h2><span id="&#x3067;&#x306F;&#x3069;&#x3046;&#x3059;&#x308B;&#x3068;&#x826F;&#x3044;&#x304B;">&#x3067;&#x306F;&#x3069;&#x3046;&#x3059;&#x308B;&#x3068;&#x826F;&#x3044;&#x304B;&#xFF1F;</span></h2><p>&#x5FB9;&#x5E95;&#x7684;&#x306B; workspace &#x3092;&#x3084;&#x3081;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="ではどうすると良いか">ではどうすると良いか？</span></h2><p>徹底的に workspace をやめます。</p>
 
-<p>= <b>DRY &#x306A;&#x8A2D;&#x8A08;&#x3057;&#x3088;&#x3046;&#xFF01;</b></p>
+<p>= <b>DRY な設計しよう！</b></p>
 
-<p>&#x3053;&#x308C;&#x306B;&#x5C3D;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>これに尽きます。</p>
 
-<p>&#x5B9F;&#x969B;&#x306B;&#x3069;&#x3046;&#x3057;&#x305F;&#x304B;&#x4EE5;&#x4E0B;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>実際にどうしたか以下まとめました。</p>
 
-<h3><span id="&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x69CB;&#x6210;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;">&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x69CB;&#x6210;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</span></h3><p>modules/common ... stg, prd &#x3069;&#x3061;&#x3089;&#x306E;&#x74B0;&#x5883;&#x3067;&#x3082;&#x5171;&#x901A;&#x3057;&#x3066;&#x540C;&#x69CB;&#x6210;&#x3067;&#x4F5C;&#x6210;&#x3059;&#x308B;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x7F6E;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="ディレクトリ構成は以下のようにしました">ディレクトリ構成は以下のようにしました。</span></h3><p>modules/common ... stg, prd どちらの環境でも共通して同構成で作成するリソースを置きます。</p>
 
-<p>modules/stg,prd ... &#x500B;&#x3005;&#x306B;&#x7570;&#x306A;&#x308B;&#x69CB;&#x6210;&#x3068;&#x306A;&#x308B;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3092;&#x7F6E;&#x304D;&#x307E;&#x3059;&#x3002;<a href="#f-5cda4c55" name="fn-5cda4c55" title="ECS + RDS + Redis &#x69CB;&#x6210;&#x3067; CodePipeline &#x304B;&#x3089;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x3059;&#x308B;&#x30B5;&#x30F3;&#x30D7;&#x30EB; terraform &#x3067;&#x3059;&#x3002;">*1</a></p>
+<p>modules/stg,prd ... 個々に異なる構成となるリソースを置きます。<a href="#f-5cda4c55" name="fn-5cda4c55" title="ECS + RDS + Redis 構成で CodePipeline からデプロイするサンプル terraform です。">*1</a></p>
 
-<pre class="code" data-lang data-unlink>.
-&#x251C;&#x2500;&#x2500; README.md
-&#x251C;&#x2500;&#x2500;envs/
-&#x2502;   &#x251C;&#x2500;&#x2500; prd
-&#x2502;   &#x2502;   &#x251C;&#x2500;&#x2500; backend.tf
-&#x2502;   &#x2502;   &#x251C;&#x2500;&#x2500; main.tf
-&#x2502;   &#x2502;   &#x251C;&#x2500;&#x2500; provider.tf
-&#x2502;   &#x2502;   &#x251C;&#x2500;&#x2500; region.tf
-&#x2502;   &#x2502;   &#x251C;&#x2500;&#x2500; templates
-&#x2502;   &#x2502;   &#x2502;   &#x2514;&#x2500;&#x2500; user-data.tpl
-&#x2502;   &#x2502;   &#x2514;&#x2500;&#x2500; variable.tf
-&#x2502;   &#x2514;&#x2500;&#x2500;stg/
-&#x2502;       &#x251C;&#x2500;&#x2500; backend.tf
-&#x2502;       &#x251C;&#x2500;&#x2500; main.tf
-&#x2502;       &#x251C;&#x2500;&#x2500; provider.tf
-&#x2502;       &#x251C;&#x2500;&#x2500; region.tf
-&#x2502;       &#x251C;&#x2500;&#x2500; templates
-&#x2502;       &#x2502;   &#x2514;&#x2500;&#x2500; user-data.tpl
-&#x2502;       &#x2514;&#x2500;&#x2500; variable.tf
-&#x2502;
-&#x2514;&#x2500;&#x2500;modules
-    &#x251C;&#x2500;&#x2500; common
-    &#x2502;   &#x251C;&#x2500;&#x2500; bastion.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; bucket_logs.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; bucket_static.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; certificate.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; cloudfront.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; cloudwatch.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; codebuild.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; codepipeline.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; network.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; output.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; rds.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; redis.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; security_group.tf
-    &#x2502;   &#x2514;&#x2500;&#x2500; variable.tf
-    &#x251C;&#x2500;&#x2500; prd
-    &#x2502;   &#x251C;&#x2500;&#x2500; admin.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; admin_autoscaling_policy.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; api.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; app.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; ecr.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; iam_ecs.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; output.tf
-    &#x2502;   &#x251C;&#x2500;&#x2500; variable.tf
-    &#x2502;   &#x2514;&#x2500;&#x2500; waf.tf
-    &#x2514;&#x2500;&#x2500; stg
-        &#x251C;&#x2500;&#x2500; admin.tf
-        &#x251C;&#x2500;&#x2500; api.tf
-        &#x251C;&#x2500;&#x2500; app.tf
-        &#x251C;&#x2500;&#x2500; ecr.tf
-        &#x251C;&#x2500;&#x2500; iam_ecs.tf
-        &#x251C;&#x2500;&#x2500; output.tf
-        &#x251C;&#x2500;&#x2500; variable.tf
-        &#x2514;&#x2500;&#x2500; waf.tf</pre>
+<pre class="code" data-lang="" data-unlink="">.
+├── README.md
+├──envs/
+│   ├── prd
+│   │   ├── backend.tf
+│   │   ├── main.tf
+│   │   ├── provider.tf
+│   │   ├── region.tf
+│   │   ├── templates
+│   │   │   └── user-data.tpl
+│   │   └── variable.tf
+│   └──stg/
+│       ├── backend.tf
+│       ├── main.tf
+│       ├── provider.tf
+│       ├── region.tf
+│       ├── templates
+│       │   └── user-data.tpl
+│       └── variable.tf
+│
+└──modules
+    ├── common
+    │   ├── bastion.tf
+    │   ├── bucket_logs.tf
+    │   ├── bucket_static.tf
+    │   ├── certificate.tf
+    │   ├── cloudfront.tf
+    │   ├── cloudwatch.tf
+    │   ├── codebuild.tf
+    │   ├── codepipeline.tf
+    │   ├── network.tf
+    │   ├── output.tf
+    │   ├── rds.tf
+    │   ├── redis.tf
+    │   ├── security_group.tf
+    │   └── variable.tf
+    ├── prd
+    │   ├── admin.tf
+    │   ├── admin_autoscaling_policy.tf
+    │   ├── api.tf
+    │   ├── app.tf
+    │   ├── ecr.tf
+    │   ├── iam_ecs.tf
+    │   ├── output.tf
+    │   ├── variable.tf
+    │   └── waf.tf
+    └── stg
+        ├── admin.tf
+        ├── api.tf
+        ├── app.tf
+        ├── ecr.tf
+        ├── iam_ecs.tf
+        ├── output.tf
+        ├── variable.tf
+        └── waf.tf</pre>
 
 
-<h3><span id="&#x524D;&#x51FA;&#x306E;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306E;&#x4F5C;&#x6210;&#x3092;&#x4F8B;&#x306B;&#x3059;&#x308B;&#x3068;&#x3069;&#x3046;&#x306A;&#x308B;&#x304B;">&#x524D;&#x51FA;&#x306E;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306E;&#x4F5C;&#x6210;&#x3092;&#x4F8B;&#x306B;&#x3059;&#x308B;&#x3068;&#x3069;&#x3046;&#x306A;&#x308B;&#x304B;</span></h3><p>&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="前出のセキュリティグループの作成を例にするとどうなるか">前出のセキュリティグループの作成を例にするとどうなるか</span></h3><p>以下の様になります。</p>
 
 <ul>
 <li>envs/prd/variables.tf</li>
 </ul>
 
 
-<pre class="code" data-lang data-unlink>variable &quot;cidrs&quot; {
+<pre class="code" data-lang="" data-unlink="">variable "cidrs" {
   default = [
-    &quot;0.0.0.0/0&quot;,
+    "0.0.0.0/0",
   ]
 }</pre>
 
@@ -2119,10 +2119,10 @@ terraform init </pre>
 </ul>
 
 
-<pre class="code" data-lang data-unlink>variable &quot;cidrs&quot; {
+<pre class="code" data-lang="" data-unlink="">variable "cidrs" {
   default = [
-    &quot;12.145.67.89/32&quot;,
-    &quot;22.145.67.89/32&quot;,
+    "12.145.67.89/32",
+    "22.145.67.89/32",
   ]
 }</pre>
 
@@ -2132,105 +2132,105 @@ terraform init </pre>
 </ul>
 
 
-<pre class="code" data-lang data-unlink>resource &quot;aws_security_group&quot; &quot;hoge&quot; {
-  name        = &quot;${terraform.workspace}-hoge-sg&quot;
-  vpc_id      = &quot;${aws_vpc.vpc_main.id}&quot;
+<pre class="code" data-lang="" data-unlink="">resource "aws_security_group" "hoge" {
+  name        = "${terraform.workspace}-hoge-sg"
+  vpc_id      = "${aws_vpc.vpc_main.id}"
 }
 
-resource &quot;aws_security_group_rule&quot; &quot;https&quot; {
-  security_group_id = &quot;${aws_security_group.hoge.id}&quot;
-  type              = &quot;ingress&quot;
+resource "aws_security_group_rule" "https" {
+  security_group_id = "${aws_security_group.hoge.id}"
+  type              = "ingress"
   from_port         = 443
   to_port           = 443
-  protocol          = &quot;tcp&quot;
-  cidr_blocks       = [&quot;${var.cidrs&quot;))}&quot;]
+  protocol          = "tcp"
+  cidr_blocks       = ["${var.cidrs"))}"]
 }
 
-resource &quot;aws_security_group_rule&quot; &quot;https&quot; {
-  security_group_id = &quot;${aws_security_group.hoge.id}&quot;
-  type              = &quot;egress&quot;
+resource "aws_security_group_rule" "https" {
+  security_group_id = "${aws_security_group.hoge.id}"
+  type              = "egress"
   from_port         = 0
   to_port           = 0
-  protocol          = &quot;-1&quot;
-  cidr_blocks       = [&quot;0.0.0.0/0&quot;]
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
 }</pre>
 
 
-<p>&#x3082;&#x3057; stg &#x3060;&#x3051;&#x306B;&#x53CD;&#x6620;&#x3055;&#x305B;&#x305F;&#x3044;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3067;&#x3042;&#x308C;&#x3070;&#x3001; `envs/stg/security_group.tf` &#x306B;&#x4F5C;&#x6210;&#x3057;&#x305F;&#x3044;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3092;&#x8A18;&#x8FF0;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>もし stg だけに反映させたいセキュリティグループであれば、 `envs/stg/security_group.tf` に作成したいセキュリティグループを記述します。</p>
 
-<p>&#x3053;&#x308C;&#x3067; stg &#x3060;&#x3051;&#x53CD;&#x6620;&#x3068;&#x3044;&#x3046;&#x5B9F;&#x904B;&#x7528;&#x3092;&#x30AB;&#x30D0;&#x30FC;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>これで stg だけ反映という実運用をカバーできます。</p>
 
-<p>&#x307E;&#x305F;&#x3001;&#x8CA0;&#x8377;&#x8A66;&#x9A13;&#x74B0;&#x5883; ( `loadtst` ) &#x3068;&#x3044;&#x3046;&#x74B0;&#x5883;&#x3092;&#x7528;&#x610F;&#x3057;&#x305F;&#x3044;&#x5834;&#x5408;&#x306F;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x30B3;&#x30D4;&#x30FC;&#x3057;&#x3001;&#x5909;&#x6570;&#x3092;&#x4FEE;&#x6B63;&#x3059;&#x308C;&#x3070;&#x826F;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>また、負荷試験環境 ( `loadtst` ) という環境を用意したい場合は、以下の様にコピーし、変数を修正すれば良いです。</p>
 
 <ul>
-<li>`envs/prd` &#x2192; `envs/loadtst`</li>
-<li>`modules/prd` &#x2192; `modules/loadtst`</li>
+<li>`envs/prd` → `envs/loadtst`</li>
+<li>`modules/prd` → `modules/loadtst`</li>
 </ul>
 
 
-<p>&#x591A;&#x5C11;&#x69CB;&#x6210;&#x306B;&#x5909;&#x66F4;&#x304C;&#x3042;&#x308D;&#x3046;&#x3068;&#x3082;&#x3001; loadtst &#x95A2;&#x9023;&#x306E;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x304C; prd, stg &#x306B;&#x5F71;&#x97FF;&#x3059;&#x308B;&#x3053;&#x3068;&#x306F;&#x306A;&#x3044;&#x69D8;&#x306B;&#x4F5C;&#x6210;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>多少構成に変更があろうとも、 loadtst 関連のリソースが prd, stg に影響することはない様に作成できます。</p>
 
-<h3><span id="terraform-&#x30B3;&#x30FC;&#x30C7;&#x30A3;&#x30F3;&#x30B0;&#x30EB;&#x30FC;&#x30EB;">terraform &#x30B3;&#x30FC;&#x30C7;&#x30A3;&#x30F3;&#x30B0;&#x30EB;&#x30FC;&#x30EB;</span></h3><p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A; workspace &#x306E;&#x5207;&#x308A;&#x66FF;&#x3048;&#x3092;&#x5229;&#x7528;&#x3057;&#x305F;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x5229;&#x7528;&#x3057;&#x306A;&#x3044;&#x3053;&#x3068;&#x3067;&#x3059;&#x3002;</p>
+<h3><span id="terraform-コーディングルール">terraform コーディングルール</span></h3><p>以下のような workspace の切り替えを利用したコードを利用しないことです。</p>
 
-<pre class="code" data-lang data-unlink>lookup(var.ips, &quot;${terraform.workspace}.cidrs&quot;)</pre>
-
-
+<pre class="code" data-lang="" data-unlink="">lookup(var.ips, "${terraform.workspace}.cidrs")</pre>
 
 
-<pre class="code" data-lang data-unlink>&quot;${terraform.workspace == &quot;stg&quot; ? hoge: moge}&quot;</pre>
 
 
-<p>&#x307E;&#x305F;&#x3001;&#x4EE5;&#x4E0B;&#x3082; NG &#x3068;&#x3057;&#x307E;&#x3059;&#x3002; stg &#x3060;&#x3051;&#x7570;&#x306A;&#x308B;&#x306E;&#x3067;&#x3042;&#x308C;&#x3070;&#x3001; modules/stg,prd &#x3068;&#x5206;&#x3051;&#x308B;&#x3079;&#x304D;&#x3067;&#x3059;&#x3002;</p>
-
-<pre class="code" data-lang data-unlink>&quot;${var.env == &quot;stg&quot; ? hoge: moge}&quot;</pre>
+<pre class="code" data-lang="" data-unlink="">"${terraform.workspace == "stg" ? hoge: moge}"</pre>
 
 
-<h2><span id="terraform-&#x5B9F;&#x884C;&#x624B;&#x9806;">terraform &#x5B9F;&#x884C;&#x624B;&#x9806;</span></h2><p>stg, prd &#x5404;&#x74B0;&#x5883;&#x69CB;&#x7BC9;&#x306F; `envs/stg`, `envs/prd` &#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x306B;&#x79FB;&#x52D5;&#x3057;&#x3001; &#x4EE5;&#x4E0B;&#x5B9F;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>また、以下も NG とします。 stg だけ異なるのであれば、 modules/stg,prd と分けるべきです。</p>
 
-<pre class="code" data-lang data-unlink>terraform init
+<pre class="code" data-lang="" data-unlink="">"${var.env == "stg" ? hoge: moge}"</pre>
+
+
+<h2><span id="terraform-実行手順">terraform 実行手順</span></h2><p>stg, prd 各環境構築は `envs/stg`, `envs/prd` ディレクトリに移動し、 以下実行します。</p>
+
+<pre class="code" data-lang="" data-unlink="">terraform init
 terraform get -update
 terraform plan
 terraform apply</pre>
 
 
-<h2><span id="aws-credentials-&#x306E;&#x6271;&#x3044;">AWS credentials &#x306E;&#x6271;&#x3044;</span></h2><p>stg, prd &#x3067;&#x540C;&#x3058; AWS Account &#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x5834;&#x5408;&#x3001;&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x306E; root &#x306B; direnv &#x7B49;&#x3001; .envrc &#x3092;&#x7F6E;&#x3044;&#x3066;&#x3001;&#x904B;&#x7528;&#x3059;&#x308B;&#x306E;&#x304C;&#x826F;&#x3044;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="aws-credentials-の扱い">AWS credentials の扱い</span></h2><p>stg, prd で同じ AWS Account を利用する場合、プロジェクトの root に direnv 等、 .envrc を置いて、運用するのが良いと思います。</p>
 
-<p>stg, prd &#x3067;&#x7570;&#x306A;&#x308B; AWS Account &#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x5834;&#x5408;&#x3001; `envs/(stg,prd)` &#x4EE5;&#x4E0B;&#x306B; .envrc &#x3092;&#x305D;&#x308C;&#x305E;&#x308C;&#x914D;&#x7F6E;&#x3057;&#x3001;&#x4E0A;&#x8A18; `terraform &#x5B9F;&#x884C;&#x624B;&#x9806;` &#x3092;&#x5B9F;&#x884C;&#x3059;&#x308C;&#x3070;&#x826F;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>stg, prd で異なる AWS Account を利用する場合、 `envs/(stg,prd)` 以下に .envrc をそれぞれ配置し、上記 `terraform 実行手順` を実行すれば良いです。</p>
 
-<h2><span id="&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x6BCE;&#x306E;-terraform-&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x306E;&#x9055;&#x3044;&#x306E;&#x5BFE;&#x5FDC;">&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x6BCE;&#x306E; terraform &#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x306E;&#x9055;&#x3044;&#x306E;&#x5BFE;&#x5FDC;</span></h2><p>tfenv &#x3067;&#x5BFE;&#x5FDC;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="プロジェクト毎の-terraform-バージョンの違いの対応">プロジェクト毎の terraform バージョンの違いの対応</span></h2><p>tfenv で対応します。</p>
 
-<pre class="code" data-lang data-unlink>macOS%$ brew install tfenv</pre>
+<pre class="code" data-lang="" data-unlink="">macOS%$ brew install tfenv</pre>
 
 
-<p>&#x4EE5;&#x524D;&#x306E;&#x57F7;&#x7B46;&#x8A18;&#x4E8B;&#x3067;&#x306F; terraform &#x3092; one-off container &#x3067;&#x5B9F;&#x884C;&#x3057;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x5DEE;&#x7570;&#x3092;&#x5438;&#x53CE;&#x3059;&#x308B;&#x69D8;&#x306B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x304C;&#x9577;&#x304F;&#x306A;&#x308A;&#x3001;&#x7BA1;&#x7406;&#x3082;&#x7169;&#x96D1;&#x306B;&#x306A;&#x308B;&#x306E;&#x3067;&#x3001;tfenv &#x304C;&#x671B;&#x307E;&#x3057;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以前の執筆記事では terraform を one-off container で実行しバージョン差異を吸収する様にしていましたが、コマンドが長くなり、管理も煩雑になるので、tfenv が望ましいです。</p>
 
-<p>&#x3053;&#x3061;&#x3089;&#x3082;&#x904B;&#x7528;&#x3057;&#x3066;&#x307F;&#x3066;&#x306E;&#x5B9F;&#x611F;&#x3067;&#x3059;&#x3002;</p>
+<p>こちらも運用してみての実感です。</p>
 
-<h2><span id="&#x305D;&#x306E;&#x4ED6;">&#x305D;&#x306E;&#x4ED6;</span></h2><p>&#x3053;&#x308C;&#x306F;&#x3057;&#x3068;&#x3044;&#x305F;&#x65B9;&#x304C;&#x30AA;&#x30B9;&#x30B9;&#x30E1;&#xFF1F;&#x30EC;&#x30D9;&#x30EB;&#x3067;&#x3059;&#x304C;&#x3001; provider &#x3067; &#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x56FA;&#x5B9A;&#x5916;&#x3057;&#x305F;&#x65B9;&#x304C;&#x826F;&#x304B;&#x3063;&#x305F;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="その他">その他</span></h2><p>これはしといた方がオススメ？レベルですが、 provider で バージョン固定外した方が良かったです。</p>
 
-<pre class="code" data-lang data-unlink>provider aws {
-  version = &quot;1.54.0&quot;
-  region  = &quot;ap-northeast-1&quot;
+<pre class="code" data-lang="" data-unlink="">provider aws {
+  version = "1.54.0"
+  region  = "ap-northeast-1"
 }</pre>
 
 
-<p>&#x56FA;&#x5B9A;&#x3055;&#x308C;&#x3066;&#x3044;&#x3066;&#x3001;&#x6700;&#x65B0;&#x306E;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x304C;&#x5229;&#x7528;&#x3067;&#x304D;&#x306A;&#x3044;&#x6642;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;<a href="#f-89d57f2f" name="fn-89d57f2f" title="Aurora MySQL &#x304C;&#x4F5C;&#x308C;&#x306A;&#x3044;&#xFF01;&#x3068;&#x601D;&#x3063;&#x305F;&#x3089;&#x3001;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x56FA;&#x5B9A;&#x3057;&#x3066;&#x305F;&#x70BA;&#x3060;&#x3063;&#x305F;&#x3053;&#x3068;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;">*2</a></p>
+<p>固定されていて、最新のリソースが利用できない時があります。<a href="#f-89d57f2f" name="fn-89d57f2f" title="Aurora MySQL が作れない！と思ったら、バージョン固定してた為だったことがありました。">*2</a></p>
 
-<p>&#x305D;&#x306E;&#x6642;&#x306F;&#x3001;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x56FA;&#x5B9A;&#x3067;&#x306A;&#x304F;&#x3001;&#x30A2;&#x30C3;&#x30D7;&#x30C7;&#x30FC;&#x30C8;&#x3057;&#x3066;&#x3044;&#x304F;&#x65B9;&#x5411;&#x3067;&#x4FEE;&#x6B63;&#x3057;&#x305F;&#x65B9;&#x304C;&#x3001;&#x6700;&#x65B0;&#x306B;&#x8FFD;&#x5F93;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>その時は、バージョン固定でなく、アップデートしていく方向で修正した方が、最新に追従できます。</p>
 
-<h2><span id="&#x7DCF;&#x8A55;">&#x7DCF;&#x8A55;</span></h2><p>&#x5B9F;&#x904B;&#x7528;&#x3092;&#x3057;&#x3066;&#x307F;&#x3066;&#x3001; workspace &#x306F;&#x3084;&#x3081;&#x3066;&#x304A;&#x3044;&#x305F;&#x65B9;&#x304C;&#x3044;&#x3044;&#x304B;&#x306A;&#x3068;&#x611F;&#x3058;&#x305F;&#x3053;&#x3068;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="総評">総評</span></h2><p>実運用をしてみて、 workspace はやめておいた方がいいかなと感じたことをまとめました。</p>
 
-<p>&#x52FF;&#x8AD6;&#x3001; workspace &#x306E;&#x826F;&#x3055;&#x3092;&#x77E5;&#x308A;&#x5C3D;&#x304F;&#x3057;&#x3066;&#x306A;&#x3044;&#x304B;&#x3089;&#x3053;&#x3046;&#x3044;&#x3046;&#x610F;&#x898B;&#x306B;&#x306A;&#x3063;&#x3066;&#x3044;&#x308B;&#x3068;&#x3082;&#x601D;&#x3044;&#x307E;&#x3059;&#x306E;&#x3067;&#x3001;&#x4E00;&#x6982;&#x306B;&#x5426;&#x5B9A;&#x3059;&#x308B;&#x610F;&#x56F3;&#x306F;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</p>
+<p>勿論、 workspace の良さを知り尽くしてないからこういう意見になっているとも思いますので、一概に否定する意図はありません。</p>
 
-<p>&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x306E;&#x6574;&#x7406;&#x304C;&#x3064;&#x3044;&#x305F;&#x3089;&#x73FE;&#x6BB5;&#x968E;&#x3067;&#x516C;&#x958B;&#x3067;&#x304D;&#x308B;&#x3068;&#x3053;&#x308D;&#x3092;&#x3057;&#x3066;&#x3044;&#x3053;&#x3046;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#xFF01;</p>
+<p>リポジトリの整理がついたら現段階で公開できるところをしていこうと思います！</p>
 
-<p>&#x4EE5;&#x4E0A;
-Terraform &#x904B;&#x7528;&#x3055;&#x308C;&#x3066;&#x308B;&#x65B9;&#x306E;&#x77E5;&#x898B;&#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3089;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以上
+Terraform 運用されてる方の知見になりましたら幸いです。</p>
 
-<div class="hatena-asin-detail"><a href="https://www.amazon.co.jp/exec/obidos/ASIN/4873117968/kenzo0107-22/"><div class="amp-img-wrapper"><amp-img src="https://images-fe.ssl-images-amazon.com/images/I/51YYyQ6-t6L._SL160_.jpg" width="125" height="160" layout="responsive"></amp-img></div></a><div class="hatena-asin-detail-info"><p class="hatena-asin-detail-title"><a href="https://www.amazon.co.jp/exec/obidos/ASIN/4873117968/kenzo0107-22/">Infrastructure as Code &#x2015;&#x30AF;&#x30E9;&#x30A6;&#x30C9;&#x306B;&#x304A;&#x3051;&#x308B;&#x30B5;&#x30FC;&#x30D0;&#x7BA1;&#x7406;&#x306E;&#x539F;&#x5247;&#x3068;&#x30D7;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30B9;</a></p><ul><li><span class="hatena-asin-detail-label">&#x4F5C;&#x8005;:</span> Kief Morris,&#x5BAE;&#x4E0B;&#x525B;&#x8F14;,&#x9577;&#x5C3E;&#x9AD8;&#x5F18;</li><li><span class="hatena-asin-detail-label">&#x51FA;&#x7248;&#x793E;/&#x30E1;&#x30FC;&#x30AB;&#x30FC;:</span> &#x30AA;&#x30E9;&#x30A4;&#x30EA;&#x30FC;&#x30B8;&#x30E3;&#x30D1;&#x30F3;</li><li><span class="hatena-asin-detail-label">&#x767A;&#x58F2;&#x65E5;:</span> 2017/03/18</li><li><span class="hatena-asin-detail-label">&#x30E1;&#x30C7;&#x30A3;&#x30A2;:</span> &#x5358;&#x884C;&#x672C;&#xFF08;&#x30BD;&#x30D5;&#x30C8;&#x30AB;&#x30D0;&#x30FC;&#xFF09;</li><li><a href="https://d.hatena.ne.jp/asin/4873117968/kenzo0107-22" target="_blank">&#x3053;&#x306E;&#x5546;&#x54C1;&#x3092;&#x542B;&#x3080;&#x30D6;&#x30ED;&#x30B0; (2&#x4EF6;) &#x3092;&#x898B;&#x308B;</a></li></ul></div><div class="hatena-asin-detail-foot"></div></div>
+<div class="hatena-asin-detail"><a href="https://www.amazon.co.jp/exec/obidos/ASIN/4873117968/kenzo0107-22/"><div class="amp-img-wrapper"><amp-img src="https://images-fe.ssl-images-amazon.com/images/I/51YYyQ6-t6L._SL160_.jpg" width="125" height="160" layout="responsive"></amp-img></div></a><div class="hatena-asin-detail-info"><p class="hatena-asin-detail-title"><a href="https://www.amazon.co.jp/exec/obidos/ASIN/4873117968/kenzo0107-22/">Infrastructure as Code ―クラウドにおけるサーバ管理の原則とプラクティス</a></p><ul><li><span class="hatena-asin-detail-label">作者:</span> Kief Morris,宮下剛輔,長尾高弘</li><li><span class="hatena-asin-detail-label">出版社/メーカー:</span> オライリージャパン</li><li><span class="hatena-asin-detail-label">発売日:</span> 2017/03/18</li><li><span class="hatena-asin-detail-label">メディア:</span> 単行本（ソフトカバー）</li><li><a href="https://d.hatena.ne.jp/asin/4873117968/kenzo0107-22" target="_blank">この商品を含むブログ (2件) を見る</a></li></ul></div><div class="hatena-asin-detail-foot"></div></div>
 <div class="footnote">
-<p class="footnote"><a href="#fn-5cda4c55" name="f-5cda4c55" class="footnote-number">*1</a><span class="footnote-delimiter">:</span><span class="footnote-text">ECS + RDS + Redis &#x69CB;&#x6210;&#x3067; CodePipeline &#x304B;&#x3089;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x3059;&#x308B;&#x30B5;&#x30F3;&#x30D7;&#x30EB; terraform &#x3067;&#x3059;&#x3002;</span></p>
-<p class="footnote"><a href="#fn-89d57f2f" name="f-89d57f2f" class="footnote-number">*2</a><span class="footnote-delimiter">:</span><span class="footnote-text">Aurora MySQL &#x304C;&#x4F5C;&#x308C;&#x306A;&#x3044;&#xFF01;&#x3068;&#x601D;&#x3063;&#x305F;&#x3089;&#x3001;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x56FA;&#x5B9A;&#x3057;&#x3066;&#x305F;&#x70BA;&#x3060;&#x3063;&#x305F;&#x3053;&#x3068;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</span></p>
+<p class="footnote"><a href="#fn-5cda4c55" name="f-5cda4c55" class="footnote-number">*1</a><span class="footnote-delimiter">:</span><span class="footnote-text">ECS + RDS + Redis 構成で CodePipeline からデプロイするサンプル terraform です。</span></p>
+<p class="footnote"><a href="#fn-89d57f2f" name="f-89d57f2f" class="footnote-number">*2</a><span class="footnote-delimiter">:</span><span class="footnote-text">Aurora MySQL が作れない！と思ったら、バージョン固定してた為だったことがありました。</span></p>
 </div>
 
 			  		

@@ -1832,22 +1832,22 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>AWS &#x3067; LB &#x306E;&#x30ED;&#x30B0;&#x3092; S3 &#x306B;&#x4FDD;&#x5B58;&#x8A2D;&#x5B9A;&#x3092;&#x3057;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x306B;&#x3001;
-&#x30A4;&#x30F3;&#x30B7;&#x30C7;&#x30F3;&#x30C8;&#x304C;&#x3042;&#x3063;&#x305F;&#x6642;&#x9593;&#x5E2F;&#x306E;&#x30ED;&#x30B0;&#x304C;&#x307E;&#x3068;&#x3081;&#x3066;&#x6B32;&#x3057;&#x3044;&#x3068;&#x3044;&#x3046;&#x6642;&#x306B;
-awscli &#x3067;&#x307E;&#x3068;&#x3081;&#x3066;&#x30ED;&#x30B0;&#x53D6;&#x5F97;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>AWS で LB のログを S3 に保存設定をしている場合に、
+インシデントがあった時間帯のログがまとめて欲しいという時に
+awscli でまとめてログ取得しています。</p>
 
-<p>&#x305D;&#x306E;&#x6642;&#x306E;&#x624B;&#x9806;&#x3092;&#x5099;&#x5FD8;&#x9332;&#x3068;&#x3057;&#x3066;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>その時の手順を備忘録としてまとめました。</p>
 
 <a id="more"></a>
 
-<h2><span id="&#x4E8B;&#x524D;&#x6E96;&#x5099;">&#x4E8B;&#x524D;&#x6E96;&#x5099;</span></h2><ul>
-<li>awscli &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</li>
+<h2><span id="事前準備">事前準備</span></h2><ul>
+<li>awscli インストール</li>
 </ul>
 
 
-<p>&#x672C;&#x4EF6;&#x306E;&#x5B9F;&#x884C;&#x74B0;&#x5883;&#x306F;&#x4EE5;&#x4E0B;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>本件の実行環境は以下になります。</p>
 
-<pre class="code" data-lang data-unlink>macOS%$ sw_vers
+<pre class="code" data-lang="" data-unlink="">macOS%$ sw_vers
 ProductName:    Mac OS X
 ProductVersion: 10.12.6
 BuildVersion:   16G1036
@@ -1856,25 +1856,25 @@ macOS%$ aws --version
 aws-cli/1.15.50 Python/3.7.0 Darwin/16.7.0 botocore/1.10.49</pre>
 
 
-<h2><span id="&#x30ED;&#x30B0;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;">&#x30ED;&#x30B0;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;</span></h2><p>&#x4F8B;) 2018&#x5E74;9&#x6708;12&#x65E5; 14&#x6642;&#x53F0;&#x306E; ALB &#x30ED;&#x30B0;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;</p>
+<h2><span id="ログファイルダウンロード">ログファイルダウンロード</span></h2><p>例) 2018年9月12日 14時台の ALB ログファイルをダウンロード</p>
 
-<pre class="code" data-lang data-unlink>// 2018&#x5E74;9&#x6708;12&#x65E5; 14&#x6642;&#x53F0;&#x306E;&#x30ED;&#x30B0;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;
-macOS%$ aws s3 --profile &lt;profile&gt; cp s3://&lt;log bucket name&gt;/&lt;lb name&gt;/AWSLogs/123456789012/elasticloadbalancing/ap-northeast-1/2018/09/12/ . --recursive --exclude &quot;*&quot; --include &quot;*20180912T05*&quot;
+<pre class="code" data-lang="" data-unlink="">// 2018年9月12日 14時台のログファイルをダウンロード
+macOS%$ aws s3 --profile &lt;profile&gt; cp s3://&lt;log bucket name&gt;/&lt;lb name&gt;/AWSLogs/123456789012/elasticloadbalancing/ap-northeast-1/2018/09/12/ . --recursive --exclude "*" --include "*20180912T05*"
 
-// &#x30ED;&#x30B0;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x89E3;&#x51CD;
+// ログファイル解凍
 gunzip *.gz
 
-// log &#x3092;1&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306B;&#x307E;&#x3068;&#x3081;
+// log を1ファイルにまとめ
 cat *.log &gt; all.log
 
-// HTTP &#x30B3;&#x30FC;&#x30C9;&#x304C; 50x &#x306E;&#x3082;&#x306E;&#x3092; 50x.log &#x306B;&#x307E;&#x3068;&#x3081;&#x308B;
-awk &apos;{if($9 ~ 50) print $0}&apos; all.log &gt; 50x.log</pre>
+// HTTP コードが 50x のものを 50x.log にまとめる
+awk '{if($9 ~ 50) print $0}' all.log &gt; 50x.log</pre>
 
 
-<p>`--profile &lt;profile&gt;` &#x306F; `aws configure --profile &lt;profile&gt;` &#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x305F;&#x5834;&#x5408;&#x306E;&#x8A2D;&#x5B9A;&#x3067;&#x3059;&#x3002;<br>
-default &#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x5834;&#x5408;&#x306F; `--profile &lt;profile&gt;` &#x306E;&#x6307;&#x5B9A;&#x306F;&#x4E0D;&#x8981;&#x3067;&#x3059;&#x3002;</p>
+<p>`--profile &lt;profile&gt;` は `aws configure --profile &lt;profile&gt;` で設定した場合の設定です。<br>
+default を利用する場合は `--profile &lt;profile&gt;` の指定は不要です。</p>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;</p>
+<p>以上です。</p>
 
 			  		
 			  		<!-- google Adsense -->

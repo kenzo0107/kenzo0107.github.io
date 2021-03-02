@@ -1820,38 +1820,38 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>AWS &#x3067;&#x904B;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B; Web &#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3067;&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B9;&#x304C;&#x5FC5;&#x8981;&#x3068;&#x306A;&#x308A;&#x3001;ALB &#x3067;&#x30E1;&#x30F3;&#x30C6;&#x5207;&#x308A;&#x66FF;&#x3048;&#x3092;&#x3057;&#x305F;&#x969B;&#x306E;&#x5BFE;&#x5FDC;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>AWS で運用している Web サービスでメンテナンスが必要となり、ALB でメンテ切り替えをした際の対応をまとめました。</p>
 <a id="more"></a>
 
-<h2><span id="&#x624B;&#x9806;">&#x624B;&#x9806;</span></h2><p>ALB Listener &#x4E00;&#x89A7;&#x304B;&#x3089;&#x30EB;&#x30FC;&#x30EB;&#x5909;&#x66F4;&#x3092;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x203B; &#x4ECA;&#x56DE; 2 &#x30DD;&#x30FC;&#x30C8;&#x306E;&#x307F;&#x89E3;&#x653E;&#x3057;&#x3066;&#x304A;&#x308A;&#x3001;80 &#x306F; 443 &#x306B;&#x8EE2;&#x9001;&#x3057;&#x3066;&#x308B;&#x306E;&#x3067;&#x3001;443 &#x306E;&#x307F;&#x5BFE;&#x5FDC;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="手順">手順</span></h2><p>ALB Listener 一覧からルール変更をします。</p>
+<p>※ 今回 2 ポートのみ解放しており、80 は 443 に転送してるので、443 のみ対応しました。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190929/20190929232804.png" width="1200" height="138" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x305D;&#x306E;&#x5F8C;&#x3001;</p>
+<p>その後、</p>
 <ul>
-<li>&#x9001;&#x4FE1;&#x5143;IP = &#x793E;&#x5185;IP (ex. <code>11.22.33.44/32</code> ) &#x2192; default &#x306E;TargetGroup &#x3078;&#x8EE2;&#x9001; &#x3067;&#x300C;&#x4FDD;&#x5B58;&#x300D;</li>
-<li>&#x793E;&#x5185;IP&#x4EE5;&#x5916;&#x306E;&#x9001;&#x4FE1;&#x5143; IP &#x5168;&#x3066; ( <code>0.0.0.0/0</code> ) &#x2192; <code>503</code> <code>text/html</code> &#x30E1;&#x30F3;&#x30C6;&#x6587;&#x8A00;&#x3092;&#x30EC;&#x30B9;&#x30DD;&#x30F3;&#x30B9; &#x3067; &#x300C;&#x4FDD;&#x5B58;&#x300D;</li>
+<li>送信元IP = 社内IP (ex. <code>11.22.33.44/32</code> ) → default のTargetGroup へ転送 で「保存」</li>
+<li>社内IP以外の送信元 IP 全て ( <code>0.0.0.0/0</code> ) → <code>503</code> <code>text/html</code> メンテ文言をレスポンス で 「保存」</li>
 </ul>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190929/20190929231656.png" width="1200" height="491" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;&#x3067; &#x793E;&#x5185; IP &#x306F;&#x3001;&#x901A;&#x5E38;&#x901A;&#x308A;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x53EF;&#x3001;&#x305D;&#x308C;&#x4EE5;&#x5916;&#x306F;&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B9;&#x30DA;&#x30FC;&#x30B8;&#x3092;&#x8868;&#x793A;&#x3055;&#x305B;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x307E;&#x3068;&#x3081;&#x3066;&#x30EB;&#x30FC;&#x30EB;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x3066;&#x4FDD;&#x5B58;&#x304C;&#x51FA;&#x6765;&#x305A;&#x3001;1&#x3064;&#x305A;&#x3064;&#x30EB;&#x30FC;&#x30EB;&#x8FFD;&#x52A0;&#x3067;&#x4FDD;&#x5B58;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x30EC;&#x30B9;&#x30DD;&#x30F3;&#x30B9;&#x3067;&#x304D;&#x308B;-content-type-&#x3063;&#x3066;&#x4F55;&#x304C;&#x3042;&#x308B;&#x306E;">&#x30EC;&#x30B9;&#x30DD;&#x30F3;&#x30B9;&#x3067;&#x304D;&#x308B; Content-Type &#x3063;&#x3066;&#x4F55;&#x304C;&#x3042;&#x308B;&#x306E;&#xFF1F;</span></h2><p>Content-Type &#x306B; <code>application/json</code> &#x7B49;&#x3082;&#x8FD4;&#x305B;&#x308B;&#x306E;&#x3067;&#x3001; API &#x30B5;&#x30FC;&#x30D0;&#x306E;&#x30E1;&#x30F3;&#x30C6;&#x6642;&#x306B;&#x306F;&#x3053;&#x3061;&#x3089;&#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x6587;&#x8A00;&#x3092;&#x6E21;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>以上で 社内 IP は、通常通りアクセス可、それ以外はメンテナンスページを表示させることができました。</p>
+<p>まとめてルールを追加して保存が出来ず、1つずつルール追加で保存になります。</p>
+<h2><span id="レスポンスできる-content-type-って何があるの">レスポンスできる Content-Type って何があるの？</span></h2><p>Content-Type に <code>application/json</code> 等も返せるので、 API サーバのメンテ時にはこちらを利用して文言を渡しました。</p>
 <div id="hexo-amp-id-3">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190929/20190929232354.png" width="794" height="702" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x3061;&#x3087;&#x3063;&#x3068;&#x3057;&#x305F;&#x6CE8;&#x610F;">&#x3061;&#x3087;&#x3063;&#x3068;&#x3057;&#x305F;&#x6CE8;&#x610F;</span></h2><p>&#x6700;&#x5927;&#x6587;&#x5B57;&#x6570;&#x304C; 1024 &#x6587;&#x5B57;&#x3067;&#x3057;&#x305F;&#x266A;</p>
+<h2><span id="ちょっとした注意">ちょっとした注意</span></h2><p>最大文字数が 1024 文字でした♪</p>
 <div id="hexo-amp-id-4">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190929/20190929232942.png" width="1200" height="498" layout="responsive"></amp-img></div>
 </div>
 
 
-<p>CSS &#x3092; <code>&#x30EC;&#x30B9;&#x30DD;&#x30F3;&#x30B9;&#x672C;&#x6587;</code> &#x306B;&#x8FFD;&#x52A0;&#x3059;&#x308B;&#x3068;&#x6587;&#x5B57;&#x6570; 1024 &#x3092;&#x8D85;&#x3048;&#x3066;&#x3057;&#x307E;&#x3044;&#x305D;&#x3046;&#x306A;&#x306E;&#x3067;&#x3001;S3 &#x306B;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x516C;&#x958B;&#x3057;&#x3001;&#x305D;&#x3061;&#x3089;&#x3092;&#x53C2;&#x7167;&#x3059;&#x308B;&#x3088;&#x3046;&#x306B;&#x3057;&#x305F;&#x308A;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>CSS を <code>レスポンス本文</code> に追加すると文字数 1024 を超えてしまいそうなので、S3 にアップロードし公開し、そちらを参照するようにしたりしました。</p>
 
 			  		
 			  		<!-- google Adsense -->

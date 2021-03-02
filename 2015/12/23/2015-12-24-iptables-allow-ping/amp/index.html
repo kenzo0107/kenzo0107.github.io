@@ -1814,39 +1814,39 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+			  		<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS 5.8</li>
 </ul>
-<h2><span id="&#x5B9F;&#x73FE;&#x3057;&#x305F;&#x3044;&#x3053;&#x3068;">&#x5B9F;&#x73FE;&#x3057;&#x305F;&#x3044;&#x3053;&#x3068;</span></h2><p><code>Server A</code> &#x304C; <code>Server B</code> &#x304B;&#x3089;&#x306E;&#x307F; ping &#x3092;&#x901A;&#x3059;</p>
+<h2><span id="実現したいこと">実現したいこと</span></h2><p><code>Server A</code> が <code>Server B</code> からのみ ping を通す</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----------+  Ping Request   +----------+</span><br><span class="line">|          | &lt;-------------- |          |</span><br><span class="line">| Server A |                 | Server B |</span><br><span class="line">|          | --------------&gt; |          |</span><br><span class="line">+----------+  Ping Response  +----------+</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x7279;&#x5B9A;ip&#x304B;&#x3089;&#x306E;-ping-&#x3092;&#x901A;&#x3059;&#x8A31;&#x53EF;&#x8A2D;&#x5B9A;">&#x7279;&#x5B9A;IP&#x304B;&#x3089;&#x306E; ping &#x3092;&#x901A;&#x3059;&#x8A31;&#x53EF;&#x8A2D;&#x5B9A;</span></h2><p>&#x4EE5;&#x4E0B;&#x8A2D;&#x5B9A;&#x3092; <code>Server A</code> &#x3067;&#x5B9F;&#x65BD;&#x3059;&#x308B;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Server A]# iptables -A INPUT -p icmp --icmp-type 8 -s &lt;Server B &#x306E; IP Address&gt; -j ACCEPT</span><br><span class="line">[Server A]# iptables -A OUTPUT -p icmp --icmp-type 0 -s &lt;Server B &#x306E; IP Address&gt; -j ACCEPT</span><br><span class="line">[Server A]# service iptables restart</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="特定ipからの-ping-を通す許可設定">特定IPからの ping を通す許可設定</span></h2><p>以下設定を <code>Server A</code> で実施する。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Server A]# iptables -A INPUT -p icmp --icmp-type 8 -s &lt;Server B の IP Address&gt; -j ACCEPT</span><br><span class="line">[Server A]# iptables -A OUTPUT -p icmp --icmp-type 0 -s &lt;Server B の IP Address&gt; -j ACCEPT</span><br><span class="line">[Server A]# service iptables restart</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 <ul>
-<li><code>--icmp-type 8</code> &#x306F; <code>Echo request (&#x30A8;&#x30B3;&#x30FC;&#x8981;&#x6C42;)</code> &#x3092;&#x8A31;&#x53EF;</li>
-<li><code>--icmp-type 0</code> &#x306F; <code>Echo Reply (&#x30A8;&#x30B3;&#x30FC;&#x5FDC;&#x7B54;)</code> &#x3092;&#x8A31;&#x53EF;</li>
+<li><code>--icmp-type 8</code> は <code>Echo request (エコー要求)</code> を許可</li>
+<li><code>--icmp-type 0</code> は <code>Echo Reply (エコー応答)</code> を許可</li>
 </ul>
 </blockquote>
-<h2><span id="server-b&#x304B;&#x3089;-ping&#x5B9F;&#x884C;">Server B&#x304B;&#x3089; ping&#x5B9F;&#x884C;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Server B]# ping &lt;Server A &#x306E; IP Address&gt;</span><br><span class="line"></span><br><span class="line">PING (&lt;Server A &#x306E; IP Address&gt;): 56 data bytes</span><br><span class="line">64 bytes from (&lt;Server A &#x306E; IP Address&gt;): icmp_seq=0 ttl=58 time=4.411 ms</span><br><span class="line">64 bytes from (&lt;Server A &#x306E; IP Address&gt;): icmp_seq=1 ttl=58 time=4.079 ms</span><br><span class="line">64 bytes from (&lt;Server A &#x306E; IP Address&gt;): icmp_seq=2 ttl=58 time=4.027 ms</span><br><span class="line">^C</span><br><span class="line">--- (&lt;Server A &#x306E; IP Address&gt;) ping statistics ---</span><br><span class="line">3 packets transmitted, 3 packets received, 0.0% packet loss</span><br><span class="line">round-trip min/avg/max/stddev = 4.027/4.172/4.411/0.170 ms</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="server-bから-ping実行">Server Bから ping実行</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Server B]# ping &lt;Server A の IP Address&gt;</span><br><span class="line"></span><br><span class="line">PING (&lt;Server A の IP Address&gt;): 56 data bytes</span><br><span class="line">64 bytes from (&lt;Server A の IP Address&gt;): icmp_seq=0 ttl=58 time=4.411 ms</span><br><span class="line">64 bytes from (&lt;Server A の IP Address&gt;): icmp_seq=1 ttl=58 time=4.079 ms</span><br><span class="line">64 bytes from (&lt;Server A の IP Address&gt;): icmp_seq=2 ttl=58 time=4.027 ms</span><br><span class="line">^C</span><br><span class="line">--- (&lt;Server A の IP Address&gt;) ping statistics ---</span><br><span class="line">3 packets transmitted, 3 packets received, 0.0% packet loss</span><br><span class="line">round-trip min/avg/max/stddev = 4.027/4.172/4.411/0.170 ms</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="icmp-type-list">icmp-type List</span></h2><p>&#x4EE5;&#x4E0B;<a href="http://www.asahi-net.or.jp/~aa4t-nngk/ipttut/output/icmptypes.html">asahi-net Appendix C. ICMP&#x30BF;&#x30A4;&#x30D7;</a>&#x3088;&#x308A;&#x53C2;&#x7167;</p>
+<h2><span id="icmp-type-list">icmp-type List</span></h2><p>以下<a href="http://www.asahi-net.or.jp/~aa4t-nngk/ipttut/output/icmptypes.html">asahi-net Appendix C. ICMPタイプ</a>より参照</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
 <th>TYPE</th>
 <th>CODE</th>
-<th>&#x610F;&#x5473;</th>
-<th>&#x554F;&#x5408;&#x305B;</th>
-<th>&#x30A8;&#x30E9;&#x30FC;</th>
-<th>&#x53C2;&#x7167;&#x5148;</th>
+<th>意味</th>
+<th>問合せ</th>
+<th>エラー</th>
+<th>参照先</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>0</td>
 <td>0</td>
-<td>Echo Reply (&#x30A8;&#x30B3;&#x30FC;&#x5FDC;&#x7B54;)</td>
+<td>Echo Reply (エコー応答)</td>
 <td>x</td>
 <td></td>
 <td>RFC792</td>
@@ -1854,7 +1854,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>0</td>
-<td>Network Unreachable (&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x5230;&#x9054;&#x4E0D;&#x80FD;)</td>
+<td>Network Unreachable (ネットワーク到達不能)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1862,7 +1862,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>1</td>
-<td>Host Unreachable (&#x30DB;&#x30B9;&#x30C8;&#x5230;&#x9054;&#x4E0D;&#x80FD;)</td>
+<td>Host Unreachable (ホスト到達不能)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1870,7 +1870,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>2</td>
-<td>Protocol Unreachable (&#x30D7;&#x30ED;&#x30C8;&#x30B3;&#x30EB;&#x5230;&#x9054;&#x4E0D;&#x80FD;)</td>
+<td>Protocol Unreachable (プロトコル到達不能)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1878,7 +1878,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>3</td>
-<td>Port Unreachable (&#x30DD;&#x30FC;&#x30C8;&#x5230;&#x9054;&#x4E0D;&#x80FD;)</td>
+<td>Port Unreachable (ポート到達不能)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1886,7 +1886,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>4</td>
-<td>Fragmentation needed but no frag. bit set (&#x30D5;&#x30E9;&#x30B0;&#x30E1;&#x30F3;&#x30C8;&#x5FC5;&#x8981;&#x3060;&#x304C;&#x30D5;&#x30E9;&#x30B0;&#x30E1;&#x30F3;&#x30C8;&#x7981;&#x6B62;&#x30D3;&#x30C3;&#x30C8;&#x3042;&#x308A;)</td>
+<td>Fragmentation needed but no frag. bit set (フラグメント必要だがフラグメント禁止ビットあり)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1894,7 +1894,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>5</td>
-<td>Source routing failed (&#x30BD;&#x30FC;&#x30B9;&#x30EB;&#x30FC;&#x30C6;&#x30A3;&#x30F3;&#x30B0;&#x5931;&#x6557;)</td>
+<td>Source routing failed (ソースルーティング失敗)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1902,7 +1902,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>6</td>
-<td>Destination network unknown (&#x5B9B;&#x5148;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x767A;&#x898B;&#x3067;&#x304D;&#x305A;)</td>
+<td>Destination network unknown (宛先ネットワーク発見できず)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1910,7 +1910,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>7</td>
-<td>Destination host unknown (&#x5B9B;&#x5148;&#x30DB;&#x30B9;&#x30C8;&#x767A;&#x898B;&#x3067;&#x304D;&#x305A;)</td>
+<td>Destination host unknown (宛先ホスト発見できず)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1918,7 +1918,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>8</td>
-<td>Source host isolated (&#x9001;&#x4FE1;&#x5143;&#x30DB;&#x30B9;&#x30C8;&#x3078;&#x306E;&#x30EB;&#x30FC;&#x30C8;&#x306A;&#x3057;) (&#x5EC3;)</td>
+<td>Source host isolated (送信元ホストへのルートなし) (廃)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1926,7 +1926,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>9</td>
-<td>Destination network administratively prohibited (&#x5B9B;&#x5148;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x306F;&#x8A2D;&#x5B9A;&#x306B;&#x3088;&#x308A;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x7981;&#x6B62;)</td>
+<td>Destination network administratively prohibited (宛先ネットワークは設定によりアクセス禁止)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1934,7 +1934,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>10</td>
-<td>Destination host administratively prohibited (&#x5B9B;&#x5148;&#x30DB;&#x30B9;&#x30C8;&#x306F;&#x8A2D;&#x5B9A;&#x306B;&#x3088;&#x308A;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x7981;&#x6B62;)</td>
+<td>Destination host administratively prohibited (宛先ホストは設定によりアクセス禁止)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1942,7 +1942,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>11</td>
-<td>Network unreachable for TOS (TOS&#x7A2E;&#x5225;&#x306B;&#x3088;&#x308A;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x5230;&#x9054;&#x4E0D;&#x80FD;)</td>
+<td>Network unreachable for TOS (TOS種別によりネットワーク到達不能)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1950,7 +1950,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>12</td>
-<td>Host unreachable for TOS (TOS&#x7A2E;&#x5225;&#x306B;&#x3088;&#x308A;&#x30DB;&#x30B9;&#x30C8;&#x5230;&#x9054;&#x4E0D;&#x80FD;)</td>
+<td>Host unreachable for TOS (TOS種別によりホスト到達不能)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -1958,7 +1958,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>13</td>
-<td>Communication administratively prohibited by filtering (&#x30D5;&#x30A3;&#x30EB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;&#x8A2D;&#x5B9A;&#x306B;&#x3088;&#x308A;&#x901A;&#x4FE1;&#x7981;&#x6B62;)</td>
+<td>Communication administratively prohibited by filtering (フィルタリング設定により通信禁止)</td>
 <td></td>
 <td>x</td>
 <td>RFC1812</td>
@@ -1966,7 +1966,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>14</td>
-<td>Host precedence violation (&#x30DB;&#x30B9;&#x30C8;&#x512A;&#x5148;&#x9806;&#x4F4D;&#x4FB5;&#x5BB3;)</td>
+<td>Host precedence violation (ホスト優先順位侵害)</td>
 <td></td>
 <td>x</td>
 <td>RFC1812</td>
@@ -1974,7 +1974,7 @@ h6.categories {
 <tr>
 <td>3</td>
 <td>15</td>
-<td>Precedence cutoff in effect (&#x512A;&#x5148;&#x9806;&#x4F4D;&#x306B;&#x3088;&#x308A;&#x906E;&#x65AD;&#x767A;&#x52D5;)</td>
+<td>Precedence cutoff in effect (優先順位により遮断発動)</td>
 <td></td>
 <td>x</td>
 <td>RFC1812</td>
@@ -1982,7 +1982,7 @@ h6.categories {
 <tr>
 <td>4</td>
 <td>0</td>
-<td>Source quench (&#x8F3B;&#x8F33;&#x767A;&#x751F;&#x306B;&#x3088;&#x308B;&#x767A;&#x4FE1;&#x6291;&#x5236;)</td>
+<td>Source quench (輻輳発生による発信抑制)</td>
 <td></td>
 <td></td>
 <td>RFC792</td>
@@ -1990,7 +1990,7 @@ h6.categories {
 <tr>
 <td>5</td>
 <td>0</td>
-<td>Redirect for network (&#x6307;&#x5B9A;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x3078;&#x306E;&#x30EA;&#x30C0;&#x30A4;&#x30EC;&#x30AF;&#x30C8;&#x8981;&#x6C42;)</td>
+<td>Redirect for network (指定ネットワークへのリダイレクト要求)</td>
 <td></td>
 <td></td>
 <td>RFC792</td>
@@ -1998,7 +1998,7 @@ h6.categories {
 <tr>
 <td>5</td>
 <td>1</td>
-<td>Redirect for host (&#x6307;&#x5B9A;&#x30DB;&#x30B9;&#x30C8;&#x3078;&#x306E;&#x30EA;&#x30C0;&#x30A4;&#x30EC;&#x30AF;&#x30C8;&#x8981;&#x6C42;)</td>
+<td>Redirect for host (指定ホストへのリダイレクト要求)</td>
 <td></td>
 <td></td>
 <td></td>
@@ -2006,7 +2006,7 @@ h6.categories {
 <tr>
 <td>5</td>
 <td>2</td>
-<td>Redirect for TOS and network (TOS&#x3068;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x306E;&#x30EA;&#x30C0;&#x30A4;&#x30EC;&#x30AF;&#x30C8;&#x8981;&#x6C42;)</td>
+<td>Redirect for TOS and network (TOSとネットワークのリダイレクト要求)</td>
 <td></td>
 <td></td>
 <td>RFC792</td>
@@ -2014,7 +2014,7 @@ h6.categories {
 <tr>
 <td>5</td>
 <td>3</td>
-<td>Redirect for TOS and host (TOS&#x3068;&#x30DB;&#x30B9;&#x30C8;&#x306E;&#x30EA;&#x30C0;&#x30A4;&#x30EC;&#x30AF;&#x30C8;&#x8981;&#x6C42;)</td>
+<td>Redirect for TOS and host (TOSとホストのリダイレクト要求)</td>
 <td></td>
 <td></td>
 <td>RFC792</td>
@@ -2022,7 +2022,7 @@ h6.categories {
 <tr>
 <td>8</td>
 <td>0</td>
-<td>Echo request(&#x30A8;&#x30B3;&#x30FC;&#x8981;&#x6C42;)</td>
+<td>Echo request(エコー要求)</td>
 <td>x</td>
 <td></td>
 <td>RFC792</td>
@@ -2030,7 +2030,7 @@ h6.categories {
 <tr>
 <td>9</td>
 <td>0</td>
-<td>Router advertisement - Normal router advertisement (&#x30EB;&#x30FC;&#x30BF;&#x5E83;&#x544A; - &#x901A;&#x5E38;&#x901A;&#x77E5;)</td>
+<td>Router advertisement - Normal router advertisement (ルータ広告 - 通常通知)</td>
 <td></td>
 <td></td>
 <td>RFC1256</td>
@@ -2038,7 +2038,7 @@ h6.categories {
 <tr>
 <td>9</td>
 <td>16</td>
-<td>Router advertisement - Does not route common traffic (&#x30EB;&#x30FC;&#x30BF;&#x5E83;&#x544A; - &#x901A;&#x5E38;&#x30C8;&#x30E9;&#x30D5;&#x30A3;&#x30C3;&#x30AF;&#x306F;&#x30EB;&#x30FC;&#x30C6;&#x30A3;&#x30F3;&#x30B0;&#x4E0D;&#x53EF;)</td>
+<td>Router advertisement - Does not route common traffic (ルータ広告 - 通常トラフィックはルーティング不可)</td>
 <td></td>
 <td></td>
 <td>RFC2002</td>
@@ -2046,7 +2046,7 @@ h6.categories {
 <tr>
 <td>10</td>
 <td>0</td>
-<td>Route selection (&#x30EB;&#x30FC;&#x30C8;&#x9078;&#x629E;)</td>
+<td>Route selection (ルート選択)</td>
 <td></td>
 <td></td>
 <td>RFC1256</td>
@@ -2054,7 +2054,7 @@ h6.categories {
 <tr>
 <td>11</td>
 <td>0</td>
-<td>TTL equals 0 during transit (&#x642C;&#x9001;&#x4E2D;&#x306B;TTL&#x304C;0&#x306B;)</td>
+<td>TTL equals 0 during transit (搬送中にTTLが0に)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -2062,7 +2062,7 @@ h6.categories {
 <tr>
 <td>11</td>
 <td>1</td>
-<td>TTL equals 0 during reassembly (&#x518D;&#x69CB;&#x6210;&#x6642;&#x306E;&#x6B20;&#x640D;&#x30D5;&#x30E9;&#x30B0;&#x30E1;&#x30F3;&#x30C8;&#x5F85;&#x6A5F;&#x4E2D;&#x306B;&#x6642;&#x9593;&#x8D85;&#x904E;)</td>
+<td>TTL equals 0 during reassembly (再構成時の欠損フラグメント待機中に時間超過)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -2070,7 +2070,7 @@ h6.categories {
 <tr>
 <td>12</td>
 <td>0</td>
-<td>IP header bad (catchall error) (IP&#x30D8;&#x30C3;&#x30C0;&#x7570;&#x5E38;) (&#x3042;&#x3089;&#x3086;&#x308B;&#x30A8;&#x30E9;&#x30FC;&#x306B;&#x5171;&#x901A;)</td>
+<td>IP header bad (catchall error) (IPヘッダ異常) (あらゆるエラーに共通)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -2078,7 +2078,7 @@ h6.categories {
 <tr>
 <td>12</td>
 <td>1</td>
-<td>Required options missing (&#x5FC5;&#x8981;&#x306A;&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x304C;&#x6B20;&#x5982;)</td>
+<td>Required options missing (必要なオプションが欠如)</td>
 <td></td>
 <td>x</td>
 <td>RFC1108</td>
@@ -2086,7 +2086,7 @@ h6.categories {
 <tr>
 <td>12</td>
 <td>2</td>
-<td>IP Header bad length (IP&#x30D8;&#x30C3;&#x30C0;&#x9577;&#x306E;&#x7570;&#x5E38;)</td>
+<td>IP Header bad length (IPヘッダ長の異常)</td>
 <td></td>
 <td>x</td>
 <td>RFC792</td>
@@ -2094,7 +2094,7 @@ h6.categories {
 <tr>
 <td>13</td>
 <td>0</td>
-<td>Timestamp request (obsolete) (&#x30BF;&#x30A4;&#x30E0;&#x30B9;&#x30BF;&#x30F3;&#x30D7;&#x8981;&#x6C42;) (&#x5EC3;)</td>
+<td>Timestamp request (obsolete) (タイムスタンプ要求) (廃)</td>
 <td>x</td>
 <td></td>
 <td>RFC792</td>
@@ -2102,7 +2102,7 @@ h6.categories {
 <tr>
 <td>14</td>
 <td></td>
-<td>Timestamp reply (obsolete) (&#x30BF;&#x30A4;&#x30E0;&#x30B9;&#x30BF;&#x30F3;&#x30D7;&#x5FDC;&#x7B54;) (&#x5EC3;)</td>
+<td>Timestamp reply (obsolete) (タイムスタンプ応答) (廃)</td>
 <td>x</td>
 <td></td>
 <td>RFC792</td>
@@ -2110,7 +2110,7 @@ h6.categories {
 <tr>
 <td>15</td>
 <td>0</td>
-<td>Information request (obsolete) (&#x60C5;&#x5831;&#x8981;&#x6C42;) (&#x5EC3;)</td>
+<td>Information request (obsolete) (情報要求) (廃)</td>
 <td>x</td>
 <td></td>
 <td>RFC792</td>
@@ -2118,7 +2118,7 @@ h6.categories {
 <tr>
 <td>16</td>
 <td>0</td>
-<td>Information reply (obsolete) (&#x60C5;&#x5831;&#x5FDC;&#x7B54;) (&#x5EC3;)</td>
+<td>Information reply (obsolete) (情報応答) (廃)</td>
 <td>x</td>
 <td></td>
 <td>RFC792</td>
@@ -2126,7 +2126,7 @@ h6.categories {
 <tr>
 <td>17</td>
 <td>0</td>
-<td>Address mask request (&#x30CD;&#x30C3;&#x30C8;&#x30DE;&#x30B9;&#x30AF;&#x901A;&#x77E5;&#x8981;&#x6C42;)</td>
+<td>Address mask request (ネットマスク通知要求)</td>
 <td>x</td>
 <td></td>
 <td>RFC950</td>
@@ -2134,7 +2134,7 @@ h6.categories {
 <tr>
 <td>18</td>
 <td>0</td>
-<td>Address mask reply (&#x30CD;&#x30C3;&#x30C8;&#x30DE;&#x30B9;&#x30AF;&#x901A;&#x77E5;&#x5FDC;&#x7B54;)</td>
+<td>Address mask reply (ネットマスク通知応答)</td>
 <td>x</td>
 <td></td>
 <td>RFC950</td>
@@ -2142,7 +2142,7 @@ h6.categories {
 <tr>
 <td>20-29</td>
 <td></td>
-<td>Reserved for robustness experiment (&#x4FE1;&#x983C;&#x6027;&#x8A66;&#x9A13;&#x306E;&#x305F;&#x3081;&#x306E;&#x4E88;&#x7D04;&#x57DF;)</td>
+<td>Reserved for robustness experiment (信頼性試験のための予約域)</td>
 <td></td>
 <td></td>
 <td>Zaw-Sing Su</td>
@@ -2158,7 +2158,7 @@ h6.categories {
 <tr>
 <td>31</td>
 <td>0</td>
-<td>Datagram Conversion Error (&#x30C7;&#x30FC;&#x30BF;&#x30B0;&#x30E9;&#x30E0;&#x5909;&#x63DB;&#x30A8;&#x30E9;&#x30FC;)</td>
+<td>Datagram Conversion Error (データグラム変換エラー)</td>
 <td></td>
 <td>x</td>
 <td>RFC1475</td>
@@ -2166,7 +2166,7 @@ h6.categories {
 <tr>
 <td>32</td>
 <td>0</td>
-<td>Mobile Host Redirect (&#x79FB;&#x52D5;&#x4F53;&#x30DB;&#x30B9;&#x30C8;&#x306E;&#x30EA;&#x30C0;&#x30A4;&#x30EC;&#x30AF;&#x30C8;)</td>
+<td>Mobile Host Redirect (移動体ホストのリダイレクト)</td>
 <td></td>
 <td></td>
 <td>David Johnson</td>
@@ -2174,7 +2174,7 @@ h6.categories {
 <tr>
 <td>33</td>
 <td>0</td>
-<td>IPv6 Where-Are-You (IPv6&#x4F4D;&#x7F6E;&#x78BA;&#x8A8D;&#x8981;&#x6C42;)</td>
+<td>IPv6 Where-Are-You (IPv6位置確認要求)</td>
 <td>x</td>
 <td></td>
 <td>Bill Simpson</td>
@@ -2182,7 +2182,7 @@ h6.categories {
 <tr>
 <td>34</td>
 <td>0</td>
-<td>IPv6 I-Am-Here (IPv6&#x4F4D;&#x7F6E;&#x78BA;&#x8A8D;&#x5FDC;&#x7B54;)</td>
+<td>IPv6 I-Am-Here (IPv6位置確認応答)</td>
 <td>x</td>
 <td></td>
 <td>Bill Simpson</td>
@@ -2190,7 +2190,7 @@ h6.categories {
 <tr>
 <td>35</td>
 <td>0</td>
-<td>Mobile Registration Request (&#x79FB;&#x52D5;&#x4F53;&#x767B;&#x9332;&#x8981;&#x6C42;)</td>
+<td>Mobile Registration Request (移動体登録要求)</td>
 <td>x</td>
 <td></td>
 <td>Bill Simpson</td>
@@ -2198,7 +2198,7 @@ h6.categories {
 <tr>
 <td>36</td>
 <td>0</td>
-<td>Mobile Registration Reply (&#x79FB;&#x52D5;&#x4F53;&#x767B;&#x9332;&#x5FDC;&#x7B54;)</td>
+<td>Mobile Registration Reply (移動体登録応答)</td>
 <td>x</td>
 <td></td>
 <td>Bill Simpson</td>
