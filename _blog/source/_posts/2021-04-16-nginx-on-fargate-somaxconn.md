@@ -33,7 +33,7 @@ error_log stderr debug;
 accept() not ready (11: Resource temporarily unavailable)
 ```
 
-accept() が一時的なリソース不足で準備できてない、とのこと。
+`accept()` が一時的なリソース不足で準備できてない、とのこと。
 
 Nginx の通信の仕組み上、 `accept()` が担当している箇所は以下図がわかりやすいです。
 ![](https://i.imgur.com/PPJozW1.png)
@@ -65,6 +65,12 @@ RUN sysctl -w net.core.somaxconn=1024
 
 ```
 #21 0.370 sysctl: error setting key 'net.core.somaxconn': Read-only file system
+```
+
+Fargate でできないものか？
+
+```
+docker run --sysctl net.core.somaxconn=65535 ...
 ```
 
 ## Fargate の設定でできないものか？
