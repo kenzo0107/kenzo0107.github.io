@@ -1,5 +1,5 @@
 ---
-title: Nginx on Fargate で Resource temporarily unavailable エラーを対応する
+title: Nginx on Fargate で Resource temporarily unavailable エラーを調査した
 tags:
 - AWS
 date: 2021-04-16
