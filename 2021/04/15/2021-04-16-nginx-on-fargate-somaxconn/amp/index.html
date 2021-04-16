@@ -110,7 +110,7 @@
 			    "@id":"https://kenzo0107.github.io/2021/04/15/2021-04-16-nginx-on-fargate-somaxconn/"
 			},
 			"datePublished": "2021-04-15T15:00:00.000Z",
-			"dateModified": "2021-04-15T15:51:56.678Z",
+			"dateModified": "2021-04-16T01:50:54.311Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1898,7 +1898,7 @@ h6.categories {
 <p>すると以下ログが確認されました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">accept() not ready (11: Resource temporarily unavailable)</span><br></pre></td></tr></tbody></table></figure>
 
-<p>accept() が一時的なリソース不足で準備できてない、とのこと。</p>
+<p><code>accept()</code> が一時的なリソース不足で準備できてない、とのこと。</p>
 <p>Nginx の通信の仕組み上、 <code>accept()</code> が担当している箇所は以下図がわかりやすいです。<br></p><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/PPJozW1.png" width="700" height="325" layout="responsive"></amp-img></div>
 <h2><span id="netcoresomaxconn-を調べてみる">net.core.somaxconn を調べてみる</span></h2><p>net.core.somaxconn は TCP ソケットが受け付けたリクエストを格納する、キューの最大長です。</p>
 <p>受け入れ可能なリクエスト数が小さいのでは？という仮説を立てました。</p>
@@ -1911,6 +1911,9 @@ h6.categories {
 
 <p>エラーになった (TへT)</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#21 0.370 sysctl: error setting key 'net.core.somaxconn': Read-only file system</span><br></pre></td></tr></tbody></table></figure>
+
+<p>Fargate でできないものか？</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --sysctl net.core.somaxconn=65535 ...</span><br></pre></td></tr></tbody></table></figure>
 
 <h2><span id="fargate-の設定でできないものか">Fargate の設定でできないものか？</span></h2><p><a href="https://aws.amazon.com/jp/blogs/startup/weekly-aae-04/">【週刊 Ask An Expert #04】AWS Loft Tokyo で受けた質問まとめ #AWSLoft</a></p>
 <blockquote>
