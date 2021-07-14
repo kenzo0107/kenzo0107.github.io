@@ -1,7 +1,6 @@
 ---
 title: go.uber.org/multierr で error をまとめる
 category: Go
-category: Go
 tags:
 - Go
 date: 2020-03-31
