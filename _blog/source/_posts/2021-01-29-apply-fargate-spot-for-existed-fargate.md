@@ -72,10 +72,12 @@ aws ecs update-service \
 An error occurred (InvalidParameterException) when calling the UpdateService operation: Cannot force a new deployment on services with a CODE_DEPLOY deployment controller. Use AWS CodeDeploy to trigger a new deployment.
 ```
 
-そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できない。
+<s>そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できない。</s> 利用できる様になりました。 (2021-10-14 追記)
 https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html
 > サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。
 
+aws-cli では CodeDeploy 経由でデプロイする様に警告されてしまう為、
+terraform で再作成する以外方法がなさそうです。
 
 ## ダウンタイムなしで切り替え & tfstate 更新手順
 

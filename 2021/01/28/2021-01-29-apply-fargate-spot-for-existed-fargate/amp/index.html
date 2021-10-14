@@ -148,7 +148,7 @@
 			    "@id":"https://kenzo0107.github.io/2021/01/28/2021-01-29-apply-fargate-spot-for-existed-fargate/"
 			},
 			"datePublished": "2021-01-28T15:00:00.000Z",
-			"dateModified": "2021-10-14T07:55:46.561Z",
+			"dateModified": "2021-10-14T08:26:22.659Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1983,10 +1983,11 @@ h6.categories {
 <h3><span id="codedeploy-のデプロイコントローラーで管理されている場合">CodeDeploy のデプロイコントローラーで管理されている場合</span></h3><p>以下エラーが発生します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An error occurred (InvalidParameterException) when calling the UpdateService operation: Cannot force a new deployment on services with a CODE_DEPLOY deployment controller. Use AWS CodeDeploy to trigger a new deployment.</span><br></pre></td></tr></tbody></table></figure>
 
-<p>そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できない。<br><a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html">https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html</a></p>
+<p><s>そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できない。</s> 利用できる様になりました。 (2021-10-14 追記)<br><a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html">https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html</a></p>
 <blockquote>
 <p>サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。</p>
 </blockquote>
+<p>aws-cli では CodeDeploy 経由でデプロイする様に警告されてしまう為、<br>terraform で再作成する以外方法がなさそうです。</p>
 <h2><span id="ダウンタイムなしで切り替え-amp-tfstate-更新手順">ダウンタイムなしで切り替え &amp; tfstate 更新手順</span></h2><p>terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。</p>
 <ol>
 <li>aws-cli で更新</li>
