@@ -21,4 +21,4 @@ xxxxxxxx-yyyy-zzzz-aaaa-bbbbbbbbbbbb kenzo.tanaka@example.com
 xxxxxxxx-yyyy-zzzz-aaaa-bbbbbbbbbbbb hoge.moge@example.com
 ```
 
-ユーザ長っ！
+ユーザ ID 長っ！
