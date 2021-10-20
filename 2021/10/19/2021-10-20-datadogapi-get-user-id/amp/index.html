@@ -53,7 +53,7 @@
 			    "@id":"https://kenzo0107.github.io/2021/10/19/2021-10-20-datadogapi-get-user-id/"
 			},
 			"datePublished": "2021-10-19T15:00:00.000Z",
-			"dateModified": "2021-10-20T08:09:49.656Z",
+			"dateModified": "2021-10-20T08:30:10.681Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1820,7 +1820,7 @@ h6.categories {
 <p>ユーザ ID を以下で取得できます。</p>
 <figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -s -X GET <span class="string">"https://api.datadoghq.com/api/v2/users"</span> -H <span class="string">"Content-Type: application/json"</span> -H <span class="string">"DD-API-KEY: xxx"</span> -H <span class="string">"DD-APPLICATION-KEY: yyy"</span> | jq -r <span class="string">'.data[] | .id +" "+ .attributes.handle'</span></span></span><br><span class="line"></span><br><span class="line">// response</span><br><span class="line">xxxxxxxx-yyyy-zzzz-aaaa-bbbbbbbbbbbb kenzo.tanaka@example.com</span><br><span class="line">xxxxxxxx-yyyy-zzzz-aaaa-bbbbbbbbbbbb hoge.moge@example.com</span><br></pre></td></tr></tbody></table></figure>
 
-<p>ユーザ長っ！</p>
+<p>ユーザ ID 長っ！</p>
 
 			  		
 			  		<!-- google Adsense -->
