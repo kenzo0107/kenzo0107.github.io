@@ -7,7 +7,8 @@ date: 2021-10-20
 
 備忘録です。
 
-Datadog ユーザをコンソール上で登録し、後追いで terraform `datadog_user` で管理したいときに `terraform import datadog_user.this <ユーザ ID>` を実行する必要があります。
+Datadog ユーザをコンソール上で登録してたけど、 terraform 管理してコード化したいね、となり、
+後追いで terraform `datadog_user` で管理しようとすると `terraform import datadog_user.this <ユーザ ID>` を実行する必要があります。
 
 ユーザ ID は Datadog コンソール上でも表示されない。。
 
