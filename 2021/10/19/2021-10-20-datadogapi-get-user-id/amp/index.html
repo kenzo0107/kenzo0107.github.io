@@ -53,7 +53,7 @@
 			    "@id":"https://kenzo0107.github.io/2021/10/19/2021-10-20-datadogapi-get-user-id/"
 			},
 			"datePublished": "2021-10-19T15:00:00.000Z",
-			"dateModified": "2021-10-21T02:41:52.399Z",
+			"dateModified": "2021-10-22T04:06:22.357Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1815,9 +1815,13 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>備忘録です。</p>
-<p>Datadog ユーザをコンソール上で登録してたけど、 terraform 管理してコード化したいね、となり、<br>後追いで terraform <code>datadog_user</code> で管理しようとすると <code>terraform import datadog_user.this &lt;ユーザ ID&gt;</code> を実行する必要があります。</p>
-<p>ユーザ ID は Datadog コンソール上でも表示されない。。</p>
-<p>ユーザ ID を以下で取得できます。</p>
+<p>Datadog ユーザをコンソール上で登録して、後追いで terraform 管理せねば！<br>という時がありました。</p>
+<p>後追いで terraform <code>datadog_user</code> で管理するには以下実行する必要があります。</p>
+<figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terraform import datadog_user.this &lt;ユーザ ID&gt;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>ユーザ ID ってどこに書いてあるんだ？！</p>
+<p>ダッシュボード上からソースから眺めてもない。。</p>
+<p>API で ユーザ ID を以下の様に取得できました。</p>
 <figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -s -X GET <span class="string">"https://api.datadoghq.com/api/v2/users"</span> -H <span class="string">"Content-Type: application/json"</span> -H <span class="string">"DD-API-KEY: xxx"</span> -H <span class="string">"DD-APPLICATION-KEY: yyy"</span> | jq -r <span class="string">'.data[] | .id +" "+ .attributes.handle'</span></span></span><br><span class="line"></span><br><span class="line">// response</span><br><span class="line">xxxxxxxx-yyyy-zzzz-aaaa-bbbbbbbbbbbb kenzo.tanaka@example.com</span><br><span class="line">xxxxxxxx-yyyy-zzzz-aaaa-bbbbbbbbbbbb hoge.moge@example.com</span><br></pre></td></tr></tbody></table></figure>
 
 <p>ユーザ ID 長っ！</p>

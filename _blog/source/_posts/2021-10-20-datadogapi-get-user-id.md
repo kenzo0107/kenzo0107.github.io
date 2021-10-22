@@ -7,12 +7,20 @@ date: 2021-10-20
 
 備忘録です。
 
-Datadog ユーザをコンソール上で登録してたけど、 terraform 管理してコード化したいね、となり、
-後追いで terraform `datadog_user` で管理しようとすると `terraform import datadog_user.this <ユーザ ID>` を実行する必要があります。
+Datadog ユーザをコンソール上で登録して、後追いで terraform 管理せねば！
+という時がありました。
 
-ユーザ ID は Datadog コンソール上でも表示されない。。
+後追いで terraform `datadog_user` で管理するには以下実行する必要があります。
 
-ユーザ ID を以下で取得できます。
+```console
+terraform import datadog_user.this <ユーザ ID>
+```
+
+ユーザ ID ってどこに書いてあるんだ？！
+
+ダッシュボード上からソースから眺めてもない。。
+
+API で ユーザ ID を以下の様に取得できました。
 
 ```console
 $ curl -s -X GET "https://api.datadoghq.com/api/v2/users" -H "Content-Type: application/json" -H "DD-API-KEY: xxx" -H "DD-APPLICATION-KEY: yyy" | jq -r '.data[] | .id +" "+ .attributes.handle'
