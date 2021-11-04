@@ -1,5 +1,5 @@
 ---
-title: ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存する
+title: ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存許可する
 tags:
 - AWS
 date: 2021-11-04
@@ -49,6 +49,7 @@ https://github.com/hashicorp/terraform-provider-aws/issues/12512
 ## まとめ
 
 設定自体は知っていればさくっと終わりますが、知らないと、いざログを見ようとして気付くという落とし穴があります。
+
 複数 AWS アカウントを terraform で管理している場合は、 module 化して展開するのも設定漏れを防ぐ為に有効です。
 
 以上

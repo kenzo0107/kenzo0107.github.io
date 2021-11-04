@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <link rel="canonical" href="https://kenzo0107.github.io/2021/11/03/2021-11-04-cloudfront-logdelivery/" >
-    <title>ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存する - 長生村本郷Engineers&#39;Blog</title>
+    <title>ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存許可する - 長生村本郷Engineers&#39;Blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     
-    <meta property="og:title" content="ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存する">
+    <meta property="og:title" content="ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存許可する">
 	<meta property="og:type" content="article">
 	<meta property="og:url" content="https://kenzo0107.github.io/2021/11/03/2021-11-04-cloudfront-logdelivery/">
 	
@@ -17,7 +17,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2021/11/03/2021-11-04-cloudfront-logdelivery/">
-	<meta name="twitter:title" content="ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存する - 長生村本郷Engineers&#39;Blog">
+	<meta name="twitter:title" content="ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存許可する - 長生村本郷Engineers&#39;Blog">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -46,14 +46,14 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "BlogPosting",
-			"headline": "ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存する",
+			"headline": "ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存許可する",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2021/11/03/2021-11-04-cloudfront-logdelivery/"
 			},
 			"datePublished": "2021-11-03T15:00:00.000Z",
-			"dateModified": "2021-11-04T14:50:12.086Z",
+			"dateModified": "2021-11-04T14:54:26.029Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1787,7 +1787,7 @@ h6.categories {
 			            <div class="header-cap flx">
 							
 							  <h1 class="article-title entry-title" itemprop="name">
-							    <a href="https://kenzo0107.github.io/2021/11/03/2021-11-04-cloudfront-logdelivery/" target="_blank" itemprop="url">ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存する</a>
+							    <a href="https://kenzo0107.github.io/2021/11/03/2021-11-04-cloudfront-logdelivery/" target="_blank" itemprop="url">ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存許可する</a>
 							  </h1>
 							
 						</div>
@@ -1823,7 +1823,8 @@ h6.categories {
 <ul>
 <li>Data Source: aws_cloudfront_log_delivery_canonical_user_id<br><a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/cloudfront_log_delivery_canonical_user_id">https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/cloudfront_log_delivery_canonical_user_id</a></li>
 </ul>
-<h2><span id="まとめ">まとめ</span></h2><p>設定自体は知っていればさくっと終わりますが、知らないと、いざログを見ようとして気付くという落とし穴があります。<br>複数 AWS アカウントを terraform で管理している場合は、 module 化して展開するのも設定漏れを防ぐ為に有効です。</p>
+<h2><span id="まとめ">まとめ</span></h2><p>設定自体は知っていればさくっと終わりますが、知らないと、いざログを見ようとして気付くという落とし穴があります。</p>
+<p>複数 AWS アカウントを terraform で管理している場合は、 module 化して展開するのも設定漏れを防ぐ為に有効です。</p>
 <p>以上<br>参考になれば幸いです。</p>
 
 			  		
