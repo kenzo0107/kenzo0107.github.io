@@ -3,7 +3,17 @@ title: ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のア�
 tags:
 - AWS
 date: 2021-11-04
+thumbnail: https://i.imgur.com/SK23gOy.png
 ---
+
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
 
 terraform 的には以下の様に設定します。
 

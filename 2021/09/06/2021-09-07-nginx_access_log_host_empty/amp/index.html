@@ -14,10 +14,46 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;p&gt;Nginx access_log で指定している $host が &lt;code&gt;_&lt;/code&gt; となるケースがあるので調査したことをまとめます。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#host-%E3%81%A8%E3%81%AF&#34;&gt;$host とは？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%83%AD%E3%82%B0%E8%A8%AD%E5%AE%9A&#34;&gt;アクセスログ設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#host-%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E3%82%92%E7%A9%BA%E6%8C%87%E5%AE%9A%E3%81%97%E3%81%A6%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B&#34;&gt;Host ヘッダーを空指定してリクエストしてみる&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B5%90%E8%AB%96&#34;&gt;結論&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2021/09/06/2021-09-07-nginx_access_log_host_empty/">
 	<meta name="twitter:title" content="Nginx access_log $host が _ になる件調査 - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;p&gt;Nginx access_log で指定している $host が &lt;code&gt;_&lt;/code&gt; となるケースがあるので調査したことをまとめます。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#host-%E3%81%A8%E3%81%AF&#34;&gt;$host とは？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%83%AD%E3%82%B0%E8%A8%AD%E5%AE%9A&#34;&gt;アクセスログ設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#host-%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E3%82%92%E7%A9%BA%E6%8C%87%E5%AE%9A%E3%81%97%E3%81%A6%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B&#34;&gt;Host ヘッダーを空指定してリクエストしてみる&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B5%90%E8%AB%96&#34;&gt;結論&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -50,12 +86,30 @@
 			"@type": "BlogPosting",
 			"headline": "Nginx access_log $host が _ になる件調査",
 			
+			"description": "&lt;p&gt;Nginx access_log で指定している $host が &lt;code&gt;_&lt;/code&gt; となるケースがあるので調査したことをまとめます。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#host-%E3%81%A8%E3%81%AF&#34;&gt;$host とは？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%83%AD%E3%82%B0%E8%A8%AD%E5%AE%9A&#34;&gt;アクセスログ設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#host-%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E3%82%92%E7%A9%BA%E6%8C%87%E5%AE%9A%E3%81%97%E3%81%A6%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B&#34;&gt;Host ヘッダーを空指定してリクエストしてみる&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B5%90%E8%AB%96&#34;&gt;結論&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2021/09/06/2021-09-07-nginx_access_log_host_empty/"
 			},
 			"datePublished": "2021-09-06T15:00:00.000Z",
-			"dateModified": "2021-11-04T15:16:51.993Z",
+			"dateModified": "2021-11-09T14:01:29.880Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1817,6 +1871,25 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p>Nginx access_log で指定している $host が <code>_</code> となるケースがあるので調査したことをまとめます。</p>
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#host-%E3%81%A8%E3%81%AF">$host とは？</a></li>
+<li><a href="#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%83%AD%E3%82%B0%E8%A8%AD%E5%AE%9A">アクセスログ設定</a></li>
+<li><a href="#host-%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E3%82%92%E7%A9%BA%E6%8C%87%E5%AE%9A%E3%81%97%E3%81%A6%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B">Host ヘッダーを空指定してリクエストしてみる</a></li>
+<li><a href="#%E7%B5%90%E8%AB%96">結論</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
 <h2><span id="host-とは">$host とは？</span></h2><p><a href="https://www.nginx.com/resources/wiki/#-24host">https://www.nginx.com/resources/wiki/#-24host</a></p>
 <blockquote>
 <p>$host</p>

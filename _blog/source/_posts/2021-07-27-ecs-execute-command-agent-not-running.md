@@ -4,6 +4,7 @@ category: AWS
 tags:
 - AWS
 date: 2021-07-27
+thumbnail: https://i.imgur.com/yK51axc.png
 ---
 
 <div class="toc">

@@ -14,10 +14,46 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;h2 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;ELB のヘルスチェック時の User-Agent (&lt;code&gt;$http_user_agent&lt;/code&gt;) が &lt;code&gt;ELB-HealthChecker&lt;/code&gt; の場合に、ログをオフにする設定の備忘録です。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;http &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  map $http_user_agent $loggable &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      ~ELB-HealthChecker  0;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      default             1;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  access_log  &amp;#x2F;var&amp;#x2F;log&amp;#x2F;nginx&amp;#x2F;access.log ltsv if&amp;#x3D;$loggable;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;code&gt;access_log&lt;/code&gt; のパラメータ &lt;code&gt;if&lt;/code&gt; で条件を指定でき、アクセスログの出力の on/off が可能です。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A8%AD%E5%AE%9A%E4%BE%8B&#34;&gt;設定例&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2021/05/19/2021-05-20-nginx-no-logging-at-elb-healthcheck/">
 	<meta name="twitter:title" content="Nginx で ELB のヘルスチェックのログを出力させない - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;h2 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;ELB のヘルスチェック時の User-Agent (&lt;code&gt;$http_user_agent&lt;/code&gt;) が &lt;code&gt;ELB-HealthChecker&lt;/code&gt; の場合に、ログをオフにする設定の備忘録です。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;http &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  map $http_user_agent $loggable &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      ~ELB-HealthChecker  0;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      default             1;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  access_log  &amp;#x2F;var&amp;#x2F;log&amp;#x2F;nginx&amp;#x2F;access.log ltsv if&amp;#x3D;$loggable;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;code&gt;access_log&lt;/code&gt; のパラメータ &lt;code&gt;if&lt;/code&gt; で条件を指定でき、アクセスログの出力の on/off が可能です。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A8%AD%E5%AE%9A%E4%BE%8B&#34;&gt;設定例&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -48,12 +84,30 @@
 			"@type": "BlogPosting",
 			"headline": "Nginx で ELB のヘルスチェックのログを出力させない",
 			
+			"description": "&lt;h2 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;ELB のヘルスチェック時の User-Agent (&lt;code&gt;$http_user_agent&lt;/code&gt;) が &lt;code&gt;ELB-HealthChecker&lt;/code&gt; の場合に、ログをオフにする設定の備忘録です。&lt;/p&gt;
+&lt;figure class=&#34;highlight plain&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;http &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  map $http_user_agent $loggable &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      ~ELB-HealthChecker  0;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      default             1;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  access_log  &amp;#x2F;var&amp;#x2F;log&amp;#x2F;nginx&amp;#x2F;access.log ltsv if&amp;#x3D;$loggable;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;code&gt;access_log&lt;/code&gt; のパラメータ &lt;code&gt;if&lt;/code&gt; で条件を指定でき、アクセスログの出力の on/off が可能です。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A8%AD%E5%AE%9A%E4%BE%8B&#34;&gt;設定例&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2021/05/19/2021-05-20-nginx-no-logging-at-elb-healthcheck/"
 			},
 			"datePublished": "2021-05-19T15:00:00.000Z",
-			"dateModified": "2021-11-04T15:16:51.993Z",
+			"dateModified": "2021-11-09T14:01:29.880Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1818,6 +1872,22 @@ h6.categories {
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">http {</span><br><span class="line">  ...</span><br><span class="line">  map $http_user_agent $loggable {</span><br><span class="line">      ~ELB-HealthChecker  0;</span><br><span class="line">      default             1;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  access_log  /var/log/nginx/access.log ltsv if=$loggable;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p><code>access_log</code> のパラメータ <code>if</code> で条件を指定でき、アクセスログの出力の on/off が可能です。</p>
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E8%A8%AD%E5%AE%9A%E4%BE%8B">設定例</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
 <h2><span id="設定例">設定例</span></h2><ul>
 <li><p>conf/nginx.conf</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">http {</span><br><span class="line">  ...</span><br><span class="line">  # access log を ltsv 形式にする</span><br><span class="line">  log_format ltsv 'domain:$host\t'</span><br><span class="line">                  'host:$remote_addr\t'</span><br><span class="line">                  'user:$remote_user\t'</span><br><span class="line">                  'time:$time_local\t'</span><br><span class="line">                  'method:$request_method\t'</span><br><span class="line">                  'path:$request_uri\t'</span><br><span class="line">                  'protocol:$server_protocol\t'</span><br><span class="line">                  'status:$status\t'</span><br><span class="line">                  'size:$body_bytes_sent\t'</span><br><span class="line">                  'referer:$http_referer\t'</span><br><span class="line">                  'agent:$http_user_agent\t'</span><br><span class="line">                  'response_time:$request_time\t'</span><br><span class="line">                  'cookie:$http_cookie\t'</span><br><span class="line">                  'set_cookie:$sent_http_set_cookie\t'</span><br><span class="line">                  'upstream_addr:$upstream_addr\t'</span><br><span class="line">                  'upstream_cache_status:$upstream_cache_status\t'</span><br><span class="line">                  'upstream_response_time:$upstream_response_time';</span><br><span class="line"></span><br><span class="line">  map $http_user_agent $loggable {</span><br><span class="line">      ~ELB-HealthChecker  0;</span><br><span class="line">      default             1;</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  access_log  /var/log/nginx/access.log ltsv if=$loggable;</span><br><span class="line"></span><br><span class="line">  include /etc/nginx/conf/conf.d/*.conf;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>

@@ -14,10 +14,36 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+
+
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2021/10/19/2021-10-20-datadogapi-get-user-id/">
 	<meta name="twitter:title" content="curl で Datadog ユーザ ID リスト取得 - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+
+
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -48,12 +74,25 @@
 			"@type": "BlogPosting",
 			"headline": "curl で Datadog ユーザ ID リスト取得",
 			
+			"description": "&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+
+
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2021/10/19/2021-10-20-datadogapi-get-user-id/"
 			},
 			"datePublished": "2021-10-19T15:00:00.000Z",
-			"dateModified": "2021-11-04T15:16:51.997Z",
+			"dateModified": "2021-11-09T14:01:29.880Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1814,7 +1853,22 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>備忘録です。</p>
+			  		<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+
+
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
+<p>備忘録です。</p>
 <p>Datadog ユーザをコンソール上で登録して、後追いで terraform 管理せねば！<br>という時がありました。</p>
 <p>後追いで terraform <code>datadog_user</code> で管理するには以下実行する必要があります。</p>
 <figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terraform import datadog_user.this &lt;ユーザ ID&gt;</span><br></pre></td></tr></tbody></table></figure>

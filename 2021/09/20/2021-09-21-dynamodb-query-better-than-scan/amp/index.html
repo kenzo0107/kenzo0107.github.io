@@ -14,10 +14,42 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BE%8B%E9%A1%8C-%E3%81%A9%E3%81%86%E3%82%84%E3%81%A3%E3%81%A6-query-%E3%82%92%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B&#34;&gt;【例題】 どうやって Query を実行する？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#gsi-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B&#34;&gt;GSI を指定する&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BD%99%E8%AB%87&#34;&gt;余談&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2021/09/20/2021-09-21-dynamodb-query-better-than-scan/">
 	<meta name="twitter:title" content="DynamoDB Scan ではなく Query を使おう！ ~GSI の設定には気をつけようの巻~ - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BE%8B%E9%A1%8C-%E3%81%A9%E3%81%86%E3%82%84%E3%81%A3%E3%81%A6-query-%E3%82%92%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B&#34;&gt;【例題】 どうやって Query を実行する？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#gsi-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B&#34;&gt;GSI を指定する&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BD%99%E8%AB%87&#34;&gt;余談&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="https://i.imgur.com/BprHlzQ.png">
@@ -48,12 +80,28 @@
 			"@type": "BlogPosting",
 			"headline": "DynamoDB Scan ではなく Query を使おう！ ~GSI の設定には気をつけようの巻~",
 			
+			"description": "&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BE%8B%E9%A1%8C-%E3%81%A9%E3%81%86%E3%82%84%E3%81%A3%E3%81%A6-query-%E3%82%92%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B&#34;&gt;【例題】 どうやって Query を実行する？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#gsi-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B&#34;&gt;GSI を指定する&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BD%99%E8%AB%87&#34;&gt;余談&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2021/09/20/2021-09-21-dynamodb-query-better-than-scan/"
 			},
 			"datePublished": "2021-09-20T15:00:00.000Z",
-			"dateModified": "2021-11-04T15:16:51.993Z",
+			"dateModified": "2021-11-09T14:01:29.880Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1814,7 +1862,25 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>参考: <a href="https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/bp-query-scan.html">https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/bp-query-scan.html</a></p>
+			  		<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BE%8B%E9%A1%8C-%E3%81%A9%E3%81%86%E3%82%84%E3%81%A3%E3%81%A6-query-%E3%82%92%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B">【例題】 どうやって Query を実行する？</a></li>
+<li><a href="#gsi-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">GSI を指定する</a></li>
+<li><a href="#%E4%BD%99%E8%AB%87">余談</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
+<p>参考: <a href="https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/bp-query-scan.html">https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/bp-query-scan.html</a></p>
 <blockquote>
 <p>応答時間を短縮するには、アプリケーションが Scan ではなく Query を使用できるようにテーブルおよびインデックスを設計します。</p>
 </blockquote>

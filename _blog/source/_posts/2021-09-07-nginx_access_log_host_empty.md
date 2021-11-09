@@ -5,6 +5,15 @@ date: 2021-09-07
 
 Nginx access_log で指定している $host が `_` となるケースがあるので調査したことをまとめます。
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
+
 ## $host とは？
 
 https://www.nginx.com/resources/wiki/#-24host

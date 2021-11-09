@@ -7,13 +7,21 @@ date: 2021-10-20
 thumbnail: https://i.imgur.com/hgb10nC.png
 ---
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
+
 ## 概要
 
 外部会社とのファイル共有で sftp サーバを構築することとなった。
 
 先方が AWS を利用していれば、 IAM Role を渡して Assume Role で S3 に直接アップロードしていただくことができましたが、
 sftp を利用したい強い気持ちを感じ、 sftp サーバを構築することとなりました。
-
 
 ## SFTP 構築方法 比較
 

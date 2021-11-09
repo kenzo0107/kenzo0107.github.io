@@ -14,10 +14,40 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E8%AA%BF%E6%9F%BB%E3%81%99%E3%82%8B&#34;&gt;スクリプトで調査する&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#cloudtrail-%E3%82%92-athena-%E3%81%A7%E6%A4%9C%E7%B4%A2%E3%81%99%E3%82%8B&#34;&gt;CloudTrail を Athena で検索する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2021/11/04/2021-11-05-find-public-s3-objects/">
 	<meta name="twitter:title" content="公開された S3 Objcet を探せ！ - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E8%AA%BF%E6%9F%BB%E3%81%99%E3%82%8B&#34;&gt;スクリプトで調査する&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#cloudtrail-%E3%82%92-athena-%E3%81%A7%E6%A4%9C%E7%B4%A2%E3%81%99%E3%82%8B&#34;&gt;CloudTrail を Athena で検索する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="https://i.imgur.com/IDCeTqO.png">
@@ -48,12 +78,27 @@
 			"@type": "BlogPosting",
 			"headline": "公開された S3 Objcet を探せ！",
 			
+			"description": "&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E8%AA%BF%E6%9F%BB%E3%81%99%E3%82%8B&#34;&gt;スクリプトで調査する&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#cloudtrail-%E3%82%92-athena-%E3%81%A7%E6%A4%9C%E7%B4%A2%E3%81%99%E3%82%8B&#34;&gt;CloudTrail を Athena で検索する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2021/11/04/2021-11-05-find-public-s3-objects/"
 			},
 			"datePublished": "2021-11-04T15:00:00.000Z",
-			"dateModified": "2021-11-04T15:16:51.997Z",
+			"dateModified": "2021-11-09T14:01:29.880Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1814,7 +1859,24 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<ul>
+			  		<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E8%AA%BF%E6%9F%BB%E3%81%99%E3%82%8B">スクリプトで調査する</a></li>
+<li><a href="#cloudtrail-%E3%82%92-athena-%E3%81%A7%E6%A4%9C%E7%B4%A2%E3%81%99%E3%82%8B">CloudTrail を Athena で検索する</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
+<ul>
 <li>AWS075: S3 Access block should restrict public bucket to limit access<br><a href="https://tfsec.dev/docs/aws/s3/no-public-buckets/">https://tfsec.dev/docs/aws/s3/no-public-buckets/</a></li>
 </ul>
 <p><a href="https://tfsec.dev/">tfsec</a> でパブリックアクセスが制限されていない場合に指摘される様になりました。</p>

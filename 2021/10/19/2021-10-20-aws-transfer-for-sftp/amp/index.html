@@ -14,10 +14,58 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sftp-%E6%A7%8B%E7%AF%89%E6%96%B9%E6%B3%95-%E6%AF%94%E8%BC%83&#34;&gt;SFTP 構築方法 比較&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3&#34;&gt;アーキテクチャ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#terraform-%E3%81%A7%E5%AF%BE%E5%BF%9C&#34;&gt;terraform で対応&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#transfer-for-sftp-%E3%82%B5%E3%83%BC%E3%83%90%E6%A7%8B%E7%AF%89&#34;&gt;Transfer for sftp サーバ構築&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#transfer-for-sftp-%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%8F%AF%E8%83%BD%E3%83%A6%E3%83%BC%E3%82%B6%E4%BD%9C%E6%88%90&#34;&gt;Transfer for sftp アクセス可能ユーザ作成&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%93%8D%E4%BD%9C%E3%83%AD%E3%82%B0%E3%81%AE%E8%BF%BD%E8%B7%A1&#34;&gt;操作ログの追跡&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E6%83%85%E5%A0%B1%E3%81%AE%E6%95%B4%E7%90%86&#34;&gt;アクセスに必要な情報の整理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B7%8F%E8%A9%95&#34;&gt;総評&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2021/10/19/2021-10-20-aws-transfer-for-sftp/">
 	<meta name="twitter:title" content="AWS Transfer for sftp + S3 で IP 制限付き sftp サーバ構築 - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sftp-%E6%A7%8B%E7%AF%89%E6%96%B9%E6%B3%95-%E6%AF%94%E8%BC%83&#34;&gt;SFTP 構築方法 比較&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3&#34;&gt;アーキテクチャ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#terraform-%E3%81%A7%E5%AF%BE%E5%BF%9C&#34;&gt;terraform で対応&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#transfer-for-sftp-%E3%82%B5%E3%83%BC%E3%83%90%E6%A7%8B%E7%AF%89&#34;&gt;Transfer for sftp サーバ構築&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#transfer-for-sftp-%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%8F%AF%E8%83%BD%E3%83%A6%E3%83%BC%E3%82%B6%E4%BD%9C%E6%88%90&#34;&gt;Transfer for sftp アクセス可能ユーザ作成&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%93%8D%E4%BD%9C%E3%83%AD%E3%82%B0%E3%81%AE%E8%BF%BD%E8%B7%A1&#34;&gt;操作ログの追跡&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E6%83%85%E5%A0%B1%E3%81%AE%E6%95%B4%E7%90%86&#34;&gt;アクセスに必要な情報の整理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B7%8F%E8%A9%95&#34;&gt;総評&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="https://i.imgur.com/hgb10nC.png">
@@ -48,12 +96,36 @@
 			"@type": "BlogPosting",
 			"headline": "AWS Transfer for sftp + S3 で IP 制限付き sftp サーバ構築",
 			
+			"description": "&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%A6%82%E8%A6%81&#34;&gt;概要&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sftp-%E6%A7%8B%E7%AF%89%E6%96%B9%E6%B3%95-%E6%AF%94%E8%BC%83&#34;&gt;SFTP 構築方法 比較&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3&#34;&gt;アーキテクチャ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#terraform-%E3%81%A7%E5%AF%BE%E5%BF%9C&#34;&gt;terraform で対応&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#transfer-for-sftp-%E3%82%B5%E3%83%BC%E3%83%90%E6%A7%8B%E7%AF%89&#34;&gt;Transfer for sftp サーバ構築&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#transfer-for-sftp-%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%8F%AF%E8%83%BD%E3%83%A6%E3%83%BC%E3%82%B6%E4%BD%9C%E6%88%90&#34;&gt;Transfer for sftp アクセス可能ユーザ作成&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E6%93%8D%E4%BD%9C%E3%83%AD%E3%82%B0%E3%81%AE%E8%BF%BD%E8%B7%A1&#34;&gt;操作ログの追跡&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E6%83%85%E5%A0%B1%E3%81%AE%E6%95%B4%E7%90%86&#34;&gt;アクセスに必要な情報の整理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B7%8F%E8%A9%95&#34;&gt;総評&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2021/10/19/2021-10-20-aws-transfer-for-sftp/"
 			},
 			"datePublished": "2021-10-19T15:00:00.000Z",
-			"dateModified": "2021-11-04T15:16:51.997Z",
+			"dateModified": "2021-11-09T14:01:29.880Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1843,7 +1915,33 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="概要">概要</span></h2><p>外部会社とのファイル共有で sftp サーバを構築することとなった。</p>
+			  		<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#sftp-%E6%A7%8B%E7%AF%89%E6%96%B9%E6%B3%95-%E6%AF%94%E8%BC%83">SFTP 構築方法 比較</a></li>
+<li><a href="#%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3">アーキテクチャ</a></li>
+<li><a href="#terraform-%E3%81%A7%E5%AF%BE%E5%BF%9C">terraform で対応</a><ul>
+<li><a href="#transfer-for-sftp-%E3%82%B5%E3%83%BC%E3%83%90%E6%A7%8B%E7%AF%89">Transfer for sftp サーバ構築</a></li>
+<li><a href="#transfer-for-sftp-%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%8F%AF%E8%83%BD%E3%83%A6%E3%83%BC%E3%82%B6%E4%BD%9C%E6%88%90">Transfer for sftp アクセス可能ユーザ作成</a></li>
+</ul>
+</li>
+<li><a href="#%E6%93%8D%E4%BD%9C%E3%83%AD%E3%82%B0%E3%81%AE%E8%BF%BD%E8%B7%A1">操作ログの追跡</a></li>
+<li><a href="#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E6%83%85%E5%A0%B1%E3%81%AE%E6%95%B4%E7%90%86">アクセスに必要な情報の整理</a></li>
+<li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
+<h2><span id="概要">概要</span></h2><p>外部会社とのファイル共有で sftp サーバを構築することとなった。</p>
 <p>先方が AWS を利用していれば、 IAM Role を渡して Assume Role で S3 に直接アップロードしていただくことができましたが、<br>sftp を利用したい強い気持ちを感じ、 sftp サーバを構築することとなりました。</p>
 <h2><span id="sftp-構築方法-比較">SFTP 構築方法 比較</span></h2><ol>
 <li>AWS Transfer for SFTP + S3<ul>

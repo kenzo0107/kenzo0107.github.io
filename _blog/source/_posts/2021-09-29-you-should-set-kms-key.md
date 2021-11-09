@@ -9,6 +9,15 @@ date: 2021-09-29
 `aws_rds_cluster` の `kms_key_id` は `Optional` (任意) ですが、
 これを設定するとどんなメリットがあるか考えたいと思います。
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
+
 ```
 resource "aws_kms_key" "rds" {
   enable_key_rotation = true

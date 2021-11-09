@@ -14,10 +14,48 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;p&gt;&lt;code&gt;aws_rds_cluster&lt;/code&gt; の &lt;code&gt;kms_key_id&lt;/code&gt; は &lt;code&gt;Optional&lt;/code&gt; (任意) ですが、&lt;br&gt;これを設定するとどんなメリットがあるか考えたいと思います。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#kms_key_id-%E3%81%A8%E3%81%AF&#34;&gt;kms_key_id とは？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E3%82%92%E6%9A%97%E5%8F%B7%E5%8C%96%E3%81%99%E3%82%8B%E7%90%86%E7%94%B1&#34;&gt;ストレージを暗号化する理由&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%BB%83%E6%A3%84%E8%A8%BC%E6%98%8E%E3%81%AB%E3%82%82%E3%81%AA%E3%82%8B&#34;&gt;廃棄証明にもなる&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%A8%E3%82%81&#34;&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%80%83%E3%81%88%E3%82%8B%E3%81%AB%E8%87%B3%E3%81%A3%E3%81%9F%E7%B5%8C%E7%B7%AF&#34;&gt;考えるに至った経緯&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2021/09/28/2021-09-29-you-should-set-kms-key/">
 	<meta name="twitter:title" content="AWS KMS キーを設定する意味を考える - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;p&gt;&lt;code&gt;aws_rds_cluster&lt;/code&gt; の &lt;code&gt;kms_key_id&lt;/code&gt; は &lt;code&gt;Optional&lt;/code&gt; (任意) ですが、&lt;br&gt;これを設定するとどんなメリットがあるか考えたいと思います。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#kms_key_id-%E3%81%A8%E3%81%AF&#34;&gt;kms_key_id とは？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E3%82%92%E6%9A%97%E5%8F%B7%E5%8C%96%E3%81%99%E3%82%8B%E7%90%86%E7%94%B1&#34;&gt;ストレージを暗号化する理由&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%BB%83%E6%A3%84%E8%A8%BC%E6%98%8E%E3%81%AB%E3%82%82%E3%81%AA%E3%82%8B&#34;&gt;廃棄証明にもなる&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%A8%E3%82%81&#34;&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%80%83%E3%81%88%E3%82%8B%E3%81%AB%E8%87%B3%E3%81%A3%E3%81%9F%E7%B5%8C%E7%B7%AF&#34;&gt;考えるに至った経緯&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -48,12 +86,31 @@
 			"@type": "BlogPosting",
 			"headline": "AWS KMS キーを設定する意味を考える",
 			
+			"description": "&lt;p&gt;&lt;code&gt;aws_rds_cluster&lt;/code&gt; の &lt;code&gt;kms_key_id&lt;/code&gt; は &lt;code&gt;Optional&lt;/code&gt; (任意) ですが、&lt;br&gt;これを設定するとどんなメリットがあるか考えたいと思います。&lt;/p&gt;
+&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#kms_key_id-%E3%81%A8%E3%81%AF&#34;&gt;kms_key_id とは？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E3%82%92%E6%9A%97%E5%8F%B7%E5%8C%96%E3%81%99%E3%82%8B%E7%90%86%E7%94%B1&#34;&gt;ストレージを暗号化する理由&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%BB%83%E6%A3%84%E8%A8%BC%E6%98%8E%E3%81%AB%E3%82%82%E3%81%AA%E3%82%8B&#34;&gt;廃棄証明にもなる&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%A8%E3%82%81&#34;&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%80%83%E3%81%88%E3%82%8B%E3%81%AB%E8%87%B3%E3%81%A3%E3%81%9F%E7%B5%8C%E7%B7%AF&#34;&gt;考えるに至った経緯&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2021/09/28/2021-09-29-you-should-set-kms-key/"
 			},
 			"datePublished": "2021-09-28T15:00:00.000Z",
-			"dateModified": "2021-11-04T15:16:51.997Z",
+			"dateModified": "2021-11-09T14:01:29.880Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1844,6 +1901,26 @@ h6.categories {
                     
 			    	<!-- content -->
 			  		<p><code>aws_rds_cluster</code> の <code>kms_key_id</code> は <code>Optional</code> (任意) ですが、<br>これを設定するとどんなメリットがあるか考えたいと思います。</p>
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#kms_key_id-%E3%81%A8%E3%81%AF">kms_key_id とは？</a></li>
+<li><a href="#%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E3%82%92%E6%9A%97%E5%8F%B7%E5%8C%96%E3%81%99%E3%82%8B%E7%90%86%E7%94%B1">ストレージを暗号化する理由</a></li>
+<li><a href="#%E5%BB%83%E6%A3%84%E8%A8%BC%E6%98%8E%E3%81%AB%E3%82%82%E3%81%AA%E3%82%8B">廃棄証明にもなる</a></li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+<li><a href="#%E8%80%83%E3%81%88%E3%82%8B%E3%81%AB%E8%87%B3%E3%81%A3%E3%81%9F%E7%B5%8C%E7%B7%AF">考えるに至った経緯</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">resource "aws_kms_key" "rds" {</span><br><span class="line">  enable_key_rotation = true</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resource "aws_kms_alias" "rds" {</span><br><span class="line">  name          = "alias/<!--figure0-->#123;local.prefix}-rds"</span><br><span class="line">  target_key_id = aws_kms_key.rds.key_id</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resource "aws_rds_cluster" "db" {</span><br><span class="line">    kms_key_id        = aws_kms_key.rds.arn</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <h2><span id="kms_key_id-とは">kms_key_id とは？</span></h2><p><code>kms_key_id</code> は terraform の公式ドキュメントにもある通り、ストレージを暗号化する際に必須です。</p>
