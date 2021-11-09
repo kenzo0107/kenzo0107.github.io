@@ -6,6 +6,15 @@ date: 2021-10-20
 thumbnail: https://imgix.datadoghq.com/img/about/presskit/usage/logousage_white.png?auto=format&fit=max&w=847
 ---
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
+
 備忘録です。
 
 Datadog ユーザをコンソール上で登録して、後追いで terraform 管理せねば！

@@ -3,7 +3,17 @@ title: 公開された S3 Objcet を探せ！
 tags:
 - AWS
 date: 2021-11-05
+thumbnail: https://i.imgur.com/ZskUBGT.png
 ---
+
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
 
 * AWS075: S3 Access block should restrict public bucket to limit access
   https://tfsec.dev/docs/aws/s3/no-public-buckets/
@@ -31,15 +41,6 @@ resource "aws_s3_bucket_public_access_block" "this" {
 
 ですが、 tfsec で指摘されたので直ちに対応して良いか、というと勿論そうではありません。
 まず、現状のユーザ影響があるかどうかを調査する必要があります。
-
-<div class="toc">
-<div class="toc-content">
-<h3 class="menu-label">ToC</h3>
-<!-- toc -->
-</div>
-</div>
-
-<!-- more -->
 
 ## スクリプトで調査する
 

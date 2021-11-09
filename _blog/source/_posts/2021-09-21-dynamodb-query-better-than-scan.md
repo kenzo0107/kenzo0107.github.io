@@ -3,12 +3,6 @@ title: DynamoDB Scan ではなく Query を使おう！ ~GSI の設定には気�
 date: 2021-09-21
 ---
 
-参考: https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/bp-query-scan.html
-
-> 応答時間を短縮するには、アプリケーションが Scan ではなく Query を使用できるようにテーブルおよびインデックスを設計します。
-
-AWS ベストプラクティス にもある通り、Scan による全件捜査はデータ量が増えるとパフォーマンスが劣化する為、極力 Query を利用することを推奨しています。
-
 <div class="toc">
 <div class="toc-content">
 <h3 class="menu-label">ToC</h3>
@@ -17,6 +11,13 @@ AWS ベストプラクティス にもある通り、Scan による全件捜査�
 </div>
 
 <!-- more -->
+
+参考: https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/bp-query-scan.html
+
+> 応答時間を短縮するには、アプリケーションが Scan ではなく Query を使用できるようにテーブルおよびインデックスを設計します。
+
+AWS ベストプラクティス にもある通り、Scan による全件捜査はデータ量が増えるとパフォーマンスが劣化する為、極力 Query を利用することを推奨しています。
+
 
 ## 【例題】 どうやって Query を実行する？
 
