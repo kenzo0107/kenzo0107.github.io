@@ -15,7 +15,6 @@
     "bulma-stylus": "^0.8.0",
     "cheerio": "^1.0.0-rc.5",
     "hexo": "^4.2.1",
-    "hexo-amazon-jp-link": "0.0.3",
     "hexo-component-inferno": "^0.4.0",
     "hexo-generator-amp": "^3.2.0",
     "hexo-generator-archive": "^1.0.0",
