@@ -35,6 +35,15 @@ resource "aws_s3_bucket" "logs" {
   }
 ```
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
+
 
 ## CloudFront Log Delivery Canonical User ID が data ソースで取れる様になった！
 

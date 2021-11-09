@@ -32,6 +32,15 @@ resource "aws_s3_bucket_public_access_block" "this" {
 ですが、 tfsec で指摘されたので直ちに対応して良いか、というと勿論そうではありません。
 まず、現状のユーザ影響があるかどうかを調査する必要があります。
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
+
 ## スクリプトで調査する
 
 2つ以上 permission がついている S3 Object を探索するスクリプトです。

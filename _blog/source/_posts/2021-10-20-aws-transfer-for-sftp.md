@@ -14,6 +14,14 @@ thumbnail: https://i.imgur.com/hgb10nC.png
 先方が AWS を利用していれば、 IAM Role を渡して Assume Role で S3 に直接アップロードしていただくことができましたが、
 sftp を利用したい強い気持ちを感じ、 sftp サーバを構築することとなりました。
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
 
 ## SFTP 構築方法 比較
 

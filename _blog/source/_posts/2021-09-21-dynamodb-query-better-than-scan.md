@@ -9,6 +9,15 @@ date: 2021-09-21
 
 AWS ベストプラクティス にもある通り、Scan による全件捜査はデータ量が増えるとパフォーマンスが劣化する為、極力 Query を利用することを推奨しています。
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
+
 ## 【例題】 どうやって Query を実行する？
 
 以下の様な `worriors` テーブルがあるとします。
