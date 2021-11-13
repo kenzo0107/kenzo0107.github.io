@@ -1,5 +1,5 @@
 ---
-title: 初めての DIY
+title: DIY 初心者の工具選び
 date: 2021-11-12
 category: DIY
 thumbnail: https://i.imgur.com/bikkvFS.jpg
