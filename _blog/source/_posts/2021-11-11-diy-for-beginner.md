@@ -96,7 +96,7 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ジグソーは 100年の老舗 Black & Decker のマルチツールを購入！
 
-{% linkPreview https://rcm-fe.amazon-adsystem.com/e/cm?ref=qf_sp_asin_til&t=kenzo0107-22&m=amazon&o=9&p=8&l=as1&IS2=1&detail=1&asins=B08BJ67S1C&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&bc1=ffffff&amp;lt1=_blank&fc1=333333&lc1=0066c0&bg1=ffffff&f=ifr _blank %}
+{% linkPreview http://www.amazon.co.jp/gp/product/B08BJ67S1C/ref=as_li_qf_sp_asin_il?ie=UTF8&camp=247&creative=1211&creativeASIN=B08BJ67S1C&linkCode=as2&tag=kenzo0107-22 _blank %}
 
 {% AmazonJpLink "B08BJ67S1C" "kenzo0107-22" "ブラックアンドデッカー 18V マルチツール ベーシック EVO185B1 ドリルドライバー・ジグソー・サンダー、ビット11種、バッテリー×2、専用ボックス" %}
 
@@ -249,6 +249,7 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 擦り過ぎると色落ちしてしまうので、あくまで表面のぷつぷつを取る様にしました。
 
 ここでの研磨は軽めにしたいのでスポンジ & サンドシートは必要になります。
+
 
 
 
