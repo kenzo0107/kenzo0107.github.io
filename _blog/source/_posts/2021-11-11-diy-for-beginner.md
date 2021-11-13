@@ -96,7 +96,9 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ジグソーは 100年の老舗 Black & Decker のマルチツールを購入！
 
-{% linkPreview http://www.amazon.co.jp/gp/product/B08BJ67S1C/ref=as_li_qf_sp_asin_il?ie=UTF8&camp=247&creative=1211&creativeASIN=B08BJ67S1C&linkCode=as2&tag=kenzo0107-22 _blank %}
+<!-- START MoshimoAffiliateEasyLink -->
+<script type="text/javascript">(function(b,c,f,g,a,d,e){b.MoshimoAffiliateObject=a;b[a]=b[a]||function(){arguments.currentScript=c.currentScript||c.scripts[c.scripts.length-2];(b[a].q=b[a].q||[]).push(arguments)};c.getElementById(a)||(d=c.createElement(f),d.src=g,d.id=a,e=c.getElementsByTagName("body")[0],e.appendChild(d))})(window,document,"script","//dn.msmstatic.com/site/cardlink/bundle.js?20210203","msmaflink");msmaflink({"n":"サコッシュ付 ブラックアンドデッカー 18Vリチウム マルチツールベーシック EVO185B1","b":"","t":"","d":"https:\/\/thumbnail.image.rakuten.co.jp","c_p":"\/@0_mall\/hcvalor-eshop\/cabinet\/14955","p":["\/vh-4536178002509.jpg","\/vh-4536178002509_1.jpg","\/vh-4536178002509_2.jpg"],"u":{"u":"https:\/\/item.rakuten.co.jp\/hcvalor-eshop\/vh-4536178002509\/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https:\/\/item.rakuten.co.jp\/hcvalor-eshop\/vh-4536178002509\/","a_id":3076536,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1},{"u_bc":"#ff9900","u_tx":"Amazonで見る","u_url":"https:\/\/rcm-fe.amazon-adsystem.com\/e\/cm?ref=qf_sp_asin_til\u0026t=kenzo0107-22\u0026m=amazon\u0026o=9\u0026p=8\u0026l=as1\u0026IS2=1\u0026detail=1\u0026asins=B08BJ67S1C\u0026linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3","s_n":"custom_5","u_so":5,"a_id":0,"p_id":0,"pc_id":0,"pl_id":0,"id":2}],"eid":"S65Qs","s":"s"});</script><div id="msmaflink-S65Qs">リンク</div>
+<!-- MoshimoAffiliateEasyLink END -->
 
 {% AmazonJpLink "B08BJ67S1C" "kenzo0107-22" "ブラックアンドデッカー 18V マルチツール ベーシック EVO185B1 ドリルドライバー・ジグソー・サンダー、ビット11種、バッテリー×2、専用ボックス" %}
 
