@@ -1,5 +1,5 @@
 ---
-title: DIY 初心者の工具選び
+title: 初めての DIY
 date: 2021-11-12
 category: DIY
 thumbnail: https://i.imgur.com/bikkvFS.jpg
@@ -15,6 +15,8 @@ thumbnail: https://i.imgur.com/bikkvFS.jpg
 <!-- more -->
 
 DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材料が何だったかを振り返ってみたいと思います。
+
+これから始めるという方に幾分でも参考になる点があると幸いです。
 
 もちろん作りたいものにもよるかと思いますので、今回作ったものを参考にします。
 
@@ -94,7 +96,7 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ジグソーは 100年の老舗 Black & Decker のマルチツールを購入！
 
-{% AmazonJpImage "B08BJ67S1C" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B08BJ67S1C" "kenzo0107-22" %}
 
 主にドリルドライバーが目的で、サンダーやジグソーはおまけ程度に考えていたのですが、 ¥20,000 台を切っており、DIY 初心者は手を出しやすい！というところで購入しました。
 
@@ -141,13 +143,13 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 以下は makita のオービットサンダーによるサンディングの説明ですが、サンディングする意味や仕方の指南が非常に分かりやすかったです。
 
-{% youtube RIiz7ynlHpw _blank %}
+{% youtube RIiz7ynlHpw %}
 
 以下、研磨で利用する工具についての比較です。
 
 ### makita オービットサンダー
 
-{% AmazonJpImage "B00FKR6TJ4" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B00FKR6TJ4" "kenzo0107-22" %}
 
 * メリット
   * かなり綺麗に研磨できる
@@ -164,7 +166,7 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ### Black & Decker サンダー
 
-{% AmazonJpImage "B08BJ67S1C" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B08BJ67S1C" "kenzo0107-22" %}
 
 * メリット
   * 安い ¥18,000 でドリルドライバーと共に 3 way で購入も可能
@@ -177,7 +179,7 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ### スポンジ & サンドシート
 
-{% AmazonJpImage "B001TIA8RM" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B001TIA8RM" "kenzo0107-22" %}
 
 * メリット
   * とにかく安い！
@@ -209,7 +211,7 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 
 ## 6. 着色
 
-{% AmazonJpImage "B0091FZ7YO" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B0091FZ7YO" "kenzo0107-22" %}
 
 和信 水性ポアーステイン オーク色を選びました。
 
@@ -219,13 +221,13 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 ![](https://i.imgur.com/bEEWGgF.jpg)
 
 
-{% AmazonJpImage "B0091FZVVS" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B0091FZVVS" "kenzo0107-22" %}
 
 同じ和信のオーク色でも 水性オイルステインは色味が全然違うので注意してください。
 
 刷毛はホームセンターで売っていた水性ステインや水性ニスを塗る為、3本セットを購入
 
-{% AmazonJpImage "B0033K1PIK" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B0033K1PIK" "kenzo0107-22" %}
 
 
 刷毛に水性ステインをたっぷりつけてしまうと、濃くなり過ぎてしまう為、
@@ -244,12 +246,12 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 
 ここでの研磨は軽めにしたいのでスポンジ & サンドシートは必要になります。
 
-{% AmazonJpImage "B001TIA8RM" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B001TIA8RM" "kenzo0107-22" %}
 
 
 
 
-{% AmazonJpImage "B01MDO8482" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B01MDO8482" "kenzo0107-22" %}
 基本 2x4材はアイアンペイントで着色しています。
 
 子供たちと一緒に塗ってみました。5分だけ (TへT)
@@ -258,7 +260,7 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 刷毛で塗ると、毛が抜けて付着し固まってしまう為、
 スポンジに付けて塗りました。
 
-{% AmazonJpImage "B01MEGW1Q0" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B01MEGW1Q0" "kenzo0107-22" %}
 
 金属部分やプラスチック部分はマルチプライマーを塗って、その上からアイアンペイントで着色します。
 
@@ -267,11 +269,11 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 マルチプライマーを塗った箇所は糊がついている様な感じでベタベタとした感じになり、そこにアイアンペイント貼り合わせるイメージです。
 
 以下動画が参考になりました。
-{% youtube AAhQlUaJEZc _blank %}
+{% youtube AAhQlUaJEZc %}
 
 ## 7. ニス塗り
 
-{% AmazonJpImage "B008MU3YYE" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B008MU3YYE" "kenzo0107-22" %}
 
 和信水性ウレタンニスでニス塗りで仕上げました。
 
@@ -300,7 +302,7 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 ## 8. 組み立て
 
 
-{% AmazonJpImage "B08BJ67S1C" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B08BJ67S1C" "kenzo0107-22" %}
 
 ドリル必須です。
 手の力だけでネジを木材を入れるのは不可能だと思います。
@@ -310,13 +312,13 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 makita のドリルドライバーを利用したことがありますが、そこまで差がわからなかったです。
 厳密には回転の速さとか円滑さ等のパフォーマンスの差があるのだと思いますが、作業に影響はなかったです。
 
-{% AmazonJpImage "B07KRN8LSV" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B07KRN8LSV" "kenzo0107-22" %}
 
 
 
 2x4材の固定には以下ジャッキを購入しました。
 
-{% AmazonJpImage "B01LZ7R4LB" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B01LZ7R4LB" "kenzo0107-22" %}
 
 高さ調整がネジでできるので、ドリルドライバーを使って容易にできます。
 
@@ -347,7 +349,7 @@ makita のドリルドライバーを利用したことがありますが、そ�
 端材で適当な長さにジグソーでカットし
 来年小学校の息子用の壁掛けを作りました。
 
-{% AmazonJpImage "B07MWDQB7S" "kenzo0107-22" 200 %}
+{% AmazonJpImage "B07MWDQB7S" "kenzo0107-22" %}
 
 食器棚と同じ水性ステインで薄めに塗って明るく仕上がりました。
 
