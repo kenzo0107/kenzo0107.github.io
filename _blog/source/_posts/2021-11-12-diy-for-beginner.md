@@ -1,6 +1,6 @@
 ---
 title: DIY 初心者の工具選び
-date: 2021-11-05
+date: 2021-11-12
 category: DIY
 thumbnail: https://i.imgur.com/bikkvFS.jpg
 ---
@@ -14,7 +14,7 @@ thumbnail: https://i.imgur.com/bikkvFS.jpg
 
 <!-- more -->
 
-DIY 初心者がいくつか DIY をしてみて自分にとって必要な工具や材料が何だったかを振り返ってみたいと思います。
+DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材料が何だったかを振り返ってみたいと思います。
 
 もちろん作りたいものにもよるかと思いますので、今回作ったものを参考にします。
 
@@ -141,7 +141,7 @@ DIY 初心者がいくつか DIY をしてみて自分にとって必要な工�
 
 以下は makita のオービットサンダーによるサンディングの説明ですが、サンディングする意味や仕方の指南が非常に分かりやすかったです。
 
-{% linkPreview https://www.youtube.com/watch?v=RIiz7ynlHpw _blank %}
+{% youtube RIiz7ynlHpw _blank %}
 
 以下、研磨で利用する工具についての比較です。
 
@@ -267,7 +267,7 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 マルチプライマーを塗った箇所は糊がついている様な感じでベタベタとした感じになり、そこにアイアンペイント貼り合わせるイメージです。
 
 以下動画が参考になりました。
-{% linkPreview https://www.youtube.com/watch?v=AAhQlUaJEZc _blank %}
+{% youtube AAhQlUaJEZc _blank %}
 
 ## 7. ニス塗り
 
