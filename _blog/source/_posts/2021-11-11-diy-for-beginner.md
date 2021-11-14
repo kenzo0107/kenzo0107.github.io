@@ -104,9 +104,11 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
     </a>
   </div>
   <div class="og-description">
-    <div class="og-description">
+    <div>
       <a href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" >ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット</a>
-      <div>&nbsp;</div>
+    </div>
+    <div>&nbsp;</div>
+    <div class="og-description">
       <a class="button is-link" href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
       <a class="button is-link" href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
     </div>
