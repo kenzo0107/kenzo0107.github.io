@@ -96,20 +96,22 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ジグソーは 100年の老舗 Black & Decker のマルチツールを購入！
 
-<div class="level link-preview" style="border: none;">
-	<div class="og-image">
-		<a href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" >
-			<img src="https://thumbnail.image.rakuten.co.jp/ran/img/1001/0004/536/178/002/523/10010004536178002523_1.jpg?_ex=128x128" style="border: none;" />
-		</a>
-	</div>
-	<div class="og-description">
-		<div class="og-description">
-      <a href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" >ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット</a>
-      <div></div>
-			<a class="button is-link" href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
-			<a class="button is-link" href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
-		</div>
-	</div>
+<div class="card-content">
+  <div class="level link-preview">
+    <div class="og-image">
+      <a href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" >
+        <img src="https://thumbnail.image.rakuten.co.jp/ran/img/1001/0004/536/178/002/523/10010004536178002523_1.jpg?_ex=128x128" style="border: none;" />
+      </a>
+    </div>
+    <div class="og-description">
+      <div class="og-description">
+        <a href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" >ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット</a>
+        <div></div>
+        <a class="button is-link" href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
+        <a class="button is-link" href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 
