@@ -250,7 +250,7 @@ DIY 初心者ですが、本当に購入して良かったと思います。
 
 刷毛はホームセンターで売っていた水性ステインや水性ニスを塗る為、3本セットを購入
 
-{% affiliate "title" "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=B0033K1PIK&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" "https://www.amazon.co.jp/gp/product/B0033K1PIK/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=kenzo0107-22&creative=1211&linkCode=as2&creativeASIN=B0033K1PIK&linkId=44fa437d54ccb95a45c83da9a7619f3e" "https://hb.afl.rakuten.co.jp/ichiba/220ee40b.a2e2964f.220ee40c.dd61d84c/_RTLink33687?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fedenki%2Fed1792529%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" %}
+{% affiliate "アサヒペン ペイント刷毛 お得用上級多用途用ハケ3本セット OTJ-3P" "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=B0033K1PIK&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" "https://www.amazon.co.jp/gp/product/B0033K1PIK/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=kenzo0107-22&creative=1211&linkCode=as2&creativeASIN=B0033K1PIK&linkId=44fa437d54ccb95a45c83da9a7619f3e" "https://hb.afl.rakuten.co.jp/ichiba/220ee40b.a2e2964f.220ee40c.dd61d84c/_RTLink33687?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fedenki%2Fed1792529%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" %}
 
 刷毛に水性ステインをたっぷりつけてしまうと、濃くなり過ぎてしまう為、
 あまり刷毛につけ過ぎず、水も控えつつ、程よく滑る感じで塗れると仕上がりがよかったです。

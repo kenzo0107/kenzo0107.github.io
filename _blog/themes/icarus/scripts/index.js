@@ -33,7 +33,7 @@ hexo.extend.tag.register('affiliate', function (args) {
   const img_url = args[1];
   const amazon_url = args[2];
   const rakuten_url = args[3];
-  return `<div class="level link-preview">
+  return `<div class="link-preview">
   <div class="og-image">
     <a href="${amazon_url}" target="_blank" >
       <img src="${img_url}" style="border: none;" />
