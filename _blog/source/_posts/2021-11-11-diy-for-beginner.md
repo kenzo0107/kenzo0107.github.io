@@ -102,7 +102,7 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 			<img src="https://thumbnail.image.rakuten.co.jp/ran/img/1001/0004/536/178/002/523/10010004536178002523_1.jpg?_ex=64x64" style="border: none;" />
 		</a>
 	</div>
-	<div class="descriptions">
+	<div class="og-description">
 		<div class="og-title">
 			<a href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" >ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット</a>
 		</div>
