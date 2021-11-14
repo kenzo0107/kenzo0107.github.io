@@ -105,7 +105,7 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
   </div>
   <div class="og-description">
     <div>
-      <a href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" >ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット</a>
+      <a href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" >ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット</a>
     </div>
     <div>&nbsp;</div>
     <div class="og-description">
@@ -114,9 +114,6 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
     </div>
   </div>
 </div>
-
-
-{% AmazonJpLink "B08BJ67S1C" "kenzo0107-22" "ブラックアンドデッカー 18V マルチツール ベーシック EVO185B1 ドリルドライバー・ジグソー・サンダー、ビット11種、バッテリー×2、専用ボックス" %}
 
 主にドリルドライバーが目的で、サンダーやジグソーはおまけ程度に考えていたのですが、 ¥20,000 台を切っており、DIY 初心者は手を出しやすい！というところで購入しました。
 
@@ -169,7 +166,23 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ### makita オービットサンダー
 
-{% AmazonJpLink "B00FKR6TJ4" "kenzo0107-22" "マキタ(Makita) 充電式ランダムオービットサンダ (バッテリー・充電器付)" %}
+<div class="level link-preview">
+  <div class="og-image">
+    <a href="https://www.amazon.co.jp/gp/product/B00FKR6TJ4/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=kenzo0107-22&creative=1211&linkCode=as2&creativeASIN=B00FKR6TJ4&linkId=713a5e16c2261a61ac2603d98fa6b7ea" target="_blank" >
+      <img src="https://m.media-amazon.com/images/I/41bsOwov2lL._SL500_._SL160_.jpg" style="border: none;" />
+    </a>
+  </div>
+  <div class="og-description">
+    <div>
+      <a href="https://www.amazon.co.jp/gp/product/B00FKR6TJ4/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=kenzo0107-22&creative=1211&linkCode=as2&creativeASIN=B00FKR6TJ4&linkId=713a5e16c2261a61ac2603d98fa6b7ea" target="_blank" >マキタ(Makita) 充電式ランダムオービットサンダ (バッテリー・充電器付)</a>
+    </div>
+    <div>&nbsp;</div>
+    <div class="og-description">
+      <a class="button is-link" href="https://hb.afl.rakuten.co.jp/ichiba/220e8151.a5ff053a.220e8152.374774aa/_RTLink33687?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftakumiya1%2Fbo180dz-bl1830b-dc18rf%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
+      <a class="button is-link" href="https://www.amazon.co.jp/gp/product/B00FKR6TJ4/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=kenzo0107-22&creative=1211&linkCode=as2&creativeASIN=B00FKR6TJ4&linkId=713a5e16c2261a61ac2603d98fa6b7ea" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
+    </div>
+  </div>
+</div>
 
 * メリット
   * かなり綺麗に研磨できる
@@ -186,7 +199,27 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ### Black & Decker サンダー
 
-{% AmazonJpLink "B08BJ67S1C" "kenzo0107-22" "ブラックアンドデッカー 18V マルチツール" %}
+既出の Black & Decker のサンダーです。
+
+{% affiliate "ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット" "https://thumbnail.image.rakuten.co.jp/ran/img/1001/0004/536/178/002/523/10010004536178002523_1.jpg?_ex=128x128" "https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" "https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" %}
+
+<div class="level link-preview">
+  <div class="og-image">
+    <a href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" >
+      <img src="https://thumbnail.image.rakuten.co.jp/ran/img/1001/0004/536/178/002/523/10010004536178002523_1.jpg?_ex=128x128" style="border: none;" />
+    </a>
+  </div>
+  <div class="og-description">
+    <div>
+      <a href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" >ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット</a>
+    </div>
+    <div>&nbsp;</div>
+    <div class="og-description">
+      <a class="button is-link" href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
+      <a class="button is-link" href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
+    </div>
+  </div>
+</div>
 
 * メリット
   * 安い ¥18,000 でドリルドライバーと共に 3 way で購入も可能
