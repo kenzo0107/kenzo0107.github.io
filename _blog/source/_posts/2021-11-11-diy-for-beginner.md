@@ -96,9 +96,24 @@ DIY 初心者の自分がいくつか DIY をしてみて必要な工具や材�
 
 ジグソーは 100年の老舗 Black & Decker のマルチツールを購入！
 
-<!-- START MoshimoAffiliateEasyLink -->
-<script type="text/javascript">(function(b,c,f,g,a,d,e){b.MoshimoAffiliateObject=a;b[a]=b[a]||function(){arguments.currentScript=c.currentScript||c.scripts[c.scripts.length-2];(b[a].q=b[a].q||[]).push(arguments)};c.getElementById(a)||(d=c.createElement(f),d.src=g,d.id=a,e=c.getElementsByTagName("body")[0],e.appendChild(d))})(window,document,"script","//dn.msmstatic.com/site/cardlink/bundle.js?20210203","msmaflink");msmaflink({"n":"サコッシュ付 ブラックアンドデッカー 18Vリチウム マルチツールベーシック EVO185B1","b":"","t":"","d":"https:\/\/thumbnail.image.rakuten.co.jp","c_p":"\/@0_mall\/hcvalor-eshop\/cabinet\/14955","p":["\/vh-4536178002509.jpg","\/vh-4536178002509_1.jpg","\/vh-4536178002509_2.jpg"],"u":{"u":"https:\/\/item.rakuten.co.jp\/hcvalor-eshop\/vh-4536178002509\/","t":"rakuten","r_v":""},"v":"2.1","b_l":[{"id":1,"u_tx":"楽天市場で見る","u_bc":"#f76956","u_url":"https:\/\/item.rakuten.co.jp\/hcvalor-eshop\/vh-4536178002509\/","a_id":3076536,"p_id":54,"pl_id":27059,"pc_id":54,"s_n":"rakuten","u_so":1},{"u_bc":"#ff9900","u_tx":"Amazonで見る","u_url":"https:\/\/rcm-fe.amazon-adsystem.com\/e\/cm?ref=qf_sp_asin_til\u0026t=kenzo0107-22\u0026m=amazon\u0026o=9\u0026p=8\u0026l=as1\u0026IS2=1\u0026detail=1\u0026asins=B08BJ67S1C\u0026linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3","s_n":"custom_5","u_so":5,"a_id":0,"p_id":0,"pc_id":0,"pl_id":0,"id":2}],"eid":"S65Qs","s":"s"});</script><div id="msmaflink-S65Qs">リンク</div>
-<!-- MoshimoAffiliateEasyLink END -->
+<div class="link-preview">
+	<div class="og-image">
+		<a href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" >
+			<img src="https://thumbnail.image.rakuten.co.jp/ran/img/1001/0004/536/178/002/523/10010004536178002523_1.jpg?_ex=64x64" style="border: none;" />
+		</a>
+	</div>
+	<div class="descriptions">
+		<div class="og-title">
+			<a href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" >ブラックアンドデッカー EVO185E1 18Vリチウム コードレス マルチツール エキスパート セット</a>
+		</div>
+		<div></div>
+		<div class="og-description">
+			<a href="https://hb.afl.rakuten.co.jp/hgc/g0000014.hdgkq86d.g0000014.hdgkr3ae/kaereba_main_202111140947334355?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F52925153e7796112d041c37c9da2d50a%2F&m=http%3A%2F%2Fm.product.rakuten.co.jp%2Fproduct%2F52925153e7796112d041c37c9da2d50a%2F" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
+			<a href="https://www.amazon.co.jp/dp/B08BJ67S1C/ref=as_sl_pc_qf_sp_asin_til?tag=kenzo0107-22&linkCode=w00&linkId=2f57a64f9e6c1aab86c0b6bdfc5cf6a3&creativeASIN=B08BJ67S1C" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
+		</div>
+	</div>
+</div>
+
 
 {% AmazonJpLink "B08BJ67S1C" "kenzo0107-22" "ブラックアンドデッカー 18V マルチツール ベーシック EVO185B1 ドリルドライバー・ジグソー・サンダー、ビット11種、バッテリー×2、専用ボックス" %}
 
