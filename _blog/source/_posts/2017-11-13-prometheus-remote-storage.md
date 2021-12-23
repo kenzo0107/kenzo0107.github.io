@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Prometheus2.0 remote storage 検証
-date: 2016-08-10
+date: 2017-11-13
 tags:
 - Prometheus
 thumbnail: https://i.imgur.com/zFciewX.png
