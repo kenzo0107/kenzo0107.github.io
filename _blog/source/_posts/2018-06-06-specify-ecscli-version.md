@@ -1,10 +1,9 @@
 ---
 layout: post
-title: ElastiCache メンテナンス対応 ~2018年梅雨~
+title: cs-cli バージョン指定してインストール
 date: 2018-06-06
 tags:
 - AWS
-- ElastiCache
 ---
 
 完全な備忘録です。
