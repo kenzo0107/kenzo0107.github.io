@@ -2,7 +2,6 @@
 layout: post
 title: du でデバイスの使用率が残り少ない、何か消さなきゃいけないというときに
 date: 2016-08-15
-thumbnail: https://i.imgur.com/NMKovma.jpg
 ---
 
 あっ！
