@@ -1,6 +1,6 @@
 ---
 layout: post
-title: cs-cli バージョン指定してインストール
+title: ecs-cli バージョン指定してインストール
 date: 2018-06-06
 tags:
 - AWS
