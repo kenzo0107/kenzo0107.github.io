@@ -62,48 +62,6 @@
 <h2><span id="確認">確認</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ruby -v</span><br><span class="line">ruby 2.0.0p645 (2015-04-13 revision 50299) [x86_64-linux]</span><br></pre></td></tr></table></figure>
 
 <p>以上</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-08-05T15:00:00.000Z" title="2015-08-05T15:00:00.000Z">2015-08-06</time><span class="level-item">2分 read (About 365 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/05/2015-08-05-use-my-certificate-on-nginx/">ElasticSearchインストール on CentOS7</a></h1><div class="content"><h2><span id="環境">環境</span></h2><ul>
-<li>CentOS Linux release 7.0.1406 (Core)</li>
-<li>ElasticSearch 1.7.1</li>
-</ul>
-<h2><span id="必要モジュールダウンロード">必要モジュールダウンロード</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install -y curl-devel java-1.8.0-openjdk</span></span><br></pre></td></tr></table></figure>
-
-<h4><span id="java-バージョン確認">java バージョン確認</span></h4><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> java version <span class="string">"1.7.0_85"</span></span></span><br><span class="line">OpenJDK Runtime Environment (rhel-2.6.1.2.el7_1-x86_64 u85-b01)</span><br><span class="line">OpenJDK 64-Bit Server VM (build 24.85-b03, mixed mode)</span><br></pre></td></tr></table></figure>
-
-<h2><span id="public-signing-keyをダウンロードインストール">public signing keyをダウンロード・インストール</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch</span></span><br></pre></td></tr></table></figure>
-
-<h2><span id="yum-repositoryに-elasticsearch追加">yum repositoryに elasticsearch追加</span></h2><h4><span id="etcyumreposdelasticsearchrepo-作成">/etc/yum.repos.d/elasticsearch.repo 作成</span></h4><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi /etc/yum.repos.d/elasticsearch.repo</span></span><br></pre></td></tr></table></figure>
-
-<h4><span id="以下追記">以下追記</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[elasticsearch-1.7]</span><br><span class="line">name&#x3D;Elasticsearch repository for 1.7.x packages</span><br><span class="line">baseurl&#x3D;http:&#x2F;&#x2F;packages.elastic.co&#x2F;elasticsearch&#x2F;1.7&#x2F;centos</span><br><span class="line">gpgcheck&#x3D;1</span><br><span class="line">gpgkey&#x3D;http:&#x2F;&#x2F;packages.elastic.co&#x2F;GPG-KEY-elasticsearch</span><br><span class="line">enabled&#x3D;1</span><br></pre></td></tr></table></figure>
-
-<h2><span id="インストール">インストール</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> yum install -y elasticsearch</span></span><br></pre></td></tr></table></figure>
-
-<h2><span id="config設定">config設定</span></h2><h5><span id="設定ファイル作成">設定ファイル作成</span></h5><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp /etc/elasticsearch/elasticsearch.yml /usr/share/elasticsearch/config</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> vim /usr/share/elasticsearch/config/elasticsearch.yml</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>9200 port設定</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- #http.port: 9200</span><br><span class="line">+ http.port: 9200</span><br></pre></td></tr></table></figure>
-
-<h2><span id="kuromojiプラグインをインストール">kuromojiプラグインをインストール</span></h2><p>形態素解析器を使って日本語検索が可能になる。</p>
-<p>ElasticSearchのバージョンによって elasticsearch-analysis-kuromojiのバージョンを変更する必要があります。<br>以下参考にお願いします。</p>
-<p><a href="https://github.com/elastic/elasticsearch-analysis-kuromoji">https://github.com/elastic/elasticsearch-analysis-kuromoji</a></p>
-<p>ここかなりハマりました汗</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /usr/share/elasticsearch/bin/plugin --install elasticsearch/elasticsearch-analysis-kuromoji/2.7.0</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2><span id="elasticsearch-サーバ起動時-自動起動登録">elasticsearch サーバ起動時、自動起動登録</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl start elasticsearch.service</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl daemon-reload</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl <span class="built_in">enable</span> elasticsearch.service</span></span><br></pre></td></tr></table></figure>
-
-<h2><span id="実行確認">実行確認</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl http://localhost:9200</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>実行結果</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;status&quot; : 200,</span><br><span class="line">  &quot;name&quot; : &quot;Angelica Jones&quot;,</span><br><span class="line">  &quot;cluster_name&quot; : &quot;elasticsearch&quot;,</span><br><span class="line">  &quot;version&quot; : &#123;</span><br><span class="line">    &quot;number&quot; : &quot;1.7.1&quot;,</span><br><span class="line">    &quot;build_hash&quot; : &quot;b88f43fc40b0bcd7f173a1f9ee2e97816de80b19&quot;,</span><br><span class="line">    &quot;build_timestamp&quot; : &quot;2015-07-29T09:54:16Z&quot;,</span><br><span class="line">    &quot;build_snapshot&quot; : false,</span><br><span class="line">    &quot;lucene_version&quot; : &quot;4.10.4&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;tagline&quot; : &quot;You Know, for Search&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>以上</p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-08-05T15:00:00.000Z" title="2015-08-05T15:00:00.000Z">2015-08-06</time><span class="level-item">2分 read (About 365 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/05/2015-08-06-install-elasticsearch-on-centos7/">ElasticSearchインストール on CentOS7</a></h1><div class="content"><h2><span id="環境">環境</span></h2><ul>
 <li>CentOS Linux release 7.0.1406 (Core)</li>
 <li>ElasticSearch 1.7.1</li>
@@ -319,6 +277,58 @@
 <h5><span id="証明書を表示ボタンクリック">「証明書を表示」ボタンクリック</span></h5><p><img src="http://i.imgur.com/qxv7yLO.png" alt="Imgur"></p>
 <h5><span id="証明書情報">「証明書情報」</span></h5><p><img src="http://i.imgur.com/wH7iaPe.png" alt="Imgur"></p>
 <p>[asin:4839919437:detail]</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-08-04T15:00:00.000Z" title="2015-08-04T15:00:00.000Z">2015-08-05</time><span class="level-item">5分 read (About 788 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/04/2015-08-05-use-my-certificate-on-nginx/">NginxにオレオレSSL証明書インストール</a></h1><div class="content"><h2><span id="環境">環境</span></h2><ul>
+<li>AWS EC2 : t2.micro</li>
+<li>OS : CentOS Linux release 7.1.1503 (Core)</li>
+<li>Nginx: 1.8.0</li>
+<li>OpenSSL: 1.0.1e-fips 11 Feb 2013</li>
+</ul>
+<h2><span id="前提">前提</span></h2><ul>
+<li>Nginxがインストール済みである。</li>
+</ul>
+<h2><span id="事前にパスワード作成">事前にパスワード作成</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat &#x2F;dev&#x2F;urandom | LC_CTYPE&#x3D;C tr -dc &#39;[:alnum:]&#39; | head -c 40</span><br><span class="line">v6biM9MMByBO0SWFitcbnyF0VUsJLbZsizpP7K15</span><br></pre></td></tr></table></figure>
+
+<p>40文字のランダムな半角英数字が生成されます。</p>
+<p>証明書作成時に必要となるパスワードです。<br>絶対忘れないようにしてください。</p>
+<blockquote>
+<p>以下ec2インスタンスのパブリック DNSを</p>
+</blockquote>
+<blockquote>
+<p><code>ec2-xx-xx-xx-xx.ap-northeast-1.compute.amazonaws.com</code></p>
+</blockquote>
+<blockquote>
+<p>として話を進めます。</p>
+</blockquote>
+<hr>
+<h2><span id="key-ファイル作成">KEY ファイル作成</span></h2><p>sha256(略してsha2)で作成します。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># mkdir -p &#x2F;etc&#x2F;nginx&#x2F;conf</span><br><span class="line"># cd &#x2F;etc&#x2F;nginx&#x2F;conf</span><br><span class="line"># openssl genrsa -des3 -out server.key 2048 -sha256</span><br><span class="line">Enter pass phrase for server.key: v6biM9MMByBO0SWFitcbnyF0VUsJLbZsizpP7K15</span><br></pre></td></tr></table></figure>
+
+<h2><span id="csr-ファイル作成">CSR ファイル作成</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># openssl req -new -sha256 -key server.key -out server.csr</span><br><span class="line">Enter pass phrase for server.key: v6biM9MMByBO0SWFitcbnyF0VUsJLbZsizpP7K15</span><br><span class="line"></span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a default value,</span><br><span class="line">If you enter &#39;.&#39;, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (2 letter code) [XX]:JP</span><br><span class="line">State or Province Name (full name) []:Tokyo</span><br><span class="line">Locality Name (eg, city) [Default City]:Setagaya-ku</span><br><span class="line">Organization Name (eg, company) [Default Company Ltd]:UmiyamaShouji inc.</span><br><span class="line">Organizational Unit Name (eg, section) []:Production</span><br><span class="line">Common Name (eg, your name or your server&#39;s hostname) []:ec2-xx-xx-xx-xx.ap-northeast-1.compute.amazonaws.com</span><br><span class="line">Email Address []: (空白のままEnter)</span><br><span class="line"></span><br><span class="line">Please enter the following &#39;extra&#39; attributes</span><br><span class="line">to be sent with your certificate request</span><br><span class="line">A challenge password []: (空白のままEnter)</span><br><span class="line">An optional company name []: (空白のままEnter)</span><br></pre></td></tr></table></figure>
+
+<h5><span id="確認">確認</span></h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ls -al</span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x. 2 root root  40 Aug  5 13:43 .</span><br><span class="line">drwxr-xr-x. 3 root root  17 Aug  5 13:32 ..</span><br><span class="line">-rw-r--r--. 1 root root 729 Aug  5 13:43 server.csr</span><br><span class="line">-rw-r--r--. 1 root root 963 Aug  5 13:37 server.key</span><br></pre></td></tr></table></figure>
+
+<h2><span id="rsa-key作成">RSA key作成</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># openssl rsa -in server.key -out server.key</span><br><span class="line">Enter pass phrase for server.key: v6biM9MMByBO0SWFitcbnyF0VUsJLbZsizpP7K15</span><br></pre></td></tr></table></figure>
+
+<h2><span id="crt作成">CRT作成</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt</span><br><span class="line"></span><br><span class="line">Signature ok</span><br><span class="line">subject&#x3D;&#x2F;C&#x3D;JP&#x2F;ST&#x3D;Tokyo&#x2F;L&#x3D;Setagaya-ku&#x2F;O&#x3D;UmiyamaShouji inc.&#x2F;OU&#x3D;Production&#x2F;CN&#x3D;ec2-xx-xx-xx-xx.ap-northeast-1.compute.amazonaws.com</span><br><span class="line">Getting Private key</span><br></pre></td></tr></table></figure>
+
+<h2><span id="sslconf作成">ssl.conf作成</span></h2><h4><span id="example_sslconf-をコピーし-sslconf-作成">example_ssl.conf をコピーし ssl.conf 作成</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cd &#x2F;etc&#x2F;nginx&#x2F;conf.d</span><br><span class="line"># cp example_ssl.conf ssl.conf</span><br></pre></td></tr></table></figure>
+
+<h4><span id="sslconf編集">ssl.conf編集</span></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vi ssl.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># HTTPS server</span><br><span class="line">#</span><br><span class="line">server &#123;</span><br><span class="line">    listen       443 ssl;</span><br><span class="line">    server_name  ec2-xx-xx-xx-xx.ap-northeast-1.compute.amazonaws.com;</span><br><span class="line">    ssl on;</span><br><span class="line">    ssl_certificate        conf&#x2F;server.crt;</span><br><span class="line">    ssl_certificate_key conf&#x2F;server.key;</span><br><span class="line"></span><br><span class="line"># 以下随時設定</span><br><span class="line">#    ssl_session_cache shared:SSL:1m;</span><br><span class="line">#    ssl_session_timeout  5m;</span><br><span class="line"></span><br><span class="line">#    ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">#    ssl_prefer_server_ciphers   on;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">        root   &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="nginx再起動">Nginx再起動</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<h3><span id="もしこんなエラーが出たら">もしこんなエラーが出たら</span></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx[2246]: nginx: [emerg] SSL_CTX_use_PrivateKey_file(&quot;&#x2F;etc&#x2F;nginx&#x2F;conf&#x2F;server.key&quot;) failed (SSL: error:0906406D:PEM routines:PEM_def_callback:problems getting password error:0906A068:PEM routines:PEM_do_header:bad password read error:140B0009:SSL routines:SSL_CTX_use_PrivateKey_file:PEM lib)</span><br></pre></td></tr></table></figure>
+
+<p>server.keyのパスフレーズにより読み込みができないというエラーです。<br>バックアップを作成してパスフレーズを解除してください。<br>完了したら再起動して確認してください。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp server.key server.key.bk</span><br><span class="line">$ sudo openssl rsa -in server.key -out server.key</span><br><span class="line">$ systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<h2><span id="動作確認">動作確認</span></h2><ul>
+<li>Safari等で <a href="https://ec2-xx-xx-xx-xx.ap-northeast-1.compute.amazonaws.com/">https://ec2-xx-xx-xx-xx.ap-northeast-1.compute.amazonaws.com</a> へアクセス</li>
+<li>作成した証明書情報確認</li>
+</ul>
+<p>以下参考までに<br>[<a href="http://kenzo0107.hatenablog.com/entry/2015/08/05/144733:embed:cite]">http://kenzo0107.hatenablog.com/entry/2015/08/05/144733:embed:cite]</a></p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-08-03T15:00:00.000Z" title="2015-08-03T15:00:00.000Z">2015-08-04</time><span class="level-item">6分 read (About 835 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/03/2015-08-04-install-nginx-go-revel-on-centos7/">CentOS7 に Nginx + Go + Revel インストール・動作確認</a></h1><div class="content"><h2><span id="環境">環境</span></h2><ul>
 <li>EC2 t2.micro</li>
 <li>CentOS Linux release 7.1.1503 (Core)</li>
