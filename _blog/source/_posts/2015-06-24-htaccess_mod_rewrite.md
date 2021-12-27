@@ -1,6 +1,6 @@
 ---
 layout: post
-title: .htaccessでmod_rewriteを利用可能にする。
+title: .htaccessでmod_rewriteを利用可能にする
 date: 2015-06-24
 ---
 
