@@ -25,8 +25,8 @@ gitやQiitaでplaybookを見ていてもどの記述で何を実現している�
 
 
 
-playbook.yml
->||
+* playbook.yml
+```
 ---
 - hosts: test-servers
   sudo: yes
@@ -38,7 +38,7 @@ playbook.yml
 
     - name: be sure httpd is running and enabled
       service: name=httpd state=running enabled=yes
-||<
+```
 
 
 ## あとがき

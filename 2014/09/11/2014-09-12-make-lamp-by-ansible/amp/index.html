@@ -53,7 +53,7 @@
 			    "@id":"https://kenzo0107.github.io/2014/09/11/2014-09-12-make-lamp-by-ansible/"
 			},
 			"datePublished": "2014-09-11T15:00:00.000Z",
-			"dateModified": "2021-12-27T13:28:21.204Z",
+			"dateModified": "2021-12-27T13:42:41.991Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1818,20 +1818,10 @@ h6.categories {
 <h2><span id="経緯">経緯</span></h2><p>Chefでサーバ環境構築していましたが、<br>設定ファイルが多い印象を持っていた為、<br>より敷居が低いという噂のAnsibleでの構築を考えました。</p>
 <h2><span id="覚える為に">覚える為に</span></h2><p>徐々に設定していく項目を増やしていく、<br>という方針で進めます。</p>
 <p>個人的経験上ですが、<br>gitやQiitaでplaybookを見ていてもどの記述で何を実現しているか<br>を理解するのはとっつきにくく、理解せず実現させてしまう可能性もあるからです。</p>
-<p>playbook.yml</p>
-<blockquote>
-<p>||</p>
-</blockquote>
-<hr>
 <ul>
-<li><p>hosts: test-servers<br>sudo: yes</p>
-<p>tasks:</p>
-<h1><span id="apache">Apache</span></h1><ul>
-<li><p>name: be sure httpd is installed<br>yum: name=httpd state=installed</p>
-</li>
-<li><p>name: be sure httpd is running and enabled<br>service: name=httpd state=running enabled=yes<br>||&lt;</p>
-</li>
-</ul>
+<li>playbook.yml<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">- hosts: test-servers</span><br><span class="line">  sudo: yes</span><br><span class="line"></span><br><span class="line">  tasks:</span><br><span class="line">    # Apache</span><br><span class="line">    - name: be sure httpd is installed</span><br><span class="line">      yum: name=httpd state=installed</span><br><span class="line"></span><br><span class="line">    - name: be sure httpd is running and enabled</span><br><span class="line">      service: name=httpd state=running enabled=yes</span><br></pre></td></tr></tbody></table></figure>
+
+
 </li>
 </ul>
 <h2><span id="あとがき">あとがき</span></h2><p>以下サイトが大変参考になりました。</p>
