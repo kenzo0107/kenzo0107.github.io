@@ -10,7 +10,7 @@
 	<meta property="og:type" content="article">
 	<meta property="og:url" content="https://kenzo0107.github.io/2020/11/19/2020-11-20-terraform-codepipeline-github-oauth-error/">
 	
-		<meta property="og:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
+		<meta property="og:image" content="https://opengraph.githubassets.com/ad9047cde64a6a9f50ec0232442ecd338733731e3056b7d881146ddd995035af/hashicorp/terraform-provider-aws/issues/15200">
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
@@ -60,7 +60,7 @@
 &lt;h1 id=&#34;概要&#34;&gt;&lt;a href=&#34;#概要&#34; class=&#34;headerlink&#34; title=&#34;概要&#34;&gt;&lt;/a&gt;概要&lt;/h1&gt;&lt;p&gt;Terraform で管理する CodePipeline で GitHub 認証エラーが発生した為、その回避方法をまとめます。&lt;/p&gt;">
 	
     
-    	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
+    	<meta name="twitter:image" content="https://opengraph.githubassets.com/ad9047cde64a6a9f50ec0232442ecd338733731e3056b7d881146ddd995035af/hashicorp/terraform-provider-aws/issues/15200">
 	
 	
 	
@@ -113,13 +113,13 @@
 			    "@id":"https://kenzo0107.github.io/2020/11/19/2020-11-20-terraform-codepipeline-github-oauth-error/"
 			},
 			"datePublished": "2020-11-19T15:00:00.000Z",
-			"dateModified": "2021-12-27T14:18:04.598Z",
+			"dateModified": "2021-12-27T14:19:34.824Z",
 			
 			"image": {
 				"@type": "ImageObject",
-				"url": "/amp-dist/sample/sample-substituteTitleImage.png",
-				"width" : "1024",
-				"height" : "800"
+				"url": "https://opengraph.githubassets.com/ad9047cde64a6a9f50ec0232442ecd338733731e3056b7d881146ddd995035af/hashicorp/terraform-provider-aws/issues/15200",
+				"width" : "1200",
+				"height" : "600"
 			},
 			
 			"author": {
@@ -1867,7 +1867,7 @@ h6.categories {
 						
 			          	<div class="header-thumb flx">
 			          		<div class="thumbImg-w circle">
-			          			<amp-img class="thumbImg" layout="fixed" width="128" height="100" src="/amp-dist/sample/sample-substituteTitleImage.png">
+			          			<amp-img class="thumbImg" layout="fixed" width="200" height="100" src="https://opengraph.githubassets.com/ad9047cde64a6a9f50ec0232442ecd338733731e3056b7d881146ddd995035af/hashicorp/terraform-provider-aws/issues/15200">
 			          			</amp-img>
 			          		</div>
 			          	</div>
@@ -1935,7 +1935,7 @@ h6.categories {
 <p>初回 terraform apply 実行時に OAuthToken に設定した値は tfstate ファイルに hash 化されて保存されます。<br>その後、何かしらリソースを更新すると、その tfstate にある hash 化された token が UpdatePipeline に渡され GitHub 認証エラーが発生する、<br>というものです。</p>
 <p>なので、初回は CodePipeline で問題なく GitHub 認証されますが、その後、 <code>terraform apply</code> 実行しリソース更新後に CodePipeline で GitHub 認証エラーが発生します。</p>
 <p>上記については以下 issue にて言及されていました。</p>
-
+<a href="https://github.com/hashicorp/terraform-provider-aws/issues/15200#issuecomment-700808677" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://opengraph.githubassets.com/ad9047cde64a6a9f50ec0232442ecd338733731e3056b7d881146ddd995035af/hashicorp/terraform-provider-aws/issues/15200" width="1200" height="600" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">aws_codepipeline with Github OAuth still breaking auth · Issue #15200 · hashicorp/terraform-provider-aws</div><div class="og-description">Community Note Please vote on this issue by adding a 👍 reaction to the original issue to help the community and maintainers prioritize this…</div></div></div></a>
 
 <h2><span id="回避策">回避策</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">resource "aws_codepipeline" "deploy" {</span><br><span class="line">  ...</span><br><span class="line">  stage {</span><br><span class="line">    name = "Source"</span><br><span class="line"></span><br><span class="line">    action {</span><br><span class="line">      ...</span><br><span class="line">      configuration = {</span><br><span class="line">        OAuthToken           = var.github_token</span><br><span class="line">        Owner                = "xxx"</span><br><span class="line">        Repo                 = "yyy"</span><br><span class="line">        Branch               = "master"</span><br><span class="line">        PollForSourceChanges = "false"</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  # NOTE: GitHub 認証エラーの暫定対応として GitHub の設定変更を無視します。</span><br><span class="line">  # see: https://github.com/hashicorp/terraform-provider-aws/issues/15200#issuecomment-700808677</span><br><span class="line">  lifecycle {</span><br><span class="line">    ignore_changes = [stage[0].action[0].configuration]</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
