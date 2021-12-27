@@ -18,7 +18,7 @@ httpd を起動中: httpd: Could not reliably determine the server's fully quali
 ```
 
 
-ServerNameに127.0.0.1を使用している[http://ja.wikipedia.org/wiki/Fully_Qualified_Domain_Name:title=FQDN]を確実に判断できません。
+ServerNameに127.0.0.1を使用している[FQDN](http://ja.wikipedia.org/wiki/Fully_Qualified_Domain_Name)を確実に判断できません。
 
 
 ## 原因
