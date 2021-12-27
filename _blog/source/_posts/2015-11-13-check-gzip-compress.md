@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 運用中のNginxをノーメンテでバージョンアップ&HTTP2.0モジュールを導入
+title: コンテンツがgzip圧縮されているかチェック
 date: 2015-11-13
 tags:
 - Nginx
