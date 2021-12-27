@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName'
+title: "httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName"
 date: 2015-03-16
 ---
 
