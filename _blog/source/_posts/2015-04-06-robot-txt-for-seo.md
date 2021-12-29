@@ -79,12 +79,3 @@ https://www.google.com/webmasters/tools/
 
 
 以上
-
-
-
-
-
-[asin:B00K3ESPEQ:detail]
-[asin:488337873X:detail]
-[asin:4844328093:detail]
-[asin:4800710138:detail]
