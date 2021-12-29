@@ -300,8 +300,6 @@ mysql -u <user> -p<pass> -e"SELECT version();"
 +------------+
 ```
 
-[asin:4873116384:detail]
-
 
 
 ## 各種メトリクス
