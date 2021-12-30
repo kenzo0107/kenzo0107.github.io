@@ -12,9 +12,6 @@ date: 2021-12-30
 
 <!-- more -->
 
-以前 ngx_mruby で S3 への proxy を実装した際にキャッシュをどう扱うか整理した際に
-気づきがたくさんあったのでまとめました。
-
 キャッシュ関連のディレクティブは多々ありますが、
 その中で間違えやすい no-cache, no-store を取り上げます。
 
@@ -57,8 +54,6 @@ No Validation, No Cache
 CloudFront 等 CDN サービスではキャッシュストレージ容量への懸念が小さいですが、
 CDN を DIY するときにはストレージ容量は有限なので懸念がある為です。
 
-という理解です。
-
 ### 厳密にキャッシュさせたくない場合
 
 ```
@@ -84,10 +79,6 @@ Proxy, CDN の互換性を軽減する為です。
 ブラウザ, Proxy, CDN の互換性を勘案し
 検証を細かく実施する必要があることがわかりました。
 
-テストをどの様に行うか、開発時の本番環境の再現性をどうするか等考えることが多い。
-
-
-
 ## 参考
 
 {% affiliate "Web配信の技術―HTTPキャッシュ・リバースプロキシ・CDNを活用する" "https://ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=B08VJ3YZK1&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" "https://www.amazon.co.jp/gp/product/B08VJ3YZK1/ref=as_li_qf_asin_il_tl?ie=UTF8&tag=kenzo0107-22&creative=1211&linkCode=as2&creativeASIN=B08VJ3YZK1&linkId=7da56da317e5d9bae2ca07a9333b9f76" "https://hb.afl.rakuten.co.jp/ichiba/22ed78a4.becc60fe.22ed78a5.6784b34a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakutenkobo-ebooks%2F5c1f7f52096c39a0a0a12d0d55bd600f%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" %}
@@ -97,10 +88,14 @@ Proxy, CDN の互換性を軽減する為です。
 
 Web における配信の最適化・高速化について解説いただいてます。
 
-CDN は CloudFront 使っていた程度ですが
+自分自身が AWS CloudFront 使っていた程度でしたが
 Varnish の設定がそもそも分かりやすく記述されており
 入りやすかったです。
 
 キャッシュに対しての理解が非常に深まりました。
 
 この場を借りて感謝申し上げます。
+
+テストをどの様に行うか、開発時の本番環境の再現性等々、まだまだ知りたいことがいっぱいです。
+
+続編求！
