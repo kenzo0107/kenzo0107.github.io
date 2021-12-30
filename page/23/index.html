@@ -131,6 +131,9 @@
 
 <p>上記のようにアクセスできれば成功です。</p>
 <p>以上</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-08-04T15:00:00.000Z" title="2015-08-04T15:00:00.000Z">2015-08-05</time><span class="level-item">数秒 read (About 52 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/04/2015-08-05-show-infomation-about-certificate-on-safari/">Safariで証明書情報確認</a></h1><div class="content"><h5><span id="鍵マークをクリック">鍵マークをクリック</span></h5><p><img src="http://i.imgur.com/Uk1IOKd.png"></p>
+<h5><span id="証明書を表示ボタンクリック">「証明書を表示」ボタンクリック</span></h5><p><img src="http://i.imgur.com/qxv7yLO.png"></p>
+<h5><span id="証明書情報">「証明書情報」</span></h5><p><img src="http://i.imgur.com/wH7iaPe.png"></p>
 </div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2015/08/04/2015-08-05-mysql-command-list/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160119/20160119111638.png" alt="MySQL コマンドまとめ"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-08-04T15:00:00.000Z" title="2015-08-04T15:00:00.000Z">2015-08-05</time><span class="level-item">9分 read (About 1338 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/04/2015-08-05-mysql-command-list/">MySQL コマンドまとめ</a></h1><div class="content"><h4><span id="dump-不要なテーブルはignore-tableテーブル名で排除">Dump 不要なテーブルは「–ignore-table=(テーブル名)」で排除</span></h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u &lt;user&gt; -p&lt;password&gt; dbname --ignore-table=dbname.table &gt; dump.sql</span><br></pre></td></tr></table></figure>
 
 <h4><span id="ddldata-definition-language取得">DDL(Data Definition Language)取得</span></h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u &lt;user&gt; -p&lt;password&gt; --no-data dbname &gt; ddl.sql</span><br></pre></td></tr></table></figure>
@@ -286,9 +289,6 @@
 </tr>
 </tbody></table>
 <h4><span id="接続中-のコネクション数取得">接続中 のコネクション数取得</span></h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -BNe <span class="string">"SHOW STATUS LIKE 'Threads_connected';"</span></span><br></pre></td></tr></table></figure>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-08-04T15:00:00.000Z" title="2015-08-04T15:00:00.000Z">2015-08-05</time><span class="level-item">数秒 read (About 52 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/04/2015-08-05-show-infomation-about-certificate-on-safari/">Safariで証明書情報確認</a></h1><div class="content"><h5><span id="鍵マークをクリック">鍵マークをクリック</span></h5><p><img src="http://i.imgur.com/Uk1IOKd.png"></p>
-<h5><span id="証明書を表示ボタンクリック">「証明書を表示」ボタンクリック</span></h5><p><img src="http://i.imgur.com/qxv7yLO.png"></p>
-<h5><span id="証明書情報">「証明書情報」</span></h5><p><img src="http://i.imgur.com/wH7iaPe.png"></p>
 </div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2015-08-04T15:00:00.000Z" title="2015-08-04T15:00:00.000Z">2015-08-05</time><span class="level-item">5分 read (About 788 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/08/04/2015-08-05-use-my-certificate-on-nginx/">NginxにオレオレSSL証明書インストール</a></h1><div class="content"><h2><span id="環境">環境</span></h2><ul>
 <li>AWS EC2 : t2.micro</li>
 <li>OS : CentOS Linux release 7.1.1503 (Core)</li>
@@ -352,7 +352,7 @@
                     fold: ''
                 }
             }
-        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Kembali ke atas" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
             if (typeof $.fn.lightGallery === 'function') {
                 $('.article').lightGallery({ selector: '.gallery-item' });
             }
