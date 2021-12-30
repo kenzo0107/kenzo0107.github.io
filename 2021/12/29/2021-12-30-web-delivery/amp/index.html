@@ -131,7 +131,7 @@
 			    "@id":"https://kenzo0107.github.io/2021/12/29/2021-12-30-web-delivery/"
 			},
 			"datePublished": "2021-12-29T15:00:00.000Z",
-			"dateModified": "2021-12-29T17:24:29.700Z",
+			"dateModified": "2021-12-30T11:55:04.565Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1920,7 +1920,6 @@ h6.categories {
 
 <a id="more"></a>
 
-<p>以前 ngx_mruby で S3 への proxy を実装した際にキャッシュをどう扱うか整理した際に<br>気づきがたくさんあったのでまとめました。</p>
 <p>キャッシュ関連のディレクティブは多々ありますが、<br>その中で間違えやすい no-cache, no-store を取り上げます。</p>
 <h2><span id="no-cache-の仕組み">no-cache の仕組み</span></h2><p><strong><font color="red">「キャッシュしない」ではない！</font></strong><br>キャッシュが有効期限内であっても毎回キャッシュが最新かどうか検証します。</p>
 <p>タワレコよろしく、<br>No Validation, No Cache<br>と覚えましょう。</p>
@@ -1933,7 +1932,6 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/QmQK5Q5.png" width="1284" height="246" layout="responsive"></amp-img></div>
 <h3><span id="使い所">使い所</span></h3><p>その命名である「no-store = ストアしない」という意味合いから<br>キャッシュストレージの容量を奪わない様にする場合に利用します。</p>
 <p>CloudFront 等 CDN サービスではキャッシュストレージ容量への懸念が小さいですが、<br>CDN を DIY するときにはストレージ容量は有限なので懸念がある為です。</p>
-<p>という理解です。</p>
 <h3><span id="厳密にキャッシュさせたくない場合">厳密にキャッシュさせたくない場合</span></h3><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: private, no-store, no-cache, must-revalidate</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
@@ -1973,7 +1971,7 @@ h6.categories {
 
 <p>同僚に勧められた本！</p>
 <p>Web における配信の最適化・高速化について解説いただいてます。</p>
-<p>CDN は CloudFront 使っていた程度ですが<br>Varnish の設定がそもそも分かりやすく記述されており<br>入りやすかったです。</p>
+<p>自分自身が AWS CloudFront 使っていた程度でしたが<br>Varnish の設定がそもそも分かりやすく記述されており<br>入りやすかったです。</p>
 <p>キャッシュに対しての理解が非常に深まりました。</p>
 <p>この場を借りて感謝申し上げます。</p>
 
