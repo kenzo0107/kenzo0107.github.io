@@ -10725,7 +10725,7 @@ body > .section {
   line-height: inherit !important;
 }
 .image.is-7by3 {
-  padding-top: 42.8%;
+  padding-top: 100%;
 }
 .image.is-7by3 img {
   bottom: 0;
