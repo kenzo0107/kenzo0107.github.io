@@ -3,214 +3,39 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
     
-        gtag('config', 'UA-162026478-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/PrivacyPolicy/">PrivacyPolicy</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2022/01/04/2022-01-04-raspberrypi-co2-monitoring/"><img class="thumbnail" src="https://i.imgur.com/2ZRGb84.jpeg" alt="Raspberry PI zero で CO2 濃度測定 &amp; アラートを LINE 通知"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2022-01-04T15:00:00.000Z" title="2022-01-04T15:00:00.000Z">2022-01-05</time><span class="level-item">16分 read (About 2410 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/01/04/2022-01-04-raspberrypi-co2-monitoring/">Raspberry PI zero で CO2 濃度測定 &amp; アラートを LINE 通知</a></h1><div class="content"><p>リモートワークで部屋に閉じこもることが増え、何気ない眠気に襲われることがあり<br>部屋の CO2 濃度を調査すべく、Raspberry PI で計測しました。</p>
-<h2><span id="設計図">設計図</span></h2><p><img src="https://i.imgur.com/Bo79WIv.png"></p>
-<p>ブレッドボードを使わず、ピンに直で結線しています。</p>
-<h3><span id="要点">要点</span></h3><ul>
-<li>MH-Z19<ul>
-<li>二酸化炭素濃度を測定します。</li>
+        gtag('config', 'UA-162026478-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/PrivacyPolicy/">PrivacyPolicy</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2022/01/04/2022-01-04-raspberrypi-co2-monitoring/"><img class="thumbnail" src="https://i.imgur.com/2ZRGb84.jpeg" alt="Raspberry PI zero で CO2 濃度測定 &amp; アラートを LINE 通知"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2022-01-04T15:00:00.000Z" title="2022-01-04T15:00:00.000Z">2022-01-05</time><span class="level-item">16分 read (About 2413 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/01/04/2022-01-04-raspberrypi-co2-monitoring/">Raspberry PI zero で CO2 濃度測定 &amp; アラートを LINE 通知</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E8%A8%AD%E8%A8%88%E5%9B%B3">設計図</a><ul>
+<li><a href="#%E8%A6%81%E7%82%B9">要点</a></li>
 </ul>
 </li>
-<li>モニター<ul>
-<li>リアルタイムの最新の二酸化炭素濃度を把握できるようにします。</li>
+<li><a href="#%E3%83%97%E3%83%AD%E3%83%83%E3%83%88%E5%85%88%E3%82%92-mackerel-%E3%81%AB%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1">プロット先を Mackerel にした理由</a></li>
+<li><a href="#%E4%BA%8B%E5%89%8D%E3%81%AB%E8%B3%BC%E5%85%A5%E3%81%97%E3%81%9F%E3%82%82%E3%81%AE">事前に購入したもの</a><ul>
+<li><a href="#%E4%BE%A1%E6%A0%BC%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">価格について</a></li>
 </ul>
 </li>
-<li>Raspberry PI<ul>
-<li>MH-Z19 で測定した二酸化炭素濃度を Mackerel にプロットします。</li>
+<li><a href="#raspberry-pi-os">Raspberry PI OS</a></li>
+<li><a href="#ansible-%E3%81%A7%E8%A8%AD%E5%AE%9A">Ansible で設定</a><ul>
+<li><a href="#%E5%90%84-role-%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">各 Role について</a></li>
 </ul>
 </li>
-<li>Mackerel<ul>
-<li>CO2 濃度を閾値を指定しそれを超えると LINE に通知する様にします。</li>
+<li><a href="#mackerel-%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%A1%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9">Mackerel のカスタムメトリクス</a></li>
+<li><a href="#mackerel-%E7%9B%A3%E8%A6%96%E3%83%AB%E3%83%BC%E3%83%AB%E3%81%AE%E8%A8%AD%E5%AE%9A">Mackerel 監視ルールの設定</a><ul>
+<li><a href="#%E5%B7%A5%E5%A4%AB%E7%82%B9">工夫点</a></li>
 </ul>
 </li>
+<li><a href="#mackerel-%E3%82%A2%E3%83%A9%E3%83%BC%E3%83%88%E9%80%9A%E7%9F%A5%E5%85%88%E8%A8%AD%E5%AE%9A">Mackerel アラート通知先設定</a></li>
+<li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li>
 </ul>
-<h2><span id="プロット先を-mackerel-にした理由">プロット先を Mackerel にした理由</span></h2><p>自前サーバを Raspberry PI に立てても良いかなと思いましたが、CO2濃度が閾値を超えると発火させたかったので<br>その辺まで面倒を見たくないなという気持ちから避けました。</p>
-<p>Prometheus を以前実装しましたが、その管理をしたくなく、<br>Raspberry PI のリソースを使わない為にも外部にしたかったです。</p>
-<p>尚、 Datadog は Raspberry PI 用の Agent は明確にサポートしておらず、近しい Agent タイプを利用する必要があります。<br>ですが、何度も失敗しサポートに問い合わせたところ、ログ送って欲しいとなって面倒になってしまいました。</p>
-<p>そこゆくとインストールが簡単、監視とカスタムメトリクス、アラート設定まで無料で事足りてしまう Mackerel が心強く、採用に至りました。</p>
-<p>念の為、 Mackerel の回し者ではないことは断言しておきます。</p>
-<h2><span id="事前に購入したもの">事前に購入したもの</span></h2><ul>
-<li>Raspberry PI zero W<ul>
-<li>特に種類は問わずです。pico もそのうち試したい！</li>
-</ul>
-</li>
-</ul>
-<div class="level article-meta">
-  <div class="level-left link-preview">
-    <div class="og-image">
-      <a href="https://www.amazon.co.jp/gp/search/ref=as_li_qf_sp_sr_tl?ie=UTF8&tag=kenzo0107-22&keywords=Raspberry PI Zero W&index=aps&camp=247&creative=1211&linkCode=ur2&linkId=10ed550c0ddab27cc54bb5eb6b39dcff" target="_blank">
-        <img src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=B07BHMRTTY&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" style="border: none;">
-      </a>
-    </div>
-    <div class="og-description">
-      <div>
-        <a href="https://www.amazon.co.jp/gp/search/ref=as_li_qf_sp_sr_tl?ie=UTF8&tag=kenzo0107-22&keywords=Raspberry PI Zero W&index=aps&camp=247&creative=1211&linkCode=ur2&linkId=10ed550c0ddab27cc54bb5eb6b39dcff" target="_blank">Raspberry PI zero W</a>
-      </div>
-      <div>&nbsp;</div>
-      <div class="og-description">
-        <a class="button is-link" href="https://hb.afl.rakuten.co.jp/ichiba/23166659.8ed3e37c.2316665a.b61e268d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmcpjapan%2Fv_35027215483031%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
-        <a class="button is-link" href="https://www.amazon.co.jp/gp/search/ref=as_li_qf_sp_sr_tl?ie=UTF8&tag=kenzo0107-22&keywords=Raspberry PI Zero W&index=aps&camp=247&creative=1211&linkCode=ur2&linkId=10ed550c0ddab27cc54bb5eb6b39dcff" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
-      </div>
-    </div>
-  </div>
+<!-- tocstop -->
+
 </div>
-
-
-<ul>
-<li>MH-Z19C<ul>
-<li>CO2 濃度測定モジュールです。</li>
-<li>Raspberry PI や Arduino と接続でき利用できます。</li>
-</ul>
-</li>
-</ul>
-<div class="level article-meta">
-  <div class="level-left link-preview">
-    <div class="og-image">
-      <a href="https://www.amazon.co.jp/gp/product/B08SJCWKKG/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B08SJCWKKG&linkCode=as2&tag=kenzo0107-22&linkId=79d332385d6654819c0b1e2ea67bdce1" target="_blank">
-        <img src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=B08SJCWKKG&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" style="border: none;">
-      </a>
-    </div>
-    <div class="og-description">
-      <div>
-        <a href="https://www.amazon.co.jp/gp/product/B08SJCWKKG/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B08SJCWKKG&linkCode=as2&tag=kenzo0107-22&linkId=79d332385d6654819c0b1e2ea67bdce1" target="_blank">MH-Z19C CO2センサー</a>
-      </div>
-      <div>&nbsp;</div>
-      <div class="og-description">
-        <a class="button is-link" href="https://hb.afl.rakuten.co.jp/ichiba/23164c18.232f3273.23164c19.8af94ae3/_RTLink33687?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhandicraft-shop%2F73015987%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
-        <a class="button is-link" href="https://www.amazon.co.jp/gp/product/B08SJCWKKG/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B08SJCWKKG&linkCode=as2&tag=kenzo0107-22&linkId=79d332385d6654819c0b1e2ea67bdce1" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<ul>
-<li>ジャンパーワイヤー<ul>
-<li>数本利用するのみですが、今後も利用する可能性が高そうであれば、買っといて損なしです。</li>
-</ul>
-</li>
-</ul>
-<div class="level article-meta">
-  <div class="level-left link-preview">
-    <div class="og-image">
-      <a href="https://www.amazon.co.jp/gp/offer-listing/B01A4DDUTA/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B01A4DDUTA&linkCode=am2&tag=kenzo0107-22&linkId=528edbec8635eb89b1d831aefcc81cab" target="_blank">
-        <img src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=B01A4DDUTA&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" style="border: none;">
-      </a>
-    </div>
-    <div class="og-description">
-      <div>
-        <a href="https://www.amazon.co.jp/gp/offer-listing/B01A4DDUTA/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B01A4DDUTA&linkCode=am2&tag=kenzo0107-22&linkId=528edbec8635eb89b1d831aefcc81cab" target="_blank">ブレッドボード・ジャンパーワイヤー（メス-メス）（20cm）40本</a>
-      </div>
-      <div>&nbsp;</div>
-      <div class="og-description">
-        <a class="button is-link" href="https://hb.afl.rakuten.co.jp/ichiba/23166baf.c1f701ce.23166bb0.221d0595/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Falt-mart%2Fb01a4dduta%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
-        <a class="button is-link" href="https://www.amazon.co.jp/gp/offer-listing/B01A4DDUTA/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B01A4DDUTA&linkCode=am2&tag=kenzo0107-22&linkId=528edbec8635eb89b1d831aefcc81cab" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<ul>
-<li>0.91インチ128 * 32 OLEDディスプレイ</li>
-</ul>
-<div class="level article-meta">
-  <div class="level-left link-preview">
-    <div class="og-image">
-      <a href="https://www.amazon.co.jp/gp/product/B09FZ3H9FT/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B09FZ3H9FT&linkCode=as2&tag=kenzo0107-22&linkId=aa2d68eafbc16fe55422cf61c323960a" target="_blank">
-        <img src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=B09FZ3H9FT&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" style="border: none;">
-      </a>
-    </div>
-    <div class="og-description">
-      <div>
-        <a href="https://www.amazon.co.jp/gp/product/B09FZ3H9FT/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B09FZ3H9FT&linkCode=as2&tag=kenzo0107-22&linkId=aa2d68eafbc16fe55422cf61c323960a" target="_blank">0.91インチ128 * 32 OLEDディスプレイ</a>
-      </div>
-      <div>&nbsp;</div>
-      <div class="og-description">
-        <a class="button is-link" href="https://hb.afl.rakuten.co.jp/ichiba/23167b1d.a5b7d2a9.23167b1e.46e4f5d4/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftanabata77%2F4945318808923%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
-        <a class="button is-link" href="https://www.amazon.co.jp/gp/product/B09FZ3H9FT/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B09FZ3H9FT&linkCode=as2&tag=kenzo0107-22&linkId=aa2d68eafbc16fe55422cf61c323960a" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<h3><span id="価格について">価格について</span></h3><p>amazon や楽天のリンク貼りましたが、<br><a href="https://akizukidenshi.com/">秋月電子通商</a>や<a href="https://www.switch-science.com/">スイッチサイエンス</a>の方が<br>安いかもしれないです。<br>時勢によるかと思いますが、専門店の方が安く購入できる印象があります。</p>
-<p>安さを求めるなら海外サイトで配送まで時間がかかる可能性がありますが <a href="https://www.ebay.com/">ebay</a> も良いです。</p>
-<p>実際に MH-Z19C は ebay で購入しましたが、届くまで1ヶ月くらい掛かりましたが、特に問題なく利用できています。</p>
-<h2><span id="raspberry-pi-os">Raspberry PI OS</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat &#x2F;etc&#x2F;issue</span><br><span class="line">Raspbian GNU&#x2F;Linux 10 \n \l</span><br></pre></td></tr></table></figure>
-
-<p>OS インストールは省略します。</p>
-<h2><span id="ansible-で設定">Ansible で設定</span></h2><p><a href="https://github.com/kenzo0107/raspi-ansible">https://github.com/kenzo0107/raspi-ansible</a> を clone いただき<br>ご利用いただければ設定できます。</p>
-<ul>
-<li>raspberrypi.yml の nodejs は今回利用しないので削除しても構いません。</li>
-<li>mackerel api key を秘匿情報として管理していますので更新してください。<br><a href="https://github.com/kenzo0107/raspi-ansible/blob/master/roles/monitoring/vars/secret.yml">https://github.com/kenzo0107/raspi-ansible/blob/master/roles/monitoring/vars/secret.yml</a></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mackerel_apikey&#x3D;xxxx</span><br></pre></td></tr></table></figure>
-
-<h3><span id="各-role-について">各 Role について</span></h3><p>今回のメインである機能について補足しておきます。</p>
-<ul>
-<li>monitoring: mackerel agent インストールし起動</li>
-<li>co2sensor: 主に MH-Z19 からデータ取得する設定<ul>
-<li>MH-Z19 からデータ取得する為に UART を有効化しシリアル通信できる様にします。</li>
-<li>I2C はデフォルトで有効化されていた為、Ansible の設定に含んでいません。<ul>
-<li>もし有効化されていない様であれば <code>/boot/confit.txt</code> に <code>dtparam=i2c_arm=on</code> 追記してください。</li>
-</ul>
-</li>
-<li>python モジュール mh_z19 インストールし、 CO2 濃度を python モジュールで取得できる様にする</li>
-<li>mackerel-agent に CO2 濃度値をカスタムメトリクスでプロットする設定追加</li>
-</ul>
-</li>
-<li>co2lcd: OLED ディスプレイに CO2 濃度を表示する設定<ul>
-<li>ディスプレイに表示するためのモジュールをインストール</li>
-<li>ディスプレイにCO2濃度表示する python スクリプトを追加</li>
-<li>上記スクリプトを systemd 登録し daemon 化<ul>
-<li>スクリプトは MH-Z19 の値が変更された場合のみディプレイへの表示更新を実施するようにしています。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2><span id="mackerel-のカスタムメトリクス">Mackerel のカスタムメトリクス</span></h2><p><img src="https://i.imgur.com/CbRXCGy.png"></p>
-<p>無料版なので1日だけのメトリクス保存となりますが、<br>おおよそ一日の動きがわかれば特段問題はないです。</p>
-<p>季節性や数日間の比較が見たくなったらアップグレードを検討します。</p>
-<h2><span id="mackerel-監視ルールの設定">Mackerel 監視ルールの設定</span></h2><p><img src="https://i.imgur.com/Bh4MQB0.png"></p>
-<p><code>cusotm.co2.raspberrypi</code> というカスタムメトリクス名は<br><a href="https://github.com/kenzo0107/raspi-ansible/blob/master/roles/co2sensor/files/mackerel-co2monitoring.sh#L3">https://github.com/kenzo0107/raspi-ansible/blob/master/roles/co2sensor/files/mackerel-co2monitoring.sh#L3</a> でメトリクス名を <code>co2.raspberrypi</code> としている為です。</p>
-<p>以下の様にしました。</p>
-<ul>
-<li>warn &gt; 1200 ppm</li>
-<li>critical &gt; 1500 ppm</li>
-</ul>
-<h3><span id="工夫点">工夫点</span></h3><p><img src="https://i.imgur.com/gIuM093.png"></p>
-<p>一時的な上昇で通知するとノイズとなるアラートが多かった為、5回連続発生した場合のみとしました。</p>
-<p>たまたま深いため息を MH-Z19 に吹きかけてアラートが発火してしまったことがあった為です。</p>
-<p>ため息したらCRITICALと教えられる様なディストピアは頂けません。</p>
-<h2><span id="mackerel-アラート通知先設定">Mackerel アラート通知先設定</span></h2><p>Mackerel は様々なプラットフォームをサポートしており、 LINE 通知を採用しました。</p>
-<p><img src="https://i.imgur.com/luBn2aV.png"></p>
-<h2><span id="総評">総評</span></h2><p>シリアル通信や I2C という聞き慣れない箇所は以下の本でラジコンを作ってたので割とすっと入れました。</p>
-<p>Raspberry PI で電子工作を始める初学者にとってうってつけの良書です。</p>
-<div class="level article-meta">
-  <div class="level-left link-preview">
-    <div class="og-image">
-      <a href="https://www.amazon.co.jp/gp/product/4065193397/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=4065193397&linkCode=as2&tag=kenzo0107-22&linkId=dcd4829e702d3caacbaf3ea349deb358" target="_blank">
-        <img src="//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=4065193397&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" style="border: none;">
-      </a>
-    </div>
-    <div class="og-description">
-      <div>
-        <a href="https://www.amazon.co.jp/gp/product/4065193397/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=4065193397&linkCode=as2&tag=kenzo0107-22&linkId=dcd4829e702d3caacbaf3ea349deb358" target="_blank">Raspberry PI で学ぶ電子工作</a>
-      </div>
-      <div>&nbsp;</div>
-      <div class="og-description">
-        <a class="button is-link" href="https://hb.afl.rakuten.co.jp/ichiba/22ed78a4.becc60fe.22ed78a5.6784b34a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakutenkobo-ebooks%2F5cdcee1da3fd31b8b1de30dd3b8b80f1%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
-        <a class="button is-link" href="https://www.amazon.co.jp/gp/product/4065193397/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=4065193397&linkCode=as2&tag=kenzo0107-22&linkId=dcd4829e702d3caacbaf3ea349deb358" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<p>ジャンパワイヤーが剥き出しで子供が触って外れることもある為、ケースも自作してみようと思います♪</p>
-<p>以上、参考になれば幸いです。</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2022-01-03T15:00:00.000Z" title="2022-01-03T15:00:00.000Z">2022-01-04</time><span class="level-item">1分 read (About 115 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/01/03/2022-01-04-rettach-to-user-namespace-unsupported-new-os/">warning: reattach-to-user-namespace: unsupported new OS, trying as if it were 10.10</a></h1><div class="content"><p>macOS を Catalina から BigSur にアップグレードしたところ、ターミナル起動で以下 warning が見られる様になりました。</p>
+</div></div><a class="article-more button is-small size-small" href="/2022/01/04/2022-01-04-raspberrypi-co2-monitoring/#more">Read More</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2022-01-03T15:00:00.000Z" title="2022-01-03T15:00:00.000Z">2022-01-04</time><span class="level-item">1分 read (About 115 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/01/03/2022-01-04-rettach-to-user-namespace-unsupported-new-os/">warning: reattach-to-user-namespace: unsupported new OS, trying as if it were 10.10</a></h1><div class="content"><p>macOS を Catalina から BigSur にアップグレードしたところ、ターミナル起動で以下 warning が見られる様になりました。</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">warning: reattach-to-user-namespace: unsupported new OS, trying as if it were 10.10</span><br></pre></td></tr></table></figure>
 
 <p>シンプルにアップグレードしたら解決しました。</p>

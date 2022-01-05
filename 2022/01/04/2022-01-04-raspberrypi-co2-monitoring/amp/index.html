@@ -14,10 +14,78 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A8%AD%E8%A8%88%E5%9B%B3&#34;&gt;設計図&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A6%81%E7%82%B9&#34;&gt;要点&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%83%97%E3%83%AD%E3%83%83%E3%83%88%E5%85%88%E3%82%92-mackerel-%E3%81%AB%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1&#34;&gt;プロット先を Mackerel にした理由&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BA%8B%E5%89%8D%E3%81%AB%E8%B3%BC%E5%85%A5%E3%81%97%E3%81%9F%E3%82%82%E3%81%AE&#34;&gt;事前に購入したもの&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BE%A1%E6%A0%BC%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6&#34;&gt;価格について&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#raspberry-pi-os&#34;&gt;Raspberry PI OS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ansible-%E3%81%A7%E8%A8%AD%E5%AE%9A&#34;&gt;Ansible で設定&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%90%84-role-%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6&#34;&gt;各 Role について&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%A1%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9&#34;&gt;Mackerel のカスタムメトリクス&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E7%9B%A3%E8%A6%96%E3%83%AB%E3%83%BC%E3%83%AB%E3%81%AE%E8%A8%AD%E5%AE%9A&#34;&gt;Mackerel 監視ルールの設定&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%B7%A5%E5%A4%AB%E7%82%B9&#34;&gt;工夫点&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E3%82%A2%E3%83%A9%E3%83%BC%E3%83%88%E9%80%9A%E7%9F%A5%E5%85%88%E8%A8%AD%E5%AE%9A&#34;&gt;Mackerel アラート通知先設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B7%8F%E8%A9%95&#34;&gt;総評&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2022/01/04/2022-01-04-raspberrypi-co2-monitoring/">
 	<meta name="twitter:title" content="Raspberry PI zero で CO2 濃度測定 &amp; アラートを LINE 通知 - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A8%AD%E8%A8%88%E5%9B%B3&#34;&gt;設計図&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A6%81%E7%82%B9&#34;&gt;要点&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%83%97%E3%83%AD%E3%83%83%E3%83%88%E5%85%88%E3%82%92-mackerel-%E3%81%AB%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1&#34;&gt;プロット先を Mackerel にした理由&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BA%8B%E5%89%8D%E3%81%AB%E8%B3%BC%E5%85%A5%E3%81%97%E3%81%9F%E3%82%82%E3%81%AE&#34;&gt;事前に購入したもの&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BE%A1%E6%A0%BC%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6&#34;&gt;価格について&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#raspberry-pi-os&#34;&gt;Raspberry PI OS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ansible-%E3%81%A7%E8%A8%AD%E5%AE%9A&#34;&gt;Ansible で設定&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%90%84-role-%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6&#34;&gt;各 Role について&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%A1%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9&#34;&gt;Mackerel のカスタムメトリクス&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E7%9B%A3%E8%A6%96%E3%83%AB%E3%83%BC%E3%83%AB%E3%81%AE%E8%A8%AD%E5%AE%9A&#34;&gt;Mackerel 監視ルールの設定&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%B7%A5%E5%A4%AB%E7%82%B9&#34;&gt;工夫点&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E3%82%A2%E3%83%A9%E3%83%BC%E3%83%88%E9%80%9A%E7%9F%A5%E5%85%88%E8%A8%AD%E5%AE%9A&#34;&gt;Mackerel アラート通知先設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B7%8F%E8%A9%95&#34;&gt;総評&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;">
 	
     
     	<meta name="twitter:image" content="https://i.imgur.com/Bo79WIv.png">
@@ -48,12 +116,46 @@
 			"@type": "BlogPosting",
 			"headline": "Raspberry PI zero で CO2 濃度測定 &amp; アラートを LINE 通知",
 			
+			"description": "&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A8%AD%E8%A8%88%E5%9B%B3&#34;&gt;設計図&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E8%A6%81%E7%82%B9&#34;&gt;要点&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%83%97%E3%83%AD%E3%83%83%E3%83%88%E5%85%88%E3%82%92-mackerel-%E3%81%AB%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1&#34;&gt;プロット先を Mackerel にした理由&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BA%8B%E5%89%8D%E3%81%AB%E8%B3%BC%E5%85%A5%E3%81%97%E3%81%9F%E3%82%82%E3%81%AE&#34;&gt;事前に購入したもの&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E4%BE%A1%E6%A0%BC%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6&#34;&gt;価格について&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#raspberry-pi-os&#34;&gt;Raspberry PI OS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ansible-%E3%81%A7%E8%A8%AD%E5%AE%9A&#34;&gt;Ansible で設定&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%90%84-role-%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6&#34;&gt;各 Role について&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%A1%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9&#34;&gt;Mackerel のカスタムメトリクス&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E7%9B%A3%E8%A6%96%E3%83%AB%E3%83%BC%E3%83%AB%E3%81%AE%E8%A8%AD%E5%AE%9A&#34;&gt;Mackerel 監視ルールの設定&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E5%B7%A5%E5%A4%AB%E7%82%B9&#34;&gt;工夫点&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mackerel-%E3%82%A2%E3%83%A9%E3%83%BC%E3%83%88%E9%80%9A%E7%9F%A5%E5%85%88%E8%A8%AD%E5%AE%9A&#34;&gt;Mackerel アラート通知先設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E7%B7%8F%E8%A9%95&#34;&gt;総評&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2022/01/04/2022-01-04-raspberrypi-co2-monitoring/"
 			},
 			"datePublished": "2022-01-04T15:00:00.000Z",
-			"dateModified": "2022-01-05T15:39:30.033Z",
+			"dateModified": "2022-01-05T15:42:51.661Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1814,7 +1916,44 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>リモートワークで部屋に閉じこもることが増え、何気ない眠気に襲われることがあり<br>部屋の CO2 濃度を調査すべく、Raspberry PI で計測しました。</p>
+			  		<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E8%A8%AD%E8%A8%88%E5%9B%B3">設計図</a><ul>
+<li><a href="#%E8%A6%81%E7%82%B9">要点</a></li>
+</ul>
+</li>
+<li><a href="#%E3%83%97%E3%83%AD%E3%83%83%E3%83%88%E5%85%88%E3%82%92-mackerel-%E3%81%AB%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1">プロット先を Mackerel にした理由</a></li>
+<li><a href="#%E4%BA%8B%E5%89%8D%E3%81%AB%E8%B3%BC%E5%85%A5%E3%81%97%E3%81%9F%E3%82%82%E3%81%AE">事前に購入したもの</a><ul>
+<li><a href="#%E4%BE%A1%E6%A0%BC%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">価格について</a></li>
+</ul>
+</li>
+<li><a href="#raspberry-pi-os">Raspberry PI OS</a></li>
+<li><a href="#ansible-%E3%81%A7%E8%A8%AD%E5%AE%9A">Ansible で設定</a><ul>
+<li><a href="#%E5%90%84-role-%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">各 Role について</a></li>
+</ul>
+</li>
+<li><a href="#mackerel-%E3%81%AE%E3%82%AB%E3%82%B9%E3%82%BF%E3%83%A0%E3%83%A1%E3%83%88%E3%83%AA%E3%82%AF%E3%82%B9">Mackerel のカスタムメトリクス</a></li>
+<li><a href="#mackerel-%E7%9B%A3%E8%A6%96%E3%83%AB%E3%83%BC%E3%83%AB%E3%81%AE%E8%A8%AD%E5%AE%9A">Mackerel 監視ルールの設定</a><ul>
+<li><a href="#%E5%B7%A5%E5%A4%AB%E7%82%B9">工夫点</a></li>
+</ul>
+</li>
+<li><a href="#mackerel-%E3%82%A2%E3%83%A9%E3%83%BC%E3%83%88%E9%80%9A%E7%9F%A5%E5%85%88%E8%A8%AD%E5%AE%9A">Mackerel アラート通知先設定</a></li>
+<li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<a id="more"></a>
+
+
+<p>リモートワークで部屋に閉じこもることが増え、何気ない眠気に襲われることがあり<br>部屋の CO2 濃度を調査すべく、Raspberry PI で計測しました。</p>
 <h2><span id="設計図">設計図</span></h2><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Bo79WIv.png" width="1506" height="904" layout="responsive"></amp-img></div>
 <p>ブレッドボードを使わず、ピンに直で結線しています。</p>
 <h3><span id="要点">要点</span></h3><ul>

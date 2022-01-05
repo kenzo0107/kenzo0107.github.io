@@ -4,6 +4,16 @@ date: 2022-01-05
 thumbnail: https://i.imgur.com/2ZRGb84.jpeg
 ---
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+<!-- more -->
+
+
 リモートワークで部屋に閉じこもることが増え、何気ない眠気に襲われることがあり
 部屋の CO2 濃度を調査すべく、Raspberry PI で計測しました。
 
