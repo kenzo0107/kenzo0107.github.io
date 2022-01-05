@@ -168,6 +168,25 @@ Mackerel は様々なプラットフォームをサポートしており、 LINE
 ![](https://i.imgur.com/luBn2aV.png)
 
 
+## CO2濃度を測定してみて
+
+CO2濃度上昇の起因は以下が多かったです。
+
+* 複数人が一部屋に集まる
+* MH-Z19 に近づいて息をしてしまう
+  * 息が吹きかからないような場所に設置することで回避できそう
+* 5時間程度、同じ部屋からほぼほぼ動かない
+  * 基本ドア閉めっぱなし
+
+意外とエアコンで暖房をつけても然程上昇することはなかったです。
+
+ドアを開けて放置するだけでも割と CO2 濃度が落ち着きます。
+
+逆によく眠れない時はCO2濃度を高めると眠りやすいのでは？と思いました。
+
+* 布団をかぶって寝る
+* なるべく集まって寝る
+
 ## 総評
 
 シリアル通信や I2C という聞き慣れない箇所は以下の本でラジコンを作ってたので割とすっと入れました。
@@ -177,5 +196,6 @@ Raspberry PI で電子工作を始める初学者にとってうってつけの�
 {% affiliate "Raspberry PI で学ぶ電子工作" "//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=4065193397&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" "https://www.amazon.co.jp/gp/product/4065193397/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=4065193397&linkCode=as2&tag=kenzo0107-22&linkId=dcd4829e702d3caacbaf3ea349deb358" "https://hb.afl.rakuten.co.jp/ichiba/22ed78a4.becc60fe.22ed78a5.6784b34a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakutenkobo-ebooks%2F5cdcee1da3fd31b8b1de30dd3b8b80f1%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" %}
 
 ジャンパワイヤーが剥き出しで子供が触って外れることもある為、ケースも自作してみようと思います♪
+
 
 以上、参考になれば幸いです。
