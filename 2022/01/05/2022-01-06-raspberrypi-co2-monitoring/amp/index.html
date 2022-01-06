@@ -158,7 +158,7 @@
 			    "@id":"https://kenzo0107.github.io/2022/01/05/2022-01-06-raspberrypi-co2-monitoring/"
 			},
 			"datePublished": "2022-01-05T15:00:00.000Z",
-			"dateModified": "2022-01-06T00:47:38.651Z",
+			"dateModified": "2022-01-06T02:56:41.995Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1985,7 +1985,7 @@ h6.categories {
 
 <a id="more"></a>
 
-
+<hr>
 <p>リモートワークで部屋に閉じこもることが増え、何気ない眠気に襲われることがあり<br>部屋の CO2 濃度を調査すべく、Raspberry PI で計測しました。</p>
 <h2><span id="設計図">設計図</span></h2><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Bo79WIv.png" width="1506" height="904" layout="responsive"></amp-img></div>
 <p>ブレッドボードを使わず、ピンに直で結線しています。</p>
@@ -2003,14 +2003,14 @@ h6.categories {
 </ul>
 </li>
 <li>Mackerel<ul>
-<li>CO2 濃度を閾値を指定しそれを超えると LINE に通知する様にします。</li>
+<li>CO2 濃度を閾値を指定しそれを超えると LINE に通知します。</li>
 </ul>
 </li>
 </ul>
-<h2><span id="プロット先を-mackerel-にした理由">プロット先を Mackerel にした理由</span></h2><p>自前サーバを Raspberry PI に立てても良いかなと思いましたが、CO2濃度が閾値を超えると発火させたかったので<br>その辺まで面倒を見たくないなという気持ちから避けました。</p>
-<p>Prometheus を以前実装しましたが、その管理をしたくなく、<br>Raspberry PI のリソースを使わない為にも外部にしたかったです。</p>
+<h2><span id="プロット先を-mackerel-にした理由">プロット先を Mackerel にした理由</span></h2><p>自前サーバを Raspberry PI に立てても良いかなと思いましたが、<br>CO2濃度が閾値を超えるとアラートを発火させたかったので<br>その辺まで面倒を見たくないなという気持ちから避けました。</p>
+<p>以前 Prometheus で監視したこともありましたが、<br>結構リソース食うので極力リソースを使用したくない意図もありました。</p>
 <p>尚、 Datadog は Raspberry PI 用の Agent は明確にサポートしておらず、近しい Agent タイプを利用する必要があります。<br>ですが、何度も失敗しサポートに問い合わせたところ、ログ送って欲しいとなって面倒になってしまいました。</p>
-<p>そこゆくとインストールが簡単、監視とカスタムメトリクス、アラート設定まで無料で事足りてしまう Mackerel が心強く、採用に至りました。</p>
+<p>インストールが簡単、監視とカスタムメトリクス、アラート設定まで無料で事足りてしまう Mackerel が心強く、採用に至りました。</p>
 <p>念の為、 Mackerel の回し者ではないことは断言しておきます。</p>
 <h2><span id="事前に購入したもの">事前に購入したもの</span></h2><ul>
 <li>Raspberry PI zero W<ul>
