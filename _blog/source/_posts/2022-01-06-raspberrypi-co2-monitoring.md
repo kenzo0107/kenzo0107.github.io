@@ -100,8 +100,7 @@ OS インストールは省略します。
 
 ## Ansible で設定
 
-https://github.com/kenzo0107/raspi-ansible を clone いただき
-ご利用いただければ設定できます。
+https://github.com/kenzo0107/raspi-ansible を利用します。
 
 * raspberrypi.yml の nodejs は今回利用しないので削除しても構いません。
 * mackerel api key を秘匿情報として管理していますので更新してください。
@@ -146,7 +145,7 @@ mackerel_apikey=xxxx
 `cusotm.co2.raspberrypi` というカスタムメトリクス名は
 https://github.com/kenzo0107/raspi-ansible/blob/master/roles/co2sensor/files/mackerel-co2monitoring.sh#L3 でメトリクス名を `co2.raspberrypi` としている為です。
 
-以下の様にしました。
+以下の様に閾値を設定しました。
 
 * warn > 1200 ppm
 * critical > 1500 ppm
@@ -163,10 +162,12 @@ https://github.com/kenzo0107/raspi-ansible/blob/master/roles/co2sensor/files/mac
 
 ## Mackerel アラート通知先設定
 
-Mackerel は様々なプラットフォームをサポートしており、 LINE 通知を採用しました。
+Mackerel は様々なプラットフォームをサポートしています。
+プライベートな通知を LINE 通知にまとめていた個人的事情で LINE 通知を採用しました。
 
 ![](https://i.imgur.com/luBn2aV.png)
 
+プライベート Slack もありますが、業務の連絡と見間違うことがあったので避けておきました。
 
 ## CO2濃度を測定してみて
 
@@ -178,9 +179,11 @@ CO2濃度上昇の起因は以下が多かったです。
 * 5時間程度、同じ部屋からほぼほぼ動かない
   * 基本ドア閉めっぱなし
 
-意外とエアコンで暖房をつけても然程上昇することはなかったです。
+意外とエアコンで暖房をつけても思ったほど上昇することはなかったです。
 
-ドアを開けて放置するだけでも割と CO2 濃度が落ち着きます。
+ドアを開けて放置するだけでも割と落ち着きます。
+
+冬場は窓を開けるのは避けたい時はドアを開けての換気でも幾分効果がある印象です。
 
 逆によく眠れない時はCO2濃度を高めると眠りやすいのでは？と思いました。
 

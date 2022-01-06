@@ -158,7 +158,7 @@
 			    "@id":"https://kenzo0107.github.io/2022/01/05/2022-01-06-raspberrypi-co2-monitoring/"
 			},
 			"datePublished": "2022-01-05T15:00:00.000Z",
-			"dateModified": "2022-01-06T00:40:39.413Z",
+			"dateModified": "2022-01-06T00:44:49.093Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -2123,7 +2123,7 @@ h6.categories {
 <h2><span id="raspberry-pi-os">Raspberry PI OS</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/issue</span><br><span class="line">Raspbian GNU/Linux 10 \n \l</span><br></pre></td></tr></tbody></table></figure>
 
 <p>OS インストールは省略します。</p>
-<h2><span id="ansible-で設定">Ansible で設定</span></h2><p><a href="https://github.com/kenzo0107/raspi-ansible">https://github.com/kenzo0107/raspi-ansible</a> を clone いただき<br>ご利用いただければ設定できます。</p>
+<h2><span id="ansible-で設定">Ansible で設定</span></h2><p><a href="https://github.com/kenzo0107/raspi-ansible">https://github.com/kenzo0107/raspi-ansible</a> を利用します。</p>
 <ul>
 <li>raspberrypi.yml の nodejs は今回利用しないので削除しても構いません。</li>
 <li>mackerel api key を秘匿情報として管理していますので更新してください。<br><a href="https://github.com/kenzo0107/raspi-ansible/blob/master/roles/monitoring/vars/secret.yml">https://github.com/kenzo0107/raspi-ansible/blob/master/roles/monitoring/vars/secret.yml</a></li>
@@ -2158,7 +2158,7 @@ h6.categories {
 <p>季節性や数日間の比較が見たくなったらアップグレードを検討します。</p>
 <h2><span id="mackerel-監視ルールの設定">Mackerel 監視ルールの設定</span></h2><div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/Bh4MQB0.png" width="934" height="396" layout="responsive"></amp-img></div>
 <p><code>cusotm.co2.raspberrypi</code> というカスタムメトリクス名は<br><a href="https://github.com/kenzo0107/raspi-ansible/blob/master/roles/co2sensor/files/mackerel-co2monitoring.sh#L3">https://github.com/kenzo0107/raspi-ansible/blob/master/roles/co2sensor/files/mackerel-co2monitoring.sh#L3</a> でメトリクス名を <code>co2.raspberrypi</code> としている為です。</p>
-<p>以下の様にしました。</p>
+<p>以下の様に閾値を設定しました。</p>
 <ul>
 <li>warn &gt; 1200 ppm</li>
 <li>critical &gt; 1500 ppm</li>
@@ -2167,8 +2167,9 @@ h6.categories {
 <p>一時的な上昇で通知するとノイズとなるアラートが多かった為、5回連続発生した場合のみとしました。</p>
 <p>たまたま深いため息を MH-Z19 に吹きかけてアラートが発火してしまったことがあった為です。</p>
 <p>ため息したらCRITICALと教えられる様なディストピアは頂けません。</p>
-<h2><span id="mackerel-アラート通知先設定">Mackerel アラート通知先設定</span></h2><p>Mackerel は様々なプラットフォームをサポートしており、 LINE 通知を採用しました。</p>
+<h2><span id="mackerel-アラート通知先設定">Mackerel アラート通知先設定</span></h2><p>Mackerel は様々なプラットフォームをサポートしています。<br>プライベートな通知を LINE 通知にまとめていた個人的事情で LINE 通知を採用しました。</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/luBn2aV.png" width="1424" height="1124" layout="responsive"></amp-img></div>
+<p>プライベート Slack もありますが、業務の連絡と見間違うことがあったので避けておきました。</p>
 <h2><span id="co2濃度を測定してみて">CO2濃度を測定してみて</span></h2><p>CO2濃度上昇の起因は以下が多かったです。</p>
 <ul>
 <li>複数人が一部屋に集まる</li>
@@ -2181,8 +2182,9 @@ h6.categories {
 </ul>
 </li>
 </ul>
-<p>意外とエアコンで暖房をつけても然程上昇することはなかったです。</p>
-<p>ドアを開けて放置するだけでも割と CO2 濃度が落ち着きます。</p>
+<p>意外とエアコンで暖房をつけても思ったほど上昇することはなかったです。</p>
+<p>ドアを開けて放置するだけでも割と落ち着きます。</p>
+<p>冬場は窓を開けるのは避けたい時はドアを開けての換気でも幾分効果がある印象です。</p>
 <p>逆によく眠れない時はCO2濃度を高めると眠りやすいのでは？と思いました。</p>
 <ul>
 <li>布団をかぶって寝る</li>
