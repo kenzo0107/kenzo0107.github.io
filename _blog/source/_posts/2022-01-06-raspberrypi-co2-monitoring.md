@@ -68,7 +68,7 @@ CO2濃度が閾値を超えるとアラートを発火させたかったので
 
 
 * ジャンパーワイヤー
-  * 数本利用するのみですが、今後も利用する可能性が高そうであれば、買っといて損なしです。
+  * 今回、8本利用するのみですが、今後も利用する可能性が高そうであれば、買っといて損なしです。
 
 {% affiliate "ブレッドボード・ジャンパーワイヤー（メス-メス）（20cm）40本" "//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=JP&ASIN=B01A4DDUTA&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=kenzo0107-22" "https://www.amazon.co.jp/gp/offer-listing/B01A4DDUTA/ref=as_li_tl?ie=UTF8&camp=247&creative=1211&creativeASIN=B01A4DDUTA&linkCode=am2&tag=kenzo0107-22&linkId=528edbec8635eb89b1d831aefcc81cab" "https://hb.afl.rakuten.co.jp/ichiba/23166baf.c1f701ce.23166bb0.221d0595/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Falt-mart%2Fb01a4dduta%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" %}
 
@@ -82,9 +82,12 @@ CO2濃度が閾値を超えるとアラートを発火させたかったので
 amazon や楽天のリンクを貼りましたが、
 [秋月電子通商](https://akizukidenshi.com/)や[スイッチサイエンス](https://www.switch-science.com/)の方が
 安いかもしれないです。
+
 時勢によるかと思いますが、専門店の方が安く購入できる印象があります。
 
-安さを求めるなら海外サイトで配送まで時間がかかる可能性がありますが [ebay](https://www.ebay.com/) も良いです。
+安さを求めるなら [ebay](https://www.ebay.com/) も良いです。
+但し、海外サイトで配送まで時間がかかる可能性があります。
+興奮を抑えきれず、すぐ実装したいという場合に不向きです。
 
 実際に MH-Z19C は ebay で購入しましたが、届くまで1ヶ月くらい掛かりましたが、特に問題なく利用できています。
 
