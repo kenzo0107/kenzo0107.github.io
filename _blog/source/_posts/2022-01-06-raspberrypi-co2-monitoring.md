@@ -100,7 +100,8 @@ $ cat /etc/issue
 Raspbian GNU/Linux 10 \n \l
 ```
 
-OS インストールは省略します。
+OS インストールは数多く紹介されておりますので説明は譲ります。
+初めての方は最後に紹介している Raspberry PI で学ぶ電子工作がおすすめです。
 
 ## Ansible で設定
 
