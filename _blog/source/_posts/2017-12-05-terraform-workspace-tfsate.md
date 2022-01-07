@@ -128,7 +128,7 @@ $ terraform state push -force .terraform/terraform.tfstate
 これで S3 `tfstate.bucket` の `env:/stg/` ディレクトリ以下に terraform.tfstate が push されました。
 実際に S3 を見て確認してみてください。
 
-[f:id:kenzo0107:20171205213108p:plain]
+![](https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205213108.png)
 
 `env` でなく `env:` なのが肝です。
 
