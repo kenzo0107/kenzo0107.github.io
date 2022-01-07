@@ -30,13 +30,13 @@ thumbnail: https://i.imgur.com/C3bQR5g.jpeg
 * MH-Z19
     - CO2 濃度測定
 * モニター
-    - リアルタイムの最新の CO2 濃度を表示
+    - CO2 濃度（リアルタイム ）表示
 * Raspberry PI
     - MH-Z19 で測定した CO2 濃度を Mackerel にプロット
-    - モニターにリアルタイムの CO2 濃度を表示
+    - モニターに CO2 濃度表示
 * Mackerel
   * CO2 濃度をカスタムメトリクスとしてグラフ化
-  * CO2 濃度を閾値を指定しそれを超えると LINE に通知
+  * 閾値を超えるとアラート発火 （LINE 通知）
 
 ## プロット先を Mackerel にした理由
 
