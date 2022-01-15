@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <link rel="canonical" href="https://kenzo0107.github.io/2022/01/14/2022-01-15-aws-elasticache-redis-cpu-utilization-unnormally-up/" >
-    <title>2022-01-15 AWS ElastiCache CPU 使用率の異常上昇について - 長生村本郷Engineers&#39;Blog</title>
+    <title>2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について - 長生村本郷Engineers&#39;Blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     
-    <meta property="og:title" content="2022-01-15 AWS ElastiCache CPU 使用率の異常上昇について">
+    <meta property="og:title" content="2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について">
 	<meta property="og:type" content="article">
 	<meta property="og:url" content="https://kenzo0107.github.io/2022/01/14/2022-01-15-aws-elasticache-redis-cpu-utilization-unnormally-up/">
 	
@@ -17,7 +17,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2022/01/14/2022-01-15-aws-elasticache-redis-cpu-utilization-unnormally-up/">
-	<meta name="twitter:title" content="2022-01-15 AWS ElastiCache CPU 使用率の異常上昇について - 長生村本郷Engineers&#39;Blog">
+	<meta name="twitter:title" content="2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について - 長生村本郷Engineers&#39;Blog">
 	
     
     	<meta name="twitter:image" content="https://i.imgur.com/JHvTN3N.png">
@@ -46,14 +46,14 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "BlogPosting",
-			"headline": "2022-01-15 AWS ElastiCache CPU 使用率の異常上昇について",
+			"headline": "2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2022/01/14/2022-01-15-aws-elasticache-redis-cpu-utilization-unnormally-up/"
 			},
 			"datePublished": "2022-01-14T15:00:00.000Z",
-			"dateModified": "2022-01-15T15:27:18.207Z",
+			"dateModified": "2022-01-15T15:30:39.683Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1816,7 +1816,7 @@ h6.categories {
 			            <div class="header-cap flx">
 							
 							  <h1 class="article-title entry-title" itemprop="name">
-							    <a href="https://kenzo0107.github.io/2022/01/14/2022-01-15-aws-elasticache-redis-cpu-utilization-unnormally-up/" target="_blank" itemprop="url">2022-01-15 AWS ElastiCache CPU 使用率の異常上昇について</a>
+							    <a href="https://kenzo0107.github.io/2022/01/14/2022-01-15-aws-elasticache-redis-cpu-utilization-unnormally-up/" target="_blank" itemprop="url">2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について</a>
 							  </h1>
 							
 						</div>
@@ -1849,8 +1849,8 @@ h6.categories {
 <h2><span id="cpu-使用率上昇時の状況整理">CPU 使用率上昇時の状況整理</span></h2><ul>
 <li><a href="https://status.aws.amazon.com/">Service Health Dashboard</a> には特に記録なし</li>
 <li>キャッシュヒット率が一時的に92% → 78% (-14%) 程度下がった</li>
-<li>アプリケーションの利用箇所で 5xx エラーはなし</li>
-<li>worker のジョブも影響なし</li>
+<li>アプリケーションの Redis 利用箇所で 5xx エラーはなし</li>
+<li>Redis を利用する worker のジョブも影響なし</li>
 <li>エンジン CPU 使用率 (=Redis エンジンスレッドの CPU 使用率) が低いことから Redis の処理自体の影響はないと思われる</li>
 <li>CPU 使用率 (Redis 以外のホスト全体の CPU 使用率) が高騰したことから、 AWS 側でホストに対する更新があったと思われる<ul>
 <li>この辺の影響だろうか？<br>  <a href="https://aws.amazon.com/jp/about-aws/whats-new/2022/01/amazon-elasticache-streaming-storing-redis-engine-logs/">https://aws.amazon.com/jp/about-aws/whats-new/2022/01/amazon-elasticache-streaming-storing-redis-engine-logs/</a></li>
