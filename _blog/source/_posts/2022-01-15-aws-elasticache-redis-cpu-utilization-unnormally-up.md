@@ -1,5 +1,5 @@
 ---
-title: 2022-01-15 AWS ElastiCache CPU 使用率の異常上昇について
+title: 2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について
 date: 2022-01-15
 category: AWS
 ---
@@ -14,8 +14,8 @@ category: AWS
 
 * [Service Health Dashboard](https://status.aws.amazon.com/) には特に記録なし
 * キャッシュヒット率が一時的に92% → 78% (-14%) 程度下がった
-* アプリケーションの利用箇所で 5xx エラーはなし
-* worker のジョブも影響なし
+* アプリケーションの Redis 利用箇所で 5xx エラーはなし
+* Redis を利用する worker のジョブも影響なし
 * エンジン CPU 使用率 (=Redis エンジンスレッドの CPU 使用率) が低いことから Redis の処理自体の影響はないと思われる
 * CPU 使用率 (Redis 以外のホスト全体の CPU 使用率) が高騰したことから、 AWS 側でホストに対する更新があったと思われる
     - この辺の影響だろうか？
