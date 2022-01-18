@@ -24,3 +24,7 @@ category: AWS
 参考: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html
 
 TODO: サポート問い合わせし、追記します。
+
+## AWS サポートに問い合わせた結果
+
+メトリクスのバグとのことでした。（ほっ）
