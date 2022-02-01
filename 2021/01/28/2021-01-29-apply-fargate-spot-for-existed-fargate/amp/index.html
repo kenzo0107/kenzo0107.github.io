@@ -148,7 +148,7 @@
 			    "@id":"https://kenzo0107.github.io/2021/01/28/2021-01-29-apply-fargate-spot-for-existed-fargate/"
 			},
 			"datePublished": "2021-01-28T15:00:00.000Z",
-			"dateModified": "2022-01-18T00:56:04.209Z",
+			"dateModified": "2022-02-01T03:02:42.609Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1987,7 +1987,10 @@ h6.categories {
 <blockquote>
 <p>サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。</p>
 </blockquote>
-<p>aws-cli では CodeDeploy 経由でデプロイする様に警告されてしまう為、<br>terraform で再作成する以外方法がなさそうです。</p>
+<p>aws-cli では CodeDeploy 経由でデプロイする様に警告されてしまう為、<br><s>terraform で再作成する以外方法がなさそうです。</s><br>CodeDeploy の appspec の設定で以下の様に指定することで<br>再作成せず管理できることを確認しました。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">version: 0.0</span><br><span class="line">Resources:</span><br><span class="line">  - TargetService:</span><br><span class="line">      Type: AWS::ECS::Service</span><br><span class="line">      Properties:</span><br><span class="line">        ...</span><br><span class="line">        CapacityProviderStrategy:</span><br><span class="line">          - CapacityProvider: 'FARGATE_SPOT'</span><br><span class="line">            Weight: 100</span><br><span class="line">            Base: 0</span><br><span class="line">          - CapacityProvider: 'FARGATE'</span><br><span class="line">            Weight: 0</span><br><span class="line">            Base: 0</span><br></pre></td></tr></tbody></table></figure>
+
+<p>※ Base や Weight の設定は適宜変更してください。</p>
 <h2><span id="ダウンタイムなしで切り替え-amp-tfstate-更新手順">ダウンタイムなしで切り替え &amp; tfstate 更新手順</span></h2><p>terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。</p>
 <ol>
 <li>aws-cli で更新</li>
