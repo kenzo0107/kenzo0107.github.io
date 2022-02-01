@@ -77,7 +77,27 @@ https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capaci
 > サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。
 
 aws-cli では CodeDeploy 経由でデプロイする様に警告されてしまう為、
-terraform で再作成する以外方法がなさそうです。
+<s>terraform で再作成する以外方法がなさそうです。</s>
+CodeDeploy の appspec の設定で以下の様に指定することで
+再作成せず管理できることを確認しました。
+
+```
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        ...
+        CapacityProviderStrategy:
+          - CapacityProvider: 'FARGATE_SPOT'
+            Weight: 100
+            Base: 0
+          - CapacityProvider: 'FARGATE'
+            Weight: 0
+            Base: 0
+```
+
+※ Base や Weight の設定は適宜変更してください。
 
 ## ダウンタイムなしで切り替え & tfstate 更新手順
 
