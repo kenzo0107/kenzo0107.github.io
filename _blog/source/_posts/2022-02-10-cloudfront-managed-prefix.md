@@ -5,6 +5,13 @@ category: AWS
 thumbnail: https://i.imgur.com/raMMbxt.png
 ---
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
 https://aws.amazon.com/jp/about-aws/whats-new/2022/02/amazon-cloudfront-managed-prefix-list/
 
 VPC が CloudFront のマネージドプリフィックスリストをサポートするようになりました。
@@ -46,13 +53,6 @@ resource "aws_lb" "app" {
 ```
 
 セキュリティグループルールベースで CloudFront からのアクセスを許可できました。
-
-<div class="toc">
-<div class="toc-content">
-<h3 class="menu-label">ToC</h3>
-<!-- toc -->
-</div>
-</div>
 
 <!-- more -->
 
