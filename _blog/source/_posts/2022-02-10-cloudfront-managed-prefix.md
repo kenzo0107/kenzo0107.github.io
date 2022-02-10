@@ -100,7 +100,7 @@ Filter 指定する場合、ステップ数も増えます。
 シンプルな実装で済む `data "aws_ec2_managed_prefix_list"` が最適と判断しました。
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/prefix_list#filter
 
-### よりセキュアに
+## よりセキュアに
 
 これは CloudFront のマネージドプリフィックリストでの制御とは話が逸れるところですが、
 WAF or ALB のリスナールールでドメイン名で制限しておくとよりセキュアです。
