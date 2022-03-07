@@ -30,9 +30,9 @@ module.exports = class extends Component {
             <div class="card">
                 {/* Thumbnail */}
                 {has_thumbnail(page) ? <div class="card-image">
-                    {index ? <a href={url_for(page.link || page.path)} class="image is-7by3">
+                    {index ? <a href={url_for(page.link || page.path)} class="image">
                         <img class="thumbnail" src={get_thumbnail(page)} alt={page.title || get_thumbnail(page)} />
-                    </a> : <span class="image is-7by3">
+                    </a> : <span class="image">
                         <img class="thumbnail" src={get_thumbnail(page)} alt={page.title || get_thumbnail(page)} />
                     </span>}
                 </div> : null}
