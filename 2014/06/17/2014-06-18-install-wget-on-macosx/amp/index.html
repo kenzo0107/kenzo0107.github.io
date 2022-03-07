@@ -1814,26 +1814,26 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x30BF;&#x30FC;&#x30DF;&#x30CA;&#x30EB;&#x304B;&#x3089;&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;</p>
-<h3><span id="curl&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3067;&#x5727;&#x7E2E;&#x3055;&#x308C;&#x305F;wget&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;wget-xxxtargz&#x3092;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;">curl&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3067;&#x5727;&#x7E2E;&#x3055;&#x308C;&#x305F;wget&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#xFF08;wget-x.x.x.tar.gz&#xFF09;&#x3092;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x3002;</span></h3><p>curl -O&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3; &#x51FA;&#x529B;&#x3092;&#x30AA;&#x30EA;&#x30B8;&#x30CA;&#x30EB;&#x306E;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x3068;&#x540C;&#x540D;&#x306E;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306B;&#x4FDD;&#x5B58;&#x3059;&#x308B;</p>
+			  		<p>ターミナルから以下実行</p>
+<h3><span id="curlコマンドで圧縮されたwgetモジュールwget-xxxtargzをダウンロードする">curlコマンドで圧縮されたwgetモジュール（wget-x.x.x.tar.gz）をダウンロードする。</span></h3><p>curl -Oオプション 出力をオリジナルのシステムと同名のファイルに保存する</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -O http://ftp.gnu.org/pub/gnu/wget/wget-1.13.4.tar.gz</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x89E3;&#x51CD;">&#x89E3;&#x51CD;</span></h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar zxvf wget-1.13.4.tar.gz</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="解凍">解凍</span></h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar zxvf wget-1.13.4.tar.gz</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x5185;&#x3078;&#x79FB;&#x52D5;">&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x5185;&#x3078;&#x79FB;&#x52D5;</span></h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> wget-1.13.4</span><br></pre></td></tr></tbody></table></figure>
-
-
-<h3><span id="makefile&#x3092;&#x4F5C;&#x6210;">Makefile&#x3092;&#x4F5C;&#x6210;</span></h3><p>Makefile &#x2026; &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x5BFE;&#x8C61;&#x3068;&#x306A;&#x308B;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x7279;&#x6709;&#x306E;&#x6A5F;&#x80FD;&#xFF0F;&#x60C5;&#x5831;&#x306E;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x72B6;&#x6CC1;&#x3092;&#x8A18;&#x8FF0;&#x3057;&#x3066;&#x3044;&#x308B;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./configure &#x2013;with-ssl=openssl</span><br></pre></td></tr></tbody></table></figure>
-
-<p>&#x2013;with-ssl=openssl<br>&#x306E;&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x3092;&#x4ED8;&#x3051;&#x306A;&#x3044;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x51FA;&#x3066;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3067;&#x304D;&#x306A;&#x3044;<br>configure: error: &#x2013;with-ssl was given, but GNUTLS is not available.</p>
-<h3><span id="makefile&#x3092;&#x5143;&#x306B;&#x30BD;&#x30FC;&#x30B9;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;">Makefile&#x3092;&#x5143;&#x306B;&#x30BD;&#x30FC;&#x30B9;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;</span></h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make</span><br></pre></td></tr></tbody></table></figure>
-
-<h3><span id="&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="ディレクトリ内へ移動">ディレクトリ内へ移動</span></h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> wget-1.13.4</span><br></pre></td></tr></tbody></table></figure>
 
 
+<h3><span id="makefileを作成">Makefileを作成</span></h3><p>Makefile … インストール対象となるシステム特有の機能／情報のチェック状況を記述している</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./configure –with-ssl=openssl</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x8A66;&#x3057;&#x306B;&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;&#x3057;&#x3066;&#x3001;&#x300C;index.html&#x300D;&#x304C;DL&#x3055;&#x308C;&#x3066;&#x3044;&#x308C;&#x3070;OK !</p>
+<p>–with-ssl=openssl<br>のオプションを付けないと以下のようなエラーが出てインストールできない<br>configure: error: –with-ssl was given, but GNUTLS is not available.</p>
+<h3><span id="makefileを元にソースファイルのコンパイル">Makefileを元にソースファイルのコンパイル</span></h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make</span><br></pre></td></tr></tbody></table></figure>
+
+<h3><span id="インストール">インストール</span></h3><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></tbody></table></figure>
+
+
+
+<p>試しに以下実行して、「index.html」がDLされていればOK !</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://yahoo.co.jp</span><br></pre></td></tr></tbody></table></figure>
 
 			  		
@@ -1900,7 +1900,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>タグ: AWS - 長生村本郷Engineers&#039;Blog</title><meta description="tech"><meta property="og:type" content="blog"><meta property="og:title" content="長生村本郷Engineers&#039;Blog"><meta property="og:url" content="https://kenzo0107.github.io/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="tech"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io"},"headline":"長生村本郷Engineers'Blog","image":["https://kenzo0107.github.io/img/og_image.png"],"author":{"@type":"Person","name":"Kenzo Tanaka"},"description":"tech"}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/PrivacyPolicy/">PrivacyPolicy</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/tags">タグ</a></li><li class="is-active"><a href="#" aria-current="page">AWS</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2018-06-05T15:00:00.000Z" title="2018-06-05T15:00:00.000Z">2018-06-06</time><span class="level-item">2分 read (About 332 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/06/05/2018-06-06-specify-ecscli-version/">ecs-cli バージョン指定してインストール</a></h1><div class="content"><p>完全な備忘録です。</p>
+<h2 id="経緯"><a href="#経緯" class="headerlink" title="経緯"></a>経緯</h2><p>6月に入って数日、<br>ecs-cli の latest をインストールすると latest が 1.6.0 となり<br><code>ecs-cli compose ...</code> を実行すると以下のようなエラーが出るようになりました。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level=error msg=<span class="string">"Unable to open ECS Compose Project"</span> error=<span class="string">"Volume driver is not supported"</span></span><br></pre></td></tr></table></figure>
+
+<p>1.4.0 では問題なかったタスク定義でしたが<br>1.6.0 では <code>Volume driver is not supported</code> となったそうで処理がこけるようになりました。</p>
+<p>その対応として 1.4.0 にバージョン固定した設定です。</p></div><a class="article-more button is-small size-small" href="/2018/06/05/2018-06-06-specify-ecscli-version/#more">Read More</a></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2018/05/17/2018-05-18-ecs_prefix/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180606/20180606115540.jpg" alt="AWS ECS prefix 指定してまとめてタスク登録解除"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2018-05-17T15:00:00.000Z" title="2018-05-17T15:00:00.000Z">2018-05-18</time><span class="level-item">数秒 read (About 63 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/05/17/2018-05-18-ecs_prefix/">AWS ECS prefix 指定してまとめてタスク登録解除</a></h1><div class="content"><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>awscli でタスク定義のまとめて登録解除がなかったので簡単に Shell 化しました</p>
+<script src="//gist.github.com/kenzo0107/adadc860e85f8b136ad040c71d249a3d.js"></script></div><a class="article-more button is-small size-small" href="/2018/05/17/2018-05-18-ecs_prefix/#more">Read More</a></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2018/05/13/2018-05-14-aws-vault-mfa/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180514/20180514221849.jpg" alt="AWS Vault で複数アカウントにMFA認証通過"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2018-05-13T15:00:00.000Z" title="2018-05-13T15:00:00.000Z">2018-05-14</time><span class="level-item">4分 read (About 617 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/05/13/2018-05-14-aws-vault-mfa/">AWS Vault で複数アカウントにMFA認証通過</a></h1><div class="content"><h2 id="AWS-Vault-とは？"><a href="#AWS-Vault-とは？" class="headerlink" title="AWS Vault とは？"></a>AWS Vault とは？</h2><p>AWS Vault は IAMの認証情報 (Access Key Id, Secret Access Key) を安全に OS のキーストアに保存しアクセスできる仕組みを提供するツールです。</p>
+<p>Vault = 金庫 というだけあって<br>PC 落としても秘匿情報が漏れにくい仕組みにしてくれます。</p>
+<h2 id="今回の目的"><a href="#今回の目的" class="headerlink" title="今回の目的"></a>今回の目的</h2><p>AWS Vault で複数アカウントのコンソールログインを簡単にしたいと思います。</p></div><a class="article-more button is-small size-small" href="/2018/05/13/2018-05-14-aws-vault-mfa/#more">Read More</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2018-05-09T15:00:00.000Z" title="2018-05-09T15:00:00.000Z">2018-05-10</time><span class="level-item">2分 read (About 249 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/05/09/2018-05-10-ecr-nologin-push/">続　ECR にログイン(aws ecr get-login)無しでプッシュする</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>前回 ECR への Docker イメージをプッシュする際の認証コマンドを実行せずにプッシュできる様にしました。</p>
+<p><a href="http://kenzo0107.hatenablog.com/entry/2018/03/07/230736">ECR にログイン(aws ecr get-login)無しでプッシュする</a></p>
+<p>ですが、<br>設定が手間というのがあり、CircleCI, AWS CodeBuild 等でワンライナーでささっと書きたいときには不便です。</p>
+<h2><span id="解決">解決</span></h2><p><code>awscli profile</code> で設定した profile を利用し ecs-cli を利用することで認証をよろしくやってくれます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ecs-cli push &lt;image&gt; --aws-profile &lt;profile&gt; --region &lt;region&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="設定-step">設定 Step</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aws configure <span class="built_in">set</span> --profile hogehoge aws_access_key_id <span class="variable">$ACCESS_KEY_ID</span></span><br><span class="line">aws configure <span class="built_in">set</span> --profile hogehoge aws_secret_access_key <span class="variable">$SECRET_ACCESS_KEY</span></span><br><span class="line">aws configure <span class="built_in">set</span> --profile hogehoge region ap-northeast-1</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ecs-cli push 123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/stg-mogemoge-rails:latest \</span><br><span class="line">	--aws-profile hogehoge \</span><br><span class="line">	--region ap-northeast-1</span><br></pre></td></tr></table></figure>
+
+<p>以上で <code>aws ecr get-login</code> を使用せず、ECR へプッシュができる様になりました♪</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2018/03/06/2018-03-07-push-to-ecr-without-login-ecr/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180307/20180307231703.png" alt="ECR にログイン(aws ecr get-login)無しでプッシュする"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2018-03-06T15:00:00.000Z" title="2018-03-06T15:00:00.000Z">2018-03-07</time><span class="level-item">3分 read (About 514 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/03/06/2018-03-07-push-to-ecr-without-login-ecr/">ECR にログイン(aws ecr get-login)無しでプッシュする</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>Docker version 1.11 で実装された credential-helper を利用し<br>ECR へのプッシュを安全に簡易的に行う仕組みを実装します。</p>
+<h2><span id="docker-ver-111-以上にアップグレード">Docker ver 1.11 以上にアップグレード</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D</span><br><span class="line">$ sudo sh -c <span class="string">"echo deb https://apt.dockerproject.org/repo ubuntu-trusty main\</span></span><br><span class="line"><span class="string">&gt; /etc/apt/sources.list.d/docker.list"</span></span><br><span class="line">$ sudo apt-get purge lxc-docker docker</span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install docker-engine</span><br><span class="line">$ sudo service docker restart</span><br></pre></td></tr></table></figure>
+
+<h2><span id="pull-dockerized-ecr-credential-helper">pull Dockerized ECR credential helper</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull pottava/amazon-ecr-credential-helper</span><br></pre></td></tr></table></figure>
+
+<h2><span id="認証設定">認証設定</span></h2><p>以下3つの中から1つ利用ください。<br>EC2 であれば、<code>1. インスタンスロールで認証</code> が一番すっきりしていてコードの見通しが良いです。</p>
+<ol>
+<li>インスタンスロールで認証</li>
+<li>credential で認証</li>
+<li>環境変数で認証</li>
+</ol>
+<h3><span id="1-インスタンスロールで認証">1. インスタンスロールで認証</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm \</span><br><span class="line">  -e REGISTRY=123457689012.dkr.ecr.us-east-1.amazonaws.com \</span><br><span class="line">  pottava/amazon-ecr-credential-helper</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c <span class="string">'cat &lt;&lt; EOF &gt; /usr/bin/docker-credential-ecr-login</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string">SECRET=\$(docker run --rm \\</span></span><br><span class="line"><span class="string">  -e METHOD=\$1 \\</span></span><br><span class="line"><span class="string">  -e REGISTRY=\$(cat -) \\</span></span><br><span class="line"><span class="string">  pottava/amazon-ecr-credential-helper)</span></span><br><span class="line"><span class="string">echo \$SECRET | grep Secret</span></span><br><span class="line"><span class="string">EOF'</span></span><br><span class="line"></span><br><span class="line">sudo chmod +x /usr/bin/docker-credential-ecr-login</span><br></pre></td></tr></table></figure>
+
+<h3><span id="2-credential-で認証">2. credential で認証</span></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm \</span><br><span class="line">  -e REGISTRY=123457689012.dkr.ecr.us-east-1.amazonaws.com \</span><br><span class="line">  -v <span class="variable">$HOME</span>/.aws/credentials:/root/.aws/credentials \</span><br><span class="line">  pottava/amazon-ecr-credential-helper</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c <span class="string">'cat &lt;&lt; EOF &gt; /usr/bin/docker-credential-ecr-login</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string">SECRET=\$(docker run --rm \\</span></span><br><span class="line"><span class="string">  -e METHOD=\$1 \\</span></span><br><span class="line"><span class="string">  -e REGISTRY=\$(cat -) \\</span></span><br><span class="line"><span class="string">  -v $HOME/.aws/credentials:/root/.aws/credentials \\</span></span><br><span class="line"><span class="string">  pottava/amazon-ecr-credential-helper)</span></span><br><span class="line"><span class="string">echo \$SECRET | grep Secret</span></span><br><span class="line"><span class="string">EOF'</span></span><br><span class="line"></span><br><span class="line">sudo chmod +x /usr/bin/docker-credential-ecr-login</span><br></pre></td></tr></table></figure>
+
+<h3><span id="3-環境変数で認証">3. 環境変数で認証</span></h3><ul>
+<li>環境変数セット</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE</span><br><span class="line"><span class="built_in">export</span> AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm \</span><br><span class="line">  -e REGISTRY=123457689012.dkr.ecr.us-east-1.amazonaws.com \</span><br><span class="line">  -e AWS_ACCESS_KEY_ID \</span><br><span class="line">  -e AWS_SECRET_ACCESS_KEY \</span><br><span class="line">  pottava/amazon-ecr-credential-helper</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c <span class="string">'cat &lt;&lt; EOF &gt; /usr/bin/docker-credential-ecr-login</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string">SECRET=\$(docker run --rm \\</span></span><br><span class="line"><span class="string">  -e METHOD=\$1 \\</span></span><br><span class="line"><span class="string">  -e REGISTRY=\$(cat -) \\</span></span><br><span class="line"><span class="string">  -e AWS_ACCESS_KEY_ID \\</span></span><br><span class="line"><span class="string">  -e AWS_SECRET_ACCESS_KEY \\</span></span><br><span class="line"><span class="string">  pottava/amazon-ecr-credential-helper)</span></span><br><span class="line"><span class="string">echo \$SECRET | grep Secret</span></span><br><span class="line"><span class="string">EOF'</span></span><br><span class="line">sudo chmod +x /usr/bin/docker-credential-ecr-login</span><br></pre></td></tr></table></figure>
+
+<h2><span id="credential-保存設定">credential 保存設定</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mv <span class="variable">$HOME</span>/.docker/config.json <span class="variable">$HOME</span>/.docker/config.json.org</span><br><span class="line"></span><br><span class="line">cat &lt;&lt; EOF &gt; <span class="variable">$HOME</span>/.docker/config.json</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"credsStore"</span>: <span class="string">"ecr-login"</span></span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>これで <code>aws ecr get-login</code> から解放されます♪</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2018-02-07T15:00:00.000Z" title="2018-02-07T15:00:00.000Z">2018-02-08</time><span class="level-item">8分 read (About 1176 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2018/02/07/2019-02-08-aws-ecs/">AWS ECS トラブルシューティング</a></h1><div class="content"><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190208/20190208225212.jpg" width="100%">
+</div>
+
+<p>ECS を利用していて幾つかはまったポイントがあったのでまとめました。</p>
+<h2><span id="started-1-task-が複数回実行されるが-コンテナが起動しない">started 1 task が複数回実行されるが、コンテナが起動しない</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ecs-cli compose service up ...</span><br><span class="line"></span><br><span class="line">level=info msg=<span class="string">"(service hogehoge) has started 1 tasks ..."</span></span><br><span class="line">level=info msg=<span class="string">"(service hogehoge) has started 1 tasks ..."</span></span><br><span class="line">level=info msg=<span class="string">"(service hogehoge) has started 1 tasks ..."</span></span><br></pre></td></tr></table></figure>
+
+
+<p>ecs-cli compose service up でデプロイ時にタスク起動を実行するものの、起動が正しくできていない状態です。<br>こちらはコンテナ起動時の処理に問題がある場合があります。</p>
+<ul>
+<li>コンテナログを確認して、コンテナ起動失敗時刻付近のログを確認してください。</li>
+<li>例えば、Nginx の設定ファイル, Rails のコードに typo, syntax error がある等です。</li>
+</ul>
+<h2><span id="already-using-a-port-required-by-your-task">already using a port required by your task</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service hogehoge was unable to place a task because no container instance met all of its requirements.</span><br><span class="line">The closest matching container-instance a1b2c3d4-e5f6-g7h8-j9k0-l1m2n3o4p5q6 is already using a port required by your task</span><br></pre></td></tr></table></figure>
+
+
+<p>port mapping を以下の様に設定していた。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"portMappings"</span>: [</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="string">"hostPort"</span>: <span class="number">0</span>,</span><br><span class="line">     <span class="string">"protocol"</span>: <span class="string">"tcp"</span>,</span><br><span class="line">     <span class="string">"containerPort"</span>: <span class="number">80</span></span><br><span class="line">   &#125;</span><br><span class="line"> ],</span><br></pre></td></tr></table></figure>
+
+
+<p>新しいタスクでも 0:80 のポートを利用しようとする為、エラーとなります。<br>以下の様に設定することで回避できました。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"portMappings"</span>: [</span><br><span class="line">   &#123;</span><br><span class="line">     <span class="string">"containerPort"</span>: <span class="number">80</span></span><br><span class="line">   &#125;</span><br><span class="line"> ],</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="insufficient-memory-available">insufficient memory available</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INFO[0031] (service hogehoge) was unable to place a task because no container instance met all of its requirements. The closest matching (container-instance a1b2c3d4-e5f6-g7h8-j9k0-l1m2n3o4p5q6) has insufficient memory available. For more information, see the Troubleshooting section of the Amazon ECS Developer Guide.  timestamp=2018-03-09 15:45:24 +0000 UTC</span><br></pre></td></tr></table></figure>
+
+
+<p>タスク更新（<code>ecs-cli compose service up</code>）実行時、<br>上記の様なメモリ不足が出る場合はインスタンスタイプを上げる、また、他タスクを削除する等、メモリーリソースを増やす対応が必要です。</p>
+<h2><span id="no-space-on-device">no space on device</span></h2><p>no space on device で イメージを pull できない。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20191003/20191003173809.png" width="100%">
+</div>
+
+<p><code>df -hT</code> コマンドで 容量の使用状況確認</p>
+<p>未使用のコンテナ・ボリュームを強制削除しお掃除</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker system prune -af --volumes</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="msgcouldnt-run-containers-reasonresourcecpu">msg=”Couldn’t run containers” reason=”RESOURCE:CPU”</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msg=<span class="string">"Couldn't run containers"</span> reason=<span class="string">"RESOURCE:CPU"</span></span><br></pre></td></tr></table></figure>
+
+
+<p>タスクで指定している cpu (vCPU) が不足しています。<br>インスタンスタイプを上げる、もしくは、他タスクを削除する等、 CPU リソースを増やす対応が必要です。</p>
+<h2><span id="fargate-port-mapping-error">Fargate - Port Mapping Error</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level=error msg=<span class="string">"Create task definition failed"</span> error=<span class="string">"ClientException: When networkMode=awsvpc, the host ports and container ports in port mappings must match.\n\tstatus code: 400, request id: a1b2c3d4-e5f6-g7h8-j9k0-l1m2n3o4p5q6"</span></span><br></pre></td></tr></table></figure>
+
+
+<p>起動タイプ Fargate で以下の様な設定だと、NG</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">"80"</span></span><br></pre></td></tr></table></figure>
+
+
+<p>こちらだと OK。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">"80:80"</span></span><br></pre></td></tr></table></figure>
+
+
+<p>ホストポートとコンテナポートのマッピングが必要です。</p>
+<h2><span id="fargate-volume_from-は利用できない">Fargate volume_from は利用できない</span></h2><p><code>volume_from</code> は Fargate では使用できません。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level=error msg=<span class="string">"Create task definition failed"</span> error=<span class="string">"ClientException: host.sourcePath should not be set for volumes in Fargate.\n\tstatus code: 400, request id: a1b2c3d4-e5f6-g7h8-j9k0-l1m2n3o4p5q6"</span></span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="指定された-iam-role-が適切なパーミッションを与えられていない">指定された IAM Role が適切なパーミッションを与えられていない</span></h2><p>IAM Role に権限を適宜付与します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">level=info msg=<span class="string">"(service hogehoge) failed to launch a task with (error ECS was unable to assume the role 'arn:aws:iam::123456789012:role/ecsTask</span></span><br><span class="line"><span class="string">ExecutionRole' that was provided for this task. Please verify that the role being passed has the proper trust relationship and permissions and that your IAM user has permissions to pass this role.)."</span> timestamp=2018-06-21 08:15:43 +0000 UTC</span><br></pre></td></tr></table></figure>
+
+
+<p>イメージ pull できないというエラーも権限を付与していないことに起因することが主です。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CannotPullContainerError: API error (500): Get https://123456789012.dkr.ecr.ap-northeast-1.amazonaws.com/v2/: net/http: request canceled <span class="keyword">while</span> waiting <span class="keyword">for</span> connection<span class="string">"</span></span><br></pre></td></tr></table></figure>
+
+
+<p>現在稼働している ECS の IAM Role の権限を参考してください。変更される可能性があるのであくまで参考にし、適宜最新の情報を以ってご対応ください。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"Version"</span>: <span class="string">"2012-10-17"</span>,</span><br><span class="line">    <span class="string">"Statement"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"Sid"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="string">"Effect"</span>: <span class="string">"Allow"</span>,</span><br><span class="line">            <span class="string">"Action"</span>: [</span><br><span class="line">                <span class="string">"logs:PutLogEvents"</span>,</span><br><span class="line">                <span class="string">"logs:CreateLogStream"</span>,</span><br><span class="line">                <span class="string">"logs:CreateLogGroup"</span>,</span><br><span class="line">                <span class="string">"elasticloadbalancing:RegisterTargets"</span>,</span><br><span class="line">                <span class="string">"elasticloadbalancing:Describe*"</span>,</span><br><span class="line">                <span class="string">"elasticloadbalancing:DeregisterTargets"</span>,</span><br><span class="line">                <span class="string">"ecs:UpdateService"</span>,</span><br><span class="line">                <span class="string">"ecs:Submit*"</span>,</span><br><span class="line">                <span class="string">"ecs:StartTelemetrySession"</span>,</span><br><span class="line">                <span class="string">"ecs:StartTask"</span>,</span><br><span class="line">                <span class="string">"ecs:RunTask"</span>,</span><br><span class="line">                <span class="string">"ecs:RegisterTaskDefinition"</span>,</span><br><span class="line">                <span class="string">"ecs:RegisterContainerInstance"</span>,</span><br><span class="line">                <span class="string">"ecs:Poll"</span>,</span><br><span class="line">                <span class="string">"ecs:ListTasks"</span>,</span><br><span class="line">                <span class="string">"ecs:DiscoverPollEndpoint"</span>,</span><br><span class="line">                <span class="string">"ecs:DescribeTasks"</span>,</span><br><span class="line">                <span class="string">"ecs:DescribeServices"</span>,</span><br><span class="line">                <span class="string">"ecs:DescribeContainerInstances"</span>,</span><br><span class="line">                <span class="string">"ecs:DeregisterContainerInstance"</span>,</span><br><span class="line">                <span class="string">"ecs:CreateService"</span>,</span><br><span class="line">                <span class="string">"ecr:UploadLayerPart"</span>,</span><br><span class="line">                <span class="string">"ecr:PutImage"</span>,</span><br><span class="line">                <span class="string">"ecr:InitiateLayerUpload"</span>,</span><br><span class="line">                <span class="string">"ecr:GetDownloadUrlForLayer"</span>,</span><br><span class="line">                <span class="string">"ecr:GetAuthorizationToken"</span>,</span><br><span class="line">                <span class="string">"ecr:CompleteLayerUpload"</span>,</span><br><span class="line">                <span class="string">"ecr:BatchGetImage"</span>,</span><br><span class="line">                <span class="string">"ecr:BatchCheckLayerAvailability"</span>,</span><br><span class="line">                <span class="string">"ec2:Describe*"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">"Resource"</span>: <span class="string">"*"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>以上です。</p>
+<p>また何か発生したら追記していきたいと思います。</p>
+<h2><span id="reference">Reference</span></h2><ul>
+<li><a href="https://aws.amazon.com/jp/premiumsupport/knowledge-center/ecs-agent-disconnected/">Amazon ECS エージェントが切断状態で表示されるのは、なぜですか?</a></li>
+</ul>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/10/07/2017-10-08-waf-cloudfront-referer-check/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180531.png" alt="WAF+CloudFront でリファラチェック (直リンク禁止)"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-10-07T15:00:00.000Z" title="2017-10-07T15:00:00.000Z">2017-10-08</time><span class="level-item">7分 read (About 1003 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/10/07/2017-10-08-waf-cloudfront-referer-check/">WAF+CloudFront でリファラチェック (直リンク禁止)</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>AWS WAF (Web Application Firewall) を利用し Cloudfront でのリファラ制御を実装しましたのでそのまとめです。</p>
+<p>直リンク禁止対策として導入しました。</p>
+<p>以下手順になります。</p>
+<h3><span id="go-to-aws-waf-ボタンクリック">Go to AWS WAF ボタンクリック</span></h3><p>サービス &gt; WAF &amp; Shield と辿り Go to AWS WAF クリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005174955.png" width="100%">
+</div>
+
+<h3><span id="configure-web-acl-ボタンクリック">Configure Web ACL ボタンクリック</span></h3><p>ACL (Access Control List) を設定していきます。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180856.png" width="100%">
+</div>
+
+<h3><span id="概要確認">概要確認</span></h3><p>特にチェックせず Next ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181044.png" width="100%">
+</div>
+
+<h3><span id="web-acl-設定">web ACL 設定</span></h3><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181315.png" width="100%">
+</div>
+
+<p>以下、設定項目を設定し、Next ボタンクリック</p>
+<table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Value</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Web ACL name</td>
+<td>(任意) 例ではCloudfront の CNAME を設定しています。</td>
+</tr>
+<tr>
+<td>CloudWatch metric name</td>
+<td>Web ACL name を入力すると自動で入力される。変更したい場合のみ変更</td>
+</tr>
+<tr>
+<td>Region</td>
+<td>Global(CloudFront) 選択</td>
+</tr>
+<tr>
+<td>AWS resource to associate</td>
+<td>対象となるCloudfrontを選択する箇所。運用中の Cloudfront を対象とすると場合は後々設定。</td>
+</tr>
+</tbody></table>
+<h3><span id="条件作成">条件作成</span></h3><p>今回は文字列一致を条件とする為、 String match conditions にて <code>Create condition</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181800.png" width="100%">
+</div>
+
+<h3><span id="string-match-condition-作成">string match condition 作成</span></h3><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005181926.png" width="100%">
+</div>
+
+<p>以下設定し <code>Add filter</code> ボタンクリック。<br>複数 filter がある場合、Add filter を繰り返します。</p>
+<table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Value</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Name</td>
+<td>(任意)</td>
+</tr>
+<tr>
+<td>Part of the request to filter on</td>
+<td>Header</td>
+</tr>
+<tr>
+<td>Header</td>
+<td>Referer</td>
+</tr>
+<tr>
+<td>Match type</td>
+<td>Contains</td>
+</tr>
+<tr>
+<td>Transformation</td>
+<td>Convert to lowercase</td>
+</tr>
+<tr>
+<td>Value to match</td>
+<td>対象となるドメイン設定</td>
+</tr>
+</tbody></table>
+<br>
+
+<h4><span id="add-filter-後-create-ボタンクリック"><code>Add filter</code> 後、 <code>Create</code> ボタンクリック。</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182327.png" width="100%">
+</div>
+
+<h4><span id="next-ボタンクリック">Next ボタンクリック</span></h4><p>追加したもののすぐに反映されていない。<br>そのまま <code>Next</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182446.png" width="100%">
+</div>
+
+<h3><span id="ルール作成">ルール作成</span></h3><p><code>Create rule</code> ボタンクリック。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182608.png" width="100%">
+</div>
+
+<h4><span id="ルールに条件を紐付け">ルールに条件を紐付け</span></h4><p>Name, Cloudwatch metric name を設定し<br>Add conditions で条件を追加します。</p>
+<p>その後、<code>Create</code> ボタンクリック。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182641.png" width="100%">
+</div>
+
+<h3><span id="ルール以外のリクエストのアクセス禁止">ルール以外のリクエストのアクセス禁止</span></h3><p>やはり Rule は反映されていない。ですが、続けて<br><code>Block all requests that don&#39;t match any rules</code> をチェックし <code>Review and create</code> ボタンクリック。</p>
+<p>※対象のCloudfront に反映させたくない場合は、Cloudfront を選択したリソースを解除する必要があります。<br><span style="color: #ff0000">※最後に関連付けができるのでここではするべきではないと思います。</span></p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005182806.png" width="100%">
+</div>
+
+<h3><span id="確認ページで入力内容確認後作成">確認ページで入力内容確認後作成</span></h3><p><code>Confirm and create</code> ボタンクリック。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183423.png" width="100%">
+</div>
+
+<h3><span id="対象の-web-acl-を編集">対象の web ACL を編集</span></h3><p>WEB ACLs より選択し <code>Edit web ACL</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183628.png" width="100%">
+</div>
+
+<h4><span id="web-acl-編集">web ACL 編集</span></h4><ol>
+<li>作成したルールを選択</li>
+<li><code>Add rule to web ACL</code> ボタンクリック</li>
+<li>Allow 選択</li>
+<li><code>Update</code> ボタンクリック</li>
+</ol>
+<p>[f:id:kenzo0107:20171005183720p:plain]</p>
+<h3><span id="cloudfront-関連付け">Cloudfront 関連付け</span></h3><p><code>Add association</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005183720.png" width="100%">
+</div>
+
+<h4><span id="web-acl-に-cloudfront-を関連付け">Web ACL に Cloudfront を関連付け</span></h4><p>Resource で 対象の Cloudfront を選択し <code>Add</code> ボタンクリック</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005184119.png" width="100%">
+</div>
+
+<p>以上で数分後 WAF+CloudFront によるリファラチェックが確認できる状態になります。</p>
+<h3><span id="アクセス確認">アクセス確認</span></h3><p>自環境では<br>ローカルの /etc/hosts 修正し対象ドメインから Cloudfront CNAME へのリンクを貼って確認しました。</p>
+<p>Cloudfront CNAME ドメインでのリソースを直接アクセスすると<br>以下の様な エラーページが表示されることが確認できました。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005184505.png" width="100%">
+</div>
+
+<h3><span id="もう少しユーザフレンドリーに">もう少しユーザフレンドリーに</span></h3><p>上記のエラーページは Cloudfront &gt; Error Pages で  <code>Create Custom Error Response</code> で S3 上のパスを指定することでカスタマイズが可能です。</p>
+<p>是非サイトコンセプトに合ったエラーページをご用意されるとよりユーザフレンドリーな配信になるかと思います。</p>
+<p>以上<br>ご参考になれば幸いです。</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/10/01/2017-10-02-elasticsearch-service-version-up/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170924/20170924222936.png" alt="AWS Elasticsearch Service バージョンアップ 2.2 → 5.5"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-10-01T15:00:00.000Z" title="2017-10-01T15:00:00.000Z">2017-10-02</time><span class="level-item">11分 read (About 1607 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/10/01/2017-10-02-elasticsearch-service-version-up/">AWS Elasticsearch Service バージョンアップ 2.2 → 5.5</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>AWS Elasticsearch Service (ES) 2.3 → 5.5 へバージョンアップを実施に際して<br>以下記事をまとめました。</p>
+<h2><span id="大まかな流れ">大まかな流れ</span></h2><ol>
+<li>ESバージョン2.3のドメインからSnapshot取得</li>
+<li>ESバージョン5.5のドメイン作成</li>
+<li>アプリの fluentd の向け先をESバージョン5.5へ変更</li>
+<li>ESバージョン5.5のドメインにデータリストア</li>
+<li>ESバージョン2.3のドメイン削除</li>
+</ol>
+<h2><span id="現状バージョン確認">現状バージョン確認</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span> : <span class="string">"Jackdaw"</span>,</span><br><span class="line">  <span class="string">"cluster_name"</span> : <span class="string">"&lt;Account ID&gt;:xxxxxxxxxx"</span>,</span><br><span class="line">  <span class="string">"version"</span> : &#123;</span><br><span class="line">    <span class="string">"number"</span> : <span class="string">"2.3.2"</span>,</span><br><span class="line">    <span class="string">"build_hash"</span> : <span class="string">"72aa8010df1a4fc849da359c9c58acba6c4d9518"</span>,</span><br><span class="line">    <span class="string">"build_timestamp"</span> : <span class="string">"2016-11-14T15:59:50Z"</span>,</span><br><span class="line">    <span class="string">"build_snapshot"</span> : <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"lucene_version"</span> : <span class="string">"5.5.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"tagline"</span> : <span class="string">"You Know, for Search"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="その他-aws-console-のクラスターの設定確認">その他、AWS console のクラスターの設定確認</span></h3><p>その他クラスターへ設定している情報をメモ</p>
+<ul>
+<li>インスタンスタイプ</li>
+<li>アクセスポリシーの確認</li>
+</ul>
+<h1><span id="aws-elasticsearch-service-スナップショットを-s3-で管理する">AWS Elasticsearch Service スナップショットを S3 で管理する</span></h1><h2><span id="iam-role-作成">IAM role 作成</span></h2><ul>
+<li>ec2 タイプで作成</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170924/20170924221853.png" width="100%">
+</div>
+
+<ul>
+<li>アクセス権限は特に設定せず 「次のステップ」ボタンクリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925113614.png" width="100%">
+</div>
+
+
+<ul>
+<li>ロール名を <b><span style="color: #1464b3">es-index-backups</span></b> とし作成</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925113908.png" width="100%">
+</div>
+
+<p>ロールARN arn:aws:iam::<account id>:role/es-index-backups で作成されていることが確認できる</account></p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925114402.png" width="100%">
+</div>
+
+<ul>
+<li>信頼関係の編集</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925114635.png" width="100%">
+</div>
+
+<p>Service を es.amazonaws.com に編集</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"Version"</span>: <span class="string">"2012-10-17"</span>,</span><br><span class="line">  <span class="string">"Statement"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"Sid"</span>: <span class="string">""</span>,</span><br><span class="line">      <span class="string">"Effect"</span>: <span class="string">"Allow"</span>,</span><br><span class="line">      <span class="string">"Principal"</span>: &#123;</span><br><span class="line">        <span class="string">"Service"</span>: <span class="string">"es.amazonaws.com"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="string">"Action"</span>: <span class="string">"sts:AssumeRole"</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="iam-user-作成">IAM User 作成</span></h2><ul>
+<li>ユーザ &gt; ユーザ追加 選択</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925114822.png" width="100%">
+</div>
+
+<br>
+<br>
+
+<ul>
+<li>ユーザ名 <code>es-index-backup-user</code> とし プログラムによるアクセスにチェックを入れて <code>次のステップ</code> クリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925115200.png" width="100%">
+</div>
+
+<br>
+<br>
+
+<ul>
+<li>特にポリシーをアタッチせず <code>次のステップ</code> クリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925115357.png" width="100%">
+</div>
+
+<ul>
+<li><code>es-index-backup-user</code> を作成し独自ポリシーで先ほど作成した role へのアクセス許可設定をアタッチします。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"Version"</span>: <span class="string">"2012-10-17"</span>,</span><br><span class="line">    <span class="string">"Statement"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">"Effect"</span>: <span class="string">"Allow"</span>,</span><br><span class="line">            <span class="string">"Action"</span>: [</span><br><span class="line">                <span class="string">"iam:PassRole"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">"Resource"</span>: <span class="string">"arn:aws:iam::&lt;Account ID&gt;:role/es-index-backups"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<ul>
+<li>発行されたアクセスキー、シークレットアクセスキーをメモしておきます。</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925120635.png" width="100%">
+</div>
+
+
+<h2><span id="s3-バケット作成">S3 バケット作成</span></h2><p>S3 &gt; <code>バケットを作成する</code> でバケット作成してください。</p>
+<h2><span id="elasticsearch-にてスナップショットリポジトリ作成">Elasticsearch にてスナップショットリポジトリ作成</span></h2><p>スナップショットを管理するリポジトリを Elasticsearch に作成する必要があります。</p>
+<p>Elasticsearch へのアクセス可能なサーバにて以下スクリプト実行します。</p>
+<ul>
+<li>register_es_repository.py</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> boto.connection <span class="keyword">import</span> AWSAuthConnection</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ESConnection</span><span class="params">(AWSAuthConnection)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, region, **kwargs)</span>:</span></span><br><span class="line">        super(ESConnection, self).__init__(**kwargs)</span><br><span class="line">        self._set_auth_region_name(region)</span><br><span class="line">        self._set_auth_service_name(<span class="string">"es"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_required_auth_capability</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> [<span class="string">'hmac-v4'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    client = ESConnection(</span><br><span class="line">            region=<span class="string">'ap-northeast-1'</span>,</span><br><span class="line">            host=<span class="string">'&lt;Elasticsearch 2.3 Endpoint Domain&gt;'</span>,</span><br><span class="line">            aws_access_key_id=<span class="string">'&lt;ACCESS KEY ID&gt;'</span>,</span><br><span class="line">            aws_secret_access_key=<span class="string">'&lt;SECRET ACCESS KEY&gt;'</span>, is_secure=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    resp = client.make_request(</span><br><span class="line">        method=<span class="string">'POST'</span>,</span><br><span class="line">        path=<span class="string">'/_snapshot/index-backups'</span>,</span><br><span class="line">        data=<span class="string">'&#123;"type": "s3","settings": &#123; "bucket": "&lt;bucket name&gt;","region": "ap-northeast-1","role_arn": "arn:aws:iam::&lt;Account ID&gt;:role/es-index-backups"&#125;&#125;'</span></span><br><span class="line">    )</span><br><span class="line">    body = resp.read()</span><br><span class="line">    <span class="keyword">print</span> body</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x register_es_repository.py</span><br><span class="line"></span><br><span class="line">$ python register_es_repository.py</span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"acknowledged"</span>:<span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>リポジトリ登録完了しました。</p>
+<h2><span id="snapshot-取得">Snapshot 取得</span></h2><p>snapshot 名を <code>20170926</code> とします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XPUT <span class="string">"https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;/_snapshot/index-backups/20170926"</span></span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"accepted"</span>:<span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="snapshot-一覧">Snapshot 一覧</span></h2><p><code>20170926</code> という snapshot 名で取得したことが確認できます。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ curl -s -XGET <span class="string">"https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;/_snapshot/index-backups/_all"</span> | jq .</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"snapshots"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"snapshot"</span>: <span class="string">"20170926"</span>,</span><br><span class="line">      <span class="string">"version_id"</span>: 2030299,</span><br><span class="line">      <span class="string">"version"</span>: <span class="string">"2.3.2"</span>,</span><br><span class="line">      <span class="string">"indices"</span>: [</span><br><span class="line">        <span class="string">"nginx-access-2017.09.09"</span>,</span><br><span class="line">        <span class="string">"nginx-access-2017.09.07"</span>,</span><br><span class="line">        <span class="string">"nginx-access-2017.09.08"</span>,</span><br><span class="line">        <span class="string">"nginx-error-2017.08.24"</span>,</span><br><span class="line">        <span class="string">"nginx-error-2017.08.23"</span>,</span><br><span class="line">        <span class="string">".kibana-4"</span>,</span><br><span class="line">...</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">"state"</span>: <span class="string">"IN_PROGRESS"</span>,</span><br><span class="line">      <span class="string">"start_time"</span>: <span class="string">"2017-09-26T03:58:51.040Z"</span>,</span><br><span class="line">      <span class="string">"start_time_in_millis"</span>: 1506398331040,</span><br><span class="line">      <span class="string">"failures"</span>: [],</span><br><span class="line">      <span class="string">"shards"</span>: &#123;</span><br><span class="line">        <span class="string">"total"</span>: 0,</span><br><span class="line">        <span class="string">"failed"</span>: 0,</span><br><span class="line">        <span class="string">"successful"</span>: 0</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="snapshot-削除">Snapshot 削除</span></h2><p>スナップショット <code>20170926</code> を削除する場合、DELETE メソッドを実行します。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XDELETE https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;/_snapshot/index-backups/20170926</span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"acknowledged"</span>:<span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="s3-確認">S3 確認</span></h2><p>以下が作成されているのがわかります。</p>
+<ul>
+<li>indices/*</li>
+<li>meta-*</li>
+<li>snap-*</li>
+</ul>
+<p>はじめ meta-* が作成できたら完了なのかなと思いきや<br>snap-* も作られるまで待つ必要がありました。</p>
+<ul>
+<li>CLI 上でスナップショット完了確認した方が確実です。</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ curl -s -GET https://&lt;Elasticsearch 2.3 Endpoint Domain&gt;/_snapshot/index-backups/20170926</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">      <span class="string">"state"</span>: <span class="string">"SUCCESS"</span>,</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2><span id="elasticsearch-55-service-新規ドメイン作成">Elasticsearch 5.5 Service 新規ドメイン作成</span></h2><p>Elasticsearch 2.3 の設定に倣って作成します。</p>
+<h2><span id="リポジトリ作成">リポジトリ作成</span></h2><ul>
+<li>register_es55_repository.py</li>
+</ul>
+<p>register_es_repository.py の host 部分を新規ドメインに修正します。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> boto.connection <span class="keyword">import</span> AWSAuthConnection</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ESConnection</span><span class="params">(AWSAuthConnection)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, region, **kwargs)</span>:</span></span><br><span class="line">        super(ESConnection, self).__init__(**kwargs)</span><br><span class="line">        self._set_auth_region_name(region)</span><br><span class="line">        self._set_auth_service_name(<span class="string">"es"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_required_auth_capability</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> [<span class="string">'hmac-v4'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    client = ESConnection(</span><br><span class="line">            region=<span class="string">'ap-northeast-1'</span>,</span><br><span class="line">            host=<span class="string">'&lt;Elasticsearch 5.5 Endpoint Domain&gt;'</span>,</span><br><span class="line">            aws_access_key_id=<span class="string">'&lt;ACCESS KEY ID&gt;'</span>,</span><br><span class="line">            aws_secret_access_key=<span class="string">'&lt;SECRET ACCESS KEY&gt;'</span>, is_secure=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Registering Snapshot Repository'</span></span><br><span class="line">    resp = client.make_request(</span><br><span class="line">        method=<span class="string">'POST'</span>,</span><br><span class="line">        path=<span class="string">'/_snapshot/index-backups'</span>,</span><br><span class="line">        data=<span class="string">'&#123;"type": "s3","settings": &#123; "bucket": "&lt;bucket name&gt;","region": "ap-northeast-1","role_arn": "arn:aws:iam::&lt;Account ID&gt;:role/es-index-backups"&#125;&#125;'</span></span><br><span class="line">    )</span><br><span class="line">    body = resp.read()</span><br><span class="line">    <span class="keyword">print</span> body</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x register_es55_repository.py</span><br><span class="line"></span><br><span class="line">$ python register_es55_repository.py</span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"acknowledged"</span>:<span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="スナップショットからリストア">スナップショットからリストア</span></h2><p><code>20170926</code> のスナップショットをリストアします。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XPOST <span class="string">"https://&lt;Elasticsearch 5.5 Endpoint Domain&gt;/_snapshot/index-backups/20170926/_restore"</span></span><br><span class="line"></span><br><span class="line">// 成功</span><br><span class="line">&#123;<span class="string">"accepted"</span>: <span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="リストア確認">リストア確認</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -XGET <span class="string">"https://&lt;Elasticsearch 5.5 Endpoint Domain&gt;/_cat/indices"</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="スナップショットに失敗するケース">スナップショットに失敗するケース</span></h2><ul>
+<li>.kibana index が既に存在しており、リストアできない。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"error"</span>:&#123;</span><br><span class="line">        <span class="string">"root_cause"</span>:[</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"type"</span>:<span class="string">"snapshot_restore_exception"</span>,</span><br><span class="line">                <span class="string">"reason"</span>:<span class="string">"[index-backups:20170926/Hc4rLIoARCWqpyJXeP7edw] cannot restore index [.kibana] because it's open"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="string">"type"</span>:<span class="string">"snapshot_restore_exception"</span>,</span><br><span class="line">        <span class="string">"reason"</span>:<span class="string">"[index-backups:20170926/Hc4rLIoARCWqpyJXeP7edw] cannot restore index [.kibana] because it's open"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"status"</span>:<span class="number">500</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="対応策">対応策</span></h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST https://&lt;Elasticsearch 5.5 Endpoint Domain&gt;/_snapshot/index-backups/20170926/_restore -d <span class="string">'&#123;</span></span><br><span class="line"><span class="string">	"indices": "nginx-*"</span></span><br><span class="line"><span class="string">&#125;'</span> | jq .</span><br></pre></td></tr></table></figure>
+
+<p><code>indices</code> を用い、スナップショット内のインデックスの中からマッチする正規表現のみをリストアできます。</p>
+<p>自身ではこの様な解決法を実施し回避できました。<br>その他良い方法があれば御指南いただけますと幸いです。</p>
+<h2><span id="ちなみに">ちなみに</span></h2><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171002/20171002144856.png" width="100%">
+</div>
+
+<p>Terraform で ES 2.2 → 5.5 バージョンアップを実施した所<br>1時間以上経過してようやくアップデートが完了しました。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aws_elasticsearch_domain.elasticsearch: Still destroying... (ID: arn:aws:es:ap-northeast-1:xxxxxxxxxxxx:domain&#x2F;***, 59m11s elapsed)</span><br><span class="line">aws_elasticsearch_domain.elasticsearch: Still destroying... (ID: arn:aws:es:ap-northeast-1:xxxxxxxxxxxx:domain&#x2F;***, 59m21s elapsed)</span><br><span class="line">aws_elasticsearch_domain.elasticsearch: Still destroying... (ID: arn:aws:es:ap-northeast-1:xxxxxxxxxxxx:domain&#x2F;***, 59m31s elapsed)</span><br><span class="line">aws_elasticsearch_domain.elasticsearch: Destruction complete after 59m41s</span><br></pre></td></tr></table></figure>
+
+<p>これは辛い (&gt;_&lt;)</p>
+<p>Terraform で管理している場合、<br>スナップショットを取得したら aws console 上でドメイン削除した方が早い。</p>
+<p>ブルーグリーン的に ES 5.5 作成して ES 2.2 から乗り換えて<br>しばらく運用して問題なければ ES 2.2 を削除する方法が一番確実だなと思いました。</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/04/17/2017-04-18-aws-retairement-notification/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170418/20170418105821.png" alt="AWS [Retirement Notification] 対応"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-04-17T15:00:00.000Z" title="2017-04-17T15:00:00.000Z">2017-04-18</time><span class="level-item">7分 read (About 1026 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/04/17/2017-04-18-aws-retairement-notification/">AWS [Retirement Notification] 対応</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>とある日、AWS よりこんなメール通知が来ました。</p>
+<p>要約すると<br>ホストしている基盤のハードウェアで回復不可能な障害が検知されたので<br>指定期限までに対応しないとインスタンスが停止する、とのこと。</p>
+<p>今回こちらの対応をまとめました。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Dear Amazon EC2 Customer,</span><br><span class="line"></span><br><span class="line">We have important news about your account (AWS Account ID: xxxxxxxxxxxx). EC2 has detected degradation of the underlying hardware hosting your Amazon EC2 instance (instance-ID: i-xxxxxxxx) in the ap-northeast-1 region. Due to this degradation, your instance could already be unreachable. After 2017-04-25 04:00 UTC your instance, which has an EBS volume as the root device, will be stopped.</span><br><span class="line"></span><br><span class="line">You can see more information on your instances that are scheduled for retirement in the AWS Management Console (https:&#x2F;&#x2F;console.aws.amazon.com&#x2F;ec2&#x2F;v2&#x2F;home?region&#x3D;ap-northeast-1#Events)</span><br><span class="line"></span><br><span class="line">* How does this affect you?</span><br><span class="line">Your instance&#39;s root device is an EBS volume and the instance will be stopped after the specified retirement date. You can start it again at any time. Note that if you have EC2 instance store volumes attached to the instance, any data on these volumes will be lost when the instance is stopped or terminated as these volumes are physically attached to the host computer</span><br><span class="line"></span><br><span class="line">* What do you need to do?</span><br><span class="line">You may still be able to access the instance. We recommend that you replace the instance by creating an AMI of your instance and launch a new instance from the AMI. For more information please see Amazon Machine Images (http:&#x2F;&#x2F;docs.aws.amazon.com&#x2F;AWSEC2&#x2F;latest&#x2F;UserGuide&#x2F;AMIs.html) in the EC2 User Guide. In case of difficulties stopping your EBS-backed instance, please see the Instance FAQ (http:&#x2F;&#x2F;aws.amazon.com&#x2F;instance-help&#x2F;#ebs-stuck-stopping).</span><br><span class="line"></span><br><span class="line">* Why retirement?</span><br><span class="line">AWS may schedule instances for retirement in cases where there is an unrecoverable issue with the underlying hardware. For more information about scheduled retirement events please see the EC2 user guide (http:&#x2F;&#x2F;docs.aws.amazon.com&#x2F;AWSEC2&#x2F;latest&#x2F;UserGuide&#x2F;instance-retirement.html). To avoid single points of failure within critical applications, please refer to our architecture center for more information on implementing fault-tolerant architectures: http:&#x2F;&#x2F;aws.amazon.com&#x2F;architecture</span><br><span class="line"></span><br><span class="line">If you have any questions or concerns, you can contact the AWS Support Team on the community forums and via AWS Premium Support at: http:&#x2F;&#x2F;aws.amazon.com&#x2F;support</span><br><span class="line"></span><br><span class="line">Sincerely,</span><br><span class="line">Amazon Web Services</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>AWS Console イベントを見ると一覧で表示されている。</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170418/20170418095219.png" width="100%">
+</div>
+
+<ul>
+<li>AWS Console 詳細を見ると Notice が出ている。</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170411/20170411215054.png" width="100%">
+</div>
+
+<h2><span id="todo">ToDO</span></h2><p>ボリュームタイプによって異なります。</p>
+<ul>
+<li>EBSボリューム<ul>
+<li>インスタンスの停止後、起動 (Reboot は ×)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>インスタンスストアボリューム<ul>
+<li>AMI からインスタンス再作成、データ移行</li>
+</ul>
+</li>
+</ul>
+<p>今回は EBS ボリューム対応について記載してます。</p>
+<h2><span id="対応">対応</span></h2><p>対象インスタンスが多かったのでローカルPC (macOS) から awscli でインスタンス停止→起動するシェル作成しました。<br>本番環境で利用されるインスタンスも含まれていた為、1件ずつ実行することとしました。</p>
+<h2><span id="事前準備">事前準備</span></h2><ul>
+<li>awscli, jq インストール</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install awscli jq</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>各アカウント毎のアクセスキー、シークレットキー等設定</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ aws configure --profile &lt;profile&gt;</span><br><span class="line">$ grep &#39;profile&#39; ~&#x2F;.aws&#x2F;config</span><br></pre></td></tr></table></figure>
+
+<h3><span id="インスタンスの停止再起動シェル">インスタンスの停止・再起動シェル</span></h3><script src="//gist.github.com/kenzo0107/b841bfad242e87da3625e5d980845529.js"></script>
+
+<p>以下のように実行すると<br>インスタンスが起動(running)していれば<br>停止後、再び起動し、ステータスチェックをするようにしました。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sh stop_and_start_ec2_instance.sh &quot;&lt;profile&gt;&quot; &quot;&lt;instance id&gt;&quot;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="イベント情報取得シェル">イベント情報取得シェル</span></h3><p>.aws/config で設定されている profile を全てチェックし<br>未対応インスタンスのみ表示する様修正しました。</p>
+<script src="//gist.github.com/kenzo0107/b79e05f6fc6692a1d631fd874ccb3e6b.js"></script>
+
+<h2><span id="結果確認">結果確認</span></h2><p>大体 1インスタンス 5分程度で完了。<br>問題なく停止起動でき、対象イベントが一覧から消えたことを確認しました♪</p>
+<h2><span id="所感">所感</span></h2><p>メンテ対象インスタンスの Region が northeast に集中していたのが気になる点でした。<br>このインスタンス何に使ってるんだっけ？とならない様に、インスタンスやprivate key の命名ルール必須と感じました。</p>
+<p>以上です。</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/03/26/2017-03-27-create-keypair-by-terraform/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327212027.png" alt="Terraform でキーペア登録し起動した EC2 に SSH接続"></a></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2017-03-26T15:00:00.000Z" title="2017-03-26T15:00:00.000Z">2017-03-27</time><span class="level-item">5分 read (About 734 words)</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/03/26/2017-03-27-create-keypair-by-terraform/">Terraform でキーペア登録し起動した EC2 に SSH接続</a></h1><div class="content"><h2><span id="今回やること">今回やること</span></h2><ul>
+<li>Mac ローカルで公開鍵、秘密鍵を生成</li>
+<li>Terraform でEC2起動、セキュリティグループで SSH (ポート22)許可、key-pair 登録</li>
+</ul>
+<p>Terraform の Hello World 的なチュートリアルと思っていただけたら幸いです。</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>Mac OS 10.12.3 (Sierra)</li>
+<li>Terraform 0.9.1</li>
+</ul>
+<h2><span id="公開鍵-秘密鍵生成">公開鍵、秘密鍵生成</span></h2><p>RSAフォーマットで鍵を生成します。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Enter file in which to save the key (&#x2F;Users&#x2F;kenzo_tanaka&#x2F;.ssh&#x2F;id_rsa): &#x2F;Users&#x2F;kenzo_tanaka&#x2F;.ssh&#x2F;terraform-test</span><br><span class="line">Enter passphrase (empty for no passphrase): (空のままEnter)</span><br><span class="line">Enter same passphrase again: (空のままEnter)</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 生成されたか確認</span><br><span class="line">$ ls ~&#x2F;.ssh&#x2F;terraform-test*</span><br><span class="line"></span><br><span class="line">&#x2F;Users&#x2F;kenzo_tanaka&#x2F;.ssh&#x2F;terraform-test      # 秘密鍵</span><br><span class="line">&#x2F;Users&#x2F;kenzo_tanaka&#x2F;.ssh&#x2F;terraform-test.pub　# 公開鍵</span><br></pre></td></tr></table></figure>
+
+<p>公開鍵を起動したEC2インスタンスに登録し<br>秘密鍵でアクセスします。</p>
+<p>以下のように利用する予定です。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -i ~&#x2F;.ssh&#x2F;terraform-test &lt;ec2 user&gt;@&lt;ec2 public ip&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="terraform-設定ファイル">Terraform 設定ファイル</span></h2><ul>
+<li><p>Point !</p>
+<ul>
+<li><code>resource &quot;aws_key_pair&quot;</code> で使用する公開鍵設定をしています。</li>
+<li><code>resource &quot;aws_security_group&quot;</code> でSSH（ポート22）を開いてます。</li>
+<li><code>resource &quot;aws_instance&quot;</code> で使用しているセキュリティグループの指定は  <code>vpc_security_group_ids</code> を利用<ul>
+<li>セキュリティグループの条件追加・削除する場合にインスタンスを一度削除し作り直すことをしたくない場合に vpc_security_group_ids を利用すると良いです。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>main.tf</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">provider &quot;aws&quot; &#123;</span><br><span class="line">  access_key &#x3D; &quot;$&#123;var.access_key&#125;&quot;</span><br><span class="line">  secret_key &#x3D; &quot;$&#123;var.secret_key&#125;&quot;</span><br><span class="line">  region     &#x3D; &quot;$&#123;var.region&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;aws_instance&quot; &quot;example&quot; &#123;</span><br><span class="line">  ami           &#x3D; &quot;$&#123;lookup(var.amis, var.region)&#125;&quot;</span><br><span class="line">  instance_type &#x3D; &quot;t2.nano&quot;</span><br><span class="line">  key_name      &#x3D; &quot;$&#123;aws_key_pair.auth.id&#125;&quot;</span><br><span class="line">  vpc_security_group_ids &#x3D; [&quot;$&#123;aws_security_group.default.id&#125;&quot;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;aws_key_pair&quot; &quot;auth&quot; &#123;</span><br><span class="line">  key_name   &#x3D; &quot;$&#123;var.key_name&#125;&quot;</span><br><span class="line">  public_key &#x3D; &quot;$&#123;file(var.public_key_path)&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resource &quot;aws_security_group&quot; &quot;default&quot; &#123;</span><br><span class="line">  name        &#x3D; &quot;terraform_security_group&quot;</span><br><span class="line">  description &#x3D; &quot;Used in the terraform&quot;</span><br><span class="line"></span><br><span class="line">  # SSH access from anywhere</span><br><span class="line">  ingress &#123;</span><br><span class="line">    from_port   &#x3D; 22</span><br><span class="line">    to_port     &#x3D; 22</span><br><span class="line">    protocol    &#x3D; &quot;tcp&quot;</span><br><span class="line">    cidr_blocks &#x3D; [&quot;0.0.0.0&#x2F;0&quot;]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>variables.tf</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">variable &quot;access_key&quot; &#123;&#125;</span><br><span class="line">variable &quot;secret_key&quot; &#123;&#125;</span><br><span class="line">variable &quot;region&quot; &#123;</span><br><span class="line">  default &#x3D; &quot;ap-northeast-1&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">variable &quot;amis&quot; &#123;</span><br><span class="line">  type &#x3D; &quot;map&quot;</span><br><span class="line">  default &#x3D; &#123;</span><br><span class="line">    us-east-1 &#x3D; &quot;ami-13be557e&quot;</span><br><span class="line">    us-west-2 &#x3D; &quot;ami-21f78e11&quot;</span><br><span class="line">    ap-northeast-1 &#x3D; &quot;ami-1bfdb67c&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">variable &quot;key_name&quot; &#123;</span><br><span class="line">  description &#x3D; &quot;Desired name of AWS key pair&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">variable &quot;public_key_path&quot; &#123;</span><br><span class="line">  description &#x3D; &lt;&lt;DESCRIPTION</span><br><span class="line">Path to the SSH public key to be used for authentication.</span><br><span class="line">Ensure this keypair is added to your local SSH agent so provisioners can</span><br><span class="line">connect.</span><br><span class="line"></span><br><span class="line">Example: ~&#x2F;.ssh&#x2F;terraform.pub</span><br><span class="line">DESCRIPTION</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>terraform.tfvars</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">access_key &#x3D; &quot;A******************Q&quot;</span><br><span class="line">secret_key &#x3D; &quot;q**************************************Z&quot;</span><br><span class="line"></span><br><span class="line">key_name &#x3D; &quot;terraform-test&quot;</span><br><span class="line">public_key_path &#x3D; &quot;~&#x2F;.ssh&#x2F;terraform-test.pub&quot;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="いざ実行">いざ実行</span></h2><ul>
+<li>実行計画確認</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ terraform plan</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>実行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ terraform apply</span><br></pre></td></tr></table></figure>
+
+<h2><span id="確認">確認</span></h2><ul>
+<li><p>AWS コンソール上で起動確認</p>
+<ul>
+<li>キーペアに terraform-test が指定されています。</li>
+<li>vpc, subnet も自動的にアタッチされてます。</li>
+</ul>
+</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214009.png" width="100%">
+</div>
+
+<ul>
+<li>キーペア<br>一応キーペアを見てみると登録されているのがわかります。</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214404.png" width="100%">
+</div>
+
+<ul>
+<li>セキュリティグループ確認</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214628.png" width="100%">
+</div>
+
+
+<ul>
+<li>SSH ログイン確認</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -i ~&#x2F;.ssh&#x2F;terraform-test ubuntu@ec2-54-65-244-25.ap-northeast-1.compute.amazonaws.com</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214837.png" width="100%">
+</div>
+
+
+<p>無事SSHログインできました！</p>
+<h2><span id="所感">所感</span></h2><p><a href="https://www.terraform.io/">terraform</a> を見ながら各パラメータの利用意図を確認しながら<br>設定してみましたが<br>パラメータの説明自体はざっくりで利用方法まではわからないです。</p>
+<p><a href="https://www.terraform.io/intro/getting-started/build.html">Teffaform のチュートリアル</a>に始まり<br>その他 <a href="http://stackoverflow.com/questions/tagged/terraform">Stack Overflow</a> で<br>適宜パターンを蓄積していく学習が程よいと思います。</p>
+<h2><span id="参考">参考</span></h2><a href="http://cross-black777.hatenablog.com/entry/2016/02/25/090000" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://blog.st-hatena.com/images/theme/og-image-1500.png"></div><div class="descriptions"><div class="og-title">Terraformで立てたEC2に後からSGを追加しようとするとEC2が再作成される - tjinjin&#39;s blog</div><div class="og-description">About 初回に立てた時はSGが1つだったが、あとからSGを追加したくなったときどうなるか試した結果です。</div></div></div></a>
+</div></article></div><nav class="pagination is-centered mt-4" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/tags/AWS/page/3/">前</a></div><div class="pagination-next"><a href="/tags/AWS/page/5/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/tags/AWS/">1</a></li><li><a class="pagination-link" href="/tags/AWS/page/2/">2</a></li><li><a class="pagination-link" href="/tags/AWS/page/3/">3</a></li><li><a class="pagination-link is-current" href="/tags/AWS/page/4/">4</a></li><li><a class="pagination-link" href="/tags/AWS/page/5/">5</a></li></ul></nav></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3"><div class="card widget"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="kenzo0107"></figure><p class="title is-size-4 is-block line-height-inherit">kenzo0107</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">投稿</p><a href="/archives"><p class="title">298</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">カテゴリ</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">タグ</p><a href="/tags"><p class="title">88</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/kenzo0107" target="_blank" rel="noopener">フォローする</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">カテゴリ</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/AWS/"><span class="level-start"><span class="level-item">AWS</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/DIY/"><span class="level-start"><span class="level-item">DIY</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Go/"><span class="level-start"><span class="level-item">Go</span></span><span class="level-end"><span class="level-item tag">26</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/RaspberryPI/"><span class="level-start"><span class="level-item">RaspberryPI</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/Terraform/"><span class="level-start"><span class="level-item">Terraform</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><h3 class="menu-label">最近の記事</h3><article class="media"><a class="media-left" href="/2022/02/09/2022-02-10-cloudfront-managed-prefix/"><p class="image is-64x64"><img class="thumbnail" src="https://i.imgur.com/raMMbxt.png" alt="terraform で CloudFront マネージドプリフィックスリストを利用したアクセス制限"></p></a><div class="media-content size-small"><p><time dateTime="2022-02-09T15:00:00.000Z">2022-02-10</time></p><p class="title is-6"><a class="link-muted" href="/2022/02/09/2022-02-10-cloudfront-managed-prefix/">terraform で CloudFront マネージドプリフィックスリストを利用したアクセス制限</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/AWS/">AWS</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2022-01-14T15:00:00.000Z">2022-01-15</time></p><p class="title is-6"><a class="link-muted" href="/2022/01/14/2022-01-15-aws-elasticache-redis-cpu-utilization-unnormally-up/">2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/AWS/">AWS</a></p></div></article><article class="media"><a class="media-left" href="/2022/01/05/2022-01-06-raspberrypi-co2-monitoring/"><p class="image is-64x64"><img class="thumbnail" src="https://i.imgur.com/C3bQR5g.jpeg" alt="Raspberry PI zero で CO2 濃度測定 &amp; アラートを LINE 通知"></p></a><div class="media-content size-small"><p><time dateTime="2022-01-05T15:00:00.000Z">2022-01-06</time></p><p class="title is-6"><a class="link-muted" href="/2022/01/05/2022-01-06-raspberrypi-co2-monitoring/">Raspberry PI zero で CO2 濃度測定 &amp; アラートを LINE 通知</a></p><p class="is-uppercase"><a class="link-muted" href="/categories/RaspberryPI/">RaspberryPI</a></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2022-01-03T15:00:00.000Z">2022-01-04</time></p><p class="title is-6"><a class="link-muted" href="/2022/01/03/2022-01-04-rettach-to-user-namespace-unsupported-new-os/">warning: reattach-to-user-namespace: unsupported new OS, trying as if it were 10.10</a></p><p class="is-uppercase"></p></div></article><article class="media"><div class="media-content size-small"><p><time dateTime="2021-12-29T15:00:00.000Z">2021-12-30</time></p><p class="title is-6"><a class="link-muted" href="/2021/12/29/2021-12-30-web-delivery/">no-cache, no-store の違い</a></p><p class="is-uppercase"></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">タグ</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/htaccess/"><span class="tag">.htaccess</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ALB/"><span class="tag">ALB</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/AWS/"><span class="tag">AWS</span><span class="tag is-grey-lightest">43</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Ansible/"><span class="tag">Ansible</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/AntiVirus/"><span class="tag">AntiVirus</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Apache/"><span class="tag">Apache</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Chef/"><span class="tag">Chef</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CodeBuild/"><span class="tag">CodeBuild</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Cookie/"><span class="tag">Cookie</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Corosync/"><span class="tag">Corosync</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Datadog/"><span class="tag">Datadog</span><span class="tag is-grey-lightest">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Docker/"><span class="tag">Docker</span><span class="tag is-grey-lightest">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ECR/"><span class="tag">ECR</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ECS/"><span class="tag">ECS</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ElastiCache/"><span class="tag">ElastiCache</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Elasticsearch/"><span class="tag">Elasticsearch</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Email/"><span class="tag">Email</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/FTPS/"><span class="tag">FTPS</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Fluentd/"><span class="tag">Fluentd</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GKE/"><span class="tag">GKE</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GitHub-Actions/"><span class="tag">GitHub Actions</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Go/"><span class="tag">Go</span><span class="tag is-grey-lightest">24</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GooglePlay/"><span class="tag">GooglePlay</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hubot/"><span class="tag">Hubot</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JavaScript/"><span class="tag">JavaScript</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Jenkins/"><span class="tag">Jenkins</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Kibana/"><span class="tag">Kibana</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/LINE-Notify/"><span class="tag">LINE Notify</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Lambda/"><span class="tag">Lambda</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Let-s-encrypt/"><span class="tag">Let&#039;s encrypt</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MachineLearning/"><span class="tag">MachineLearning</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Monitoring/"><span class="tag">Monitoring</span><span class="tag is-grey-lightest">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MySQL/"><span class="tag">MySQL</span><span class="tag is-grey-lightest">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nginx/"><span class="tag">Nginx</span><span class="tag is-grey-lightest">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenSSL/"><span class="tag">OpenSSL</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Outlook/"><span class="tag">Outlook</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PHP/"><span class="tag">PHP</span><span class="tag is-grey-lightest">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Pacemaker/"><span class="tag">Pacemaker</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Prometheus/"><span class="tag">Prometheus</span><span class="tag is-grey-lightest">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ProxySQL/"><span class="tag">ProxySQL</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Puppeteer/"><span class="tag">Puppeteer</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag is-grey-lightest">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Rails/"><span class="tag">Rails</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RaspberryPI/"><span class="tag">RaspberryPI</span><span class="tag is-grey-lightest">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Reactio/"><span class="tag">Reactio</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Ruby/"><span class="tag">Ruby</span><span class="tag is-grey-lightest">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/S3/"><span class="tag">S3</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SSL/"><span class="tag">SSL</span><span class="tag is-grey-lightest">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Security/"><span class="tag">Security</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SendGrid/"><span class="tag">SendGrid</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Slack/"><span class="tag">Slack</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SonarQube/"><span class="tag">SonarQube</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/StatsBot/"><span class="tag">StatsBot</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Swift/"><span class="tag">Swift</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Terraform/"><span class="tag">Terraform</span><span class="tag is-grey-lightest">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Twilio/"><span class="tag">Twilio</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Unity/"><span class="tag">Unity</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Vagrant/"><span class="tag">Vagrant</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Vault/"><span class="tag">Vault</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/WAF/"><span class="tag">WAF</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zabbix/"><span class="tag">Zabbix</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/awk/"><span class="tag">awk</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/casperjs/"><span class="tag">casperjs</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cpu/"><span class="tag">cpu</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/csv/"><span class="tag">csv</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flask/"><span class="tag">flask</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/git/"><span class="tag">git</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/i-node/"><span class="tag">i-node</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iftop/"><span class="tag">iftop</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ipinfo/"><span class="tag">ipinfo</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iptable/"><span class="tag">iptable</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kibana/"><span class="tag">kibana</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/macos/"><span class="tag">macos</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nginx/"><span class="tag">nginx</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/no-ip/"><span class="tag">no-ip</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ping/"><span class="tag">ping</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pip/"><span class="tag">pip</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/reCAPTCHA/"><span class="tag">reCAPTCHA</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sftp/"><span class="tag">sftp</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/spam/"><span class="tag">spam</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ssh/"><span class="tag">ssh</span><span class="tag is-grey-lightest">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/vim/"><span class="tag">vim</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/wget/"><span class="tag">wget</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/yum/"><span class="tag">yum</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/zsh/"><span class="tag">zsh</span><span class="tag is-grey-lightest">1</span></a></div></div></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Advertisement</h3><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6265337967545472" data-ad-slot="9975280607" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="size-small"><span>&copy; 2022 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'https://kenzo0107.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Zurück nach oben" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"投稿","pages":"Pages","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

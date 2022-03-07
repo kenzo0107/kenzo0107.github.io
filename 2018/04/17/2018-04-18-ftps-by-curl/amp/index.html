@@ -1814,14 +1814,14 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3067; FTPS &#x63A5;&#x7D9A;&#x78BA;&#x8A8D;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+			  		<p>以下コマンドで FTPS 接続確認ができます。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -u &lt;user&gt; --ftp-ssl -k ftp://&lt;ftp domain&gt;/</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x5099;&#x5FD8;&#x9332;&#x8A18;&#x4E8B;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x793E;&#x5916;&#x5411;&#x3051;&#x306B; FTPS &#x3067;&#x63A5;&#x7D9A;&#x8A31;&#x53EF;&#x3092;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x8A2D;&#x5B9A;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x5358;&#x7D14;&#x306B;&#x4F5C;&#x6210;&#x30FB;&#x66F4;&#x65B0;&#x3057;&#x305F; user, password &#x3067;&#x8A8D;&#x8A3C;&#x3092;&#x30D1;&#x30B9;&#x3067;&#x304D;&#x308B;&#x304B;&#x3001;<br>&#x306E;&#x78BA;&#x8A8D;&#x3060;&#x3051;&#x304C;&#x3067;&#x304D;&#x308C;&#x3070;&#x826F;&#x3044;&#x306E;&#x3067;&#x3001;&#x305D;&#x306E;&#x78BA;&#x8A8D;&#x65B9;&#x6CD5;&#x3092;&#x6A21;&#x7D22;&#x3057;&#x3066;&#x3044;&#x308B;&#x6642;&#x306B;<br>&#x7A0B;&#x3088;&#x3044;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x305D;&#x306E;&#x63A5;&#x7D9A;&#x78BA;&#x8A8D;&#x3092; FileZilla, Cyberduck &#x3067;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;<br>&#x3069;&#x3046;&#x3082;&#x3046;&#x307E;&#x304F;&#x3044;&#x304B;&#x305A;&#x3002;&#x3002;</p>
-<p>&#x6539;&#x3081;&#x3066;&#x3001; <code>lftp</code> &#x3068;&#x304B;&#x8272;&#x3005; ftp &#x3060;&#x3051;&#x3067;&#x3082;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x306F;&#x591A;&#x3005;&#x3042;&#x308B;&#x3093;&#x3060;&#x306A;&#x3068;&#x5B9F;&#x611F;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="概要">概要</span></h2><p>備忘録記事です。</p>
+<p>社外向けに FTPS で接続許可をする必要があり設定しました。</p>
+<p>単純に作成・更新した user, password で認証をパスできるか、<br>の確認だけができれば良いので、その確認方法を模索している時に<br>程よいコマンドがありました。</p>
+<p>その接続確認を FileZilla, Cyberduck でしましたが<br>どうもうまくいかず。。</p>
+<p>改めて、 <code>lftp</code> とか色々 ftp だけでもコマンドは多々あるんだなと実感しました。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1887,7 +1887,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

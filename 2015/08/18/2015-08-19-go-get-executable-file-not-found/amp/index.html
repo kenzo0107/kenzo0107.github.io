@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <link rel="canonical" href="https://kenzo0107.github.io/2015/08/18/2015-08-19-go-get-executable-file-not-found/" >
-    <title>go get で 「exec:  - 長生村本郷Engineers&#39;Blog</title>
+    <title>go get で 「exec: &#34;bzr&#34;: executable file not found in $PATH」エラー対策 - 長生村本郷Engineers&#39;Blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     
-    <meta property="og:title" content="go get で 「exec: ">
+    <meta property="og:title" content="go get で 「exec: &#34;bzr&#34;: executable file not found in $PATH」エラー対策">
 	<meta property="og:type" content="article">
 	<meta property="og:url" content="https://kenzo0107.github.io/2015/08/18/2015-08-19-go-get-executable-file-not-found/">
 	
@@ -17,7 +17,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2015/08/18/2015-08-19-go-get-executable-file-not-found/">
-	<meta name="twitter:title" content="go get で 「exec:  - 長生村本郷Engineers&#39;Blog">
+	<meta name="twitter:title" content="go get で 「exec: &#34;bzr&#34;: executable file not found in $PATH」エラー対策 - 長生村本郷Engineers&#39;Blog">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -46,14 +46,14 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "BlogPosting",
-			"headline": "go get で 「exec: ",
+			"headline": "go get で 「exec: &#34;bzr&#34;: executable file not found in $PATH」エラー対策",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2015/08/18/2015-08-19-go-get-executable-file-not-found/"
 			},
 			"datePublished": "2015-08-18T15:00:00.000Z",
-			"dateModified": "2020-05-20T14:03:54.487Z",
+			"dateModified": "2022-03-07T15:14:59.664Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1816,7 +1816,7 @@ h6.categories {
 			            <div class="header-cap flx">
 							
 							  <h1 class="article-title entry-title" itemprop="name">
-							    <a href="https://kenzo0107.github.io/2015/08/18/2015-08-19-go-get-executable-file-not-found/" target="_blank" itemprop="url">go get で 「exec: </a>
+							    <a href="https://kenzo0107.github.io/2015/08/18/2015-08-19-go-get-executable-file-not-found/" target="_blank" itemprop="url">go get で 「exec: &#34;bzr&#34;: executable file not found in $PATH」エラー対策</a>
 							  </h1>
 							
 						</div>
@@ -1843,18 +1843,18 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x7D50;&#x8AD6;">&#x7D50;&#x8AD6;</span></h2><p>bzr&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x305F;&#x5F8C;&#x3001;&#x518D;&#x5EA6;<code>go get</code>&#x3057;&#x3066;&#x554F;&#x984C;&#x306A;&#x304F;&#x52D5;&#x4F5C;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<h2><span id="結論">結論</span></h2><p>bzrモジュールインストールした後、再度<code>go get</code>して問題なく動作しました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install -y bzr</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>EC2&#x306E;CentOS7&#x3067;<br>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B; <code>go get</code> &#x3057;&#x305F;&#x969B;&#x306B;<code>bzr&#x304C;&#x898B;&#x5F53;&#x305F;&#x3089;&#x306A;&#x3044;</code>&#x3068;&#x3044;&#x3046;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3057;&#x305F;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ go get launchpad.net/goamz/aws</span><br><span class="line"></span><br><span class="line">[centos@ip-xxx-xx-xx-xx src]$ go get launchpad.net/goamz/aws</span><br><span class="line">go: missing Bazaar command. See http://golang.org/s/gogetcmd</span><br><span class="line">package launchpad.net/goamz/aws: exec: &quot;bzr&quot;: executable file not found in $PATH</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="概要">概要</span></h2><p>EC2のCentOS7で<br>以下のように <code>go get</code> した際に<code>bzrが見当たらない</code>というエラーが発生した。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ go get launchpad.net/goamz/aws</span><br><span class="line"></span><br><span class="line">[centos@ip-xxx-xx-xx-xx src]$ go get launchpad.net/goamz/aws</span><br><span class="line">go: missing Bazaar command. See http://golang.org/s/gogetcmd</span><br><span class="line">package launchpad.net/goamz/aws: exec: "bzr": executable file not found in $PATH</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3061;&#x3087;&#x3053;&#x3063;&#x3068;&#x3057;&#x305F;&#x3064;&#x307E;&#x3065;&#x304D;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x3061;&#x306A;&#x307F;&#x306B;">&#x3061;&#x306A;&#x307F;&#x306B;</span></h2><p><code>bzr</code>&#x306F;git&#x3068;&#x540C;&#x69D8;&#x3001;&#x5206;&#x6563;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x7BA1;&#x7406;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x4ECA;&#x56DE;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x305F;Package&#x304C;Bazaar&#x3067;&#x7BA1;&#x7406;&#x3057;&#x3066;&#x3044;&#x305F;&#x304B;&#x3089;&#x5FC5;&#x8981;&#x306B;&#x306A;&#x3063;&#x305F;&#x306E;&#x3067;&#x3057;&#x3087;&#x3046;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x53C2;&#x7167;<br><a href="http://doc.bazaar.canonical.com/beta/ja/user-reference/index.html">Bazaar&#x30E6;&#x30FC;&#x30B6;&#x30FC;&#x30EA;&#x30D5;&#x30A1;&#x30EC;&#x30F3;&#x30B9;</a></p>
+<p>ちょこっとしたつまづきでした。</p>
+<h2><span id="ちなみに">ちなみに</span></h2><p><code>bzr</code>はgitと同様、分散バージョン管理システムです。</p>
+<p>今回インストールしようとしたPackageがBazaarで管理していたから必要になったのでしょう。</p>
+<p>以下参照<br><a href="http://doc.bazaar.canonical.com/beta/ja/user-reference/index.html">Bazaarユーザーリファレンス</a></p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1873,25 +1873,6 @@ h6.categories {
 		  	
 		  	
 		  	<!-- TAGS -->
-		  	
-		  	<div class="meta-content">
-				
-				<div class="widget">
-				  	<h6 class="tag"><span class="fa fa-fw fa-tag"></span>TAGS</h6>
-				  	<div class="article-tag">
-						<ul class="article-tag-list">
-							
-					    		<li class="article-tag-list-item">
-					    			<a class="article-tag-list-link" href="/tags/Go/">
-					    				Go
-					    			</a>
-					    		</li>
-							
-						</ul>
-					</div>
-				</div>
-				
-			</div>
 		  	
 		  	
 		  	<!-- Categories posts -->
@@ -1920,7 +1901,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

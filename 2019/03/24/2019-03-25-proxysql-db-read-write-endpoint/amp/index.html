@@ -1835,38 +1835,38 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>docker-compose &#x4E0A;&#x3067; ProxySQL &#x3067; primary DB &#x3068; secondary DB &#x3078;&#x306E; SQL &#x6BCE;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5148;&#x3092;&#x30B9;&#x30A4;&#x30C3;&#x30C1;&#x30F3;&#x30B0;&#x3059;&#x308B;&#x74B0;&#x5883;&#x3092;&#x69CB;&#x7BC9;&#x3057;&#x3001;&#x8A66;&#x9A13;&#x3057;&#x3066;&#x307F;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<p>docker-compose 上で ProxySQL で primary DB と secondary DB への SQL 毎にアクセス先をスイッチングする環境を構築し、試験してみました。</p>
 <p><a href="https://github.com/kenzo0107/proxysql-mysql-group-replication">kenzo0107/proxysql-mysql-group-replication</a></p>
-<h2><span id="proxysql-&#x3068;&#x306F;">ProxySQL &#x3068;&#x306F;&#xFF1F;</span></h2><p>ProxySQL &#x306F;&#x30CF;&#x30A4;&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x306A; MySQL &#x306E; SQL &#x30D7;&#x30ED;&#x30AD;&#x30B7;&#x3067;&#x3059;&#x3002;</p>
-<p>MySQL&#x306E;&#x30D5;&#x30A9;&#x30FC;&#x30AF;&#x3067;&#x3042;&#x308B; Percona Server &#x3084; MariaDB &#x3060;&#x3051;&#x3067;&#x306A;&#x304F;&#x3001;Galera Cluster &#x306B;&#x3082;&#x5BFE;&#x5FDC;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x4ECA;&#x56DE;&#x3084;&#x3063;&#x3066;&#x307F;&#x3088;&#x3046;&#x3068;&#x601D;&#x3063;&#x305F;&#x306E;&#x306F;">&#x4ECA;&#x56DE;&#x3084;&#x3063;&#x3066;&#x307F;&#x3088;&#x3046;&#x3068;&#x601D;&#x3063;&#x305F;&#x306E;&#x306F;</span></h2><p>&#x4ECA;&#x56DE;&#x6CE8;&#x76EE;&#x3057;&#x305F;&#x306E;&#x306F; ProxySQL &#x306E; SQL &#x30D7;&#x30ED;&#x30AD;&#x30B7;&#x306E;&#x6A5F;&#x80FD;&#x3067;&#x3059;&#x3002;</p>
-<p>ProxySQL &#x306F; SQL &#x306B;&#x3088;&#x3063;&#x3066;&#x3001;Read/Write &#x30A8;&#x30F3;&#x30C9;&#x30DD;&#x30A4;&#x30F3;&#x30C8;&#x3092;&#x30B9;&#x30A4;&#x30C3;&#x30C1;&#x30F3;&#x30B0;&#x3057;&#x3066;&#x304F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="proxysql-とは">ProxySQL とは？</span></h2><p>ProxySQL はハイパフォーマンスな MySQL の SQL プロキシです。</p>
+<p>MySQLのフォークである Percona Server や MariaDB だけでなく、Galera Cluster にも対応しています。</p>
+<h2><span id="今回やってみようと思ったのは">今回やってみようと思ったのは</span></h2><p>今回注目したのは ProxySQL の SQL プロキシの機能です。</p>
+<p>ProxySQL は SQL によって、Read/Write エンドポイントをスイッチングしてくれます。</p>
 <a id="more"></a>
 
 <ul>
-<li>SELECT &#x306A;&#x3089; Read &#x30A8;&#x30F3;&#x30C9;&#x30DD;&#x30A4;&#x30F3;&#x30C8;&#x3078;</li>
-<li>INSERT, UPDATE, DELETE &#x306A;&#x3089; Write &#x30A8;&#x30F3;&#x30C9;&#x30DD;&#x30A4;&#x30F3;&#x30C8;&#x3078;</li>
+<li>SELECT なら Read エンドポイントへ</li>
+<li>INSERT, UPDATE, DELETE なら Write エンドポイントへ</li>
 </ul>
-<p>&#x3068;&#x3044;&#x3046;&#x611F;&#x3058;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x4F7F;&#x304A;&#x3046;&#x3068;&#x601D;&#x3063;&#x305F;&#x7D4C;&#x7DEF;">&#x4F7F;&#x304A;&#x3046;&#x3068;&#x601D;&#x3063;&#x305F;&#x7D4C;&#x7DEF;</span></h2><p>Rails &#x306B;&#x95A2;&#x308F;&#x3089;&#x305A;&#x3001;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x5074;&#x306E;&#x554F;&#x984C;&#x3067;&#x3001;Read/Write &#x306E;&#x30B9;&#x30A4;&#x30C3;&#x30C1;&#x30F3;&#x30B0;&#x304C;&#x3067;&#x304D;&#x306A;&#x3044;&#x5834;&#x5408;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>という感じです。</p>
+<h2><span id="使おうと思った経緯">使おうと思った経緯</span></h2><p>Rails に関わらず、アプリケーション側の問題で、Read/Write のスイッチングができない場合があります。</p>
 <ul>
-<li>Rails &#x3067;&#x7279;&#x5B9A;&#x306E; gem &#x306B;&#x4F9D;&#x5B58;&#x3057;&#x3066; switch_point &#x304C;&#x52B9;&#x304B;&#x306A;&#x3044;&#x3068;&#x3053;&#x308D;&#x304C;&#x3042;&#x308B;&#x3068;&#x304B;&#x3002;&#x3002;</li>
-<li>&#x72EC;&#x81EA;&#x30D5;&#x30EC;&#x30FC;&#x30E0;&#x30EF;&#x30FC;&#x30AF;&#x3067; DB &#x5074;&#x306E;&#x51E6;&#x7406;&#x304C;&#x8907;&#x96D1;&#x3059;&#x304E;&#x3066;&#x624B;&#x304C;&#x51FA;&#x305B;&#x306A;&#x3044;&#x3068;&#x304B;&#x3002;&#x3002;</li>
+<li>Rails で特定の gem に依存して switch_point が効かないところがあるとか。。</li>
+<li>独自フレームワークで DB 側の処理が複雑すぎて手が出せないとか。。</li>
 </ul>
-<p>&#x306A;&#x307E;&#x3058;&#x3063;&#x304B;&#x3001;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x304C;&#x6210;&#x9577;&#x3057;&#x3066;&#x3044;&#x304F;&#x3068;&#x3001;&#x30A2;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;&#x5074;&#x3067; DB &#x306E;&#x30B9;&#x30A4;&#x30C3;&#x30C1;&#x30F3;&#x30B0;&#x304C;&#x3067;&#x304D;&#x306A;&#x3044;&#x3053;&#x3068;&#x304C;&#x3001;&#x76F4;&#x63A5;&#x7684;&#x306B; DB &#x306E;&#x30DC;&#x30C8;&#x30EB;&#x30CD;&#x30C3;&#x30AF;&#x3078;&#x7E4B;&#x304C;&#x308B;&#x3053;&#x3068;&#x306B;&#x306A;&#x308A;&#x304B;&#x306D;&#x307E;&#x305B;&#x3093;&#x3002;</p>
-<p>&#x3053;&#x306E;&#x89E3;&#x6C7A;&#x306E;&#x70BA;&#x306B; ProxySQL &#x3092;&#x5229;&#x7528;&#x3057;&#x3088;&#x3046;&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x5B9F;&#x969B;&#x306B;&#x8A66;&#x3057;&#x3066;&#x307F;&#x308B;">&#x5B9F;&#x969B;&#x306B;&#x8A66;&#x3057;&#x3066;&#x307F;&#x308B;&#x3002;</span></h2><p>&#x5192;&#x982D;&#x306E;&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x3092; <code>git clone</code> &#x3057;&#x3066; <code>docker-compose up</code> &#x3057;&#x3066;&#x9802;&#x3051;&#x308C;&#x3070;&#x3001;&#x8D77;&#x52D5;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>README &#x306E;&#x901A;&#x308A;&#x306B;&#x5B9F;&#x65BD;&#x3057;&#x3066;&#x307F;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<p>なまじっか、サービスが成長していくと、アプリケーション側で DB のスイッチングができないことが、直接的に DB のボトルネックへ繋がることになりかねません。</p>
+<p>この解決の為に ProxySQL を利用しようと思いました。</p>
+<h2><span id="実際に試してみる">実際に試してみる。</span></h2><p>冒頭のリポジトリを <code>git clone</code> して <code>docker-compose up</code> して頂ければ、起動します。</p>
+<p>README の通りに実施してみてください。</p>
 <ul>
-<li>UPDATE &#x3067; primary DB &#x3078;</li>
-<li>SELECT &#x3067; secondary DB &#x3078;</li>
+<li>UPDATE で primary DB へ</li>
+<li>SELECT で secondary DB へ</li>
 </ul>
-<p>&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x3044;&#x308B;&#x306E;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>アクセスしているのがわかります。</p>
 <h2><span id="todo">TODO</span></h2><ul>
-<li>Rails &#x7B49;&#x30D5;&#x30EC;&#x30FC;&#x30E0;&#x30EF;&#x30FC;&#x30AF;&#x3067; Transaction &#x51E6;&#x7406;&#x304C;&#x3069;&#x3046;&#x6271;&#x308F;&#x308C;&#x308B;&#x304B;&#x8ABF;&#x67FB;</li>
+<li>Rails 等フレームワークで Transaction 処理がどう扱われるか調査</li>
 </ul>
-<p>&#x3080;&#x3057;&#x308D;&#x3053;&#x3053;&#x304C;&#x809D;&#x5FC3;&#x3067;&#x3059;&#x306D;&#x3002;&#x3059;&#x3067;&#x306B;&#x304A;&#x8ABF;&#x3079;&#x3044;&#x305F;&#x3060;&#x3044;&#x3066;&#x3044;&#x308B;&#x65B9;&#x3001;&#x3054;&#x6559;&#x793A;&#x304F;&#x3060;&#x3055;&#x3044;&#x307E;&#x3057;&#x305F;&#x3089;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;<br>&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>むしろここが肝心ですね。すでにお調べいただいている方、ご教示くださいましたら幸いです。</p>
+<p>以上<br>参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1932,7 +1932,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

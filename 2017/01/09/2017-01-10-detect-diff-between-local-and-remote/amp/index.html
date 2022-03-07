@@ -1843,35 +1843,35 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x30EA;&#x30E2;&#x30FC;&#x30C8;&#x30B5;&#x30FC;&#x30D0;&#x3068;&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x30B5;&#x30FC;&#x30D0;&#x3068;&#x306E;&#x5DEE;&#x5206;&#x306E;&#x3042;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x60C5;&#x5831;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;&#x30C4;&#x30FC;&#x30EB;&#x3092; Golang &#x3067;&#x4F5C;&#x6210;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>リモートサーバとローカルサーバとの差分のあるファイル情報を取得するツールを Golang で作成しました。</p>
 <a href="https://github.com/kenzo0107/diffrelo" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://avatars0.githubusercontent.com/u/6197906?s=400&amp;v=4" width="400" height="400" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">kenzo0107/diffrelo</div><div class="og-description">diffrelo is a tool to find the file differences between the remote server and the local workspace. - kenzo0107/diffrelo</div></div></div></a>
 
 
-<h2><span id="&#x3069;&#x3093;&#x306A;&#x30C4;&#x30FC;&#x30EB;&#x304B;3&#x884C;&#x307E;&#x3068;&#x3081;">&#x3069;&#x3093;&#x306A;&#x30C4;&#x30FC;&#x30EB;&#x304B;3&#x884C;&#x307E;&#x3068;&#x3081;</span></h2><ol>
-<li>&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x30EF;&#x30FC;&#x30AF;&#x30B9;&#x30DA;&#x30FC;&#x30B9;&#x3092;&#x5143;&#x306B;&#x30EA;&#x30E2;&#x30FC;&#x30C8;&#x30B5;&#x30FC;&#x30D0;&#x304B;&#x3089;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x3068;&#x62E1;&#x5F35;&#x5B50;&#x6307;&#x5B9A;&#x3057;&#x5B9F;&#x884C;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x4E0A;&#x306B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;</li>
-<li>&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x306E;&#x30EF;&#x30FC;&#x30AF;&#x30B9;&#x30DA;&#x30FC;&#x30B9;&#x304B;&#x3089;&#x5B9F;&#x884C;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x4E0A;&#x306B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x30B3;&#x30D4;&#x30FC;</li>
-<li>1,2 &#x3067;&#x53D6;&#x5F97;&#x3057;&#x305F;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304B;&#x3089;&#x5DEE;&#x5206;&#x3092;&#x30C1;&#x30A7;&#x30C3;&#x30AF;</li>
+<h2><span id="どんなツールか3行まとめ">どんなツールか3行まとめ</span></h2><ol>
+<li>ローカルワークスペースを元にリモートサーバからディレクトリと拡張子指定し実行ディレクトリ上にファイルをダウンロード</li>
+<li>ローカルのワークスペースから実行ディレクトリ上にファイルをコピー</li>
+<li>1,2 で取得したファイルから差分をチェック</li>
 </ol>
-<h2><span id="&#x5229;&#x7528;&#x60F3;&#x5B9A;&#x30B1;&#x30FC;&#x30B9;">&#x5229;&#x7528;&#x60F3;&#x5B9A;&#x30B1;&#x30FC;&#x30B9;</span></h2><ul>
-<li>&#x30EA;&#x30E2;&#x30FC;&#x30C8;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30B5;&#x30FC;&#x30D0;&#x3068;&#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x30EF;&#x30FC;&#x30AF;&#x30B9;&#x30DA;&#x30FC;&#x30B9;&#x306E;&#x540C;&#x671F;&#x72B6;&#x6CC1;&#x304C;&#x4E0D;&#x660E;&#x77AD;&#x3067;&#x3042;&#x308B;&#x5834;&#x5408;</li>
+<h2><span id="利用想定ケース">利用想定ケース</span></h2><ul>
+<li>リモートファイルサーバとローカルワークスペースの同期状況が不明瞭である場合</li>
 </ul>
-<p>&#x3053;&#x306E;1&#x70B9;&#x306E;&#x307F;&#x3067;&#x3059;&#x3002;<br>&#x6574;&#x5099;&#x3055;&#x308C;&#x305F;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x74B0;&#x5883;&#x3067;&#x306F;&#x767A;&#x751F;&#x3057;&#x306B;&#x304F;&#x3044;&#x30B1;&#x30FC;&#x30B9;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x3067;&#x3059;&#x304C;&#x610F;&#x5916;&#x3068;&#x591A;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>この1点のみです。<br>整備されたデプロイ環境では発生しにくいケースです。</p>
+<p>ですが意外と多いです。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/HqjRw7c.png" width="300" height="300" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x305D;&#x308C;&#x306F;&#x3053;&#x3093;&#x306A;&#x30B1;&#x30FC;&#x30B9;</p>
+<p>それはこんなケース</p>
 <ul>
-<li>&#x62C5;&#x5F53;&#x8005;&#x304C;&#x9000;&#x8077;&#x3057;&#x3066;&#x5F15;&#x304D;&#x7D99;&#x304C;&#x308C;&#x3066;&#x3044;&#x306A;&#x3044; (&gt;_&lt;)</li>
-<li>&#x3061;&#x3087;&#x3063;&#x3068;&#x3057;&#x305F;&#x30C4;&#x30FC;&#x30EB;&#x3060;&#x3057;Git&#x7BA1;&#x7406;&#x3057;&#x3066;&#x306A;&#x304B;&#x3063;&#x305F; (&gt;_&lt;)</li>
-<li>&#x5225;&#x306E;&#x696D;&#x8005;&#x3055;&#x3093;&#x304C;&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3067;&#x304D;&#x3001;&#x52DD;&#x624B;&#x306B;&#x7DE8;&#x96C6;&#x3059;&#x308B;&#x3053;&#x3068;&#x304C;&#x3042;&#x308B; (&gt;_&lt;)</li>
+<li>担当者が退職して引き継がれていない (&gt;_&lt;)</li>
+<li>ちょっとしたツールだしGit管理してなかった (&gt;_&lt;)</li>
+<li>別の業者さんがサーバにアクセスでき、勝手に編集することがある (&gt;_&lt;)</li>
 </ul>
-<p>&#x4E0A;&#x8A18;&#x306E;&#x30B1;&#x30FC;&#x30B9;&#x306B;&#x5F53;&#x305F;&#x308B;&#x6848;&#x4EF6;&#x306B;&#x305F;&#x307E;&#x305F;&#x307E;&#x62C5;&#x5F53;&#x3057;&#x3066;&#x3057;&#x307E;&#x3063;&#x3066;<br>&#x30C7;&#x30B0;&#x30EC;&#x3063;&#x305F;&#x3001;&#x30D0;&#x30B0;&#x3063;&#x305F;&#x3068;&#x306A;&#x3089;&#x306A;&#x3044;&#x70BA;&#x306B;&#x500B;&#x4EBA;&#x7684;&#x306B;&#x4F5C;&#x3063;&#x3066;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x88DC;&#x8DB3;">&#x88DC;&#x8DB3;</span></h2><p>&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x306E;&#x5BFE;&#x8C61;&#x62E1;&#x5F35;&#x5B50;&#x306F; php,tpl,js,css,html &#x3092;&#x5BFE;&#x8C61;&#x3068;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;<br>&#x4F1A;&#x793E;&#x3067;PHP&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x6271;&#x3046;&#x3053;&#x3068;&#x304C;&#x591A;&#x3044;&#x306E;&#x3067; m(_ _)m</p>
-<h2><span id="&#x3042;&#x3068;&#x304C;&#x304D;">&#x3042;&#x3068;&#x304C;&#x304D;</span></h2><p>&#x5143;&#x3005; Python &#x3067;&#x66F8;&#x3044;&#x3066;&#x307E;&#x3057;&#x305F;&#x304C; Go &#x306B;&#x3057;&#x305F;&#x3068;&#x3053;&#x308D;<br>4~5&#x500D;&#x7A0B;&#x5EA6;&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x30A2;&#x30C3;&#x30D7;&#x3057;&#x307E;&#x3057;&#x305F;&#xFF01;</p>
-<p>&#x4E26;&#x884C;&#x51E6;&#x7406;&#x306B;&#x3064;&#x3044;&#x3066;&#x3082;<br>Python &#x3082; <a href="http://docs.python.jp/2/library/multiprocessing.html">multiprocessing</a> &#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x304C;<br>&#x66F8;&#x304D;&#x6613;&#x3055;&#x306F; Go &#x304B;&#x306A;&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x3061;&#x306A;&#x307F;&#x306B;">&#x3061;&#x306A;&#x307F;&#x306B;</span></h2><p>&#x5B9F;&#x88C5;&#x306B;&#x5F53;&#x305F;&#x3063;&#x3066;&#x3053;&#x3061;&#x3089;&#x62DD;&#x8AAD;&#x3055;&#x305B;&#x3066;&#x3044;&#x305F;&#x3060;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;<br>&#x57FA;&#x790E;&#x7684;&#x306A;Go&#x8A00;&#x8A9E;&#x306E;&#x69CB;&#x6587;&#x3084;&#x74B0;&#x5883;&#x69CB;&#x7BC9;&#x3001;<br>Semaphore &#x3092;&#x610F;&#x8B58;&#x3057;&#x305F;&#x8A2D;&#x8A08;&#x306F;&#x3068;&#x3066;&#x3082;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>上記のケースに当たる案件にたまたま担当してしまって<br>デグレった、バグったとならない為に個人的に作ってました。</p>
+<h2><span id="補足">補足</span></h2><p>デフォルトの対象拡張子は php,tpl,js,css,html を対象としています。<br>会社でPHPプロジェクトを扱うことが多いので m(_ _)m</p>
+<h2><span id="あとがき">あとがき</span></h2><p>元々 Python で書いてましたが Go にしたところ<br>4~5倍程度パフォーマンスアップしました！</p>
+<p>並行処理についても<br>Python も <a href="http://docs.python.jp/2/library/multiprocessing.html">multiprocessing</a> がありますが<br>書き易さは Go かなと思いました。</p>
+<h2><span id="ちなみに">ちなみに</span></h2><p>実装に当たってこちら拝読させていただきました。<br>基礎的なGo言語の構文や環境構築、<br>Semaphore を意識した設計はとても参考になりました。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1937,7 +1937,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

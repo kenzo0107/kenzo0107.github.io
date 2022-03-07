@@ -1814,58 +1814,58 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x30D9;&#x30EA;&#x30C8;&#x30E9;&#x30F3;&#x30B9;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x306E;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x306B;&#x969B;&#x3057;&#x3066;<br><font color="red">2016&#x5E74;&#x4EE5;&#x5185;&#x306B;</font>SSL v3.0/TLS 1.0&#x7121;&#x52B9;&#x5316;&#x51E6;&#x7406;&#x304C;&#x5FC5;&#x9808;&#x3068;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4E16;&#x754C;&#x7684;&#x306A;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x5BFE;&#x7B56;&#x306E;&#x4E00;&#x74B0;&#x3068;&#x3057;&#x3066;&#x5FC5;&#x9808;&#x4E8B;&#x9805;&#x306A;&#x306E;&#x3067;<br>&#x30D9;&#x30EA;&#x30C8;&#x30E9;&#x30F3;&#x30B9;&#x4EE5;&#x5916;&#x306E;&#x6C7A;&#x6E08;&#x3082;&#x3001;&#x307E;&#x305F;&#x6C7A;&#x6E08;&#x4EE5;&#x5916;&#x3067;&#x3082;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x306E;&#x5BFE;&#x7B56;&#x5FC5;&#x9808;&#x3067;&#x3059;&#x3002;</p>
-<p><a href="http://internet.watch.impress.co.jp/docs/news/20141015_671482.html">Google&#x3001;SSL 3.0&#x306E;&#x8106;&#x5F31;&#x6027;&#x300C;POODLE&#x300D;&#x3092;&#x516C;&#x8868;&#x3001;SSL 3.0&#x306F;&#x4ECA;&#x5F8C;&#x30B5;&#x30DD;&#x30FC;&#x30C8;&#x5EC3;&#x6B62;&#x306E;&#x610F;&#x5411;</a></p>
-<p>EC-CUBE&#x3067;&#x30D9;&#x30EA;&#x30C8;&#x30E9;&#x30F3;&#x30B9;&#x306E;&#x6C7A;&#x6E08;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x3067;&#x306F;<br>PHP&#x304B;&#x3089;OpenSSL&#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;&#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x6C7A;&#x6E08;&#x3078;&#x901A;&#x4FE1;&#x3092;&#x5B9F;&#x65BD;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x305D;&#x306E;PHP&#x306E;OpenSSL&#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;&#x3092;1.0.1i&#x4EE5;&#x4E0A;(&#x6700;&#x65B0;&#x304C;&#x63A8;&#x5968;)&#x306B;<br>&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x5BFE;&#x5FDC;&#x3059;&#x308B; ToDo&#x3068;&#x3057;&#x3066;&#x306F;&#x4EE5;&#x4E0B;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>ベリトランスモジュールのバージョンアップに際して<br><font color="red">2016年以内に</font>SSL v3.0/TLS 1.0無効化処理が必須となりました。</p>
+<p>世界的なセキュリティ対策の一環として必須事項なので<br>ベリトランス以外の決済も、また決済以外でもシステムの対策必須です。</p>
+<p><a href="http://internet.watch.impress.co.jp/docs/news/20141015_671482.html">Google、SSL 3.0の脆弱性「POODLE」を公表、SSL 3.0は今後サポート廃止の意向</a></p>
+<p>EC-CUBEでベリトランスの決済モジュールでは<br>PHPからOpenSSLライブラリを利用して決済へ通信を実施しています。</p>
+<p>そのPHPのOpenSSLライブラリを1.0.1i以上(最新が推奨)に<br>バージョンアップする必要があります。</p>
+<p>対応する ToDoとしては以下になります。</p>
 <blockquote>
-<p>TLS1.1&#x4EE5;&#x4E0A;&#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x306B;&#x306F; openssl 1.0.1i &#x4EE5;&#x4E0A;&#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x30A2;&#x30EA;<br>&#x2192; openssl &#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7; (1.0.1i&#x4EE5;&#x4E0A;)<br>&#x2192; PHP &#x306E;&#x518D;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;&#x3057; OpenSSL&#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;(1.0.1i&#x4EE5;&#x4E0A;)&#x3092;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;</p>
+<p>TLS1.1以上を利用するには openssl 1.0.1i 以上を利用する必要アリ<br>→ openssl バージョンアップ (1.0.1i以上)<br>→ PHP の再コンパイルし OpenSSLライブラリ(1.0.1i以上)をバージョンアップ</p>
 </blockquote>
-<p>&#x4E0A;&#x8A18;&#x5BFE;&#x5FDC;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x203B; Apache&#x306E;SSL v3.0/TLS1.0&#x5229;&#x7528;&#x4E0D;&#x53EF;&#x8A2D;&#x5B9A;&#x306F;&#x5225;&#x9014;<br>&#x30B0;&#x30B0;&#x308C;&#x3070;&#x3059;&#x3050;&#x51FA;&#x3066;&#x304D;&#x307E;&#x3059;&#x266A;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<p>上記対応をまとめました。</p>
+<p>※ ApacheのSSL v3.0/TLS1.0利用不可設定は別途<br>ググればすぐ出てきます♪</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS release 6.6 (Final)</li>
 <li>PHP 5.3.9</li>
 <li>openssl 1.0.1g</li>
 </ul>
-<h2><span id="&#x624B;&#x9806;">&#x624B;&#x9806;</span></h2><h3><span id="php-&#x3067;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;-openssl-&#x306E;&#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x78BA;&#x8A8D;">PHP &#x3067;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B; OpenSSL &#x306E;&#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x78BA;&#x8A8D;</span></h3><p>&#x3053;&#x308C;&#x304B;&#x3089;PHP&#x3092;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;&#x3057;&#x76F4;&#x3059;&#x306E;&#x3067;<br>OpenSSL support &#x304C; disable&#x3067;&#x3082;&#x554F;&#x984C;&#x306A;&#x3044;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x203B;&#x4ECA;&#x56DE;&#x3067;&#x306F;&#x65E2;&#x306B;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x6E08;&#x307F;&#x3067;&#x3042;&#x308B;&#x3068;&#x3044;&#x3046;&#x30B1;&#x30FC;&#x30B9;&#x3092;&#x60F3;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="手順">手順</span></h2><h3><span id="php-で利用している-openssl-のライブラリバージョン確認">PHP で利用している OpenSSL のライブラリバージョン確認</span></h3><p>これからPHPをコンパイルし直すので<br>OpenSSL support が disableでも問題ないです。</p>
+<p>※今回では既にインストール済みであるというケースを想定しています。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># php -i | grep OpenSSL</span><br><span class="line"></span><br><span class="line">OpenSSL support =&gt; enabled</span><br><span class="line">OpenSSL Library Version =&gt; OpenSSL 1.0.1g  28 Jan 2016</span><br><span class="line">OpenSSL Header Version =&gt; OpenSSL 1.0.1g  28 Jan 2016</span><br><span class="line">OpenSSL support =&gt; enabled</span><br></pre></td></tr></tbody></table></figure>
 
-<p>PHP&#x3067;&#x3067;&#x5229;&#x7528;&#x3055;&#x308C;&#x308B;OpenSSL Library, Header Version &#x304C; <code>1.0.1g</code> &#x3067;&#x3042;&#x308B;&#x3053;&#x3068;&#x304C;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h3><span id="&#x65E2;&#x5B58;openssl-&#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;">&#x65E2;&#x5B58;openssl &#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;</span></h3><p>&#x65E2;&#x306B;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x6E08;&#x307F;&#x304B;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x306E;&#x3067;<br>&#x73FE;&#x884C;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x3092;&#x4E00;&#x65E6;&#x9000;&#x907F;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># openssl version</span><br><span class="line">1.0.1g</span><br><span class="line"></span><br><span class="line"># which openssl</span><br><span class="line">/usr/local/bin/openssl</span><br><span class="line"></span><br><span class="line">// &#x540D;&#x524D;&#x5909;&#x66F4;&#x3067;&#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;&#x3068;&#x3057;&#x3066;&#x6B8B;&#x3059;</span><br><span class="line"># mv /usr/local/bin/openssl /usr/local/bin/openssl1.0.1g</span><br></pre></td></tr></tbody></table></figure>
+<p>PHPでで利用されるOpenSSL Library, Header Version が <code>1.0.1g</code> であることが確認できました。</p>
+<h3><span id="既存openssl-バックアップ">既存openssl バックアップ</span></h3><p>既にインストール済みかと思いますので<br>現行バージョンを一旦退避します。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># openssl version</span><br><span class="line">1.0.1g</span><br><span class="line"></span><br><span class="line"># which openssl</span><br><span class="line">/usr/local/bin/openssl</span><br><span class="line"></span><br><span class="line">// 名前変更でバックアップとして残す</span><br><span class="line"># mv /usr/local/bin/openssl /usr/local/bin/openssl1.0.1g</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4F55;&#x304B;&#x4E0D;&#x5177;&#x5408;&#x304C;&#x767A;&#x751F;&#x3057;&#x305F;&#x5834;&#x5408;&#x306B;&#x307E;&#x304D;&#x3082;&#x3069;&#x305B;&#x308B;&#x3088;&#x3046;&#x306B;&#x3001;&#x5FF5;&#x306E;&#x305F;&#x3081;&#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;&#x3092;&#x3068;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="openssl-&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;">openssl &#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;</span></h2><p>&#x30BD;&#x30FC;&#x30B9;&#x304B;&#x3089;&#x30D3;&#x30EB;&#x30C9;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>何か不具合が発生した場合にまきもどせるように、念のためバックアップをとりました。</p>
+<h2><span id="openssl-バージョンアップ">openssl バージョンアップ</span></h2><p>ソースからビルドします。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/local/src</span><br><span class="line"># wget http://www.openssl.org/source/openssl-1.0.2f.tar.gz</span><br><span class="line"># tar xzvf openssl-1.0.2f.tar.gz</span><br><span class="line"># cd openssl-1.0.2f</span><br><span class="line"># ./config --prefix=/usr/local shared -fPIC</span><br><span class="line"># make</span><br><span class="line"># make install</span><br></pre></td></tr></tbody></table></figure>
 
-<p>-fPIC &#x306F; &#x52D5;&#x7684;&#x5171;&#x6709;&#x30AA;&#x30D6;&#x30B8;&#x30A7;&#x30AF;&#x30C8;(DSO)&#x3068;&#x3057;&#x3066;mod_ssl&#x3092;&#x30D3;&#x30EB;&#x30C9;&#x3057;<br>PHP&#x306E;&#x30D0;&#x30A4;&#x30CA;&#x30EA;&#x5B9F;&#x884C;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304B;&#x3089;&#x30D5;&#x30C3;&#x30AF;&#x3057;&#x3066;&#x5229;&#x7528;&#x3059;&#x308B;&#x70BA;&#x306B;&#x5FC5;&#x8981;&#x3001;<br>&#x3068;&#x8A00;&#x3063;&#x305F;&#x3068;&#x3053;&#x308D;&#x3067;&#x3057;&#x3087;&#x3046;&#x304B;&#x3002;</p>
-<h2><span id="openssl-&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x78BA;&#x8A8D;">openssl &#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x78BA;&#x8A8D;</span></h2><p>&#x6B63;&#x3057;&#x304F;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>-fPIC は 動的共有オブジェクト(DSO)としてmod_sslをビルドし<br>PHPのバイナリ実行ファイルからフックして利用する為に必要、<br>と言ったところでしょうか。</p>
+<h2><span id="openssl-バージョンアップ確認">openssl バージョンアップ確認</span></h2><p>正しくバージョンアップされていることを確認しました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># openssl version</span><br><span class="line"></span><br><span class="line">OpenSSL 1.0.2f  28 Jan 2016</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="php&#x518D;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;">PHP&#x518D;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;</span></h2><ul>
-<li>&#x65E2;&#x5B58;PHP&#x304C;&#x3069;&#x306E;&#x3088;&#x3046;&#x306B;configure&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x304B;&#x78BA;&#x8A8D;</li>
+<h2><span id="php再コンパイル">PHP再コンパイル</span></h2><ul>
+<li>既存PHPがどのようにconfigureされているか確認</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># php -i | grep config</span><br><span class="line"></span><br><span class="line">Configure Command =&gt;  &apos;./configure&apos;  &apos;--enable-mbstring&apos; &apos;--enable-zend-multibyte&apos; &apos;--with-mysql&apos; &apos;--with-mysqli&apos; &apos;--enable-mbregex&apos; &apos;--with-gd&apos; &apos;--with-jpeg-dir=/usr/lib&apos; &apos;--with-png-dir=/usr/lib&apos; &apos;--with-freetype-dir=/usr/lib&apos; &apos;--with-zlib-dir&apos; &apos;--with-libdir=lib64&apos; &apos;--enable-soap&apos; &apos;--with-apxs2=/etc/httpd/bin/apxs&apos; &apos;--with-openssl=/usr/local&apos;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># php -i | grep config</span><br><span class="line"></span><br><span class="line">Configure Command =&gt;  './configure'  '--enable-mbstring' '--enable-zend-multibyte' '--with-mysql' '--with-mysqli' '--enable-mbregex' '--with-gd' '--with-jpeg-dir=/usr/lib' '--with-png-dir=/usr/lib' '--with-freetype-dir=/usr/lib' '--with-zlib-dir' '--with-libdir=lib64' '--enable-soap' '--with-apxs2=/etc/httpd/bin/apxs' '--with-openssl=/usr/local'</span><br></pre></td></tr></tbody></table></figure>
 
-<p><code>--with-openssl</code> &#x304C;&#x306A;&#x3044;&#x5834;&#x5408;&#x306F;&#x4E0A;&#x8A18;&#x306E;&#x3088;&#x3046;&#x306B;&#x8FFD;&#x52A0;&#x3057;&#x307E;&#x3059;&#x3002;<br>&#x4ECA;&#x56DE;&#x306F;&#x65E2;&#x306B;&#x6307;&#x5B9A;&#x6E08;&#x307F;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x4E0A;&#x8A18;&#x306E;conigure&#x60C5;&#x5831;&#x3092;&#x5229;&#x7528;&#x3057;&#x3066;<br>&#x2013;with-openssl&#x304C;&#x3042;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x305F;&#x4E0A;&#x3067;<br>&#x518D;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p><code>--with-openssl</code> がない場合は上記のように追加します。<br>今回は既に指定済みです。</p>
+<p>上記のconigure情報を利用して<br>–with-opensslがあることを確認した上で<br>再コンパイルします。</p>
 <ul>
-<li>&#x518D;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;</li>
+<li>再コンパイル</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/local/src/php-5.3.9</span><br><span class="line"># ./configure --enable-mbstring --enable-zend-multibyte --with-mysql --with-mysqli --enable-mbregex --with-gd --with-jpeg-dir=/usr/lib --with-png-dir=/usr/lib --with-freetype-dir=/usr/lib --with-zlib-dir --with-libdir=lib64 --enable-soap --with-apxs2=/etc/httpd/bin/apxs --with-openssl=/usr/local</span><br><span class="line"># make</span><br><span class="line"># make install</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x51FA;&#x308B;&#x5834;&#x5408;&#x306F;&#x3001;&#x624B;&#x9806;)&#x300C;openssl &#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x30A2;&#x30C3;&#x30D7;&#x300D;&#x3092;&#x3054;&#x78BA;&#x8A8D;&#x4E0B;&#x3055;&#x3044;&#x3002;<br>&#x65B0;&#x305F;&#x306B;openssl&#x3092;&#x30BD;&#x30FC;&#x30B9;&#x304B;&#x3089;&#x30B3;&#x30F3;&#x30D1;&#x30A4;&#x30EB;&#x3057;&#x3066;&#x30D3;&#x30EB;&#x30C9;&#x3057;&#x305F;&#x3068;&#x304D;&#x306A;&#x3069;&#x306B;&#x51FA;&#x308B;&#x30A8;&#x30E9;&#x30FC;&#x3067;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure: error: Cannot find OpenSSL&apos;s &lt;evp.h&gt;</span><br></pre></td></tr></tbody></table></figure>
+<p>以下のようなエラーが出る場合は、手順)「openssl バージョンアップ」をご確認下さい。<br>新たにopensslをソースからコンパイルしてビルドしたときなどに出るエラーです。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure: error: Cannot find OpenSSL's &lt;evp.h&gt;</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="php&#x3067;&#x5229;&#x7528;&#x3059;&#x308B;openssl-&#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;&#x306E;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x78BA;&#x8A8D;">PHP&#x3067;&#x5229;&#x7528;&#x3059;&#x308B;OpenSSL &#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;&#x306E;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x78BA;&#x8A8D;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># php -i | grep OpenSSL</span><br><span class="line"></span><br><span class="line">OpenSSL support =&gt; enabled</span><br><span class="line">OpenSSL Library Version =&gt; OpenSSL 1.0.2f  28 Jan 2016</span><br><span class="line">OpenSSL Header Version =&gt; OpenSSL 1.0.2f  28 Jan 2016</span><br><span class="line">OpenSSL support =&gt; enabled</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="phpで利用するopenssl-ライブラリのバージョン確認">PHPで利用するOpenSSL ライブラリのバージョン確認</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># php -i | grep OpenSSL</span><br><span class="line"></span><br><span class="line">OpenSSL support =&gt; enabled</span><br><span class="line">OpenSSL Library Version =&gt; OpenSSL 1.0.2f  28 Jan 2016</span><br><span class="line">OpenSSL Header Version =&gt; OpenSSL 1.0.2f  28 Jan 2016</span><br><span class="line">OpenSSL support =&gt; enabled</span><br></pre></td></tr></tbody></table></figure>
 
-<p>OpenSSL Library, Header Version &#x304C;&#x5171;&#x306B;&#x6307;&#x5B9A;&#x901A;&#x308A;&#x3068;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;</p>
+<p>OpenSSL Library, Header Version が共に指定通りとなりました。</p>
+<p>以上です。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1931,7 +1931,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

@@ -1823,44 +1823,44 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>Rails &#x3067;&#x69CB;&#x7BC9;&#x3057;&#x305F; Web&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x3067; bot &#x653B;&#x6483;&#x3092;&#x5B9A;&#x671F;&#x7684;&#x306B;&#x53D7;&#x3051;&#x305F;&#x70BA;&#x3001;&#x554F;&#x3044;&#x5408;&#x308F;&#x305B;&#x30D5;&#x30A9;&#x30FC;&#x30E0;&#x306B; reCAPTCHA v3 &#x3092;&#x5C0E;&#x5165;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x4F55;&#x6545;-v2-&#x3067;&#x306A;&#x304F;-recaptcha-v3">&#x4F55;&#x6545; v2 &#x3067;&#x306A;&#x304F;&#x3001;reCAPTCHA v3 ?</span></h2><a id="more"></a>
+			  		<h2><span id="概要">概要</span></h2><p>Rails で構築した Webサービスで bot 攻撃を定期的に受けた為、問い合わせフォームに reCAPTCHA v3 を導入しました。</p>
+<h2><span id="何故-v2-でなく-recaptcha-v3">何故 v2 でなく、reCAPTCHA v3 ?</span></h2><a id="more"></a>
 
-<p>v2 &#x306F; <code>I&apos;m not a robot</code> &#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x30DC;&#x30C3;&#x30AF;&#x30B9;&#x306B;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3092;&#x5165;&#x308C;&#x305F;&#x5F8C;&#x306B;&#x753B;&#x50CF;&#x9078;&#x629E;&#x3055;&#x305B;&#x308B;&#x4ED5;&#x69D8;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4F8B;&#x3048;&#x3070;&#x3001;&#x770B;&#x677F;&#x304C;&#x5199;&#x3063;&#x3066;&#x308B;&#x306E;&#x306F;&#x3069;&#x308C;&#xFF1F;&#x3068;&#x9078;&#x3070;&#x305B;&#x308B;&#x554F;&#x3044;&#x304C;&#x51FA;&#x3066;&#x304D;&#x305F;&#x5834;&#x5408;&#x3001;<br><br>&#x300C;&#x3069;&#x3053;&#x307E;&#x3067;&#x304C;&#x770B;&#x677F;&#x3068;&#x3057;&#x305F;&#x3089;&#x3044;&#x3044;&#x306E;&#xFF1F;&#x300D;&#x3068;&#x5FC3;&#x7406;&#x7684;&#x8CA0;&#x62C5;&#x3082;&#x9AD8;&#x304F;&#x3001;&#x30E6;&#x30FC;&#x30B6;&#x304C;&#x96E2;&#x8131;&#x3059;&#x308B;&#x53EF;&#x80FD;&#x6027;&#x3082;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>v2 は <code>I'm not a robot</code> チェックボックスにチェックを入れた後に画像選択させる仕様があります。</p>
+<p>例えば、看板が写ってるのはどれ？と選ばせる問いが出てきた場合、<br><br>「どこまでが看板としたらいいの？」と心理的負担も高く、ユーザが離脱する可能性もあります。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216210737.png" width="500" height="869" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="v3-&#x3060;&#x3068;&#x5B09;&#x3057;&#x3044;&#x3053;&#x3068;&#x306F;&#x4F55;">v3 &#x3060;&#x3068;&#x5B09;&#x3057;&#x3044;&#x3053;&#x3068;&#x306F;&#x4F55;&#xFF1F;</span></h2><p>v3 <a href="#f-6cff6d12" name="fn-6cff6d12" title="2019&#x5E74;2&#x6708;&#x73FE;&#x5728;&#x6700;&#x65B0;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;">*1</a> &#x306F;&#x8A2D;&#x7F6E;&#x3057;&#x305F;&#x30DA;&#x30FC;&#x30B8;&#x306E;&#x30E6;&#x30FC;&#x30B6;&#x884C;&#x52D5;&#x3092;&#x30B9;&#x30B3;&#x30A2;&#x5316;&#x3057; bot &#x304B;&#x5224;&#x65AD;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x304C;&#x5897;&#x3048;&#x308B;&#x3068;&#x3088;&#x308A;&#x7CBE;&#x5EA6;&#x304C;&#x9AD8;&#x307E;&#x3063;&#x3066;&#x304F;&#x308B;&#x3001;&#x3068;&#x3044;&#x3046;&#x4ED5;&#x69D8;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x975E; bot &#x30E6;&#x30FC;&#x30B6;&#x3078;&#x306E;&#x8CA0;&#x62C5;&#x306F;&#x5168;&#x304F;&#x306A;&#x304F;&#x3001; bot &#x3092;&#x906E;&#x65AD;&#x3067;&#x304D;&#x308B;&#x69D8;&#x306B;&#x306A;&#x308B;&#x3068;&#x3044;&#x3046;&#x3001;&#x4E16;&#x306E;&#x4E2D;&#x9032;&#x3093;&#x3067;&#x308B;&#x306A;&#x3041;&#x611F;&#x6E80;&#x8F09;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="v3-だと嬉しいことは何">v3 だと嬉しいことは何？</span></h2><p>v3 <a href="#f-6cff6d12" name="fn-6cff6d12" title="2019年2月現在最新バージョン">*1</a> は設置したページのユーザ行動をスコア化し bot か判断します。</p>
+<p>アクセスが増えるとより精度が高まってくる、という仕様です。</p>
+<p>非 bot ユーザへの負担は全くなく、 bot を遮断できる様になるという、世の中進んでるなぁ感満載です。</p>
 
-<a href="https://gigazine.net/news/20190218-how-recaptcha-judge-human/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://i.gzn.jp/img/2019/02/18/how-recaptcha-judge-human/00.jpg" width="800" height="450" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Google&#x306E;reCAPTCHA&#x306F;&#x3069;&#x3046;&#x3084;&#x3063;&#x3066;&#x4EBA;&#x9593;&#x3068;&#x30DC;&#x30C3;&#x30C8;&#x3092;&#x898B;&#x5206;&#x3051;&#x3066;&#x3044;&#x308B;&#x306E;&#x304B;&#xFF1F;</div><div class="og-description">Google&#x304C;&#x958B;&#x767A;&#x3092;&#x9032;&#x3081;&#x308B;&#x30A6;&#x30A7;&#x30D6;&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x8A8D;&#x8A3C;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x300C;reCAPTCHA&#x300D;&#x306F;&#x3001;&#x4EBA;&#x9593;&#x3068;&#x30DC;&#x30C3;&#x30C8;&#x3092;&#x533A;&#x5225;&#x3059;&#x308B;&#x305F;&#x3081;&#x306E;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x3067;&#x3059;&#x3002;&#x3053;&#x308C;&#x307E;&#x3067;&#x306E;&#x4EBA;&#x9593;&#x3068;&#x30DC;&#x30C3;&#x30C8;&#x3092;&#x898B;&#x5206;&#x3051;&#x308B;&#x30B7;&#x30B9;&#x30C6;&#x30E0;&#x306E;&#x591A;&#x304F;&#x306F;&#x6B6A;&#x3093;&#x3060;&#x6587;&#x5B57;&#x3092;&#x8AAD;&#x3093;&#x3067;&#x624B;&#x5165;&#x529B;&#x3057;&#x305F;&#x308A;&#x3001;&#x6761;&#x4EF6;&#x306B;&#x3075;&#x3055;&#x308F;&#x3057;&#x3044;&#x753B;&#x50CF;&#x3092;&#x8907;&#x6570;&#x9078;&#x629E;&#x3057;&#x305F;&#x308A;&#x3068;&#x3044;&#x3063;&#x305F;&#x4F5C;&#x696D;&#x3067;&#x898B;&#x5206;&#x3051;&#x3089;&#x308C;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x3053;&#x3046;&#x3057;&#x2026;</div></div></div></a>
+<a href="https://gigazine.net/news/20190218-how-recaptcha-judge-human/" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://i.gzn.jp/img/2019/02/18/how-recaptcha-judge-human/00.jpg" width="800" height="450" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">GoogleのreCAPTCHAはどうやって人間とボットを見分けているのか？</div><div class="og-description">Googleが開発を進めるウェブサイトの認証システム「reCAPTCHA」は、人間とボットを区別するためのシステムです。これまでの人間とボットを見分けるシステムの多くは歪んだ文字を読んで手入力したり、条件にふさわしい画像を複数選択したりといった作業で見分けられていましたが、こうし…</div></div></div></a>
 
-<h2><span id="gem-&#x3042;&#x308B;">gem &#x3042;&#x308B;&#xFF1F;</span></h2><p>&#x4ECA;&#x56DE; gem &#x306F;&#x4F7F;&#x7528;&#x3057;&#x307E;&#x305B;&#x3093;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x3068;&#x3044;&#x3046;&#x306E;&#x3082;&#x3001; &#x4EE5;&#x4E0B;&#x7406;&#x7531;&#x304B;&#x3089;&#x3067;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="gem-ある">gem ある？</span></h2><p>今回 gem は使用しませんでした。</p>
+<p>というのも、 以下理由からでした。</p>
 <ul>
-<li><code>gem &apos;recaptcha&apos;</code> &#x304C; v3 &#x975E;&#x5BFE;&#x5FDC;&#x3002;</li>
-<li><code>gem &apos;new_google_recaptcha&apos;</code> &#x306F; v3 &#x5BFE;&#x5FDC;&#x3057;&#x3066;&#x307E;&#x3059;&#x304C;&#x3001;&#x30B9;&#x30B3;&#x30A2;&#x304C;&#x8FD4;&#x3063;&#x3066;&#x3053;&#x306A;&#x3044;&#x306E;&#x3067;&#x30C6;&#x30B9;&#x30C8;&#x3057;&#x8F9B;&#x3044;&#x3002;</li>
+<li><code>gem 'recaptcha'</code> が v3 非対応。</li>
+<li><code>gem 'new_google_recaptcha'</code> は v3 対応してますが、スコアが返ってこないのでテストし辛い。</li>
 </ul>
-<p>&#x305D;&#x306E;&#x4ED6;&#x306B;&#x65E2;&#x306B;&#x3042;&#x308B;&#x306E;&#x304B;&#x3082;&#x308F;&#x304B;&#x308A;&#x307E;&#x305B;&#x3093;&#x304C;&#x3001;&#x8A18;&#x4E8B;&#x57F7;&#x7B46;&#x6642;&#x306B;&#x306F;&#x63A2;&#x3057;&#x51FA;&#x3059;&#x3053;&#x3068;&#x306F;&#x3067;&#x304D;&#x307E;&#x305B;&#x3093;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<h3><span id="&#x307E;&#x305A;-recaptcha-v3-&#x767A;&#x884C;">&#x307E;&#x305A; reCAPTCHA v3 &#x767A;&#x884C;</span></h3><p>&#x4EE5;&#x4E0B; reCAPTCHA &#x30B3;&#x30F3;&#x30BD;&#x30FC;&#x30EB;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x767A;&#x884C;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<p>その他に既にあるのかもわかりませんが、記事執筆時には探し出すことはできませんでした。</p>
+<h3><span id="まず-recaptcha-v3-発行">まず reCAPTCHA v3 発行</span></h3><p>以下 reCAPTCHA コンソールにアクセスし発行してください。</p>
 <p><a href="https://g.co/recaptcha/v3">https://g.co/recaptcha/v3</a></p>
-<p>v3 &#x3092;&#x9078;&#x629E;&#x3057;&#x3001;&#x4ECA;&#x56DE;&#x5C0E;&#x5165;&#x3059;&#x308B;&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x3092;&#x767B;&#x9332;&#x3057;&#x307E;&#x3059;&#x3002;<a href="#f-a2800b5a" name="fn-a2800b5a" title="&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x306F;&#x8907;&#x6570;&#x767B;&#x9332;&#x53EF;&#x80FD;&#x3067;&#x3059;&#x3002;&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x6BCE;&#x306B;&#x96C6;&#x8A08;&#x3084;&#x3001; bot &#x5BFE;&#x7B56;&#x306E;&#x50BE;&#x5411;&#x3092;&#x5909;&#x3048;&#x305F;&#x3044;&#x5834;&#x5408;&#x306F;&#x3001;&#x500B;&#x3005;&#x306B;&#x767A;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002; &#x307E;&#x305F;&#x3001; RAILS_ENV = production &#x3068;&#x305D;&#x308C;&#x4EE5;&#x5916;&#x3067;&#x767A;&#x884C;&#x3059;&#x308B;&#x65B9;&#x304C;&#x672C;&#x756A;&#x3078;&#x306E;&#x5F71;&#x97FF;&#x304C;&#x306A;&#x3044;&#x306E;&#x3067;&#x63A8;&#x5968;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;">*2</a></p>
+<p>v3 を選択し、今回導入するドメインを登録します。<a href="#f-a2800b5a" name="fn-a2800b5a" title="ドメインは複数登録可能です。ドメイン毎に集計や、 bot 対策の傾向を変えたい場合は、個々に発行します。 また、 RAILS_ENV = production とそれ以外で発行する方が本番への影響がないので推奨されます。">*2</a></p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216214351.png" width="901" height="1024" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x767A;&#x884C;&#x3055;&#x308C;&#x305F;&#x30B5;&#x30A4;&#x30C8;&#x30AD;&#x30FC;&#x30FB;&#x30B7;&#x30FC;&#x30AF;&#x30EC;&#x30C3;&#x30C8;&#x30AD;&#x30FC;&#x3092;&#x4FDD;&#x5B58;&#x3057;&#x3066;&#x304A;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>発行されたサイトキー・シークレットキーを保存しておきます。</p>
 
 <ul>
-<li>&#x30B5;&#x30A4;&#x30C8;&#x30AD;&#x30FC;<ul>
-<li>&#x30E6;&#x30FC;&#x30B6;&#x304C;&#x30B5;&#x30A4;&#x30C8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x305F;&#x969B;&#x306B;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B;&#x969B;&#x306B;&#x5FC5;&#x8981;&#x306A;&#x30AD;&#x30FC;&#x3067;&#x3059;&#x3002;&#x3053;&#x3061;&#x3089;&#x306F;&#x30E6;&#x30FC;&#x30B6;&#x516C;&#x958B;&#x3057;&#x3066;&#x554F;&#x984C;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</li>
+<li>サイトキー<ul>
+<li>ユーザがサイトにアクセスした際にトークンを取得する際に必要なキーです。こちらはユーザ公開して問題ありません。</li>
 </ul>
 </li>
-<li>&#x30B7;&#x30FC;&#x30AF;&#x30EC;&#x30C3;&#x30C8;&#x30AD;&#x30FC;<ul>
-<li>&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x3092;&#x5143;&#x306B; Google &#x306B;&#x554F;&#x3044;&#x5408;&#x308F;&#x305B;&#x3059;&#x308B;&#x969B;&#x306B;&#x5FC5;&#x8981;&#x306A;&#x30AD;&#x30FC;&#x3067;&#x3059;&#x3002;&#x3053;&#x3061;&#x3089;&#x306F;&#x79D8;&#x5BC6;&#x60C5;&#x5831;&#x3068;&#x3057;&#x3066;&#x6271;&#x3044;&#x307E;&#x3059;&#x3002;</li>
+<li>シークレットキー<ul>
+<li>トークンを元に Google に問い合わせする際に必要なキーです。こちらは秘密情報として扱います。</li>
 </ul>
 </li>
 </ul>
@@ -1868,62 +1868,62 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216214558.png" width="1024" height="946" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="rails-&#x5074;&#x5B9F;&#x88C5;">Rails &#x5074;&#x5B9F;&#x88C5;</span></h2><p>Rails &gt;= 5.2 &#x3092;&#x60F3;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="rails-側実装">Rails 側実装</span></h2><p>Rails &gt;= 5.2 を想定しています。</p>
 
-<h4><span id="configcredentialsymlenc">config/credentials.yml.enc</span></h4><pre class="code lang-ruby" data-lang="ruby" data-unlink>recaptcha:
+<h4><span id="configcredentialsymlenc">config/credentials.yml.enc</span></h4><pre class="code lang-ruby" data-lang="ruby" data-unlink="">recaptcha:
   <span class="synConstant">secret_key</span>: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 </pre>
 
 
-<p>&#x30B7;&#x30FC;&#x30AF;&#x30EC;&#x30C3;&#x30C8;&#x3092;&#x79D8;&#x5BC6;&#x60C5;&#x5831;&#x306B;&#x4FDD;&#x5B58;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>シークレットを秘密情報に保存します。</p>
 
-<h4><span id="appcontrollersapplication_controllerrb">app/controllers/application_controller.rb</span></h4><pre class="code lang-ruby" data-lang="ruby" data-unlink><span class="synPreProc">require</span> <span class="synSpecial">&apos;</span><span class="synConstant">net/http</span><span class="synSpecial">&apos;</span>
-<span class="synPreProc">require</span> <span class="synSpecial">&apos;</span><span class="synConstant">uri</span><span class="synSpecial">&apos;</span>
+<h4><span id="appcontrollersapplication_controllerrb">app/controllers/application_controller.rb</span></h4><pre class="code lang-ruby" data-lang="ruby" data-unlink=""><span class="synPreProc">require</span> <span class="synSpecial">'</span><span class="synConstant">net/http</span><span class="synSpecial">'</span>
+<span class="synPreProc">require</span> <span class="synSpecial">'</span><span class="synConstant">uri</span><span class="synSpecial">'</span>
 
 <span class="synPreProc">class</span> <span class="synType">ApplicationController</span> &lt; <span class="synType">ActionController</span>::<span class="synType">Base</span>
 ...
   <span class="synType">RECAPTCHA_MINIMUM_SCORE</span> = <span class="synConstant">0.5</span>
-  <span class="synType">RECAPTCHA_ACTION</span> = <span class="synSpecial">&apos;</span><span class="synConstant">homepage</span><span class="synSpecial">&apos;</span>
+  <span class="synType">RECAPTCHA_ACTION</span> = <span class="synSpecial">'</span><span class="synConstant">homepage</span><span class="synSpecial">'</span>
 ...
   <span class="synPreProc">def</span> <span class="synIdentifier">verify_recaptcha?</span>(token)
     secret_key = <span class="synType">Rails</span>.application.credentials.recaptcha[<span class="synConstant">:secret_key</span>]
-    uri = <span class="synType">URI</span>.parse(<span class="synSpecial">&quot;</span><span class="synConstant">https://www.google.com/recaptcha/api/siteverify?secret=</span><span class="synSpecial">#{</span>secret_key<span class="synSpecial">}</span><span class="synConstant">&amp;response=</span><span class="synSpecial">#{</span>token<span class="synSpecial">}&quot;</span>)
+    uri = <span class="synType">URI</span>.parse(<span class="synSpecial">"</span><span class="synConstant">https://www.google.com/recaptcha/api/siteverify?secret=</span><span class="synSpecial">#{</span>secret_key<span class="synSpecial">}</span><span class="synConstant">&amp;response=</span><span class="synSpecial">#{</span>token<span class="synSpecial">}"</span>)
     r = <span class="synType">Net</span>::<span class="synType">HTTP</span>.get_response(uri)
     j = <span class="synType">JSON</span>.parse(r.body)
-    j[<span class="synSpecial">&apos;</span><span class="synConstant">success</span><span class="synSpecial">&apos;</span>] &amp;&amp; j[<span class="synSpecial">&apos;</span><span class="synConstant">score</span><span class="synSpecial">&apos;</span>] &gt; <span class="synType">RECAPTCHA_MINIMUM_SCORE</span> &amp;&amp; j[<span class="synSpecial">&apos;</span><span class="synConstant">action</span><span class="synSpecial">&apos;</span>] == <span class="synType">RECAPTCHA_ACTION</span>
+    j[<span class="synSpecial">'</span><span class="synConstant">success</span><span class="synSpecial">'</span>] &amp;&amp; j[<span class="synSpecial">'</span><span class="synConstant">score</span><span class="synSpecial">'</span>] &gt; <span class="synType">RECAPTCHA_MINIMUM_SCORE</span> &amp;&amp; j[<span class="synSpecial">'</span><span class="synConstant">action</span><span class="synSpecial">'</span>] == <span class="synType">RECAPTCHA_ACTION</span>
   <span class="synPreProc">end</span>
 <span class="synPreProc">end</span>
 </pre>
 
 
-<p>&#x5171;&#x901A;&#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3068;&#x3057;&#x3066;&#x3001;recaptcha &#x306E;&#x8A8D;&#x8A3C;&#x30E1;&#x30BD;&#x30C3;&#x30C9; `verify_recaptcha?` &#x3092;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>共通メソッドとして、recaptcha の認証メソッド `verify_recaptcha?` を設定しています。</p>
 
-<p>&#x3053;&#x3053;&#x3067;&#x3001;bot &#x3068;&#x306A;&#x308B;&#x30B9;&#x30B3;&#x30A2;&#x3092; 0.5 &#x4EE5;&#x4E0B;&#x3068;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>ここで、bot となるスコアを 0.5 以下としています。</p>
 
-<p>&#x901A;&#x5E38;&#x901A;&#x308A;&#x64CD;&#x4F5C;&#x3057;&#x3066;&#x3044;&#x308C;&#x3070;&#x3001;&#x5341;&#x5206;&#x8D85;&#x3048;&#x308B;&#x6570;&#x5024;&#x3067;&#x3059;&#x3002;</p>
+<p>通常通り操作していれば、十分超える数値です。</p>
 
-<h4><span id="configlocalesenyml">config/locales/en.yml</span></h4><pre class="code" data-lang data-unlink>en:
+<h4><span id="configlocalesenyml">config/locales/en.yml</span></h4><pre class="code" data-lang="" data-unlink="">en:
   recaptcha:
     errors:
-      verification_failed: &apos;reCAPTCHA Authorization Failed. Please try again later.&apos;</pre>
+      verification_failed: 'reCAPTCHA Authorization Failed. Please try again later.'</pre>
 
 
-<p>local en &#x8A2D;&#x5B9A;&#x3067;&#x3059;&#x3002;</p>
+<p>local en 設定です。</p>
 
-<h4><span id="configlocalesjayml">config/locales/ja.yml</span></h4><pre class="code" data-lang data-unlink>ja:
+<h4><span id="configlocalesjayml">config/locales/ja.yml</span></h4><pre class="code" data-lang="" data-unlink="">ja:
   recaptcha:
     errors:
-      verification_failed: &apos;reCAPTCHA &#x8A8D;&#x8A3C;&#x5931;&#x6557;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;&#x3057;&#x3070;&#x3089;&#x304F;&#x3057;&#x3066;&#x304B;&#x3089;&#x3082;&#x3046;&#x4E00;&#x5EA6;&#x304A;&#x8A66;&#x3057;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;&apos;</pre>
+      verification_failed: 'reCAPTCHA 認証失敗しました。しばらくしてからもう一度お試しください。'</pre>
 
 
-<p>local ja &#x8A2D;&#x5B9A;&#x3067;&#x3059;&#x3002;</p>
+<p>local ja 設定です。</p>
 
-<h4><span id="appcontrollershoges_controllerrb">app/controllers/hoges_controller.rb</span></h4><pre class="code lang-ruby" data-lang="ruby" data-unlink><span class="synPreProc">class</span> <span class="synType">HogesController</span> &lt; <span class="synType">ApplicationController</span>
+<h4><span id="appcontrollershoges_controllerrb">app/controllers/hoges_controller.rb</span></h4><pre class="code lang-ruby" data-lang="ruby" data-unlink=""><span class="synPreProc">class</span> <span class="synType">HogesController</span> &lt; <span class="synType">ApplicationController</span>
   <span class="synPreProc">def</span> <span class="synIdentifier">new</span>; <span class="synPreProc">end</span>
 
   <span class="synPreProc">def</span> <span class="synIdentifier">create</span>
     <span class="synStatement">unless</span> verify_recaptcha?(params[<span class="synConstant">:recaptcha_token</span>])
-      flash.now[<span class="synConstant">:recaptcha_error</span>] = <span class="synType">I18n</span>.t(<span class="synSpecial">&apos;</span><span class="synConstant">recaptcha.errors.verification_failed</span><span class="synSpecial">&apos;</span>)
+      flash.now[<span class="synConstant">:recaptcha_error</span>] = <span class="synType">I18n</span>.t(<span class="synSpecial">'</span><span class="synConstant">recaptcha.errors.verification_failed</span><span class="synSpecial">'</span>)
       <span class="synStatement">return</span> render <span class="synConstant">action</span>: <span class="synConstant">:new</span>
     <span class="synStatement">end</span>
 
@@ -1937,106 +1937,106 @@ h6.categories {
 </pre>
 
 
-<p>new &#x304B;&#x3089; create &#x306B; post &#x3057;&#x3066; reCAPTCHA &#x3067; bot &#x5224;&#x5B9A;&#x3057;&#x3066;</p>
+<p>new から create に post して reCAPTCHA で bot 判定して</p>
 
 <ul>
-<li>OK &#x2192; finish &#x3078;&#x9032;&#x3080;</li>
-<li>NG &#x2192; new &#x306B;&#x623B;&#x308B;</li>
+<li>OK → finish へ進む</li>
+<li>NG → new に戻る</li>
 </ul>
 
 
-<p>&#x3068;&#x3044;&#x3046;&#x8A2D;&#x8A08;&#x3067;&#x3059;&#x3002;</p>
+<p>という設計です。</p>
 
-<h4><span id="appviewshogesnewhtmlerb">app/views/hoges/new.html.erb</span></h4><pre class="code lang-html" data-lang="html" data-unlink><span class="synIdentifier">&lt;% if flash[:recaptcha_error] %&gt;</span>
-<span class="synIdentifier">&lt;</span><span class="synStatement">div</span><span class="synIdentifier"> </span><span class="synType">class</span><span class="synIdentifier">=</span><span class="synConstant">&quot;text&quot;</span><span class="synIdentifier">&gt;</span>
-  <span class="synIdentifier">&lt;</span><span class="synStatement">p</span><span class="synIdentifier">&gt;&lt;</span>spacn<span class="synIdentifier"> </span><span class="synType">class</span><span class="synIdentifier">=</span><span class="synConstant">&quot;error&quot;</span><span class="synIdentifier">&gt;&lt;%=</span><span class="synConstant"> flash[:recaptcha_error]</span><span class="synIdentifier"> %&gt;&lt;/</span><span class="synStatement">span</span><span class="synIdentifier">&gt;&lt;/</span><span class="synStatement">p</span><span class="synIdentifier">&gt;</span>
+<h4><span id="appviewshogesnewhtmlerb">app/views/hoges/new.html.erb</span></h4><pre class="code lang-html" data-lang="html" data-unlink=""><span class="synIdentifier">&lt;% if flash[:recaptcha_error] %&gt;</span>
+<span class="synIdentifier">&lt;</span><span class="synStatement">div</span><span class="synIdentifier"> </span><span class="synType">class</span><span class="synIdentifier">=</span><span class="synConstant">"text"</span><span class="synIdentifier">&gt;</span>
+  <span class="synIdentifier">&lt;</span><span class="synStatement">p</span><span class="synIdentifier">&gt;&lt;</span>spacn<span class="synIdentifier"> </span><span class="synType">class</span><span class="synIdentifier">=</span><span class="synConstant">"error"</span><span class="synIdentifier">&gt;&lt;%=</span><span class="synConstant"> flash[:recaptcha_error]</span><span class="synIdentifier"> %&gt;&lt;/</span><span class="synStatement">span</span><span class="synIdentifier">&gt;&lt;/</span><span class="synStatement">p</span><span class="synIdentifier">&gt;</span>
 <span class="synIdentifier">&lt;/</span><span class="synStatement">div</span><span class="synIdentifier">&gt;</span>
 <span class="synIdentifier">&lt;% end %&gt;</span>
 
 <span class="synIdentifier">&lt;%=</span><span class="synConstant"> form_tag({action:</span><span class="synIdentifier"> :create}, {</span><span class="synType">method</span><span class="synIdentifier">: :post}) do %&gt;</span>
 ...
-  <span class="synIdentifier">&lt;</span><span class="synStatement">input</span><span class="synIdentifier"> </span><span class="synType">id</span><span class="synIdentifier">=</span><span class="synConstant">&quot;recaptcha_token&quot;</span><span class="synIdentifier"> </span><span class="synType">name</span><span class="synIdentifier">=</span><span class="synConstant">&quot;recaptcha_token&quot;</span><span class="synIdentifier"> </span><span class="synType">type</span><span class="synIdentifier">=</span><span class="synConstant">&quot;hidden&quot;</span><span class="synIdentifier">/&gt;</span>
-  <span class="synIdentifier">&lt;%=</span><span class="synConstant"> submit_tag</span><span class="synIdentifier"> </span><span class="synConstant">&quot;&#x9001;&#x4FE1;&#x3059;&#x308B;&quot;</span><span class="synIdentifier">, :</span><span class="synType">class</span><span class="synIdentifier"> =&gt;</span> &quot;submit-recaptcha btn&quot;, :disabled =<span class="synError">&gt;</span> true %<span class="synError">&gt;</span>
+  <span class="synIdentifier">&lt;</span><span class="synStatement">input</span><span class="synIdentifier"> </span><span class="synType">id</span><span class="synIdentifier">=</span><span class="synConstant">"recaptcha_token"</span><span class="synIdentifier"> </span><span class="synType">name</span><span class="synIdentifier">=</span><span class="synConstant">"recaptcha_token"</span><span class="synIdentifier"> </span><span class="synType">type</span><span class="synIdentifier">=</span><span class="synConstant">"hidden"</span><span class="synIdentifier">/&gt;</span>
+  <span class="synIdentifier">&lt;%=</span><span class="synConstant"> submit_tag</span><span class="synIdentifier"> </span><span class="synConstant">"送信する"</span><span class="synIdentifier">, :</span><span class="synType">class</span><span class="synIdentifier"> =&gt;</span> "submit-recaptcha btn", :disabled =<span class="synError">&gt;</span> true %<span class="synError">&gt;</span>
 <span class="synIdentifier">&lt;% end %&gt;</span>
 
-<span class="synIdentifier">&lt;</span><span class="synStatement">script</span><span class="synIdentifier"> </span><span class="synType">src</span><span class="synIdentifier">=</span><span class="synConstant">&quot;https://www.google.com/recaptcha/api.js?render=&lt;%= Settings.recaptcha.site_key %&gt;&amp;ver=3.0&quot;</span><span class="synIdentifier">&gt;&lt;/</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
+<span class="synIdentifier">&lt;</span><span class="synStatement">script</span><span class="synIdentifier"> </span><span class="synType">src</span><span class="synIdentifier">=</span><span class="synConstant">"https://www.google.com/recaptcha/api.js?render=&lt;%= Settings.recaptcha.site_key %&gt;&amp;ver=3.0"</span><span class="synIdentifier">&gt;&lt;/</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
 <span class="synIdentifier">&lt;</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
 <span class="synSpecial">grecaptcha.ready</span>(<span class="synIdentifier">function</span>()<span class="synSpecial"> </span><span class="synIdentifier">{</span>
-<span class="synSpecial">  grecaptcha.execute</span>(<span class="synConstant">&apos;&lt;%= Settings.recaptcha.site_key %&gt;&apos;</span><span class="synSpecial">, </span><span class="synIdentifier">{</span><span class="synSpecial">action: </span><span class="synConstant">&apos;homepage&apos;</span><span class="synIdentifier">}</span>)<span class="synSpecial">.then</span>(<span class="synIdentifier">function</span>(<span class="synSpecial">token</span>)<span class="synSpecial"> </span><span class="synIdentifier">{</span>
-<span class="synSpecial">    $</span>(<span class="synConstant">&apos;#recaptcha_token&apos;</span>)<span class="synSpecial">.val</span>(<span class="synSpecial">token</span>)<span class="synSpecial">;</span>
-<span class="synSpecial">    $</span>(<span class="synConstant">&apos;.submit-recaptcha&apos;</span>)<span class="synSpecial">.prop</span>(<span class="synConstant">&apos;disabled&apos;</span><span class="synSpecial">, </span><span class="synConstant">false</span>)<span class="synSpecial">;</span>
+<span class="synSpecial">  grecaptcha.execute</span>(<span class="synConstant">'&lt;%= Settings.recaptcha.site_key %&gt;'</span><span class="synSpecial">, </span><span class="synIdentifier">{</span><span class="synSpecial">action: </span><span class="synConstant">'homepage'</span><span class="synIdentifier">}</span>)<span class="synSpecial">.then</span>(<span class="synIdentifier">function</span>(<span class="synSpecial">token</span>)<span class="synSpecial"> </span><span class="synIdentifier">{</span>
+<span class="synSpecial">    $</span>(<span class="synConstant">'#recaptcha_token'</span>)<span class="synSpecial">.val</span>(<span class="synSpecial">token</span>)<span class="synSpecial">;</span>
+<span class="synSpecial">    $</span>(<span class="synConstant">'.submit-recaptcha'</span>)<span class="synSpecial">.prop</span>(<span class="synConstant">'disabled'</span><span class="synSpecial">, </span><span class="synConstant">false</span>)<span class="synSpecial">;</span>
 <span class="synSpecial">  </span><span class="synIdentifier">}</span>)<span class="synSpecial">;</span>
 <span class="synIdentifier">}</span>)<span class="synSpecial">;</span>
 <span class="synIdentifier">&lt;/</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
 </pre>
 
 
-<h5><span id="&#x30A8;&#x30E9;&#x30FC;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x8868;&#x793A;">&#x30A8;&#x30E9;&#x30FC;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x8868;&#x793A;</span></h5><pre class="code lang-html" data-lang="html" data-unlink><span class="synIdentifier">&lt;% if flash[:recaptcha_error] %&gt;</span>
-<span class="synIdentifier">&lt;</span><span class="synStatement">div</span><span class="synIdentifier"> </span><span class="synType">class</span><span class="synIdentifier">=</span><span class="synConstant">&quot;text&quot;</span><span class="synIdentifier">&gt;</span>
-  <span class="synIdentifier">&lt;</span><span class="synStatement">p</span><span class="synIdentifier">&gt;&lt;</span>spacn<span class="synIdentifier"> </span><span class="synType">class</span><span class="synIdentifier">=</span><span class="synConstant">&quot;error&quot;</span><span class="synIdentifier">&gt;&lt;%=</span><span class="synConstant"> flash[:recaptcha_error]</span><span class="synIdentifier"> %&gt;&lt;/</span><span class="synStatement">span</span><span class="synIdentifier">&gt;&lt;/</span><span class="synStatement">p</span><span class="synIdentifier">&gt;</span>
+<h5><span id="エラーメッセージ表示">エラーメッセージ表示</span></h5><pre class="code lang-html" data-lang="html" data-unlink=""><span class="synIdentifier">&lt;% if flash[:recaptcha_error] %&gt;</span>
+<span class="synIdentifier">&lt;</span><span class="synStatement">div</span><span class="synIdentifier"> </span><span class="synType">class</span><span class="synIdentifier">=</span><span class="synConstant">"text"</span><span class="synIdentifier">&gt;</span>
+  <span class="synIdentifier">&lt;</span><span class="synStatement">p</span><span class="synIdentifier">&gt;&lt;</span>spacn<span class="synIdentifier"> </span><span class="synType">class</span><span class="synIdentifier">=</span><span class="synConstant">"error"</span><span class="synIdentifier">&gt;&lt;%=</span><span class="synConstant"> flash[:recaptcha_error]</span><span class="synIdentifier"> %&gt;&lt;/</span><span class="synStatement">span</span><span class="synIdentifier">&gt;&lt;/</span><span class="synStatement">p</span><span class="synIdentifier">&gt;</span>
 <span class="synIdentifier">&lt;/</span><span class="synStatement">div</span><span class="synIdentifier">&gt;</span>
 <span class="synIdentifier">&lt;% end %&gt;</span>
 </pre>
 
 
-<h5><span id="ampltformampgt-~-ampltformampgt-&#x5185;&#x306B;&#x4EE5;&#x4E0B;-namerecaptcha_token-input-&#x30BF;&#x30B0;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x307E;&#x3059;"><code>&amp;lt;form&amp;gt; ~ &amp;lt;/form&amp;gt;</code> &#x5185;&#x306B;&#x4EE5;&#x4E0B; <code>name=recaptcha_token</code> input &#x30BF;&#x30B0;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x307E;&#x3059;&#x3002;</span></h5><pre class="code" data-lang data-unlink>&lt;input id=&quot;recaptcha_token&quot; name=&quot;recaptcha_token&quot; type=&quot;hidden&quot;/&gt;</pre>
+<h5><span id="ampltformampgt-~-ampltformampgt-内に以下-namerecaptcha_token-input-タグを追加します"><code>&amp;lt;form&amp;gt; ~ &amp;lt;/form&amp;gt;</code> 内に以下 <code>name=recaptcha_token</code> input タグを追加します。</span></h5><pre class="code" data-lang="" data-unlink="">&lt;input id="recaptcha_token" name="recaptcha_token" type="hidden"/&gt;</pre>
 
 
-<h5><span id="&#x30DA;&#x30FC;&#x30B8;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x6642;&#x306B;-recaptcha-&#x306E;-token-&#x3092;&#x53D6;&#x5F97;&#x3059;&#x3079;&#x304F;-&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x3092;&#x4ED5;&#x8FBC;&#x307F;&#x307E;&#x3059;">&#x30DA;&#x30FC;&#x30B8;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x6642;&#x306B; reCAPTCHA &#x306E; token &#x3092;&#x53D6;&#x5F97;&#x3059;&#x3079;&#x304F;&#x3001;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x3092;&#x4ED5;&#x8FBC;&#x307F;&#x307E;&#x3059;&#x3002;</span></h5><pre class="code lang-html" data-lang="html" data-unlink><span class="synIdentifier">&lt;</span><span class="synStatement">script</span><span class="synIdentifier"> </span><span class="synType">src</span><span class="synIdentifier">=</span><span class="synConstant">&quot;https://www.google.com/recaptcha/api.js?render=&lt;%= Settings.recaptcha.site_key %&gt;&amp;ver=3.0&quot;</span><span class="synIdentifier">&gt;&lt;/</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
+<h5><span id="ページアクセス時に-recaptcha-の-token-を取得すべく-スクリプトを仕込みます">ページアクセス時に reCAPTCHA の token を取得すべく、スクリプトを仕込みます。</span></h5><pre class="code lang-html" data-lang="html" data-unlink=""><span class="synIdentifier">&lt;</span><span class="synStatement">script</span><span class="synIdentifier"> </span><span class="synType">src</span><span class="synIdentifier">=</span><span class="synConstant">"https://www.google.com/recaptcha/api.js?render=&lt;%= Settings.recaptcha.site_key %&gt;&amp;ver=3.0"</span><span class="synIdentifier">&gt;&lt;/</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
 <span class="synIdentifier">&lt;</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
 <span class="synSpecial">grecaptcha.ready</span>(<span class="synIdentifier">function</span>()<span class="synSpecial"> </span><span class="synIdentifier">{</span>
-<span class="synSpecial">  grecaptcha.execute</span>(<span class="synConstant">&apos;&lt;%= Settings.recaptcha.site_key %&gt;&apos;</span><span class="synSpecial">, </span><span class="synIdentifier">{</span><span class="synSpecial">action: </span><span class="synConstant">&apos;homepage&apos;</span><span class="synIdentifier">}</span>)<span class="synSpecial">.then</span>(<span class="synIdentifier">function</span>(<span class="synSpecial">token</span>)<span class="synSpecial"> </span><span class="synIdentifier">{</span>
-<span class="synSpecial">    $</span>(<span class="synConstant">&apos;#recaptcha_token&apos;</span>)<span class="synSpecial">.val</span>(<span class="synSpecial">token</span>)<span class="synSpecial">;</span>
-<span class="synSpecial">    $</span>(<span class="synConstant">&apos;.submit-recaptcha&apos;</span>)<span class="synSpecial">.prop</span>(<span class="synConstant">&apos;disabled&apos;</span><span class="synSpecial">, </span><span class="synConstant">false</span>)<span class="synSpecial">;</span>
+<span class="synSpecial">  grecaptcha.execute</span>(<span class="synConstant">'&lt;%= Settings.recaptcha.site_key %&gt;'</span><span class="synSpecial">, </span><span class="synIdentifier">{</span><span class="synSpecial">action: </span><span class="synConstant">'homepage'</span><span class="synIdentifier">}</span>)<span class="synSpecial">.then</span>(<span class="synIdentifier">function</span>(<span class="synSpecial">token</span>)<span class="synSpecial"> </span><span class="synIdentifier">{</span>
+<span class="synSpecial">    $</span>(<span class="synConstant">'#recaptcha_token'</span>)<span class="synSpecial">.val</span>(<span class="synSpecial">token</span>)<span class="synSpecial">;</span>
+<span class="synSpecial">    $</span>(<span class="synConstant">'.submit-recaptcha'</span>)<span class="synSpecial">.prop</span>(<span class="synConstant">'disabled'</span><span class="synSpecial">, </span><span class="synConstant">false</span>)<span class="synSpecial">;</span>
 <span class="synSpecial">  </span><span class="synIdentifier">}</span>)<span class="synSpecial">;</span>
 <span class="synIdentifier">}</span>)<span class="synSpecial">;</span>
 <span class="synIdentifier">&lt;/</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
 </pre>
 
 
-<p>reCAPTCHA &#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x53D6;&#x5F97;&#x304C;&#x6210;&#x529F;&#x3057;&#x305F;&#x5834;&#x5408;&#x306B;&#x4EE5;&#x4E0B;&#x5B9F;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>reCAPTCHA トークン取得が成功した場合に以下実行します。</p>
 
 <ul>
-<li>id=&quot;recaptcha_token&quot; input &#x30BF;&#x30B0;&#x306E; value &#x306B; &#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x3092;&#x8A2D;&#x5B9A;</li>
-<li>submit &#x30DC;&#x30BF;&#x30F3;&#x306E;&#x6709;&#x52B9;&#x5316;</li>
+<li>id="recaptcha_token" input タグの value に トークンを設定</li>
+<li>submit ボタンの有効化</li>
 </ul>
 
 
-<p>`&lt;%= Settings.recaptcha.site_key %&gt;` &#x306B;&#x3064;&#x3044;&#x3066;<br>
-`gem &apos;settingslogic&apos;` &#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x3066;&#x3044;&#x308B;&#x524D;&#x63D0;&#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>`&lt;%= Settings.recaptcha.site_key %&gt;` について<br>
+`gem 'settingslogic'` をインストールしている前提で設定しています。</p>
 
-<p>&#x5C0E;&#x5165;&#x3057;&#x3066;&#x3044;&#x306A;&#x3044;&#x5834;&#x5408;&#x306F;&#x3001;&#x7C21;&#x6613;&#x7684;&#x306B;&#x51E6;&#x7406;&#x3092;&#x8A66;&#x3059;&#x7A0B;&#x5EA6;&#x3067;&#x3042;&#x308C;&#x3070;&#x3001; `&lt;%= Settings.recaptcha.site_key %&gt;` &#x3092;&#x53D6;&#x5F97;&#x3057;&#x305F;&#x30B5;&#x30A4;&#x30C8;&#x30AD;&#x30FC;&#x306B;&#x7F6E;&#x304D;&#x63DB;&#x3048;&#x3066;&#x4E0B;&#x3055;&#x3044;&#x3002;<a href="#f-b2bcad45" name="fn-b2bcad45" title="&#x524D;&#x306B;&#x3082;&#x304A;&#x4F1D;&#x3048;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x30B5;&#x30A4;&#x30C8;&#x30AD;&#x30FC;&#x306E;&#x7BA1;&#x7406;&#x306F;&#x76F4;&#x6307;&#x5B9A;&#x3067;&#x306A;&#x304F;&#x3001;&#x4F55;&#x304B;&#x3057;&#x3089;&#x7BA1;&#x7406;&#x304C;&#x63A8;&#x5968;&#x3067;&#x3059;&#x3002;">*3</a></p>
+<p>導入していない場合は、簡易的に処理を試す程度であれば、 `&lt;%= Settings.recaptcha.site_key %&gt;` を取得したサイトキーに置き換えて下さい。<a href="#f-b2bcad45" name="fn-b2bcad45" title="前にもお伝えしましたが、サイトキーの管理は直指定でなく、何かしら管理が推奨です。">*3</a></p>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x8A2D;&#x5B9A;&#x306F;&#x5B8C;&#x4E86;&#x3067;&#x3059;&#x3002;</p>
+<p>以上で設定は完了です。</p>
 
-<h2><span id="&#x30DA;&#x30FC;&#x30B8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x308B;">&#x30DA;&#x30FC;&#x30B8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x308B;</span></h2><p>&#x30DA;&#x30FC;&#x30B8;&#x53F3;&#x4E0B;&#x306B; reCAPTCHA &#x30DE;&#x30FC;&#x30AF;&#x304C;&#x5E38;&#x306B;&#x8868;&#x793A;&#x3055;&#x308C;&#x308B;&#x69D8;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="ページにアクセスしてみる">ページにアクセスしてみる</span></h2><p>ページ右下に reCAPTCHA マークが常に表示される様になります。</p>
 
 <div id="hexo-amp-id-4">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216234742.png" width="158" height="152" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x96C6;&#x8A08;&#x60C5;&#x5831;&#x3092;&#x898B;&#x308B;">&#x96C6;&#x8A08;&#x60C5;&#x5831;&#x3092;&#x898B;&#x308B;</span></h2><p>reCAPTCHA &#x30B3;&#x30F3;&#x30BD;&#x30FC;&#x30EB;&#x3092;&#x898B;&#x308B;&#x3068;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x8868;&#x793A;&#x304C;&#x51FA;&#x3066;&#x3044;&#x3066;&#x3059;&#x3050;&#x306B;&#x306F;&#x96C6;&#x8A08;&#x60C5;&#x5831;&#x304C;&#x53CD;&#x6620;&#x3055;&#x308C;&#x3066;&#x3044;&#x306A;&#x3044;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="集計情報を見る">集計情報を見る</span></h2><p>reCAPTCHA コンソールを見ると、以下の様な表示が出ていてすぐには集計情報が反映されていないと思います。</p>
 
 <div id="hexo-amp-id-5">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216235044.png" width="1024" height="103" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x3057;&#x3070;&#x3089;&#x304F;&#x7D4C;&#x3064;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x30B0;&#x30E9;&#x30D5;&#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x308B;&#x69D8;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>しばらく経つと以下の様なグラフが表示される様になります。</p>
 
 <div id="hexo-amp-id-6">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216235204.png" width="1024" height="719" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x6CE8;&#x610F;">&#x6CE8;&#x610F;</span></h2><p>&#x4F8B;&#x3048;&#x3070;&#x3001;&#x793E;&#x5185; IP &#x7B49;&#x56FA;&#x5B9A;&#x3055;&#x308C;&#x305F; IP &#x304B;&#x3089;&#x30C6;&#x30B9;&#x30C8;&#x3067;&#x983B;&#x7E41;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x3068;&#x3001; bot &#x6271;&#x3044;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="注意">注意</span></h2><p>例えば、社内 IP 等固定された IP からテストで頻繁にアクセスすると、 bot 扱いされます。</p>
 
-<p>reCAPTCHA &#x5074;&#x3067; IP &#x306E;&#x30DB;&#x30EF;&#x30A4;&#x30C8;&#x30EA;&#x30B9;&#x30C8;&#x306F;&#x306A;&#x3044;&#x306E;&#x3067;&#x3001;&#x305D;&#x306E;&#x5834;&#x5408;&#x3001; Rails &#x5074;&#x3067;&#x8A31;&#x53EF; IP &#x30EA;&#x30B9;&#x30C8;&#x3092;&#x4F5C;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>reCAPTCHA 側で IP のホワイトリストはないので、その場合、 Rails 側で許可 IP リストを作る必要があります。</p>
 
-<p>&#x4EE5;&#x4E0A;<br>
-&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以上<br>
+参考になれば幸いです。</p>
 <div class="footnote">
-<p class="footnote"><a href="#fn-6cff6d12" name="f-6cff6d12" class="footnote-number">*1</a><span class="footnote-delimiter">:</span><span class="footnote-text">2019&#x5E74;2&#x6708;&#x73FE;&#x5728;&#x6700;&#x65B0;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;</span></p>
-<p class="footnote"><a href="#fn-a2800b5a" name="f-a2800b5a" class="footnote-number">*2</a><span class="footnote-delimiter">:</span><span class="footnote-text">&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x306F;&#x8907;&#x6570;&#x767B;&#x9332;&#x53EF;&#x80FD;&#x3067;&#x3059;&#x3002;&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x6BCE;&#x306B;&#x96C6;&#x8A08;&#x3084;&#x3001; bot &#x5BFE;&#x7B56;&#x306E;&#x50BE;&#x5411;&#x3092;&#x5909;&#x3048;&#x305F;&#x3044;&#x5834;&#x5408;&#x306F;&#x3001;&#x500B;&#x3005;&#x306B;&#x767A;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002; &#x307E;&#x305F;&#x3001; RAILS_ENV = production &#x3068;&#x305D;&#x308C;&#x4EE5;&#x5916;&#x3067;&#x767A;&#x884C;&#x3059;&#x308B;&#x65B9;&#x304C;&#x672C;&#x756A;&#x3078;&#x306E;&#x5F71;&#x97FF;&#x304C;&#x306A;&#x3044;&#x306E;&#x3067;&#x63A8;&#x5968;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</span></p>
-<p class="footnote"><a href="#fn-b2bcad45" name="f-b2bcad45" class="footnote-number">*3</a><span class="footnote-delimiter">:</span><span class="footnote-text">&#x524D;&#x306B;&#x3082;&#x304A;&#x4F1D;&#x3048;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x30B5;&#x30A4;&#x30C8;&#x30AD;&#x30FC;&#x306E;&#x7BA1;&#x7406;&#x306F;&#x76F4;&#x6307;&#x5B9A;&#x3067;&#x306A;&#x304F;&#x3001;&#x4F55;&#x304B;&#x3057;&#x3089;&#x7BA1;&#x7406;&#x304C;&#x63A8;&#x5968;&#x3067;&#x3059;&#x3002;</span></p>
+<p class="footnote"><a href="#fn-6cff6d12" name="f-6cff6d12" class="footnote-number">*1</a><span class="footnote-delimiter">:</span><span class="footnote-text">2019年2月現在最新バージョン</span></p>
+<p class="footnote"><a href="#fn-a2800b5a" name="f-a2800b5a" class="footnote-number">*2</a><span class="footnote-delimiter">:</span><span class="footnote-text">ドメインは複数登録可能です。ドメイン毎に集計や、 bot 対策の傾向を変えたい場合は、個々に発行します。 また、 RAILS_ENV = production とそれ以外で発行する方が本番への影響がないので推奨されます。</span></p>
+<p class="footnote"><a href="#fn-b2bcad45" name="f-b2bcad45" class="footnote-number">*3</a><span class="footnote-delimiter">:</span><span class="footnote-text">前にもお伝えしましたが、サイトキーの管理は直指定でなく、何かしら管理が推奨です。</span></p>
 </div>
 
 			  		
@@ -2115,7 +2115,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

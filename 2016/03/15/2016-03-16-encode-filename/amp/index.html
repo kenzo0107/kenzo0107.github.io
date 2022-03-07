@@ -1814,30 +1814,30 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>EC&#x30B5;&#x30A4;&#x30C8;&#x306E;&#x58F2;&#x4E0A;&#x306E;&#x30EC;&#x30DD;&#x30FC;&#x30C8;&#x306A;&#x3069;&#x3092;&#x9001;&#x4FE1;&#x3057;&#x305F;&#x3044;&#x3001;&#x3068;&#x3044;&#x3046;&#x3068;&#x304D;<br>&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x540D;&#x306B;&#x65E5;&#x672C;&#x8A9E;&#x3092;&#x6307;&#x5B9A;&#x305B;&#x3056;&#x308B;&#x3092;&#x5F97;&#x306A;&#x3044;&#x3068;&#x304D;(&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x3055;&#x3093;&#x304C;&#x300C;&#x7D76;&#x5BFE;&#x306B;&#x65E5;&#x672C;&#x8A9E;&#xFF01;&#x300D;)<br>&#x304C;&#x3068;&#x304D;&#x305F;&#x307E;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>ECサイトの売上のレポートなどを送信したい、というとき<br>ファイル名に日本語を指定せざるを得ないとき(クライアントさんが「絶対に日本語！」)<br>がときたまあります。</p>
 <ul>
-<li>&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;&#x69D8;&#x306E;&#x74B0;&#x5883;&#x306F;Windows&#x3002;</li>
-<li>Windows &#x30C7;&#x30B9;&#x30AF;&#x30C8;&#x30C3;&#x30D7;&#x306E;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x306F; Shift JIS&#x3002;</li>
+<li>クライアント様の環境はWindows。</li>
+<li>Windows デスクトップのデフォルト文字コードは Shift JIS。</li>
 </ul>
-<p>Linux &#x3067;&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x304C;UTF-8&#x3060;&#x3063;&#x305F;&#x5834;&#x5408;<br>&#x30E1;&#x30FC;&#x30EB;&#x306B;&#x6DFB;&#x4ED8;&#x3057;&#x9001;&#x4FE1;&#x3057;&#x3001;&#x53D7;&#x4FE1;&#x3057;&#x305F;Windows PC&#x3067;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x3068;<br>&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x540D;&#x304C;&#x6587;&#x5B57;&#x5316;&#x3051;&#x3057;&#x3066;&#x308B;&#x3001;<br>&#x306A;&#x3093;&#x3066;&#x3053;&#x3068;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x305D;&#x3093;&#x306A;&#x3068;&#x304D;&#x3001;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x4E2D;&#x8EAB;&#x3067;&#x306A;&#x304F;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x540D;&#x81EA;&#x4F53;&#x306E;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x5909;&#x66F4;&#x3057;&#x305F;&#x306E;&#x3067;<br>&#x305D;&#x306E;&#x5BFE;&#x5FDC;&#x307E;&#x3068;&#x3081;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<p>Linux で作成したファイルのデフォルト文字コードがUTF-8だった場合<br>メールに添付し送信し、受信したWindows PCでダウンロードすると<br>ファイル名が文字化けしてる、<br>なんてことがあります。</p>
+<p>そんなとき、ファイルの中身でなくファイル名自体の文字コードを変更したので<br>その対応まとめです。</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS release 5.11 (Final)</li>
 <li>convmv 1.10</li>
 </ul>
-<p>convmv &#x3092;&#x5229;&#x7528;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>convmv を利用します。</p>
 <ul>
-<li>CentOS&#x306A;&#x3089;yum&#x3067;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</li>
+<li>CentOSならyumでインストール</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install -y convmv</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x624B;&#x9806;">&#x624B;&#x9806;</span></h2><ul>
-<li>&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;UTF-8&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</li>
+<h2><span id="手順">手順</span></h2><ul>
+<li>デフォルト文字コードUTF-8とします。</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// UTF-8 &#x3067;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x540D;&#x300C;&#x307B;&#x3052;&#x307B;&#x3052;&#x300D;&#x4F5C;&#x6210;</span><br><span class="line">$ touch &#x307B;&#x3052;&#x307B;&#x3052;</span><br><span class="line"></span><br><span class="line">// &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x540D;&#x306E;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x3092; UTF-8 &#x304B;&#x3089; ShiftJIS &#x306B;&#x5909;&#x63DB;</span><br><span class="line">$ convmv -r -f utf8 -t sjis &#x307B;&#x3052;&#x307B;&#x3052; --notest</span><br><span class="line">mv &quot;./&#x307B;&#x3052;&#x307B;&#x3052;&quot; &quot;./&#x642;&#xB0;&#x642;&#xB0;&quot;</span><br><span class="line">Ready!</span><br><span class="line"></span><br><span class="line">$ ls -al</span><br><span class="line">-rw-rw-r-- 1 user group     0  3&#x6708; 16 16:45 ?&#x642;??&#x642;?</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// UTF-8 でファイル名「ほげほげ」作成</span><br><span class="line">$ touch ほげほげ</span><br><span class="line"></span><br><span class="line">// ファイル名の文字コードを UTF-8 から ShiftJIS に変換</span><br><span class="line">$ convmv -r -f utf8 -t sjis ほげほげ --notest</span><br><span class="line">mv "./ほげほげ" "./ق°ق°"</span><br><span class="line">Ready!</span><br><span class="line"></span><br><span class="line">$ ls -al</span><br><span class="line">-rw-rw-r-- 1 user group     0  3月 16 16:45 ?ق??ق?</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x5168;&#x304F;&#x8AAD;&#x307F;&#x53D6;&#x308C;&#x306A;&#x3044;&#x3088;&#x3046;&#x306A;&#x6587;&#x5B57;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x3054;&#x304F;&#x7A00;&#x306B;&#x300C;&#x7D76;&#x5BFE;&#x65E5;&#x672C;&#x8A9E;&#x3067;&#xFF01;&#x300D;&#x3068;&#x3044;&#x3046;&#x65B9;&#x306E;&#x4E00;&#x52A9;&#x306B;&#x306A;&#x308C;&#x3070;&#x4F55;&#x3088;&#x308A;&#x3067;&#x3059;&#x3002;</p>
+<p>全く読み取れないような文字になります。</p>
+<p>ごく稀に「絶対日本語で！」という方の一助になれば何よりです。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1884,7 +1884,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

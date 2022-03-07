@@ -1814,31 +1814,31 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>fluentd + ElasticSearch + kibana &#x3092;&#x904B;&#x7528;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x304C;<br>&#x3042;&#x308B;&#x65E5;ElasticSearch&#x304C;&#x52D5;&#x4F5C;&#x3057;&#x306A;&#x304F;&#x306A;&#x308B;&#x4E8B;&#x8C61;&#x304C;&#x767A;&#x751F;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x904E;&#x53BB;index&#x304C;&#x6E9C;&#x307E;&#x308A;&#x306B;&#x6E9C;&#x307E;&#x3063;&#x3066;&#x30E1;&#x30E2;&#x30EA;&#x4E0D;&#x8DB3;&#x3068;&#x3044;&#x3046;&#x30A8;&#x30E9;&#x30FC;&#x3002;</p>
-<p>log&#x306F;S3&#x306B;&#x30A2;&#x30C3;&#x30D7;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x3066;&#x3044;&#x308B;&#x3057;&#x3001;<br>&#x4E0D;&#x8981;&#x306A;Index&#x306F;&#x9069;&#x5B9C;&#x524A;&#x9664;&#x3057;&#x3066;&#x5BFE;&#x7B56;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+			  		<h2><span id="概要">概要</span></h2><p>fluentd + ElasticSearch + kibana を運用していますが<br>ある日ElasticSearchが動作しなくなる事象が発生しました。</p>
+<p>過去indexが溜まりに溜まってメモリ不足というエラー。</p>
+<p>logはS3にアップロードしているし、<br>不要なIndexは適宜削除して対策しました。</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS Linux release 7.0.1406 (Core)</li>
 <li>ElasticSearch 1.7.1</li>
 <li>Python 2.7.5</li>
 <li>pip 7.1.0</li>
 </ul>
-<h2><span id="curator-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">curator &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><ul>
-<li>ElasticSearch&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x3066;&#x3044;&#x308B;&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x3066;&#x4EE5;&#x4E0B;&#x5B9F;&#x65BD;</li>
+<h2><span id="curator-インストール">curator インストール</span></h2><ul>
+<li>ElasticSearchをインストールしているサーバにて以下実施</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pip install curator</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="curator-&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;">curator &#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5B9F;&#x884C;</span></h2><ul>
-<li>ElasticSearch&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x3066;&#x3044;&#x308B;&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x3066;&#x4EE5;&#x4E0B;&#x5B9F;&#x65BD;</li>
+<h2><span id="curator-コマンド実行">curator コマンド実行</span></h2><ul>
+<li>ElasticSearchをインストールしているサーバにて以下実施</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 14&#x65E5;(2&#x9031;&#x9593;)&#x7D4C;&#x904E;&#x3067;close</span><br><span class="line">curator --host localhost close indices --prefix logstash --older-than 14 --time-unit days --timestring %Y.%m.%d</span><br><span class="line"></span><br><span class="line"># 35&#x65E5;(4&#x9031;&#x9593;)&#x7D4C;&#x904E;&#x3067;delete</span><br><span class="line">curator --host localhost delete indices --prefix logstash --older-than 35 --time-unit days --timestring %Y.%m.%d</span><br><span class="line"></span><br><span class="line"># 2&#x65E5;&#x7D4C;&#x904E;&#x3067;bloom filter&#x7121;&#x52B9;&#x5316;</span><br><span class="line">curator --host localhost bloom indices --prefix logstash --older-than 2 --time-unit days --timestring %Y.%m.%d</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 14日(2週間)経過でclose</span><br><span class="line">curator --host localhost close indices --prefix logstash --older-than 14 --time-unit days --timestring %Y.%m.%d</span><br><span class="line"></span><br><span class="line"># 35日(4週間)経過でdelete</span><br><span class="line">curator --host localhost delete indices --prefix logstash --older-than 35 --time-unit days --timestring %Y.%m.%d</span><br><span class="line"></span><br><span class="line"># 2日経過でbloom filter無効化</span><br><span class="line">curator --host localhost bloom indices --prefix logstash --older-than 2 --time-unit days --timestring %Y.%m.%d</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x3092;jenkins&#x3067; <a href="https://wiki.jenkins-ci.org/display/JENKINS/SSH+plugin">SSH plugin</a> &#x3067;<br>&#x30EA;&#x30E2;&#x30FC;&#x30C8;&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3057;&#x3066;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3088;&#x3046;&#x3001;<br>&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x5B9A;&#x671F;&#x30DD;&#x30FC;&#x30EA;&#x30F3;&#x30B0;&#x3067;1&#x65E5;1&#x56DE;&#x5B9F;&#x884C;&#x3055;&#x305B;&#x3066;&#x307E;&#x3059;&#x3002;</p>
+<p>上記をjenkinsで <a href="https://wiki.jenkins-ci.org/display/JENKINS/SSH+plugin">SSH plugin</a> で<br>リモートサーバにログインして実行するよう、<br>設定して定期ポーリングで1日1回実行させてます。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151112/20151112142836.png" width="1024" height="290" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;</p>
+<p>以上</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1904,7 +1904,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

@@ -1849,22 +1849,22 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>gosec &#x3067;&#x8B66;&#x544A;&#x3055;&#x308C;&#x308B; os.Open() &#x306B;&#x5BFE;&#x5FDC;&#x3057;&#x305F;&#x8A71;&#x3067;&#x3059;&#x3002;</p>
+			  		<p>gosec で警告される os.Open() に対応した話です。</p>
 <a id="more"></a>
 
-<p>gosec &#x3067;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x30B3;&#x30FC;&#x30C9;&#x304C;&#x3042;&#x308B;&#x3068;</p>
+<p>gosec で以下のようなコードがあると</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.Open(fname)</span><br></pre></td></tr></tbody></table></figure>
 
 
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x8B66;&#x544A;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<p>以下のように警告されます。</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">G304 (CWE<span class="number">-22</span>): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)</span><br></pre></td></tr></tbody></table></figure>
 
 
-<p>&#x5909;&#x6570;&#x3067;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30D1;&#x30B9;&#x3092;&#x6307;&#x5B9A;&#x3059;&#x308B;&#x306E;&#x306F;&#x3001;&#x610F;&#x56F3;&#x3057;&#x306A;&#x3044;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30D1;&#x30B9;&#x3092;&#x6307;&#x5B9A;&#x3055;&#x308C;&#x308B;&#x5371;&#x967A;&#x6027;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x5BFE;&#x5FDC;">&#x5BFE;&#x5FDC;</span></h2><p>filepath.Clean() &#x3092;&#x4F7F;&#x7528;&#x3057;&#x3001;&#x3088;&#x308D;&#x3057;&#x304F;&#x306A;&#x3044;&#x30D1;&#x30B9;&#x3092;&#x7DBA;&#x9E97;&#x306B;&#x6574;&#x3048;&#x308B;&#x3088;&#x3046;&#x306B;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>変数でファイルパスを指定するのは、意図しないファイルパスを指定される危険性があります。</p>
+<h2><span id="対応">対応</span></h2><p>filepath.Clean() を使用し、よろしくないパスを綺麗に整えるようにします。</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.Open(filepath.Clean(fname))</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;<br>&#x3054;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以上<br>ご参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1930,7 +1930,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

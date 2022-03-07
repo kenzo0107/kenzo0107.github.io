@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <link rel="canonical" href="https://kenzo0107.github.io/2018/06/05/2018-06-06-specify-ecscli-version/" >
-    <title>ElastiCache メンテナンス対応 ~2018年梅雨~ - 長生村本郷Engineers&#39;Blog</title>
+    <title>ecs-cli バージョン指定してインストール - 長生村本郷Engineers&#39;Blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     
-    <meta property="og:title" content="ElastiCache メンテナンス対応 ~2018年梅雨~">
+    <meta property="og:title" content="ecs-cli バージョン指定してインストール">
 	<meta property="og:type" content="article">
 	<meta property="og:url" content="https://kenzo0107.github.io/2018/06/05/2018-06-06-specify-ecscli-version/">
 	
@@ -24,7 +24,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2018/06/05/2018-06-06-specify-ecscli-version/">
-	<meta name="twitter:title" content="ElastiCache メンテナンス対応 ~2018年梅雨~ - 長生村本郷Engineers&#39;Blog">
+	<meta name="twitter:title" content="ecs-cli バージョン指定してインストール - 長生村本郷Engineers&#39;Blog">
 	
 		<meta name="twitter:description" content="&lt;p&gt;完全な備忘録です。&lt;/p&gt;
 &lt;h2 id=&#34;経緯&#34;&gt;&lt;a href=&#34;#経緯&#34; class=&#34;headerlink&#34; title=&#34;経緯&#34;&gt;&lt;/a&gt;経緯&lt;/h2&gt;&lt;p&gt;6月に入って数日、&lt;br&gt;ecs-cli の latest をインストールすると latest が 1.6.0 となり&lt;br&gt;&lt;code&gt;ecs-cli compose ...&lt;/code&gt; を実行すると以下のようなエラーが出るようになりました。&lt;/p&gt;
@@ -60,7 +60,7 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "BlogPosting",
-			"headline": "ElastiCache メンテナンス対応 ~2018年梅雨~",
+			"headline": "ecs-cli バージョン指定してインストール",
 			
 			"description": "&lt;p&gt;完全な備忘録です。&lt;/p&gt;
 &lt;h2 id=&#34;経緯&#34;&gt;&lt;a href=&#34;#経緯&#34; class=&#34;headerlink&#34; title=&#34;経緯&#34;&gt;&lt;/a&gt;経緯&lt;/h2&gt;&lt;p&gt;6月に入って数日、&lt;br&gt;ecs-cli の latest をインストールすると latest が 1.6.0 となり&lt;br&gt;&lt;code&gt;ecs-cli compose ...&lt;/code&gt; を実行すると以下のようなエラーが出るようになりました。&lt;/p&gt;
@@ -74,7 +74,7 @@
 			    "@id":"https://kenzo0107.github.io/2018/06/05/2018-06-06-specify-ecscli-version/"
 			},
 			"datePublished": "2018-06-05T15:00:00.000Z",
-			"dateModified": "2020-05-07T03:41:29.392Z",
+			"dateModified": "2022-03-07T15:14:59.672Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1808,7 +1808,7 @@ h6.categories {
 			            <div class="header-cap flx">
 							
 							  <h1 class="article-title entry-title" itemprop="name">
-							    <a href="https://kenzo0107.github.io/2018/06/05/2018-06-06-specify-ecscli-version/" target="_blank" itemprop="url">ElastiCache メンテナンス対応 ~2018年梅雨~</a>
+							    <a href="https://kenzo0107.github.io/2018/06/05/2018-06-06-specify-ecscli-version/" target="_blank" itemprop="url">ecs-cli バージョン指定してインストール</a>
 							  </h1>
 							
 						</div>
@@ -1835,15 +1835,15 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x5B8C;&#x5168;&#x306A;&#x5099;&#x5FD8;&#x9332;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x7D4C;&#x7DEF;">&#x7D4C;&#x7DEF;</span></h2><p>6&#x6708;&#x306B;&#x5165;&#x3063;&#x3066;&#x6570;&#x65E5;&#x3001;<br>ecs-cli &#x306E; latest &#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3059;&#x308B;&#x3068; latest &#x304C; 1.6.0 &#x3068;&#x306A;&#x308A;<br><code>ecs-cli compose ...</code> &#x3092;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x51FA;&#x308B;&#x3088;&#x3046;&#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level=error msg=<span class="string">&quot;Unable to open ECS Compose Project&quot;</span> error=<span class="string">&quot;Volume driver is not supported&quot;</span></span><br></pre></td></tr></tbody></table></figure>
+			  		<p>完全な備忘録です。</p>
+<h2><span id="経緯">経緯</span></h2><p>6月に入って数日、<br>ecs-cli の latest をインストールすると latest が 1.6.0 となり<br><code>ecs-cli compose ...</code> を実行すると以下のようなエラーが出るようになりました。</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level=error msg=<span class="string">"Unable to open ECS Compose Project"</span> error=<span class="string">"Volume driver is not supported"</span></span><br></pre></td></tr></tbody></table></figure>
 
-<p>1.4.0 &#x3067;&#x306F;&#x554F;&#x984C;&#x306A;&#x304B;&#x3063;&#x305F;&#x30BF;&#x30B9;&#x30AF;&#x5B9A;&#x7FA9;&#x3067;&#x3057;&#x305F;&#x304C;<br>1.6.0 &#x3067;&#x306F; <code>Volume driver is not supported</code> &#x3068;&#x306A;&#x3063;&#x305F;&#x305D;&#x3046;&#x3067;&#x51E6;&#x7406;&#x304C;&#x3053;&#x3051;&#x308B;&#x3088;&#x3046;&#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x305D;&#x306E;&#x5BFE;&#x5FDC;&#x3068;&#x3057;&#x3066; 1.4.0 &#x306B;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x56FA;&#x5B9A;&#x3057;&#x305F;&#x8A2D;&#x5B9A;&#x3067;&#x3059;&#x3002;</p>
+<p>1.4.0 では問題なかったタスク定義でしたが<br>1.6.0 では <code>Volume driver is not supported</code> となったそうで処理がこけるようになりました。</p>
+<p>その対応として 1.4.0 にバージョン固定した設定です。</p>
 <a id="more"></a>
 
-<h2><span id="&#x7D50;&#x8AD6;">&#x7D50;&#x8AD6;</span></h2><p>latest &#x306E;&#x90E8;&#x5206;&#x3092; <code>&lt;version&gt;</code> &#x306B;&#x5909;&#x66F4;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x6307;&#x5B9A;&#x306E;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x3067;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x304C;&#x53EF;&#x80FD;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="結論">結論</span></h2><p>latest の部分を <code>&lt;version&gt;</code> に変更することで指定のバージョンでインストールが可能です。</p>
 <ul>
 <li>for Linux OS</li>
 </ul>
@@ -1854,10 +1854,10 @@ h6.categories {
 </ul>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-darwin-amd64-v1.6.0 -o /usr/bin/ecs-cli &amp;&amp; chmod +x /usr/bin/ecs-cli</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="aws-documentation-&#x3067;&#x306F;">AWS Documentation &#x3067;&#x306F;</span></h2><p>&#x6700;&#x65B0;&#x306E; ecs-cli &#x306E;&#x307F;&#x306E;&#x8AAC;&#x660E;&#x306E;&#x70BA;&#x3001;&#x82E5;&#x5E72;&#x30CF;&#x30DE;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>GitHub &#x306B;&#x306F; <code>Download specific version</code> &#x3068;&#x3042;&#x308B;&#x306E;&#x3067;&#x3053;&#x3061;&#x3089;&#x306E;&#x60C5;&#x5831;&#x3092;&#x8FFD;&#x3063;&#x3066;&#x304A;&#x304F;&#x3068;&#x826F;&#x304B;&#x3063;&#x305F;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="aws-documentation-では">AWS Documentation では</span></h2><p>最新の ecs-cli のみの説明の為、若干ハマりました。</p>
+<p>GitHub には <code>Download specific version</code> とあるのでこちらの情報を追っておくと良かったです。</p>
 <p><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html">ecs-cli - Download specific version</a></p>
-<p>&#x4EE5;&#x4E0A;<br>&#x672C;&#x5F53;&#x306B;&#x5099;&#x5FD8;&#x9332;&#x3067;&#x3057;&#x305F;&#x3002;</p>
+<p>以上<br>本当に備忘録でした。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1887,12 +1887,6 @@ h6.categories {
 					    		<li class="article-tag-list-item">
 					    			<a class="article-tag-list-link" href="/tags/AWS/">
 					    				AWS
-					    			</a>
-					    		</li>
-							
-					    		<li class="article-tag-list-item">
-					    			<a class="article-tag-list-link" href="/tags/ElastiCache/">
-					    				ElastiCache
 					    			</a>
 					    		</li>
 							
@@ -1929,7 +1923,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

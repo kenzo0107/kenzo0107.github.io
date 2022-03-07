@@ -1849,18 +1849,18 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4EE5;&#x524D;&#x3001;&#x8907;&#x6570;&#x306E; AWS Account EC2 &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3078;&#x306E;&#x63A5;&#x7D9A;&#x3092; EC2 Instance Connect &#x3092;&#x4F7F;&#x7528;&#x3057;&#x30A4;&#x30F3;&#x30BF;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30D6;&#x306B; ssh &#x63A5;&#x7D9A;&#x3067;&#x304D;&#x308B;&#x30C4;&#x30FC;&#x30EB;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<p>以前、複数の AWS Account EC2 インスタンスへの接続を EC2 Instance Connect を使用しインタラクティブに ssh 接続できるツールを作成しました。</p>
 <a id="more"></a>
 
-<p><a href="https://kenzo0107.hatenablog.com/entry/2019/08/04/180149">EC2 Instance Connect API &#x3067; ssh &#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3067;&#x304D;&#x308B;&#x30A4;&#x30F3;&#x30BF;&#x30E9;&#x30AF;&#x30C6;&#x30A3;&#x30D6; cli tool &#x201C;omssh&#x201D; &#x3092;&#x4F5C;&#x3063;&#x3066;&#x307F;&#x307E;&#x3057;&#x305F;&#x3002;</a></p>
-<p>&#x81EA;&#x5206;&#x7528;&#x306B;&#x30C1;&#x30E3;&#x30C1;&#x30E3;&#x30C3;&#x3068;&#x4F5C;&#x3063;&#x3066;&#x30A2;&#x30C3;&#x30D7;&#x3057;&#x305F;&#x3082;&#x306E;&#x3067;&#x624B;&#x5143;&#x3067;&#x3057;&#x304B;&#x30C6;&#x30B9;&#x30C8;&#x3057;&#x3066;&#x304A;&#x3089;&#x305A; &#x3001; lint &#x3084; test &#x3082;&#x3057;&#x3066;&#x306A;&#x304B;&#x3063;&#x305F;&#x306E;&#x3067;&#x3059;&#x304C;&#x3001;</p>
+<p><a href="https://kenzo0107.hatenablog.com/entry/2019/08/04/180149">EC2 Instance Connect API で ssh ログインできるインタラクティブ cli tool “omssh” を作ってみました。</a></p>
+<p>自分用にチャチャッと作ってアップしたもので手元でしかテストしておらず 、 lint や test もしてなかったのですが、</p>
 <ul>
-<li>&#x5F8C;&#x5B66;&#x306E;&#x70BA;&#x3001;&#x6539;&#x3081;&#x3066; lint, test &#x3057;&#x305F;&#x4E0A;&#x3067;&#x30B3;&#x30FC;&#x30C9;&#x3092;&#x7BA1;&#x7406;&#x3067;&#x304D;&#x308B;&#x69D8;&#x306B;&#x306A;&#x308A;&#x305F;&#x3044;</li>
-<li>&#x81EA;&#x5206;&#x306E;&#x30EA;&#x30DD;&#x30B8;&#x30C8;&#x30EA;&#x3068;&#x3057;&#x3066;&#x516C;&#x958B;&#x3057;&#x3066;&#x3044;&#x308B;&#x3057;&#x3001;&#x611B;&#x60C5;&#x6301;&#x3061;&#x305F;&#x3044;</li>
+<li>後学の為、改めて lint, test した上でコードを管理できる様になりたい</li>
+<li>自分のリポジトリとして公開しているし、愛情持ちたい</li>
 </ul>
-<p>&#x3068;&#x3044;&#x3046;&#x6C17;&#x6301;&#x3061;&#x3067;&#x53D6;&#x308A;&#x7D44;&#x3093;&#x3067;&#x307F;&#x305F;&#x3044;&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x6210;&#x679C;&#x7269;">&#x6210;&#x679C;&#x7269;</span></h2><p><a href="https://github.com/kenzo0107/omssh">kenzo0107/omssh</a></p>
-<h2><span id="&#x9759;&#x7684;&#x89E3;&#x6790;-on-github-actions">&#x9759;&#x7684;&#x89E3;&#x6790; on GitHub Actions</span></h2><p><a href="https://github.com/grandcolline/golang-github-actions">grandcolline/golang-github-actions</a> &#x3092;&#x5229;&#x7528;&#x3055;&#x305B;&#x3066;&#x3044;&#x305F;&#x3060;&#x304D;&#x307E;&#x3057;&#x3066;&#x4EE5;&#x4E0B;&#x89E3;&#x6790;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>という気持ちで取り組んでみたいと思いました。</p>
+<h2><span id="成果物">成果物</span></h2><p><a href="https://github.com/kenzo0107/omssh">kenzo0107/omssh</a></p>
+<h2><span id="静的解析-on-github-actions">静的解析 on GitHub Actions</span></h2><p><a href="https://github.com/grandcolline/golang-github-actions">grandcolline/golang-github-actions</a> を利用させていただきまして以下解析しました。</p>
 <ul>
 <li><a href="golang.org/x/tools/cmd/goimports">goimports</a></li>
 <li><a href="github.com/kisielk/errcheck">errcheck</a></li>
@@ -1869,100 +1869,100 @@ h6.categories {
 <li><a href="honnef.co/go/tools/staticcheck">staticcheck</a></li>
 <li><a href="github.com/securego/gosec/cmd/gosec">gosec</a></li>
 </ul>
-<p>GitHub Actions &#x3067;&#x306E;&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306F;&#x4EE5;&#x4E0B;&#x3067;&#x3059;&#x3002;</p>
+<p>GitHub Actions での設定ファイルは以下です。</p>
 <p><a href="https://gist.github.com/kenzo0107/4bdac92908244222f441c1b04f3b7c5a">kenzo0107/static_check_go.yaml</a></p>
-<h2><span id="&#x958B;&#x767A;&#x6642;&#x306B;&#x3082;&#x9759;&#x7684;&#x89E3;&#x6790;">&#x958B;&#x767A;&#x6642;&#x306B;&#x3082;&#x9759;&#x7684;&#x89E3;&#x6790;</span></h2><p>&#x958B;&#x767A;&#x6642;&#x306B;&#x89E3;&#x6790;&#x3067;&#x304D;&#x308B;&#x69D8;&#x3001; Makefile &#x306B;&#x8A2D;&#x5B9A;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="開発時にも静的解析">開発時にも静的解析</span></h2><p>開発時に解析できる様、 Makefile に設定しました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">.PHONY: lint</span><br><span class="line">lint: devel-deps</span><br><span class="line">	go vet ./...</span><br><span class="line">	go vet -vettool=$(shell which shadow)</span><br><span class="line">	staticcheck ./...</span><br><span class="line">	errcheck ./...</span><br><span class="line">	# exclude G106: Audit the use of ssh.InsecureIgnoreHostKey</span><br><span class="line">	gosec -quiet -exclude=G106 ./...</span><br><span class="line">	golint -set_exit_status ./...</span><br></pre></td></tr></tbody></table></figure>
 
-<p>goimports &#x306B;&#x95A2;&#x3057;&#x3066;&#x306F;&#x30A8;&#x30C7;&#x30A3;&#x30BF;&#x306E;&#x8A2D;&#x5B9A;&#x3067;&#x4FDD;&#x5B58;&#x6642;&#x306B;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3059;&#x308B;&#x69D8;&#x306B;&#x3057;&#x3066;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x5B9F;&#x969B;&#x306B;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x52D5;&#x304B;&#x3057;&#x3066;&#x307F;&#x305F;&#x3089;&#x308F;&#x304B;&#x308A;&#x3084;&#x3059;&#x3044;&#x3067;&#x3059;&#x304C;&#x3001;&#x4EE5;&#x4E0B;&#x306B;&#x3069;&#x3093;&#x306A;&#x3053;&#x3068;&#x3092;&#x6307;&#x6458;&#x3057;&#x3066;&#x304F;&#x308B;&#x304B;&#x307E;&#x3068;&#x3081;&#x307E;&#x3059;&#x3002;</p>
-<h3><span id="go-vet">go vet ./&#x2026;</span></h3><p>&#x69CB;&#x6587;&#x30A8;&#x30E9;&#x30FC;&#x3092;&#x6307;&#x6458;&#x3057;&#x3066;&#x304F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a := fmt.Sprintf(<span class="string">&quot;%s&quot;</span>, <span class="number">1</span>)</span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></tbody></table></figure>
+<p>goimports に関してはエディタの設定で保存時にチェックする様にしてます。</p>
+<p>実際に設定して動かしてみたらわかりやすいですが、以下にどんなことを指摘してくるかまとめます。</p>
+<h3><span id="go-vet">go vet ./…</span></h3><p>構文エラーを指摘してくれます。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a := fmt.Sprintf(<span class="string">"%s"</span>, <span class="number">1</span>)</span><br><span class="line">fmt.Println(a)</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="go-vet-vettoolshell-which-shadow">go vet -vettool=$(shell which shadow)</span></h3><p>&#x30B9;&#x30B3;&#x30FC;&#x30D7;&#x306E;&#x5916;&#x5074;&#x3067;&#x5B9A;&#x7FA9;&#x3057;&#x305F;&#x5909;&#x6570;&#x3068;&#x540C;&#x540D;&#x306E;&#x5909;&#x6570;&#x304C;&#x30B9;&#x30B3;&#x30FC;&#x30D7;&#x306E;&#x5185;&#x90E8;&#x3067;&#x4F7F;&#x7528;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x306B;&#x8B66;&#x544A;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x6F5C;&#x5728;&#x7684;&#x306B;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3059;&#x308B;&#x53EF;&#x80FD;&#x6027;&#x304C;&#x3042;&#x308A;&#x3001;&#x5909;&#x6570;&#x540D;&#x3092;&#x5909;&#x66F4;&#x3059;&#x308B;&#x7B49;&#x306E;&#x5BFE;&#x5FDC;&#x304C;&#x5FC5;&#x8981;&#x3067;&#x3059;&#x3002;</p>
-<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hoge</span><span class="params">()</span> <span class="title">error</span></span> {</span><br><span class="line">	err := errors.New(<span class="string">&quot;error occured&quot;</span>)</span><br><span class="line">	{</span><br><span class="line">		err := errors.New(<span class="string">&quot;error occured&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">			<span class="keyword">return</span> err</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="go-vet-vettoolshell-which-shadow">go vet -vettool=$(shell which shadow)</span></h3><p>スコープの外側で定義した変数と同名の変数がスコープの内部で使用されている場合に警告されます。</p>
+<p>潜在的にエラーが発生する可能性があり、変数名を変更する等の対応が必要です。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hoge</span><span class="params">()</span> <span class="title">error</span></span> {</span><br><span class="line">	err := errors.New(<span class="string">"error occured"</span>)</span><br><span class="line">	{</span><br><span class="line">		err := errors.New(<span class="string">"error occured"</span>)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">			<span class="keyword">return</span> err</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> {</span><br><span class="line">		<span class="keyword">return</span> err</span><br><span class="line">	}</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./main.go:14:3: declaration of <span class="string">&quot;err&quot;</span> shadows declaration at line 12</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./main.go:14:3: declaration of <span class="string">"err"</span> shadows declaration at line 12</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x306E;&#x5834;&#x5408;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x30B9;&#x30B3;&#x30FC;&#x30D7;&#x5185;&#x3067;&#x30B9;&#x30B3;&#x30FC;&#x30D7;&#x5916;&#x306E;&#x5909;&#x6570;&#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x56DE;&#x907F;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">err := errors.New(<span class="string">&quot;error occured&quot;</span>)</span><br><span class="line">{</span><br><span class="line">	err = errors.New(<span class="string">&quot;error occured&quot;</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>上記の場合、以下の様にスコープ内でスコープ外の変数を利用することで回避できます。</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">err := errors.New(<span class="string">"error occured"</span>)</span><br><span class="line">{</span><br><span class="line">	err = errors.New(<span class="string">"error occured"</span>)</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3067;&#x3059;&#x304C;&#x3001;&#x3053;&#x306E;&#x5834;&#x5408;&#x3060;&#x3068;&#x6700;&#x521D;&#x306F; <code>err :=</code> &#x3067;&#x5B9A;&#x7FA9;&#x3057;&#x3001;&#x305D;&#x306E;&#x5F8C;&#x306F; <code>err =</code> &#x3067;&#x5B9A;&#x7FA9;&#x3057;&#x306A;&#x3051;&#x308C;&#x3070;&#x306A;&#x3089;&#x305A;&#x3001;&#x308F;&#x304B;&#x308A;&#x3065;&#x3089;&#x3044;&#x306E;&#x3067;&#x3001;<br>&#x5909;&#x6570; err &#x3092;&#x5B9A;&#x7FA9;&#x3057;&#x305F;&#x76F4;&#x5F8C;&#x306B;&#x51E6;&#x7406;&#x3092;&#x5B9F;&#x65BD;&#x3059;&#x308B;&#x69D8;&#x306B;&#x3059;&#x308B;&#x3068;&#x56DE;&#x907F;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func hoge() error {</span><br><span class="line">	err := errors.New(&quot;error occured&quot;)</span><br><span class="line">	if err != nil {</span><br><span class="line">		return err</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	{</span><br><span class="line">		err := errors.New(&quot;error occured&quot;)</span><br><span class="line">		if err != nil {</span><br><span class="line">			return err</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">	return nil</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>ですが、この場合だと最初は <code>err :=</code> で定義し、その後は <code>err =</code> で定義しなければならず、わかりづらいので、<br>変数 err を定義した直後に処理を実施する様にすると回避できます。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func hoge() error {</span><br><span class="line">	err := errors.New("error occured")</span><br><span class="line">	if err != nil {</span><br><span class="line">		return err</span><br><span class="line">	}</span><br><span class="line"></span><br><span class="line">	{</span><br><span class="line">		err := errors.New("error occured")</span><br><span class="line">		if err != nil {</span><br><span class="line">			return err</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">	return nil</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="staticcheck">staticcheck ./&#x2026;</span></h3><p>&#x30D0;&#x30B0;&#x306E;&#x691C;&#x51FA;&#x3001;&#x30B3;&#x30FC;&#x30C9;&#x306E;&#x7C21;&#x7D20;&#x5316;&#x306E;&#x63D0;&#x6848;&#x3001;&#x30C7;&#x30C3;&#x30C9;&#x30B3;&#x30FC;&#x30C9;&#x306E;&#x6307;&#x6458;&#x306A;&#x3069;&#x3092;&#x3057;&#x3066;&#x304F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x3067; <code>staticcheck ./...</code> &#x3092;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3068;</p>
-<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">&quot;github.com/aws/aws-sdk-go/aws/session&quot;</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">session.New(&amp;config)</span><br></pre></td></tr></tbody></table></figure>
+<h3><span id="staticcheck">staticcheck ./…</span></h3><p>バグの検出、コードの簡素化の提案、デッドコードの指摘などをしてくれます。</p>
+<p>以下のコードで <code>staticcheck ./...</code> を実行すると</p>
+<figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"github.com/aws/aws-sdk-go/aws/session"</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">session.New(&amp;config)</span><br></pre></td></tr></tbody></table></figure>
 
-<p>session.New &#x4F7F;&#x3046;&#x306E;&#x306F;&#x975E;&#x63A8;&#x5968;&#x3060;&#x3088;&#x3001;&#x3068;&#x8B66;&#x544A;&#x3057;&#x3066;&#x304F;&#x308C;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>deprecated &#x3092;&#x6307;&#x6458;&#x3057;&#x3066;&#x304F;&#x308C;&#x308B;&#x306E;&#x3042;&#x308A;&#x304C;&#x305F;&#x3044;&#xFF01;</p>
+<p>session.New 使うのは非推奨だよ、と警告してくれました。</p>
+<p>deprecated を指摘してくれるのありがたい！</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.New is deprecated: Use NewSession <span class="built_in">functions</span> to create sessions instead. NewSession has the same functionality as New except an error can be returned when the func is called instead of waiting to receive an error until a request is made.  (SA1019)</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x4FEE;&#x6B63;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x3001;&#x5BFE;&#x5FDC;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>以下の様に修正することで、対応できました。</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">session.Must(session.NewSession(&amp;config))</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="errcheck">errcheck ./&#x2026;</span></h3><p>error &#x3092;&#x8FD4;&#x3059; function &#x306E;&#x51E6;&#x7406;&#x3092;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3057;&#x3066;&#x3044;&#x308B;&#x304B;&#x8B66;&#x544A;&#x3057;&#x3066;&#x304F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x3067; <code>errcheck ./...</code> &#x3092;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x3068;</p>
+<h3><span id="errcheck">errcheck ./…</span></h3><p>error を返す function の処理をチェックしているか警告してくれます。</p>
+<p>以下のコードで <code>errcheck ./...</code> を実行すると</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f, err := os.Open(fpath)</span><br><span class="line">...</span><br><span class="line"><span class="keyword">defer</span> f.Close()</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x8B66;&#x544A;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<p>以下の様に警告されます。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg/utility/profile.go:19:15:   defer f.Close()</span><br></pre></td></tr></tbody></table></figure>
 
-<p><code>f.Close()</code> &#x304C; error &#x3092;&#x8FD4;&#x3057;&#x307E;&#x3059;&#x304C;&#x3001;&#x305D;&#x306E; error &#x304C;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3055;&#x308C;&#x3066;&#x3044;&#x306A;&#x3044;&#x3067;&#x3059;&#x3088;&#x3001;&#x3068;&#x3044;&#x3046;&#x6307;&#x6458;&#x3067;&#x3059;&#x3002;</p>
+<p><code>f.Close()</code> が error を返しますが、その error がチェックされていないですよ、という指摘です。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Close closes the File, rendering it unusable for I/O. On files that support SetDeadline, any pending I/O operations will be canceled and return immediately with an error.</span><br><span class="line"></span><br><span class="line">func (*os.File).Close() error</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x7121;&#x540D;&#x95A2;&#x6570;&#x3067; wrap &#x3057;&#x3066;&#x305D;&#x306E;&#x4E2D;&#x3067; error check &#x3059;&#x308B;&#x69D8;&#x306B;&#x3057;&#x5BFE;&#x5FDC;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>無名関数で wrap してその中で error check する様にし対応しました。</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> {</span><br><span class="line">	<span class="keyword">if</span> err := f.Close(); err != <span class="literal">nil</span> {</span><br><span class="line">		log.Fatalln(err)</span><br><span class="line">	}</span><br><span class="line">}()</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="gosec-quiet">gosec -quiet ./&#x2026;</span></h3><p>&#x4F7F;&#x7528;&#x30B3;&#x30FC;&#x30C9;&#x3067;&#x306E;&#x8106;&#x5F31;&#x6027;&#x3092;&#x6307;&#x6458;&#x3057;&#x3066;&#x304F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x73FE;&#x72B6;&#x306E; omssh &#x3067;&#x306F; <code>gosec -quiet ./...</code> &#x3092;&#x5B9F;&#x884C;&#x3057;&#x3066;&#x307F;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x8B66;&#x544A;&#x304C;&#x51FA;&#x307E;&#x3059;&#x3002;</p>
-<p><code>G106</code> &#x3068;&#x3057;&#x3066;&#x7BA1;&#x7406;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B; <code>ssh.InsecureIgnoreHostKey()</code> &#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x3078;&#x306E;&#x8106;&#x5F31;&#x6027;&#x304C;&#x6307;&#x6458;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="gosec-quiet">gosec -quiet ./…</span></h3><p>使用コードでの脆弱性を指摘してくれます。</p>
+<p>現状の omssh では <code>gosec -quiet ./...</code> を実行してみると以下の様な警告が出ます。</p>
+<p><code>G106</code> として管理されている <code>ssh.InsecureIgnoreHostKey()</code> を利用していることへの脆弱性が指摘されています。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Results:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[/Users/kenzo.tanaka/src/github.com/kenzo0107/omssh/omssh.go:50] - G106 (CWE-322): Use of ssh InsecureIgnoreHostKey should be audited (Confidence: HIGH, Severity: MEDIUM)</span><br><span class="line">  &gt; ssh.InsecureIgnoreHostKey()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Summary:</span><br><span class="line">   Files: 9</span><br><span class="line">   Lines: 718</span><br><span class="line">   Nosec: 0</span><br><span class="line">  Issues: 1</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x5BFE;&#x5FDC;&#x6CD5;&#x3092;&#x628A;&#x63E1;&#x3067;&#x304D;&#x3066;&#x3044;&#x306A;&#x3044;&#x306E;&#x3067; <code>-exclude=G106</code> &#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3;&#x3067;&#x56DE;&#x907F;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<h4><span id="gosec-&#x3067;&#x8B66;&#x544A;&#x3055;&#x308C;&#x304C;&#x3061;&#x306A;&#x30B3;&#x30FC;&#x30C9;">gosec &#x3067;&#x8B66;&#x544A;&#x3055;&#x308C;&#x304C;&#x3061;&#x306A;&#x30B3;&#x30FC;&#x30C9;</span></h4><p>&#x3088;&#x304F;&#x3042;&#x308A;&#x304C;&#x3061;&#x306A; gosec &#x306B;&#x8B66;&#x544A;&#x3055;&#x308C;&#x304C;&#x3061;&#x306A;&#x30B3;&#x30FC;&#x30C9;&#x4F8B;&#x3068;&#x3057;&#x3066;&#x306F;&#x4EE5;&#x4E0B;&#x3067;&#x306F;&#x306A;&#x3044;&#x3067;&#x3057;&#x3087;&#x3046;&#x304B;&#x3002;</p>
-<p>&#x5F15;&#x6570;&#x3068;&#x3057;&#x3066;&#x3001;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30D1;&#x30B9;&#x3092;&#x6E21;&#x3057;&#x3066;&#x3001;&#x305D;&#x306E;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x958B;&#x3053;&#x3046;&#x3068;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>対応法を把握できていないので <code>-exclude=G106</code> オプションで回避しています。</p>
+<h4><span id="gosec-で警告されがちなコード">gosec で警告されがちなコード</span></h4><p>よくありがちな gosec に警告されがちなコード例としては以下ではないでしょうか。</p>
+<p>引数として、ファイルパスを渡して、そのファイルを開こうとしています。</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetProfiles</span><span class="params">(credentialsPath <span class="keyword">string</span>)</span> <span class="params">(profiles []<span class="keyword">string</span>, err error)</span></span> {</span><br><span class="line">	f, err := os.Open(credentialsPath)</span><br><span class="line">        ...</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3053;&#x306E;&#x30B3;&#x30FC;&#x30C9;&#x3092; <code>gosec -quiet ./...</code> &#x3057;&#x3066;&#x307F;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x8B66;&#x544A;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<p>このコードを <code>gosec -quiet ./...</code> してみると以下の様に警告されます。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[/Users/kenzo.tanaka/src/github.com/kenzo0107/omssh/pkg/utility/profile.go:16] - G304 (CWE-22): Potential file inclusion via variable (Confidence: HIGH, Severity: MEDIUM)</span><br><span class="line">  &gt; os.Open(credentialsPath)</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3053;&#x3061;&#x3089;&#x306E;&#x5BFE;&#x51E6;&#x6CD5;&#x3068;&#x3057;&#x3066;&#x306F;&#x3001;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30D1;&#x30B9;&#x3092;&#x7DBA;&#x9E97;&#x306B;&#x3057;&#x3066;&#x304F;&#x308C;&#x308B; <code>filepath.Clean(string)</code> &#x3092;&#x565B;&#x307E;&#x305B;&#x308B;&#x3068;&#x56DE;&#x907F;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>こちらの対処法としては、ファイルパスを綺麗にしてくれる <code>filepath.Clean(string)</code> を噛ませると回避できました。</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- f, err := os.Open(credentialsPath)</span><br><span class="line">+ f, err := os.Open(filepath.Clean(credentialsPath))</span><br></pre></td></tr></tbody></table></figure>
 
-<p><code>../kenzo\hoge/moge</code> &#x3068;&#x3044;&#x3046;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30D1;&#x30B9;&#x3060;&#x3068; <code>../kenzo\hoge/moge</code> &#x3068;&#x3044;&#x3046;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30D1;&#x30B9;&#x304C;&#x8FD4;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h3><span id="golint-set_exit_status">golint -set_exit_status ./&#x2026;</span></h3><p><code>-set_exit_status</code> &#x3092;&#x6307;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x308B;&#x306E;&#x306F;&#x3001;&#x7D42;&#x4E86;&#x30B9;&#x30C6;&#x30FC;&#x30BF;&#x30B9;&#x3092;&#x8FD4;&#x3057;&#x3066;&#x304F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x30B3;&#x30FC;&#x30C9;&#x304C;&#x3042;&#x308B;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p><code>../kenzo\hoge/moge</code> というファイルパスだと <code>../kenzo\hoge/moge</code> というファイルパスが返ります。</p>
+<h3><span id="golint-set_exit_status">golint -set_exit_status ./…</span></h3><p><code>-set_exit_status</code> を指定しているのは、終了ステータスを返してくれます。</p>
+<p>以下の様なコードがあるとします。</p>
 <figure class="highlight go"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> EC2Iface <span class="keyword">interface</span> {</span><br><span class="line">   ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p><code>golint -set_exit_status ./...</code> &#x3059;&#x308B;&#x3068;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A;&#x30A8;&#x30E9;&#x30FC;&#x3092;&#x51FA;&#x529B;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<p><code>golint -set_exit_status ./...</code> すると以下の様なエラーを出力されます。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pkg/awsapi/ec2.go:12:6: exported <span class="built_in">type</span> EC2Iface should have comment or be unexported</span><br><span class="line">Found 1 lint suggestions; failing.</span><br></pre></td></tr></tbody></table></figure>
 
-<p>EC2Iface &#x3068;&#x5927;&#x6587;&#x5B57;&#x59CB;&#x307E;&#x308A;&#x306A;&#x306E;&#x3067;&#x3001;&#x4ED6;&#x30D1;&#x30C3;&#x30B1;&#x30FC;&#x30B8;&#x304B;&#x3089;&#x3082;&#x53C2;&#x7167;&#x3067;&#x304D;&#x308B; <code>exported type</code> &#x306A;&#x306E;&#x3067;&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x3092;&#x66F8;&#x304D;&#x307E;&#x3057;&#x3087;&#x3046;&#x306D;&#x3001;<br>&#x3068;&#x3044;&#x3046;&#x6307;&#x6458;&#x3067;&#x3059;&#x3002;</p>
-<p>VSCode &#x3092;&#x4F7F;&#x3063;&#x3066;&#x3044;&#x307E;&#x3059;&#x304C;&#x3001;&#x3053;&#x306E;&#x69D8;&#x306B;&#x30AB;&#x30FC;&#x30BD;&#x30EB;&#x3092;&#x5408;&#x308F;&#x305B;&#x308B;&#x3068;&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x3066;&#x304F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4E01;&#x5BE7;&#x306B;&#x66F8;&#x3044;&#x3066;&#x7F6E;&#x3044;&#x3066;&#x4E0A;&#x3052;&#x308B;&#x3068;&#x3053;&#x3093;&#x306A;&#x5024;&#x3092;&#x8FD4;&#x3059;&#x3088;&#x301C;&#x3068;&#x304B;&#x308F;&#x304B;&#x308A;&#x3084;&#x3059;&#x3044;&#x3067;&#x3059;&#x306D;&#x3002;</p>
-<p>&#x9762;&#x5012;&#x304F;&#x3055;&#x304C;&#x3089;&#x305A;&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x66F8;&#x304D;&#x307E;&#x3057;&#x3087;&#x3046;&#x3002;</p>
-<h2><span id="&#x5358;&#x4F53;&#x30C6;&#x30B9;&#x30C8;-on-github-actions">&#x5358;&#x4F53;&#x30C6;&#x30B9;&#x30C8; on GitHub Actions</span></h2><p>&#x3053;&#x3061;&#x3089;&#x306F;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x3067; test &#x3092;&#x5B9F;&#x884C;&#x3057; coverage &#x3092; <a href="https://codecov.io/">CodeCov</a> &#x306B;&#x4E0A;&#x3052;&#x308B;&#x69D8;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;&#x307E;&#x305F;&#x3001;&#x305D;&#x306E;&#x30AB;&#x30D0;&#x30EC;&#x30C3;&#x30B8;&#x3092; README &#x306B;&#x30E9;&#x30D9;&#x30EB;&#x3068;&#x3057;&#x3066;&#x8868;&#x793A;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<p>CODECOV_TOKEN &#x306F; GitHub &#x306E; Settings &gt; Secrets &#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x304A;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>EC2Iface と大文字始まりなので、他パッケージからも参照できる <code>exported type</code> なのでコメントを書きましょうね、<br>という指摘です。</p>
+<p>VSCode を使っていますが、この様にカーソルを合わせるとコメントが表示されてくれます。</p>
+<p>丁寧に書いて置いて上げるとこんな値を返すよ〜とかわかりやすいですね。</p>
+<p>面倒くさがらずコメント書きましょう。</p>
+<h2><span id="単体テスト-on-github-actions">単体テスト on GitHub Actions</span></h2><p>こちらはシンプルで test を実行し coverage を <a href="https://codecov.io/">CodeCov</a> に上げる様にしました。また、そのカバレッジを README にラベルとして表示できます。</p>
+<p>CODECOV_TOKEN は GitHub の Settings &gt; Secrets で設定しておきます。</p>
 <p><a href="https://codecov.io/gh/kenzo0107/omssh"></a></p><div class="amp-img-wrapper"><a href="https://codecov.io/gh/kenzo0107/omssh"><amp-img src="https://codecov.io/gh/kenzo0107/omssh/branch/master/graph/badge.svg" width="112" height="20" layout="responsive"></amp-img></a></div>
 <p><a href="https://gist.github.com/kenzo0107/0349f1a43c2aa26abf6db51fddd48af8">kenzo0107/test_go.yaml</a></p>
-<h2><span id="&#x307E;&#x3068;&#x3081;">&#x307E;&#x3068;&#x3081;</span></h2><p>&#x9759;&#x7684;&#x89E3;&#x6790;&#x3068;&#x5358;&#x4F53;&#x30C6;&#x30B9;&#x30C8;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x305F;&#x3053;&#x3068;&#x3067;</p>
+<h2><span id="まとめ">まとめ</span></h2><p>静的解析と単体テストを追加したことで</p>
 <ul>
-<li>&#x30B3;&#x30FC;&#x30C9;&#x5909;&#x66F4;&#x304C;&#x3057;&#x3084;&#x3059;&#x304F;&#x306A;&#x3063;&#x305F;&#x3002;</li>
-<li>Golang &#x306E;&#x6C42;&#x3081;&#x308B;&#x30B3;&#x30FC;&#x30C9;&#x306E;&#x66F8;&#x304D;&#x65B9;&#x3092;&#x5B66;&#x3076;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x305F;&#x3002;</li>
-<li>aws-sdk-go &#x306E; mock &#x306E;&#x4F5C;&#x6210;&#x306E;&#x4ED5;&#x65B9;&#x3092;&#x5B66;&#x3076;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x305F;&#x3002;</li>
+<li>コード変更がしやすくなった。</li>
+<li>Golang の求めるコードの書き方を学ぶことができた。</li>
+<li>aws-sdk-go の mock の作成の仕方を学ぶことができた。</li>
 </ul>
-<p>&#x3068;&#x3044;&#x3046;&#x3054;&#x5229;&#x76CA;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x5358;&#x4F53;&#x30C6;&#x30B9;&#x30C8;&#x3067;-100-&#x3092;&#x76EE;&#x6307;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;">&#x5358;&#x4F53;&#x30C6;&#x30B9;&#x30C8;&#x3067; 100% &#x3092;&#x76EE;&#x6307;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;</span></h2><p>ssh &#x63A5;&#x7D9A;&#x5468;&#x308A;&#x3067;&#x624B;&#x3053;&#x305A;&#x3063;&#x3066;&#x30AB;&#x30D0;&#x30EC;&#x30C3;&#x30B8;&#x304C;&#x5FAE;&#x5897;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<p>ssh &#x63A5;&#x7D9A;&#x3059;&#x308B;&#x969B;&#x306B;&#x4EEE;&#x60F3;&#x7684;&#x306A; ssh server &#x3092;&#x8D77;&#x52D5;&#x3059;&#x308B;&#x6240;&#x307E;&#x3067;&#x306F;&#x3088;&#x304B;&#x3063;&#x305F;&#x3093;&#x3067;&#x3059;&#x304C;&#x3001;<br><code>(*ssh.Session).RequestPty</code> &#x3059;&#x308B;&#x3068;&#x305D;&#x3053;&#x3067;&#x51E6;&#x7406;&#x5F85;&#x3061;&#x304C;&#x767A;&#x751F;&#x3057;&#x3001;&#x30C6;&#x30B9;&#x30C8;&#x304C;&#x9032;&#x307E;&#x306A;&#x304F;&#x306A;&#x3063;&#x3066;&#x3057;&#x307E;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x826F;&#x3044;&#x6848;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3089;&#x3054;&#x6559;&#x793A;&#x3044;&#x305F;&#x3060;&#x3051;&#x307E;&#x3057;&#x305F;&#x3089;&#x5E78;&#x3044;&#x3067;&#x3059; <code>m(_ _)m</code></p>
-<h2><span id="&#x4ECA;&#x56DE;&#x306E;&#x77E5;&#x898B;&#x3092;&#x6D3B;&#x304B;&#x3057;&#x3066;">&#x4ECA;&#x56DE;&#x306E;&#x77E5;&#x898B;&#x3092;&#x6D3B;&#x304B;&#x3057;&#x3066;</span></h2><p>AWS &#x306E; EC2 &#x3084; RDS &#x7B49;&#x306E; Reserved Instance &#x306E;&#x4F7F;&#x7528;&#x7387;&#x30FB;&#x30AB;&#x30D0;&#x30EC;&#x30C3;&#x30B8;&#x7387;&#x3092; Datadog &#x306B;&#x30D7;&#x30ED;&#x30C3;&#x30C8;&#x3059;&#x308B; Lambda &#x3092;&#x751F;&#x6210;&#x3059;&#x308B; <a href="https://aws.amazon.com/jp/serverless/sam/">SAM</a> &#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092; Go &#x3067;&#x4F5C;&#x3063;&#x3066;&#x307F;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x30D7;&#x30ED;&#x30C3;&#x30C8;&#x3057;&#x305F;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x306B;&#x76E3;&#x8996;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x4F7F;&#x7528;&#x7387;&#x30FB;&#x30AB;&#x30D0;&#x30EC;&#x30C3;&#x30B8;&#x7387;&#x4F4E;&#x4E0B;&#x3092;&#x30A2;&#x30E9;&#x30FC;&#x30C8;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>というご利益がありました。</p>
+<h2><span id="単体テストで-100-を目指しましたが">単体テストで 100% を目指しましたが、</span></h2><p>ssh 接続周りで手こずってカバレッジが微増でした。</p>
+<p>ssh 接続する際に仮想的な ssh server を起動する所まではよかったんですが、<br><code>(*ssh.Session).RequestPty</code> するとそこで処理待ちが発生し、テストが進まなくなってしまいました。</p>
+<p>良い案ありましたらご教示いただけましたら幸いです <code>m(_ _)m</code></p>
+<h2><span id="今回の知見を活かして">今回の知見を活かして</span></h2><p>AWS の EC2 や RDS 等の Reserved Instance の使用率・カバレッジ率を Datadog にプロットする Lambda を生成する <a href="https://aws.amazon.com/jp/serverless/sam/">SAM</a> プロジェクトを Go で作ってみました。</p>
+<p>プロットしたメトリクスに監視することで使用率・カバレッジ率低下をアラートできます。</p>
 <p><a href="https://github.com/kenzo0107/ri-utilization-plotter">kenzo0107/ri-utilization-plotter</a></p>
-<p>&#x307E;&#x305F;&#x3001;&#x3088;&#x308A; OSS &#x3089;&#x3057;&#x304F;&#x30ED;&#x30B4;&#x3092;&#x4F5C;&#x3063;&#x3066;&#x307F;&#x307E;&#x3057;&#x305F;&#x266A;</p>
-<p>&#x611B;&#x60C5;&#x304C;&#x5897;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x53C2;&#x7167;">&#x53C2;&#x7167;</span></h2><p><a href="https://stackoverflow.com/questions/49418982/unit-testing-an-ssh-client-in-go">Unit Testing an SSH Client in Go</a></p>
+<p>また、より OSS らしくロゴを作ってみました♪</p>
+<p>愛情が増します。</p>
+<h2><span id="参照">参照</span></h2><p><a href="https://stackoverflow.com/questions/49418982/unit-testing-an-ssh-client-in-go">Unit Testing an SSH Client in Go</a></p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -2028,7 +2028,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

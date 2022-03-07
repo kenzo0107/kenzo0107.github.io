@@ -1836,52 +1836,52 @@ h6.categories {
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20191123/20191123143247.png" width="1200" height="400" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x304A;&#x984C;&#x3092;&#x901A;&#x3057;&#x3066; Ruby &#x3067; inject &#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3092;&#x5B66;&#x3073;&#x307E;&#x3057;&#x305F;&#x3002;&#x305D;&#x306E;&#x5099;&#x5FD8;&#x9332;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="概要">概要</span></h2><p>お題を通して Ruby で inject メソッドを学びました。その備忘録です。</p>
 <a id="more"></a>
 
-<h2><span id="&#x304A;&#x984C;">&#x304A;&#x984C;</span></h2><p>123,456 &#x5186;&#x3092;&#x7D19;&#x5E63;&#x30FB;&#x786C;&#x8CA8;&#x304C;&#x4E00;&#x756A;&#x5C11;&#x306A;&#x304F;&#x306A;&#x308B;&#x69D8;&#x306B;&#x306A;&#x308B;&#x7D44;&#x307F;&#x5408;&#x308F;&#x305B;&#x3092;&#x6C42;&#x3081;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;<br>&#x786C;&#x8CA8; &#x2026; 1, 5, 10, 50, 100, 500 &#x5186;&#x7389;<br>&#x7D19;&#x5E63; &#x2026; 1000, 2000, 5000, 10000 &#x5186;&#x672D;</p>
-<h2><span id="&#x7B54;&#x3048;">&#x7B54;&#x3048;</span></h2><ul>
-<li>10,000 &#x5186;&#x672D; &#xD7; 12</li>
-<li>5,000 &#x5186;&#x672D; &#xD7; 0</li>
-<li>2,000 &#x5186;&#x672D; &#xD7; 1</li>
-<li>1,000 &#x5186;&#x672D; &#xD7; 1</li>
-<li>500 &#x5186;&#x7389; &#xD7; 0</li>
-<li>100 &#x5186;&#x7389; &#xD7; 4</li>
-<li>50 &#x5186;&#x7389; &#xD7; 1</li>
-<li>10 &#x5186;&#x7389; &#xD7; 0</li>
-<li>5 &#x5186;&#x7389; &#xD7; 1</li>
-<li>1 &#x5186;&#x7389; &#xD7; 1</li>
+<h2><span id="お題">お題</span></h2><p>123,456 円を紙幣・硬貨が一番少なくなる様になる組み合わせを求めてください。<br>硬貨 … 1, 5, 10, 50, 100, 500 円玉<br>紙幣 … 1000, 2000, 5000, 10000 円札</p>
+<h2><span id="答え">答え</span></h2><ul>
+<li>10,000 円札 × 12</li>
+<li>5,000 円札 × 0</li>
+<li>2,000 円札 × 1</li>
+<li>1,000 円札 × 1</li>
+<li>500 円玉 × 0</li>
+<li>100 円玉 × 4</li>
+<li>50 円玉 × 1</li>
+<li>10 円玉 × 0</li>
+<li>5 円玉 × 1</li>
+<li>1 円玉 × 1</li>
 </ul>
-<h3><span id="inject-&#x30E1;&#x30BD;&#x30C3;&#x30C9;">inject &#x30E1;&#x30BD;&#x30C3;&#x30C9;</span></h3><p>&#x914D;&#x5217;&#x306E;&#x7D44;&#x307F;&#x5408;&#x308F;&#x305B;&#x3067;&#x7B54;&#x3048;&#x3092;&#x51FA;&#x3059;&#x3068;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x306B;&#x66F8;&#x3051;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="inject-メソッド">inject メソッド</span></h3><p>配列の組み合わせで答えを出すとシンプルに書けます。</p>
 
 
-<p>&#x5927;&#x304D;&#x3044;&#x5024;&#x304B;&#x3089;&#x9806;&#x306B; divmod &#x306E;&#x7D50;&#x679C; <code>[&#x5546;, &#x4F59;&#x308A;]</code> &#x3092;&#x4E0D;&#x5B9A;&#x6570;&#x500B;&#x306E;&#x914D;&#x5217; (a) &#x306E;&#x5F8C;&#x308D;&#x306B;&#x8DB3;&#x3057;&#x3066;&#x3001;<br>r &#x306B;&#x914D;&#x5217;&#x306E;&#x4E00;&#x756A;&#x5F8C;&#x308D;&#x306E;&#x8981;&#x7D20; <code>&#x4F59;&#x308A;</code> &#x304C;&#x5165;&#x308B;&#x306E;&#x3067;&#x3001;&#x305D;&#x308C;&#x6B21;&#x306E; iterator &#x306E;&#x8A08;&#x7B97;&#x306B;&#x5229;&#x7528;&#x3059;&#x308B;&#x65B9;&#x6CD5;&#x3067;&#x3059;&#x3002;</p>
+<p>大きい値から順に divmod の結果 <code>[商, 余り]</code> を不定数個の配列 (a) の後ろに足して、<br>r に配列の一番後ろの要素 <code>余り</code> が入るので、それ次の iterator の計算に利用する方法です。</p>
 <figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[] + <span class="number">123456</span>.divmode(<span class="number">10000</span>) <span class="comment"># [12, 3456]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">3456</span>] + <span class="number">3456</span>.divmod(<span class="number">5000</span>) <span class="comment"># [12, 0, 3456]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">0</span>, <span class="number">3456</span>] + <span class="number">3456</span>.divmod(<span class="number">2000</span>) <span class="comment"># [12, 0, 1, 1456]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1456</span>] + <span class="number">1456</span>.divmod(<span class="number">1000</span>) <span class="comment"># [12, 0, 1, 1, 456]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">456</span>] + <span class="number">456</span>.divmod(<span class="number">500</span>) <span class="comment"># [12, 0, 1, 1, 0, 456]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">456</span>] + <span class="number">456</span>.divmod(<span class="number">100</span>) <span class="comment"># [12, 0, 1, 1, 0, 4, 56]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">456</span>] + <span class="number">56</span>.divmod(<span class="number">50</span>) <span class="comment"># [12, 0, 1, 1, 0, 4, 1, 6]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">6</span>] + <span class="number">6</span>.divmod(<span class="number">10</span>) <span class="comment"># [12, 0, 1, 1, 0, 4, 1, 1, 0, 6]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">6</span>] + <span class="number">6</span>.divmod(<span class="number">5</span>) <span class="comment"># [12, 0, 1, 1, 0, 4, 1, 1, 0, 1]</span></span><br><span class="line">[<span class="number">12</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>] + <span class="number">1</span>.divmod(<span class="number">1</span>) <span class="comment"># [12, 0, 1, 1, 0, 4, 1, 1, 0, 1, 1, 0]</span></span><br></pre></td></tr></tbody></table></figure>
 
 
-<p>&#x6700;&#x5F8C;&#x306E; 0 &#x304C;&#x4F59;&#x8A08;&#x3067;&#x3059;&#x304C;&#x3001;&#x975E;&#x5E38;&#x306B;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x306A;&#x5F62;&#x3067;&#x7B54;&#x3048;&#x3092;&#x6C42;&#x3089;&#x308C;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x305F;&#x3060;&#x3001;<br>&#x3053;&#x306E; inject &#x306E;&#x8A08;&#x7B97;&#x5F0F;&#x304C;&#x521D;&#x624B;&#x3067;&#x30B9;&#x30C3;&#x3068;&#x51FA;&#x3059;&#x306E;&#x306F;&#x6163;&#x308C;&#x304C;&#x5FC5;&#x8981;&#x306A;&#x5370;&#x8C61;&#x3002;</p>
-<p>&#x306A;&#x306E;&#x3067;&#x3001;<br>&#x4E00;&#x65E6; each &#x3067;&#x8A08;&#x7B97;&#x306E;&#x624B;&#x9806;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x3066;&#x304B;&#x3089; inject &#x3067;&#x30B3;&#x30FC;&#x30C9;&#x304C;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x306B;&#x306A;&#x308A;&#x305D;&#x3046;&#x306A;&#x3089;&#x3084;&#x3063;&#x3066;&#x307F;&#x308B;&#x3001;<br>&#x3063;&#x3066;&#x3044;&#x3046;&#x306E;&#x304C;&#x6163;&#x308C;&#x308B;&#x306E;&#x306B;&#x826F;&#x3055;&#x305D;&#x3046;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="each-&#x30E1;&#x30BD;&#x30C3;&#x30C9;">each &#x30E1;&#x30BD;&#x30C3;&#x30C9;</span></h2>
+<p>最後の 0 が余計ですが、非常にシンプルな形で答えを求られました。</p>
+<p>ただ、<br>この inject の計算式が初手でスッと出すのは慣れが必要な印象。</p>
+<p>なので、<br>一旦 each で計算の手順を確認してから inject でコードがシンプルになりそうならやってみる、<br>っていうのが慣れるのに良さそうでした。</p>
+<h2><span id="each-メソッド">each メソッド</span></h2>
 
-<p>each &#x3067;&#x3084;&#x308B;&#x3068; loop &#x306E;&#x5916;&#x5074;&#x3067; <code>b = []</code> &#x3068;&#x6700;&#x7D42;&#x7684;&#x306B;&#x8FD4;&#x3059;&#x914D;&#x5217;&#x3092;&#x5B9A;&#x7FA9;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p><code>b &lt;&lt; r if p.size - 1 == index</code> &#x306F;&#x3001;&#x4E0D;&#x8981;&#x3067;&#x3059;&#x304C;&#x3001;&#x56DE;&#x7B54;&#x306E;&#x914D;&#x5217;&#x3092; inject &#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x306E;&#x5834;&#x5408;&#x3068;&#x5408;&#x308F;&#x305B;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="benchmark-&#x3068;&#x3063;&#x3066;&#x307F;&#x308B;">benchmark &#x3068;&#x3063;&#x3066;&#x307F;&#x308B;</span></h2><figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> &amp;quot;benchmark&amp;quot;</span><br><span class="line"></span><br><span class="line">r = <span class="number">123_456</span></span><br><span class="line"></span><br><span class="line">Benchmark.bmbm <span class="keyword">do</span> <span class="params">|x|</span></span><br><span class="line">    x.report(&amp;quot;div_inject&amp;quot;) <span class="keyword">do</span></span><br><span class="line">        <span class="number">10000</span>.times <span class="keyword">do</span></span><br><span class="line">            div_inject(r)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    x.report(&amp;quot;div_each&amp;quot;) <span class="keyword">do</span></span><br><span class="line">        <span class="number">10000</span>.times <span class="keyword">do</span></span><br><span class="line">            div_each(r)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
+<p>each でやると loop の外側で <code>b = []</code> と最終的に返す配列を定義する必要があります。</p>
+<p><code>b &lt;&lt; r if p.size - 1 == index</code> は、不要ですが、回答の配列を inject メソッドの場合と合わせました。</p>
+<h2><span id="benchmark-とってみる">benchmark とってみる</span></h2><figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">require</span> &amp;quot;benchmark&amp;quot;</span><br><span class="line"></span><br><span class="line">r = <span class="number">123_456</span></span><br><span class="line"></span><br><span class="line">Benchmark.bmbm <span class="keyword">do</span> <span class="params">|x|</span></span><br><span class="line">    x.report(&amp;quot;div_inject&amp;quot;) <span class="keyword">do</span></span><br><span class="line">        <span class="number">10000</span>.times <span class="keyword">do</span></span><br><span class="line">            div_inject(r)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    x.report(&amp;quot;div_each&amp;quot;) <span class="keyword">do</span></span><br><span class="line">        <span class="number">10000</span>.times <span class="keyword">do</span></span><br><span class="line">            div_each(r)</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
 
 
-<p>each &#x306E;&#x65B9;&#x304C;&#x901F;&#x304B;&#x3063;&#x305F;&#x3067;&#x3059;&#x3002;</p>
+<p>each の方が速かったです。</p>
 <figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">                 user     system      total        real</span><br><span class="line">div_inject   <span class="number">0</span>.<span class="number">037365</span>   <span class="number">0</span>.<span class="number">000524</span>   <span class="number">0</span>.<span class="number">037</span>889 (  <span class="number">0</span>.<span class="number">040733</span>)</span><br><span class="line">div_each     <span class="number">0</span>.<span class="number">024333</span>   <span class="number">0</span>.<span class="number">000257</span>   <span class="number">0</span>.<span class="number">0245</span>9<span class="number">0</span> (  <span class="number">0</span>.<span class="number">025320</span>)</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x500B;&#x4EBA;&#x7684;&#x306B;&#x306F; inject &#x306E;&#x65B9;&#x304C;&#x901F;&#x304F;&#x306A;&#x3063;&#x3066;&#x304F;&#x308C;&#x308B;&#x3068;&#x672C;&#x8A18;&#x4E8B;&#x304C;&#x7DE0;&#x307E;&#x3063;&#x305F;&#x3093;&#x3067;&#x3059;&#x304C;<br>&#x4ECA;&#x56DE;&#x306E;&#x8A08;&#x7B97;&#x30ED;&#x30B8;&#x30C3;&#x30AF;&#x3067;&#x306F;&#x3001;each &#x306E;&#x65B9;&#x304C;&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x304C;&#x3088;&#x304B;&#x3063;&#x305F;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="hash-&#x3092;&#x6271;&#x3063;&#x3066;&#x307F;&#x308B;">hash &#x3092;&#x6271;&#x3063;&#x3066;&#x307F;&#x308B;</span></h2><h3><span id="inject">inject</span></h3>
+<p>個人的には inject の方が速くなってくれると本記事が締まったんですが<br>今回の計算ロジックでは、each の方がパフォーマンスがよかったです。</p>
+<h2><span id="hash-を扱ってみる">hash を扱ってみる</span></h2><h3><span id="inject">inject</span></h3>
 
 
 <h3><span id="each">each</span></h3>
 
-<p>benchmark &#x3068;&#x308B;&#x3068;&#x3001; each, hash &#x3069;&#x3061;&#x3089;&#x3082;&#x307B;&#x307C;&#x540C;&#x7B49;&#x3067;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x307E;&#x3068;&#x3081;">&#x307E;&#x3068;&#x3081;</span></h2><p>inject &#x30E1;&#x30BD;&#x30C3;&#x30C9;&#x3092;&#x4F8B;&#x984C;&#x3092;&#x901A;&#x3057;&#x3066;&#x5B66;&#x3073;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4F8B;&#x984C;&#x3067;&#x306F;&#x7279;&#x306B;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x306B;&#x66F8;&#x3051;&#x307E;&#x3057;&#x305F;&#x304C;&#x3001;&#x30D1;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30F3;&#x30B9;&#x304C;&#x683C;&#x6BB5;&#x306B;&#x4E0A;&#x304C;&#x308B;&#x3068;&#x3044;&#x3046;&#x8A71;&#x3067;&#x306F;&#x306A;&#x3044;&#x306E;&#x3067;<br>&#x4F7F;&#x3044;&#x6240;&#x306F;&#x898B;&#x5B9A;&#x3081;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308B;&#x304B;&#x306A;&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;<br>&#x3054;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>benchmark とると、 each, hash どちらもほぼ同等でした。</p>
+<h2><span id="まとめ">まとめ</span></h2><p>inject メソッドを例題を通して学びました。</p>
+<p>例題では特にシンプルに書けましたが、パフォーマンスが格段に上がるという話ではないので<br>使い所は見定める必要があるかなと思いました。</p>
+<p>以上<br>ご参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1947,7 +1947,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

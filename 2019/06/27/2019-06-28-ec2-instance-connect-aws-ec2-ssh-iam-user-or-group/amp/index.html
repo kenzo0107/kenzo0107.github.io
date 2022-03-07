@@ -1835,74 +1835,74 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>2019-06-28 &#x306B; <a href="https://aws.amazon.com/jp/about-aws/whats-new/2019/06/introducing-amazon-ec2-instance-connect/">EC2 Instance Conncet</a> &#x304C;&#x767A;&#x8868;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;&#xFF01;</p>
-<p>&#x3053;&#x308C;&#x306B;&#x3088;&#x3063;&#x3066;&#x3001;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3068; IAM &#x6A29;&#x9650;&#x3067; ssh &#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x8A31;&#x53EF;&#x304C;&#x53EF;&#x80FD;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>2019-06-28 に <a href="https://aws.amazon.com/jp/about-aws/whats-new/2019/06/introducing-amazon-ec2-instance-connect/">EC2 Instance Conncet</a> が発表されました！</p>
+<p>これによって、セキュリティグループと IAM 権限で ssh アクセス許可が可能になります。</p>
 
-<p>&#x4F8B;&#x3048;&#x3070;&#x3001;<br>
-&#x4F1A;&#x793E;&#x306E; IP &#x304B;&#x3089;&#x306E;&#x307F;&#x3001;&#x7279;&#x5B9A;&#x306E; IAM User Group &#x306B;&#x6240;&#x5C5E;&#x3057;&#x3066;&#x3044;&#x308B; IAM User &#x306B; ssh &#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x6A29;&#x9650;&#x3092;&#x4ED8;&#x4E0E;&#x3001;<br>
-&#x5225;&#x306E;&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3078;&#x7570;&#x52D5;&#x3057;&#x305F;&#x3001;&#x9000;&#x8077;&#x3057;&#x305F;&#x5834;&#x5408;&#x306F;&#x3001;&#x305D;&#x306E; IAM User Group &#x304B;&#x3089;&#x524A;&#x9664;&#x3067; ssh &#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x6A29;&#x9650;&#x3092;&#x5265;&#x596A;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>例えば、<br>
+会社の IP からのみ、特定の IAM User Group に所属している IAM User に ssh アクセス権限を付与、<br>
+別のプロジェクトへ異動した、退職した場合は、その IAM User Group から削除で ssh アクセス権限を剥奪できます。</p>
 
 <a id="more"></a>
 
-<h2><span id="&#x8A66;&#x9A13;&#x74B0;&#x5883;">&#x8A66;&#x9A13;&#x74B0;&#x5883;</span></h2><p>macOS 10.14.3 &#x3067;&#x8A66;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h2><span id="試験環境">試験環境</span></h2><p>macOS 10.14.3 で試しました。</p>
 
-<h2><span id="&#x4E8B;&#x524D;&#x6E96;&#x5099;">&#x4E8B;&#x524D;&#x6E96;&#x5099;</span></h2><pre class="code" data-lang data-unlink>$ pip install -U awscli
+<h2><span id="事前準備">事前準備</span></h2><pre class="code" data-lang="" data-unlink="">$ pip install -U awscli
 
 $ aws s3api get-object --bucket ec2-instance-connect --key cli/ec2instanceconnectcli-latest.tar.gz ec2instanceconnectcli-latest.tar.gz
 
 $ sudo pip install ec2instanceconnectcli-latest.tar.gz</pre>
 
 
-<p>&#x767A;&#x884C;&#x3057;&#x305F; IAM User &#x306E;&#x30D1;&#x30FC;&#x30DF;&#x30C3;&#x30B7;&#x30E7;&#x30F3;&#x6A29;&#x9650;&#x306B;&#x4EE5;&#x4E0B;&#x3092;&#x8FFD;&#x52A0;</p>
+<p>発行した IAM User のパーミッション権限に以下を追加</p>
 
-<pre class="code" data-lang data-unlink>{
-    &quot;Version&quot;: &quot;2012-10-17&quot;,
-    &quot;Statement&quot;: [
+<pre class="code" data-lang="" data-unlink="">{
+    "Version": "2012-10-17",
+    "Statement": [
         {
-            &quot;Sid&quot;: &quot;EC2InstanceConnect&quot;,
-            &quot;Action&quot;: [
-                &quot;ec2:DescribeInstances&quot;,
-                &quot;ec2-instance-connect:SendSSHPublicKey&quot;
+            "Sid": "EC2InstanceConnect",
+            "Action": [
+                "ec2:DescribeInstances",
+                "ec2-instance-connect:SendSSHPublicKey"
             ],
-            &quot;Effect&quot;: &quot;Allow&quot;,
-            &quot;Resource&quot;: &quot;*&quot;
+            "Effect": "Allow",
+            "Resource": "*"
         }
     ]
 }</pre>
 
 
-<p>&#x3053;&#x306E;&#x8FBA;&#x308A;&#x306F; terraform &#x7BA1;&#x7406;&#x6848;&#x4EF6;&#x3067;&#x3059;&#x306D;&#x3002;</p>
+<p>この辺りは terraform 管理案件ですね。</p>
 
-<h2><span id="ec2-instance-conncect-&#x5BFE;&#x5FDC;-os">EC2 Instance Conncect &#x5BFE;&#x5FDC; OS</span></h2><ul>
+<h2><span id="ec2-instance-conncect-対応-os">EC2 Instance Conncect 対応 OS</span></h2><ul>
 <li>Ubuntu&gt;=16.04</li>
 <li>AmazonLinux2&gt;=2.0.20190618</li>
 </ul>
 
 
-<h2><span id="ssh-&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3059;&#x308B;-ec2&#x5074;&#x306E;&#x8A2D;&#x5B9A;">ssh &#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3059;&#x308B; EC2&#x5074;&#x306E;&#x8A2D;&#x5B9A;</span></h2><h3><span id="ubuntugt1604">Ubuntu&gt;=16.04</span></h3><p>ec2-instance-connect &#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x3066;&#x304A;&#x304F;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="ssh-ログインする-ec2側の設定">ssh ログインする EC2側の設定</span></h2><h3><span id="ubuntugt1604">Ubuntu&gt;=16.04</span></h3><p>ec2-instance-connect をインストールしておく必要があります。</p>
 
-<pre class="code" data-lang data-unlink>$ sudo apt-get update &amp;&amp; sudo apt-get install ec2-instance-connect</pre>
-
-
+<pre class="code" data-lang="" data-unlink="">$ sudo apt-get update &amp;&amp; sudo apt-get install ec2-instance-connect</pre>
 
 
-<pre class="code" data-lang data-unlink>$ dpkg -l | grep ec2-instance-connect
+
+
+<pre class="code" data-lang="" data-unlink="">$ dpkg -l | grep ec2-instance-connect
 
 ii  ec2-instance-connect           1.1.9-0ubuntu3~18.04.1            all          Configures ssh daemon to accept EC2 Instance Connect ssh keys</pre>
 
 
-<h3><span id="amazonlinux2gt2020190618">AmazonLinux2&gt;=2.0.20190618</span></h3><p>ec2-instance-connect &#x306F;&#x8A2D;&#x5B9A;&#x6E08;&#x307F;&#x3067;&#x3059;&#x3002;</p>
+<h3><span id="amazonlinux2gt2020190618">AmazonLinux2&gt;=2.0.20190618</span></h3><p>ec2-instance-connect は設定済みです。</p>
 
-<h3><span id="&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;">&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;</span></h3><p>ssh &#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x5148;&#x3068;&#x306A;&#x308B; EC2 &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306F;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5143;&#x304B;&#x3089; ssh (22 port) &#x3092;&#x958B;&#x3051;&#x3066;&#x304A;&#x304F;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="セキュリティグループ">セキュリティグループ</span></h3><p>ssh ログイン先となる EC2 インスタンスのセキュリティグループはアクセス元から ssh (22 port) を開けておく必要があります。</p>
 
-<h2><span id="ssh-&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3057;&#x3066;&#x307F;&#x308B;">ssh &#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3057;&#x3066;&#x307F;&#x308B;</span></h2><pre class="code" data-lang data-unlink>local%$ mssh ubuntu@i-0f123456abcdefg --profile &lt;profile&gt; --region ap-northeast-1</pre>
+<h2><span id="ssh-ログインしてみる">ssh ログインしてみる</span></h2><pre class="code" data-lang="" data-unlink="">local%$ mssh ubuntu@i-0f123456abcdefg --profile &lt;profile&gt; --region ap-northeast-1</pre>
 
 
-<p>&#x4E00;&#x898B;&#x3001;&#x8AB0;&#x3057;&#x3082;&#x304C; ubuntu &#x3067;&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3057;&#x3066;&#x3044;&#x3066;&#x76E3;&#x67FB;&#x304C;&#x4E0D;&#x5B89;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x304C;&#x3001; CloudTrail  &#x306F;&#x3061;&#x3083;&#x3093;&#x3068;&#x8AB0;&#x304C;&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3057;&#x305F;&#x304B;&#x898B;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>一見、誰しもが ubuntu でログインしていて監査が不安になりますが、 CloudTrail  はちゃんと誰がログインしたか見ています。</p>
 
-<h3><span id="cloudtrail">CloudTrail</span></h3><figure class="figure-image figure-image-fotolife" title="CloudTrail"><span itemscope itemtype="https://schema.org/Photograph"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190628/20190628160255.png" width="954" height="510" layout="responsive"></amp-img></div></span><figcaption>CloudTrail</figcaption></figure>
+<h3><span id="cloudtrail">CloudTrail</span></h3><figure class="figure-image figure-image-fotolife" title="CloudTrail"><span itemscope="" itemtype="https://schema.org/Photograph"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190628/20190628160255.png" width="954" height="510" layout="responsive"></amp-img></div></span><figcaption>CloudTrail</figcaption></figure>
 
-<p>&#x4EE5;&#x4E0B;&#x30A4;&#x30D9;&#x30F3;&#x30C8;&#x3067;&#x30ED;&#x30B0;&#x304C;&#x6B8B;&#x3063;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<p>以下イベントでログが残っています。</p>
 
 <ul>
 <li>SendSSHPublicKey</li>
@@ -1910,50 +1910,50 @@ ii  ec2-instance-connect           1.1.9-0ubuntu3~18.04.1            all        
 </ul>
 
 
-<p>SendSSHPublicKey &#x306E;&#x300C;&#x30A4;&#x30D9;&#x30F3;&#x30C8;&#x306E;&#x8868;&#x793A;&#x300D;&#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3067; JSON &#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x307E;&#x3059;&#x304C;&#x3001;&#x305D;&#x306E;&#x4E2D;&#x3067;&#x3001;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5143; IP, IAM User Arn&#x3001;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5148; &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;ID&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>SendSSHPublicKey の「イベントの表示」ボタンクリックで JSON が表示されますが、その中で、アクセス元 IP, IAM User Arn、アクセス先 インスタンスIDがわかります。</p>
 
-<pre class="code" data-lang data-unlink>{
-    &quot;eventVersion&quot;: &quot;1.05&quot;,
-    &quot;userIdentity&quot;: {
-        &quot;type&quot;: &quot;IAMUser&quot;,
-        &quot;principalId&quot;: &quot;ABCDEFGHIJK....&quot;,
-        &quot;arn&quot;: &quot;arn:aws:iam::123456789012:user/hogehoge&quot;,
-        &quot;accountId&quot;: &quot;123456789012&quot;,
-        &quot;accessKeyId&quot;: &quot;AKIxxxxxxxxxxxxxxxx&quot;,
-        &quot;userName&quot;: &quot;hogehoge&quot;,
-        &quot;sessionContext&quot;: {
-            &quot;attributes&quot;: {
-                &quot;mfaAuthenticated&quot;: &quot;false&quot;,
-                &quot;creationDate&quot;: &quot;2019-06-28T06:18:50Z&quot;
+<pre class="code" data-lang="" data-unlink="">{
+    "eventVersion": "1.05",
+    "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "ABCDEFGHIJK....",
+        "arn": "arn:aws:iam::123456789012:user/hogehoge",
+        "accountId": "123456789012",
+        "accessKeyId": "AKIxxxxxxxxxxxxxxxx",
+        "userName": "hogehoge",
+        "sessionContext": {
+            "attributes": {
+                "mfaAuthenticated": "false",
+                "creationDate": "2019-06-28T06:18:50Z"
             }
         }
     },
-    &quot;eventTime&quot;: &quot;2019-06-28T06:18:51Z&quot;,
-    &quot;eventSource&quot;: &quot;ec2-instance-connect.amazonaws.com&quot;,
-    &quot;eventName&quot;: &quot;SendSSHPublicKey&quot;,
-    &quot;awsRegion&quot;: &quot;ap-northeast-1&quot;,
-    &quot;sourceIPAddress&quot;: &quot;xx.xxx.xxx.xxx&quot;,
-    &quot;userAgent&quot;: &quot;aws-ec2-instance-connect-cli/1.0.0 Python/2.7.16 Darwin/18.2.0 Botocore/1.12.179&quot;,
-    &quot;requestParameters&quot;: {
-        &quot;instanceId&quot;: &quot;i-0f.......&quot;,
-        &quot;osUser&quot;: &quot;ubuntu&quot;,
-        &quot;SSHKey&quot;: {
-            &quot;publicKey&quot;: &quot;ssh-rsa AAAAB....rHb&quot;
+    "eventTime": "2019-06-28T06:18:51Z",
+    "eventSource": "ec2-instance-connect.amazonaws.com",
+    "eventName": "SendSSHPublicKey",
+    "awsRegion": "ap-northeast-1",
+    "sourceIPAddress": "xx.xxx.xxx.xxx",
+    "userAgent": "aws-ec2-instance-connect-cli/1.0.0 Python/2.7.16 Darwin/18.2.0 Botocore/1.12.179",
+    "requestParameters": {
+        "instanceId": "i-0f.......",
+        "osUser": "ubuntu",
+        "SSHKey": {
+            "publicKey": "ssh-rsa AAAAB....rHb"
         }
     },
-    &quot;responseElements&quot;: null,
-    &quot;requestID&quot;: &quot;01234567-890a-1234-5b6d-......&quot;,
-    &quot;eventID&quot;: &quot;f51...&quot;,
-    &quot;eventType&quot;: &quot;AwsApiCall&quot;,
-    &quot;recipientAccountId&quot;: &quot;123456789012&quot;
+    "responseElements": null,
+    "requestID": "01234567-890a-1234-5b6d-......",
+    "eventID": "f51...",
+    "eventType": "AwsApiCall",
+    "recipientAccountId": "123456789012"
 }</pre>
 
 
-<p>&#x3053;&#x3061;&#x3089;&#x3067; EC2 &#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5C65;&#x6B74;&#x7B49;&#x306F;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>こちらで EC2 インスタンスのアクセス履歴等はわかります。</p>
 
-<h2><span id="&#x307E;&#x3068;&#x3081;">&#x307E;&#x3068;&#x3081;</span></h2><p>&#x3053;&#x308C;&#x307E;&#x3067; ssh &#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;&#x7BA1;&#x7406;&#x306F;&#x624B;&#x9593;&#x3067;&#x3057;&#x305F;&#x304C;&#x3001;IAM &#x6A29;&#x9650;&#x3067;&#x306E;&#x7BA1;&#x7406;&#x306B;&#x3088;&#x3063;&#x3066;&#x975E;&#x5E38;&#x306B;&#x697D;&#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x266A;</p>
+<h2><span id="まとめ">まとめ</span></h2><p>これまで ssh アカウント管理は手間でしたが、IAM 権限での管理によって非常に楽になりました♪</p>
 
-<p>CloudTrail &#x3067;&#x76E3;&#x67FB;&#x3082;&#x30D0;&#x30C3;&#x30C1;&#x30EA;&#xFF01;</p>
+<p>CloudTrail で監査もバッチリ！</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -2019,7 +2019,7 @@ ii  ec2-instance-connect           1.1.9-0ubuntu3~18.04.1            all        
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

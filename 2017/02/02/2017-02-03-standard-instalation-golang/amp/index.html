@@ -1824,30 +1824,30 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>Golang &#x30AA;&#x30D5;&#x30A3;&#x30B7;&#x30E3;&#x30EB;&#x30B5;&#x30A4;&#x30C8;&#x306B;&#x66F8;&#x304B;&#x308C;&#x3066;&#x3044;&#x308B;&#x305D;&#x306E;&#x307E;&#x307E;&#x3067;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>Golang オフィシャルサイトに書かれているそのままです。</p>
 <a href="https://golang.org/doc/install#install" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img></div><div class="descriptions"><div class="og-title">Getting Started - The Go Programming Language</div><div class="og-description">Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.</div></div></div></a>
 
-<p>&#x4ED6; Golang &#x95A2;&#x9023;&#x8A18;&#x4E8B;&#x8AAC;&#x660E;&#x306E;&#x70BA;&#x306B;&#x3001;&#x307E;&#x305F;&#x3001;&#x5099;&#x5FD8;&#x9332;&#x3068;&#x3057;&#x3066;&#x8A18;&#x8FF0;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<p>他 Golang 関連記事説明の為に、また、備忘録として記述します。</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS Linux release 7.3.1611 (Core)</li>
 </ul>
-<h2><span id="&#x624B;&#x9806;">&#x624B;&#x9806;</span></h2><p><a href="https://golang.org/dl/">Golang Official - Downloads</a> &#x304B;&#x3089;&#x74B0;&#x5883;&#x306B;&#x5408;&#x308F;&#x305B;<br>&#x6700;&#x65B0;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3059;&#x308B;&#x3053;&#x3068;&#x3092;&#x304A;&#x52E7;&#x3081;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="手順">手順</span></h2><p><a href="https://golang.org/dl/">Golang Official - Downloads</a> から環境に合わせ<br>最新バージョンをインストールすることをお勧めします。</p>
 <ul>
-<li>&#x30BD;&#x30FC;&#x30B9;&#x304B;&#x3089;&#x30D3;&#x30EB;&#x30C9;</li>
+<li>ソースからビルド</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/src</span><br><span class="line">$ sudo wget https://storage.googleapis.com/golang/go1.7.5.linux-amd64.tar.gz</span><br><span class="line">$ sudo tar -C /usr/local -xzf go1.7.5.linux-amd64.tar.gz</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>PATH&#x8A2D;&#x5B9A;</li>
+<li>PATH設定</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cat &lt;&lt; &apos;EOF&apos; | sudo tee /etc/profile.d/golang.sh</span><br><span class="line">export GOPATH=$HOME/go</span><br><span class="line">export PATH=$PATH:/usr/local/go/bin</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">$ sudo cp /etc/profile.d/golang.sh /etc/profile.d/golang.csh</span><br><span class="line"></span><br><span class="line">$ source /etc/profile</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cat &lt;&lt; 'EOF' | sudo tee /etc/profile.d/golang.sh</span><br><span class="line">export GOPATH=$HOME/go</span><br><span class="line">export PATH=$PATH:/usr/local/go/bin</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">$ sudo cp /etc/profile.d/golang.sh /etc/profile.d/golang.csh</span><br><span class="line"></span><br><span class="line">$ source /etc/profile</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>&#x78BA;&#x8A8D;</li>
+<li>確認</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ go version</span><br><span class="line"></span><br><span class="line">go version go1.7.5 linux/amd64</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;&#x3067; Golang &#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x5B8C;&#x4E86;&#x3067;&#x3059;&#x3002;</p>
+<p>以上で Golang のインストール完了です。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1913,7 +1913,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

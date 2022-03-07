@@ -1814,29 +1814,29 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x4ECA;&#x56DE;&#x3084;&#x308B;&#x3053;&#x3068;">&#x4ECA;&#x56DE;&#x3084;&#x308B;&#x3053;&#x3068;</span></h2><ul>
-<li>Mac &#x30ED;&#x30FC;&#x30AB;&#x30EB;&#x3067;&#x516C;&#x958B;&#x9375;&#x3001;&#x79D8;&#x5BC6;&#x9375;&#x3092;&#x751F;&#x6210;</li>
-<li>Terraform &#x3067;EC2&#x8D77;&#x52D5;&#x3001;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3067; SSH (&#x30DD;&#x30FC;&#x30C8;22)&#x8A31;&#x53EF;&#x3001;key-pair &#x767B;&#x9332;</li>
+			  		<h2><span id="今回やること">今回やること</span></h2><ul>
+<li>Mac ローカルで公開鍵、秘密鍵を生成</li>
+<li>Terraform でEC2起動、セキュリティグループで SSH (ポート22)許可、key-pair 登録</li>
 </ul>
-<p>Terraform &#x306E; Hello World &#x7684;&#x306A;&#x30C1;&#x30E5;&#x30FC;&#x30C8;&#x30EA;&#x30A2;&#x30EB;&#x3068;&#x601D;&#x3063;&#x3066;&#x3044;&#x305F;&#x3060;&#x3051;&#x305F;&#x3089;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<p>Terraform の Hello World 的なチュートリアルと思っていただけたら幸いです。</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>Mac OS 10.12.3 (Sierra)</li>
 <li>Terraform 0.9.1</li>
 </ul>
-<h2><span id="&#x516C;&#x958B;&#x9375;-&#x79D8;&#x5BC6;&#x9375;&#x751F;&#x6210;">&#x516C;&#x958B;&#x9375;&#x3001;&#x79D8;&#x5BC6;&#x9375;&#x751F;&#x6210;</span></h2><p>RSA&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30C3;&#x30C8;&#x3067;&#x9375;&#x3092;&#x751F;&#x6210;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Enter file in which to save the key (/Users/kenzo_tanaka/.ssh/id_rsa): /Users/kenzo_tanaka/.ssh/terraform-test</span><br><span class="line">Enter passphrase (empty for no passphrase): (&#x7A7A;&#x306E;&#x307E;&#x307E;Enter)</span><br><span class="line">Enter same passphrase again: (&#x7A7A;&#x306E;&#x307E;&#x307E;Enter)</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">// &#x751F;&#x6210;&#x3055;&#x308C;&#x305F;&#x304B;&#x78BA;&#x8A8D;</span><br><span class="line">$ ls ~/.ssh/terraform-test*</span><br><span class="line"></span><br><span class="line">/Users/kenzo_tanaka/.ssh/terraform-test      # &#x79D8;&#x5BC6;&#x9375;</span><br><span class="line">/Users/kenzo_tanaka/.ssh/terraform-test.pub&#x3000;# &#x516C;&#x958B;&#x9375;</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="公開鍵-秘密鍵生成">公開鍵、秘密鍵生成</span></h2><p>RSAフォーマットで鍵を生成します。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa</span><br><span class="line"></span><br><span class="line">Enter file in which to save the key (/Users/kenzo_tanaka/.ssh/id_rsa): /Users/kenzo_tanaka/.ssh/terraform-test</span><br><span class="line">Enter passphrase (empty for no passphrase): (空のままEnter)</span><br><span class="line">Enter same passphrase again: (空のままEnter)</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">// 生成されたか確認</span><br><span class="line">$ ls ~/.ssh/terraform-test*</span><br><span class="line"></span><br><span class="line">/Users/kenzo_tanaka/.ssh/terraform-test      # 秘密鍵</span><br><span class="line">/Users/kenzo_tanaka/.ssh/terraform-test.pub　# 公開鍵</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x516C;&#x958B;&#x9375;&#x3092;&#x8D77;&#x52D5;&#x3057;&#x305F;EC2&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x767B;&#x9332;&#x3057;<br>&#x79D8;&#x5BC6;&#x9375;&#x3067;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x5229;&#x7528;&#x3059;&#x308B;&#x4E88;&#x5B9A;&#x3067;&#x3059;&#x3002;</p>
+<p>公開鍵を起動したEC2インスタンスに登録し<br>秘密鍵でアクセスします。</p>
+<p>以下のように利用する予定です。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -i ~/.ssh/terraform-test &lt;ec2 user&gt;@&lt;ec2 public ip&gt;</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="terraform-&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;">Terraform &#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;</span></h2><ul>
+<h2><span id="terraform-設定ファイル">Terraform 設定ファイル</span></h2><ul>
 <li><p>Point !</p>
 <ul>
-<li><code>resource &quot;aws_key_pair&quot;</code> &#x3067;&#x4F7F;&#x7528;&#x3059;&#x308B;&#x516C;&#x958B;&#x9375;&#x8A2D;&#x5B9A;&#x3092;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</li>
-<li><code>resource &quot;aws_security_group&quot;</code> &#x3067;SSH&#xFF08;&#x30DD;&#x30FC;&#x30C8;22&#xFF09;&#x3092;&#x958B;&#x3044;&#x3066;&#x307E;&#x3059;&#x3002;</li>
-<li><code>resource &quot;aws_instance&quot;</code> &#x3067;&#x4F7F;&#x7528;&#x3057;&#x3066;&#x3044;&#x308B;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306E;&#x6307;&#x5B9A;&#x306F;  <code>vpc_security_group_ids</code> &#x3092;&#x5229;&#x7528;<ul>
-<li>&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306E;&#x6761;&#x4EF6;&#x8FFD;&#x52A0;&#x30FB;&#x524A;&#x9664;&#x3059;&#x308B;&#x5834;&#x5408;&#x306B;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x3092;&#x4E00;&#x5EA6;&#x524A;&#x9664;&#x3057;&#x4F5C;&#x308A;&#x76F4;&#x3059;&#x3053;&#x3068;&#x3092;&#x3057;&#x305F;&#x304F;&#x306A;&#x3044;&#x5834;&#x5408;&#x306B; vpc_security_group_ids &#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x3068;&#x826F;&#x3044;&#x3067;&#x3059;&#x3002;</li>
+<li><code>resource "aws_key_pair"</code> で使用する公開鍵設定をしています。</li>
+<li><code>resource "aws_security_group"</code> でSSH（ポート22）を開いてます。</li>
+<li><code>resource "aws_instance"</code> で使用しているセキュリティグループの指定は  <code>vpc_security_group_ids</code> を利用<ul>
+<li>セキュリティグループの条件追加・削除する場合にインスタンスを一度削除し作り直すことをしたくない場合に vpc_security_group_ids を利用すると良いです。</li>
 </ul>
 </li>
 </ul>
@@ -1844,33 +1844,33 @@ h6.categories {
 <li><p>main.tf</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">provider &quot;aws&quot; {</span><br><span class="line">  access_key = &quot;<!--figure2-->#123;var.access_key}&quot;</span><br><span class="line">  secret_key = &quot;<!--figure2-->#123;var.secret_key}&quot;</span><br><span class="line">  region     = &quot;<!--figure2-->#123;var.region}&quot;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resource &quot;aws_instance&quot; &quot;example&quot; {</span><br><span class="line">  ami           = &quot;<!--figure2-->#123;lookup(var.amis, var.region)}&quot;</span><br><span class="line">  instance_type = &quot;t2.nano&quot;</span><br><span class="line">  key_name      = &quot;<!--figure2-->#123;aws_key_pair.auth.id}&quot;</span><br><span class="line">  vpc_security_group_ids = [&quot;<!--figure2-->#123;aws_security_group.default.id}&quot;]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resource &quot;aws_key_pair&quot; &quot;auth&quot; {</span><br><span class="line">  key_name   = &quot;<!--figure2-->#123;var.key_name}&quot;</span><br><span class="line">  public_key = &quot;<!--figure2-->#123;file(var.public_key_path)}&quot;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resource &quot;aws_security_group&quot; &quot;default&quot; {</span><br><span class="line">  name        = &quot;terraform_security_group&quot;</span><br><span class="line">  description = &quot;Used in the terraform&quot;</span><br><span class="line"></span><br><span class="line">  # SSH access from anywhere</span><br><span class="line">  ingress {</span><br><span class="line">    from_port   = 22</span><br><span class="line">    to_port     = 22</span><br><span class="line">    protocol    = &quot;tcp&quot;</span><br><span class="line">    cidr_blocks = [&quot;0.0.0.0/0&quot;]</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">provider "aws" {</span><br><span class="line">  access_key = "<!--figure2-->#123;var.access_key}"</span><br><span class="line">  secret_key = "<!--figure2-->#123;var.secret_key}"</span><br><span class="line">  region     = "<!--figure2-->#123;var.region}"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resource "aws_instance" "example" {</span><br><span class="line">  ami           = "<!--figure2-->#123;lookup(var.amis, var.region)}"</span><br><span class="line">  instance_type = "t2.nano"</span><br><span class="line">  key_name      = "<!--figure2-->#123;aws_key_pair.auth.id}"</span><br><span class="line">  vpc_security_group_ids = ["<!--figure2-->#123;aws_security_group.default.id}"]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resource "aws_key_pair" "auth" {</span><br><span class="line">  key_name   = "<!--figure2-->#123;var.key_name}"</span><br><span class="line">  public_key = "<!--figure2-->#123;file(var.public_key_path)}"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">resource "aws_security_group" "default" {</span><br><span class="line">  name        = "terraform_security_group"</span><br><span class="line">  description = "Used in the terraform"</span><br><span class="line"></span><br><span class="line">  # SSH access from anywhere</span><br><span class="line">  ingress {</span><br><span class="line">    from_port   = 22</span><br><span class="line">    to_port     = 22</span><br><span class="line">    protocol    = "tcp"</span><br><span class="line">    cidr_blocks = ["0.0.0.0/0"]</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
 <li>variables.tf</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">variable &quot;access_key&quot; {}</span><br><span class="line">variable &quot;secret_key&quot; {}</span><br><span class="line">variable &quot;region&quot; {</span><br><span class="line">  default = &quot;ap-northeast-1&quot;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">variable &quot;amis&quot; {</span><br><span class="line">  type = &quot;map&quot;</span><br><span class="line">  default = {</span><br><span class="line">    us-east-1 = &quot;ami-13be557e&quot;</span><br><span class="line">    us-west-2 = &quot;ami-21f78e11&quot;</span><br><span class="line">    ap-northeast-1 = &quot;ami-1bfdb67c&quot;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">variable &quot;key_name&quot; {</span><br><span class="line">  description = &quot;Desired name of AWS key pair&quot;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">variable &quot;public_key_path&quot; {</span><br><span class="line">  description = &lt;&lt;DESCRIPTION</span><br><span class="line">Path to the SSH public key to be used for authentication.</span><br><span class="line">Ensure this keypair is added to your local SSH agent so provisioners can</span><br><span class="line">connect.</span><br><span class="line"></span><br><span class="line">Example: ~/.ssh/terraform.pub</span><br><span class="line">DESCRIPTION</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">variable "access_key" {}</span><br><span class="line">variable "secret_key" {}</span><br><span class="line">variable "region" {</span><br><span class="line">  default = "ap-northeast-1"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">variable "amis" {</span><br><span class="line">  type = "map"</span><br><span class="line">  default = {</span><br><span class="line">    us-east-1 = "ami-13be557e"</span><br><span class="line">    us-west-2 = "ami-21f78e11"</span><br><span class="line">    ap-northeast-1 = "ami-1bfdb67c"</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">variable "key_name" {</span><br><span class="line">  description = "Desired name of AWS key pair"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">variable "public_key_path" {</span><br><span class="line">  description = &lt;&lt;DESCRIPTION</span><br><span class="line">Path to the SSH public key to be used for authentication.</span><br><span class="line">Ensure this keypair is added to your local SSH agent so provisioners can</span><br><span class="line">connect.</span><br><span class="line"></span><br><span class="line">Example: ~/.ssh/terraform.pub</span><br><span class="line">DESCRIPTION</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
 <li>terraform.tfvars</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">access_key = &quot;A******************Q&quot;</span><br><span class="line">secret_key = &quot;q**************************************Z&quot;</span><br><span class="line"></span><br><span class="line">key_name = &quot;terraform-test&quot;</span><br><span class="line">public_key_path = &quot;~/.ssh/terraform-test.pub&quot;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">access_key = "A******************Q"</span><br><span class="line">secret_key = "q**************************************Z"</span><br><span class="line"></span><br><span class="line">key_name = "terraform-test"</span><br><span class="line">public_key_path = "~/.ssh/terraform-test.pub"</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x3044;&#x3056;&#x5B9F;&#x884C;">&#x3044;&#x3056;&#x5B9F;&#x884C;</span></h2><ul>
-<li>&#x5B9F;&#x884C;&#x8A08;&#x753B;&#x78BA;&#x8A8D;</li>
+<h2><span id="いざ実行">いざ実行</span></h2><ul>
+<li>実行計画確認</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ terraform plan</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>&#x5B9F;&#x884C;</li>
+<li>実行</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ terraform apply</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x78BA;&#x8A8D;">&#x78BA;&#x8A8D;</span></h2><ul>
-<li><p>AWS &#x30B3;&#x30F3;&#x30BD;&#x30FC;&#x30EB;&#x4E0A;&#x3067;&#x8D77;&#x52D5;&#x78BA;&#x8A8D;</p>
+<h2><span id="確認">確認</span></h2><ul>
+<li><p>AWS コンソール上で起動確認</p>
 <ul>
-<li>&#x30AD;&#x30FC;&#x30DA;&#x30A2;&#x306B; terraform-test &#x304C;&#x6307;&#x5B9A;&#x3055;&#x308C;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</li>
-<li>vpc, subnet &#x3082;&#x81EA;&#x52D5;&#x7684;&#x306B;&#x30A2;&#x30BF;&#x30C3;&#x30C1;&#x3055;&#x308C;&#x3066;&#x307E;&#x3059;&#x3002;</li>
+<li>キーペアに terraform-test が指定されています。</li>
+<li>vpc, subnet も自動的にアタッチされてます。</li>
 </ul>
 </li>
 </ul>
@@ -1879,14 +1879,14 @@ h6.categories {
 </div>
 
 <ul>
-<li>&#x30AD;&#x30FC;&#x30DA;&#x30A2;<br>&#x4E00;&#x5FDC;&#x30AD;&#x30FC;&#x30DA;&#x30A2;&#x3092;&#x898B;&#x3066;&#x307F;&#x308B;&#x3068;&#x767B;&#x9332;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x306E;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</li>
+<li>キーペア<br>一応キーペアを見てみると登録されているのがわかります。</li>
 </ul>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214404.png" width="1024" height="130" layout="responsive"></amp-img></div>
 </div>
 
 <ul>
-<li>&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x78BA;&#x8A8D;</li>
+<li>セキュリティグループ確認</li>
 </ul>
 <div id="hexo-amp-id-3">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214628.png" width="1024" height="217" layout="responsive"></amp-img></div>
@@ -1894,7 +1894,7 @@ h6.categories {
 
 
 <ul>
-<li>SSH &#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x78BA;&#x8A8D;</li>
+<li>SSH ログイン確認</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -i ~/.ssh/terraform-test ubuntu@ec2-54-65-244-25.ap-northeast-1.compute.amazonaws.com</span><br></pre></td></tr></tbody></table></figure>
 
@@ -1903,10 +1903,10 @@ h6.categories {
 </div>
 
 
-<p>&#x7121;&#x4E8B;SSH&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#xFF01;</p>
-<h2><span id="&#x6240;&#x611F;">&#x6240;&#x611F;</span></h2><p><a href="https://www.terraform.io/">terraform</a> &#x3092;&#x898B;&#x306A;&#x304C;&#x3089;&#x5404;&#x30D1;&#x30E9;&#x30E1;&#x30FC;&#x30BF;&#x306E;&#x5229;&#x7528;&#x610F;&#x56F3;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x306A;&#x304C;&#x3089;<br>&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x307F;&#x307E;&#x3057;&#x305F;&#x304C;<br>&#x30D1;&#x30E9;&#x30E1;&#x30FC;&#x30BF;&#x306E;&#x8AAC;&#x660E;&#x81EA;&#x4F53;&#x306F;&#x3056;&#x3063;&#x304F;&#x308A;&#x3067;&#x5229;&#x7528;&#x65B9;&#x6CD5;&#x307E;&#x3067;&#x306F;&#x308F;&#x304B;&#x3089;&#x306A;&#x3044;&#x3067;&#x3059;&#x3002;</p>
-<p><a href="https://www.terraform.io/intro/getting-started/build.html">Teffaform &#x306E;&#x30C1;&#x30E5;&#x30FC;&#x30C8;&#x30EA;&#x30A2;&#x30EB;</a>&#x306B;&#x59CB;&#x307E;&#x308A;<br>&#x305D;&#x306E;&#x4ED6; <a href="http://stackoverflow.com/questions/tagged/terraform">Stack Overflow</a> &#x3067;<br>&#x9069;&#x5B9C;&#x30D1;&#x30BF;&#x30FC;&#x30F3;&#x3092;&#x84C4;&#x7A4D;&#x3057;&#x3066;&#x3044;&#x304F;&#x5B66;&#x7FD2;&#x304C;&#x7A0B;&#x3088;&#x3044;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</span></h2><a href="http://cross-black777.hatenablog.com/entry/2016/02/25/090000" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://blog.st-hatena.com/images/theme/og-image-1500.png" width="1500" height="1051" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Terraform&#x3067;&#x7ACB;&#x3066;&#x305F;EC2&#x306B;&#x5F8C;&#x304B;&#x3089;SG&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x3088;&#x3046;&#x3068;&#x3059;&#x308B;&#x3068;EC2&#x304C;&#x518D;&#x4F5C;&#x6210;&#x3055;&#x308C;&#x308B; - tjinjin&apos;s blog</div><div class="og-description">About &#x521D;&#x56DE;&#x306B;&#x7ACB;&#x3066;&#x305F;&#x6642;&#x306F;SG&#x304C;1&#x3064;&#x3060;&#x3063;&#x305F;&#x304C;&#x3001;&#x3042;&#x3068;&#x304B;&#x3089;SG&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x305F;&#x304F;&#x306A;&#x3063;&#x305F;&#x3068;&#x304D;&#x3069;&#x3046;&#x306A;&#x308B;&#x304B;&#x8A66;&#x3057;&#x305F;&#x7D50;&#x679C;&#x3067;&#x3059;&#x3002;</div></div></div></a>
+<p>無事SSHログインできました！</p>
+<h2><span id="所感">所感</span></h2><p><a href="https://www.terraform.io/">terraform</a> を見ながら各パラメータの利用意図を確認しながら<br>設定してみましたが<br>パラメータの説明自体はざっくりで利用方法まではわからないです。</p>
+<p><a href="https://www.terraform.io/intro/getting-started/build.html">Teffaform のチュートリアル</a>に始まり<br>その他 <a href="http://stackoverflow.com/questions/tagged/terraform">Stack Overflow</a> で<br>適宜パターンを蓄積していく学習が程よいと思います。</p>
+<h2><span id="参考">参考</span></h2><a href="http://cross-black777.hatenablog.com/entry/2016/02/25/090000" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://blog.st-hatena.com/images/theme/og-image-1500.png" width="1500" height="1051" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Terraformで立てたEC2に後からSGを追加しようとするとEC2が再作成される - tjinjin's blog</div><div class="og-description">About 初回に立てた時はSGが1つだったが、あとからSGを追加したくなったときどうなるか試した結果です。</div></div></div></a>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1978,7 +1978,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

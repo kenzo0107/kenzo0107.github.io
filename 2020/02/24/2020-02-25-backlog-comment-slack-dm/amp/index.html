@@ -59,7 +59,7 @@
 			    "@id":"https://kenzo0107.github.io/2020/02/24/2020-02-25-backlog-comment-slack-dm/"
 			},
 			"datePublished": "2020-02-24T15:00:00.000Z",
-			"dateModified": "2020-05-20T14:03:54.487Z",
+			"dateModified": "2022-03-07T15:14:59.672Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1849,34 +1849,34 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Backlog &#x3067;&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x8FFD;&#x52A0;&#x6642;&#x306B; &#x300C;&#x304A;&#x77E5;&#x3089;&#x305B;&#x3057;&#x305F;&#x3044;&#x30E6;&#x30FC;&#x30B6;&#x300D;&#x306B; Slack DM &#x3059;&#x308B; AWS Serverless Application Model with Golang &#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x4F5C;&#x308A;&#x307E;&#x3057;&#x305F;&#x266A;</p>
+			  		<p>Backlog でコメント追加時に 「お知らせしたいユーザ」に Slack DM する AWS Serverless Application Model with Golang プロジェクト作りました♪</p>
 <a id="more"></a>
 
-<p>&#x4F7F;&#x3044;&#x65B9;&#x306F;&#x3001; Git &#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x3092;&#x898B;&#x3066;&#x3044;&#x305F;&#x3060;&#x3051;&#x308C;&#x3070;&#xFF01;</p>
+<p>使い方は、 Git プロジェクトを見ていただければ！</p>
 <p><a href="https://github.com/kenzo0107/backlog-to-slack-dm">kenzo0107/backlog-to-slack-dm</a></p>
-<p>&#x3082;&#x3057;&#x3088;&#x304F;&#x308F;&#x304B;&#x3089;&#x3093;&#x305E;&#xFF01;&#x3068;&#x3044;&#x3046;&#x6642;&#x306F;&#x9023;&#x7D61;&#x304F;&#x3060;&#x3055;&#x3044;&#x266A;</p>
-<h3><span id="&#x69CB;&#x7BC9;&#x3059;&#x308B;&#x306B;&#x8FBA;&#x308A;-&#x691C;&#x8A0E;&#x3057;&#x305F;&#x70B9;">&#x69CB;&#x7BC9;&#x3059;&#x308B;&#x306B;&#x8FBA;&#x308A;&#x3001;&#x691C;&#x8A0E;&#x3057;&#x305F;&#x70B9;</span></h3><h4><span id="&#x4E16;&#x306E;&#x4E2D;&#x306B;&#x306F;-backlog-api-&#x95A2;&#x9023;&#x306E;-sdk-&#x306A;&#x3069;&#x3042;&#x308B;&#x304B;">&#x4E16;&#x306E;&#x4E2D;&#x306B;&#x306F; backlog API &#x95A2;&#x9023;&#x306E; SDK &#x306A;&#x3069;&#x3042;&#x308B;&#x304B;&#xFF1F;</span></h4><p><a href="https://github.com/griffin-stewie/go-backlog">griffin-stewie/go-backlog</a> &#x304C;&#x8AF8;&#x3005;&#x63C3;&#x3063;&#x3066;&#x3044;&#x3066;&#x826F;&#x3055;&#x305D;&#x3046;&#x3060;&#x3063;&#x305F;&#x306E;&#x3067;&#x4F7F;&#x3063;&#x3066;&#x307F;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x5229;&#x7528;&#x3057;&#x305F;&#x3044;&#x7B87;&#x6240;&#x3068;&#x3057;&#x3066;&#x306F;&#x3001;&#x4EE5;&#x4E0B;&#x3067;&#x3059;&#x3002;</p>
+<p>もしよくわからんぞ！という時は連絡ください♪</p>
+<h3><span id="構築するに辺り-検討した点">構築するに辺り、検討した点</span></h3><h4><span id="世の中には-backlog-api-関連の-sdk-などあるか">世の中には backlog API 関連の SDK などあるか？</span></h4><p><a href="https://github.com/griffin-stewie/go-backlog">griffin-stewie/go-backlog</a> が諸々揃っていて良さそうだったので使ってみました。</p>
+<p>利用したい箇所としては、以下です。</p>
 <ul>
-<li>&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x8FFD;&#x52A0;&#x6642;&#x306E;&#x30A4;&#x30D9;&#x30F3;&#x30C8;&#x60C5;&#x5831;&#x3092;&#x53D7;&#x3051;&#x308B; <code>type Activity struct</code></li>
-<li>&#x2191;&#x3067;&#x53D7;&#x3051;&#x53D6;&#x308C;&#x308B;&#x901A;&#x77E5;&#x3057;&#x305F;&#x3044;&#x30E6;&#x30FC;&#x30B6;&#x306E; ID &#x304B;&#x3089; Email &#x30A2;&#x30C9;&#x30EC;&#x30B9;&#x3092;&#x53D6;&#x5F97;&#x3059;&#x308B; API &#x5B9F;&#x884C;</li>
+<li>コメント追加時のイベント情報を受ける <code>type Activity struct</code></li>
+<li>↑で受け取れる通知したいユーザの ID から Email アドレスを取得する API 実行</li>
 </ul>
-<p>&#x4F46;&#x3057;&#x3001;&#x3053;&#x306E;&#x30E9;&#x30A4;&#x30D6;&#x30E9;&#x30EA;&#x3067;&#x306F;&#x3001;<a href="https://github.com/griffin-stewie/go-backlog/blob/master/models.go#L242">Activity &#x306B;&#x306F;&#x901A;&#x77E5;&#x3057;&#x305F;&#x3044;&#x60C5;&#x5831;&#x3092;&#x542B;&#x3080; Notifications &#x304C;&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x30A2;&#x30A6;&#x30C8;&#x3068;&#x306A;&#x3063;&#x3066;&#x3044;&#x305F;</a>&#x306E;&#x3067;&#x3001;&#x76F4;&#x3061;&#x306B;&#x5229;&#x7528;&#x3067;&#x304D;&#x305A;&#x3001;</p>
-<p>&#x6025;&#x3092;&#x8981;&#x3057;&#x3066;&#x3044;&#x305F;&#x3053;&#x3068;&#x3082;&#x3042;&#x308A;&#x3001; fork &#x3057;&#x3066; <a href="https://github.com/kenzo0107/go-backlog">kenzo0107/go-backlog</a> &#x3067;&#x5BFE;&#x5FDC;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x5358;&#x7D14;&#x306B;&#x30B3;&#x30E1;&#x30F3;&#x30C8;&#x30A2;&#x30A6;&#x30C8;&#x3092;&#x5916;&#x3057;&#x3066;&#x4F7F;&#x3048;&#x308B;&#x69D8;&#x306B;&#x3057;&#x305F;&#x3060;&#x3051;&#x3067;&#x306F;&#x3001; json.Unmarshal &#x5B9F;&#x884C;&#x6642;&#x306B;&#x30A8;&#x30E9;&#x30FC;&#x3068;&#x306A;&#x3063;&#x3066;&#x304A;&#x308A;&#x3001;&#x4ED6;&#x306E;&#x30D1;&#x30E9;&#x30E1;&#x30FC;&#x30BF;&#x3082;&#x5E7E;&#x5206;&#x304B;&#x5BFE;&#x5FDC;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h4><span id="backlog-&#x304B;&#x3089;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5236;&#x5FA1;&#x306F;&#x3069;&#x3046;&#x3059;&#x308B;">Backlog &#x304B;&#x3089;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5236;&#x5FA1;&#x306F;&#x3069;&#x3046;&#x3059;&#x308B;&#xFF1F;</span></h4><p>Backlog &#x304B;&#x3089;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5236;&#x5FA1;&#x306F;Basic &#x8A8D;&#x8A3C;&#x306B;&#x3064;&#x3044;&#x3066;&#x8A00;&#x53CA;&#x304C;&#x3042;&#x3063;&#x305F;&#x306E;&#x3067; Basic &#x8A8D;&#x8A3C;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>但し、このライブラリでは、<a href="https://github.com/griffin-stewie/go-backlog/blob/master/models.go#L242">Activity には通知したい情報を含む Notifications がコメントアウトとなっていた</a>ので、直ちに利用できず、</p>
+<p>急を要していたこともあり、 fork して <a href="https://github.com/kenzo0107/go-backlog">kenzo0107/go-backlog</a> で対応しました。</p>
+<p>単純にコメントアウトを外して使える様にしただけでは、 json.Unmarshal 実行時にエラーとなっており、他のパラメータも幾分か対応する必要がありました。</p>
+<h4><span id="backlog-からのアクセス制御はどうする">Backlog からのアクセス制御はどうする？</span></h4><p>Backlog からのアクセス制御はBasic 認証について言及があったので Basic 認証にしました。</p>
 <blockquote>
-<p>IP &#x30A2;&#x30C9;&#x30EC;&#x30B9;&#x306E;&#x5909;&#x66F4;&#x306B;&#x5F71;&#x97FF;&#x3055;&#x308C;&#x306A;&#x3044;&#x65B9;&#x6CD5;&#x3067;&#x3042;&#x308C;&#x3070;&#x3001; Webhook &#x306E; URL &#x306B; BASIC &#x8A8D;&#x8A3C;&#x3092;&#x3064;&#x3051;&#x3066;&#x3044;&#x305F;&#x3060;&#x304F;&#x3053;&#x3068;&#x3067;&#x3001;IP &#x30A2;&#x30C9;&#x30EC;&#x30B9;&#x306B;&#x4F9D;&#x5B58;&#x3057;&#x306A;&#x3044;&#x8A8D;&#x8A3C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>IP アドレスの変更に影響されない方法であれば、 Webhook の URL に BASIC 認証をつけていただくことで、IP アドレスに依存しない認証できます。</p>
 </blockquote>
-<p><a href="https://support-ja.backlog.com/hc/ja/articles/360035645534-Webhook-%E3%82%B5%E3%83%BC%E3%83%90%E3%81%AE%E6%83%85%E5%A0%B1">Webhook &#x9001;&#x4FE1;&#x30B5;&#x30FC;&#x30D0;&#x30FC;&#x306E; IP &#x30A2;&#x30C9;&#x30EC;&#x30B9;&#x3092;&#x6559;&#x3048;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;</a></p>
-<p>IP &#x30EC;&#x30F3;&#x30B8;&#x306F;&#x4E88;&#x544A;&#x306A;&#x304F;&#x5909;&#x66F4;&#x3055;&#x308C;&#x308B;&#x53EF;&#x80FD;&#x6027;&#x304C;&#x3042;&#x308A;&#x3001;&#x4F5C;&#x6210;&#x8005;&#x4EE5;&#x5916;&#x3067;&#x306F;&#x306A;&#x304B;&#x306A;&#x304B;&#x6C17;&#x4ED8;&#x304D;&#x306B;&#x304F;&#x3044;&#x304B;&#x3082;&#x3057;&#x308C;&#x307E;&#x305B;&#x3093;&#x3002;<br>&#x305D;&#x306E;&#x70BA;&#x3001; Backlog Webhook &#x306B;&#x8A2D;&#x5B9A;&#x3059;&#x308B; URL &#x306F;&#x3001; <code>https://&lt;user&gt;:&lt;password&gt;@......</code> &#x3068; Basic &#x8A8D;&#x8A3C;&#x306E;&#x60C5;&#x5831;&#x3092;&#x57CB;&#x3081;&#x8FBC;&#x3080;&#x69D8;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x3053;&#x308C;&#x3092; API Gateway + Lambda Authorizer (Request Type) &#x3067;&#x8A8D;&#x8A3C;&#x3055;&#x305B;&#x308B;&#x69D8;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h4><span id="backlog-api-&#x5B9F;&#x884C;&#x6642;&#x306B;&#x8A31;&#x53EF;&#x3059;&#x308B;-ip-&#x306F;&#x3069;&#x3046;&#x3059;&#x308B;&#x304B;">Backlog API &#x5B9F;&#x884C;&#x6642;&#x306B;&#x8A31;&#x53EF;&#x3059;&#x308B; ip &#x306F;&#x3069;&#x3046;&#x3059;&#x308B;&#x304B;&#xFF1F;</span></h4><p>Backlog API &#x3092;&#x5B9F;&#x884C;&#x3059;&#x308B; Lambda &#x3092; Nat Gateway &#x3092;&#x30EB;&#x30FC;&#x30C6;&#x30A3;&#x30F3;&#x30B0;&#x3057;&#x305F; Private Subnet &#x306B;&#x7F6E;&#x304F;&#x3053;&#x3068;&#x3067;&#x3001;&#x51FA;&#x53E3; IP &#x3092;&#x56FA;&#x5B9A;&#x3059;&#x308B;&#x69D8;&#x306B;&#x3057;&#x3001;&#x305D;&#x306E; IP &#x3092; Backlog &#x5074;&#x3067;&#x8A31;&#x53EF; IP &#x3068;&#x3057;&#x3066;&#x8A2D;&#x5B9A;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h3><span id="&#x6CE8;&#x610F;&#x70B9;">&#x6CE8;&#x610F;&#x70B9;</span></h3><h4><span id="backlog-webhook-&#x5404;&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x6BCE;&#x306B;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;">Backlog Webhook &#x5404;&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x6BCE;&#x306B;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;</span></h4><p>&#x5168;&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x4E00;&#x62EC;&#x3057;&#x3066;&#x8A2D;&#x5B9A;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x305B;&#x3093;&#x3067;&#x3057;&#x305F;&#x3002; 2020-02-27 &#x73FE;&#x5728;</p>
-<p>&#x5404;&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x7BA1;&#x7406;&#x8005;&#x306B;&#x79D8;&#x5BC6;&#x60C5;&#x5831;&#x3068;&#x3057;&#x3066;&#x901A;&#x77E5;&#x3059;&#x308B;&#x69D8;&#x306B;&#x5BFE;&#x5FDC;&#x3092;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x307E;&#x3068;&#x3081;">&#x307E;&#x3068;&#x3081;</span></h2><p>&#x307E;&#x3060;&#x30C6;&#x30B9;&#x30C8;&#x3092;&#x66F8;&#x304D;&#x5207;&#x308C;&#x3066;&#x306A;&#x3044;&#x3068;&#x3053;&#x308D;&#x306F;&#x3042;&#x308A;&#x307E;&#x3059;&#x304C;&#x3001;&#x554F;&#x984C;&#x306A;&#x304F;&#x52D5;&#x4F5C;&#x3057;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>Backlog &#x3092;&#x53D6;&#x308A;&#x5165;&#x308C;&#x3066;&#x3044;&#x308B;&#x65B9;&#x3078;&#x3001;&#x4F55;&#x304B;&#x3057;&#x3089;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;</p>
+<p><a href="https://support-ja.backlog.com/hc/ja/articles/360035645534-Webhook-%E3%82%B5%E3%83%BC%E3%83%90%E3%81%AE%E6%83%85%E5%A0%B1">Webhook 送信サーバーの IP アドレスを教えてください</a></p>
+<p>IP レンジは予告なく変更される可能性があり、作成者以外ではなかなか気付きにくいかもしれません。<br>その為、 Backlog Webhook に設定する URL は、 <code>https://&lt;user&gt;:&lt;password&gt;@......</code> と Basic 認証の情報を埋め込む様にしました。</p>
+<p>これを API Gateway + Lambda Authorizer (Request Type) で認証させる様にしました。</p>
+<h4><span id="backlog-api-実行時に許可する-ip-はどうするか">Backlog API 実行時に許可する ip はどうするか？</span></h4><p>Backlog API を実行する Lambda を Nat Gateway をルーティングした Private Subnet に置くことで、出口 IP を固定する様にし、その IP を Backlog 側で許可 IP として設定しました。</p>
+<h3><span id="注意点">注意点</span></h3><h4><span id="backlog-webhook-各プロジェクト毎に設定する必要があり">Backlog Webhook 各プロジェクト毎に設定する必要があり</span></h4><p>全プロジェクト一括して設定ということができませんでした。 2020-02-27 現在</p>
+<p>各プロジェクト管理者に秘密情報として通知する様に対応をしました。</p>
+<h2><span id="まとめ">まとめ</span></h2><p>まだテストを書き切れてないところはありますが、問題なく動作していることを確認しています。</p>
+<p>Backlog を取り入れている方へ、何かしら参考になれば幸いです。</p>
+<p>以上です。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1942,7 +1942,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

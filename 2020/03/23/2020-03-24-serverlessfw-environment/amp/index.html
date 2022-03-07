@@ -1823,58 +1823,58 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>Serverless Framework &#x3067;&#x306E;&#x4E0A;&#x66F8;&#x304D;&#x8A2D;&#x5B9A;&#x306B;&#x3064;&#x3044;&#x3066;&#x8A70;&#x307E;&#x3063;&#x305F;&#x70B9;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x57FA;&#x672C;&#x7684;&#x306B;&#x306F;&#x4EE5;&#x4E0B;&#x516C;&#x5F0F;&#x30C9;&#x30AD;&#x30E5;&#x30E1;&#x30F3;&#x30C8;&#x3092;&#x53C2;&#x8003;&#x306B;&#x3057;&#x3064;&#x3064;&#x3001;&#x3044;&#x304F;&#x3064;&#x304B;&#x5B9F;&#x88C5;&#x30D1;&#x30BF;&#x30FC;&#x30F3;&#x3092;&#x8A66;&#x9A13;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<p>Serverless Framework での上書き設定について詰まった点をまとめました。</p>
+<p>基本的には以下公式ドキュメントを参考にしつつ、いくつか実装パターンを試験しました。</p>
 <a id="more"></a>
 
-<p>&#x74B0;&#x5883;&#x5909;&#x6570;&#x3092;&#x4F8B;&#x306B;&#x3068;&#x3063;&#x3066;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x307F;&#x307E;&#x3059;&#x3002;</p>
+<p>環境変数を例にとって設定してみます。</p>
 <p><a href="https://serverless.com/framework/docs/providers/aws/guide/functions#environment-variables">Environment Variables</a></p>
-<h2><span id="stage-&#x5171;&#x901A;&#x3067;&#x8A2D;&#x5B9A;">stage &#x5171;&#x901A;&#x3067;&#x8A2D;&#x5B9A;</span></h2><figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">provider:</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&apos;hello,world&apos;</span></span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="stage-共通で設定">stage 共通で設定</span></h2><figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">provider:</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">'hello,world'</span></span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x8A2D;&#x5B9A;&#x306E;&#x5834;&#x5408;&#x3001;&#x74B0;&#x5883;&#x5909;&#x6570;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x8A2D;&#x5B9A;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<p>上記設定の場合、環境変数は以下の様に設定されます。</p>
 <ul>
 <li>key: hello,world</li>
 </ul>
-<h2><span id="1&#x3064;&#x306E;&#x5024;&#x3092;&#x4E0A;&#x66F8;&#x304D;&#x3059;&#x308B;&#x5834;&#x5408;">1&#x3064;&#x306E;&#x5024;&#x3092;&#x4E0A;&#x66F8;&#x304D;&#x3059;&#x308B;&#x5834;&#x5408;</span></h2><p>&#x53C2;&#x8003;: <a href="https://serverless.com/framework/docs/providers/openwhisk/guide/variables#overwriting-variables">Overwriting Variables</a></p>
+<h2><span id="1つの値を上書きする場合">1つの値を上書きする場合</span></h2><p>参考: <a href="https://serverless.com/framework/docs/providers/openwhisk/guide/variables#overwriting-variables">Overwriting Variables</a></p>
 <figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">provider:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">openwhisk</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">dev</span></span><br><span class="line"></span><br><span class="line"><span class="attr">custom:</span></span><br><span class="line">  <span class="attr">myStage:</span> <span class="string"><!--figure1-->#123;opt:stage,</span> <span class="string">self:provider.stage}</span></span><br><span class="line"></span><br><span class="line"><span class="attr">functions:</span></span><br><span class="line">  <span class="attr">trigger:</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">key:</span> <span class="string"><!--figure1-->#123;self:custom.myStage}</span></span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x8A2D;&#x5B9A;&#x306E;&#x5834;&#x5408;&#x3001;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x5F8C;&#x306E;&#x74B0;&#x5883;&#x5909;&#x6570;&#x306E;&#x8A2D;&#x5B9A;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>上記設定の場合、デプロイ後の環境変数の設定は以下の様になります。</p>
 <ul>
-<li><code>sls deploy</code> &#x3067;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x3057;&#x305F;&#x5834;&#x5408;<ul>
+<li><code>sls deploy</code> でデプロイした場合<ul>
 <li>key: dev</li>
 </ul>
 </li>
-<li><code>sls deploy --stage hoge</code> &#x3067;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x3057;&#x305F;&#x5834;&#x5408;<ul>
+<li><code>sls deploy --stage hoge</code> でデプロイした場合<ul>
 <li>key: hoge</li>
 </ul>
 </li>
 </ul>
-<h2><span id="stage-&#x6BCE;&#x306B;-envorinment-&#x3092;&#x8FFD;&#x52A0;&#x4E0A;&#x66F8;&#x304D;">stage &#x6BCE;&#x306B; envorinment &#x3092;&#x8FFD;&#x52A0;&#x30FB;&#x4E0A;&#x66F8;&#x304D;</span></h2><p>&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x306E;&#x8A2D;&#x5B9A;&#x3092; provider.environment &#x3067;&#x6307;&#x5B9A;&#x3057;&#x3001;&#x5404; stage &#x6BCE;&#x306E;&#x8A2D;&#x5B9A;&#x306F; <code>self:custom.${self:provider.stage}.environment</code> &#x3067;&#x8FFD;&#x52A0;&#x30FB;&#x4E0A;&#x66F8;&#x304D;&#x3067;&#x304D;&#x308B;&#x69D8;&#x306B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">provider:</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="attr">project:</span> <span class="string"><!--figure2-->#123;self:custom.<!--figure2-->#123;self:provider.stage}.project}</span></span><br><span class="line">    <span class="attr">slackChannel:</span> <span class="string"><!--figure2-->#123;self:custom.<!--figure2-->#123;self:provider.stage}.slack.channel}</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">&apos;hello,world&apos;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">custom:</span></span><br><span class="line">  <span class="attr">hoge:</span></span><br><span class="line">    <span class="attr">project:</span> <span class="string">hoge</span></span><br><span class="line">    <span class="attr">slack:</span></span><br><span class="line">      <span class="attr">channel:</span> <span class="string">&apos;#hoge&apos;</span></span><br><span class="line">  <span class="attr">moge:</span></span><br><span class="line">    <span class="attr">project:</span> <span class="string">moge</span></span><br><span class="line">    <span class="attr">slack:</span></span><br><span class="line">      <span class="attr">channel:</span> <span class="string">&apos;#moge&apos;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">key:</span> <span class="string">&apos;moge-key&apos;</span></span><br><span class="line">      <span class="attr">key2:</span> <span class="string">&apos;moge-key2&apos;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">functions:</span></span><br><span class="line">  <span class="attr">trigger:</span></span><br><span class="line">    <span class="attr">environment:</span> <span class="string"><!--figure2-->#123;self:custom.<!--figure2-->#123;self:provider.stage}.environment,</span> <span class="string">self:provider.environment}</span></span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="stage-毎に-envorinment-を追加上書き">stage 毎に envorinment を追加・上書き</span></h2><p>デフォルトの設定を provider.environment で指定し、各 stage 毎の設定は <code>self:custom.${self:provider.stage}.environment</code> で追加・上書きできる様にしています。</p>
+<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">provider:</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="attr">project:</span> <span class="string"><!--figure2-->#123;self:custom.<!--figure2-->#123;self:provider.stage}.project}</span></span><br><span class="line">    <span class="attr">slackChannel:</span> <span class="string"><!--figure2-->#123;self:custom.<!--figure2-->#123;self:provider.stage}.slack.channel}</span></span><br><span class="line">    <span class="attr">key:</span> <span class="string">'hello,world'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">custom:</span></span><br><span class="line">  <span class="attr">hoge:</span></span><br><span class="line">    <span class="attr">project:</span> <span class="string">hoge</span></span><br><span class="line">    <span class="attr">slack:</span></span><br><span class="line">      <span class="attr">channel:</span> <span class="string">'#hoge'</span></span><br><span class="line">  <span class="attr">moge:</span></span><br><span class="line">    <span class="attr">project:</span> <span class="string">moge</span></span><br><span class="line">    <span class="attr">slack:</span></span><br><span class="line">      <span class="attr">channel:</span> <span class="string">'#moge'</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">key:</span> <span class="string">'moge-key'</span></span><br><span class="line">      <span class="attr">key2:</span> <span class="string">'moge-key2'</span></span><br><span class="line"></span><br><span class="line"><span class="attr">functions:</span></span><br><span class="line">  <span class="attr">trigger:</span></span><br><span class="line">    <span class="attr">environment:</span> <span class="string"><!--figure2-->#123;self:custom.<!--figure2-->#123;self:provider.stage}.environment,</span> <span class="string">self:provider.environment}</span></span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x8A2D;&#x5B9A;&#x306E;&#x5834;&#x5408;&#x3001;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x5F8C;&#x306E;&#x74B0;&#x5883;&#x5909;&#x6570;&#x306E;&#x8A2D;&#x5B9A;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>上記設定の場合、デプロイ後の環境変数の設定は以下の様になります。</p>
 <ul>
-<li><code>sls deploy --stage hoge</code> &#x3067;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x3057;&#x305F;&#x5834;&#x5408;<ul>
+<li><code>sls deploy --stage hoge</code> でデプロイした場合<ul>
 <li>project: hogeproject</li>
 <li>slackChannel: #hoge</li>
 <li>key: hello,world</li>
 </ul>
 </li>
-<li><code>sls deploy --stage moge</code> &#x3067;&#x30C7;&#x30D7;&#x30ED;&#x30A4;&#x3057;&#x305F;&#x5834;&#x5408;<ul>
+<li><code>sls deploy --stage moge</code> でデプロイした場合<ul>
 <li>project: hogeproject</li>
 <li>slackChannel: #hoge</li>
-<li>key: moge-key   <code>&lt;-- &#x66F4;&#x65B0;</code></li>
-<li>key2: moge-key2 <code>&lt;-- &#x8FFD;&#x52A0;</code></li>
+<li>key: moge-key   <code>&lt;-- 更新</code></li>
+<li>key2: moge-key2 <code>&lt;-- 追加</code></li>
 </ul>
 </li>
 </ul>
-<p>functions.trigger.environment &#x3092;&#x4E0A;&#x66F8;&#x304D;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x7406;&#x7531;&#x306F;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x3057;&#x305F;&#x5834;&#x5408;&#x3001;</p>
+<p>functions.trigger.environment を上書き設定する理由は、以下の様にした場合、</p>
 <figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">functions:</span></span><br><span class="line">  <span class="attr">trigger:</span></span><br><span class="line">    <span class="comment"># environment: <!--figure3-->#123;self:custom.<!--figure3-->#123;self:provider.stage}.environment, self:provider.environment}</span></span><br><span class="line">    <span class="attr">environment:</span> <span class="string"><!--figure3-->#123;self:custom.<!--figure3-->#123;self:provider.stage}.environment}</span></span><br></pre></td></tr></tbody></table></figure>
 
-<p><code>self:custom.hoge.environment</code> &#x306E;&#x8A2D;&#x5B9A;&#x304C;&#x306A;&#x304F;&#x3001; Warning &#x304C;&#x767A;&#x751F;&#x3059;&#x308B;&#x70BA;&#x3067;&#x3059;&#x3002;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Serverless Warning --------------------------------------</span><br><span class="line"></span><br><span class="line"> A valid service attribute to satisfy the declaration <span class="string">&apos;self:custom.hoge.environment&apos;</span> could not be found.</span><br></pre></td></tr></tbody></table></figure>
+<p><code>self:custom.hoge.environment</code> の設定がなく、 Warning が発生する為です。</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Serverless Warning --------------------------------------</span><br><span class="line"></span><br><span class="line"> A valid service attribute to satisfy the declaration <span class="string">'self:custom.hoge.environment'</span> could not be found.</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;<br>&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以上<br>参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1946,7 +1946,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

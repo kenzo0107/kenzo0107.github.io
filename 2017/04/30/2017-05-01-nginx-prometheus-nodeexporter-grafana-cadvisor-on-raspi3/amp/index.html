@@ -1814,28 +1814,28 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>Raspi3&#x306B; docker-compose &#x3067; Prometheus &#x306B;&#x3088;&#x308B;&#x76E3;&#x8996;&#x6A5F;&#x69CB;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>Raspi3に docker-compose で Prometheus による監視機構を作成しました。</p>
 <a href="https://github.com/kenzo0107/vagrant-docker/tree/master/docker/prometheus-grafana-on-raspi3" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://avatars0.githubusercontent.com/u/6197906?s=400&amp;v=4" width="400" height="400" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">kenzo0107/vagrant-docker</div><div class="og-description">Docker on Vagrant(ubuntu). Contribute to kenzo0107/vagrant-docker development by creating an account on GitHub.</div></div></div></a>
 
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<h2><span id="環境">環境</span></h2><ul>
 <li>Raspberry Pi 3 Model B (Raspbian GNU/Linux 8) arm7l</li>
 <li>Docker version 17.04.0-ce, build 4845c56</li>
 <li>docker-compose version 1.9.0, build 2585387</li>
 </ul>
-<h2><span id="raspi-&#x306B;-docker-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Raspi &#x306B; docker &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ wget -qO- https://get.docker.com/ | sh</span><br><span class="line">raspi%$ sudo usermod -aG docker pi</span><br><span class="line">raspi%$ sudo gpasswd -a $USER docker</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="raspi-に-docker-インストール">Raspi に docker インストール</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ wget -qO- https://get.docker.com/ | sh</span><br><span class="line">raspi%$ sudo usermod -aG docker pi</span><br><span class="line">raspi%$ sudo gpasswd -a $USER docker</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="raspi-&#x306B;-docker-compose-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Raspi &#x306B; docker-compose &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ sudo apt-get update</span><br><span class="line">raspi%$ sudo apt-get install -y apt-transport-https</span><br><span class="line">raspi%$ echo &quot;deb https://packagecloud.io/Hypriot/Schatzkiste/debian/ jessie main&quot; | raspi%sudo tee /etc/apt/sources.list.d/hypriot.list</span><br><span class="line">raspi%$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 37BBEE3F7AD95B3F</span><br><span class="line">raspi%$ sudo apt-get update</span><br><span class="line">raspi%$ sudo apt-get install docker-compose</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="raspi-に-docker-compose-インストール">Raspi に docker-compose インストール</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ sudo apt-get update</span><br><span class="line">raspi%$ sudo apt-get install -y apt-transport-https</span><br><span class="line">raspi%$ echo "deb https://packagecloud.io/Hypriot/Schatzkiste/debian/ jessie main" | raspi%sudo tee /etc/apt/sources.list.d/hypriot.list</span><br><span class="line">raspi%$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 37BBEE3F7AD95B3F</span><br><span class="line">raspi%$ sudo apt-get update</span><br><span class="line">raspi%$ sudo apt-get install docker-compose</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>version &#x78BA;&#x8A8D;</li>
+<li>version 確認</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ docker-compose --version</span><br><span class="line">docker-compose version 1.9.0, build 2585387</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="docker-compose-&#x306E;&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x8A2D;&#x5B9A;">docker-compose &#x306E;&#x30D7;&#x30ED;&#x30B8;&#x30A7;&#x30AF;&#x30C8;&#x8A2D;&#x5B9A;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ cd ~</span><br><span class="line">raspi%$ git clone https://github.com/kenzo0107/vagrant-docker</span><br><span class="line">raspi%$ cd vagrant-docker/docker/prometheus-grafana-on-raspi3</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="docker-compose-のプロジェクト設定">docker-compose のプロジェクト設定</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ cd ~</span><br><span class="line">raspi%$ git clone https://github.com/kenzo0107/vagrant-docker</span><br><span class="line">raspi%$ cd vagrant-docker/docker/prometheus-grafana-on-raspi3</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="nginx-basic-&#x8A8D;&#x8A3C;&#x8A2D;&#x5B9A;">Nginx Basic &#x8A8D;&#x8A3C;&#x8A2D;&#x5B9A;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.htpasswd &#x4F5C;&#x6210;&#x6642;&#x306E;&#x30E6;&#x30FC;&#x30B6;/&#x30D1;&#x30B9; == GF_SECURITY_ADMIN_USER/GF_SECURITY_ADMIN_PASSWORD</span><br></pre></td></tr></tbody></table></figure>
-<p>&#x3067;&#x3042;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>Grafana &#x306E;&#x8A8D;&#x8A3C;&#x6A5F;&#x80FD;&#x306B;&#x3088;&#x308A;&#x8A2D;&#x5B9A;&#x3057;&#x305F; Basic &#x8A8D;&#x8A3C;&#x3067;&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3067;&#x304D;&#x308B;&#x4ED5;&#x7D44;&#x307F;&#x304C;&#x3042;&#x308A;&#x3001;<br>&#x4E00;&#x81F4;&#x3057;&#x306A;&#x3044;&#x5834;&#x5408;&#x3001;&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3067;&#x304D;&#x305A;&#x3001;&#x5931;&#x6557;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="nginx-basic-認証設定">Nginx Basic 認証設定</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.htpasswd 作成時のユーザ/パス == GF_SECURITY_ADMIN_USER/GF_SECURITY_ADMIN_PASSWORD</span><br></pre></td></tr></tbody></table></figure>
+<p>である必要があります。</p>
+<p>Grafana の認証機能により設定した Basic 認証でログインできる仕組みがあり、<br>一致しない場合、ログインできず、失敗します。</p>
 <ul>
 <li><p>grafana/env</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GF_SECURITY_ADMIN_USER=admin-user</span><br><span class="line">GF_SECURITY_ADMIN_PASSWORD=admin-pass</span><br></pre></td></tr></tbody></table></figure>
@@ -1843,55 +1843,55 @@ h6.categories {
 <li><p>.htpasswd</p>
 </li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ htpasswd -c nginx/conf/conf.d/.htpasswd admin-user</span><br><span class="line">New password: (&#x300C;admin-pass&#x300D;&#x3068;&#x5165;&#x529B;&#x3057;Enter)</span><br><span class="line">Re-type new password: (&#x300C;admin-pass&#x300D;&#x3068;&#x5165;&#x529B;&#x3057;Enter)</span><br><span class="line">Adding password for user admin-user</span><br><span class="line"></span><br><span class="line">raspi%$ cat nginx/conf/conf.d/.htpasswd</span><br><span class="line">admin-user:$apr1$JLxC83lt$uO7aEn9Z59fZtba4EA7C6/</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ htpasswd -c nginx/conf/conf.d/.htpasswd admin-user</span><br><span class="line">New password: (「admin-pass」と入力しEnter)</span><br><span class="line">Re-type new password: (「admin-pass」と入力しEnter)</span><br><span class="line">Adding password for user admin-user</span><br><span class="line"></span><br><span class="line">raspi%$ cat nginx/conf/conf.d/.htpasswd</span><br><span class="line">admin-user:$apr1$JLxC83lt$uO7aEn9Z59fZtba4EA7C6/</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="cron&#x8A2D;&#x5B9A;">Cron&#x8A2D;&#x5B9A;</span></h2><p>Raspi &#x306E;&#x6E29;&#x5EA6;&#x3084;&#x96FB;&#x5727;&#x3092;&#x5B9A;&#x671F;&#x53D6;&#x5F97;&#x3057; Prometheus &#x306B;&#x8AAD;&#x307F;&#x8FBC;&#x307E;&#x305B;&#x308B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;(*.prom)&#x4F5C;&#x6210;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="cron設定">Cron設定</span></h2><p>Raspi の温度や電圧を定期取得し Prometheus に読み込ませるファイル(*.prom)作成します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/5 * * * * &lt;home/to/path&gt;/vagrant-docker/docker/prometheus-grafana-on-raspi3/node-exporter/collector/raspi.sh</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="docker-compose-&#x306B;&#x3088;&#x308A;-docker-&#x8D77;&#x52D5;">docker-compose &#x306B;&#x3088;&#x308A; Docker &#x8D77;&#x52D5;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ docker-compose up -d</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="docker-compose-により-docker-起動">docker-compose により Docker 起動</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">raspi%$ docker-compose up -d</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="grafana-&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x308B;">Grafana &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x307F;&#x308B;</span></h2><p><code>http://&lt;your_server_ip&gt;:13000</code> &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x3068; .htpasswd &#x3067;&#x6307;&#x5B9A;&#x3057;&#x305F;&#x30E6;&#x30FC;&#x30B6;/&#x30D1;&#x30B9;&#x3092;&#x6C42;&#x3081;&#x3089;&#x308C;&#x308B;&#x306E;&#x3067;&#x5165;&#x529B;&#x3057;&#x307E;&#x3059;</p>
+<h2><span id="grafana-にアクセスしてみる">Grafana にアクセスしてみる</span></h2><p><code>http://&lt;your_server_ip&gt;:13000</code> にアクセスすると .htpasswd で指定したユーザ/パスを求められるので入力します</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170430/20170430235949.png" width="1024" height="891" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x305D;&#x306E;&#x5F8C;&#x3001;Grafana &#x306E;&#x30DA;&#x30FC;&#x30B8;&#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x308C;&#x3070;&#x6210;&#x529F;&#x3067;&#x3059;&#x3002;</p>
+<p>その後、Grafana のページが表示されれば成功です。</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170501/20170501002430.png" width="1024" height="726" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x300C;Add data Source&#x300D;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="data-source-&#x8A2D;&#x5B9A;">Data Source &#x8A2D;&#x5B9A;</span></h2><p>&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x8A2D;&#x5B9A;&#x3057;&#x300C;Save &amp; Test&#x300D;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3057;&#x3057;Success&#x3059;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>「Add data Source」をクリックします。</p>
+<h2><span id="data-source-設定">Data Source 設定</span></h2><p>以下の様に設定し「Save &amp; Test」をクリックししSuccessすることを確認します。</p>
 <div id="hexo-amp-id-3">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170501/20170501002606.png" width="912" height="1024" layout="responsive"></amp-img></div>
 </div>
 
 
-<h2><span id="dashboardjson-&#x30A4;&#x30F3;&#x30DD;&#x30FC;&#x30C8;">Dashboard.json &#x30A4;&#x30F3;&#x30DD;&#x30FC;&#x30C8;</span></h2><p>&#x5DE6;&#x4E0A;&#x306E;&#x30A2;&#x30A4;&#x30B3;&#x30F3;&#x304B;&#x3089; Dashboards &gt; Import &#x9078;&#x629E;&#x3057; DockerDashboard.json &#x3092;&#x30A4;&#x30F3;&#x30DD;&#x30FC;&#x30C8;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="dashboardjson-インポート">Dashboard.json インポート</span></h2><p>左上のアイコンから Dashboards &gt; Import 選択し DockerDashboard.json をインポートします。</p>
 <div id="hexo-amp-id-4">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170501/20170501003915.png" width="684" height="830" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="dashboard-&#x8868;&#x793A;">Dashboard &#x8868;&#x793A;</span></h2><div id="hexo-amp-id-5">
+<h2><span id="dashboard-表示">Dashboard 表示</span></h2><div id="hexo-amp-id-5">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170501/20170501003051.png" width="744" height="1024" layout="responsive"></amp-img></div>
 </div>
 
 
-<h2><span id="&#x30DD;&#x30A4;&#x30F3;&#x30C8;">&#x30DD;&#x30A4;&#x30F3;&#x30C8; !</span></h2><h3><span id="&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x4E0A;&#x306E;&#x89B3;&#x70B9;&#x304B;&#x3089;&#x5916;&#x304B;&#x3089;&#x76F4;&#x63A5;-grafana-&#x3092;&#x53C2;&#x7167;&#x3055;&#x305B;&#x306A;&#x3044;&#x69D8;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;">&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x4E0A;&#x306E;&#x89B3;&#x70B9;&#x304B;&#x3089;&#x5916;&#x304B;&#x3089;&#x76F4;&#x63A5; Grafana &#x3092;&#x53C2;&#x7167;&#x3055;&#x305B;&#x306A;&#x3044;&#x69D8;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</span></h3><p>nginx/conf/conf.d/default.conf</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">    listen       80;</span><br><span class="line"></span><br><span class="line">    location / {</span><br><span class="line">        auth_basic &quot;Restricted&quot;;</span><br><span class="line">        auth_basic_user_file /etc/nginx/conf.d/.htpasswd;</span><br><span class="line"></span><br><span class="line">        proxy_pass                          http://grafana:3000/;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="ポイント">ポイント !</span></h2><h3><span id="セキュリティ上の観点から外から直接-grafana-を参照させない様にしました">セキュリティ上の観点から外から直接 Grafana を参照させない様にしました。</span></h3><p>nginx/conf/conf.d/default.conf</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">    listen       80;</span><br><span class="line"></span><br><span class="line">    location / {</span><br><span class="line">        auth_basic "Restricted";</span><br><span class="line">        auth_basic_user_file /etc/nginx/conf.d/.htpasswd;</span><br><span class="line"></span><br><span class="line">        proxy_pass                          http://grafana:3000/;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h3><span id="image-&#x9078;&#x3073;&#x306F;&#x614E;&#x91CD;&#x306B;">image &#x9078;&#x3073;&#x306F;&#x614E;&#x91CD;&#x306B;&#x3002;</span></h3><p>&#x4EE5;&#x4E0B;&#x306E;&#x70B9;&#x3067;&#x975E;&#x5E38;&#x306B;&#x30CF;&#x30DE;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h3><span id="image-選びは慎重に">image 選びは慎重に。</span></h3><p>以下の点で非常にハマりました。</p>
 <ol>
-<li>Raspberry Pi3 Model B (&#x4ECA;&#x56DE;&#x306F;arm7l)&#x4E0A;&#x3067;&#x52D5;&#x4F5C;&#x3059;&#x308B;&#x304B;</li>
-<li>Nginx &#x3067; Proxy &#x6A5F;&#x80FD;&#x304C;&#x6B63;&#x3057;&#x304F;&#x52D5;&#x4F5C;&#x3059;&#x308B;&#x304B;</li>
+<li>Raspberry Pi3 Model B (今回はarm7l)上で動作するか</li>
+<li>Nginx で Proxy 機能が正しく動作するか</li>
 </ol>
-<p>nginx &#x306E;proxy&#x6A5F;&#x80FD;&#x3067; grafana &#x306B;&#x7E4B;&#x3052;&#x3066;&#x3082; &#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x8868;&#x793A;&#x3055;&#x308C;&#x3066;&#x3057;&#x307E;&#x3046;&#x30B1;&#x30FC;&#x30B9;&#x306B;&#x3076;&#x3064;&#x304B;&#x308A;&#x307E;&#x304F;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>nginx のproxy機能で grafana に繋げても 以下の様に表示されてしまうケースにぶつかりまくりました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{{alert.title}}</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x7DCF;&#x8A55;">&#x7DCF;&#x8A55;</span></h2><p>&#x30A4;&#x30E1;&#x30FC;&#x30B8;&#x63A2;&#x3057;&#x306B;&#x3064;&#x3044;&#x6642;&#x9593;&#x53D6;&#x3063;&#x3066;&#x3057;&#x307E;&#x3044;&#x307E;&#x3057;&#x305F;&#x304C;<br>&#x81EA;&#x4F5C;&#x3057;&#x305F;&#x65B9;&#x304C;&#x65E9;&#x304B;&#x3063;&#x305F;&#x304B;&#x3082;&#x3068;&#x53CD;&#x7701;&#x3002;</p>
-<p>&#x4ECA;&#x56DE;&#x306F;&#x81EA;&#x8EAB;&#x3092;&#x76E3;&#x8996;&#x3059;&#x308B;&#x3068;&#x3044;&#x3046;&#x4ED5;&#x7D44;&#x307F;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x304C;&#x5916;&#x90E8;&#x304B;&#x3089;&#x76E3;&#x8996;&#x3057;&#x76F8;&#x4E92;&#x306B;&#x76E3;&#x8996;&#x3057;&#x5408;&#x3046;&#x4F53;&#x5236;&#x304C;&#x5FC5;&#x8981;&#x3067;&#x3059;&#x3002;<br>&#x5BB6;&#x5EAD;&#x5185;&#x7A1F;&#x8B70;&#x304C;&#x901A;&#x308C;&#x3070;&#x3082;&#x3046;&#x4E00;&#x53F0;get&#x3057;&#x3088;&#x3046;&#xFF01;</p>
-<p>&#x305D;&#x3057;&#x3066;&#x3001;&#x5BB6;&#x5EAD;&#x306E;&#x70BA;&#x306B;&#x306A;&#x308B;&#x3082;&#x306E;&#x3092;&#x4F5C;&#x308D;&#x3046;&#xFF01;</p>
+<h2><span id="総評">総評</span></h2><p>イメージ探しについ時間取ってしまいましたが<br>自作した方が早かったかもと反省。</p>
+<p>今回は自身を監視するという仕組みにしましたが外部から監視し相互に監視し合う体制が必要です。<br>家庭内稟議が通ればもう一台getしよう！</p>
+<p>そして、家庭の為になるものを作ろう！</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1957,7 +1957,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

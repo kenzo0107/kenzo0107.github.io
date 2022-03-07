@@ -1814,41 +1814,41 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>Pacemaker &amp; Corosync &#x306B;&#x3088;&#x308B;<br>AWS &#x3067;&#x306E; Multi-AZ &#x9593;&#x306E;EIP&#x4ED8;&#x3051;&#x66FF;&#x3048;&#x306B;&#x3088;&#x308B;<br>&#x30D5;&#x30A7;&#x30A4;&#x30EB;&#x30AA;&#x30FC;&#x30D0;&#x30FC;&#x306B;&#x3064;&#x3044;&#x3066;&#x5B9F;&#x88C5;&#x3057;&#x305F;&#x306E;&#x3067;&#x307E;&#x3068;&#x3081;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x30A4;&#x30E1;&#x30FC;&#x30B8;&#x3067;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>Pacemaker &amp; Corosync による<br>AWS での Multi-AZ 間のEIP付け替えによる<br>フェイルオーバーについて実装したのでまとめます。</p>
+<p>以下イメージです。</p>
 <ul>
-<li>&#x901A;&#x5E38;&#x72B6;&#x614B;</li>
+<li>通常状態</li>
 </ul>
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/QBvFhti.png" width="3456" height="2198" layout="responsive"></amp-img></div>
 <ul>
-<li>Avalavility Zone A &#x306B;&#x914D;&#x7F6E;&#x3055;&#x308C;&#x305F; Instance A &#x3067;&#x969C;&#x5BB3;&#x304C;&#x767A;&#x751F;&#x3057;&#x305F;&#x5834;&#x5408;<br>Avalavility Zone B &#x306B;&#x914D;&#x7F6E;&#x3055;&#x308C;&#x305F; Instance B &#x306B; EIP&#x3092;&#x4ED8;&#x3051;&#x66FF;&#x3048;</li>
+<li>Avalavility Zone A に配置された Instance A で障害が発生した場合<br>Avalavility Zone B に配置された Instance B に EIPを付け替え</li>
 </ul>
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/xoJ3h8s.png?1" width="3456" height="2198" layout="responsive"></amp-img></div>
 <h2><span id="todo">ToDo</span></h2><ul>
-<li>VPC, Subnet &#x8A2D;&#x5B9A;</li>
-<li>Pacemaker &amp; Corosync &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB; / &#x8A2D;&#x5B9A;</li>
-<li>Cluster &#x69CB;&#x7BC9;</li>
-<li>EIP&#x4ED8;&#x3051;&#x66FF;&#x3048;&#x30B9;&#x30AF;&#x30EA;&#x30D7;&#x30C8;&#x4F5C;&#x6210;</li>
-<li>&#x30D5;&#x30A7;&#x30A4;&#x30EB;&#x30AA;&#x30FC;&#x30D0;&#x30FC;&#x8A66;&#x9A13;</li>
+<li>VPC, Subnet 設定</li>
+<li>Pacemaker &amp; Corosync インストール / 設定</li>
+<li>Cluster 構築</li>
+<li>EIP付け替えスクリプト作成</li>
+<li>フェイルオーバー試験</li>
 </ul>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
-<li>CentOS 7 (x86_64) with Updates HVM (t2.micro)<br>&#x203B; &#x691C;&#x8A3C;&#x7528;&#x306E;&#x70BA;&#x3001; t2.micro&#x3067;&#x5B9F;&#x65BD;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</li>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS 7 (x86_64) with Updates HVM (t2.micro)<br>※ 検証用の為、 t2.microで実施しています。</li>
 </ul>
-<h2><span id="vpc-subnet-&#x69CB;&#x7BC9;">VPC, Subnet &#x69CB;&#x7BC9;</span></h2><p>&#x4EE5;&#x4E0B;&#x8A18;&#x4E8B;&#x306B;&#x3066;&#x975E;&#x5E38;&#x306B;&#x3088;&#x304F;&#x307E;&#x3068;&#x3081;&#x3066;&#x9802;&#x3044;&#x3066;&#x3044;&#x308B;&#x306E;&#x3067;&#x53C2;&#x8003;&#x306B;&#x3057;&#x3066;&#x3044;&#x305F;&#x3060;&#x304D;<br>&#x3053;&#x306E;&#x8A2D;&#x5B9A;&#x3092;&#x4EE5;&#x964D;&#x305D;&#x306E;&#x307E;&#x307E;&#x5229;&#x7528;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p><a href="http://qiita.com/hiroshik1985/items/9de2dd02c9c2f6911f3b">0&#x304B;&#x3089;&#x59CB;&#x3081;&#x308B;AWS&#x5165;&#x9580;&#x2460;&#xFF1A;VPC&#x7DE8;</a></p>
-<h5><span id="&#x5FF5;&#x306E;&#x305F;&#x3081;-&#x4EE5;&#x4E0B;-vpc-subnet-&#x8A2D;&#x5B9A;&#x3067;&#x3059;">&#x5FF5;&#x306E;&#x305F;&#x3081;&#x3001;&#x4EE5;&#x4E0B; VPC, Subnet &#x8A2D;&#x5B9A;&#x3067;&#x3059;&#x3002;</span></h5><ul>
-<li>VPC &#x8A2D;&#x5B9A;</li>
+<h2><span id="vpc-subnet-構築">VPC, Subnet 構築</span></h2><p>以下記事にて非常によくまとめて頂いているので参考にしていただき<br>この設定を以降そのまま利用します。</p>
+<p><a href="http://qiita.com/hiroshik1985/items/9de2dd02c9c2f6911f3b">0から始めるAWS入門①：VPC編</a></p>
+<h5><span id="念のため-以下-vpc-subnet-設定です">念のため、以下 VPC, Subnet 設定です。</span></h5><ul>
+<li>VPC 設定</li>
 </ul>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th><em>&#x9805;&#x76EE;</em></th>
-<th><em>&#x5024;</em></th>
+<th><em>項目</em></th>
+<th><em>値</em></th>
 </tr>
 </thead>
 <tbody><tr>
 <td>Name tag</td>
-<td>&#x4EFB;&#x610F;</td>
+<td>任意</td>
 </tr>
 <tr>
 <td>CIDR</td>
@@ -1860,25 +1860,25 @@ h6.categories {
 </tr>
 </tbody></table></div>
 <ul>
-<li>Subnet &#x8A2D;&#x5B9A;</li>
+<li>Subnet 設定</li>
 </ul>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th><em>&#x9805;&#x76EE;</em></th>
+<th><em>項目</em></th>
 <th>Subnet 1</th>
 <th>Subnet 2</th>
 </tr>
 </thead>
 <tbody><tr>
 <td>Name tag</td>
-<td>&#x4EFB;&#x610F;(VPC&#x306E;&#x30BF;&#x30B0;&#x540D;&#x3068;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x305F;&#x307B;&#x3046;&#x304C;&#x7BA1;&#x7406;&#x3057;&#x3084;&#x3059;&#x3044;)</td>
-<td>&#x4EFB;&#x610F;(VPC&#x306E;&#x30BF;&#x30B0;&#x540D;&#x3068;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x305F;&#x307B;&#x3046;&#x304C;&#x7BA1;&#x7406;&#x3057;&#x3084;&#x3059;&#x3044;)</td>
+<td>任意(VPCのタグ名と関連付けたほうが管理しやすい)</td>
+<td>任意(VPCのタグ名と関連付けたほうが管理しやすい)</td>
 </tr>
 <tr>
 <td>VPC</td>
-<td>&#x4E0A;&#x8A18;&#x3067;&#x4F5C;&#x6210;&#x3057;&#x305F;VPC&#x3092;&#x9078;&#x629E;&#x3059;&#x308B;</td>
-<td>&#x4E0A;&#x8A18;&#x3067;&#x4F5C;&#x6210;&#x3057;&#x305F;VPC&#x3092;&#x9078;&#x629E;&#x3059;&#x308B;</td>
+<td>上記で作成したVPCを選択する</td>
+<td>上記で作成したVPCを選択する</td>
 </tr>
 <tr>
 <td>Availability Zone</td>
@@ -1891,36 +1891,36 @@ h6.categories {
 <td>10.0.1.0/24</td>
 </tr>
 </tbody></table></div>
-<p>&#x4E0A;&#x8A18;VPC&#x8A2D;&#x5B9A;&#x306B;&#x57FA;&#x3065;&#x304D;&#x4EE5;&#x4E0B;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x69CB;&#x7BC9;&#x3059;&#x308B;&#x30A4;&#x30E1;&#x30FC;&#x30B8;&#x306F;&#x4EE5;&#x4E0B;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>上記VPC設定に基づき以下設定していきます。</p>
+<p>構築するイメージは以下になります。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/Vecob6k.png" width="1728" height="1099" layout="responsive"></amp-img></div>
 </div>
 
 
-<h2><span id="&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x4F5C;&#x6210;">&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x4F5C;&#x6210;</span></h2><p>&#x4ECA;&#x56DE;&#x4F5C;&#x6210;&#x3059;&#x308B;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;2&#x3064;&#x306B;&#x30A2;&#x30BF;&#x30C3;&#x30C1;&#x3059;&#x308B;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3092;&#x4E8B;&#x524D;&#x306B;&#x4F5C;&#x6210;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="セキュリティグループ作成">セキュリティグループ作成</span></h2><p>今回作成するインスタンス2つにアタッチするセキュリティグループを事前に作成します。</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/OMoO3DE.png" width="402" height="627" layout="responsive"></amp-img></div>
 </div>
 
-<h4><span id="&#x30DE;&#x30A4;ip&#x304B;&#x3089;&#x306E;ssh&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x8A31;&#x53EF;">&#x30DE;&#x30A4;IP&#x304B;&#x3089;&#x306E;SSH&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x8A31;&#x53EF;</span></h4><div class="table-wrapper"><table>
+<h4><span id="マイipからのsshログイン許可">マイIPからのSSHログイン許可</span></h4><div class="table-wrapper"><table>
 <thead>
 <tr>
-<th><em>&#x9805;&#x76EE;</em></th>
-<th>&#x8A2D;&#x5B9A;&#x5024;</th>
+<th><em>項目</em></th>
+<th>設定値</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x540D;</td>
-<td>VPC-for-EIP(&#x4EFB;&#x610F;)</td>
+<td>セキュリティグループ名</td>
+<td>VPC-for-EIP(任意)</td>
 </tr>
 <tr>
-<td>&#x8AAC;&#x660E;</td>
-<td>VPC-for-EIP(&#x4EFB;&#x610F;)</td>
+<td>説明</td>
+<td>VPC-for-EIP(任意)</td>
 </tr>
 <tr>
 <td>VPC</td>
-<td>&#x4E0A;&#x8A18;&#x3067;&#x4F5C;&#x6210;&#x3057;&#x305F;VPC&#x3092;&#x9078;&#x629E;&#x3059;&#x308B;</td>
+<td>上記で作成したVPCを選択する</td>
 </tr>
 </tbody></table></div>
 <div id="hexo-amp-id-3">
@@ -1928,116 +1928,116 @@ h6.categories {
 </div>
 
 
-<h4><span id="&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x7DE8;&#x96C6;">&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x7DE8;&#x96C6;</span></h4><ul>
-<li>&#x30D5;&#x30A3;&#x30EB;&#x30BF;&#x30FC;&#x3067;&#x691C;&#x7D22;<div id="hexo-amp-id-4">
+<h4><span id="作成したセキュリティグループ編集">作成したセキュリティグループ編集</span></h4><ul>
+<li>フィルターで検索<div id="hexo-amp-id-4">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/iCAVdLY.png" width="794" height="136" layout="responsive"></amp-img></div>
 </div>
 
 </li>
 </ul>
-<p><span id="hexo-amp-id-5">&#x203B;&#x4EE5;&#x4E0B;&#x306F;&#x74B0;&#x5883;&#x306B;&#x3088;&#x308A;&#x5909;&#x66F4;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</span></p>
+<p><span id="hexo-amp-id-5">※以下は環境により変更してください。</span></p>
 <ul>
-<li>&#x9001;&#x4FE1;&#x5143;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30B0;&#x30EB;&#x30FC;&#x30D7;ID&#x3068;&#x3057;&#x4EE5;&#x4E0B;&#x8FFD;&#x52A0;&#x3057;&#x4FDD;&#x5B58;</li>
+<li>送信元を作成したグループIDとし以下追加し保存</li>
 </ul>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th><em>&#x30BF;&#x30A4;&#x30D7;</em></th>
-<th><em>&#x30D7;&#x30ED;&#x30C8;&#x30B3;&#x30EB;</em></th>
-<th><em>&#x30DD;&#x30FC;&#x30C8;&#x7BC4;&#x56F2;</em></th>
-<th><em>&#x9001;&#x4FE1;&#x5143;</em></th>
-<th><em>&#x7528;&#x9014;</em></th>
+<th><em>タイプ</em></th>
+<th><em>プロトコル</em></th>
+<th><em>ポート範囲</em></th>
+<th><em>送信元</em></th>
+<th><em>用途</em></th>
 </tr>
 </thead>
 <tbody><tr>
-<td>&#x3059;&#x3079;&#x3066;&#x306E;TCP</td>
+<td>すべてのTCP</td>
 <td>TCP</td>
 <td>0 - 65535</td>
-<td>&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;ID</td>
-<td>&#x4ECA;&#x56DE;&#x306F;&#x691C;&#x8A3C;&#x7528;&#x306E;&#x70BA;&#x3001;&#x5168;&#x89E3;&#x653E;&#x3002;&#x9069;&#x5B9C;&#x8A2D;&#x5B9A;&#x5909;&#x66F4;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</td>
+<td>作成したセキュリティグループID</td>
+<td>今回は検証用の為、全解放。適宜設定変更してください。</td>
 </tr>
 <tr>
-<td>&#x3059;&#x3079;&#x3066;&#x306E;ICMP</td>
+<td>すべてのICMP</td>
 <td>ICMP</td>
 <td>0 - 65535</td>
-<td>&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;ID</td>
-<td>ping&#x758E;&#x901A;&#x78BA;&#x8A8D;&#x7528;&#x3002;&#x4ECA;&#x56DE;&#x306F;&#x691C;&#x8A3C;&#x7528;&#x306E;&#x70BA;&#x3001;&#x5168;&#x89E3;&#x653E;  &#x9069;&#x5B9C;&#x8A2D;&#x5B9A;&#x5909;&#x66F4;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</td>
+<td>作成したセキュリティグループID</td>
+<td>ping疎通確認用。今回は検証用の為、全解放  適宜設定変更してください。</td>
 </tr>
 <tr>
-<td>&#x3059;&#x3079;&#x3066;&#x306E;UDP</td>
+<td>すべてのUDP</td>
 <td>UDP</td>
 <td>0 - 65535</td>
-<td>&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;ID</td>
-<td>corosync&#x3067;&#x5FC5;&#x8981;&#x306A;&#x30DD;&#x30FC;&#x30C8;&#x306F;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x3067; 5404 - 5405&#x3002;  &#x74B0;&#x5883;&#x306B;&#x3088;&#x308A;&#x8A2D;&#x5B9A;&#x5909;&#x66F4;&#x3059;&#x308B;&#x5834;&#x5408;&#x306F;&#x6CE8;&#x610F;&#x304C;&#x5FC5;&#x8981;&#x3067;&#x3059;&#x3002;&#x4ECA;&#x56DE;&#x306F;&#x691C;&#x8A3C;&#x7528;&#x306E;&#x70BA;&#x3001;&#x5168;&#x89E3;&#x653E;&#x3002;&#x9069;&#x5B9C;&#x8A2D;&#x5B9A;&#x5909;&#x66F4;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</td>
+<td>作成したセキュリティグループID</td>
+<td>corosyncで必要なポートはデフォルトで 5404 - 5405。  環境により設定変更する場合は注意が必要です。今回は検証用の為、全解放。適宜設定変更してください。</td>
 </tr>
 <tr>
 <td>SSH</td>
 <td>TCP</td>
 <td>20</td>
-<td>&#x30DE;&#x30A4;IP</td>
-<td>&#x81EA;PC&#x7AEF;&#x672B;&#x304B;&#x3089;SSH&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x7528;&#x3002;&#x5B9F;&#x74B0;&#x5883;&#x3067;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x306F;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</td>
+<td>マイIP</td>
+<td>自PC端末からSSHログイン用。実環境で設定する必要はありません。</td>
 </tr>
 <tr>
 <td>HTTP</td>
 <td>TCP</td>
 <td>80</td>
-<td>&#x30DE;&#x30A4;IP</td>
-<td>FailOver&#x691C;&#x8A3C;&#x7528;&#x3002;&#x5B9F;&#x74B0;&#x5883;&#x3067;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x306F;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</td>
+<td>マイIP</td>
+<td>FailOver検証用。実環境で設定する必要はありません。</td>
 </tr>
 </tbody></table></div>
 <div id="hexo-amp-id-6">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/tqo68AU.png" width="1354" height="496" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x9069;&#x7528;&#x3059;&#x308B;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306E;&#x4F5C;&#x6210;&#x304C;&#x5B8C;&#x4E86;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>以上でインスタンスに適用するセキュリティグループの作成が完了しました。</p>
 <hr>
-<h2><span id="&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x4F5C;&#x6210;">&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x4F5C;&#x6210;</span></h2><p>&#x4ECA;&#x56DE;&#x3001;&#x4EE5;&#x4E0B;&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x3092;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="ポリシー作成">ポリシー作成</span></h2><p>今回、以下コマンドを実行する必要があります。</p>
 <div class="table-wrapper"><table>
 <thead>
 <tr>
-<th><em>&#x30B3;&#x30DE;&#x30F3;&#x30C9;</em></th>
-<th><em>&#x7528;&#x9014;</em></th>
+<th><em>コマンド</em></th>
+<th><em>用途</em></th>
 </tr>
 </thead>
 <tbody><tr>
 <td>aws ec2 associate-address</td>
-<td>ElasticIP&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x308B;</td>
+<td>ElasticIPをインスタンスに関連付ける</td>
 </tr>
 <tr>
 <td>aws ec2 disassociate-address</td>
-<td>ElasticIP&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x89E3;&#x9664;</td>
+<td>ElasticIPをインスタンス関連付け解除</td>
 </tr>
 <tr>
 <td>aws ec2 describe-addresses</td>
-<td>IP&#x30A2;&#x30C9;&#x30EC;&#x30B9;&#x306B;&#x3064;&#x3044;&#x3066;&#x8A73;&#x7D30;&#x53D6;&#x5F97;</td>
+<td>IPアドレスについて詳細取得</td>
 </tr>
 </tbody></table></div>
-<h5><span id="identity-amp-access-management-&#x30DA;&#x30FC;&#x30B8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;">Identity &amp; Access Management &#x30DA;&#x30FC;&#x30B8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;</span></h5><div id="hexo-amp-id-7">
+<h5><span id="identity-amp-access-management-ページにアクセス">Identity &amp; Access Management ページにアクセス</span></h5><div id="hexo-amp-id-7">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/SXbwsQO.png" width="453" height="589" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x30DD;&#x30B7;&#x30EA;&#x30FC;&#x4F5C;&#x6210;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">&#x300C;&#x30DD;&#x30B7;&#x30EA;&#x30FC;&#x4F5C;&#x6210;&#x300D;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h5><div id="hexo-amp-id-8">
+<h5><span id="ポシリー作成クリック">「ポシリー作成」クリック</span></h5><div id="hexo-amp-id-8">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/YtCrsuO.png" width="596" height="596" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x72EC;&#x81EA;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x4F5C;&#x6210;">&#x72EC;&#x81EA;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x4F5C;&#x6210;</span></h5><div id="hexo-amp-id-9">
+<h5><span id="独自ポリシー作成">独自ポリシー作成</span></h5><div id="hexo-amp-id-9">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/ESnqZ9e.png" width="1460" height="670" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x72EC;&#x81EA;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x60C5;&#x5831;&#x5165;&#x529B;">&#x72EC;&#x81EA;&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x60C5;&#x5831;&#x5165;&#x529B;</span></h5><ul>
-<li>&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x540D;(&#x4EFB;&#x610F;)</li>
+<h5><span id="独自ポリシー情報入力">独自ポリシー情報入力</span></h5><ul>
+<li>ポリシー名(任意)</li>
 </ul>
 <p>floatingElasticIP</p>
 <ul>
-<li>&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x30C9;&#x30AD;&#x30E5;&#x30E1;&#x30F3;&#x30C8;</li>
+<li>ポリシードキュメント</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    &quot;Version&quot;: &quot;2012-10-17&quot;,</span><br><span class="line">    &quot;Statement&quot;: [</span><br><span class="line">        {</span><br><span class="line">            &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">            &quot;Action&quot;: [</span><br><span class="line">                &quot;ec2:Describe*&quot;,</span><br><span class="line">                &quot;ec2:DisassociateAddress&quot;,</span><br><span class="line">                &quot;ec2:AssociateAddress&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;Resource&quot;: [</span><br><span class="line">                &quot;*&quot;</span><br><span class="line">            ]</span><br><span class="line">        }</span><br><span class="line">    ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">    "Version": "2012-10-17",</span><br><span class="line">    "Statement": [</span><br><span class="line">        {</span><br><span class="line">            "Effect": "Allow",</span><br><span class="line">            "Action": [</span><br><span class="line">                "ec2:Describe*",</span><br><span class="line">                "ec2:DisassociateAddress",</span><br><span class="line">                "ec2:AssociateAddress"</span><br><span class="line">            ],</span><br><span class="line">            "Resource": [</span><br><span class="line">                "*"</span><br><span class="line">            ]</span><br><span class="line">        }</span><br><span class="line">    ]</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <div id="hexo-amp-id-10">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/pBl5BIx.png" width="1458" height="1066" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x78BA;&#x8A8D;">&#x78BA;&#x8A8D;</span></h5><div id="hexo-amp-id-11">
+<h5><span id="確認">確認</span></h5><div id="hexo-amp-id-11">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/NQCNu3S.png" width="1056" height="278" layout="responsive"></amp-img></div>
 </div>
 
@@ -2045,286 +2045,286 @@ h6.categories {
 
 
 
-<h2><span id="iam&#x30ED;&#x30FC;&#x30EB;&#x4F5C;&#x6210;">IAM&#x30ED;&#x30FC;&#x30EB;&#x4F5C;&#x6210;</span></h2><p>ElasticIP&#x306E;&#x4ED8;&#x3051;&#x66FF;&#x3048;&#x6A29;&#x9650;&#x3092;&#x6301;&#x3063;&#x305F;&#x30ED;&#x30FC;&#x30EB;&#x3092;&#x4F5C;&#x6210;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h5><span id="&#x65B0;&#x3057;&#x3044;&#x30ED;&#x30FC;&#x30EB;&#x306E;&#x4F5C;&#x6210;-&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">&#x65B0;&#x3057;&#x3044;&#x30ED;&#x30FC;&#x30EB;&#x306E;&#x4F5C;&#x6210; &#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h5><div id="hexo-amp-id-12">
+<h2><span id="iamロール作成">IAMロール作成</span></h2><p>ElasticIPの付け替え権限を持ったロールを作成します。</p>
+<h5><span id="新しいロールの作成-をクリック">新しいロールの作成 をクリック</span></h5><div id="hexo-amp-id-12">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/5gceMNE.png" width="445" height="306" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x30ED;&#x30FC;&#x30EB;&#x540D;&#x306E;&#x8A2D;&#x5B9A;">&#x30ED;&#x30FC;&#x30EB;&#x540D;&#x306E;&#x8A2D;&#x5B9A;</span></h5><div id="hexo-amp-id-13">
+<h5><span id="ロール名の設定">ロール名の設定</span></h5><div id="hexo-amp-id-13">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/jm6Xd6R.png" width="832" height="231" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x30ED;&#x30FC;&#x30EB;&#x30BF;&#x30A4;&#x30D7;&#x306E;&#x9078;&#x629E;">&#x30ED;&#x30FC;&#x30EB;&#x30BF;&#x30A4;&#x30D7;&#x306E;&#x9078;&#x629E;</span></h5><p><code>Amazon EC2</code> &#x306E;&#x300C;&#x9078;&#x629E;&#x300D;&#x30DC;&#x30BF;&#x30F3;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<h5><span id="ロールタイプの選択">ロールタイプの選択</span></h5><p><code>Amazon EC2</code> の「選択」ボタンをクリック</p>
 <div id="hexo-amp-id-14">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/1WlUrxd.png" width="844" height="364" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306E;&#x30A2;&#x30BF;&#x30C3;&#x30C1;">&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306E;&#x30A2;&#x30BF;&#x30C3;&#x30C1;</span></h5><div id="hexo-amp-id-15">
+<h5><span id="ポリシーのアタッチ">ポリシーのアタッチ</span></h5><div id="hexo-amp-id-15">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/2SQnomX.png" width="1632" height="438" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x767B;&#x9332;&#x5185;&#x5BB9;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x30ED;&#x30FC;&#x30EB;&#x306E;&#x4F5C;&#x6210;">&#x767B;&#x9332;&#x5185;&#x5BB9;&#x3092;&#x78BA;&#x8A8D;&#x3057;&#x30ED;&#x30FC;&#x30EB;&#x306E;&#x4F5C;&#x6210;</span></h5><div id="hexo-amp-id-16">
+<h5><span id="登録内容を確認しロールの作成">登録内容を確認しロールの作成</span></h5><div id="hexo-amp-id-16">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/2ShhAQb.png" width="1258" height="502" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x4F5C;&#x6210;&#x3055;&#x308C;&#x305F;&#x304B;&#x78BA;&#x8A8D;">&#x4F5C;&#x6210;&#x3055;&#x308C;&#x305F;&#x304B;&#x78BA;&#x8A8D;</span></h5><div id="hexo-amp-id-17">
+<h5><span id="作成されたか確認">作成されたか確認</span></h5><div id="hexo-amp-id-17">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/ku9OuEY.png" width="769" height="104" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x9069;&#x7528;&#x3059;&#x308B;IAM&#x30ED;&#x30FC;&#x30EB;&#x306E;&#x4F5C;&#x6210;&#x304C;&#x5B8C;&#x4E86;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x30E6;&#x30FC;&#x30B6;&#x4F5C;&#x6210;">&#x30E6;&#x30FC;&#x30B6;&#x4F5C;&#x6210;</span></h2><h5><span id="identity-amp-access-management-&#x30DA;&#x30FC;&#x30B8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;">Identity &amp; Access Management &#x30DA;&#x30FC;&#x30B8;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;</span></h5><div id="hexo-amp-id-18">
+<p>以上でインスタンスに適用するIAMロールの作成が完了しました。</p>
+<h2><span id="ユーザ作成">ユーザ作成</span></h2><h5><span id="identity-amp-access-management-ページにアクセス">Identity &amp; Access Management ページにアクセス</span></h5><div id="hexo-amp-id-18">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/SXbwsQO.png" width="453" height="589" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x30E1;&#x30CB;&#x30E5;&#x30FC;&#x304B;&#x3089;&#x30E6;&#x30FC;&#x30B6;&#x30AF;&#x30EA;&#x30C3;&#x30AF;-amp-&#x65B0;&#x898F;&#x30E6;&#x30FC;&#x30B6;&#x306E;&#x4F5C;&#x6210;-&#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">&#x30E1;&#x30CB;&#x30E5;&#x30FC;&#x304B;&#x3089;&#x30E6;&#x30FC;&#x30B6;&#x30AF;&#x30EA;&#x30C3;&#x30AF; &amp; &#x65B0;&#x898F;&#x30E6;&#x30FC;&#x30B6;&#x306E;&#x4F5C;&#x6210; &#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h5><div id="hexo-amp-id-19">
+<h5><span id="メニューからユーザクリック-amp-新規ユーザの作成-ボタンクリック">メニューからユーザクリック &amp; 新規ユーザの作成 ボタンクリック</span></h5><div id="hexo-amp-id-19">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/CgXjbXe.png" width="846" height="323" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x30E6;&#x30FC;&#x30B6;&#x540D;&#x5165;&#x529B;&#x3057;&#x4F5C;&#x6210;&#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">&#x30E6;&#x30FC;&#x30B6;&#x540D;&#x5165;&#x529B;&#x3057;&#x4F5C;&#x6210;&#x30DC;&#x30BF;&#x30F3;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h5><div id="hexo-amp-id-20">
+<h5><span id="ユーザ名入力し作成ボタンクリック">ユーザ名入力し作成ボタンクリック</span></h5><div id="hexo-amp-id-20">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/krwAV7x.png" width="716" height="325" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x8A8D;&#x8A3C;&#x60C5;&#x5831;&#x3092;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">&#x8A8D;&#x8A3C;&#x60C5;&#x5831;&#x3092;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h5><p><code>Access Key Id</code> &#x3068; <code>Secret Access Key</code> &#x304C;&#x8A18;&#x8F09;&#x3055;&#x308C;&#x305F;CSV&#x304C;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;<br>&#x5927;&#x5207;&#x306B;&#x4FDD;&#x7BA1;&#x3057;&#x307E;&#x3057;&#x3087;&#x3046;&#x3002;</p>
+<h5><span id="認証情報をダウンロードクリック">認証情報をダウンロードクリック</span></h5><p><code>Access Key Id</code> と <code>Secret Access Key</code> が記載されたCSVがダウンロードされます。<br>大切に保管しましょう。</p>
 <div id="hexo-amp-id-21">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/aijHfiD.png" width="727" height="238" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x4F5C;&#x6210;&#x3055;&#x308C;&#x305F;&#x30E6;&#x30FC;&#x30B6;&#x30FC;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;">&#x4F5C;&#x6210;&#x3055;&#x308C;&#x305F;&#x30E6;&#x30FC;&#x30B6;&#x30FC;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;</span></h5><div id="hexo-amp-id-22">
+<h5><span id="作成されたユーザーにアクセス">作成されたユーザーにアクセス</span></h5><div id="hexo-amp-id-22">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/GZlHWhS.png" width="410" height="181" layout="responsive"></amp-img></div>
 </div>
 
 
-<h5><span id="&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306E;&#x30A2;&#x30BF;&#x30C3;&#x30C1;&#x958B;&#x59CB;">&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306E;&#x30A2;&#x30BF;&#x30C3;&#x30C1;&#x958B;&#x59CB;</span></h5><div id="hexo-amp-id-23">
+<h5><span id="ポリシーのアタッチ開始">ポリシーのアタッチ開始</span></h5><div id="hexo-amp-id-23">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/7eqSqLN.png" width="362" height="416" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306B;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3092;&#x5165;&#x308C;&#x30A2;&#x30BF;&#x30C3;&#x30C1;">&#x30DD;&#x30EA;&#x30B7;&#x30FC;&#x306B;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3092;&#x5165;&#x308C;&#x30A2;&#x30BF;&#x30C3;&#x30C1;</span></h5><div id="hexo-amp-id-24">
+<h5><span id="ポリシーにチェックを入れアタッチ">ポリシーにチェックを入れアタッチ</span></h5><div id="hexo-amp-id-24">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/GzFx20A.png" width="1618" height="444" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;<br><code>AmazonEC2FullAccess</code> &#x6A29;&#x9650;&#x3092;&#x6301;&#x3063;&#x305F;&#x30E6;&#x30FC;&#x30B6; <code>floatingIP</code> &#x30E6;&#x30FC;&#x30B6;&#x304C;&#x4F5C;&#x6210;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4E0A;&#x8A18;&#x30E6;&#x30FC;&#x30B6;&#x306E;&#x8A8D;&#x8A3C;&#x60C5;&#x5831;&#x306F; &#x624B;&#x9806; <code>aws-cli &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</code> &#x3067;&#x5229;&#x7528;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>以上で<br><code>AmazonEC2FullAccess</code> 権限を持ったユーザ <code>floatingIP</code> ユーザが作成されました。</p>
+<p>上記ユーザの認証情報は 手順 <code>aws-cli インストール</code> で利用します。</p>
 <hr>
-<h2><span id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x4F5C;&#x6210;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x4F5C;&#x6210;</span></h2><ul>
-<li>&#x4E0A;&#x8A18;&#x3067;&#x4F5C;&#x6210;&#x3057;&#x305F;VPC&#x306E;Subnet (ap-northeast-1a)&#x306B;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9; (&#x4EE5;&#x964D;Instance A)&#x3092;&#x4F5C;&#x6210;&#x3057;&#x307E;&#x3059;&#x3002;</li>
+<h2><span id="インスタンスの作成">インスタンスの作成</span></h2><ul>
+<li>上記で作成したVPCのSubnet (ap-northeast-1a)にインスタンス (以降Instance A)を作成します。</li>
 </ul>
-<h4><span id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x4F5C;&#x6210;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">&#x300C;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x4F5C;&#x6210;&#x300D;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h4><div id="hexo-amp-id-25">
+<h4><span id="インスタンスの作成をクリック">「インスタンスの作成」をクリック</span></h4><div id="hexo-amp-id-25">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/xUusATW.png" width="968" height="754" layout="responsive"></amp-img></div>
 </div>
 
 
-<h4><span id="&#x30DE;&#x30B7;&#x30F3;&#x30A4;&#x30E1;&#x30FC;&#x30B8;&#x9078;&#x629E;">&#x30DE;&#x30B7;&#x30F3;&#x30A4;&#x30E1;&#x30FC;&#x30B8;&#x9078;&#x629E;</span></h4><p>&#x4ECA;&#x56DE;&#x306F; <code>CentOS 7 (x86_64) with Updates HVM</code> &#x3092;&#x9078;&#x629E;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h4><span id="マシンイメージ選択">マシンイメージ選択</span></h4><p>今回は <code>CentOS 7 (x86_64) with Updates HVM</code> を選択します。</p>
 <div id="hexo-amp-id-26">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/lpufR9j.png" width="1314" height="796" layout="responsive"></amp-img></div>
 </div>
 
 
-<h4><span id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x30BF;&#x30A4;&#x30D7;&#x9078;&#x629E;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x30BF;&#x30A4;&#x30D7;&#x9078;&#x629E;</span></h4><p>&#x4ECA;&#x56DE;&#x306F;&#x691C;&#x8A3C;&#x7528;&#x3067;&#x7121;&#x6599;&#x67A0;&#x3068;&#x3057;&#x3066;&#x5229;&#x7528;&#x3057;&#x305F;&#x3044;&#x306E;&#x3067; <code>t2.micro</code> &#x3092;&#x9078;&#x629E;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h4><span id="インスタンスタイプ選択">インスタンスタイプ選択</span></h4><p>今回は検証用で無料枠として利用したいので <code>t2.micro</code> を選択します。</p>
 <div id="hexo-amp-id-27">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/6dtDEyx.png" width="1526" height="908" layout="responsive"></amp-img></div>
 </div>
 
-<h4><span id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x8A73;&#x7D30;&#x306E;&#x8A2D;&#x5B9A;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x8A73;&#x7D30;&#x306E;&#x8A2D;&#x5B9A;</span></h4><p><code>ap-northeast-1a</code> &#x306B;&#x4F5C;&#x6210;&#x3059;&#x308B; <code>Instance A</code> &#x306E;&#x30D7;&#x30E9;&#x30A4;&#x30DE;&#x30EA;IP&#x3092;<br><code>10.0.0.20</code> &#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h4><span id="インスタンスの詳細の設定">インスタンスの詳細の設定</span></h4><p><code>ap-northeast-1a</code> に作成する <code>Instance A</code> のプライマリIPを<br><code>10.0.0.20</code> とします。</p>
 <div id="hexo-amp-id-28">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/NLKElwj.png" width="726" height="662" layout="responsive"></amp-img></div>
 </div>
 
 
-<h4><span id="&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B8;&#x306E;&#x8FFD;&#x52A0;">&#x30B9;&#x30C8;&#x30EC;&#x30FC;&#x30B8;&#x306E;&#x8FFD;&#x52A0;</span></h4><p>&#x7279;&#x306B;&#x5909;&#x66F4;&#x3059;&#x308B;&#x3053;&#x3068;&#x306A;&#x304F;&#x6B21;&#x306E;&#x624B;&#x9806;&#x3078;</p>
+<h4><span id="ストレージの追加">ストレージの追加</span></h4><p>特に変更することなく次の手順へ</p>
 <div id="hexo-amp-id-29">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/oxgrhev.png" width="1406" height="826" layout="responsive"></amp-img></div>
 </div>
 
 
-<h4><span id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x30BF;&#x30B0;&#x4ED8;&#x3051;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x30BF;&#x30B0;&#x4ED8;&#x3051;</span></h4><p><code>Name</code> &#x30BF;&#x30B0;&#x306B; <code>Instance A</code> &#x3068;&#x6307;&#x5B9A;&#x3057;&#x307E;&#x3059;&#x3002;<br>&#x203B; &#x4EFB;&#x610F;&#x306A;&#x306E;&#x3067;&#x308F;&#x304B;&#x308A;&#x3084;&#x3059;&#x3044;&#x30C6;&#x30AD;&#x30B9;&#x30C8;&#x3067;&#x3042;&#x308C;&#x3070;&#x826F;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<h4><span id="インスタンスのタグ付け">インスタンスのタグ付け</span></h4><p><code>Name</code> タグに <code>Instance A</code> と指定します。<br>※ 任意なのでわかりやすいテキストであれば良いです。</p>
 <div id="hexo-amp-id-30">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/hPol99o.png" width="1234" height="566" layout="responsive"></amp-img></div>
 </div>
 
 
-<h4><span id="&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306E;&#x8A2D;&#x5B9A;">&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x306E;&#x8A2D;&#x5B9A;</span></h4><ul>
-<li>&#x4E8B;&#x524D;&#x306B;&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;&#x3092;&#x9078;&#x629E;</li>
+<h4><span id="セキュリティグループの設定">セキュリティグループの設定</span></h4><ul>
+<li>事前に作成したセキュリティグループを選択</li>
 </ul>
 <div id="hexo-amp-id-31">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/M0eWyCo.png" width="881" height="600" layout="responsive"></amp-img></div>
 </div>
 
 
-<h4><span id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x4F5C;&#x6210;&#x306E;&#x78BA;&#x8A8D;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x4F5C;&#x6210;&#x306E;&#x78BA;&#x8A8D;</span></h4><div id="hexo-amp-id-32">
+<h4><span id="インスタンス作成の確認">インスタンス作成の確認</span></h4><div id="hexo-amp-id-32">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/IAEUp2R.png" width="1242" height="956" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;&#x3067; <code>Insntace A</code> &#x306E;&#x4F5C;&#x6210;&#x304C;&#x5B8C;&#x4E86;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x540C;&#x69D8;&#x306B;-instance-b-&#x4F5C;&#x6210;">&#x540C;&#x69D8;&#x306B; <code>Instance B</code> &#x4F5C;&#x6210;</span></h2><h6><span id="instance-a-&#x3068;&#x306E;&#x4E3B;&#x306A;&#x5909;&#x66F4;&#x70B9;"><code>Instance A</code> &#x3068;&#x306E;&#x4E3B;&#x306A;&#x5909;&#x66F4;&#x70B9;</span></h6><ul>
-<li>Subnet <code>10.0.1.0/24</code> &#x3092;&#x9078;&#x629E;</li>
-<li>&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306E;&#x30BF;&#x30B0;&#x306F; <code>Instance B</code> &#x3068;&#x3059;&#x308B;</li>
+<p>以上で <code>Insntace A</code> の作成が完了しました。</p>
+<h2><span id="同様に-instance-b-作成">同様に <code>Instance B</code> 作成</span></h2><h6><span id="instance-a-との主な変更点"><code>Instance A</code> との主な変更点</span></h6><ul>
+<li>Subnet <code>10.0.1.0/24</code> を選択</li>
+<li>インスタンスのタグは <code>Instance B</code> とする</li>
 </ul>
-<h6><span id="instance-b-&#x8A2D;&#x5B9A;&#x6642;&#x6CE8;&#x610F;&#x70B9;"><code>Instance B</code> &#x8A2D;&#x5B9A;&#x6642;&#x6CE8;&#x610F;&#x70B9;</span></h6><ul>
-<li><code>&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;</code> &#x306F; <code>Instance B</code> &#x3067;&#x3082;&#x540C;&#x69D8; <code>Instance A</code> &#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x305F;<br><code>&#x30BB;&#x30AD;&#x30E5;&#x30EA;&#x30C6;&#x30A3;&#x30B0;&#x30EB;&#x30FC;&#x30D7;</code> &#x3092;&#x9078;&#x629E;&#x3059;&#x308B;&#x3002;</li>
+<h6><span id="instance-b-設定時注意点"><code>Instance B</code> 設定時注意点</span></h6><ul>
+<li><code>セキュリティグループ</code> は <code>Instance B</code> でも同様 <code>Instance A</code> で設定した<br><code>セキュリティグループ</code> を選択する。</li>
 </ul>
 <div id="hexo-amp-id-33">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/it25cK3.png" width="872" height="687" layout="responsive"></amp-img></div>
 </div>
 
 
-<h2><span id="&#x9001;&#x4FE1;&#x5143;&#x9001;&#x4FE1;&#x5148;&#x306E;&#x5909;&#x66F4;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3092;&#x7121;&#x52B9;&#x5316;">&#x9001;&#x4FE1;&#x5143;/&#x9001;&#x4FE1;&#x5148;&#x306E;&#x5909;&#x66F4;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3092;&#x7121;&#x52B9;&#x5316;</span></h2><p>&#x203B;&#x4E0A;&#x8A18; Instance A, B &#x5171;&#x306B; <code>Source/Destination Check</code> (&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF; &gt; &#x9001;&#x4FE1;&#x5143;/&#x9001;&#x4FE1;&#x5148;&#x306E;&#x5909;&#x66F4;&#x30C1;&#x30A7;&#x30C3;&#x30AF;) &#x3092; <code>Disabled</code> (&#x7121;&#x52B9;) &#x306B;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x304C;&#x3042;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="送信元送信先の変更チェックを無効化">送信元/送信先の変更チェックを無効化</span></h2><p>※上記 Instance A, B 共に <code>Source/Destination Check</code> (ネットワーク &gt; 送信元/送信先の変更チェック) を <code>Disabled</code> (無効) に設定する必要があります。</p>
 <div id="hexo-amp-id-34">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/eYjJF0i.png" width="477" height="335" layout="responsive"></amp-img></div>
 </div>
 
 
-<h2><span id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;-ssh&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x5F8C;&#x307E;&#x305A;&#x3084;&#x308B;&#x3053;&#x3068;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9; SSH&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x5F8C;&#x307E;&#x305A;&#x3084;&#x308B;&#x3053;&#x3068;</span></h2><h4><span id="&#x6700;&#x4F4E;&#x9650;&#x5FC5;&#x8981;&#x306A;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">&#x6700;&#x4F4E;&#x9650;&#x5FC5;&#x8981;&#x306A;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h4><p>&#x203B; git &#x306F; ElasticIP&#x4ED8;&#x3051;&#x66FF;&#x3048;&#x6642;&#x306E;&#x30B7;&#x30A7;&#x30EB;&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3059;&#x308B;&#x969B;&#x306B;&#x5FC5;&#x8981;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="インスタンス-sshログイン後まずやること">インスタンス SSHログイン後まずやること</span></h2><h4><span id="最低限必要なモジュールインストール">最低限必要なモジュールインストール</span></h4><p>※ git は ElasticIP付け替え時のシェルをインストールする際に必要になります。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# yum install -y git</span><br><span class="line"></span><br><span class="line">[Instance A &amp; B ]# git --version</span><br><span class="line"></span><br><span class="line">git version 1.8.3.1</span><br></pre></td></tr></tbody></table></figure>
 
-<h4><span id="fail-over-&#x691C;&#x8A3C;&#x7528;&#x306B;-httpd-php-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Fail Over &#x691C;&#x8A3C;&#x7528;&#x306B; httpd, php &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h4><p>&#x3042;&#x304F;&#x307E;&#x3067; Fail Over &#x6642;&#x306E;&#x52D5;&#x304D;&#x3092;&#x898B;&#x308B;&#x70BA;&#x306E;&#x78BA;&#x8A8D;&#x7528;&#x306B;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x8D77;&#x52D5;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;<br><span id="hexo-amp-id-35">&#x203B;&#x5FC5;&#x9808;&#x5DE5;&#x7A0B;&#x3067;&#x306F;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</span></p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# yum --disableexcludes=main install -y gcc</span><br><span class="line">[Instance A &amp; B ]# yum install -y gmp gmp-devel</span><br><span class="line">[Instance A &amp; B ]# yum install -y php php-mysql httpd libxml2-devel net-snmp net-snmp-devel curl-devel gettext</span><br><span class="line">[Instance A &amp; B ]# echo &apos;&lt;?php print_r($_SERVER[&quot;SERVER_ADDR&quot;]); ?&gt;&apos; &gt; /var/www/html/index.php</span><br><span class="line">[Instance A &amp; B ]# systemctl start httpd</span><br><span class="line">[Instance A &amp; B ]# systemctl enable httpd</span><br></pre></td></tr></tbody></table></figure>
+<h4><span id="fail-over-検証用に-httpd-php-インストール">Fail Over 検証用に httpd, php インストール</span></h4><p>あくまで Fail Over 時の動きを見る為の確認用にインストールし起動しています。<br><span id="hexo-amp-id-35">※必須工程ではありません。</span></p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# yum --disableexcludes=main install -y gcc</span><br><span class="line">[Instance A &amp; B ]# yum install -y gmp gmp-devel</span><br><span class="line">[Instance A &amp; B ]# yum install -y php php-mysql httpd libxml2-devel net-snmp net-snmp-devel curl-devel gettext</span><br><span class="line">[Instance A &amp; B ]# echo '&lt;?php print_r($_SERVER["SERVER_ADDR"]); ?&gt;' &gt; /var/www/html/index.php</span><br><span class="line">[Instance A &amp; B ]# systemctl start httpd</span><br><span class="line">[Instance A &amp; B ]# systemctl enable httpd</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h4><span id="system-clock-&#x8ABF;&#x6574;-jst&#x8A2D;&#x5B9A;">system clock &#x8ABF;&#x6574; JST&#x8A2D;&#x5B9A;</span></h4><p>OS&#x5185;&#x306E;&#x6642;&#x9593;&#x304C;&#x73FE;&#x5B9F;&#x306E;&#x6642;&#x9593;&#x3068;&#x305A;&#x308C;&#x3066;&#x3044;&#x308B;&#x3068;<br>aws-cli&#x304C;&#x6B63;&#x5E38;&#x306B;&#x52D5;&#x4F5C;&#x3057;&#x306A;&#x3044;&#x53EF;&#x80FD;&#x6027;&#x304C;&#x3042;&#x308B;&#x306E;&#x3067;<br>&#x5FF5;&#x306E;&#x70BA;&#x3001;&#x8ABF;&#x6574;&#x3057;&#x3066;&#x304A;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># &#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;&#x78BA;&#x4FDD;</span><br><span class="line">[Instance A &amp; B ]# cp /etc/sysconfig/clock /etc/sysconfig/clock.org</span><br><span class="line"></span><br><span class="line"># &#x518D;&#x8D77;&#x52D5;&#x3057;&#x3066;&#x3082;&#x8A2D;&#x5B9A;&#x7DAD;&#x6301;&#x3059;&#x308B;&#x69D8;&#x306B;&#x3059;&#x308B;&#x3002;</span><br><span class="line">[Instance A &amp; B ]# echo -e &apos;ZONE=&quot;Asia/Tokyo&quot;\nUTC=false&apos; &gt; /etc/sysconfig/clock</span><br><span class="line"></span><br><span class="line"># &#x30D0;&#x30C3;&#x30AF;&#x30A2;&#x30C3;&#x30D7;&#x78BA;&#x4FDD;</span><br><span class="line">[Instance A &amp; B ]# cp /etc/localtime /etc/localtime.org</span><br><span class="line"></span><br><span class="line"># Asia/Tokyo &#x3092; localtime &#x306B;&#x8A2D;&#x5B9A;</span><br><span class="line">[Instance A &amp; B ]# ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime</span><br><span class="line"></span><br><span class="line">[Instance A &amp; B ]# date</span><br></pre></td></tr></tbody></table></figure>
+<h4><span id="system-clock-調整-jst設定">system clock 調整 JST設定</span></h4><p>OS内の時間が現実の時間とずれていると<br>aws-cliが正常に動作しない可能性があるので<br>念の為、調整しておきます。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># バックアップ確保</span><br><span class="line">[Instance A &amp; B ]# cp /etc/sysconfig/clock /etc/sysconfig/clock.org</span><br><span class="line"></span><br><span class="line"># 再起動しても設定維持する様にする。</span><br><span class="line">[Instance A &amp; B ]# echo -e 'ZONE="Asia/Tokyo"\nUTC=false' &gt; /etc/sysconfig/clock</span><br><span class="line"></span><br><span class="line"># バックアップ確保</span><br><span class="line">[Instance A &amp; B ]# cp /etc/localtime /etc/localtime.org</span><br><span class="line"></span><br><span class="line"># Asia/Tokyo を localtime に設定</span><br><span class="line">[Instance A &amp; B ]# ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime</span><br><span class="line"></span><br><span class="line">[Instance A &amp; B ]# date</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="elastic-ip&#x4F5C;&#x6210;">Elastic IP&#x4F5C;&#x6210;</span></h2><p>Elastic IP&#x3092;&#x4F5C;&#x6210;&#x3057; <code>Server A</code> &#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x307E;&#x3059;&#x3002;</p>
-<h5><span id="&#x65B0;&#x3057;&#x3044;&#x30A2;&#x30C9;&#x30EC;&#x30B9;&#x3092;&#x5272;&#x308A;&#x5F53;&#x3066;&#x308B;">&#x65B0;&#x3057;&#x3044;&#x30A2;&#x30C9;&#x30EC;&#x30B9;&#x3092;&#x5272;&#x308A;&#x5F53;&#x3066;&#x308B;</span></h5><div id="hexo-amp-id-36">
+<h2><span id="elastic-ip作成">Elastic IP作成</span></h2><p>Elastic IPを作成し <code>Server A</code> に関連付けます。</p>
+<h5><span id="新しいアドレスを割り当てる">新しいアドレスを割り当てる</span></h5><div id="hexo-amp-id-36">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/Xcv1hQ5.png" width="390" height="518" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x78BA;&#x8A8D;&#x30DD;&#x30C3;&#x30D7;&#x30A2;&#x30C3;&#x30D7;&#x3067;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x308B;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;">&#x78BA;&#x8A8D;&#x30DD;&#x30C3;&#x30D7;&#x30A2;&#x30C3;&#x30D7;&#x3067;&#x300C;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x308B;&#x300D;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;</span></h5><div id="hexo-amp-id-37">
+<h5><span id="確認ポップアップで関連付けるをクリック">確認ポップアップで「関連付ける」をクリック</span></h5><div id="hexo-amp-id-37">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/8LUxbhs.png" width="472" height="412" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x6210;&#x529F;&#x78BA;&#x8A8D;">&#x6210;&#x529F;&#x78BA;&#x8A8D;</span></h5><div id="hexo-amp-id-38">
+<h5><span id="成功確認">成功確認</span></h5><div id="hexo-amp-id-38">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/UQ1YPk4.png" width="550" height="412" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3051;">&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3051;</span></h5><div id="hexo-amp-id-39">
+<h5><span id="インスタンスに関連付け">インスタンスに関連付け</span></h5><div id="hexo-amp-id-39">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/Cpol9pv.png" width="663" height="341" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x95A2;&#x9023;&#x3059;&#x308B;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x9078;&#x629E;">&#x95A2;&#x9023;&#x3059;&#x308B;&#x30A4;&#x30F3;&#x30B9;&#x30BF;&#x30F3;&#x30B9;&#x9078;&#x629E;</span></h5><div id="hexo-amp-id-40">
+<h5><span id="関連するインスタンス選択">関連するインスタンス選択</span></h5><div id="hexo-amp-id-40">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/bJVJcSv.png" width="712" height="353" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="&#x78BA;&#x8A8D;">&#x78BA;&#x8A8D;</span></h5><div id="hexo-amp-id-41">
+<h5><span id="確認">確認</span></h5><div id="hexo-amp-id-41">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/uQlaHyf.png" width="690" height="90" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x4EE5;&#x4E0A;&#x3067; Instance A &#x306B; ElasticIP &#x304C;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="instance-a-amp-b-&#x306B;-ssh&#x30ED;&#x30B0;&#x30A4;&#x30F3;">Instance A &amp; B &#x306B; SSH&#x30ED;&#x30B0;&#x30A4;&#x30F3;</span></h2><ul>
-<li><p>Instance A &#x306B; SSH&#x30ED;&#x30B0;&#x30A4;&#x30F3;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Local PC]# ssh -i aws.pem centos@&lt;Instance A&#x306E;Public IP&gt;</span><br></pre></td></tr></tbody></table></figure>
+<p>以上で Instance A に ElasticIP が関連付けされました。</p>
+<h2><span id="instance-a-amp-b-に-sshログイン">Instance A &amp; B に SSHログイン</span></h2><ul>
+<li><p>Instance A に SSHログイン</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Local PC]# ssh -i aws.pem centos@&lt;Instance AのPublic IP&gt;</span><br></pre></td></tr></tbody></table></figure>
 </li>
-<li><p>Instance B &#x306B; SSH&#x30ED;&#x30B0;&#x30A4;&#x30F3;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Local PC]# ssh -i aws.pem centos@&lt;Instance B&#x306E;Public IP&gt;</span><br></pre></td></tr></tbody></table></figure>
+<li><p>Instance B に SSHログイン</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Local PC]# ssh -i aws.pem centos@&lt;Instance BのPublic IP&gt;</span><br></pre></td></tr></tbody></table></figure>
 
 </li>
 </ul>
-<h2><span id="etchosts&#x8A2D;&#x5B9A;">/etc/hosts&#x8A2D;&#x5B9A;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# uname -n</span><br><span class="line">ip-10-0-0-10.ap-northeast-1.compute.internal</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="etchosts設定">/etc/hosts設定</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# uname -n</span><br><span class="line">ip-10-0-0-10.ap-northeast-1.compute.internal</span><br></pre></td></tr></tbody></table></figure>
 
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Instance B ]# uname -n</span><br><span class="line">ip-10-0-1-10.ap-northeast-1.compute.internal</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# vi /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line"># &#x4EE5;&#x4E0B;&#x8FFD;&#x52A0;</span><br><span class="line">10.0.0.20 ip-10-0-0-20.ap-northeast-1.compute.internal</span><br><span class="line">10.0.1.20 ip-10-0-1-20.ap-northeast-1.compute.internal</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# vi /etc/hosts</span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"></span><br><span class="line"># 以下追加</span><br><span class="line">10.0.0.20 ip-10-0-0-20.ap-northeast-1.compute.internal</span><br><span class="line">10.0.1.20 ip-10-0-1-20.ap-northeast-1.compute.internal</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="pacemaker-amp-corosync-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Pacemaker &amp; Corosync &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><ul>
-<li>pcs&#x306F;&#x65E7;&#x6765;&#x306E;crmsh&#x306B;&#x4EE3;&#x308F;&#x308B;Pacemaker&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x7BA1;&#x7406;&#x30C4;&#x30FC;&#x30EB;&#x3067;&#x3042;&#x308A;&#x3001;RHEL/CentOS7&#x306B;&#x304A;&#x3044;&#x3066;&#x306F;pcs&#x306E;&#x4F7F;&#x7528;&#x304C;&#x63A8;&#x5968;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3002;</li>
+<h2><span id="pacemaker-amp-corosync-インストール">Pacemaker &amp; Corosync インストール</span></h2><ul>
+<li>pcsは旧来のcrmshに代わるPacemakerクラスタ管理ツールであり、RHEL/CentOS7においてはpcsの使用が推奨されている。</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# yum -y install pcs fence-agents-all</span><br></pre></td></tr></tbody></table></figure>
 
 
 <ul>
-<li>&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x78BA;&#x8A8D;</li>
+<li>バージョン確認</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# pcs --version</span><br><span class="line">0.9.143</span><br><span class="line"></span><br><span class="line">[Instance A &amp; B ]# pacemakerd --version</span><br><span class="line">Pacemaker 1.1.13-10.el7</span><br><span class="line">Written by Andrew Beekhof</span><br><span class="line"></span><br><span class="line">[Instance A &amp; B ]# corosync -v</span><br><span class="line">Corosync Cluster Engine, version &apos;2.3.4&apos;</span><br><span class="line">Copyright (c) 2006-2009 Red Hat, Inc.</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# pcs --version</span><br><span class="line">0.9.143</span><br><span class="line"></span><br><span class="line">[Instance A &amp; B ]# pacemakerd --version</span><br><span class="line">Pacemaker 1.1.13-10.el7</span><br><span class="line">Written by Andrew Beekhof</span><br><span class="line"></span><br><span class="line">[Instance A &amp; B ]# corosync -v</span><br><span class="line">Corosync Cluster Engine, version '2.3.4'</span><br><span class="line">Copyright (c) 2006-2009 Red Hat, Inc.</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="hacluster-&#x30D1;&#x30B9;&#x30EF;&#x30FC;&#x30C9;&#x8A2D;&#x5B9A;">hacluster &#x30D1;&#x30B9;&#x30EF;&#x30FC;&#x30C9;&#x8A2D;&#x5B9A;</span></h2><p>corosync&#x30D1;&#x30C3;&#x30B1;&#x30FC;&#x30B8;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x6642;&#x306B;&#x81EA;&#x52D5;&#x3067; <code>hacluster</code> &#x30E6;&#x30FC;&#x30B6;&#x304C;&#x8FFD;&#x52A0;&#x3055;&#x308C;&#x308B;&#x3002;<br>&#x305D;&#x306E; <code>hacluster</code> &#x306E;&#x30D1;&#x30B9;&#x30EF;&#x30FC;&#x30C9;&#x3092;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# passwd hacluster</span><br><span class="line">&#x30E6;&#x30FC;&#x30B6;&#x30FC; hacluster &#x306E;&#x30D1;&#x30B9;&#x30EF;&#x30FC;&#x30C9;&#x3092;&#x5909;&#x66F4;&#x3002;</span><br><span class="line">&#x65B0;&#x3057;&#x3044;&#x30D1;&#x30B9;&#x30EF;&#x30FC;&#x30C9;:</span><br><span class="line">&#x65B0;&#x3057;&#x3044;&#x30D1;&#x30B9;&#x30EF;&#x30FC;&#x30C9;&#x3092;&#x518D;&#x5165;&#x529B;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;:</span><br><span class="line">passwd: &#x3059;&#x3079;&#x3066;&#x306E;&#x8A8D;&#x8A3C;&#x30C8;&#x30FC;&#x30AF;&#x30F3;&#x304C;&#x6B63;&#x3057;&#x304F;&#x66F4;&#x65B0;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="hacluster-パスワード設定">hacluster パスワード設定</span></h2><p>corosyncパッケージインストール時に自動で <code>hacluster</code> ユーザが追加される。<br>その <code>hacluster</code> のパスワードを設定する。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# passwd hacluster</span><br><span class="line">ユーザー hacluster のパスワードを変更。</span><br><span class="line">新しいパスワード:</span><br><span class="line">新しいパスワードを再入力してください:</span><br><span class="line">passwd: すべての認証トークンが正しく更新できました。</span><br></pre></td></tr></tbody></table></figure>
 
 
 
-<h2><span id="pcsd-&#x8D77;&#x52D5;">pcsd &#x8D77;&#x52D5;</span></h2><p>cluster&#x76E3;&#x8996;&#x3092;&#x5B9F;&#x65BD;&#x3059;&#x308B;&#x70BA;</p>
+<h2><span id="pcsd-起動">pcsd 起動</span></h2><p>cluster監視を実施する為</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# systemctl start pcsd</span><br><span class="line">[Instance A &amp; B ]# systemctl enable pcsd</span><br><span class="line">[Instance A &amp; B ]# systemctl status pcsd</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="cluster&#x8A8D;&#x8A3C;">cluster&#x8A8D;&#x8A3C;</span></h2><p>&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x3092;&#x7D44;&#x3080;&#x5404;&#x30DB;&#x30B9;&#x30C8;&#x3078;&#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x8A8D;&#x8A3C;&#x3092;&#x691C;&#x8A3C;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x3069;&#x3061;&#x3089;&#x304B;&#x4E00;&#x65B9;&#x306E;Instance&#x304B;&#x3089;&#x5B9F;&#x884C;&#x3057;&#x307E;&#x3059;&#x3002;<br>&#x4EE5;&#x4E0B;&#x306F;Instance A&#x304B;&#x3089;&#x5B9F;&#x884C;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="cluster認証">cluster認証</span></h2><p>クラスタを組む各ホストへのアクセス認証を検証します。</p>
+<p>どちらか一方のInstanceから実行します。<br>以下はInstance Aから実行しています。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs cluster auth ip-10-0-0-20.ap-northeast-1.compute.internal ip-10-0-1-20.ap-northeast-1.compute.internal</span><br><span class="line">Username: hacluster</span><br><span class="line">Password:</span><br><span class="line">ip-10-0-1-20.ap-northeast-1.compute.internal: Authorized</span><br><span class="line">ip-10-0-0-20.ap-northeast-1.compute.internal: Authorized</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x306E;&#x3088;&#x3046;&#x306B; Authorized (&#x8A8D;&#x8A3C;&#x6E08;&#x307F;) &#x3068;&#x51FA;&#x529B;&#x3055;&#x308C;&#x3066;&#x3044;&#x308C;&#x3070;&#x554F;&#x984C;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x304C;<br>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A; <code>Unable to Communicate</code> &#x3068;&#x3044;&#x3046;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x51FA;&#x529B;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x5834;&#x5408;&#x306F;<br><code>&#x5404;Instance</code> &#x306E;&#x8A2D;&#x5B9A;&#x3092;&#x898B;&#x76F4;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<p>上記のように Authorized (認証済み) と出力されていれば問題ありませんが<br>以下のような <code>Unable to Communicate</code> というエラーが出力されている場合は<br><code>各Instance</code> の設定を見直してください。</p>
 <ul>
-<li>&#x8A8D;&#x8A3C;&#x30A8;&#x30E9;&#x30FC;&#x306E;&#x4F8B;<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs cluster auth ip-10-0-0-20.ap-northeast-1.compute.internal ip-10-0-1-20.ap-northeast-1.compute.internal -u hacluster -p ruby2015</span><br><span class="line">Error: Unable to communicate with ip-10-0-0-20.ap-northeast-1.compute.internal</span><br><span class="line">Error: Unable to communicate with ip-10-0-1-20.ap-northeast-1.compute.internal</span><br></pre></td></tr></tbody></table></figure>
+<li>認証エラーの例<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs cluster auth ip-10-0-0-20.ap-northeast-1.compute.internal ip-10-0-1-20.ap-northeast-1.compute.internal -u hacluster -p ruby2015</span><br><span class="line">Error: Unable to communicate with ip-10-0-0-20.ap-northeast-1.compute.internal</span><br><span class="line">Error: Unable to communicate with ip-10-0-1-20.ap-northeast-1.compute.internal</span><br></pre></td></tr></tbody></table></figure>
 
 
 </li>
 </ul>
-<h2><span id="cluster&#x8A2D;&#x5B9A;">cluster&#x8A2D;&#x5B9A;</span></h2><p>&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x8A2D;&#x5B9A;&#x3092;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="cluster設定">cluster設定</span></h2><p>クラスタ設定をします。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs cluster setup --name aws-cluster ip-10-0-0-20.ap-northeast-1.compute.internal ip-10-0-1-20.ap-northeast-1.compute.internal --force</span><br><span class="line"></span><br><span class="line">Shutting down pacemaker/corosync services...</span><br><span class="line">Redirecting to /bin/systemctl stop  pacemaker.service</span><br><span class="line">Redirecting to /bin/systemctl stop  corosync.service</span><br><span class="line">Killing any remaining services...</span><br><span class="line">Removing all cluster configuration files...</span><br><span class="line">ip-10-0-0-20.ap-northeast-1.compute.internal: Succeeded</span><br><span class="line">ip-10-0-1-20.ap-northeast-1.compute.internal: Succeeded</span><br><span class="line">Synchronizing pcsd certificates on nodes ip-10-0-0-20.ap-northeast-1.compute.internal, ip-10-0-1-20.ap-northeast-1.compute.internal...</span><br><span class="line">ip-10-0-0-20.ap-northeast-1.compute.internal: Success</span><br><span class="line">ip-10-0-1-20.ap-northeast-1.compute.internal: Success</span><br><span class="line"></span><br><span class="line">Restaring pcsd on the nodes in order to reload the certificates...</span><br><span class="line">ip-10-0-0-20.ap-northeast-1.compute.internal: Success</span><br><span class="line">ip-10-0-1-20.ap-northeast-1.compute.internal: Success</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="cluster&#x8D77;&#x52D5;">cluster&#x8D77;&#x52D5;</span></h2><p>&#x5168;&#x30DB;&#x30B9;&#x30C8;&#x306B;&#x5411;&#x3051; &#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x8D77;&#x52D5;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="cluster起動">cluster起動</span></h2><p>全ホストに向け クラスタ起動します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs cluster start --all</span><br><span class="line"></span><br><span class="line">ip-10-0-1-20.ap-northeast-1.compute.internal: Starting Cluster...</span><br><span class="line">ip-10-0-0-20.ap-northeast-1.compute.internal: Starting Cluster...</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="aws-cli-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">aws-cli &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><p>&#x624B;&#x9806;: <code>&#x30E6;&#x30FC;&#x30B6;&#x4F5C;&#x6210;</code> &#x3067;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x305F; <code>credentials.csv</code> &#x306B;&#x8A18;&#x8F09;&#x3055;&#x308C;&#x305F;<br><code>Access Key Id</code> <code>Secret Access Key</code> &#x3092;&#x4F7F;&#x7528;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="aws-cli-インストール">aws-cli インストール</span></h2><p>手順: <code>ユーザ作成</code> でダウンロードした <code>credentials.csv</code> に記載された<br><code>Access Key Id</code> <code>Secret Access Key</code> を使用します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# rpm -iUvh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm</span><br><span class="line">[Instance A &amp; B ]# yum -y install python-pip</span><br><span class="line">[Instance A &amp; B ]# pip --version</span><br><span class="line">pip 7.1.0 from /usr/lib/python2.7/site-packages (python 2.7)</span><br><span class="line"></span><br><span class="line">[Instance A &amp; B ]# pip install awscli</span><br><span class="line">[Instance A &amp; B ]# aws configure</span><br><span class="line">AWS Access Key ID [None]: *********************</span><br><span class="line">AWS Secret Access Key [None]: **************************************</span><br><span class="line">Default region name [None]: ap-northeast-1</span><br><span class="line">Default output format [None]: json</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="eip-&#x4ED8;&#x3051;&#x66FF;&#x3048;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x4F5C;&#x6210;">EIP &#x4ED8;&#x3051;&#x66FF;&#x3048;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x4F5C;&#x6210;</span></h2><p>heartbeat &#x3067;&#x554F;&#x984C;&#x691C;&#x77E5;&#x3057;&#x305F;&#x969B;&#x306B;&#x8D77;&#x52D5;&#x3059;&#x308B;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x3068;&#x3057;&#x3066;&#x767B;&#x9332;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p><code>OCF_ROOT</code> &#x304C;&#x5B9A;&#x6570;&#x3068;&#x3057;&#x3066;&#x6307;&#x5B9A;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x304C;&#x3001;&#x5B58;&#x5728;&#x3057;&#x306A;&#x3044;&#x70BA;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# cd /tmp</span><br><span class="line">[Instance A &amp; B ]# git clone https://github.com/moomindani/aws-eip-resource-agent.git</span><br><span class="line">[Instance A &amp; B ]# cd aws-eip-resource-agent</span><br><span class="line">[Instance A &amp; B ]# sed -i &apos;s/\<!--figure18-->#123;OCF_ROOT}/\/usr\/lib\/ocf/&apos; eip</span><br><span class="line">[Instance A &amp; B ]# mv eip /usr/lib/ocf/resource.d/heartbeat/</span><br><span class="line">[Instance A &amp; B ]# chown root:root /usr/lib/ocf/resource.d/heartbeat/eip</span><br><span class="line">[Instance A &amp; B ]# chmod 0755 /usr/lib/ocf/resource.d/heartbeat/eip</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="eip-付け替えリソース作成">EIP 付け替えリソース作成</span></h2><p>heartbeat で問題検知した際に起動するリソースとして登録します。</p>
+<p><code>OCF_ROOT</code> が定数として指定されているが、存在しない為</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[Instance A &amp; B ]# cd /tmp</span><br><span class="line">[Instance A &amp; B ]# git clone https://github.com/moomindani/aws-eip-resource-agent.git</span><br><span class="line">[Instance A &amp; B ]# cd aws-eip-resource-agent</span><br><span class="line">[Instance A &amp; B ]# sed -i 's/\<!--figure18-->#123;OCF_ROOT}/\/usr\/lib\/ocf/' eip</span><br><span class="line">[Instance A &amp; B ]# mv eip /usr/lib/ocf/resource.d/heartbeat/</span><br><span class="line">[Instance A &amp; B ]# chown root:root /usr/lib/ocf/resource.d/heartbeat/eip</span><br><span class="line">[Instance A &amp; B ]# chmod 0755 /usr/lib/ocf/resource.d/heartbeat/eip</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="pacemaker-&#x8A2D;&#x5B9A;">pacemaker &#x8A2D;&#x5B9A;</span></h2><h5><span id="stonish-&#x7121;&#x52B9;&#x5316;">stonish &#x7121;&#x52B9;&#x5316;</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs property set stonith-enabled=false</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="pacemaker-設定">pacemaker 設定</span></h2><h5><span id="stonish-無効化">stonish 無効化</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs property set stonith-enabled=false</span><br></pre></td></tr></tbody></table></figure>
 
-<h5><span id="split-brain-&#x30B9;&#x30D7;&#x30EA;&#x30C3;&#x30C8;&#x30D6;&#x30EC;&#x30A4;&#x30F3;-&#x304C;&#x767A;&#x751F;&#x3057;&#x3066;&#x3082;-quorum-&#x30AF;&#x30A9;&#x30FC;&#x30E9;&#x30E0;-&#x304C;&#x7279;&#x5225;&#x306A;&#x52D5;&#x4F5C;&#x3092;&#x884C;&#x308F;&#x306A;&#x3044;&#x3088;&#x3046;&#x306B;&#x8A2D;&#x5B9A;"><code>split-brain</code> (&#x30B9;&#x30D7;&#x30EA;&#x30C3;&#x30C8;&#x30FB;&#x30D6;&#x30EC;&#x30A4;&#x30F3;) &#x304C;&#x767A;&#x751F;&#x3057;&#x3066;&#x3082; quorum (&#x30AF;&#x30A9;&#x30FC;&#x30E9;&#x30E0;) &#x304C;&#x7279;&#x5225;&#x306A;&#x52D5;&#x4F5C;&#x3092;&#x884C;&#x308F;&#x306A;&#x3044;&#x3088;&#x3046;&#x306B;&#x8A2D;&#x5B9A;</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs property set no-quorum-policy=ignore</span><br></pre></td></tr></tbody></table></figure>
+<h5><span id="split-brain-スプリットブレイン-が発生しても-quorum-クォーラム-が特別な動作を行わないように設定"><code>split-brain</code> (スプリット・ブレイン) が発生しても quorum (クォーラム) が特別な動作を行わないように設定</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs property set no-quorum-policy=ignore</span><br></pre></td></tr></tbody></table></figure>
 
 <blockquote>
-<p><code>split-brain</code> &#x3068;&#x306F;<br>&#x30CF;&#x30FC;&#x30C8;&#x30D3;&#x30FC;&#x30C8;&#x901A;&#x4FE1;&#x3092;&#x884C;&#x3046;&#x30CD;&#x30C3;&#x30C8;&#x30EF;&#x30FC;&#x30AF;&#x306B;&#x65AD;&#x7DDA;&#x306A;&#x3069;&#x306E;&#x554F;&#x984C;&#x304C;&#x767A;&#x751F;&#x3057;&#x305F;&#x5834;&#x5408;&#x3001;&#x30DB;&#x30B9;&#x30C8;&#x306B;&#x969C;&#x5BB3;&#x304C;&#x8D77;&#x3053;&#x3063;&#x305F;&#x3068;&#x52D8;&#x9055;&#x3044;&#x3057;&#x3001;<br>&#x672C;&#x6765;&#x7ACB;&#x3061;&#x4E0A;&#x304C;&#x3063;&#x3066;&#x307B;&#x3057;&#x304F;&#x306A;&#x3044;&#x30B9;&#x30BF;&#x30F3;&#x30D0;&#x30A4;&#x5074;&#x306E;&#x30DB;&#x30B9;&#x30C8;&#x304C;&#x30A2;&#x30AF;&#x30C6;&#x30A3;&#x30D6;&#x306B;&#x306A;&#x3063;&#x3066;&#x3057;&#x307E;&#x3046;&#x3068;&#x3044;&#x3046;&#x3082;&#x306E;</p>
+<p><code>split-brain</code> とは<br>ハートビート通信を行うネットワークに断線などの問題が発生した場合、ホストに障害が起こったと勘違いし、<br>本来立ち上がってほしくないスタンバイ側のホストがアクティブになってしまうというもの</p>
 </blockquote>
 <ul>
 <li><a href="http://linux-ha.org/wiki/Split_Brain">Split-Brain wiki</a></li>
 <li><a href="https://ja.wikipedia.org/wiki/Quorum">Quorum wiki</a></li>
 </ul>
-<h5><span id="&#x5C5E;&#x6027;&#x5024;&#x66F4;&#x65B0;&#x6642;&#x306E;&#x5F85;&#x3061;&#x6642;&#x9593;-crmd-transition-delay-&#x3092;-0s&#x79D2;-&#x8A2D;&#x5B9A;">&#x5C5E;&#x6027;&#x5024;&#x66F4;&#x65B0;&#x6642;&#x306E;&#x5F85;&#x3061;&#x6642;&#x9593;( <code>crmd-transition-delay</code> )&#x3092; 0s(&#x79D2;) &#x8A2D;&#x5B9A;</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs property set crmd-transition-delay=&quot;0s&quot;</span><br></pre></td></tr></tbody></table></figure>
+<h5><span id="属性値更新時の待ち時間-crmd-transition-delay-を-0s秒-設定">属性値更新時の待ち時間( <code>crmd-transition-delay</code> )を 0s(秒) 設定</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs property set crmd-transition-delay="0s"</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li><a href="http://linux-ha.osdn.jp/wp/archives/1498">Pacemaker-1.0.11 &#x304C;&#x30EA;&#x30EA;&#x30FC;&#x30B9;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;</a></li>
+<li><a href="http://linux-ha.osdn.jp/wp/archives/1498">Pacemaker-1.0.11 がリリースされました</a></li>
 </ul>
-<h5><span id="&#x81EA;&#x52D5;&#x30D5;&#x30A7;&#x30A4;&#x30EB;&#x30D0;&#x30C3;&#x30AF;&#x306A;&#x3057;-&#x540C;&#x4E00;&#x30B5;&#x30FC;&#x30D0;&#x3067;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x306E;&#x518D;&#x8D77;&#x52D5;&#x3092;&#x8A66;&#x307F;&#x308B;&#x56DE;&#x6570;&#x3092;-1-&#x56DE;&#x306B;&#x8A2D;&#x5B9A;">&#x81EA;&#x52D5;&#x30D5;&#x30A7;&#x30A4;&#x30EB;&#x30D0;&#x30C3;&#x30AF;&#x306A;&#x3057;&#x3001;&#x540C;&#x4E00;&#x30B5;&#x30FC;&#x30D0;&#x3067;&#x30EA;&#x30BD;&#x30FC;&#x30B9;&#x306E;&#x518D;&#x8D77;&#x52D5;&#x3092;&#x8A66;&#x307F;&#x308B;&#x56DE;&#x6570;&#x3092; 1 &#x56DE;&#x306B;&#x8A2D;&#x5B9A;</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs resource defaults resource-stickiness=&quot;INFINITY&quot; migration-threshold=&quot;1&quot;</span><br></pre></td></tr></tbody></table></figure>
+<h5><span id="自動フェイルバックなし-同一サーバでリソースの再起動を試みる回数を-1-回に設定">自動フェイルバックなし、同一サーバでリソースの再起動を試みる回数を 1 回に設定</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs resource defaults resource-stickiness="INFINITY" migration-threshold="1"</span><br></pre></td></tr></tbody></table></figure>
 
-<h5><span id="eip&#x5207;&#x308A;&#x66FF;&#x3048;&#x8A2D;&#x5B9A;">EIP&#x5207;&#x308A;&#x66FF;&#x3048;&#x8A2D;&#x5B9A;</span></h5><p>&#x4ECA;&#x56DE;&#x4F5C;&#x6210;&#x3057; <code>Instance A</code> &#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x3057;&#x305F; ElasticIP &#x306F; <code>52.192.203.215</code> &#x3067;&#x3059;&#x3002;<br>&#x4EE5;&#x4E0B;&#x8A2D;&#x5B9A;&#x306B;&#x53CD;&#x6620;&#x3055;&#x305B;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs resource create eip ocf:heartbeat:eip \</span><br><span class="line">    params \</span><br><span class="line">        elastic_ip=&quot;52.192.203.215&quot; \</span><br><span class="line">    op start   timeout=&quot;60s&quot; interval=&quot;0s&quot;  on-fail=&quot;stop&quot; \</span><br><span class="line">    op monitor timeout=&quot;60s&quot; interval=&quot;10s&quot; on-fail=&quot;restart&quot; \</span><br><span class="line">    op stop    timeout=&quot;60s&quot; interval=&quot;0s&quot;  on-fail=&quot;block&quot;</span><br></pre></td></tr></tbody></table></figure>
+<h5><span id="eip切り替え設定">EIP切り替え設定</span></h5><p>今回作成し <code>Instance A</code> に関連付けした ElasticIP は <code>52.192.203.215</code> です。<br>以下設定に反映させます。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs resource create eip ocf:heartbeat:eip \</span><br><span class="line">    params \</span><br><span class="line">        elastic_ip="52.192.203.215" \</span><br><span class="line">    op start   timeout="60s" interval="0s"  on-fail="stop" \</span><br><span class="line">    op monitor timeout="60s" interval="10s" on-fail="restart" \</span><br><span class="line">    op stop    timeout="60s" interval="0s"  on-fail="block"</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="cluster-&#x8A2D;&#x5B9A;&#x78BA;&#x8A8D;">cluster &#x8A2D;&#x5B9A;&#x78BA;&#x8A8D;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs config</span><br><span class="line"></span><br><span class="line">pcs config</span><br><span class="line">Cluster Name: aws-cluster</span><br><span class="line">Corosync Nodes:</span><br><span class="line"> ip-10-0-0-20.ap-northeast-1.compute.internal ip-10-0-1-20.ap-northeast-1.compute.internal</span><br><span class="line">Pacemaker Nodes:</span><br><span class="line"> ip-10-0-0-20.ap-northeast-1.compute.internal ip-10-0-1-20.ap-northeast-1.compute.internal</span><br><span class="line"></span><br><span class="line">Resources:</span><br><span class="line"> Resource: eip (class=ocf provider=heartbeat type=eip)</span><br><span class="line">  Attributes: elastic_ip=52.192.203.215</span><br><span class="line">  Operations: start interval=0s timeout=60s on-fail=stop (eip-start-interval-0s)</span><br><span class="line">              monitor interval=10s timeout=60s on-fail=restart (eip-monitor-interval-10s)</span><br><span class="line">              stop interval=0s timeout=60s on-fail=block (eip-stop-interval-0s)</span><br><span class="line"></span><br><span class="line">Stonith Devices:</span><br><span class="line">Fencing Levels:</span><br><span class="line"></span><br><span class="line">Location Constraints:</span><br><span class="line">Ordering Constraints:</span><br><span class="line">Colocation Constraints:</span><br><span class="line"></span><br><span class="line">Resources Defaults:</span><br><span class="line"> resource-stickiness: INFINITY</span><br><span class="line"> migration-threshold: 1</span><br><span class="line">Operations Defaults:</span><br><span class="line"> No defaults set</span><br><span class="line"></span><br><span class="line">Cluster Properties:</span><br><span class="line"> cluster-infrastructure: corosync</span><br><span class="line"> cluster-name: aws-cluster</span><br><span class="line"> crmd-transition-delay: 0s</span><br><span class="line"> dc-version: 1.1.13-10.el7-44eb2dd</span><br><span class="line"> have-watchdog: false</span><br><span class="line"> no-quorum-policy: ignore</span><br><span class="line"> stonith-enabled: false</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="cluster-設定確認">cluster 設定確認</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">[Instance A ]# pcs config</span><br><span class="line"></span><br><span class="line">pcs config</span><br><span class="line">Cluster Name: aws-cluster</span><br><span class="line">Corosync Nodes:</span><br><span class="line"> ip-10-0-0-20.ap-northeast-1.compute.internal ip-10-0-1-20.ap-northeast-1.compute.internal</span><br><span class="line">Pacemaker Nodes:</span><br><span class="line"> ip-10-0-0-20.ap-northeast-1.compute.internal ip-10-0-1-20.ap-northeast-1.compute.internal</span><br><span class="line"></span><br><span class="line">Resources:</span><br><span class="line"> Resource: eip (class=ocf provider=heartbeat type=eip)</span><br><span class="line">  Attributes: elastic_ip=52.192.203.215</span><br><span class="line">  Operations: start interval=0s timeout=60s on-fail=stop (eip-start-interval-0s)</span><br><span class="line">              monitor interval=10s timeout=60s on-fail=restart (eip-monitor-interval-10s)</span><br><span class="line">              stop interval=0s timeout=60s on-fail=block (eip-stop-interval-0s)</span><br><span class="line"></span><br><span class="line">Stonith Devices:</span><br><span class="line">Fencing Levels:</span><br><span class="line"></span><br><span class="line">Location Constraints:</span><br><span class="line">Ordering Constraints:</span><br><span class="line">Colocation Constraints:</span><br><span class="line"></span><br><span class="line">Resources Defaults:</span><br><span class="line"> resource-stickiness: INFINITY</span><br><span class="line"> migration-threshold: 1</span><br><span class="line">Operations Defaults:</span><br><span class="line"> No defaults set</span><br><span class="line"></span><br><span class="line">Cluster Properties:</span><br><span class="line"> cluster-infrastructure: corosync</span><br><span class="line"> cluster-name: aws-cluster</span><br><span class="line"> crmd-transition-delay: 0s</span><br><span class="line"> dc-version: 1.1.13-10.el7-44eb2dd</span><br><span class="line"> have-watchdog: false</span><br><span class="line"> no-quorum-policy: ignore</span><br><span class="line"> stonith-enabled: false</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="fail-over-&#x5B9F;&#x884C;&#x78BA;&#x8A8D;">Fail Over &#x5B9F;&#x884C;&#x78BA;&#x8A8D;</span></h2><p>&#x624B;&#x9806; <code>Fail Over &#x691C;&#x8A3C;&#x7528;&#x306B; httpd, php &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</code> &#x306B;&#x3066;<br>DocumentRoot (/var/www/html/) &#x306B;<br><code>Private IP</code> (<code>$_SERVER[&quot;SERVER_ADDR&quot;]</code>)  &#x3092;&#x8868;&#x793A;&#x3055;&#x305B;&#x308B;index.php&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;<br>&#x914D;&#x7F6E;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089; Private IP &#x3092;&#x5143;&#x306B; Instance A or B &#x3069;&#x3061;&#x3089;&#x306E;Instance &#x306B;<br>&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;&#x3066;&#x3044;&#x308B;&#x304B;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h5><span id="&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089;-elasticip-&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;">&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089; ElasticIP &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;</span></h5><p>ElasticIP <code>52.192.203.215</code> &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x3068;<br>Private IP <code>10.0.0.20</code> &#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x73FE;&#x72B6;&#x3001;ElasticIP &#x306F; Instance A &#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3044;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="fail-over-実行確認">Fail Over 実行確認</span></h2><p>手順 <code>Fail Over 検証用に httpd, php インストール</code> にて<br>DocumentRoot (/var/www/html/) に<br><code>Private IP</code> (<code>$_SERVER["SERVER_ADDR"]</code>)  を表示させるindex.phpファイルを<br>配置しました。</p>
+<p>ブラウザから Private IP を元に Instance A or B どちらのInstance に<br>アクセスしているかがわかります。</p>
+<h5><span id="ブラウザから-elasticip-にアクセス">ブラウザから ElasticIP にアクセス</span></h5><p>ElasticIP <code>52.192.203.215</code> にアクセスすると<br>Private IP <code>10.0.0.20</code> が表示されていることがわかります。</p>
+<p>現状、ElasticIP は Instance A に関連付いていることがわかります。</p>
 <div id="hexo-amp-id-42">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/fF2SwAb.png" width="802" height="460" layout="responsive"></amp-img></div>
 </div>
 
-<h5><span id="instance-a-&#x306E;-corosync-&#x505C;&#x6B62;">Instance A &#x306E; corosync &#x505C;&#x6B62;</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A]# systemctl stop corosync</span><br></pre></td></tr></tbody></table></figure>
+<h5><span id="instance-a-の-corosync-停止">Instance A の corosync 停止</span></h5><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Instance A]# systemctl stop corosync</span><br></pre></td></tr></tbody></table></figure>
 
-<h5><span id="&#x518D;&#x5EA6;&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089;-elasticip-&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;">&#x518D;&#x5EA6;&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089; ElasticIP &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;</span></h5><p>&#x5148;&#x307B;&#x3069;&#x8868;&#x793A;&#x3055;&#x305B;&#x3066;&#x3044;&#x305F;&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x3092;&#x5E7E;&#x5EA6;&#x304B;&#x30EA;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x3068;<br>Private IP <code>10.0.1.20</code> &#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>ElasticIP &#x306F; Instance B &#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x3089;&#x308C;&#x305F;&#x3053;&#x3068;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<h5><span id="再度ブラウザから-elasticip-にアクセス">再度ブラウザから ElasticIP にアクセス</span></h5><p>先ほど表示させていたブラウザを幾度かリロードすると<br>Private IP <code>10.0.1.20</code> が表示されていることがわかります。</p>
+<p>ElasticIP は Instance B に関連付けられたことがわかります。</p>
 <div id="hexo-amp-id-43">
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/ddnCfF5.png" width="534" height="244" layout="responsive"></amp-img></div>
 </div>
 
 
-<p>ElasticIP &#x304C; Instance A &#x304B;&#x3089;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x304C;&#x89E3;&#x653E;&#x3055;&#x308C;&#x3001; Instance B &#x306B;&#x95A2;&#x9023;&#x4ED8;&#x3051;&#x3055;&#x308C;&#x308B;&#x3088;&#x3046;&#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x30B3;&#x30F3;&#x30BD;&#x30FC;&#x30EB;&#x30DA;&#x30FC;&#x30B8;&#x4E0A;&#x3067;&#x3082;&#x78BA;&#x8A8D;&#x3059;&#x308B;&#x3053;&#x3068;&#x304C;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x7C21;&#x6613;&#x7684;&#x3067;&#x306F;&#x3042;&#x308A;&#x307E;&#x3059;&#x304C;<br>Cloud Design Pattern &#x306E; floating IP (ElasticIP) &#x304C;&#x5B9F;&#x73FE;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</span></h2><ul>
-<li><a href="http://kan3aa.hatenablog.com/entry/2015/06/05/135150">CentOS7.1&#x3067;Pacemaker+corosync&#x306B;&#x3088;&#x308B;&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x3092;&#x69CB;&#x6210;&#x3059;&#x308B;</a></li>
-<li><a href="https://moomindani.wordpress.com/2014/05/27/aws-eip-resource-agent/">Pacemaker&#x3067;EIP&#x3092;&#x4ED8;&#x66FF;&#x3048;&#x308B;Resource Agent&#x3092;&#x66F8;&#x3044;&#x3066;&#x307F;&#x305F;</a></li>
-<li><a href="http://doruby.kbmj.com/taka/20131018/yum_update_crm_pcs_">yum update&#x3057;&#x305F;&#x3089;crm&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x304C;&#x7121;&#x304F;&#x306A;&#x3063;&#x305F;&#xFF01;(pcs&#x30B3;&#x30DE;&#x30F3;&#x30C9;&#x5BFE;&#x7167;&#x8868;)</a></li>
-<li><a href="http://news.mynavi.jp/news/2013/05/14/092/">pacemaker + corosync &#x3067; HA &#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x69CB;&#x7BC9;</a></li>
-<li><a href="http://linux-ha.osdn.jp/wp/archives/3868">&#x52D5;&#x304B;&#x3057;&#x3066;&#x7406;&#x89E3;&#x3059;&#x308B;Pacemaker &#xFF5E;CRM&#x8A2D;&#x5B9A;&#x7DE8;&#xFF5E;</a></li>
+<p>ElasticIP が Instance A から関連付けが解放され、 Instance B に関連付けされるようになりました。</p>
+<p>コンソールページ上でも確認することができます。</p>
+<p>以上で簡易的ではありますが<br>Cloud Design Pattern の floating IP (ElasticIP) が実現できました。</p>
+<p>以上です。</p>
+<h2><span id="参考">参考</span></h2><ul>
+<li><a href="http://kan3aa.hatenablog.com/entry/2015/06/05/135150">CentOS7.1でPacemaker+corosyncによるクラスタを構成する</a></li>
+<li><a href="https://moomindani.wordpress.com/2014/05/27/aws-eip-resource-agent/">PacemakerでEIPを付替えるResource Agentを書いてみた</a></li>
+<li><a href="http://doruby.kbmj.com/taka/20131018/yum_update_crm_pcs_">yum updateしたらcrmコマンドが無くなった！(pcsコマンド対照表)</a></li>
+<li><a href="http://news.mynavi.jp/news/2013/05/14/092/">pacemaker + corosync で HA クラスタ構築</a></li>
+<li><a href="http://linux-ha.osdn.jp/wp/archives/3868">動かして理解するPacemaker ～CRM設定編～</a></li>
 </ul>
 
 			  		
@@ -2403,7 +2403,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

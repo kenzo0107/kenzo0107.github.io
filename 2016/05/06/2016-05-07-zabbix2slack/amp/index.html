@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <link rel="canonical" href="https://kenzo0107.github.io/2016/05/06/2016-05-07-zabbix2slack/" >
-    <title>sftpをシェル化してファイルアップロード - 長生村本郷Engineers&#39;Blog</title>
+    <title>Zabbix3.x系からSlack通知 - 長生村本郷Engineers&#39;Blog</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     
-    <meta property="og:title" content="sftpをシェル化してファイルアップロード">
+    <meta property="og:title" content="Zabbix3.x系からSlack通知">
 	<meta property="og:type" content="article">
 	<meta property="og:url" content="https://kenzo0107.github.io/2016/05/06/2016-05-07-zabbix2slack/">
 	
@@ -17,7 +17,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2016/05/06/2016-05-07-zabbix2slack/">
-	<meta name="twitter:title" content="sftpをシェル化してファイルアップロード - 長生村本郷Engineers&#39;Blog">
+	<meta name="twitter:title" content="Zabbix3.x系からSlack通知 - 長生村本郷Engineers&#39;Blog">
 	
     
     	<meta name="twitter:image" content="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160507/20160507002056.png">
@@ -46,14 +46,14 @@
 		{
 			"@context": "http://schema.org",
 			"@type": "BlogPosting",
-			"headline": "sftpをシェル化してファイルアップロード",
+			"headline": "Zabbix3.x系からSlack通知",
 			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2016/05/06/2016-05-07-zabbix2slack/"
 			},
 			"datePublished": "2016-05-06T15:00:00.000Z",
-			"dateModified": "2020-05-07T03:41:25.748Z",
+			"dateModified": "2022-03-07T15:14:59.668Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1787,7 +1787,7 @@ h6.categories {
 			            <div class="header-cap flx">
 							
 							  <h1 class="article-title entry-title" itemprop="name">
-							    <a href="https://kenzo0107.github.io/2016/05/06/2016-05-07-zabbix2slack/" target="_blank" itemprop="url">sftpをシェル化してファイルアップロード</a>
+							    <a href="https://kenzo0107.github.io/2016/05/06/2016-05-07-zabbix2slack/" target="_blank" itemprop="url">Zabbix3.x系からSlack通知</a>
 							  </h1>
 							
 						</div>
@@ -1814,16 +1814,16 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>Zabbix3.x&#x7CFB;&#x3067;&#x306E;Slack&#x3078;&#x306E;&#x969C;&#x5BB3;&#x5185;&#x5BB9;&#x901A;&#x77E5;&#x65B9;&#x6CD5;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x7C21;&#x5358;&#x306A;&#x30E1;&#x30C3;&#x30BB;&#x30FC;&#x30B8;&#x306E;&#x901A;&#x77E5;&#x3067;&#x306A;&#x304F;<br>&#x3042;&#x308B;&#x7A0B;&#x5EA6;&#x898B;&#x3084;&#x3059;&#x304F;&#x3001;&#x72B6;&#x6CC1;&#x5224;&#x65AD;&#x3057;&#x3084;&#x3059;&#x3044;&#x69D8;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x2193;&#x307E;&#x305A;&#x3056;&#x3063;&#x304F;&#x308A;&#x3068;&#x3053;&#x3093;&#x306A;&#x611F;&#x3058;&#x3067;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>Zabbix3.x系でのSlackへの障害内容通知方法をまとめました。</p>
+<p>簡単なメッセージの通知でなく<br>ある程度見やすく、状況判断しやすい様にしました。</p>
+<p>↓まずざっくりとこんな感じです。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160507/20160507002056.png" width="1024" height="235" layout="responsive"></amp-img></div>
 </div>
 
 
-<h2><span id="&#x624B;&#x9806;">&#x624B;&#x9806;</span></h2><p>Git&#x306B;&#x4E0A;&#x3052;&#x3066;&#x307E;&#x3059;&#x3002;&#x3054;&#x53C2;&#x7167;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
-<a href="https://github.com/kenzo0107/zabbix3-slack" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://avatars0.githubusercontent.com/u/6197906?s=400&amp;v=4" width="400" height="400" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">kenzo0107/Zabbix3-Slack</div><div class="og-description">slack notification from zabbix3. Contribute to kenzo0107/Zabbix3-Slack development by creating an account on GitHub.</div></div></div></a>
+<h2><span id="手順">手順</span></h2><p>Gitに上げてます。ご参照ください。</p>
+<a href="https://github.com/kenzo0107/zabbix3-slack" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://opengraph.githubassets.com/a1880ebb3517a1a7e73fa2d41a6279fc64593213df0d64f15f91332135cb909f/kenzo0107/Zabbix3-Slack" width="1200" height="600" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">GitHub - kenzo0107/Zabbix3-Slack: slack notification from zabbix3</div><div class="og-description">slack notification from zabbix3. Contribute to kenzo0107/Zabbix3-Slack development by creating an account on GitHub.</div></div></div></a>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1895,7 +1895,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

@@ -1814,56 +1814,56 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x4EE5;&#x4E0B;&#x968F;&#x6642;&#x8FFD;&#x52A0;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+			  		<p>以下随時追加。</p>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS Linux release 7.1.1503 (Core)</li>
 <li>Fluentd 0.12.12</li>
 <li>Nginx 1.8.0</li>
 </ul>
 <h2><span id="permission-denined">Permission denined</span></h2><ul>
-<li>&#x30D1;&#x30FC;&#x30DF;&#x30C3;&#x30B7;&#x30E7;&#x30F3;&#x30A8;&#x30E9;&#x30FC;&#xFF01;</li>
+<li>パーミッションエラー！</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># tail -f /var/log/td-agent/td-agent.log</span><br><span class="line"></span><br><span class="line">2015-08-19 14:17:14 +0900 [error]: Permission denied @ xxxxxxx - /var/log/nginx/error.log</span><br><span class="line">  2015-08-19 14:17:14 +0900 [error]: suppressed same stacktrace</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x5BFE;&#x7B56;">&#x5BFE;&#x7B56;</span></h3><p>td-agent&#x5B9F;&#x884C;&#x30E6;&#x30FC;&#x30B6;&#x3092;<code>root</code>&#x306B;&#x5909;&#x66F4;&#x3059;&#x308B;&#x3002;</p>
+<h3><span id="対策">対策</span></h3><p>td-agent実行ユーザを<code>root</code>に変更する。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/init.d/td-agent</span><br><span class="line"></span><br><span class="line">- TD_AGENT_USER=td-agent</span><br><span class="line">- TD_AGENT_GROUP=td-agent</span><br><span class="line"></span><br><span class="line">+ TD_AGENT_USER=root</span><br><span class="line">+ TD_AGENT_GROUP=root</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x30C7;&#x30FC;&#x30E2;&#x30F3;&#x30EA;&#x30ED;&#x30FC;&#x30C9;</p>
+<p>デーモンリロード</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x52D5;&#x4F5C;&#x78BA;&#x8A8D;">&#x52D5;&#x4F5C;&#x78BA;&#x8A8D;</span></h3><p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;<code>tail</code>&#x304C;&#x6B63;&#x3057;&#x304F;&#x5B9F;&#x884C;&#x3067;&#x304D;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x304C;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="動作確認">動作確認</span></h3><p>以下のように<code>tail</code>が正しく実行できていることが確認できます。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># tail -f /var/log/td-agent/td-agent.log</span><br><span class="line"></span><br><span class="line">2015-08-19 14:17:15 +0900 [info]: following tail of /var/log/nginx/access.log</span><br><span class="line">2015-08-19 14:17:15 +0900 [info]: following tail of /var/log/nginx/error.log</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="warn-pattern-not-match">[warn]: pattern not match</span></h2><p>&#x3053;&#x308C;&#x304B;&#x306A;&#x308A;&#x30CF;&#x30DE;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>Nginx&#x306E;log&#x3092;&#x6D41;&#x3059;&#x3068;&#x304D;&#x306B;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;fomat&#x3059;&#x308B;&#x3088;&#x3046;&#x306B;&#x66F8;&#x304B;&#x308C;&#x3066;&#x3044;&#x308B;&#x8A18;&#x4E8B;&#x3092;&#x591A;&#x304F;&#x898B;&#x305F;&#x306E;&#x3067;<br>&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x307F;&#x305F;&#x3089;&#x30A8;&#x30E9;&#x30FC;&#x767A;&#x751F;(; &gt;_&lt;)</p>
+<h2><span id="warn-pattern-not-match">[warn]: pattern not match</span></h2><p>これかなりハマりました。</p>
+<p>Nginxのlogを流すときに以下のようにfomatするように書かれている記事を多く見たので<br>設定してみたらエラー発生(; &gt;_&lt;)</p>
 <ul>
 <li>/etc/td-agent/td-agent.conf</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type tail</span><br><span class="line">  format nginx</span><br><span class="line">  path /var/log/nginx/access.log</span><br><span class="line">  pos_file /var/log/td-agent/nginx-access.pos</span><br><span class="line">  tag nginx.access</span><br><span class="line">&lt;/source&gt;</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x5BFE;&#x7B56;">&#x5BFE;&#x7B56;</span></h3><p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x4FEE;&#x6B63;</p>
+<h3><span id="対策">対策</span></h3><p>以下のように修正</p>
 <ul>
 <li>/etc/td-agent/td-agent.conf</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type tail</span><br><span class="line">  format /^(?&lt;remote&gt;[^ ]*) (?&lt;host&gt;[^ ]*) (?&lt;user&gt;[^ ]*) \[(?&lt;time&gt;[^\]]*)\] &quot;(?&lt;method&gt;\S+)(?: +(?&lt;path&gt;[^ ]*) +\S*)?&quot; (?&lt;code&gt;[^ ]*) (?&lt;size&gt;[^ ]*)(?: &quot;(?&lt;referer&gt;[^\&quot;]*)&quot; &quot;(?&lt;agent&gt;[^\&quot;]*)&quot; &quot;(?&lt;forwarder&gt;[^\&quot;]*)&quot;)?/</span><br><span class="line">  time_format %d/%b/%Y:%H:%M:%S %z</span><br><span class="line">  path /var/log/nginx/access.log</span><br><span class="line">  pos_file /var/log/td-agent/nginx-access.pos</span><br><span class="line">  tag nginx.access</span><br><span class="line">&lt;/source&gt;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;source&gt;</span><br><span class="line">  type tail</span><br><span class="line">  format /^(?&lt;remote&gt;[^ ]*) (?&lt;host&gt;[^ ]*) (?&lt;user&gt;[^ ]*) \[(?&lt;time&gt;[^\]]*)\] "(?&lt;method&gt;\S+)(?: +(?&lt;path&gt;[^ ]*) +\S*)?" (?&lt;code&gt;[^ ]*) (?&lt;size&gt;[^ ]*)(?: "(?&lt;referer&gt;[^\"]*)" "(?&lt;agent&gt;[^\"]*)" "(?&lt;forwarder&gt;[^\"]*)")?/</span><br><span class="line">  time_format %d/%b/%Y:%H:%M:%S %z</span><br><span class="line">  path /var/log/nginx/access.log</span><br><span class="line">  pos_file /var/log/td-agent/nginx-access.pos</span><br><span class="line">  tag nginx.access</span><br><span class="line">&lt;/source&gt;</span><br></pre></td></tr></tbody></table></figure>
 
-<p>td-agent&#x518D;&#x8D77;&#x52D5;</p>
+<p>td-agent再起動</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart td-agent</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3053;&#x308C;&#x3067;&#x5927;&#x4E08;&#x592B;&#x3002;</p>
-<h2><span id="buffer_path-&#x91CD;&#x8907;">buffer_path &#x91CD;&#x8907;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[error]: failed to configure sub output redshift: Other &apos;&apos; plugin already use same buffer_path: type = , buffer_path = *</span><br></pre></td></tr></tbody></table></figure>
+<p>これで大丈夫。</p>
+<h2><span id="buffer_path-重複">buffer_path 重複</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[error]: failed to configure sub output redshift: Other '' plugin already use same buffer_path: type = , buffer_path = *</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x5143;&#x3005;&#x306E;&#x8A2D;&#x5B9A;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;<br>td-agent &#x306E;&#x9001;&#x4FE1;&#x5148;&#x306B;&#x30C8;&#x30E9;&#x30D6;&#x30EB;&#x304C;&#x3042;&#x308A; buffer &#x304C;&#x6E9C;&#x307E;&#x308A;&#x91CD;&#x8907;&#x3057;&#x30A8;&#x30E9;&#x30FC;&#x3068;&#x306A;&#x3063;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>元々の設定は以下の様にしていました。<br>td-agent の送信先にトラブルがあり buffer が溜まり重複しエラーとなっていました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buffer_path /logs/td-agent/nginx/logs</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4F8B;&#xFF09;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306A; tag &#x304C;&#x3042;&#x3063;&#x305F;&#x5834;&#x5408;&#x3001;buffer_path &#x306F;&#x540C;&#x3058;&#x304F; <code>/logs/td-agent/nginx/logs</code> &#x3068;&#x306A;&#x3063;&#x3066;&#x3057;&#x307E;&#x3046;</p>
+<p>例）以下の様な tag があった場合、buffer_path は同じく <code>/logs/td-agent/nginx/logs</code> となってしまう</p>
 <p>hogehoge.20170101.log<br>hogehoge.20170102.log</p>
-<h3><span id="&#x5BFE;&#x7B56;">&#x5BFE;&#x7B56;</span></h3><p>tag_parts &#x3092;&#x7528;&#x3044;&#x3001;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B; tag &#x6BCE;&#x306B; buffer_path &#x3092;&#x30E6;&#x30CB;&#x30FC;&#x30AF;&#x306B;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x89E3;&#x6C7A;</p>
+<h3><span id="対策">対策</span></h3><p>tag_parts を用い、以下の様に tag 毎に buffer_path をユニークにすることで解決</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buffer_path /logs/td-agent/nginx/logs_<!--figure9-->#123;tag_parts[0]}_<!--figure9-->#123;tag_parts[1]}</span><br></pre></td></tr></tbody></table></figure>
 
 
-<p>&#x5F15;&#x304D;&#x7D9A;&#x304D;&#x4F55;&#x304B;&#x767A;&#x751F;&#x3057;&#x305F;&#x3089;&#x8FFD;&#x8A18;&#x3057;&#x3066;&#x3044;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<p>引き続き何か発生したら追記していきます。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1929,7 +1929,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

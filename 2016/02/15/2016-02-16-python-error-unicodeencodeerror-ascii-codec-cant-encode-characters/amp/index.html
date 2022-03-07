@@ -1814,36 +1814,36 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x7D50;&#x8AD6;">&#x7D50;&#x8AD6;</span></h2><p>Python&#x306E;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x3092; utf-8 &#x306B;&#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x3002;</p>
-<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>python &#x3067;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x753B;&#x50CF;URL&#x304B;&#x3089;&#x753B;&#x50CF;&#x3092;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3059;&#x308B;&#x51E6;&#x7406;&#x3092;&#x5B9F;&#x88C5;&#x3057;&#x305F;&#x6240;<br>&#x63B2;&#x984C;&#x306E;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x767A;&#x751F;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> HTMLParser <span class="keyword">import</span> HTMLParser</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(url)</span>:</span></span><br><span class="line">    img = urllib.urlopen(url)</span><br><span class="line">    localfile = open(os.path.basename(url),<span class="string">&apos;wb&apos;</span>)</span><br><span class="line">    localfile.write(img.read())</span><br><span class="line">    img.close()</span><br><span class="line">    localfile.close()</span><br></pre></td></tr></tbody></table></figure>
+			  		<h2><span id="結論">結論</span></h2><p>Pythonの文字コードを utf-8 に設定する。</p>
+<h2><span id="概要">概要</span></h2><p>python で以下のような画像URLから画像をダウンロードする処理を実装した所<br>掲題のエラーが発生しました。</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> HTMLParser <span class="keyword">import</span> HTMLParser</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(url)</span>:</span></span><br><span class="line">    img = urllib.urlopen(url)</span><br><span class="line">    localfile = open(os.path.basename(url),<span class="string">'wb'</span>)</span><br><span class="line">    localfile.write(img.read())</span><br><span class="line">    img.close()</span><br><span class="line">    localfile.close()</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>&#x5177;&#x4F53;&#x7684;&#x306B;&#x306F;&#x3053;&#x3053;&#x3067;&#x3053;&#x3051;&#x3066;&#x307E;&#x3057;&#x305F;&#x3002;</li>
+<li>具体的にはここでこけてました。</li>
 </ul>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">localfile.write(img.read())</span><br></pre></td></tr></tbody></table></figure>
 
 
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS Linux release 7.0.1406 (Core)</li>
 <li>Python 2.7.5</li>
 </ul>
 <hr>
-<h2><span id="&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D;">&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D;</span></h2><p>&#x4EE5;&#x4E0B;&#x5BFE;&#x8A71;&#x5F0F;&#x3067;&#x78BA;&#x8A8D;&#x3057;&#x3066;&#x307F;&#x308B;&#x3068; ascii &#x3068;&#x8868;&#x793A;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;&#x3002;<br>&#x3053;&#x308C;&#x3092; utf-8 &#x306B;&#x5909;&#x66F4;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ python</span><br><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.getdefaultencoding()</span><br><span class="line"><span class="string">&apos;ascii&apos;</span></span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="文字コード確認">文字コード確認</span></h2><p>以下対話式で確認してみると ascii と表示されました。<br>これを utf-8 に変更します。</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ python</span><br><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.getdefaultencoding()</span><br><span class="line"><span class="string">'ascii'</span></span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="pip-&#x30D1;&#x30B9;&#x78BA;&#x8A8D;">pip &#x30D1;&#x30B9;&#x78BA;&#x8A8D;</span></h2><p>&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x78BA;&#x8A8D;&#x6642;&#x306B;&#x30D1;&#x30B9;&#x304C;&#x51FA;&#x529B;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="pip-パス確認">pip パス確認</span></h2><p>バージョン確認時にパスが出力されます。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip --version</span><br><span class="line">pip 7.1.0 from /usr/lib/python2.7/site-packages (python 2.7)</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="site-packages&#x914D;&#x4E0B;&#x306B;-sitecustomizepy-&#x3092;&#x4F5C;&#x6210;">site-packages&#x914D;&#x4E0B;&#x306B; sitecustomize.py &#x3092;&#x4F5C;&#x6210;</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/lib/python2.7/site-packages/sitecustomize.py</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="site-packages配下に-sitecustomizepy-を作成">site-packages配下に sitecustomize.py を作成</span></h2><figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/lib/python2.7/site-packages/sitecustomize.py</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setdefaultencoding(<span class="string">&apos;utf-8&apos;</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x5185;&#x5BB9;&#x3067;&#x4FDD;&#x5B58;&#x3002;</p>
-<h2><span id="&#x518D;&#x5EA6;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D;">&#x518D;&#x5EA6;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x78BA;&#x8A8D;</span></h2><p>utf-8 &#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ python</span><br><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.getdefaultencoding()</span><br><span class="line"><span class="string">&apos;utf-8&apos;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>上記内容で保存。</p>
+<h2><span id="再度文字コード確認">再度文字コード確認</span></h2><p>utf-8 になりました。</p>
+<figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ python</span><br><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.getdefaultencoding()</span><br><span class="line"><span class="string">'utf-8'</span></span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3053;&#x308C;&#x3067;&#x63B2;&#x984C;&#x306E;&#x30A8;&#x30E9;&#x30FC;&#x304C;&#x89E3;&#x6C7A;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>これで掲題のエラーが解決されました。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1909,7 +1909,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

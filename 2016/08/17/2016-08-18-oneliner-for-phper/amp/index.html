@@ -1814,37 +1814,37 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x307F;&#x3093;&#x306A;&#x304C;&#x5E78;&#x305B;&#x306B;&#x306A;&#x308C;&#x308B;<a href="http://blog.tojiru.net/">hiraku &#x3055;&#x3093;</a>&#x306E;&#x7A76;&#x6975;&#x306E;1&#x30E9;&#x30A4;&#x30CA;&#x30FC;&#x3067;&#x3059;&#x3002;</p>
+			  		<p>みんなが幸せになれる<a href="http://blog.tojiru.net/">hiraku さん</a>の究極の1ライナーです。</p>
 <figure class="highlight sh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ composer config -g repositories.packagist composer http://packagist.jp</span><br></pre></td></tr></tbody></table></figure>
 
-<p>composer &#x306B;&#x3088;&#x308B; &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x304C;&#x5287;&#x7684;&#x306B;&#x65E9;&#x304F;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x9045;&#x3044;&#x7406;&#x7531;&#x306F; &#x7279;&#x306B; <span id="hexo-amp-id-1">packagist.org &#x304C; &#x30D5;&#x30E9;&#x30F3;&#x30B9;&#x306B;&#x3042;&#x308B;</span> &#x304B;&#x3089;&#x3068;&#x306E;&#x3053;&#x3068;</p>
-<h2><span id="&#x554F;&#x984C;&#x767A;&#x751F;">&#x554F;&#x984C;&#x767A;&#x751F;</span></h2><p>&#x65E9;&#x901F;&#x4E0A;&#x8A18; 1 &#x30E9;&#x30A4;&#x30CA;&#x30FC;&#x3092;&#x5B9F;&#x884C;!!</p>
-<p>&#x3059;&#x308B;&#x3068;&#x2026;</p>
+<p>composer による インストールが劇的に早くなります。</p>
+<p>遅い理由は 特に <span id="hexo-amp-id-1">packagist.org が フランスにある</span> からとのこと</p>
+<h2><span id="問題発生">問題発生</span></h2><p>早速上記 1 ライナーを実行!!</p>
+<p>すると…</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">You are running composer with xdebug enabled. This has a major impact on runtime performance. See https://getcomposer.org/xdebug</span><br><span class="line">Do not run Composer as root/super user! See https://getcomposer.org/root for details</span><br></pre></td></tr></tbody></table></figure>
 
-<p>xdeug &#x304C; enabled &#x306B;&#x306A;&#x3063;&#x3066;&#x3044;&#x308B;&#x305E;&#x3068;&#x6012;&#x3089;&#x308C;&#x3066;&#x3044;&#x308B;&#x3002;&#x3002;</p>
-<h2><span id="xdebug-&#x8A2D;&#x5B9A;&#x7B87;&#x6240;&#x3092;&#x63A2;&#x3059;">xdebug &#x8A2D;&#x5B9A;&#x7B87;&#x6240;&#x3092;&#x63A2;&#x3059;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ php -i | grep xdebug</span><br><span class="line"></span><br><span class="line">/etc/php.d/xdebug.ini,</span><br><span class="line">xdebug</span><br><span class="line">xdebug support =&gt; enabled</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
+<p>xdeug が enabled になっているぞと怒られている。。</p>
+<h2><span id="xdebug-設定箇所を探す">xdebug 設定箇所を探す</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ php -i | grep xdebug</span><br><span class="line"></span><br><span class="line">/etc/php.d/xdebug.ini,</span><br><span class="line">xdebug</span><br><span class="line">xdebug support =&gt; enabled</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
 
-<p>/etc/php.d/xdebug.ini &#x3067; &#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x305F;&#x3002;</p>
-<p>&#x203B;&#x74B0;&#x5883;&#x306B;&#x3088;&#x3063;&#x3066;&#x306F; php.ini &#x3067;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x308B;&#x7B49;&#x3042;&#x308B;&#x306E;&#x3067;&#x6CE8;&#x610F;</p>
-<h2><span id="xdebug-&#x3092;-disabled-&#x306B;&#x8A2D;&#x5B9A;&#x5909;&#x66F4;">xdebug &#x3092; disabled &#x306B;&#x8A2D;&#x5B9A;&#x5909;&#x66F4;</span></h2><p>&#x81EA;&#x5206;&#x306E; PHP&#x5B9F;&#x884C;&#x74B0;&#x5883;&#x3067;&#x306F; xdebug &#x3092;&#x5229;&#x7528;&#x3059;&#x308B;&#x5FC5;&#x8981;&#x6027;&#x304C;&#x306A;&#x304B;&#x3063;&#x305F;&#x70BA;&#x3001;<br>/etc/php.d/xdebug.ini &#x9000;&#x907F;</p>
+<p>/etc/php.d/xdebug.ini で 設定していた。</p>
+<p>※環境によっては php.ini で設定している等あるので注意</p>
+<h2><span id="xdebug-を-disabled-に設定変更">xdebug を disabled に設定変更</span></h2><p>自分の PHP実行環境では xdebug を利用する必要性がなかった為、<br>/etc/php.d/xdebug.ini 退避</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/php.d/xdebug.ini /etc/php.d/xdebug.ini.org</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x518D;&#x5EA6;&#x5B9F;&#x884C;">&#x518D;&#x5EA6;&#x5B9F;&#x884C;</span></h2><p>&#x3042;&#x308C;&#x2026; &#x307E;&#x305F;&#x51FA;&#x3066;&#x304D;&#x305F;&#x2026; &#x4ECA;&#x5EA6;&#x306F;&#x3001;</p>
+<h2><span id="再度実行">再度実行</span></h2><p>あれ… また出てきた… 今度は、</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Do not run Composer as root/super user! See https://getcomposer.org/root for details</span><br></pre></td></tr></tbody></table></figure>
 
-<p>root &#x30E6;&#x30FC;&#x30B6;&#x3067;&#x5B9F;&#x884C;&#x3059;&#x308B;&#x306A;&#x3068;&#x6012;&#x3089;&#x308C;&#x3066;&#x3044;&#x308B;&#x3002;&#x3002;</p>
-<h2><span id="root-&#x30E6;&#x30FC;&#x30B6;&#x4EE5;&#x5916;&#x306E;&#x901A;&#x5E38;&#x30E6;&#x30FC;&#x30B6;&#x3078;&#x5909;&#x66F4;">root &#x30E6;&#x30FC;&#x30B6;&#x4EE5;&#x5916;&#x306E;&#x901A;&#x5E38;&#x30E6;&#x30FC;&#x30B6;&#x3078;&#x5909;&#x66F4;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># su - &lt;user&gt;</span><br></pre></td></tr></tbody></table></figure>
+<p>root ユーザで実行するなと怒られている。。</p>
+<h2><span id="root-ユーザ以外の通常ユーザへ変更">root ユーザ以外の通常ユーザへ変更</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># su - &lt;user&gt;</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x518D;&#x5EA6;&#x5B9F;&#x884C;">&#x518D;&#x5EA6;&#x5B9F;&#x884C;</span></h2><p>&#x6210;&#x529F;&#x3057;&#x305F;&#xFF01;</p>
+<h2><span id="再度実行">再度実行</span></h2><p>成功した！</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ composer config -g repos.packagist composer https://packagist.jp</span><br><span class="line">$</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x8A2D;&#x5B9A;&#x78BA;&#x8A8D;">&#x8A2D;&#x5B9A;&#x78BA;&#x8A8D;</span></h2><p>packagist url &#x304C; <code>https://packagist.jp</code> &#x306B;&#x306A;&#x3063;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x3092;&#x78BA;&#x8A8D;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ cat .composer/config.json</span><br><span class="line"></span><br><span class="line">{</span><br><span class="line">    &quot;config&quot;: {},</span><br><span class="line">    &quot;repositories&quot;: {</span><br><span class="line">        &quot;packagist&quot;: {</span><br><span class="line">            &quot;type&quot;: &quot;composer&quot;,</span><br><span class="line">            &quot;url&quot;: &quot;https://packagist.jp&quot;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="設定確認">設定確認</span></h2><p>packagist url が <code>https://packagist.jp</code> になっていることを確認</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ cat .composer/config.json</span><br><span class="line"></span><br><span class="line">{</span><br><span class="line">    "config": {},</span><br><span class="line">    "repositories": {</span><br><span class="line">        "packagist": {</span><br><span class="line">            "type": "composer",</span><br><span class="line">            "url": "https://packagist.jp"</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x826F;&#x304D;PHP&#x30E9;&#x30A4;&#x30D5;&#x3092;&#xFF01;</p>
-<h2><span id="&#x53C2;&#x7167;">&#x53C2;&#x7167;</span></h2><a href="https://tech.mercari.com/entry/2016/02/01/164829" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cloud.githubusercontent.com/assets/835251/12534815/55071302-c2ad-11e5-96a4-72e2c8744d5f.gif" width="570" height="461" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">&#x5149;&#x9045;&#x3044;&#x554F;&#x984C;&#x3092;&#x514B;&#x670D;&#x3057;&#x3066;composer&#x3092;10&#x500D;&#x901F;&#x304F;&#x3057;&#x305F;&#x8A71; - Mercari Engineering Blog</div><div class="og-description">&#x306F;&#x3058;&#x3081;&#x307E;&#x3057;&#x3066;&#x3002;&#x30B5;&#x30FC;&#x30D0;&#x30FC;&#x30B5;&#x30A4;&#x30C9;&#x30A8;&#x30F3;&#x30B8;&#x30CB;&#x30A2;&#x306E;&#x4E2D;&#x91CE;(@Hiraku)&#x3067;&#x3059;&#x3002;2015&#x5E74;12&#x6708;&#x304B;&#x3089;&#x30E1;&#x30EB;&#x30AB;&#x30EA;&#x3067;&#x50CD;&#x3044;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002; 2016&#x5E74;1&#x6708;27&#x65E5;(&#x6C34;)&#x306E;&#x7B2C;98&#x56DE;PHP&#x52C9;&#x5F37;&#x4F1A;@&#x6771;&#x4EAC;&#x306B;&#x3066;&#x3001;composer&#x3092;&#x901F;&#x304F;&#x3059;&#x308B;&#x53D6;&#x308A;&#x7D44;&#x307F;&#x306B;&#x3064;&#x3044;&#x3066;&#x767A;&#x8868;&#x3092;&#x3057;&#x3066;&#x304D;&#x307E;&#x3057;&#x305F;&#x3002; composer&#x306E;&#x9045;&#x3055;&#x3092;&#x307E;&#x3058;&#x3081;&#x306B;&#x8003;&#x3048;&#x308B; #&#x2026;</div></div></div></a>
+<p>良きPHPライフを！</p>
+<h2><span id="参照">参照</span></h2><a href="https://tech.mercari.com/entry/2016/02/01/164829" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cloud.githubusercontent.com/assets/835251/12534815/55071302-c2ad-11e5-96a4-72e2c8744d5f.gif" width="570" height="461" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">光遅い問題を克服してcomposerを10倍速くした話 - Mercari Engineering Blog</div><div class="og-description">はじめまして。サーバーサイドエンジニアの中野(@Hiraku)です。2015年12月からメルカリで働いています。 2016年1月27日(水)の第98回PHP勉強会@東京にて、composerを速くする取り組みについて発表をしてきました。 composerの遅さをまじめに考える #…</div></div></div></a>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1910,7 +1910,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

@@ -1814,15 +1814,15 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p><a href="https://prometheus.io/docs/introduction/getting_started/">Prometheus&#x5165;&#x9580;</a> &#x306B;&#x3042;&#x308B;&#x30C1;&#x30E5;&#x30FC;&#x30C8;&#x30EA;&#x30A2;&#x30EB;&#x3092;<br>Ansible&#x3067;&#x7C21;&#x5358;&#x306B;&#x69CB;&#x7BC9;&#x3067;&#x304D;&#x308B;&#x3088;&#x3046;&#x306B;&#x3057;&#x305F;&#x3001;<br>&#x3068;&#x3044;&#x3046;&#x3082;&#x306E;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x5148;&#x65E5;2016&#x5E74;6&#x6708;14&#x65E5;&#x3001;<br>LINE&#x682A;&#x5F0F;&#x4F1A;&#x793E;&#x3067;&#x306E;<a href="http://connpass.com/event/32859/">Prometheus Casual Talks #1</a>&#x306B;&#x53C2;&#x52A0;&#x3057;<br>&#x30CA;&#x30EC;&#x30C3;&#x30B8;&#x306E;&#x304A;&#x3055;&#x3089;&#x3044;&#x306A;&#x3069;&#x3057;&#x305F;&#x304F;&#x3001;<br>&#x69CB;&#x7BC9;&#x6CD5;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="prometheus&#x3068;&#x306F;">Prometheus&#x3068;&#x306F;</span></h2><p>&#x6700;&#x8FD1;&#x8A71;&#x984C;&#x306E;Pull&#x578B;&#x306E;Query Filtering&#x53EF;&#x80FD;&#x3067; Grafana&#x7B49;&#x3068;&#x9023;&#x643A;&#x3067;&#x304D;&#x308B; &#x30E2;&#x30CB;&#x30BF;&#x30EA;&#x30F3;&#x30B0;/Alert&#x30C4;&#x30FC;&#x30EB;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x69CB;&#x6210;">&#x69CB;&#x6210;</span></h2><div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/pfazhaR.png" width="513" height="327" layout="responsive"></amp-img></div>
+			  		<h2><span id="概要">概要</span></h2><p><a href="https://prometheus.io/docs/introduction/getting_started/">Prometheus入門</a> にあるチュートリアルを<br>Ansibleで簡単に構築できるようにした、<br>というものです。</p>
+<p>先日2016年6月14日、<br>LINE株式会社での<a href="http://connpass.com/event/32859/">Prometheus Casual Talks #1</a>に参加し<br>ナレッジのおさらいなどしたく、<br>構築法をまとめました。</p>
+<h2><span id="prometheusとは">Prometheusとは</span></h2><p>最近話題のPull型のQuery Filtering可能で Grafana等と連携できる モニタリング/Alertツールです。</p>
+<h2><span id="構成">構成</span></h2><div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/pfazhaR.png" width="513" height="327" layout="responsive"></amp-img></div>
 <ul>
-<li>Prometheus Server &#xD7; 1</li>
-<li>Prometheus Client &#xD7; 2</li>
+<li>Prometheus Server × 1</li>
+<li>Prometheus Client × 2</li>
 </ul>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+<h2><span id="環境">環境</span></h2><ul>
 <li>CentOS 6.5</li>
 <li>Prometheus Server 0.20.0</li>
 <li>Supervisor 3.3.0</li>
@@ -1831,16 +1831,16 @@ h6.categories {
 <li>Vagrant 1.8.1</li>
 <li>MacOSX 10.11.5</li>
 </ul>
-<h2><span id="&#x524D;&#x63D0;&#x6761;&#x4EF6;">&#x524D;&#x63D0;&#x6761;&#x4EF6;</span></h2><p>&#x4EE5;&#x4E0B;&#x30C4;&#x30FC;&#x30EB;&#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x3066;&#x304A;&#x3044;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<h2><span id="前提条件">前提条件</span></h2><p>以下ツールをインストールしておいてください。</p>
 <ul>
 <li>VirtualBox</li>
 <li>Vagrant</li>
 <li>Ansible</li>
 </ul>
-<h2><span id="&#x4F7F;&#x3044;&#x65B9;">&#x4F7F;&#x3044;&#x65B9;</span></h2><h3><span id="1-git-repository-&#x3092;-clone">1. git repository &#x3092; clone</span></h3><p>[<a href="https://github.com/kenzo0107/Vagrant-Prometheus]">https://github.com/kenzo0107/Vagrant-Prometheus]</a></p>
+<h2><span id="使い方">使い方</span></h2><h3><span id="1-git-repository-を-clone">1. git repository を clone</span></h3><p>[<a href="https://github.com/kenzo0107/Vagrant-Prometheus]">https://github.com/kenzo0107/Vagrant-Prometheus]</a></p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/kenzo0107/Vagrant-Prometheus</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="2-vagrant-vm-&#x8D77;&#x52D5;">2. Vagrant VM &#x8D77;&#x52D5;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd Vagrant-Prometheus</span><br><span class="line">$ vagrant up</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="2-vagrant-vm-起動">2. Vagrant VM 起動</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd Vagrant-Prometheus</span><br><span class="line">$ vagrant up</span><br></pre></td></tr></tbody></table></figure>
 
 <p>3 node running !</p>
 <ul>
@@ -1859,30 +1859,30 @@ h6.categories {
 </ul>
 </li>
 </ul>
-<h2><span id="3-sshconfig-&#x8FFD;&#x52A0;">3. ssh.config &#x8FFD;&#x52A0;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh-config &gt; ssh.config</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="3-sshconfig-追加">3. ssh.config 追加</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant ssh-config &gt; ssh.config</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="4-ping-&#x758E;&#x901A;&#x8A66;&#x9A13;">4. ping &#x758E;&#x901A;&#x8A66;&#x9A13;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ansible default -m ping</span><br><span class="line"></span><br><span class="line">server | SUCCESS =&gt; {</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">}</span><br><span class="line">client1 | SUCCESS =&gt; {</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">}</span><br><span class="line">client2 | SUCCESS =&gt; {</span><br><span class="line">    &quot;changed&quot;: false,</span><br><span class="line">    &quot;ping&quot;: &quot;pong&quot;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="4-ping-疎通試験">4. ping 疎通試験</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ansible default -m ping</span><br><span class="line"></span><br><span class="line">server | SUCCESS =&gt; {</span><br><span class="line">    "changed": false,</span><br><span class="line">    "ping": "pong"</span><br><span class="line">}</span><br><span class="line">client1 | SUCCESS =&gt; {</span><br><span class="line">    "changed": false,</span><br><span class="line">    "ping": "pong"</span><br><span class="line">}</span><br><span class="line">client2 | SUCCESS =&gt; {</span><br><span class="line">    "changed": false,</span><br><span class="line">    "ping": "pong"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
 <p>ok, success.</p>
-<h2><span id="5-2node-&#x306B;-prometheusclient-&#x8A2D;&#x5B9A;">5. 2node &#x306B; PrometheusClient &#x8A2D;&#x5B9A;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook set_clients_prometheus.yml</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="5-2node-に-prometheusclient-設定">5. 2node に PrometheusClient 設定</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook set_clients_prometheus.yml</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="6-prometheusclient-&#x306E;&#x8D77;&#x52D5;&#x78BA;&#x8A8D;">6. PrometheusClient &#x306E;&#x8D77;&#x52D5;&#x78BA;&#x8A8D;</span></h2><p>&#x4EE5;&#x4E0B;PrometheusClient&#x3092;&#x8D77;&#x52D5;&#x3057;&#x3066;&#x3044;&#x308B;&#x30B5;&#x30FC;&#x30D0;&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3057;<br>&#x8D77;&#x52D5;&#x3055;&#x308C;&#x3066;&#x3044;&#x308B;&#x304B;&#x78BA;&#x8A8D;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="6-prometheusclient-の起動確認">6. PrometheusClient の起動確認</span></h2><p>以下PrometheusClientを起動しているサーバにアクセスし<br>起動されているか確認します。</p>
 <ul>
 <li><a href="http://192.168.11.31:8080/metrics">http://192.168.11.31:8080/metrics</a></li>
 <li><a href="http://192.168.11.32:8080/metrics">http://192.168.11.32:8080/metrics</a></li>
 </ul>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x8868;&#x793A;&#x3055;&#x308C;&#x308C;&#x3070;&#x6210;&#x529F;&#x3067;&#x3059;&#x3002;</p>
+<p>以下のように表示されれば成功です。</p>
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/igPci2Z.png" width="1302" height="772" layout="responsive"></amp-img></div>
 
 
-<h2><span id="7-prometheusserver-&#x8A2D;&#x5B9A;">7. PrometheusServer &#x8A2D;&#x5B9A;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook set_server_prometheus.yml</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="7-prometheusserver-設定">7. PrometheusServer 設定</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ansible-playbook set_server_prometheus.yml</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="8-prometheusserver-&#x78BA;&#x8A8D;">8. PrometheusServer &#x78BA;&#x8A8D;</span></h2><p><a href="http://192.168.33.30:9090">http://192.168.33.30:9090</a> &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;</p>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x8868;&#x793A;&#x3055;&#x308C;&#x308C;&#x3070;&#x6210;&#x529F;&#x3067;&#x3059;&#x3002;</p>
+<h2><span id="8-prometheusserver-確認">8. PrometheusServer 確認</span></h2><p><a href="http://192.168.33.30:9090">http://192.168.33.30:9090</a> にアクセス</p>
+<p>以下のように表示されれば成功です。</p>
 <div class="amp-img-wrapper"><amp-img src="http://i.imgur.com/XDTarz3.png" width="1544" height="1470" layout="responsive"></amp-img></div>
 
-<p>&#x662F;&#x975E;&#x591A;&#x5C11;&#x306A;&#x308A;&#x3068;&#x3082;&#x4E00;&#x52A9;&#x3068;&#x306A;&#x308C;&#x3070;&#x4F55;&#x3088;&#x308A;&#x3067;&#x3059;&#xFF01;<br>&#x3044;&#x3058;&#x304F;&#x308A;&#x5012;&#x3057;&#x3066;&#x307F;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#xFF01;</p>
-<p>&#x4EE5;&#x4E0A;</p>
+<p>是非多少なりとも一助となれば何よりです！<br>いじくり倒してみてください！</p>
+<p>以上</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1966,7 +1966,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

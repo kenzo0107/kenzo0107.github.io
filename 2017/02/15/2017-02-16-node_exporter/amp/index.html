@@ -1814,42 +1814,42 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>node_expoter &#x306E;&#x30AA;&#x30D7;&#x30B7;&#x30E7;&#x30F3; <code>--collector.textfile.directory</code> &#x3067;&#x6307;&#x5B9A;&#x3057;&#x305F;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x306B; <code>*.prom</code> &#x3068;&#x3044;&#x3046;&#x62E1;&#x5F35;&#x5B50;&#x3092;&#x914D;&#x7F6E;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;<br>&#x305D;&#x3053;&#x306B;&#x8A18;&#x8FF0;&#x3057;&#x305F;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x60C5;&#x5831;&#x3092; prometheus server &#x304C;&#x8AAD;&#x307F;&#x53D6;&#x3063;&#x3066;&#x304F;&#x308C;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x3053;&#x306E; <code>*.prom</code> &#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x4E00;&#x5B9A;&#x6642;&#x9593;&#x6BCE;&#x306B;&#x66F4;&#x65B0;&#x3059;&#x308C;&#x3070;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x304C;&#x81EA;&#x4F5C;&#x3067;&#x304D;&#x308B;&#x3001;&#x3068;&#x3044;&#x3046;&#x3082;&#x306E;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="&#x624B;&#x9806;">&#x624B;&#x9806;</span></h2><ul>
-<li>node_exporter &#x81EA;&#x4F53;&#x306E;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x30FB;&#x30BB;&#x30C3;&#x30C8;&#x30A2;&#x30C3;&#x30D7;&#x306F;&#x4EE5;&#x4E0B;&#x3054;&#x53C2;&#x7167;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</li>
+			  		<h2><span id="概要">概要</span></h2><p>node_expoter のオプション <code>--collector.textfile.directory</code> で指定したディレクトリに <code>*.prom</code> という拡張子を配置することで<br>そこに記述したメトリクス情報を prometheus server が読み取ってくれます。</p>
+<p>この <code>*.prom</code> ファイルを一定時間毎に更新すればメトリクスが自作できる、というものです。</p>
+<h2><span id="手順">手順</span></h2><ul>
+<li>node_exporter 自体のインストール・セットアップは以下ご参照ください。</li>
 </ul>
-<a href="http://kenzo0107.hatenablog.com/entry/2017/01/25/154144" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125144719.png" width="685" height="437" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Node Exporter &#x69CB;&#x7BC9;&#x624B;&#x9806; + Prometheus &#x304B;&#x3089;AWS&#x30AA;&#x30FC;&#x30C8;&#x30B9;&#x30B1;&#x30FC;&#x30EB;&#x76E3;&#x8996; - &#x9577;&#x751F;&#x6751;&#x672C;&#x90F7;Engineers&apos;Blog</div><div class="og-description">&#x6982;&#x8981; &#x524D;&#x56DE; Prometheus Server &#x69CB;&#x7BC9;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002; kenzo0107.hatenablog.com &#x4ECA;&#x56DE;&#x306F; &#x76E3;&#x8996;&#x5BFE;&#x8C61;&#x30B5;&#x30FC;&#x30D0;&#x3067; Node Exporter &#x69CB;&#x7BC9;&#x3092;&#x5B9F;&#x65BD;&#x3057;&#x307E;&#x3059;&#x3002; &#x4ECA;&#x56DE;&#x3084;&#x308B;&#x3053;&#x3068; 3&#x884C;&#x307E;&#x3068;&#x3081; Node Exporter &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB; Node Exporte&#x2026;</div></div></div></a>
+<a href="http://kenzo0107.hatenablog.com/entry/2017/01/25/154144" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125144719.png" width="685" height="437" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Node Exporter 構築手順 + Prometheus からAWSオートスケール監視 - 長生村本郷Engineers'Blog</div><div class="og-description">概要 前回 Prometheus Server 構築しました。 kenzo0107.hatenablog.com 今回は 監視対象サーバで Node Exporter 構築を実施します。 今回やること 3行まとめ Node Exporter インストール Node Exporte…</div></div></div></a>
 
-<p>&#x4E0A;&#x8A18;&#x624B;&#x9806;&#x3067;&#x306F;&#x4EE5;&#x4E0B;&#x306B;node_exporter&#x3092;&#x914D;&#x7F6E;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;<br>&#x74B0;&#x5883;&#x306B;&#x3088;&#x3063;&#x3066;&#x9069;&#x5B9C;&#x66F8;&#x304D;&#x63DB;&#x3048;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<p>上記手順では以下にnode_exporterを配置しています。<br>環境によって適宜書き換えてください。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/node_exporter/node_exporter</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="text_collector-&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x4F5C;&#x6210;">text_collector &#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x4F5C;&#x6210;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/node_exporter</span><br><span class="line">$ mkdir text_collector</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="text_collector-ディレクトリ作成">text_collector ディレクトリ作成</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/node_exporter</span><br><span class="line">$ mkdir text_collector</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="shell-&#x4F5C;&#x6210;">shell &#x4F5C;&#x6210;</span></h2><p>&#x4ECA;&#x56DE;&#x306F; httpd &#x306E; process count &#x306E;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x8FFD;&#x52A0;&#x3059;&#x308B;&#x3053;&#x3068;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="shell-作成">shell 作成</span></h2><p>今回は httpd の process count のメトリクス追加することとします。</p>
 <ul>
-<li>/usr/local/node_exporter/text_collector/httpd.sh &#x4F5C;&#x6210;</li>
+<li>/usr/local/node_exporter/text_collector/httpd.sh 作成</li>
 </ul>
 
 
-<h2><span id="cron&#x8A2D;&#x5B9A;">cron&#x8A2D;&#x5B9A;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># node_exporter httpd 5&#x5206;&#x6BCE;&#x66F4;&#x65B0;</span><br><span class="line">*/5 * * * * /usr/local/node_exporter/text_collector/httpd.sh</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="cron設定">cron設定</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># node_exporter httpd 5分毎更新</span><br><span class="line">*/5 * * * * /usr/local/node_exporter/text_collector/httpd.sh</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="httpdprom-&#x4F5C;&#x6210;&#x78BA;&#x8A8D;">httpd.prom &#x4F5C;&#x6210;&#x78BA;&#x8A8D;</span></h2><ul>
+<h2><span id="httpdprom-作成確認">httpd.prom 作成確認</span></h2><ul>
 <li>/usr/local/node_exporter/text_collector/httpd.prom</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_httpd_count 24</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x306E; <code>node_httpd_count</code> &#x304C;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x540D;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="node_expoter-&#x518D;&#x8D77;&#x52D5;">node_expoter &#x518D;&#x8D77;&#x52D5;</span></h2><p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306B;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x6307;&#x5B9A;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>上記の <code>node_httpd_count</code> がメトリクス名になります。</p>
+<h2><span id="node_expoter-再起動">node_expoter 再起動</span></h2><p>以下のようにディレクトリ指定します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_expoter --collector.textfile.directory /usr/local/node_exporter/text_collector</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x3092;&#x6307;&#x5B9A;&#x3057;&#x78BA;&#x8A8D;&#x3059;&#x308B;">&#x4F5C;&#x6210;&#x3057;&#x305F;&#x30E1;&#x30C8;&#x30EA;&#x30AF;&#x30B9;&#x3092;&#x6307;&#x5B9A;&#x3057;&#x78BA;&#x8A8D;&#x3059;&#x308B;&#x3002;</span></h2><p>&#x7121;&#x4E8B;&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#xFF01;</p>
+<h2><span id="作成したメトリクスを指定し確認する">作成したメトリクスを指定し確認する。</span></h2><p>無事できました！</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170216/20170216225202.png" width="1024" height="987" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x3053;&#x308C;&#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x308B;&#x3068;&#x30B7;&#x30A7;&#x30EB;&#x82B8;&#x3067;&#x8272;&#x3005;&#x4E8B;&#x8DB3;&#x308A;&#x308B;&#x3053;&#x3068;&#x3082;&#x3042;&#x308A;&#x307E;&#x3059;&#x266A;</p>
-<p>&#x4E00;&#x52A9;&#x306B;&#x306A;&#x308C;&#x3070;&#x4F55;&#x3088;&#x308A;&#x3067;&#x3059;&#x3002;</p>
+<p>これを利用してるとシェル芸で色々事足りることもあります♪</p>
+<p>一助になれば何よりです。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1921,7 +1921,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

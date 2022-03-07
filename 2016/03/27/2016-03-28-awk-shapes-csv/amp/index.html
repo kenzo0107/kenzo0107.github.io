@@ -1816,47 +1816,47 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x3042;&#x308B;&#x9867;&#x5BA2;&#x30C7;&#x30FC;&#x30BF;&#x3092;&#x62BD;&#x51FA;&#x3057;&#x3066;&#x30EC;&#x30DD;&#x30FC;&#x30C8;&#x3057;&#x305F;&#x3044;&#x3001;&#x3068;&#x3044;&#x3046;&#x3068;&#x304D;&#x306B;<br>CSV&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3067; &#x201C;090&#x201D; &#x306A;&#x3069;&#x3068;&#x643A;&#x5E2F;&#x96FB;&#x8A71;&#x304C;&#x3042;&#x308B;&#x3068; Excel&#x3067;CSV&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x958B;&#x3044;&#x305F;&#x3068;&#x304D;&#x306B;<br>&#x201C;90&#x201D; &#x306B;&#x306A;&#x3063;&#x3066;&#x3057;&#x307E;&#x3046;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x304C;&#x3042;&#x308B;&#x304B;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+			  		<h2><span id="概要">概要</span></h2><p>ある顧客データを抽出してレポートしたい、というときに<br>CSVファイルで “090” などと携帯電話があると ExcelでCSVファイルを開いたときに<br>“90” になってしまうということがあるかと思います。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160328/20160328190207.png" width="810" height="292" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x305D;&#x3093;&#x306A;&#x3068;&#x304D;&#x306E;&#x70BA;&#x306B;&#x7279;&#x5B9A;&#x5217;&#x306E;&#x307F;&#x6570;&#x5024;&#x3092;&#x6587;&#x5B57;&#x5217;&#x6271;&#x3044;&#x306B;&#x3057;&#x305F;&#x3068;&#x304D;&#x306E;&#x5185;&#x5BB9;&#x307E;&#x3068;&#x3081;&#x3067;&#x3059;&#x3002;</p>
-<h2><span id="excel&#x3067;&#x6570;&#x5024;&#x3092;&#x6587;&#x5B57;&#x5217;&#x6271;&#x3044;&#x3059;&#x308B;&#x306B;&#x306F;">Excel&#x3067;&#x6570;&#x5024;&#x3092;&#x6587;&#x5B57;&#x5217;&#x6271;&#x3044;&#x3059;&#x308B;&#x306B;&#x306F;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;090&quot;</span><br></pre></td></tr></tbody></table></figure>
+<p>そんなときの為に特定列のみ数値を文字列扱いにしたときの内容まとめです。</p>
+<h2><span id="excelで数値を文字列扱いするには">Excelで数値を文字列扱いするには</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"090"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x3068;&#x3042;&#x3063;&#x305F;&#x3068;&#x3059;&#x308B;&#x3068;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&quot;090&quot;</span><br></pre></td></tr></tbody></table></figure>
+<p>とあったとすると</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">="090"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x306E;&#x3088;&#x3046;&#x306B;&#x6574;&#x5F62;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x6587;&#x5B57;&#x5217;&#x6271;&#x3044;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4F8B;)</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&#x30C7;&#x30DF;&#x30B9;&#x30CF;&#x30B5;&#x30D3;&#x30B9;&quot;,=&quot;09099999999&quot;,&quot;DeepMind&quot;</span><br></pre></td></tr></tbody></table></figure>
+<p>のように整形することで文字列扱いになります。</p>
+<p>例)</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"デミスハサビス",="09099999999","DeepMind"</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x6574;&#x5F62;&#x3057;&#x3066;&#x307F;&#x308B;">&#x6574;&#x5F62;&#x3057;&#x3066;&#x307F;&#x308B;</span></h2><ul>
-<li>&#x4F8B;&#xFF09;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A; tmp.csv &#x304C;&#x3042;&#x308B;&#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</li>
+<h2><span id="整形してみる">整形してみる</span></h2><ul>
+<li>例）以下のような tmp.csv があるとします。</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;&#x30C7;&#x30DF;&#x30B9;&#x30CF;&#x30B5;&#x30D3;&#x30B9;&quot;,&quot;09099999999&quot;,&quot;DeepMind&quot;</span><br><span class="line">&quot;&#x3044;&#x3068;&#x3046;&#x305B;&#x3044;&#x3053;&#x3046;&quot;,&quot;08088888888&quot;,&quot;&#x30A8;&#x30E0;&#x30D1;&#x30A4;&#x30E4;&#x30FB;&#x30B9;&#x30CD;&#x30FC;&#x30AF;&#x30FB;&#x30D3;&#x30EB;&#x30C7;&#x30A3;&#x30F3;&#x30B0;&quot;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">"デミスハサビス","09099999999","DeepMind"</span><br><span class="line">"いとうせいこう","08088888888","エムパイヤ・スネーク・ビルディング"</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>2&#x3064;&#x76EE;&#x306E;&#x30AB;&#x30E9;&#x30E0;&#x306E;&#x307F; =&#x3092;&#x5DE6;&#x7AEF;&#x306B;&#x8FFD;&#x52A0;&#x3057;&#x307E;&#x3059;<br>&#x203B;&#x201D;(&#x30C0;&#x30D6;&#x30EB;&#x30AF;&#x30A9;&#x30C6;&#x30FC;&#x30B7;&#x30E7;&#x30F3;)&#x3067;&#x56F2;&#x307E;&#x308C;&#x305F;&#x5024;&#x306E;&#x5DE6;&#x5074;&#x306B;&#x300C;=&#x300D;&#x3092;&#x8FFD;&#x52A0;&#x3057;&#x307E;&#x3059;&#x3002;<br>&#x203B;&#x3042;&#x3048;&#x3066;&#x5206;&#x304B;&#x308A;&#x3084;&#x3059;&#x304F; <amp-mathml layout="container" inline data-formula="\[1, \]"></amp-mathml>2, $3 &#x306E;&#x9805;&#x76EE;&#x3092;&#x660E;&#x793A;&#x7684;&#x306B;&#x6307;&#x5B9A;&#x3057;&#x3066;&#x307F;&#x307E;&#x3057;&#x305F;&#x3002;</li>
+<li>2つ目のカラムのみ =を左端に追加します<br>※”(ダブルクォテーション)で囲まれた値の左側に「=」を追加します。<br>※あえて分かりやすく <amp-mathml layout="container" inline="" data-formula="\[1, \]"></amp-mathml>2, $3 の項目を明示的に指定してみました。</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ awk -F &apos;,&apos; &apos;{print $1 &quot;,=&quot;$2&quot;,&quot;$3}&apos; tmp.csv</span><br><span class="line">&quot;&#x30C7;&#x30DF;&#x30B9;&#x30CF;&#x30B5;&#x30D3;&#x30B9;&quot;,=&quot;09099999999&quot;,&quot;DeepMind&quot;</span><br><span class="line">&quot;&#x3044;&#x3068;&#x3046;&#x305B;&#x3044;&#x3053;&#x3046;&quot;,=&quot;08088888888&quot;,&quot;&#x30A8;&#x30E0;&#x30D1;&#x30A4;&#x30E4;&#x30FB;&#x30B9;&#x30CD;&#x30FC;&#x30AF;&#x30FB;&#x30D3;&#x30EB;&#x30C7;&#x30A3;&#x30F3;&#x30B0;&quot;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ awk -F ',' '{print $1 ",="$2","$3}' tmp.csv</span><br><span class="line">"デミスハサビス",="09099999999","DeepMind"</span><br><span class="line">"いとうせいこう",="08088888888","エムパイヤ・スネーク・ビルディング"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18;&#x306E;&#x3088;&#x3046;&#x306B; &#x300C;=&#x300D; &#x304C;&#x8FFD;&#x52A0;&#x3055;&#x308C;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>上記のように 「=」 が追加されました。</p>
 <ul>
-<li>&#x51FA;&#x529B;&#x5148;&#x3092;&#x6307;&#x5B9A;</li>
+<li>出力先を指定</li>
 </ul>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ awk -F &apos;,&apos; &apos;{print $1 &quot;,=&quot;$2&quot;,&quot;$3}&apos; tmp.csv &gt; output.csv</span><br><span class="line">$ cat output.csv</span><br><span class="line">&quot;&#x30C7;&#x30DF;&#x30B9;&#x30CF;&#x30B5;&#x30D3;&#x30B9;&quot;,=&quot;09099999999&quot;,&quot;DeepMind&quot;</span><br><span class="line">&quot;&#x3044;&#x3068;&#x3046;&#x305B;&#x3044;&#x3053;&#x3046;&quot;,=&quot;08088888888&quot;,&quot;&#x30A8;&#x30E0;&#x30D1;&#x30A4;&#x30E4;&#x30FB;&#x30B9;&#x30CD;&#x30FC;&#x30AF;&#x30FB;&#x30D3;&#x30EB;&#x30C7;&#x30A3;&#x30F3;&#x30B0;&quot;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ awk -F ',' '{print $1 ",="$2","$3}' tmp.csv &gt; output.csv</span><br><span class="line">$ cat output.csv</span><br><span class="line">"デミスハサビス",="09099999999","DeepMind"</span><br><span class="line">"いとうせいこう",="08088888888","エムパイヤ・スネーク・ビルディング"</span><br></pre></td></tr></tbody></table></figure>
 
-<p>output.csv &#x3092; Excel&#x3067;&#x958B;&#x3044;&#x3066;&#x307F;&#x307E;&#x3059;&#x3002;</p>
+<p>output.csv を Excelで開いてみます。</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160328/20160328190448.png" width="792" height="336" layout="responsive"></amp-img></div>
 </div>
 
-<p>&#x3067;&#x304D;&#x307E;&#x3057;&#x305F;&#x266A;</p>
-<h2><span id="&#x304A;&#x307E;&#x3051;">&#x304A;&#x307E;&#x3051;</span></h2><p>Excel&#x3092;&#x958B;&#x304F;&#x969B;&#x3001;Windows&#x3067;&#x306F;&#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8; SJIS&#x306A;&#x306E;&#x3067;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x304C;UTF8&#x306E;&#x5834;&#x5408;&#x3001;&#x6587;&#x5B57;&#x5316;&#x3051;&#x3057;&#x307E;&#x3059;&#x3002;<br>&#x4EE5;&#x4E0B;CSV&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;SJIS&#x306B;&#x6587;&#x5B57;&#x30B3;&#x30FC;&#x30C9;&#x5909;&#x63DB;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<p>できました♪</p>
+<h2><span id="おまけ">おまけ</span></h2><p>Excelを開く際、Windowsではデフォルト SJISなので文字コードがUTF8の場合、文字化けします。<br>以下CSVファイルをSJISに文字コード変換します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nkf -sLw output.csv &gt; output_sjis.csv</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;</p>
+<p>以上です。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1928,7 +1928,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

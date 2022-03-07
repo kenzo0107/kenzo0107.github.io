@@ -1814,22 +1814,22 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>CentOS 5 &#x306B; vim &#x3092;&#x30BD;&#x30FC;&#x30B9;&#x304B;&#x3089;&#x30D3;&#x30EB;&#x30C9;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x305F;&#x6240;<br>.configure &#x5B9F;&#x884C;&#x6642;&#x306B;&#x30A8;&#x30E9;&#x30FC;&#x767A;&#x751F;</p>
+			  		<h2><span id="概要">概要</span></h2><p>CentOS 5 に vim をソースからビルドしようとした所<br>.configure 実行時にエラー発生</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">no terminal library found</span><br><span class="line">checking for tgetent()... configure: error: NOT FOUND!</span><br><span class="line">      You need to install a terminal library; for example ncurses.</span><br><span class="line">      Or specify the name of the library with --with-tlib.</span><br></pre></td></tr></tbody></table></figure>
 
-<p>terminal library &#x304C;&#x306A;&#x3044;&#x3068;&#x6012;&#x3089;&#x308C;&#x3066;&#x3044;&#x308B;&#x3002;</p>
-<p>&#x3061;&#x306A;&#x307F;&#x306B;&#x3053;&#x3093;&#x306A;&#x6D41;&#x308C;&#x3067; vim &#x3092;&#x30BD;&#x30FC;&#x30B9;&#x304B;&#x3089;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x30D3;&#x30EB;&#x30C9;&#x3057;&#x3088;&#x3046;&#x3068;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2</span><br><span class="line">$ tar xvf vim-7.4.tar.bz2</span><br><span class="line">$ cd vim74</span><br><span class="line">$ ./configure --enable-multibyte --with-features=huge --disable-selinux --prefix=&apos;/usr/local/vim-7.4&apos;</span><br><span class="line">$ sudo make install</span><br><span class="line">$ sudo ln -s /usr/local/vim-7.4/bin/vim /usr/bin/vim</span><br></pre></td></tr></tbody></table></figure>
+<p>terminal library がないと怒られている。</p>
+<p>ちなみにこんな流れで vim をソースからダウンロードしビルドしようとしました。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ wget ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2</span><br><span class="line">$ tar xvf vim-7.4.tar.bz2</span><br><span class="line">$ cd vim74</span><br><span class="line">$ ./configure --enable-multibyte --with-features=huge --disable-selinux --prefix='/usr/local/vim-7.4'</span><br><span class="line">$ sudo make install</span><br><span class="line">$ sudo ln -s /usr/local/vim-7.4/bin/vim /usr/bin/vim</span><br></pre></td></tr></tbody></table></figure>
 
 
 <ul>
-<li>ncurses-devel &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x518D;&#x5EA6;&#x5B9F;&#x884C;</li>
+<li>ncurses-devel インストールし再度実行</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y ncurses-devel</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x901A;&#x308A;&#x307E;&#x3057;&#x305F; (;<del>_</del>)</p>
-<p>yum &#x3067;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3059;&#x308B; vim &#x3060;&#x3068; Neobundle &#x304C;&#x5229;&#x7528;&#x4E0D;&#x53EF;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x3060;&#x3063;&#x305F;&#x70BA;<br>&#x30BD;&#x30FC;&#x30B9;&#x304B;&#x3089;&#x30D3;&#x30EB;&#x30C9;&#x3059;&#x308B;&#x9078;&#x629E;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x7A0B;&#x3088;&#x3044; rpm &#x304C;&#x3042;&#x308C;&#x3070;&#x6559;&#x3048;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#xFF01;</p>
+<p>通りました (;<del>_</del>)</p>
+<p>yum でインストールする vim だと Neobundle が利用不可バージョンだった為<br>ソースからビルドする選択にしました。</p>
+<p>程よい rpm があれば教えてください！</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1895,7 +1895,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

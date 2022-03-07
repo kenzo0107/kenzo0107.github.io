@@ -1814,27 +1814,27 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><ul>
+			  		<h2><span id="環境">環境</span></h2><ul>
 <li>AWS</li>
 <li>CentOS Linux release 7.0.1406 (Core)</li>
 </ul>
-<h2><span id="&#x5FC5;&#x8981;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">&#x5FC5;&#x8981;&#x30E2;&#x30B8;&#x30E5;&#x30FC;&#x30EB;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install git libffi libffi-dev gcc openssl-devel readline-devel zlib-devel</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="必要モジュールインストール">必要モジュールインストール</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum -y install git libffi libffi-dev gcc openssl-devel readline-devel zlib-devel</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="rbenv-ruby-build-&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;">rbenv, ruby-build &#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv</span><br><span class="line">$ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="rbenv-ruby-build-ダウンロード">rbenv, ruby-build ダウンロード</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/sstephenson/rbenv.git ~/.rbenv</span><br><span class="line">$ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="rbenv-path&#x6307;&#x5B9A;">rbenv PATH&#x6307;&#x5B9A;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ echo &apos;export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot;&apos; &gt;&gt; ~/.bash_profile</span><br><span class="line">$ echo &apos;eval &quot;$(rbenv init -)&quot;&apos; &gt;&gt; ~/.bash_profile</span><br><span class="line">$ exec $SHELL</span><br><span class="line">$ source ~/.bash_profile</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="rbenv-path指定">rbenv PATH指定</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' &gt;&gt; ~/.bash_profile</span><br><span class="line">$ echo 'eval "$(rbenv init -)"' &gt;&gt; ~/.bash_profile</span><br><span class="line">$ exec $SHELL</span><br><span class="line">$ source ~/.bash_profile</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ rbenv install -list</span><br><span class="line"></span><br><span class="line">Available versions:</span><br><span class="line">   :</span><br><span class="line">   :</span><br><span class="line">  2.0.0-p643</span><br><span class="line">  2.0.0-p645 &#x2190; 2.0.0&#x306E;&#x6700;&#x65B0; (&#x203B;2015/08/06&#x6642;&#x70B9;)</span><br><span class="line">  2.1.0-dev</span><br><span class="line">  2.1.0-preview1</span><br><span class="line">  2.1.0-preview2</span><br><span class="line">  2.1.0-rc1</span><br><span class="line">   :</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ rbenv install -list</span><br><span class="line"></span><br><span class="line">Available versions:</span><br><span class="line">   :</span><br><span class="line">   :</span><br><span class="line">  2.0.0-p643</span><br><span class="line">  2.0.0-p645 ← 2.0.0の最新 (※2015/08/06時点)</span><br><span class="line">  2.1.0-dev</span><br><span class="line">  2.1.0-preview1</span><br><span class="line">  2.1.0-preview2</span><br><span class="line">  2.1.0-rc1</span><br><span class="line">   :</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="ruby-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">ruby &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rbenv install -v 2.0.0-p645</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="ruby-インストール">ruby インストール</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rbenv install -v 2.0.0-p645</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x518D;&#x8AAD;&#x8FBC;">&#x518D;&#x8AAD;&#x8FBC;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rbenv rehash</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="再読込">再読込</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rbenv rehash</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x305F;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x306B;&#x5207;&#x308A;&#x66FF;&#x3048;">&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x305F;&#x30D0;&#x30FC;&#x30B8;&#x30E7;&#x30F3;&#x306B;&#x5207;&#x308A;&#x66FF;&#x3048;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rbenv global 2.0.0-p645</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="インストールしたバージョンに切り替え">インストールしたバージョンに切り替え</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rbenv global 2.0.0-p645</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x78BA;&#x8A8D;">&#x78BA;&#x8A8D;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ruby -v</span><br><span class="line">ruby 2.0.0p645 (2015-04-13 revision 50299) [x86_64-linux]</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="確認">確認</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ruby -v</span><br><span class="line">ruby 2.0.0p645 (2015-04-13 revision 50299) [x86_64-linux]</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;</p>
+<p>以上</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1900,7 +1900,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

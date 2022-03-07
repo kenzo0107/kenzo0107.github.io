@@ -1814,37 +1814,37 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x6982;&#x8981;">&#x6982;&#x8981;</span></h2><p>&#x524D;&#x56DE;&#x69CB;&#x7BC9;&#x3057;&#x305F; Vagrant &#x74B0;&#x5883;&#x4E0A;&#x3067; docker-compose &#x306B;&#x3088;&#x308B;&#x958B;&#x767A;&#x74B0;&#x5883;&#x69CB;&#x7BC9;&#x3092;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<a href="http://kenzo0107.hatenablog.com/entry/2017/04/13/225610" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170413/20170413222957.png" width="584" height="536" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Vagrant (Ubuntu) &#x306B; Docker, Docker Compose &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB; - &#x9577;&#x751F;&#x6751;&#x672C;&#x90F7;Engineers&apos;Blog</div><div class="og-description">&#x6982;&#x8981; &#x958B;&#x767A;&#x74B0;&#x5883;&#x69CB;&#x7BC9;&#x7528;&#x306B;&#x4F5C;&#x6210;&#x3057;&#x305F;&#x3001; Vagrant (Ubuntu) &#x306B; Docker &#x3068; Docker Compose &#x3092;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3059;&#x308B;&#x624B;&#x9806;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002; Vagrantfile &#x4F5C;&#x6210; &#x304B;&#x306A;&#x308A;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x306B;&#x3057;&#x3066;&#x307E;&#x3059;&#x3002; Vagrantfile # -*- mode: ruby -*&#x2026;</div></div></div></a>
+			  		<h2><span id="概要">概要</span></h2><p>前回構築した Vagrant 環境上で docker-compose による開発環境構築をします。</p>
+<a href="http://kenzo0107.hatenablog.com/entry/2017/04/13/225610" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170413/20170413222957.png" width="584" height="536" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Vagrant (Ubuntu) に Docker, Docker Compose インストール - 長生村本郷Engineers'Blog</div><div class="og-description">概要 開発環境構築用に作成した、 Vagrant (Ubuntu) に Docker と Docker Compose をインストールする手順をまとめました。 Vagrantfile 作成 かなりシンプルにしてます。 Vagrantfile # -*- mode: ruby -*…</div></div></div></a>
 
-<p>&#x4ECA;&#x56DE;&#x306F;&#x524D;&#x56DE;&#x306E;&#x7D9A;&#x304D;&#x3067; Nginx &#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x30ED;&#x30B0;&#x3092; Elasticsearch + Fluentd + Kibana &#x3067;&#x53EF;&#x8996;&#x5316;&#x3057;&#x3066;&#x307F;&#x307E;&#x3059;&#x3002;<br>&#x30A2;&#x30D7;&#x30EA;</p>
-<h2><span id="&#x7C21;&#x5358;&#x69CB;&#x7BC9;&#x624B;&#x9806;">&#x7C21;&#x5358;&#x69CB;&#x7BC9;&#x624B;&#x9806;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">macOS% $ git clone https://github.com/kenzo0107/vagrant-docker</span><br><span class="line">macOS% $ cd vagrant-docker</span><br><span class="line">macOS% $ vagrant up</span><br><span class="line">macOS% $ vagrant ssh</span><br><span class="line">vagrant% $ cd /vagrant/nginx-efk</span><br><span class="line"></span><br><span class="line">// -d &#x30C7;&#x30BF;&#x30C3;&#x30C1;&#x30E2;&#x30FC;&#x30C9;&#x3067;&#x306A;&#x3044;&#x306E;&#x306F;&#x5404;&#x30B3;&#x30F3;&#x30C6;&#x30CA;&#x306E;&#x8D77;&#x52D5;&#x72B6;&#x6CC1;&#x304C;&#x30ED;&#x30B0;&#x3067;&#x898B;&#x3048;&#x308B;&#x70BA;&#x3067;&#x3059;&#x3002;</span><br><span class="line">vagrant% $ docker-compose up</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
+<p>今回は前回の続きで Nginx のアクセスログを Elasticsearch + Fluentd + Kibana で可視化してみます。<br>アプリ</p>
+<h2><span id="簡単構築手順">簡単構築手順</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">macOS% $ git clone https://github.com/kenzo0107/vagrant-docker</span><br><span class="line">macOS% $ cd vagrant-docker</span><br><span class="line">macOS% $ vagrant up</span><br><span class="line">macOS% $ vagrant ssh</span><br><span class="line">vagrant% $ cd /vagrant/nginx-efk</span><br><span class="line"></span><br><span class="line">// -d デタッチモードでないのは各コンテナの起動状況がログで見える為です。</span><br><span class="line">vagrant% $ docker-compose up</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="docker-compose-&#x69CB;&#x6210;">docker-compose &#x69CB;&#x6210;</span></h2><p>Git &#x306B;&#x307E;&#x3068;&#x3081;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="docker-compose-構成">docker-compose 構成</span></h2><p>Git にまとめています。</p>
 <a href="https://github.com/kenzo0107/vagrant-docker/tree/master/docker/nginx-efk" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://avatars0.githubusercontent.com/u/6197906?s=400&amp;v=4" width="400" height="400" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">kenzo0107/vagrant-docker</div><div class="og-description">Docker on Vagrant(ubuntu). Contribute to kenzo0107/vagrant-docker development by creating an account on GitHub.</div></div></div></a>
 
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#x251C;&#x2500;&#x2500; docker-compose.yml</span><br><span class="line">&#x251C;&#x2500;&#x2500; fluentd</span><br><span class="line">&#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; conf</span><br><span class="line">&#x2502;&#xA0;&#xA0; &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; conf.d</span><br><span class="line">&#x2502;&#xA0;&#xA0; &#x2502;&#xA0;&#xA0; &#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; nginx.log.conf</span><br><span class="line">&#x2502;&#xA0;&#xA0; &#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; fluent.conf</span><br><span class="line">&#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; Dockerfile</span><br><span class="line">&#x2514;&#x2500;&#x2500; nginx</span><br><span class="line">    &#x2514;&#x2500;&#x2500; conf</span><br><span class="line">        &#x2514;&#x2500;&#x2500; nginx.conf</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">├── docker-compose.yml</span><br><span class="line">├── fluentd</span><br><span class="line">│&nbsp;&nbsp; ├── conf</span><br><span class="line">│&nbsp;&nbsp; │&nbsp;&nbsp; ├── conf.d</span><br><span class="line">│&nbsp;&nbsp; │&nbsp;&nbsp; │&nbsp;&nbsp; └── nginx.log.conf</span><br><span class="line">│&nbsp;&nbsp; │&nbsp;&nbsp; └── fluent.conf</span><br><span class="line">│&nbsp;&nbsp; └── Dockerfile</span><br><span class="line">└── nginx</span><br><span class="line">    └── conf</span><br><span class="line">        └── nginx.conf</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x30DD;&#x30A4;&#x30F3;&#x30C8;">&#x30DD;&#x30A4;&#x30F3;&#x30C8;</span></h3><ul>
-<li>nginx &#x306E;&#x30ED;&#x30B0;&#x683C;&#x7D0D;&#x5834;&#x6240;&#x3092; <code>volume</code> &#x6307;&#x5B9A;&#x3057;&#x30DB;&#x30B9;&#x30C8;&#x5074;&#x3068;&#x30B7;&#x30F3;&#x30AF;&#x3002; &#x305D;&#x308C;&#x3092; fluentd &#x5074;&#x3067;&#x3082; <code>volume</code> &#x6307;&#x5B9A;&#x3057; tail &#x3059;&#x308B;&#x3088;&#x3046;&#x306B;&#x3057;&#x307E;&#x3057;&#x305F;&#x3002;</li>
+<h3><span id="ポイント">ポイント</span></h3><ul>
+<li>nginx のログ格納場所を <code>volume</code> 指定しホスト側とシンク。 それを fluentd 側でも <code>volume</code> 指定し tail するようにしました。</li>
 </ul>
-<p>&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x30A4;&#x30E1;&#x30FC;&#x30B8;&#x3067;&#x3059;&#x3002;</p>
+<p>以下のようなイメージです。</p>
 <div id="hexo-amp-id-1">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421221055.png" width="960" height="540" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089;-nginx-&#x8D77;&#x52D5;&#x78BA;&#x8A8D;">&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089; Nginx &#x8D77;&#x52D5;&#x78BA;&#x8A8D;</span></h2><p>&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089; <code>http://192.168.35.101/</code> &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x3068;<br>Nginx &#x306E; Welcome &#x30DA;&#x30FC;&#x30B8;&#x304C;&#x78BA;&#x8A8D;&#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="ブラウザから-nginx-起動確認">ブラウザから Nginx 起動確認</span></h2><p>ブラウザから <code>http://192.168.35.101/</code> にアクセスすると<br>Nginx の Welcome ページが確認できます。</p>
 <div id="hexo-amp-id-2">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421222343.png" width="1024" height="615" layout="responsive"></amp-img></div>
 </div>
 
 
-<p>&#x5148;&#x7A0B;&#x306E; <code>docker-compose up</code> &#x5F8C;&#x306B;&#x4EE5;&#x4E0B;&#x306E;&#x3088;&#x3046;&#x306A;&#x30ED;&#x30B0;&#x304C;&#x898B;&#x3048;<br>fluentd &#x304C; Nginx &#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x30ED;&#x30B0;&#x3092;&#x6355;&#x307E;&#x3048;&#x3066;&#x3044;&#x308B;&#x306E;&#x304C;&#x308F;&#x304B;&#x308A;&#x307E;&#x3059;&#x3002;</p>
+<p>先程の <code>docker-compose up</code> 後に以下のようなログが見え<br>fluentd が Nginx アクセスログを捕まえているのがわかります。</p>
 <div id="hexo-amp-id-3">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421222937.png" width="1024" height="125" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="kibana-&#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;">Kibana &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;</span></h2><p>&#x30D6;&#x30E9;&#x30A6;&#x30B6;&#x304B;&#x3089; <code>http://192.168.35.101:5601</code> &#x306B;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3059;&#x308B;&#x3068;<br>Kibana &#x30DA;&#x30FC;&#x30B8;&#x304C;&#x8868;&#x793A;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="kibana-にアクセス">Kibana にアクセス</span></h2><p>ブラウザから <code>http://192.168.35.101:5601</code> にアクセスすると<br>Kibana ページが表示されます。</p>
 <div id="hexo-amp-id-4">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421223008.png" width="867" height="1024" layout="responsive"></amp-img></div>
 </div>
@@ -1852,27 +1852,27 @@ h6.categories {
 <ol>
 <li><p>Index name or pattern</p>
 <ul>
-<li>fluentd-* &#x6307;&#x5B9A;</li>
+<li>fluentd-* 指定</li>
 </ul>
 </li>
 <li><p>Time-field name</p>
 <ul>
-<li>@timestamp &#x6307;&#x5B9A;</li>
+<li>@timestamp 指定</li>
 </ul>
 </li>
-<li><p>Create &#x30DC;&#x30BF;&#x30F3;&#x62BC;&#x4E0B;</p>
+<li><p>Create ボタン押下</p>
 </li>
-<li><p>&#x30EC;&#x30D5;&#x30C8;&#x30E1;&#x30CB;&#x30E5;&#x30FC;&#x304B;&#x3089; <code>Discover</code> &#x30AF;&#x30EA;&#x30C3;&#x30AF;</p>
+<li><p>レフトメニューから <code>Discover</code> クリック</p>
 </li>
 </ol>
 <div id="hexo-amp-id-5">
 <div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421223626.png" width="1024" height="956" layout="responsive"></amp-img></div>
 </div>
 
-<h2><span id="macos-&#x304B;&#x3089;&#x30ED;&#x30B0;&#x78BA;&#x8A8D;">macOS &#x304B;&#x3089;&#x30ED;&#x30B0;&#x78BA;&#x8A8D;</span></h2><p>&#x5F53;&#x7136;&#x306A;&#x304C;&#x3089; macOS &#x3068; vagrant &#x3068;&#x30B7;&#x30F3;&#x30AF;&#x3057;&#x3066;&#x3044;&#x308B;&#x306E;&#x3067;<br>macOS &#x4E0A;&#x304B;&#x3089;&#x3082;&#x30ED;&#x30B0;&#x304C; tail &#x3067;&#x304D;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="macos-からログ確認">macOS からログ確認</span></h2><p>当然ながら macOS と vagrant とシンクしているので<br>macOS 上からもログが tail できます。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ tail -f &lt;path/to/vagrant-docker&gt;/docker/nginx-efk/_log/nginx/access.log</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4EE5;&#x4E0A;&#x3067;&#x3059;&#x3002;<br>&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>以上です。<br>参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1938,7 +1938,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

@@ -1814,38 +1814,38 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x524D;&#x56DE;">&#x524D;&#x56DE;</span></h2><p>&#x9854;&#x691C;&#x77E5;&#x3068;&#x9854;&#x8A8D;&#x8B58;&#x306F;&#x672C;&#x8CEA;&#x304C;&#x7570;&#x306A;&#x308B;&#x3002;</p>
+			  		<h2><span id="前回">前回</span></h2><p>顔検知と顔認識は本質が異なる。</p>
 <ul>
-<li><b>&#x9854;&#x691C;&#x77E5;</b>&#x306F;&#x9854;&#x3068;&#x5224;&#x5B9A;&#x3059;&#x308B;&#x3053;&#x3068;</li>
-<li><b>&#x9854;&#x8A8D;&#x8B58;</b>&#x306F;&#x9854;&#x304C;&#x8AB0;&#x304B;&#x7279;&#x5B9A;&#x306E;&#x4EBA;&#x306E;&#x9854;&#x3060;&#x3068;&#x5224;&#x5B9A;&#x3059;&#x308B;&#x3053;&#x3068;</li>
+<li><b>顔検知</b>は顔と判定すること</li>
+<li><b>顔認識</b>は顔が誰か特定の人の顔だと判定すること</li>
 </ul>
-<p>&#x4ECA;&#x56DE;&#x306F;&#x5F8C;&#x8005;&#x306E;&#x9854;&#x8A8D;&#x8B58;&#x3092;&#x3059;&#x308B;&#x4ED5;&#x7D44;&#x307F;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<p>今回は後者の顔認識をする仕組みをまとめました。</p>
 <a href="https://github.com/kenzo0107/FacialRecognitionSystem" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://avatars0.githubusercontent.com/u/6197906?s=400&amp;v=4" width="400" height="400" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">kenzo0107/FacialRecognitionSystem</div><div class="og-description">DeepLearning and Facial Recognition System by TensorFlow - kenzo0107/FacialRecognitionSystem</div></div></div></a>
 
 
-<h2><span id="&#x3084;&#x308D;&#x3046;&#x3068;&#x3057;&#x3066;&#x308B;&#x3053;&#x3068;">&#x3084;&#x308D;&#x3046;&#x3068;&#x3057;&#x3066;&#x308B;&#x3053;&#x3068;</span></h2><p>&#x4EE5;&#x4E0B;5&#x3064;&#x306E;STEP&#x3092;&#x9806;&#x3092;&#x8FFD;&#x3063;&#x3066;&#x5B9F;&#x65BD;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="やろうとしてること">やろうとしてること</span></h2><p>以下5つのSTEPを順を追って実施しています。</p>
 <ol>
-<li>&#x691C;&#x7D22;&#x30A8;&#x30F3;&#x30B8;&#x30F3;&#x304B;&#x3089;&#x753B;&#x50CF;&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;</li>
-<li>&#x30C0;&#x30A6;&#x30F3;&#x30ED;&#x30FC;&#x30C9;&#x3057;&#x305F;&#x753B;&#x50CF;&#x304B;&#x3089;&#x9854;&#x691C;&#x77E5;&#x3057;&#x9854;&#x90E8;&#x5206;&#x306E;&#x307F;&#x629C;&#x304D;&#x53D6;&#x308B;</li>
-<li>&#x9854;&#x90E8;&#x5206;&#x3092;&#x629C;&#x304D;&#x53D6;&#x3063;&#x305F;&#x753B;&#x50CF;&#x3092;&#x8A13;&#x7DF4;&#x7528;&#x3068;&#x8A66;&#x9A13;&#x7528;&#x306B;&#x5206;&#x3051;&#x308B;</li>
-<li>&#x6A5F;&#x68B0;&#x5B66;&#x7FD2;&#x306B;&#x3088;&#x308A;&#x30E2;&#x30C7;&#x30EB;&#x4F5C;&#x6210;</li>
-<li>&#x8A66;&#x9A13;&#x7528;&#x753B;&#x50CF;&#x3092;&#x30E2;&#x30C7;&#x30EB;&#x3092;&#x5229;&#x7528;&#x3057;&#x8AB0;&#x306E;&#x9854;&#x3067;&#x3042;&#x308B;&#x304B;&#x8A55;&#x4FA1;</li>
+<li>検索エンジンから画像ダウンロード</li>
+<li>ダウンロードした画像から顔検知し顔部分のみ抜き取る</li>
+<li>顔部分を抜き取った画像を訓練用と試験用に分ける</li>
+<li>機械学習によりモデル作成</li>
+<li>試験用画像をモデルを利用し誰の顔であるか評価</li>
 </ol>
-<h2><span id="&#x53C2;&#x8003;">&#x53C2;&#x8003;</span></h2><p>&#x6A5F;&#x68B0;&#x5B66;&#x7FD2;&#x3067;&#x306F; TensorFlow &#x3092;&#x5229;&#x7528;&#x3057;&#x3066;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x2460; &#x4EE5;&#x4E0B; TensorFlow &#x306E; Hello World &#x7684;&#x306A;&#x4F8B;&#x984C;&#x3068;&#x30B3;&#x30D4;&#x30DA;&#x3059;&#x308C;&#x3070;&#x3059;&#x3050;&#x52D5;&#x4F5C;&#x3059;&#x308B;&#x30B3;&#x30FC;&#x30C9;&#x304C;&#x8A18;&#x8F09;&#x3055;&#x308C;&#x3066;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="参考">参考</span></h2><p>機械学習では TensorFlow を利用してます。</p>
+<p>① 以下 TensorFlow の Hello World 的な例題とコピペすればすぐ動作するコードが記載されてます。</p>
 <ul>
 <li><a href="https://www.tensorflow.org/versions/r0.10/tutorials/mnist/beginners/index.html#mnist-for-ml-beginners">https://www.tensorflow.org/versions/r0.10/tutorials/mnist/beginners/index.html#mnist-for-ml-beginners</a></li>
 <li><a href="https://www.tensorflow.org/versions/r0.10/tutorials/mnist/pros/index.html#deep-mnist-for-experts">https://www.tensorflow.org/versions/r0.10/tutorials/mnist/pros/index.html#deep-mnist-for-experts</a></li>
 <li><a href="https://www.tensorflow.org/versions/r0.10/tutorials/mnist/tf/index.html#tensorflow-mechanics-101">https://www.tensorflow.org/versions/r0.10/tutorials/mnist/tf/index.html#tensorflow-mechanics-101</a></li>
 <li><a href="https://www.tensorflow.org/versions/r0.10/tutorials/tfserve/index.html#tensorflow-serving">https://www.tensorflow.org/versions/r0.10/tutorials/tfserve/index.html#tensorflow-serving</a></li>
 </ul>
-<p>&#x2461; &#x3059;&#x304E;&#x3083;&#x30FC;&#x3093;&#x3055;&#x3093;&#x306E;&#x8A18;&#x4E8B;&#x306F;&#x975E;&#x5E38;&#x306B;&#x53C2;&#x8003;&#x306B;&#x306A;&#x308A;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<a href="http://memo.sugyan.com/entry/20160112/1452558576" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sugyan/20160112/20160112012505.png" width="512" height="512" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">TensorFlow&#x306B;&#x3088;&#x308B;&#x30C7;&#x30A3;&#x30FC;&#x30D7;&#x30E9;&#x30FC;&#x30CB;&#x30F3;&#x30B0;&#x3067;&#x3001;&#x30A2;&#x30A4;&#x30C9;&#x30EB;&#x306E;&#x9854;&#x3092;&#x8B58;&#x5225;&#x3059;&#x308B; - &#x3059;&#x304E;&#x3083;&#x30FC;&#x3093;&#x30E1;&#x30E2;</div><div class="og-description">&#x4EE5;&#x524D;&#x306F; MNIST&#x306E;&#x4F8B;&#x3092;&#x4F7F;&#x3063;&#x3066;&#x753B;&#x50CF;&#x8B58;&#x5225;&#x3092;&#x8A66;&#x3057;&#x3066;&#x307F;&#x305F; &#x3051;&#x3069;&#x3001;&#x6B21;&#x306F;&#x30AB;&#x30E9;&#x30FC;&#x753B;&#x50CF;&#x306B;&#x3064;&#x3044;&#x3066;&#x306E;&#x8B58;&#x5225;&#x3092;&#x8A66;&#x3057;&#x3066;&#x307F;&#x308B;&#x3002;&#x300C;&#x30A2;&#x30A4;&#x30C9;&#x30EB;&#x306A;&#x3093;&#x3066;&#x307F;&#x3093;&#x306A;&#x540C;&#x3058;&#x9854;&#x306B;&#x898B;&#x3048;&#x308B;&#x300D;&#x3063;&#x3066; &#x6700;&#x8FD1;&#x3082;&#x8A00;&#x308F;&#x308C;&#x3066;&#x308B;&#x306E;&#x304B;&#x3069;&#x3046;&#x304B;&#x77E5;&#x3089;&#x306A;&#x3044;&#x3051;&#x3069;&#x3001;&#x81EA;&#x5206;&#x3082;&#x3064;&#x3044;5&#x5E74;&#x524D;&#x304F;&#x3089;&#x3044;&#x307E;&#x3067;&#x306F;&#x305D;&#x3046;&#x601D;&#x3063;&#x3066;&#x3044;&#x305F;&#x308F;&#x3051;&#x3067;&#x3002;&#x305D;&#x306E;&#x8B58;&#x5225;&#x3092;&#x6A5F;&#x68B0;&#x5B66;&#x7FD2;&#x3067;&#x3084;&#x3063;&#x3066;&#x307F;&#x3088;&#x3046; &#x3068;&#x3044;&#x3046;&#x8A66;&#x307F;&#x3002;&#x2026;</div></div></div></a>
+<p>② すぎゃーんさんの記事は非常に参考になりました。</p>
+<a href="http://memo.sugyan.com/entry/20160112/1452558576" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="http://cdn-ak.f.st-hatena.com/images/fotolife/s/sugyan/20160112/20160112012505.png" width="512" height="512" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">TensorFlowによるディープラーニングで、アイドルの顔を識別する - すぎゃーんメモ</div><div class="og-description">以前は MNISTの例を使って画像識別を試してみた けど、次はカラー画像についての識別を試してみる。「アイドルなんてみんな同じ顔に見える」って 最近も言われてるのかどうか知らないけど、自分もつい5年前くらいまではそう思っていたわけで。その識別を機械学習でやってみよう という試み。…</div></div></div></a>
 
-<p>&#x3084;&#x3063;&#x3066;&#x3044;&#x308B;&#x3053;&#x3068;&#x3082;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x3067;&#x308F;&#x304B;&#x308A;&#x3084;&#x3059;&#x304F;&#x3001;&#x4E14;&#x3064;&#x3001;Web&#x30A8;&#x30F3;&#x30B8;&#x30CB;&#x30A2;&#x306E;&#x767A;&#x60F3;&#x3067;&#x30B5;&#x30FC;&#x30D3;&#x30B9;&#x5316;&#x3057;&#x3066;&#x308B;&#x6240;&#x304C;&#x8208;&#x5473;&#x6301;&#x3063;&#x3066;&#x671B;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<h2><span id="&#x4ECA;&#x5F8C;">&#x4ECA;&#x5F8C;</span></h2><p>&#x5143;&#x3005;&#x3084;&#x308A;&#x305F;&#x304B;&#x3063;&#x305F;&#x3053;&#x3068;&#x306F;<br>Raspberry PI &#x3067;&#x9854;&#x8A8D;&#x8B58;&#x3057;&#x3066;&#x5BB6;&#x65CF;&#x3060;&#x3068;&#x5224;&#x5B9A;&#x3057;&#x305F;&#x3089;&#x300C;&#x304A;&#x306F;&#x3088;&#x3046;&#x300D;&#x3068;&#x6328;&#x62F6;&#x3055;&#x305B;&#x308B;&#x3001;<br>&#x306A;&#x306E;&#x3067;&#x305D;&#x306E;&#x9854;&#x8A8D;&#x8B58;&#x90E8;&#x5206;&#x306E;&#x57FA;&#x790E;&#x3092;&#x4ECA;&#x56DE;&#x306F;&#x5B66;&#x3073;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4ECA;&#x5F8C;&#x306F;&#x5B9F;&#x969B;&#x306B;Raspberry PI &#x3068;&#x3069;&#x3046;&#x4ECA;&#x56DE;&#x306E;&#x4ED5;&#x7D44;&#x307F;&#x3092;&#x9023;&#x7D50;&#x3055;&#x305B;&#x308B;&#x304B;&#x3092;<br>&#x3084;&#x3063;&#x3066;&#x307F;&#x3088;&#x3046;&#x3068;&#x601D;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x3068;&#x306F;&#x3044;&#x3048;&#x5BB6;&#x65CF;&#x306E;&#x5199;&#x771F;&#x306F;&#x305D;&#x3046;&#x7C21;&#x5358;&#x306B;&#x306F;&#x96C6;&#x307E;&#x3089;&#x306A;&#x3044;&#x306E;&#x3067;<br>SMAP&#x3067;&#x57FA;&#x790E;&#x4F5C;&#x308A;&#x3092;&#x3082;&#x3046;&#x3061;&#x3087;&#x3044;&#x9811;&#x5F35;&#x3063;&#x3066;&#x307F;&#x3088;&#x3046;&#xFF01;</p>
+<p>やっていることもシンプルでわかりやすく、且つ、Webエンジニアの発想でサービス化してる所が興味持って望めました。</p>
+<h2><span id="今後">今後</span></h2><p>元々やりたかったことは<br>Raspberry PI で顔認識して家族だと判定したら「おはよう」と挨拶させる、<br>なのでその顔認識部分の基礎を今回は学びました。</p>
+<p>今後は実際にRaspberry PI とどう今回の仕組みを連結させるかを<br>やってみようと思います。</p>
+<p>とはいえ家族の写真はそう簡単には集まらないので<br>SMAPで基礎作りをもうちょい頑張ってみよう！</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1911,7 +1911,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

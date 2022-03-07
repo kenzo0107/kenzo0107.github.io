@@ -1823,36 +1823,36 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>&#x3088;&#x304F;&#x8A2D;&#x5B9A;&#x3057;&#x3066;&#x3044;&#x308B; Nginx &#x306E; configure file &#x306E;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x5143;&#x306B;&#x3088;&#x3063;&#x3066;&#x306E;&#x632F;&#x308A;&#x5206;&#x3051;&#x65B9;&#x3092;&#x307E;&#x3068;&#x3081;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LB &#x2192; Nginx &#x2192; Rails</span><br></pre></td></tr></tbody></table></figure>
+			  		<p>よく設定している Nginx の configure file のアクセス元によっての振り分け方をまとめました。</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LB → Nginx → Rails</span><br></pre></td></tr></tbody></table></figure>
 
 <a id="more"></a>
 
-<h2><span id="nginx-&#x8A2D;&#x5B9A;">Nginx &#x8A2D;&#x5B9A;</span></h2><ul>
+<h2><span id="nginx-設定">Nginx 設定</span></h2><ul>
 <li>conf.d/default.conf</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># cannot allow ip direct</span><br><span class="line">server {</span><br><span class="line">  listen       80;</span><br><span class="line">  server_name  _;</span><br><span class="line">  return       444;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"># healthcheck from LB</span><br><span class="line">server {</span><br><span class="line">  listen 80 default_server;</span><br><span class="line">  listen [::]:80 default_server;</span><br><span class="line">  root /work/app/public;</span><br><span class="line"></span><br><span class="line">  location = /healthcheck.html {</span><br><span class="line">    access_log  off;</span><br><span class="line">    proxy_pass https://puma;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">server {</span><br><span class="line">  listen  80;</span><br><span class="line">  server_name example.com;</span><br><span class="line">  ...</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="ip-&#x76F4;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x7981;&#x6B62;">IP &#x76F4;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x7981;&#x6B62;</span></h3><p><code>server_name  _</code> &#x3068;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x3001;ip &#x76F4;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3092;&#x30BF;&#x30FC;&#x30B2;&#x30C3;&#x30C8;&#x306B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="ip-直アクセス禁止">IP 直アクセス禁止</span></h3><p><code>server_name  _</code> とすることで、ip 直アクセスをターゲットにしています。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">  listen       80;</span><br><span class="line">  server_name  _;</span><br><span class="line">  return       444;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="lb-&#x304B;&#x3089;&#x306E;&#x30D8;&#x30EB;&#x30B9;&#x30C1;&#x30A7;&#x30C3;&#x30AF;">LB &#x304B;&#x3089;&#x306E;&#x30D8;&#x30EB;&#x30B9;&#x30C1;&#x30A7;&#x30C3;&#x30AF;</span></h3><p>LB &#x304B;&#x3089;&#x30D8;&#x30EB;&#x30B9;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x3092;&#x5411;&#x3051;&#x308B;&#x5148;&#x3092; <code>default_sever</code> &#x8A2D;&#x5B9A;&#x3059;&#x308B;&#x3053;&#x3068;&#x3067;&#x3001;&#x3053;&#x306E; <code>server</code> &#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C6;&#x30A3;&#x30D6;&#x3092;&#x53C2;&#x7167;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="lb-からのヘルスチェック">LB からのヘルスチェック</span></h3><p>LB からヘルスチェックを向ける先を <code>default_sever</code> 設定することで、この <code>server</code> ディレクティブを参照します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">  listen 80 default_server;</span><br><span class="line">  listen [::]:80 default_server;</span><br><span class="line">  root /work/app/public;</span><br><span class="line"></span><br><span class="line">  location = /healthcheck.html {</span><br><span class="line">    access_log  off;</span><br><span class="line">    proxy_pass https://puma;</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4E0A;&#x8A18; config file &#x306F;&#x3001;AWS ALB &#x306E;&#x30D8;&#x30EB;&#x30B9;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x30D1;&#x30B9;&#x3092; <code>/healthcheck.html</code> &#x3068;&#x3057;&#x3001;&#x305D;&#x306E;&#x5411;&#x3051;&#x5148;&#x3092; Rails puma &#x306B;&#x3057;&#x3066;&#x3044;&#x307E;&#x3059;&#x3002;</p>
-<p>Rails &#x5074;&#x3067;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B; gem &#x2018;ok_computer&#x2019; &#x306B;&#x5411;&#x3051;&#x308B;&#x306E;&#x3082;&#x826F;&#x3057;&#x3001;&#x72EC;&#x81EA;&#x306B;&#x30EC;&#x30B9;&#x30DD;&#x30F3;&#x30B9;&#x8FD4;&#x3059;&#x3082;&#x826F;&#x3057;&#x3067;&#x3059;&#x3002;</p>
-<figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get <span class="string">&apos;healthcheck.html&apos;</span>, <span class="symbol">to:</span> <span class="string">&apos;ok_computer/ok_computer#index&apos;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>上記 config file は、AWS ALB のヘルスチェックパスを <code>/healthcheck.html</code> とし、その向け先を Rails puma にしています。</p>
+<p>Rails 側で以下の様に gem ‘ok_computer’ に向けるのも良し、独自にレスポンス返すも良しです。</p>
+<figure class="highlight ruby"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get <span class="string">'healthcheck.html'</span>, <span class="symbol">to:</span> <span class="string">'ok_computer/ok_computer#index'</span></span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x6307;&#x5B9A;">&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x6307;&#x5B9A;</span></h3><p><code>example.com</code> &#x3067;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3055;&#x308C;&#x305F;&#x969B;&#x306B;&#x3053;&#x3061;&#x3089;&#x306E; <code>server</code> &#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C6;&#x30A3;&#x30D6;&#x3092;&#x53C2;&#x7167;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h3><span id="ドメイン指定">ドメイン指定</span></h3><p><code>example.com</code> でアクセスされた際にこちらの <code>server</code> ディレクティブを参照します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">  listen  80;</span><br><span class="line">  server_name example.com;</span><br><span class="line">  ...</span><br></pre></td></tr></tbody></table></figure>
 
-<h3><span id="&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x6307;&#x5B9A;&#x306E;&#x60AA;&#x3044;&#x4F8B;">&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x6307;&#x5B9A;&#x306E;&#x60AA;&#x3044;&#x4F8B;</span></h3><p>&#x4EE5;&#x524D;&#x306F;&#x4EE5;&#x4E0B;&#x306E;&#x69D8;&#x306B;&#x6307;&#x5B9A;&#x3057;&#x3001;ip &#x76F4;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x3001;&#x30D8;&#x30EB;&#x30B9;&#x30C1;&#x30A7;&#x30C3;&#x30AF;&#x5BFE;&#x5FDC;&#x3057;&#x3066;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
+<h3><span id="ドメイン指定の悪い例">ドメイン指定の悪い例</span></h3><p>以前は以下の様に指定し、ip 直アクセス、ヘルスチェック対応していました。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server {</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name example.com;</span><br><span class="line"></span><br><span class="line">    if ($host != &amp;#34;example.com&amp;#34;) {</span><br><span class="line">        return 444;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    location = /healthcheck.html {</span><br><span class="line">      access_log  off;</span><br><span class="line">      proxy_pass https://puma;</span><br><span class="line">    }</span><br><span class="line">    ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x52FF;&#x8AD6;&#x3053;&#x308C;&#x3067;&#x3082;&#x52D5;&#x4F5C;&#x3057;&#x307E;&#x3059;&#x3002;&#x3067;&#x3059;&#x304C;&#x3001;&#x3084;&#x3084;&#x53EF;&#x8AAD;&#x6027;&#x304C;&#x60AA;&#x3044;&#x3067;&#x3059;&#x3002;</p>
-<p>&#x30DE;&#x30EB;&#x30C1;&#x30C9;&#x30E1;&#x30A4;&#x30F3;&#x3067;&#x306E; IP &#x76F4;&#x30A2;&#x30AF;&#x30BB;&#x30B9;&#x4E0D;&#x8A31;&#x53EF;&#x306B;&#x5BFE;&#x5FDC;&#x3092;&#x3059;&#x308B;&#x969B;&#x306B;&#x3082;&#x3001;&#x3053;&#x306E; if &#x6587;&#x304C;&#x3069;&#x3093;&#x3069;&#x3093;&#x9577;&#x304F;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x305D;&#x306E;&#x70BA;&#x3001;&#x5411;&#x3051;&#x5148;&#x306E;&#x610F;&#x56F3;&#x6BCE;&#x306B; <code>server {}</code> &#x3092;&#x5C0F;&#x307E;&#x3081;&#x306B;&#x5206;&#x3051;&#x308B;&#x904B;&#x7528;&#x306E;&#x65B9;&#x304C;&#x53EF;&#x8AAD;&#x6027;&#x304C;&#x9AD8;&#x304F;&#x3001;&#x5B9F;&#x904B;&#x7528;&#x3057;&#x3066;&#x3044;&#x3066;&#x30E1;&#x30F3;&#x30C6;&#x30CA;&#x30F3;&#x30B5;&#x30D3;&#x30EA;&#x30C6;&#x30A3;&#x304C;&#x9AD8;&#x3044;&#x3068;&#x611F;&#x3058;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x4EE5;&#x4E0A;<br>&#x53C2;&#x8003;&#x306B;&#x306A;&#x308C;&#x3070;&#x5E78;&#x3044;&#x3067;&#x3059;&#x3002;</p>
+<p>勿論これでも動作します。ですが、やや可読性が悪いです。</p>
+<p>マルチドメインでの IP 直アクセス不許可に対応をする際にも、この if 文がどんどん長くなります。</p>
+<p>その為、向け先の意図毎に <code>server {}</code> を小まめに分ける運用の方が可読性が高く、実運用していてメンテナンサビリティが高いと感じました。</p>
+<p>以上<br>参考になれば幸いです。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1918,7 +1918,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

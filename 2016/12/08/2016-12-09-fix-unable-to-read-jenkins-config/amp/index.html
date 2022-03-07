@@ -1814,15 +1814,15 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x3068;&#x3042;&#x308B;&#x5348;&#x5F8C;-jenkins-&#x3092;&#x518D;&#x8D77;&#x52D5;&#x3057;&#x305F;&#x3068;&#x304D;&#x306B;&#x51FA;&#x305F;&#x30A8;&#x30E9;&#x30FC;">&#x3068;&#x3042;&#x308B;&#x5348;&#x5F8C;&#x3001;Jenkins &#x3092;&#x518D;&#x8D77;&#x52D5;&#x3057;&#x305F;&#x3068;&#x304D;&#x306B;&#x51FA;&#x305F;&#x30A8;&#x30E9;&#x30FC;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hudson.util.HudsonFailedToLoad: org.jvnet.hudson.reactor.ReactorException: java.io.IOException: Unable to read /var/lib/jenkins/config.xml</span><br><span class="line">	at hudson.WebAppMain$3.run(WebAppMain.java:234)</span><br><span class="line">Caused by: org.jvnet.hudson.reactor.ReactorException: java.io.IOException: Unable to read /var/lib/jenkins/config.xml</span><br><span class="line">	at org.jvnet.hudson.reactor.Reactor.execute(Reactor.java:269)</span><br><span class="line">	at jenkins.InitReactorRunner.run(InitReactorRunner.java:44)</span><br><span class="line">	at jenkins.model.Jenkins.executeReactor(Jenkins.java:912)</span><br><span class="line">	at jenkins.model.Jenkins.&lt;init&gt;(Jenkins.java:811)</span><br><span class="line">	at hudson.model.Hudson.&lt;init&gt;(Hudson.java:82)</span><br><span class="line">	at hudson.model.Hudson.&lt;init&gt;(Hudson.java:78)</span><br><span class="line">	at hudson.WebAppMain$3.run(WebAppMain.java:222)</span><br></pre></td></tr></tbody></table></figure>
+			  		<h2><span id="とある午後-jenkins-を再起動したときに出たエラー">とある午後、Jenkins を再起動したときに出たエラー</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hudson.util.HudsonFailedToLoad: org.jvnet.hudson.reactor.ReactorException: java.io.IOException: Unable to read /var/lib/jenkins/config.xml</span><br><span class="line">	at hudson.WebAppMain$3.run(WebAppMain.java:234)</span><br><span class="line">Caused by: org.jvnet.hudson.reactor.ReactorException: java.io.IOException: Unable to read /var/lib/jenkins/config.xml</span><br><span class="line">	at org.jvnet.hudson.reactor.Reactor.execute(Reactor.java:269)</span><br><span class="line">	at jenkins.InitReactorRunner.run(InitReactorRunner.java:44)</span><br><span class="line">	at jenkins.model.Jenkins.executeReactor(Jenkins.java:912)</span><br><span class="line">	at jenkins.model.Jenkins.&lt;init&gt;(Jenkins.java:811)</span><br><span class="line">	at hudson.model.Hudson.&lt;init&gt;(Hudson.java:82)</span><br><span class="line">	at hudson.model.Hudson.&lt;init&gt;(Hudson.java:78)</span><br><span class="line">	at hudson.WebAppMain$3.run(WebAppMain.java:222)</span><br></pre></td></tr></tbody></table></figure>
 
-<p><code>/var/lib/jenkins/config.xml &#x304C;&#x8AAD;&#x307F;&#x8FBC;&#x3081;&#x306A;&#x3044;</code> &#x3068;&#x3044;&#x3046;&#x30A8;&#x30E9;&#x30FC;</p>
-<p><code>/var/lib/jenkins/config.xml</code> &#x306E;&#x6240;&#x6709;&#x8005;&#x306F; jenkins:jenkins &#x3060;&#x3051;&#x3069;&#x3001;&#x306A;&#x305C;&#xFF1F;</p>
-<p>&#x3068;&#x6A29;&#x9650;&#x5468;&#x308A;&#x3092;&#x8AF8;&#x3005;&#x8A66;&#x9A13;&#x3057;&#x3066;&#x76F4;&#x3057;&#x3066;&#x3044;&#x304F;&#x3068;<br><code>plugins</code> &#x3092;&#x30C7;&#x30A3;&#x30EC;&#x30AF;&#x30C8;&#x30EA;&#x3054;&#x3068;&#x6240;&#x6709;&#x8005;&#x5909;&#x66F4;&#x3059;&#x308B;&#x3068;&#x76F4;&#x308A;&#x307E;&#x3057;&#x305F;&#x6C57;</p>
+<p><code>/var/lib/jenkins/config.xml が読み込めない</code> というエラー</p>
+<p><code>/var/lib/jenkins/config.xml</code> の所有者は jenkins:jenkins だけど、なぜ？</p>
+<p>と権限周りを諸々試験して直していくと<br><code>plugins</code> をディレクトリごと所有者変更すると直りました汗</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chown -R jenkins:jenkins /var/lib/jenkins/plugins</span><br></pre></td></tr></tbody></table></figure>
 
-<p>plugin &#x306E;&#x6319;&#x52D5;&#x3067;&#x4F55;&#x304B;&#x6240;&#x6709;&#x8005;&#x5909;&#x66F4;&#x3055;&#x308C;&#x5F97;&#x308B;&#x3082;&#x306E;&#x304C;&#x3042;&#x3063;&#x305F;&#x306E;&#x304B;&#x89E3;&#x660E;&#x305B;&#x305A;&#x3002;</p>
-<h2><span id="&#x540C;&#x69D8;&#x306E;&#x4E8B;&#x8C61;&#x306E;&#x8A18;&#x4E8B;&#x3092;&#x898B;&#x3064;&#x3051;&#x305F;&#x306E;&#x3067;&#x53C2;&#x7167;">&#x540C;&#x69D8;&#x306E;&#x4E8B;&#x8C61;&#x306E;&#x8A18;&#x4E8B;&#x3092;&#x898B;&#x3064;&#x3051;&#x305F;&#x306E;&#x3067;&#x53C2;&#x7167;</span></h2>
+<p>plugin の挙動で何か所有者変更され得るものがあったのか解明せず。</p>
+<h2><span id="同様の事象の記事を見つけたので参照">同様の事象の記事を見つけたので参照</span></h2>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1888,7 +1888,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				

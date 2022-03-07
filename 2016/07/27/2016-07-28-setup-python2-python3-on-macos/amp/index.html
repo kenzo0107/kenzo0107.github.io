@@ -1814,38 +1814,38 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<h2><span id="&#x7D4C;&#x7DEF;">&#x7D4C;&#x7DEF;</span></h2><p>MacOSX &#x30C7;&#x30D5;&#x30A9;&#x30EB;&#x30C8;&#x3067;&#x306F; python 2&#x7CFB;&#x3002;</p>
-<p>python 2.7 &#x306F; 2020&#x5E74;&#x307E;&#x3067;&#x306E;&#x30B5;&#x30DD;&#x30FC;&#x30C8; &#x306A;&#x306E;&#x3067;<br>python 3 &#x7CFB; &#x306B;&#x6163;&#x308C;&#x3066;&#x304A;&#x3053;&#x3046;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x3067;<br>3 &#x7CFB;&#x74B0;&#x5883;&#x3092;&#x69CB;&#x7BC9;&#x3057;&#x3088;&#x3046;&#x3068;&#x601D;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;</p>
-<p>&#x3067;&#x3059;&#x304C;<br><a href="http://dlib.net/">dlib</a> &#x306A;&#x3069; Python 2&#x7CFB;&#x3067;&#x306A;&#x3044;&#x3068;&#x3046;&#x307E;&#x304F;&#x8A2D;&#x5B9A;&#x304C;&#x3067;&#x304D;&#x306A;&#x304B;&#x3063;&#x305F;&#x7D4C;&#x7DEF;&#x304C;&#x3042;&#x308A;<br>(&#x203B;&#x81EA;&#x5206;&#x306E;&#x4E0D;&#x624B;&#x969B;&#x306E;&#x53EF;&#x80FD;&#x6027;&#x3082;&#x3042;&#x308A;&#x307E;&#x3059;&#x304C;)<br>&#x4E21;&#x65B9;&#x6B8B;&#x305D;&#x3046;&#x3068;&#x3044;&#x3046;&#x3053;&#x3068;&#x3067;&#x4E21;&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x3092;&#x69CB;&#x7BC9;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<h2><span id="&#x74B0;&#x5883;">&#x74B0;&#x5883;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sw_vers</span><br><span class="line"></span><br><span class="line">ProductName:    Mac OS X</span><br><span class="line">ProductVersion: 10.11.5</span><br><span class="line">BuildVersion:   15F34</span><br></pre></td></tr></tbody></table></figure>
+			  		<h2><span id="経緯">経緯</span></h2><p>MacOSX デフォルトでは python 2系。</p>
+<p>python 2.7 は 2020年までのサポート なので<br>python 3 系 に慣れておこうということで<br>3 系環境を構築しようと思いました。</p>
+<p>ですが<br><a href="http://dlib.net/">dlib</a> など Python 2系でないとうまく設定ができなかった経緯があり<br>(※自分の不手際の可能性もありますが)<br>両方残そうということで両仮想環境を構築します。</p>
+<h2><span id="環境">環境</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sw_vers</span><br><span class="line"></span><br><span class="line">ProductName:    Mac OS X</span><br><span class="line">ProductVersion: 10.11.5</span><br><span class="line">BuildVersion:   15F34</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="homebrew-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Homebrew &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><p>&#x4EE5;&#x4E0B;&#x30AA;&#x30D5;&#x30A3;&#x30B7;&#x30E3;&#x30EB;&#x30B5;&#x30A4;&#x30C8;&#x53C2;&#x7167;&#x3057;&#x3066;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</p>
+<h2><span id="homebrew-インストール">Homebrew インストール</span></h2><p>以下オフィシャルサイト参照してください。</p>
 <p><a href="http://brew.sh/index_ja.html">Homebrew Ja</a></p>
-<h2><span id="python2-3-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">Python2, 3 &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><p>2016/07/28 &#x73FE;&#x5728;&#x3001; python = 2.7.10, python3 = 3.4.3</p>
+<h2><span id="python2-3-インストール">Python2, 3 インストール</span></h2><p>2016/07/28 現在、 python = 2.7.10, python3 = 3.4.3</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install python python3 pyenv</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;">&#x8A2D;&#x5B9A;&#x30D5;&#x30A1;&#x30A4;&#x30EB;</span></h2><p>.bashrc &#x3082;&#x3057;&#x304F;&#x306F; .zshrc &#x306B;&#x8FFD;&#x8A18;&#x3057;&#x307E;&#x3059;&#x3002;</p>
-<p>&#x4EE5;&#x4E0B;&#x4EEE;&#x306B; .bashrc &#x3068;&#x3057;&#x307E;&#x3059;&#x3002;</p>
+<h2><span id="設定ファイル">設定ファイル</span></h2><p>.bashrc もしくは .zshrc に追記します。</p>
+<p>以下仮に .bashrc とします。</p>
 <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> vi ~/.bashrc</span></span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PYENV_ROOT=&quot;$HOME/.pyenv&quot;</span><br><span class="line">export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;</span><br><span class="line">eval &quot;$(pyenv init -)&quot;</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PYENV_ROOT="$HOME/.pyenv"</span><br><span class="line">export PATH="$PYENV_ROOT/bin:$PATH"</span><br><span class="line">eval "$(pyenv init -)"</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>&#x8A2D;&#x5B9A;&#x8AAD;&#x307F;&#x8FBC;&#x307F;</li>
+<li>設定読み込み</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/.bashrc</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="virtualenv-&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">virtualenv &#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo easy_install virtualenv</span><br></pre></td></tr></tbody></table></figure>
+<h2><span id="virtualenv-インストール">virtualenv インストール</span></h2><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo easy_install virtualenv</span><br></pre></td></tr></tbody></table></figure>
 
-<h2><span id="&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x69CB;&#x7BC9;">&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x69CB;&#x7BC9;</span></h2><ul>
-<li>python2 &#x3067;&#x306E;&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x69CB;&#x7BC9;</li>
+<h2><span id="仮想環境構築">仮想環境構築</span></h2><ul>
+<li>python2 での仮想環境構築</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ which python</span><br><span class="line"></span><br><span class="line">/usr/local/bin/python2.7</span><br></pre></td></tr></tbody></table></figure>
 
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ virtualenv -p /usr/local/bin/python2.7 ~/py2env</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>python3 &#x3067;&#x306E;&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x69CB;&#x7BC9;</li>
+<li>python3 での仮想環境構築</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ which python3</span><br><span class="line"></span><br><span class="line">/usr/local/bin/python3</span><br></pre></td></tr></tbody></table></figure>
 
@@ -1853,17 +1853,17 @@ h6.categories {
 
 
 
-<h2><span id="&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x5207;&#x308A;&#x66FF;&#x3048;">&#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x5207;&#x308A;&#x66FF;&#x3048;</span></h2><ul>
-<li>Python 2.7 &#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x3078;&#x5207;&#x308A;&#x66FF;&#x3048;</li>
+<h2><span id="仮想環境切り替え">仮想環境切り替え</span></h2><ul>
+<li>Python 2.7 仮想環境へ切り替え</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/py2env/bin/active</span><br></pre></td></tr></tbody></table></figure>
 
 <ul>
-<li>Python 3.4 &#x4EEE;&#x60F3;&#x74B0;&#x5883;&#x3078;&#x5207;&#x308A;&#x66FF;&#x3048;</li>
+<li>Python 3.4 仮想環境へ切り替え</li>
 </ul>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ source ~/py3env/bin/active</span><br></pre></td></tr></tbody></table></figure>
 
-<p>&#x4ECA;&#x66F4;&#x3067;&#x3059;&#x304C;&#x5099;&#x5FD8;&#x9332;&#x7684;&#x307E;&#x3068;&#x3081;&#x3067;&#x3057;&#x305F;&#x3002;</p>
+<p>今更ですが備忘録的まとめでした。</p>
 
 			  		
 			  		<!-- google Adsense -->
@@ -1929,7 +1929,7 @@ h6.categories {
 				
 				<div class="copyright-title">
 					<span>
-					&copy; 2020&nbsp;長生村本郷Engineers&#39;Blog
+					&copy; 2022&nbsp;長生村本郷Engineers&#39;Blog
 					</span>
 				</div>
 				
