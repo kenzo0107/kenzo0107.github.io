@@ -1,6 +1,6 @@
 ---
-title: fluentbit エラー 「Value of key 'xxx' is not a map. Will not attempt to lift from here」対応
-date: 2022-03-13
+title: fluentbit JSON のネストしたキーの取得方法
+date: 2022-03-25
 category: AWS
 thumbnail: https://i.imgur.com/zlOM1Ii.png
 ---
