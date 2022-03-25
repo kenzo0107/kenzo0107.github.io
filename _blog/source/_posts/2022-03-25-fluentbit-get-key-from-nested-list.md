@@ -12,6 +12,8 @@ thumbnail: https://i.imgur.com/zlOM1Ii.png
 </div>
 </div>
 
+---
+
 ECS Service のコンテナログからネストされたキーの取得をどのように対応したかをまとめました。
 
 実施内容は https://github.com/kenzo0107/sample-fluentbit-get-nested-key にてまとめています。
