@@ -14,10 +14,58 @@
 	
 	<meta property="og:site_name" content="長生村本郷Engineers&#39;Blog">
 	
+		<meta property="og:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88&#34;&gt;キー log の中身だけ欲しい場合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE%E4%B8%AD%E3%81%AE-b-%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88&#34;&gt;キー log の中の b の中身だけ欲しい場合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE-b-%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88-%E3%81%9D%E3%81%AE-2&#34;&gt;キー log の b のリストの中身だけ欲しい場合 その 2&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#lua-%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E5%AF%BE%E5%BF%9C&#34;&gt;lua スクリプトで対応&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%A8%E3%82%81&#34;&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;ECS Service のコンテナログからネストされたキーの取得をどのように対応したかをまとめました。&lt;/p&gt;
+&lt;p&gt;実施内容は &lt;a href=&#34;https://github.com/kenzo0107/sample-fluentbit-get-nested-key&#34;&gt;https://github.com/kenzo0107/sample-fluentbit-get-nested-key&lt;/a&gt; にてまとめています。&lt;/p&gt;">
+	
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="長生村本郷Engineers&#39;Blog">
 	<meta name="twitter:url" content="https://kenzo0107.github.io/2022/03/12/2022-03-25-fluentbit-get-key-from-nested-list/">
 	<meta name="twitter:title" content="fluentbit エラー 「Value of key &#39;xxx&#39; is not a map. Will not attempt to lift from here」対応 - 長生村本郷Engineers&#39;Blog">
+	
+		<meta name="twitter:description" content="&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88&#34;&gt;キー log の中身だけ欲しい場合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE%E4%B8%AD%E3%81%AE-b-%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88&#34;&gt;キー log の中の b の中身だけ欲しい場合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE-b-%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88-%E3%81%9D%E3%81%AE-2&#34;&gt;キー log の b のリストの中身だけ欲しい場合 その 2&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#lua-%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E5%AF%BE%E5%BF%9C&#34;&gt;lua スクリプトで対応&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%A8%E3%82%81&#34;&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;ECS Service のコンテナログからネストされたキーの取得をどのように対応したかをまとめました。&lt;/p&gt;
+&lt;p&gt;実施内容は &lt;a href=&#34;https://github.com/kenzo0107/sample-fluentbit-get-nested-key&#34;&gt;https://github.com/kenzo0107/sample-fluentbit-get-nested-key&lt;/a&gt; にてまとめています。&lt;/p&gt;">
 	
     
     	<meta name="twitter:image" content="/amp-dist/sample/sample-substituteTitleImage.png">
@@ -48,12 +96,36 @@
 			"@type": "BlogPosting",
 			"headline": "fluentbit エラー 「Value of key &#39;xxx&#39; is not a map. Will not attempt to lift from here」対応",
 			
+			"description": "&lt;div class=&#34;toc&#34;&gt;
+&lt;div class=&#34;toc-content&#34;&gt;
+&lt;h3 class=&#34;menu-label&#34;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88&#34;&gt;キー log の中身だけ欲しい場合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE%E4%B8%AD%E3%81%AE-b-%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88&#34;&gt;キー log の中の b の中身だけ欲しい場合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%82%AD%E3%83%BC-log-%E3%81%AE-b-%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88-%E3%81%9D%E3%81%AE-2&#34;&gt;キー log の b のリストの中身だけ欲しい場合 その 2&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#lua-%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E5%AF%BE%E5%BF%9C&#34;&gt;lua スクリプトで対応&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#%E3%81%BE%E3%81%A8%E3%82%81&#34;&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;ECS Service のコンテナログからネストされたキーの取得をどのように対応したかをまとめました。&lt;/p&gt;
+&lt;p&gt;実施内容は &lt;a href=&#34;https://github.com/kenzo0107/sample-fluentbit-get-nested-key&#34;&gt;https://github.com/kenzo0107/sample-fluentbit-get-nested-key&lt;/a&gt; にてまとめています。&lt;/p&gt;",
+			
 			"mainEntityOfPage":{
 			    "@type":"WebPage",
 			    "@id":"https://kenzo0107.github.io/2022/03/12/2022-03-25-fluentbit-get-key-from-nested-list/"
 			},
 			"datePublished": "2022-03-12T15:00:00.000Z",
-			"dateModified": "2022-03-25T08:01:11.547Z",
+			"dateModified": "2022-03-25T08:13:30.923Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1866,6 +1938,8 @@ h6.categories {
 <hr>
 <p>ECS Service のコンテナログからネストされたキーの取得をどのように対応したかをまとめました。</p>
 <p>実施内容は <a href="https://github.com/kenzo0107/sample-fluentbit-get-nested-key">https://github.com/kenzo0107/sample-fluentbit-get-nested-key</a> にてまとめています。</p>
+<a id="more"></a>
+
 <h2><span id="キー-log-の中身だけ欲しい場合">キー log の中身だけ欲しい場合</span></h2><ul>
 <li>ログ</li>
 </ul>
