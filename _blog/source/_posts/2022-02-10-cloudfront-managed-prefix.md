@@ -12,10 +12,14 @@ thumbnail: https://i.imgur.com/raMMbxt.png
 </div>
 </div>
 
+---
+
 https://aws.amazon.com/jp/about-aws/whats-new/2022/02/amazon-cloudfront-managed-prefix-list/
 
 VPC が CloudFront のマネージドプリフィックスリストをサポートするようになりました。
 これにより CloudFront からのアクセスをセキュリティグループルールベースでアクセス制限できるようになります。
+
+<!-- more -->
 
 ## 早速 terraform で実装してみた
 
