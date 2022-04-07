@@ -68,7 +68,10 @@ jobs:
 
 ![](https://i.imgur.com/3Kbhcml.png)
 
-ちりも積もれば...となるのでこれを避けたい場合は GitHub の Webhook を利用し回避することも可能です。
+ちりも積もれば...となるのでこれを避けたい場合は GitHub の Webhook で Lambda の無料枠使えれば...
+という感じで根本的な対策がないという印象です。
+
+`on.delete` に branches フィルタ希望です（切に）
 
 ### デフォルトブランチに push して初めて on.delete は利用できる
 
