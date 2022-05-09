@@ -188,7 +188,7 @@
 			    "@id":"https://kenzo0107.github.io/2022/05/05/2022-05-06-ouchi-kubernetes/"
 			},
 			"datePublished": "2022-05-05T15:00:00.000Z",
-			"dateModified": "2022-05-09T11:07:02.760Z",
+			"dateModified": "2022-05-09T11:10:44.719Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -2130,6 +2130,11 @@ h6.categories {
 
 <h2><span id="swap-無効化">swap 無効化</span></h2><figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo swapoff --all</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl stop dphys-swapfile</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl <span class="built_in">disable</span> dphys-swapfile</span></span><br></pre></td></tr></tbody></table></figure>
 
+<p>swap を無効化する理由は公式ドキュメントで言及されています。</p>
+<p><a href="https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/_print/#%E5%A7%8B%E3%82%81%E3%82%8B%E5%89%8D%E3%81%AB">https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/_print/#始める前に</a></p>
+<blockquote>
+<p>Swapがオフであること。kubeletが正常に動作するためにはswapは必ずオフでなければなりません。</p>
+</blockquote>
 <h2><span id="ip-固定">IP 固定</span></h2><p>ルーターで IP 固定しておくと再起動時に変更なく楽です。</p>
 <p>ルーターでなく、 Raspberry PI 側で <code>/etc/dhcpcd.conf</code> を編集し固定する方法は以下参考になります。<br><a href="https://www.fabshop.jp/raspberry-pi-static-ip/">Raspberry Pi の IP アドレスを固定にするには？</a></p>
 <p>ここで一旦 reboot し諸々を反映しておきます。</p>

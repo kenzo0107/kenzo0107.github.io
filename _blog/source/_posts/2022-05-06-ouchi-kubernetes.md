@@ -86,6 +86,12 @@ $ sudo systemctl stop dphys-swapfile
 $ sudo systemctl disable dphys-swapfile
 ```
 
+swap を無効化する理由は公式ドキュメントで言及されています。
+
+https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/_print/#始める前に
+> Swapがオフであること。kubeletが正常に動作するためにはswapは必ずオフでなければなりません。
+
+
 ## IP 固定
 
 ルーターで IP 固定しておくと再起動時に変更なく楽です。
