@@ -185,7 +185,7 @@
 			    "@id":"https://kenzo0107.github.io/2022/05/05/2022-05-06-ouchi-kubernetes/"
 			},
 			"datePublished": "2022-05-05T15:00:00.000Z",
-			"dateModified": "2022-05-09T05:17:39.900Z",
+			"dateModified": "2022-05-09T06:22:52.670Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -2026,12 +2026,12 @@ h6.categories {
 <h2><span id="目的">目的</span></h2><p>Raspberry PI のようなベアメタル環境で OS をインストールし k8s 関連パッケージを構築し、構築に必要な大まかな流れを理解する、<br>です。</p>
 <p>以下を実施していきます。</p>
 <ol>
-<li>OS インストール</li>
+<li>Raspberry PI OS インストール</li>
 <li>kubernetes cluster 構築</li>
-<li>nginx デプロイ</li>
+<li>Metal LB 構築</li>
 </ol>
-<p>非常に学びとハマりポイントがあったので、記していければ良いかなと思います。</p>
-<h2><span id="購入したものリスト">購入したものリスト</span></h2><p>半導体不足の影響もあってか Raspberry PI スターターキットでの取り扱いが多く、入手に時間が掛かりました。<br>4GB あれば、今後の学習についても必要十分だろうという判断です。<br>スターターキットが標準の電源付きなので、その点も安心材料でした。<br>やや高くなりますが、その辺は<a href="https://medpeer.co.jp/recruit/">会社</a>の制度の力を存分にお借りしました ♪<br>（ということで少しでも採用に貢献 done）</p>
+<p>非常に学びとハマりポイントが多かったので、以下に記していきたいと思います。</p>
+<h2><span id="購入したものリスト">購入したものリスト</span></h2><p>2022 年 4 月下旬、Raspberry PI 単体でなく、スターターキットでの取り扱いが多かったです。<br>スターターキットは単体に比べやや高くなりますが、その辺は<a href="https://medpeer.co.jp/recruit/">会社</a>のサポート制度の力を存分にお借りしました ♪</p>
 <div class="level article-meta">
   <div class="level-left link-preview">
     <div class="og-image">
@@ -2138,7 +2138,7 @@ h6.categories {
 <blockquote>
 <p>コンテナランタイムと kubelet が cgroup ドライバーとして systemd を使用するように設定を変更することでシステムは安定します。 以下の Docker 設定の native.cgroupdriver=systemd オプションに注意してください。</p>
 </blockquote>
-<h2><span id="kubeadm-インストール">kubeadm インストール</span></h2><p><a href="https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">公式</a>に沿って実行します。</p>
+<h2><span id="kubeadm-インストール">kubeadm インストール</span></h2><p><a href="https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">公式</a>に沿って以下実行していきます。</p>
 <h3><span id="iptables-がブリッジを通過するトラフィックを処理できるようにする">iptables がブリッジを通過するトラフィックを処理できるようにする</span></h3><p><a href="https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#iptables%E3%81%8C%E3%83%96%E3%83%AA%E3%83%83%E3%82%B8%E3%82%92%E9%80%9A%E9%81%8E%E3%81%99%E3%82%8B%E3%83%88%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%92%E5%87%A6%E7%90%86%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%99%E3%82%8B">公式ドキュメント参考</a></p>
 <p><code>br_netfilter</code> がロードされているか確認する</p>
 <figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lsmod | grep br_netfilter</span></span><br><span class="line"></span><br><span class="line">br_netfilter           32768  0</span><br><span class="line">bridge                180224  1 br_netfilter</span><br><span class="line">ipv6                  520192  28 br_netfilter,bridge</span><br></pre></td></tr></tbody></table></figure>
@@ -2152,7 +2152,7 @@ h6.categories {
 <blockquote>
 <p>nftables バックエンドは現在の kubeadm パッケージと互換性がありません。(ファイアウォールルールが重複し、kube-proxy を破壊するためです。)</p>
 </blockquote>
-<p>公式の説明いもある通り、 iptables が nftables を使うことで kubernetes が正常に動作しないことがある為、 iptables をレガシーバージョンに切り替えます。</p>
+<p>公式の説明にある通り、 iptables が nftables を使うことで kubernetes が正常に動作しないことがある為、 iptables をレガシーバージョンに切り替えます。</p>
 <figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// レガシーバイナリがインストールされていることを確認してください</span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install -y iptables arptables ebtables</span></span><br><span class="line"></span><br><span class="line">// レガシーバージョンに切り替えてください。</span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo update-alternatives --<span class="built_in">set</span> iptables /usr/sbin/iptables-legacy</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo update-alternatives --<span class="built_in">set</span> ip6tables /usr/sbin/ip6tables-legacy</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo update-alternatives --<span class="built_in">set</span> arptables /usr/sbin/arptables-legacy</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo update-alternatives --<span class="built_in">set</span> ebtables /usr/sbin/ebtables-legacy</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>参考: <a href="https://knowledge.sakura.ad.jp/22636/">nftables 入門</a></p>

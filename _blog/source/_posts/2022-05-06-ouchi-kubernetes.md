@@ -30,19 +30,16 @@ Raspberry PI のようなベアメタル環境で OS をインストールし k8
 
 以下を実施していきます。
 
-1. OS インストール
+1. Raspberry PI OS インストール
 2. kubernetes cluster 構築
-3. nginx デプロイ
+3. Metal LB 構築
 
-非常に学びとハマりポイントがあったので、記していければ良いかなと思います。
+非常に学びとハマりポイントが多かったので、以下に記していきたいと思います。
 
 ## 購入したものリスト
 
-半導体不足の影響もあってか Raspberry PI スターターキットでの取り扱いが多く、入手に時間が掛かりました。
-4GB あれば、今後の学習についても必要十分だろうという判断です。
-スターターキットが標準の電源付きなので、その点も安心材料でした。
-やや高くなりますが、その辺は[会社](https://medpeer.co.jp/recruit/)の制度の力を存分にお借りしました ♪
-（ということで少しでも採用に貢献 done）
+2022 年 4 月下旬、Raspberry PI 単体でなく、スターターキットでの取り扱いが多かったです。
+スターターキットは単体に比べやや高くなりますが、その辺は[会社](https://medpeer.co.jp/recruit/)のサポート制度の力を存分にお借りしました ♪
 
 {% affiliate "Raspberry PI 4B 4GB スターターキット" "//ws-fe.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B07YLY143F&Format=_SL160_&ID=AsinImage&MarketPlace=JP&ServiceVersion=20070822&WS=1&tag=kenzo0107-22&language=ja_JP" "https://www.amazon.co.jp/CanaKit-Raspberry-%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%BF%E3%83%BC%E3%82%AD%E3%83%83%E3%83%88-%E3%82%AF%E3%83%AA%E3%82%A2%E3%82%B1%E3%83%BC%E3%82%B9%E4%BB%98%E3%81%8D-PI4-STR32EWF-C4-CLR/dp/B07YLY143F?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=1O7RHSIN45Y49&keywords=Pi4+B+4GB+%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%BF%E3%83%BC+%E3%82%AD%E3%83%83%E3%83%88+7%E7%82%B9%E3%82%BB%E3%83%83%E3%83%88+V4+%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E6%95%99%E6%9D%90&qid=1651933444&sprefix=raspberry+pi+4b+%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%BF%E3%83%BC%E3%82%AD%E3%83%83%E3%83%88%2Caps%2C476&sr=8-27&linkCode=li2&tag=kenzo0107-22&linkId=f8b93f80255639d3b5cc614c2ec24ce2&language=ja_JP&ref_=as_li_ss_il" "https://hb.afl.rakuten.co.jp/ichiba/23166659.8ed3e37c.2316665a.b61e268d/_RTLink33687?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmcpjapan%2Fv_35027214434455%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" %}
 
@@ -139,7 +136,7 @@ $ sudo docker info | grep Cgroup
 
 ## kubeadm インストール
 
-[公式](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)に沿って実行します。
+[公式](https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)に沿って以下実行していきます。
 
 ### iptables がブリッジを通過するトラフィックを処理できるようにする
 
@@ -175,7 +172,7 @@ $ sudo sysctl --system
 
 > nftables バックエンドは現在の kubeadm パッケージと互換性がありません。(ファイアウォールルールが重複し、kube-proxy を破壊するためです。)
 
-公式の説明いもある通り、 iptables が nftables を使うことで kubernetes が正常に動作しないことがある為、 iptables をレガシーバージョンに切り替えます。
+公式の説明にある通り、 iptables が nftables を使うことで kubernetes が正常に動作しないことがある為、 iptables をレガシーバージョンに切り替えます。
 
 ```console
 // レガシーバイナリがインストールされていることを確認してください
