@@ -72,9 +72,11 @@ $ sudo nano /boot/cmdline.txt
 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
 ```
 
+`nano` or `vi` が入ってたのですが、 `vim` 使いたい場合は[こちら](https://kenzo0107.github.io/2022/05/08/2022-05-09-install_vim_on_raspberrypi_os/) 参考
+
 cgroup への理解は以下参考になりました。
 
-https://valinux.hatenablog.com/entry/20210114
+{% linkPreview https://valinux.hatenablog.com/entry/20210114 %}
 
 ## swap 無効化
 

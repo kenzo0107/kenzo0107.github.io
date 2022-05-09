@@ -185,7 +185,7 @@
 			    "@id":"https://kenzo0107.github.io/2022/05/05/2022-05-06-ouchi-kubernetes/"
 			},
 			"datePublished": "2022-05-05T15:00:00.000Z",
-			"dateModified": "2022-05-09T07:28:02.793Z",
+			"dateModified": "2022-05-09T07:34:53.103Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -2120,8 +2120,10 @@ h6.categories {
 <h2><span id="cgroup-の有効化">cgroup の有効化</span></h2><p>Docker を利用すべく、 cgroup を有効化します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo nano /boot/cmdline.txt</span><br><span class="line"></span><br><span class="line">cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1</span><br></pre></td></tr></tbody></table></figure>
 
+<p><code>nano</code> or <code>vi</code> が入ってたのですが、 <code>vim</code> 使いたい場合は<a href="https://kenzo0107.github.io/2022/05/08/2022-05-09-install_vim_on_raspberrypi_os/">こちら</a> 参考</p>
 <p>cgroup への理解は以下参考になりました。</p>
-<p><a href="https://valinux.hatenablog.com/entry/20210114">https://valinux.hatenablog.com/entry/20210114</a></p>
+<a href="https://valinux.hatenablog.com/entry/20210114" class="link-preview"><div class="link-area"><div class="og-image"><div class="amp-img-wrapper"><amp-img src="https://cdn-ak.f.st-hatena.com/images/fotolife/v/valinux/20210113/20210113115814.png" width="378" height="378" layout="responsive"></amp-img></div></div><div class="descriptions"><div class="og-title">Kubernetes で cgroup がどう利用されているか - VA Linux エンジニアブログ  </div><div class="og-description">cgroup とは、Linux カーネルの機能の1つであり、プロセスやスレッドが利用するリソースの制限や分離を行うための機能で、Linux コンテナの根幹を成す技術の1つでもあります。本記事では、Kubernetes のいくつかの機能を例に挙げ、cgroup がどう利用されている…</div></div></div></a>
+
 <h2><span id="swap-無効化">swap 無効化</span></h2><figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo swapoff --all</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl stop dphys-swapfile</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl <span class="built_in">disable</span> dphys-swapfile</span></span><br></pre></td></tr></tbody></table></figure>
 
 <h2><span id="ip-固定">IP 固定</span></h2><p>ルーターで IP 固定しておくと再起動時に変更なく楽です。</p>
