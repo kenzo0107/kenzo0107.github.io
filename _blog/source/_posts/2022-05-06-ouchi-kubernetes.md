@@ -16,7 +16,7 @@ thumbnail: https://i.imgur.com/RgpOXr3.jpg
 
 <!-- more -->
 
-GW の隙間時間に Raspberry PI で k8s を構築しました。
+Raspberry PI で Kubernetes クラスタを構築しました。
 
 会社の「テックサポート制度」により、 Raspberry PI がサポート対象となり、遺憾無くお金を使わせてもらうことができる様になりました。
 その甲斐あって、兼ねてより家で k8s cluster を飼う、というエンジニア冥利に尽きる所作を味わいたくチャレンジさせていただきました。
