@@ -383,6 +383,8 @@ data:
         addresses:
           - 192.168.11.200-192.168.11.220
 EOF
+
+$ kubectl apply -f metallb-config.yaml
 ```
 
 nginx を `type: LoadBalancer` でデプロイし、 metallb が IP を割り当てていることを確認します。
