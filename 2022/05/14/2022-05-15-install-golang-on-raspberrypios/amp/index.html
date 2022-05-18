@@ -53,7 +53,7 @@
 			    "@id":"https://kenzo0107.github.io/2022/05/14/2022-05-15-install-golang-on-raspberrypios/"
 			},
 			"datePublished": "2022-05-14T15:00:00.000Z",
-			"dateModified": "2022-05-14T15:16:52.784Z",
+			"dateModified": "2022-05-18T14:25:33.266Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1845,6 +1845,8 @@ h6.categories {
 			    	<!-- content -->
 			  		<p>RPi に Go をインストールする手順です。<br>2022.05.15 時点最新 1.18.2 をインストールします。</p>
 <figure class="highlight console"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://golang.org/dl/go1.18.2.linux-armv6l.tar.gz</span><br><span class="line">sudo tar -C /usr/local -xzf go1.18.2.linux-armv6l.tar.gz</span><br><span class="line">echo 'export PATH=$PATH:/usr/local/go/bin' &gt;&gt; ~/.bashrc</span><br><span class="line">echo 'export PATH=$HOME/go/bin:$PATH' &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br><span class="line"></span><br><span class="line">// バージョン確認</span><br><span class="line">go version</span><br></pre></td></tr></tbody></table></figure>
+
+<p>※ Raspberry PI OS Bullseye 2022.04.04 リリースで検証しました。</p>
 
 			  		
 			  		<!-- google Adsense -->

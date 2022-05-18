@@ -17,3 +17,5 @@ source ~/.bashrc
 // バージョン確認
 go version
 ```
+
+※ Raspberry PI OS Bullseye 2022.04.04 リリースで検証しました。
