@@ -1,15 +1,8 @@
 ---
-title: black 「ImportError: cannot import name '_unicodefun' from 'click'」 対応
+title: black 「ImportError: cannot import name _unicodefun from click」 対応
 date: 2022-05-25
----
-
-<div class="toc">
-<div class="toc-content">
-<h3 class="menu-label">ToC</h3>
-<!-- toc -->
-</div>
-</div>
-
+tags:
+- Python
 ---
 
 python の自動整形ツール [black](https://github.com/psf/black) で以下エラーが発生した為、その時の対応をまとめます。
