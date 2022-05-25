@@ -1,5 +1,5 @@
 ---
-title: black "ImportError: cannot import name '_unicodefun' from 'click'" 対応
+title: black 「ImportError: cannot import name '_unicodefun' from 'click'」 対応
 date: 2022-05-25
 ---
 
