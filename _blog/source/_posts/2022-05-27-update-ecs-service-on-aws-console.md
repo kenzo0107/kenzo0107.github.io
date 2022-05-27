@@ -39,7 +39,7 @@ AWS コンソール上で ECS Service 更新ステップを進むと
             "TargetService": {
                 "Type": "AWS::ECS::Service",
                 "Properties": {
-                    "TaskDefinition": "arn:aws:ecs:ap-northeast-1:365174474712:task-definition/stg-career-app:105",
+                    "TaskDefinition": "<タスク定義 ARN>",
                     "LoadBalancerInfo": {
                         "ContainerName": "nginx",
                         "ContainerPort": 80
