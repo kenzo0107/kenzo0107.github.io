@@ -94,13 +94,29 @@ aws deploy create-deployment \
 	--revision '{"revisionType": "AppSpecContent", "appSpecContent": {"content": "{\"version\": 0.0, \"Resources\": [{\"TargetService\": {\"Type\": \"AWS::ECS::Service\", \"Properties\": {\"TaskDefinition\": \"<タスク定義 ARN>\", \"LoadBalancerInfo\": {\"ContainerName\": \"nginx\", \"ContainerPort\": 80},\"CapacityProviderStrategy\": [{\"Base\":0,\"CapacityProvider\":\"FARGATE_SPOT\",\"Weight\":1},{\"Base\":0,\"CapacityProvider\":\"FARGATE\",\"Weight\":0}]}}}]}"}}'
 ```
 
-ファイルにまとめておくとシンプル ♪
+ファイルにまとめておくとコマンドがシンプル ♪
+（content の定義が String なので、1 行にまとめて文字列として定義しており見づらさはある）
 
 ```
 aws deploy create-deployment --cli-input-json file://deployment.json
 ```
 
-appspec を明示的に指定することで capacity provider strategy を明示的に残すようにします。
+deployment.json
+
+```
+{
+    "applicationName": "xxx",
+    "deploymentGroupName": "yyy",
+    "revision": {
+	    "revisionType": "AppSpecContent",
+		  "appSpecContent": {
+			  "content": "{\"version\": 0.0, \"Resources\": [{\"TargetService\": {\"Type\": \"AWS::ECS::Service\", \"Properties\": {\"TaskDefinition\": \"<タスク定義 ARN>\", \"LoadBalancerInfo\": {\"ContainerName\": \"nginx\", \"ContainerPort\": 80},\"CapacityProviderStrategy\": [{\"Base\":0,\"CapacityProvider\":\"FARGATE_SPOT\",\"Weight\":1},{\"Base\":0,\"CapacityProvider\":\"FARGATE\",\"Weight\":0}]}}}]}"
+		}
+	}
+}
+```
+
+appspec を明示的に指定することで capacity provider strategy を明示的に残すようにできることを確認しました。
 
 以上
 参考になれば幸いです。
