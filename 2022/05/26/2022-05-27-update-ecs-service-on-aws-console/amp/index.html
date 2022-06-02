@@ -53,7 +53,7 @@
 			    "@id":"https://kenzo0107.github.io/2022/05/26/2022-05-27-update-ecs-service-on-aws-console/"
 			},
 			"datePublished": "2022-05-26T15:00:00.000Z",
-			"dateModified": "2022-05-27T07:16:25.458Z",
+			"dateModified": "2022-06-02T00:51:51.495Z",
 			
 			"image": {
 				"@type": "ImageObject",
@@ -1843,7 +1843,7 @@ h6.categories {
                     
                     
 			    	<!-- content -->
-			  		<p>capacity provider strategy で FARGATE_SPOT に全振りしていた FARGATE がいます。</p>
+			  		<p>capacity provider strategy で FARGATE_SPOT に weight = 1 で全振りしていた FARGATE がいます。</p>
 <div class="amp-img-wrapper"><amp-img src="https://i.imgur.com/rqRuh2G.png" width="726" height="220" layout="responsive"></amp-img></div>
 <ul>
 <li>FARGATE_SPOT weight = 1</li>
@@ -1860,11 +1860,9 @@ h6.categories {
 
 <p>ここで capacity provider strategy の設定がありません。</p>
 <p>その影響で更新完了後、 capacity provider strategy の設定がなくなってしまいました。</p>
-<h2><span id="どんな影響がある">どんな影響がある？</span></h2><p>terraform で capacity provider strategy を管理していると<br>plan で ECS Service が再作成となりダウンタイムが発生します。</p>
+<p>terraform で capacity provider strategy を管理していると<br>terraform apply 実施すると ECS Service が意図せず再作成となりダウンタイムが発生します。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  # aws_ecs_service.app must be replaced</span><br><span class="line">-/+ resource "aws_ecs_service" "app" {</span><br><span class="line"></span><br><span class="line">      + capacity_provider_strategy { # forces replacement</span><br><span class="line">          + capacity_provider = "FARGATE"</span><br><span class="line">          + weight            = 0</span><br><span class="line">        }</span><br><span class="line">      + capacity_provider_strategy { # forces replacement</span><br><span class="line">          + capacity_provider = "FARGATE_SPOT"</span><br><span class="line">          + weight            = 1</span><br><span class="line">        }</span><br></pre></td></tr></tbody></table></figure>
 
-<p>意図せずに再作成される危険性があります。</p>
-<p>また、 FARGATE_SPOT のコスト削減メリットを享受できません。<br>意図した設定で無くなっていると言うのが辛いとこです。</p>
 <h2><span id="対策">対策</span></h2><p>CodeDeploy で管理されている ECS Service の更新は<br>aws-cli や CodeDeploy 経由でデプロイします。</p>
 <p><code>aws deploy create-deployment</code> のオプションで全て対応しようとするとやや複雑になります。</p>
 <figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aws deploy create-deployment \</span><br><span class="line">	--application-name xxx \</span><br><span class="line">	--deployment-group-name yyy \</span><br><span class="line">	--revision '{"revisionType": "AppSpecContent", "appSpecContent": {"content": "{\"version\": 0.0, \"Resources\": [{\"TargetService\": {\"Type\": \"AWS::ECS::Service\", \"Properties\": {\"TaskDefinition\": \"&lt;タスク定義 ARN&gt;\", \"LoadBalancerInfo\": {\"ContainerName\": \"nginx\", \"ContainerPort\": 80},\"CapacityProviderStrategy\": [{\"Base\":0,\"CapacityProvider\":\"FARGATE_SPOT\",\"Weight\":1},{\"Base\":0,\"CapacityProvider\":\"FARGATE\",\"Weight\":0}]}}}]}"}}'</span><br></pre></td></tr></tbody></table></figure>

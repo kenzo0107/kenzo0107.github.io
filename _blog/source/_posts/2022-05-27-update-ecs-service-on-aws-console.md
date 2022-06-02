@@ -4,7 +4,7 @@ date: 2022-05-27
 category: AWS
 ---
 
-capacity provider strategy で FARGATE_SPOT に全振りしていた FARGATE がいます。
+capacity provider strategy で FARGATE_SPOT に weight = 1 で全振りしていた FARGATE がいます。
 
 ![](https://i.imgur.com/rqRuh2G.png)
 
@@ -56,10 +56,8 @@ AWS コンソール上で ECS Service 更新ステップを進むと
 
 その影響で更新完了後、 capacity provider strategy の設定がなくなってしまいました。
 
-## どんな影響がある？
-
 terraform で capacity provider strategy を管理していると
-plan で ECS Service が再作成となりダウンタイムが発生します。
+terraform apply 実施すると ECS Service が意図せず再作成となりダウンタイムが発生します。
 
 ```
   # aws_ecs_service.app must be replaced
@@ -74,11 +72,6 @@ plan で ECS Service が再作成となりダウンタイムが発生します�
           + weight            = 1
         }
 ```
-
-意図せずに再作成される危険性があります。
-
-また、 FARGATE_SPOT のコスト削減メリットを享受できません。
-意図した設定で無くなっていると言うのが辛いとこです。
 
 ## 対策
 
