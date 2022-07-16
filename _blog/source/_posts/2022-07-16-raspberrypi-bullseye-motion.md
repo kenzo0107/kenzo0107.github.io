@@ -1,6 +1,6 @@
 ---
-title: Raspberry PI bullseye で motion を起動しブラウザで表示
-date: 2022-06-16
+title: Raspberry PI bullseye で motion を起動しブラウザで表示する
+date: 2022-07-16
 category: AWS
 ---
 
