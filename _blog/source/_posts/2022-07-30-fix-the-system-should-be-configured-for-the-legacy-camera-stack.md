@@ -35,7 +35,7 @@ https://www.raspberrypi.com/documentation/accessories/camera.html
 $ libcamera-still -o test.jpg
 ```
 
-## legacy camera stack をサポー落としても良し
+## legacy camera stack をサポートしても良し
 
 ```
 sudo raspi-config
