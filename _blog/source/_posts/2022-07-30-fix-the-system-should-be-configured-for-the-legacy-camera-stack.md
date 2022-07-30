@@ -35,7 +35,7 @@ https://www.raspberrypi.com/documentation/accessories/camera.html
 $ libcamera-still -o test.jpg
 ```
 
-## legacy camera stack をサポー落としても良し
+## legacy camera stack をサポートしても良し
 
 ```
 sudo raspi-config
@@ -43,9 +43,6 @@ sudo raspi-config
 // Interface Options を選択
 // Legacy Camera Enable/disable legacy camera support
 ```
-
-![](https://i.imgur.com/pK0JFjt.png)
-![](https://i.imgur.com/phPcr6m.png)
 
 以上
 参考になれば幸いです。
