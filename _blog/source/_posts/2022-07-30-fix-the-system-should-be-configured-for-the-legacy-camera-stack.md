@@ -44,8 +44,5 @@ sudo raspi-config
 // Legacy Camera Enable/disable legacy camera support
 ```
 
-![](https://i.imgur.com/pK0JFjt.png)
-![](https://i.imgur.com/phPcr6m.png)
-
 以上
 参考になれば幸いです。
