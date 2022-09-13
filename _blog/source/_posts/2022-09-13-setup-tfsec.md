@@ -61,7 +61,7 @@ resource "aws_lb" "dummy" {
 
 ## プロジェクト全体でルールを除外したいとき
 
-参考: https://aquasecurity.github.io/tfsec/v0.63.1/getting-started/configuration/config/
+参考: https://aquasecurity.github.io/tfsec/v1.27.6/getting-started/configuration/config/
 
 .tfsec/config.yml を作成し、除外したいルールを追加します。
 あくまでも以下はサンプルで、個々の運用によって除外ルールは変更してください。
