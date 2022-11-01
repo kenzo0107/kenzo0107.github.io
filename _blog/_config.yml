@@ -98,22 +98,6 @@ sitemap:
 single_page:
   - privacy_policy
 
-
-# hexo-generator-amp
-generator_amp:
-  validateAMP: false
-  templateDir: amp-template
-  assetDistDir: amp-dist
-  logo:
-    path: sample/sample-logo.png
-    width: 600
-    height: 60
-  substituteTitleImage:
-    path: sample/sample-substituteTitleImage.png
-    width: 1024
-    height: 800
-  warningLog: false
-
 ## Themes: https://hexo.io/themes/
 theme: icarus
 
