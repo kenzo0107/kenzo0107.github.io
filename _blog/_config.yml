@@ -108,3 +108,9 @@ deploy:
   repo: https://github.com/kenzo0107/kenzo0107.github.io
   branch: master
   message: update
+
+# hexo-generator-feed (https://github.com/hexojs/hexo-generator-feed)
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
