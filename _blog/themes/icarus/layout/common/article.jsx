@@ -88,7 +88,6 @@ module.exports = class extends Component {
                     {index && page.excerpt ? <a class="article-more button is-small size-small" href={`${url_for(page.path)}#more`}>{__('article.more')}</a> : null}
                     {/* Share button */}
                     {!index ? <Share config={config} page={page} helper={helper} /> : null}
-                    <a href="https://b.hatena.ne.jp/entry/kenzo0107.github.io{page.link}" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-normal" data-hatena-bookmark-lang="ja" title="{page.title}"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="{page.title}" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
                 </article>
             </div>
             {/* Donate button */}
