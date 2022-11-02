@@ -15,6 +15,8 @@ thumbnail: https://aquasecurity.github.io/tfsec/v0.63.1/imgs/homelogo.png
 
 [tfsec](https://github.com/aquasecurity/tfsec) を使用し [Terraform](https://www.terraform.io/) で管理するリソースのセキュリティを強化する手順を記載します。
 
+<!-- more -->
+
 ## ローカルに tfsec インストール
 
 以下例では [asdf](https://github.com/asdf-vm/asdf) を利用し導入しています。

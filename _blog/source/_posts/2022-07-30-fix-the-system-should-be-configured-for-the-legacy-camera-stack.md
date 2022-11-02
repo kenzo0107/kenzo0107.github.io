@@ -29,6 +29,8 @@ https://www.raspberrypi.com/documentation/accessories/camera.html
 
 > Raspberry Pi OS images from Bullseye onwards will contain only the libcamera-based stack.
 
+<!-- more -->
+
 ## libcamera を利用しよう
 
 ```

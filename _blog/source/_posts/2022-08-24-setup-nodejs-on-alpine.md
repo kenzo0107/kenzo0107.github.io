@@ -16,6 +16,8 @@ php の alpine ベースイメージに nodejs をセットアップする場合
 `apk add nodejs` でインストールも可能ですが、
 マルチステージビルドで node の alpine イメージから node を動作させるのに必要なファイルをコピーすることで実現可能なので設定がシンプルです。
 
+<!-- more -->
+
 ```
 FROM node:16.15.1-alpine AS node
 

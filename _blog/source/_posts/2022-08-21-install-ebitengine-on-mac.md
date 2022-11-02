@@ -17,6 +17,8 @@ date: 2022-08-21
 [公式 ebitengine インストール](https://ebiten.org/documents/install.html?os=darwin) の通り、
 MacOS で ebitengine 導入時に一手間あったので備忘録
 
+<!-- more -->
+
 ## 実行環境
 
 ```

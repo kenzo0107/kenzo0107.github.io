@@ -2,7 +2,7 @@
 title: tfsec aws-vpc-add-description-to-security-group 対応
 date: 2022-05-13
 category:
-- Terraform
+  - Terraform
 thumbnail: https://i.imgur.com/vaHrTti.png
 ---
 
@@ -16,6 +16,8 @@ thumbnail: https://i.imgur.com/vaHrTti.png
 ---
 
 terraform で AWS Security Group リソースは以下の場合、 `aws-vpc-add-description-to-security-group` ルールで違反が指摘されます。
+
+<!-- more -->
 
 - `description` がない
 - `description = "Managed by Terraform"`

@@ -18,6 +18,8 @@ category: AWS
 2022.08.02 時点、
 Lake Formation blueprint incremental database で生成された Glue Workflow を実行すると異常終了する事象がありました。
 
+<!-- more -->
+
 ## まず結論
 
 最終的に修正されたスクリプトは以下に残しております。

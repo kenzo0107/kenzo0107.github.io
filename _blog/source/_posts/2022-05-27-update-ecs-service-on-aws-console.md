@@ -11,6 +11,8 @@ capacity provider strategy で FARGATE_SPOT に weight = 1 で全振りしてい
 - FARGATE_SPOT weight = 1
 - FARGATE weight = 0
 
+<!-- more -->
+
 ## AWS コンソール上で ECS Service をアップデートした際の問題
 
 ![](https://i.imgur.com/4RoXEV6.png)

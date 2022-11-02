@@ -17,6 +17,8 @@ category: RaspberryPI
 
 Raspberry PI bullseye で motion 起動しブラウザで表示します。
 
+<!-- more -->
+
 ## RPi の設定
 
 数行で完了します。
