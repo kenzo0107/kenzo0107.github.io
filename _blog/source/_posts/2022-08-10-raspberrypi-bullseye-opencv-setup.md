@@ -24,6 +24,8 @@ bullseye より前のバージョンでの場合が多く、うまくいかな�
 
 その為、 bullseye での設定をまとめます。
 
+<!-- more -->
+
 ## bullseye 64-bit with Desktop を選択
 
 `64-bit` の `Desktop` ありを選択しました。

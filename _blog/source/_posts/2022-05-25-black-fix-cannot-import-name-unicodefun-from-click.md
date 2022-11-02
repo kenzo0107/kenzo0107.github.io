@@ -7,6 +7,8 @@ tags:
 
 python の自動整形ツール [black](https://github.com/psf/black) で以下エラーが発生した為、その時の対応をまとめます。
 
+<!-- more -->
+
 ```
 $ black . --check --skip-string-normalization
 

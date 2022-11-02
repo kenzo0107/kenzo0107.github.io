@@ -27,6 +27,8 @@ terraform で map 型を for で整形した際に key を昇順にソートし�
 
 これを利用し、data リソースで取得した Subnet ID を AZ 順 (a → c → d) に list で取得してみます。
 
+<!-- more -->
+
 ```terraform
 data "aws_subnets" "public" {
   filter {
