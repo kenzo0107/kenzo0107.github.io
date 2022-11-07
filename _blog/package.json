@@ -29,6 +29,7 @@
     "hexo-server": "^1.0.0",
     "hexo-tag-link-preview": "^1.2.4",
     "hexo-tag-twitter": "^1.0.2",
+    "hexo-theme-icarus": "^5.1.0",
     "hexo-toc": "^1.1.0",
     "hexo-util": "^1.9.1",
     "inferno": "^7.4.8",
