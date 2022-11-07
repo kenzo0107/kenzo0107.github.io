@@ -43,9 +43,6 @@ navbar:
   menu:
     Home: /
     Archives: /archives
-    Categories: /categories
-    Tags: /tags
-    About: /about
     PrivacyPolicy: /2013/12/31/PrivacyPolicy/
   links:
     Download on GitHub:
