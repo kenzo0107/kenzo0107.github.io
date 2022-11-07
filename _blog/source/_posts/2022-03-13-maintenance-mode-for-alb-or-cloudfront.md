@@ -2,7 +2,7 @@
 title: AWS ALB/CloudFront でのメンテナンス切り替え方法
 date: 2022-03-13
 category: AWS
-thumbnail: https://i.imgur.com/IwHAByw.png
+cover: https://i.imgur.com/IwHAByw.png
 ---
 
 <div class="toc">

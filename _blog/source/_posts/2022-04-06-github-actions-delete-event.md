@@ -1,7 +1,7 @@
 ---
 title: GitHub Actions で特定ブランチが削除された場合に実行する
 date: 2022-04-06
-thumbnail: https://i.imgur.com/XvuvUZ4.png
+cover: https://i.imgur.com/XvuvUZ4.png
 ---
 
 <div class="toc">

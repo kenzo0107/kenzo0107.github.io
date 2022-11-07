@@ -3,9 +3,9 @@ layout: post
 title: AWS ECS prefix 指定してまとめてタスク登録解除
 date: 2018-05-18
 tags:
-- AWS
-- ECS
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180606/20180606115540.jpg
+  - AWS
+  - ECS
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180606/20180606115540.jpg
 ---
 
 ## 概要

@@ -2,9 +2,9 @@
 title: terraform-provider-aws 3.26.0 で ElastiCache ClusterMode でエラーになる件
 category: Terraform
 tags:
-- AWS
+  - AWS
 date: 2021-02-02
-thumbnail: https://i.imgur.com/xeRZLru.png
+cover: https://i.imgur.com/xeRZLru.png
 ---
 
 <div class="toc">
@@ -39,7 +39,6 @@ Error: if automatic_failover_enabled is true, number_cache_clusters must be grea
   on redis_cache.tf line 12, in resource "aws_elasticache_replication_group" "cache_store":
   12: resource "aws_elasticache_replication_group" "cache_store" {
 ```
-
 
 以下に修正する必要がある。
 

@@ -3,30 +3,26 @@ layout: post
 title: inputボックスにURL打ち込むと自動URL短縮化されるjs
 date: 2016-03-10
 tags:
-- JavaScript
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160310/20160310115924.png
+  - JavaScript
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160310/20160310115924.png
 ---
 
 [f:id:kenzo0107:20160310115924p:plain]
 
 ## 概要
 
-最近ではURLに日本語を利用するケースが増えてきました。
+最近では URL に日本語を利用するケースが増えてきました。
 
-SEOとして価値がある作業かどうかは眉唾ではありますが
-ネット利用率の低い方にとってはUIとしては分かりやすいのかもしれません。
+SEO として価値がある作業かどうかは眉唾ではありますが
+ネット利用率の低い方にとっては UI としては分かりやすいのかもしれません。
 
 その点を論じているブログがありました。
 
 {% linkPreview https://www.suzukikenichi.com/blog/should-urls-contain-japanese/ _blank %}
 
-
-
-日本語を含むURLをTwitterへ投稿するようなソーシャル連携ツール等の開発の際、
-文字数に厳密に注意する必要があり、短縮の自動化をbitly APIで行いましたので
+日本語を含む URL を Twitter へ投稿するようなソーシャル連携ツール等の開発の際、
+文字数に厳密に注意する必要があり、短縮の自動化を bitly API で行いましたので
 そのまとめです。
-
-
 
 ## 手順
 
@@ -38,8 +34,7 @@ SEOとして価値がある作業かどうかは眉唾ではありますが
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160310/20160310121138.png" width="100%">
 </div>
 
-
-- 以下jsをhtml等でロードしてください。
+- 以下 js を html 等でロードしてください。
 
 {% gist kenzo0107/88af2f3e961324fac815 %}
 

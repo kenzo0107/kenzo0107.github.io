@@ -2,9 +2,9 @@
 title: ecs execute command が失敗した際に調査したこと
 category: AWS
 tags:
-- AWS
+  - AWS
 date: 2021-07-27
-thumbnail: https://i.imgur.com/yK51axc.png
+cover: https://i.imgur.com/yK51axc.png
 ---
 
 <div class="toc">
@@ -46,7 +46,7 @@ true
 
 ## Task Role が権限を所持しているか
 
-大丈夫そう♪
+大丈夫そう ♪
 
 ```
   statement {
@@ -91,7 +91,6 @@ An error occurred (InvalidParameterException) when calling the ExecuteCommand op
 ```
 
 `rails c` をよく利用するから OOM でやられたか???
-
 
 ## 同一タスクで強制デプロイでタスクを入れ替える
 

@@ -3,9 +3,9 @@ layout: post
 title: Node Exporter 構築手順 + Prometheus からAWSオートスケール監視
 date: 2017-01-25
 tags:
-- Monitoring
-- Prometheus
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125144719.png
+  - Monitoring
+  - Prometheus
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125144719.png
 ---
 
 ## 概要
@@ -16,7 +16,7 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/2
 
 今回は 監視対象サーバで Node Exporter 構築を実施します。
 
-## 今回やること 3行まとめ
+## 今回やること 3 行まとめ
 
 - Node Exporter インストール
 - Node Exporter 起動スクリプト作成
@@ -107,10 +107,10 @@ $ sudo systemctl status node_exporter.service -l
 
 ## Prometheus から監視
 
-今回は AWS EC2インスタンスで起動中の node_exporter によるメトリクス取得設定です。
+今回は AWS EC2 インスタンスで起動中の node_exporter によるメトリクス取得設定です。
 
 ※ 監視実施サーバに `AmazonEC2ReadOnlyAccess` をアタッチしたロール設定をする必要があります。
-<span style="color: #ff5252">※ 監視対象サーバに 監視対象サーバから `9100 ポート` へアクセスできるようにセキュリティグループ設定します。  </span>
+<span style="color: #ff5252">※ 監視対象サーバに 監視対象サーバから `9100 ポート` へアクセスできるようにセキュリティグループ設定します。 </span>
 
 - /usr/local/prometheus-server/prometheus.yml 編集
 
@@ -205,7 +205,6 @@ $ sudo systemctl restart prometheus.service
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125153144.png" width="100%">
 </div>
-
 
 `Up : Yes` となっている Node のリンクをクリックすると CPU, Disck のグラフが確認できます。
 

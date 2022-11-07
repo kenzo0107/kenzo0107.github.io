@@ -3,12 +3,10 @@ layout: post
 title: 標準的な Golang インストール方法
 date: 2017-02-03
 category: Go
-category: Go
 tags:
-- Go
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170203/20170203124749.png
+  - Go
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170203/20170203124749.png
 ---
-
 
 ## 概要
 
@@ -35,7 +33,7 @@ $ sudo wget https://storage.googleapis.com/golang/go1.7.5.linux-amd64.tar.gz
 $ sudo tar -C /usr/local -xzf go1.7.5.linux-amd64.tar.gz
 ```
 
-- PATH設定
+- PATH 設定
 
 ```
 $ sudo cat << 'EOF' | sudo tee /etc/profile.d/golang.sh

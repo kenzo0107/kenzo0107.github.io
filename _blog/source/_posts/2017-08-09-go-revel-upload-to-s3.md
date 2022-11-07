@@ -3,20 +3,18 @@ layout: post
 title: Go+Revelフレームワーク 非同期でS3へ画像リサイズ/アップロード
 date: 2017-08-09
 category: Go
-category: Go
 tags:
-- Go
+  - Go
 ---
 
 備忘録です。
 
 ## 概要
 
-AWS向けのgoライブラリが乱立していて
+AWS 向けの go ライブラリが乱立していて
 どれ使ったらいい？という感じだったので
 本家の `launchpad.net/goamz/aws` を利用して
 実装することにしました。
-
 
 ## Controller
 
@@ -26,7 +24,7 @@ AWS向けのgoライブラリが乱立していて
 
 ## Component
 
-画像アップロード部分をcomponent化しました。
+画像アップロード部分を component 化しました。
 
 - app/utility/aws.go
 

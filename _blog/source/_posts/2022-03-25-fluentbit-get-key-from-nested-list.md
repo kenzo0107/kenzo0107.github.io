@@ -2,7 +2,7 @@
 title: fluentbit JSON のネストしたキーの取得方法
 date: 2022-03-25
 category: AWS
-thumbnail: https://i.imgur.com/zlOM1Ii.png
+cover: https://i.imgur.com/zlOM1Ii.png
 ---
 
 <div class="toc">

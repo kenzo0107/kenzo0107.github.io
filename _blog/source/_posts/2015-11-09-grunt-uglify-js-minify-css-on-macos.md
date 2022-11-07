@@ -3,8 +3,8 @@ layout: post
 title: By grunt, uglify js & minify css on MacOSX.
 date: 2015-11-09
 tags:
-- JavaScript
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151109/20151109114223.jpg
+  - JavaScript
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151109/20151109114223.jpg
 ---
 
 ## environment
@@ -82,7 +82,6 @@ npm install grunt-cssbeautifier   --save-dev
 | grunt-jsbeautifier    | beautify Javascript files.                               |
 | grunt-cssbeautifier   | beautify Javascript files.                               |
 
-
 ## Confirm package.json
 
 ```js
@@ -116,7 +115,6 @@ cat package.json
 
 - Add dependencies of grunt modules to package.json !
 
-
 ## move to parent directory of css, js folder
 
 ```
@@ -142,7 +140,6 @@ tree
 	├── login.js
 	└── signup.js
 ```
-
 
 ### Create Gruntfile.coffee or Gruntfile.json
 

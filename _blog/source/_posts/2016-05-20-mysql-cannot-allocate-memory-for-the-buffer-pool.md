@@ -3,14 +3,14 @@ layout: post
 title: MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool
 date: 2016-05-20
 tags:
-- MySQL
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520103201.jpg
+  - MySQL
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520103201.jpg
 ---
 
 ## 概要
 
-AWS E2インスタンス上に MySQL, SonarQube インストールし起動するものの
-MySQLが落ちるという事象が発生。
+AWS E2 インスタンス上に MySQL, SonarQube インストールし起動するものの
+MySQL が落ちるという事象が発生。
 
 ログを見ると以下のエラーが。。
 
@@ -34,10 +34,9 @@ Cannot allocate memory for the buffer pool
 割りあてるメモリがないという話。
 なので、メモリを作ります。
 
+## 対策 1. swap 領域を作成する
 
-## 対策1. swap領域を作成する
-
-### swap領域作成
+### swap 領域作成
 
 ```sh
 // 空ファイル作成
@@ -50,7 +49,7 @@ Cannot allocate memory for the buffer pool
 # swapon /swapfile
 ```
 
-### swap領域確認
+### swap 領域確認
 
 ```sh
 # free
@@ -66,9 +65,7 @@ Swap:       1048572      491136      557436   ← Swapの設定が追加され�
 # systemctl restart mysqld
 ```
 
-
-
-## 対策2. innodb_buffer_pool_size の割当を増やす
+## 対策 2. innodb_buffer_pool_size の割当を増やす
 
 ### 現在設定されている innodb_buffer_pool_size 確認
 
@@ -85,9 +82,9 @@ $ mysql -u <user> -p<pass> <db>  -e "SHOW VARIABLES LIKE 'innodb_buffer_pool_siz
 エラーログにあった 137363456 を下回ってるのがわかります。
 この割当メモリを増やします。
 
-### my.cnfの場所探し
+### my.cnf の場所探し
 
-左から順に検索し該当するファイルがあればそのmy.cnfを参照します。
+左から順に検索し該当するファイルがあればその my.cnf を参照します。
 /etc/my.cnf → /etc/mysql/my.cnf → /usr/etc/my.cnf → ~/.my.cnf
 
 ```sh
@@ -99,7 +96,7 @@ $ mysql -u <user> -p<pass> <db>  -e "SHOW VARIABLES LIKE 'innodb_buffer_pool_siz
 ### メモリ追加
 
 自分の方では
-my.cnf上に innodb_buffer_pool_size の設定項目がなかったので
+my.cnf 上に innodb_buffer_pool_size の設定項目がなかったので
 追加しました。
 
 - my.cnf
@@ -134,6 +131,5 @@ $ mysql -u <user> -p<pass> <db>  -e "SHOW VARIABLES LIKE 'innodb_buffer_pool_siz
 | innodb_buffer_pool_size | 268435456 |
 +-------------------------+-----------+
 ```
-
 
 今回発生していたエラーログが消えました。

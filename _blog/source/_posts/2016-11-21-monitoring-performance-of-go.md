@@ -3,9 +3,8 @@ layout: post
 title: Golang 簡易パフォーマンス測定
 date: 2016-11-21
 category: Go
-category: Go
 tags:
-- Go
+  - Go
 ---
 
 ## 概要

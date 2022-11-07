@@ -3,8 +3,8 @@ layout: post
 title: Mackerel で Docker の起動状態確認
 date: 2017-07-14
 tags:
-- Docker
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714223239.png
+  - Docker
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714223239.png
 ---
 
 ## 概要
@@ -23,7 +23,6 @@ $ sudo cat <<'EOF'>/etc/mackerel-agent/conf.d/docker-state.conf
 command = "/etc/mackerel-agent/conf.d/mackerel-plugin-docker-state"
 EOF
 ```
-
 
 ## mackerel-agent.conf に include 設定追加
 
@@ -60,7 +59,7 @@ $ sudo service mackerel-agent restart
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714222015.png" width="100%">
 </div>
 
-※上記グラフではコンテナ2つが起動しています。
+※上記グラフではコンテナ 2 つが起動しています。
 
 ## 新規監視ルールを作成
 
@@ -70,9 +69,8 @@ running で検索すると出てきます。
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714223652.png" width="100%">
 </div>
 
-3分間の平均が1 より低くなったら
+3 分間の平均が 1 より低くなったら
 コンテナが停止(Exit)と見なし通知する様にしました。
-
 
 ## 総評
 

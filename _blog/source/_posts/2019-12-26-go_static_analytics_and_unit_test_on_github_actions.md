@@ -1,9 +1,8 @@
 ---
 title: Go 静的解析 & 単体テスト on GitHub Actions
 category: Go
-category: Go
 tags:
-- Go
+  - Go
 date: 2019-12-26
 comments: true
 ---
@@ -14,11 +13,10 @@ comments: true
 
 [EC2 Instance Connect API で ssh ログインできるインタラクティブ cli tool "omssh" を作ってみました。](https://kenzo0107.hatenablog.com/entry/2019/08/04/180149)
 
-
 自分用にチャチャッと作ってアップしたもので手元でしかテストしておらず 、 lint や test もしてなかったのですが、
 
-* 後学の為、改めて lint, test した上でコードを管理できる様になりたい
-* 自分のリポジトリとして公開しているし、愛情持ちたい
+- 後学の為、改めて lint, test した上でコードを管理できる様になりたい
+- 自分のリポジトリとして公開しているし、愛情持ちたい
 
 という気持ちで取り組んでみたいと思いました。
 
@@ -30,12 +28,12 @@ comments: true
 
 [grandcolline/golang-github-actions](https://github.com/grandcolline/golang-github-actions) を利用させていただきまして以下解析しました。
 
-* [goimports](golang.org/x/tools/cmd/goimports)
-* [errcheck](github.com/kisielk/errcheck)
-* [golint](golang.org/x/lint/golint)
-* [shadow](golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow)
-* [staticcheck](honnef.co/go/tools/staticcheck)
-* [gosec](github.com/securego/gosec/cmd/gosec)
+- [goimports](golang.org/x/tools/cmd/goimports)
+- [errcheck](github.com/kisielk/errcheck)
+- [golint](golang.org/x/lint/golint)
+- [shadow](golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow)
+- [staticcheck](honnef.co/go/tools/staticcheck)
+- [gosec](github.com/securego/gosec/cmd/gosec)
 
 GitHub Actions での設定ファイルは以下です。
 
@@ -275,23 +273,19 @@ VSCode を使っていますが、この様にカーソルを合わせるとコ�
 
 CODECOV_TOKEN は GitHub の Settings > Secrets で設定しておきます。
 
-
 [![codecov](https://codecov.io/gh/kenzo0107/omssh/branch/master/graph/badge.svg)](https://codecov.io/gh/kenzo0107/omssh)
 
-
 [kenzo0107/test_go.yaml](https://gist.github.com/kenzo0107/0349f1a43c2aa26abf6db51fddd48af8)
-
 
 ## まとめ
 
 静的解析と単体テストを追加したことで
 
-* コード変更がしやすくなった。
-* Golang の求めるコードの書き方を学ぶことができた。
-* aws-sdk-go の mock の作成の仕方を学ぶことができた。
+- コード変更がしやすくなった。
+- Golang の求めるコードの書き方を学ぶことができた。
+- aws-sdk-go の mock の作成の仕方を学ぶことができた。
 
 というご利益がありました。
-
 
 ## 単体テストで 100% を目指しましたが、
 
@@ -302,7 +296,6 @@ ssh 接続する際に仮想的な ssh server を起動する所まではよか�
 
 良い案ありましたらご教示いただけましたら幸いです `m(_ _)m`
 
-
 ## 今回の知見を活かして
 
 AWS の EC2 や RDS 等の Reserved Instance の使用率・カバレッジ率を Datadog にプロットする Lambda を生成する [SAM](https://aws.amazon.com/jp/serverless/sam/) プロジェクトを Go で作ってみました。
@@ -311,10 +304,9 @@ AWS の EC2 や RDS 等の Reserved Instance の使用率・カバレッジ率�
 
 [kenzo0107/ri-utilization-plotter](https://github.com/kenzo0107/ri-utilization-plotter)
 
-また、より OSS らしくロゴを作ってみました♪
+また、より OSS らしくロゴを作ってみました ♪
 
 愛情が増します。
-
 
 ## 参照
 

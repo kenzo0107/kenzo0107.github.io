@@ -3,15 +3,14 @@ layout: post
 title: Linux に rbenv をセットアップして ruby バージョンを切り替える
 date: 2018-03-07
 tags:
-- Ruby
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180307/20180307225204.png
+  - Ruby
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180307/20180307225204.png
 ---
 
 ## 概要
 
 サーバの ruby のバージョンが古かった為、
 rbenv で ruby のバージョンを切り替える様にした際の設定メモです。
-
 
 ## setup rbenv
 

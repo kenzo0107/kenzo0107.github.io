@@ -3,8 +3,8 @@ layout: post
 title: 子供の笑顔と笑い声を聞く為に ffmpeg + Nginx + RTMP on RaspberryPI
 date: 2018-08-15
 tags:
-- RaspberryPI
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180815/20180815181451.png
+  - RaspberryPI
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180815/20180815181451.png
 ---
 
 ## 概要
@@ -22,7 +22,7 @@ WebCamera で撮影した 動画+音声付き を HLS 配信する際の手順�
 ですが、うさぎは鳴きませんが、子供は泣き叫びます。
 mjpeg-streamer では表情こそわかりますが、我が子の声が聞こえてきません。
 
-その為、動画＋音声付きで低負荷で 動画＋音声 配信ができないものかと探していた際に ffmpeg に出会いました。<a href="#f-b00f1fb9" name="fn-b00f1fb9" title="勿論のことですが、家族の了承を得た上で設定しています。">*1</a>
+その為、動画＋音声付きで低負荷で 動画＋音声 配信ができないものかと探していた際に ffmpeg に出会いました。<a href="#f-b00f1fb9" name="fn-b00f1fb9" title="勿論のことですが、家族の了承を得た上で設定しています。">\*1</a>
 
 ## 購入したもの
 
@@ -51,7 +51,6 @@ mjpeg-streamer では表情こそわかりますが、我が子の声が聞こ�
 <li>ffmpeg</li>
 </ul>
 
-
 <pre class="code" data-lang="" data-unlink>// home ディレクトリで作業するとします。
 pi$ cd ~
 
@@ -72,7 +71,6 @@ pi$ patch -u &lt; 3921741/patch-ngx_http_auth_digest_module.diff
 pi$ git clone git://source.ffmpeg.org/ffmpeg.git
 pi$ wget ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.1.6.tar.bz2</pre>
 
-
 ### 解凍
 
 <pre class="code" data-lang="" data-unlink>pi$ tar xvzf nginx-1.15.2.tar.gz
@@ -80,14 +78,12 @@ pi$ unzip rtmp.zip
 pi$ unzip ssl.zip
 pi$ tar xjvf alsa-lib-1.1.6.tar.bz2</pre>
 
-
 ### Nginx ビルド
 
 <pre class="code" data-lang="" data-unlink>pi$ cd nginx-1.15.2/
 pi$ sudo ./configure --with-http_ssl_module --with-http_realip_module --add-module=../nginx-rtmp-module-master --with-openssl=../openssl-master --add-module=../nginx-http-auth-digest
 pi$ sudo make
 pi$ sudo make install</pre>
-
 
 ### Nginx Version 確認
 
@@ -99,13 +95,11 @@ built with OpenSSL 1.1.1-pre9-dev  xx XXX xxxx
 TLS SNI support enabled
 configure arguments: --with-http_ssl_module --with-http_realip_module --add-module=../nginx-rtmp-module-master --with-openssl=../openssl-master --add-module=../nginx-http-auth-digest</pre>
 
-
 ### Nginx をシンボリックリンクでパスが通っている場所から参照できるようにする。
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 
 pi$ which nginx</pre>
-
 
 ### ffmpeg ビルド
 
@@ -121,11 +115,9 @@ pi$ sudo ./configure  --enable-gpl  --enable-nonfree --enable-mmal --enable-omx-
 pi$ sudo make -j4
 pi4 sudo make install</pre>
 
-
 <p>`sudo apt-get install libomxil-bellagio-dev` を実行していない場合に以下のエラーが出ました。</p>
 
 <pre class="code" data-lang="" data-unlink>ERROR: OMX_Core.h not found</pre>
-
 
 ## 録音してみる
 
@@ -136,16 +128,13 @@ pi4 sudo make install</pre>
 HD Webcam C615 (usb-3f980000.usb-1.3):
         /dev/video0</pre>
 
-
 <p>上記コマンド実行時に以下のようなエラーが出る時は、</p>
 
 <pre class="code" data-lang="" data-unlink>Failed to open /dev/video0: No such file or directory</pre>
 
-
 <p>以下コマンドを試してください。</p>
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo pkill /dev/video0</pre>
-
 
 ### 音声入力デバイス一覧確認
 
@@ -164,13 +153,11 @@ HD Webcam C615 (usb-3f980000.usb-1.3):
   サブデバイス: 1/1
   サブデバイス #0: subdevice #0</pre>
 
-
 ### いざ録音
 
 <p>カード 2 が入力デバイスである為、 `hw:2` としました。</p>
 
 <pre class="code" data-lang="" data-unlink>pi$ ffmpeg -f alsa -ac 1 -i hw:2 -f v4l2 -s 640x480 -i /dev/video0 output.mpg</pre>
-
 
 <p>生成された output.mpg ファイルを mac 上にダウンロードし再生を試してみてください。</p>
 
@@ -184,11 +171,9 @@ HD Webcam C615 (usb-3f980000.usb-1.3):
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo mkdir -p /usr/local/nginx/conf.d</pre>
 
-
 ### HLS ファイル生成用ディレクトリ作成
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo mkdir -p /var/www/html/live/hls</pre>
-
 
 ### HLS 配信用 index.html
 
@@ -196,15 +181,12 @@ HD Webcam C615 (usb-3f980000.usb-1.3):
 <li>hls.min.js 取得</li>
 </ul>
 
-
 <pre class="code" data-lang="" data-unlink>pi$ cd /var/www/html
 pi$ wget https://cdn.jsdelivr.net/hls.js/latest/hls.min.js</pre>
-
 
 <ul>
 <li>/var/www/html/index.html</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>&lt;!DOCTYPE html&gt;
 &lt;html lang=&#34;ja&#34;&gt;
@@ -229,20 +211,17 @@ pi$ wget https://cdn.jsdelivr.net/hls.js/latest/hls.min.js</pre>
 &lt;/body&gt;
 &lt;/html&gt;</pre>
 
-
 ### Digest 認証設定
 
 <pre class="code" data-lang="" data-unlink>pi$ cd /var/www
 pi$ sudo htdigest -c .htdigest 'digest AuthNginx' hoge
 password: &lt;enter password&gt;</pre>
 
-
 ### 各種設定ファイル配置
 
 <ul>
 <li>/usr/local/nginx/conf.d/default.conf</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>server {
     listen 8090;
@@ -267,11 +246,9 @@ password: &lt;enter password&gt;</pre>
     }
 }</pre>
 
-
 <ul>
 <li>/usr/local/nginx/conf.d/rtmp</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>rtmp {
     server {
@@ -291,11 +268,9 @@ password: &lt;enter password&gt;</pre>
     }
 }</pre>
 
-
 <ul>
 <li>/usr/local/nginx/conf/nginx.conf</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>user  www-data;
 worker_processes  1;
@@ -316,13 +291,11 @@ http {
 
 include /usr/local/nginx/conf.d/rtmp;</pre>
 
-
 ### Nginx 起動設定ファイル
 
 <ul>
 <li>/lib/systemd/system/nginx.service</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>[Unit]
 Description=The NGINX HTTP and reverse proxy server
@@ -340,13 +313,11 @@ PrivateTmp=true
 [Install]
 WantedBy=multi-user.target</pre>
 
-
 ## Nginx 起動
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo systemctl daemon-reload
 pi$ sudo systemctl start nginx
 pi$ sudo systemctl status nginx</pre>
-
 
 <p>この時はまだ HLS ファイルが生成されていませんので<br/>
 `https://&lt;RaspberryPI IP&gt;:8090` にアクセスしても HLS 配信されていません。</p>
@@ -366,7 +337,6 @@ pi$ sudo systemctl status nginx</pre>
 -c:a aac -b:a 128k -ar 44100 \
 -af &#34;volume=30dB&#34; \
 -f flv rtmp://localhost/live/stream;</pre>
-
 
 ## アクセスしてみる
 

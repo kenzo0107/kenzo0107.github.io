@@ -3,9 +3,9 @@ layout: post
 title: node_exporter シェルでクエリ自作
 date: 2017-02-16
 tags:
-- Monitoring
-- Prometheus
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170216/20170216225748.png
+  - Monitoring
+  - Prometheus
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170216/20170216225748.png
 ---
 
 ## 概要
@@ -15,14 +15,13 @@ node_expoter のオプション `--collector.textfile.directory` で指定した
 
 この `*.prom` ファイルを一定時間毎に更新すればメトリクスが自作できる、というものです。
 
-
 ## 手順
 
 - node_exporter 自体のインストール・セットアップは以下ご参照ください。
 
 {% linkPreview http://kenzo0107.hatenablog.com/entry/2017/01/25/154144 _blank %}
 
-上記手順では以下にnode_exporterを配置しています。
+上記手順では以下に node_exporter を配置しています。
 環境によって適宜書き換えてください。
 
 ```
@@ -44,7 +43,7 @@ $ mkdir text_collector
 
 {% gist kenzo0107/cf245d3ba1d2f0faea7f0134414a8c81 %}
 
-## cron設定
+## cron 設定
 
 ```
 # node_exporter httpd 5分毎更新
@@ -77,6 +76,6 @@ node_expoter --collector.textfile.directory /usr/local/node_exporter/text_collec
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170216/20170216225202.png" width="100%">
 </div>
 
-これを利用してるとシェル芸で色々事足りることもあります♪
+これを利用してるとシェル芸で色々事足りることもあります ♪
 
 一助になれば何よりです。

@@ -2,9 +2,9 @@
 layout: post
 title: Jenkins が起動しない - Unable to read /var/lib/jenkins/config.xml -
 date: 2016-12-09
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161209/20161209135407.png
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161209/20161209135407.png
 tags:
-- Jenkins
+  - Jenkins
 ---
 
 ## とある午後、Jenkins を再起動したときに出たエラー

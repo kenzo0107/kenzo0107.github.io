@@ -3,10 +3,9 @@ layout: post
 title: Vagrant + docker-compose で Rails 5.1.0 (Puma) + Nginx + MySQL 環境構築
 date: 2017-08-22
 tags:
-- Docker
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170823/20170823110755.png
+  - Docker
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170823/20170823110755.png
 ---
-
 
 ## 概要
 
@@ -82,12 +81,11 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>  # <--- MYSQL_ROOT_PASSWORD
+  password: <%= ENV['MYSQL_ROOT_PASSWORD'] %> # <--- MYSQL_ROOT_PASSWORD
   host: db # <--- service name
 ```
 
-
-## DB作成
+## DB 作成
 
 ```sh
 vagrant%$ docker-compose run --rm web rails db:create
@@ -120,7 +118,6 @@ vagrant%$ docker-compose up -d
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170822/20170822123732.png" width="100%">
 </div>
 
-
 ## rails g
 
 `rails g` 実行時は基本 one-off container で実行するのが良いです。
@@ -144,7 +141,7 @@ vagrant%$ docker-compose up -d web
 ## あとがき
 
 Rack server との接続は一癖ありましたが、そこさえ乗り越えたら
-すっと行きました♪
+すっと行きました ♪
 
 DB は 3306 でオープンしてるので
 Mac のローカルから [Sequel Pro](https://www.sequelpro.com/) で接続して確認できます。
@@ -153,4 +150,4 @@ Mac のローカルから [Sequel Pro](https://www.sequelpro.com/) で接続し�
 mailcatcher でメール機能を試験できる様にしたりと
 何かと便利です。
 
-Docker 有難や♪
+Docker 有難や ♪

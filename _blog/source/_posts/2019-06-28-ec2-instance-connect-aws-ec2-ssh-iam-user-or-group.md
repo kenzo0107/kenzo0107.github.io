@@ -3,8 +3,8 @@ layout: post
 title: EC2 Instance Connect で AWS EC2 への ssh 管理を IAM User or Group で簡単に♪
 date: 2019-06-28
 tags:
-- AWS
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190628/20190628154100.png
+  - AWS
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190628/20190628154100.png
 ---
 
 ## 概要
@@ -31,7 +31,6 @@ $ aws s3api get-object --bucket ec2-instance-connect --key cli/ec2instanceconnec
 
 $ sudo pip install ec2instanceconnectcli-latest.tar.gz</pre>
 
-
 <p>発行した IAM User のパーミッション権限に以下を追加</p>
 
 <pre class="code" data-lang="" data-unlink>{
@@ -49,7 +48,6 @@ $ sudo pip install ec2instanceconnectcli-latest.tar.gz</pre>
     ]
 }</pre>
 
-
 <p>この辺りは terraform 管理案件ですね。</p>
 
 ## EC2 Instance Conncect 対応 OS
@@ -59,8 +57,7 @@ $ sudo pip install ec2instanceconnectcli-latest.tar.gz</pre>
 <li>AmazonLinux2>=2.0.20190618</li>
 </ul>
 
-
-## ssh ログインする EC2側の設定
+## ssh ログインする EC2 側の設定
 
 ### Ubuntu>=16.04
 
@@ -68,13 +65,9 @@ $ sudo pip install ec2instanceconnectcli-latest.tar.gz</pre>
 
 <pre class="code" data-lang="" data-unlink>$ sudo apt-get update && sudo apt-get install ec2-instance-connect</pre>
 
-
-
-
 <pre class="code" data-lang="" data-unlink>$ dpkg -l | grep ec2-instance-connect
 
 ii  ec2-instance-connect           1.1.9-0ubuntu3~18.04.1            all          Configures ssh daemon to accept EC2 Instance Connect ssh keys</pre>
-
 
 ### AmazonLinux2>=2.0.20190618
 
@@ -88,7 +81,6 @@ ii  ec2-instance-connect           1.1.9-0ubuntu3~18.04.1            all        
 
 <pre class="code" data-lang="" data-unlink>local%$ mssh ubuntu@i-0f123456abcdefg --profile &lt;profile&gt; --region ap-northeast-1</pre>
 
-
 <p>一見、誰しもが ubuntu でログインしていて監査が不安になりますが、 CloudTrail  はちゃんと誰がログインしたか見ています。</p>
 
 ### CloudTrail
@@ -101,7 +93,6 @@ ii  ec2-instance-connect           1.1.9-0ubuntu3~18.04.1            all        
 <li>SendSSHPublicKey</li>
 <li>DescribeInstances</li>
 </ul>
-
 
 <p>SendSSHPublicKey の「イベントの表示」ボタンクリックで JSON が表示されますが、その中で、アクセス元 IP, IAM User Arn、アクセス先 インスタンスIDがわかります。</p>
 
@@ -140,7 +131,6 @@ ii  ec2-instance-connect           1.1.9-0ubuntu3~18.04.1            all        
     &#34;eventType&#34;: &#34;AwsApiCall&#34;,
     &#34;recipientAccountId&#34;: &#34;123456789012&#34;
 }</pre>
-
 
 <p>こちらで EC2 インスタンスのアクセス履歴等はわかります。</p>
 

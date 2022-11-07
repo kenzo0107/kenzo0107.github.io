@@ -1,7 +1,7 @@
 ---
 title: JavaScript で日付計算の妙
 date: 2022-10-31
-thumbnail: https://i.imgur.com/VbLapz4.png
+cover: https://i.imgur.com/VbLapz4.png
 ---
 
 問題です。以下コードを実行した際に何と出力されるでしょう？

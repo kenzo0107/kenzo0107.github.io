@@ -3,8 +3,8 @@ layout: post
 title: 食洗機かけ終わったかわからなくなる問題を RaspberryPI + BlueButton + LINE Notify + Google Home で解決した話
 date: 2018-08-20
 tags:
-- RaspberryPI
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180820/20180820223225.jpg
+  - RaspberryPI
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180820/20180820223225.jpg
 ---
 
 ## 概要
@@ -46,14 +46,12 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180820/2
 <li>3をトリガーに Google Home に食洗機開始したよメッセージを喋ってもらう。<a href="#f-08674585" name="fn-08674585" title="Google Home はあくまでスピーカー代りです。">*2</a></li>
 </ol>
 
-
 <p>押す長さによって処理分けしています。</p>
 
 <ul>
 <li><span style="color: #0000cc"><b>長押し</b></span>=食洗機開始をGoogle Home, Line へ通知</li>
 <li><span style="color: #286f2c"><b>短押し</b></span>=食洗機開始時刻読み上げ</li>
 </ul>
-
 
 ## 購入したもの
 
@@ -75,7 +73,6 @@ USB スピーカーを接続するでも、Lチカで反応させる、でも確
 
 Linux raspberrypi 4.9.35-v7+ #1014 SMP Fri Jun 30 14:47:43 BST 2017 armv7l GNU/Linux</pre>
 
-
 ### 事前準備
 
 <ul>
@@ -83,7 +80,6 @@ Linux raspberrypi 4.9.35-v7+ #1014 SMP Fri Jun 30 14:47:43 BST 2017 armv7l GNU/L
 <a href="https://notify-bot.line.me/ja/">LINE Notify</a></p></li>
 <li><p>BlueButton を Bluetooth ペアリングしときます。</p></li>
 </ul>
-
 
 <p>ペアリングは既にいくつも記事があります。以下記事参考になるかと思います。<br/>
 <a href="https://qiita.com/nori-dev-akg/items/96584d9591d329f9dcb2">Bluetoothシャットダウンボタンを作る #300円でIoTボタン</a></p>
@@ -94,29 +90,24 @@ Linux raspberrypi 4.9.35-v7+ #1014 SMP Fri Jun 30 14:47:43 BST 2017 armv7l GNU/L
 <li>nodejs, npm インストール</li>
 </ul>
 
-
 <pre class="code" data-lang="" data-unlink>pi$ sudo apt-get update
 pi$ sudo apt-get install -y nodejs npm
 pi$ sudo npm cache clean
 pi$ sudo npm install npm n -g
 pi$ sudo n stable</pre>
 
-
 <ul>
 <li>google-home-notifiler 設定</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>pi$ cd ~
 pi$ git clone https://github.com/noelportugal/google-home-notifier
 pi$ cd google-home-notifier/
 pi$ npm install</pre>
 
-
 <ul>
 <li>example.js 編集</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>...
 const serverPort = 8091; // default port
@@ -125,7 +116,6 @@ const serverPort = 8091; // default port
 + var ip = '&lt;Google Home's IP&gt;'; // ex. 192.168.11.5
 ...</pre>
 
-
 <p>Google Home's IP の確認は<a href="https://www.kabegiwablog.com/entry/2018/03/14/090000">こちら</a></p>
 
 ### google-home-notifler サーバ起動スクリプト作成
@@ -133,7 +123,6 @@ const serverPort = 8091; // default port
 <ul>
 <li>/etc/systemd/system/googlehomenotifier.service</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>[Unit]
 Description=google-home-notifier Server
@@ -151,26 +140,21 @@ WorkingDirectory=/home/pi/google-home-notifier
 [Install]
 WantedBy=multi-user.target</pre>
 
-
 <p>上記追加後、daemon-reload し、`googlehomenotifier.service` を認識させます。</p>
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo systemctl daemon-reload</pre>
-
 
 ### いざ google-home-notifiler 起動
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo systemctl start google-home-notifiler</pre>
 
-
-### 試しに hello と言わせる♪
+### 試しに hello と言わせる ♪
 
 <pre class="code" data-lang="" data-unlink>pi$ curl -X POST -d &#34;text=hello&#34; https://127.0.0.1:8091/google-home-notifier</pre>
-
 
 ## BlueButton セットアップ
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo gem install bluebutton</pre>
-
 
 ## 食洗機 Notify スクリプト インストール
 
@@ -179,21 +163,17 @@ WantedBy=multi-user.target</pre>
 <pre class="code" data-lang="" data-unlink>pi$ cd ~
 pi$ git clone https://github.com/kenzo0107/dishwasher</pre>
 
-
 <ul>
 <li>dishwasher.sh の以下箇所を先に生成したものと変更してください。</li>
 </ul>
 
-
 <pre class="code" data-lang="" data-unlink>readonly LINENOTIFY_TOKEN=&#34;&lt;please change yours&gt;&#34;</pre>
-
 
 ## 起動スクリプト設定 & 実行
 
 <pre class="code" data-lang="" data-unlink>pi$ sudo cp bluebutton.service /etc/systemd/system/
 pi$ sudo systemctl daemon-reload
 pi$ sudo systemctl start bluebutton.service</pre>
-
 
 ## いざ実行
 
@@ -213,7 +193,6 @@ pi$ sudo systemctl start bluebutton.service</pre>
 <li>long key down ボタン長押し</li>
 <li>long key up 長押しボタンを離す</li>
 </ul>
-
 
 <p>long key down (長押し)していると、まず最初に key down イベントが発生し、その後、 long key down のイベント発生となります。</p>
 

@@ -3,8 +3,8 @@ layout: post
 title: puppeteer で radio ボタンチェック
 date: 2019-09-06
 tags:
-- Puppeteer
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190906/20190906230848.png
+  - Puppeteer
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190906/20190906230848.png
 ---
 
 ## 概要
@@ -21,7 +21,6 @@ puppeteer というスクレイピングツールで radio ボタンをチェッ
 <span class="synIdentifier">&lt;</span><span class="synStatement">input</span><span class="synIdentifier"> </span><span class="synType">type</span><span class="synIdentifier">=</span><span class="synConstant">&quot;radio&quot;</span><span class="synIdentifier"> </span><span class="synType">name</span><span class="synIdentifier">=</span><span class="synConstant">&quot;maker&quot;</span><span class="synIdentifier"> </span><span class="synType">value</span><span class="synIdentifier">=</span><span class="synConstant">&quot;2&quot;</span><span class="synIdentifier">&gt;</span> ポセイドン企画
 </pre>
 
-
 ## 答え
 
 <p><b>クリスタル映像</b> を選びたい場合は、以下のようにします。</p>
@@ -37,7 +36,6 @@ await page.evaluate(
 )
 </pre>
 
-
 ## 失敗例
 
 <p>click 処理は軒並み失敗しました。</p>
@@ -48,26 +46,21 @@ await page.evaluate(
 <li>page.click</li>
 </ul>
 
-
 <pre class="code lang-javascript" data-lang="javascript" data-unlink><span class="synStatement">const</span> selectedRadioSelector = `input<span class="synIdentifier">[</span>type=<span class="synConstant">&quot;radio&quot;</span><span class="synIdentifier">][</span>value=<span class="synConstant">&quot;1&quot;</span><span class="synIdentifier">]</span>`
 page.click(selectedRadioSelector)
 </pre>
-
 
 <ul>
 <li>radio 要素を捕まえて、click</li>
 </ul>
 
-
 <pre class="code lang-javascript" data-lang="javascript" data-unlink>r = page.$(selectedRadioSelector)
 r.click()
 </pre>
 
-
 <ul>
 <li>document.querySelector().click()</li>
 </ul>
-
 
 <pre class="code lang-javascript" data-lang="javascript" data-unlink><span class="synStatement">const</span> selectedRadioSelector = `input<span class="synIdentifier">[</span>type=<span class="synConstant">&quot;radio&quot;</span><span class="synIdentifier">][</span>value=<span class="synConstant">&quot;1&quot;</span><span class="synIdentifier">]</span>`
 await page.evaluate(
@@ -75,7 +68,6 @@ await page.evaluate(
   selectedRadioSelector
 )
 </pre>
-
 
 ## 応用
 
@@ -86,13 +78,11 @@ await page.evaluate(
 <span class="synIdentifier">&lt;</span><span class="synStatement">input</span><span class="synIdentifier"> </span><span class="synType">type</span><span class="synIdentifier">=</span><span class="synConstant">&quot;radio&quot;</span><span class="synIdentifier"> </span><span class="synType">id</span><span class="synIdentifier">=</span><span class="synConstant">&quot;group2&quot;</span><span class="synIdentifier"> </span><span class="synType">name</span><span class="synIdentifier">=</span><span class="synConstant">&quot;maker&quot;</span><span class="synIdentifier"> </span><span class="synType">value</span><span class="synIdentifier">=</span><span class="synConstant">&quot;2&quot;</span><span class="synIdentifier">&gt;</span> <span class="synIdentifier">&lt;</span><span class="synStatement">label</span><span class="synIdentifier"> </span><span class="synType">for</span><span class="synIdentifier">=</span><span class="synConstant">&quot;group1&quot;</span><span class="synIdentifier">&gt;</span>ポセイドン企画<span class="synIdentifier">&lt;/</span><span class="synStatement">label</span><span class="synIdentifier">&gt;</span>
 </pre>
 
-
 <p>このラベルを正規表現でマッチする方をチェックしてみます。</p>
 
 <ul>
 <li>"映像" という文字を含む方をチェックする</li>
 </ul>
-
 
 <pre class="code lang-javascript" data-lang="javascript" data-unlink><span class="synStatement">const</span> regex = <span class="synConstant">&quot;映像&quot;</span>
 <span class="synStatement">const</span> regexpLabel = <span class="synStatement">new</span> <span class="synType">RegExp</span>(regex, <span class="synConstant">'g'</span>)
@@ -124,7 +114,6 @@ label: <span class="synStatement">for</span> (<span class="synStatement">const</
   <span class="synIdentifier">}</span>
 <span class="synIdentifier">}</span>
 </pre>
-
 
 ## まとめ
 

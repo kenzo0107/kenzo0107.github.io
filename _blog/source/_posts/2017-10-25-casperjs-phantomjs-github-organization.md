@@ -3,8 +3,8 @@ layout: post
 title: CasperJS+PhantomJS で Github Organization 移行
 date: 2017-10-25
 tags:
-- casperjs
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171025/20171025214738.png
+  - casperjs
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171025/20171025214738.png
 ---
 
 ## 概要
@@ -41,7 +41,7 @@ macOS%$ git clone https://github.com/kenzo0107/ghe-org-transfer
 macOS%$ cd ghe-org-transfer
 ```
 
-## scripts/ghe-org-transfer.js の <your ****> 編集
+## scripts/ghe-org-transfer.js の <your \*\*\*\*> 編集
 
 ```js
 var config = {
@@ -52,15 +52,13 @@ var config = {
   // Github Login Account
   loginParams: {
     email: '<your email>',
-    password:  '<your password>'
+    password: '<your password>',
   },
   viewportSize: {
     width: 3000,
-    height: 2500
+    height: 2500,
   },
-  paths: [
-    "<your owner>/<your repository>"
-  ],
+  paths: ['<your owner>/<your repository>'],
   destOrganization: '<your destination of organization>',
   reason: 'transfer this repository to new oragnization',
 };
@@ -102,8 +100,7 @@ macOS%$ make run
 以前 Grafana のグラフのスナップショットを撮る Grafana API がうまく動作しなかったのも
 CasperJS+PhantomJS で取得する様にできました。
 
-いやはや便利♪
-
+いやはや便利 ♪
 
 全然別件ですが、サイトの認証に利用される reCAPTCHA の突破など挑戦してましたがうまく行かず...
-うまくいったぜ！という方、是非教えてください m(_ _)m
+うまくいったぜ！という方、是非教えてください m(\_ \_)m

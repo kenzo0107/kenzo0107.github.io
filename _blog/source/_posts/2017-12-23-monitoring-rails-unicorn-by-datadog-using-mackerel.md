@@ -3,18 +3,17 @@ layout: post
 title: Datadog で Rails Unicorn の Memory, Idle|Busy Worker 監視 〜呉越同舟〜
 date: 2017-12-23
 tags:
-- Datadog
-- Rails
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171223/20171223193555.png
+  - Datadog
+  - Rails
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171223/20171223193555.png
 ---
 
 ## 概要
 
 Rails の乗っているホストへ Datadog で Unicorn を監視しようとした所、
-それらしい Integration がありません((あったら教えてください >_< ))。
+それらしい Integration がありません((あったら教えてください >\_< ))。
 
 ということで独自スクリプトを作成しようと思いました！
-
 
 ## 独自スクリプトを書こうとしてたら...
 
@@ -22,21 +21,19 @@ Rails の乗っているホストへ Datadog で Unicorn を監視しようと�
 
 自分「えっ？...」
 
-
 ## Mackerel 入ってる
 
 Mackerel に unicorn 監視用の plugin がありました。
 
 [mackerel-plugin-unicorn](https://github.com/mackerelio/mackerel-agent-plugins/tree/master/mackerel-plugin-unicorn)
 
-はてなさんもOSSで出して頂いている、
+はてなさんも OSS で出して頂いている、
 車輪の再開発は時間の無駄、
 人生は一度しかないのでこの Mackerel プラグインを Datadog で使わせて頂こうと思いました。
 
-
 ## Mackerel + Datadog 呉越同舟スクリプト
 
-* /etc/dd-agent/unicorn_check.py
+- /etc/dd-agent/unicorn_check.py
 
 ```python
 from checks import AgentCheck
@@ -69,7 +66,7 @@ class UnicornCheck(AgentCheck):
     ).stdout.readlines()
 ```
 
-* /etc/dd-agent/conf.d/unicorn_check.yaml
+- /etc/dd-agent/conf.d/unicorn_check.yaml
 
 Unicorn の PID ファイルを指定します。
 
@@ -77,7 +74,6 @@ Unicorn の PID ファイルを指定します。
 init_config:
 
 instances:
-
   - pidfile: /path/to/rails_project/shared/tmp/pids/unicorn.pid
 ```
 
@@ -102,7 +98,6 @@ $ sudo service datadog-agent restart
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171223/20171223203723.png" width="100%">
 </div>
-
 
 ## 総評
 

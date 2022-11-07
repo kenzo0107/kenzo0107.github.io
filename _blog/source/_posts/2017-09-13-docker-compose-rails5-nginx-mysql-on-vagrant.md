@@ -3,8 +3,8 @@ layout: post
 title: docker-comopse で Rails 5 (Puma) + Nginx + Mysql 構築 on Vagrant(Ubuntu)
 date: 2017-09-13
 tags:
-- Docker
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170708/20170708204516.png
+  - Docker
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170708/20170708204516.png
 ---
 
 自身の Rails 開発環境の雛形として利用している docker-compose です。
@@ -63,10 +63,9 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: <%= ENV['MYSQL_ROOT_PASSWORD'] %>  # <--- MYSQL_ROOT_PASSWORD
+  password: <%= ENV['MYSQL_ROOT_PASSWORD'] %> # <--- MYSQL_ROOT_PASSWORD
   host: db # <--- service name
 ```
-
 
 ## データベース作成
 

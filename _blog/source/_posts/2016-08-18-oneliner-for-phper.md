@@ -3,11 +3,11 @@ layout: post
 title: PHP エンジニアであれば必ずやるべき 1 ライナー
 date: 2016-08-18
 tags:
-- PHP
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160818/20160818224146.jpg
+  - PHP
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160818/20160818224146.jpg
 ---
 
-みんなが幸せになれる[hiraku さん](http://blog.tojiru.net/)の究極の1ライナーです。
+みんなが幸せになれる[hiraku さん](http://blog.tojiru.net/)の究極の 1 ライナーです。
 
 ```sh
 $ composer config -g repositories.packagist composer http://packagist.jp
@@ -16,7 +16,6 @@ $ composer config -g repositories.packagist composer http://packagist.jp
 composer による インストールが劇的に早くなります。
 
 遅い理由は 特に <span style="color:red">packagist.org が フランスにある</span> からとのこと
-
 
 ## 問題発生
 
@@ -49,7 +48,7 @@ xdebug support => enabled
 
 ## xdebug を disabled に設定変更
 
-自分の PHP実行環境では xdebug を利用する必要性がなかった為、
+自分の PHP 実行環境では xdebug を利用する必要性がなかった為、
 /etc/php.d/xdebug.ini 退避
 
 ```
@@ -99,7 +98,7 @@ $ cat .composer/config.json
 }
 ```
 
-良きPHPライフを！
+良き PHP ライフを！
 
 ## 参照
 

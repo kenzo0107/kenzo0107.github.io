@@ -3,20 +3,20 @@ layout: post
 title: Kibana4 検索窓での検索 正規表現パターンマッチ等
 date: 2015-11-24
 tags:
-- Kibana
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151124/20151124123137.png
+  - Kibana
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151124/20151124123137.png
 ---
 
 ## 概要
 
-アクセスログをfluentdで集積(aggregate)して
-ElasticSearch へ保存、そのデータをkibanaで表示しています。
+アクセスログを fluentd で集積(aggregate)して
+ElasticSearch へ保存、そのデータを kibana で表示しています。
 
 ちょっとしたアクセスログ解析したい場合、
-かつては、SSHでサーバにログインして
+かつては、SSH でサーバにログインして
 コマンド実行し検索するという工程を踏んでいました。
 
-ですが、Kibanaで検索することにより
+ですが、Kibana で検索することにより
 サーバログインすることなく、検索がスムーズになりました。
 
 リモートログインして誤った操作等もなくなる、
@@ -27,7 +27,6 @@ ElasticSearch へ保存、そのデータをkibanaで表示しています。
 ちょいちょいあったので
 Kibana4 検索窓での検索方法を簡単にまとめました。
 
-
 ## 前提
 
 - Kibana4
@@ -35,10 +34,9 @@ Kibana4 検索窓での検索方法を簡単にまとめました。
 
 `http(s)://hogehoge.jp`
 
-
 ### 範囲指定
 
-- httpステータスコード 200 から 400 検索
+- http ステータスコード 200 から 400 検索
 
 status: [200 TO 400]
 
@@ -53,7 +51,7 @@ NOT referer:/http(s?)\:\/\/hogehoge\.jp\/(.*)/
 
 ### 複合検索
 
-- 例) 指定ドメイン以外、且つ、200ステータス
+- 例) 指定ドメイン以外、且つ、200 ステータス
 
 ```
 NOT referer:/http(s?)\:\/\/hogehoge\.jp\/(.*)/ AND status:200

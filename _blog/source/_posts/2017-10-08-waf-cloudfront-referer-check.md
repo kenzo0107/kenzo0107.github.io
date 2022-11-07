@@ -3,9 +3,9 @@ layout: post
 title: WAF+CloudFront でリファラチェック (直リンク禁止)
 date: 2017-10-08
 tags:
-- AWS
-- WAF
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180531.png
+  - AWS
+  - WAF
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171005/20171005180531.png
 ---
 
 ## 概要
@@ -48,12 +48,12 @@ ACL (Access Control List) を設定していきます。
 
 以下、設定項目を設定し、Next ボタンクリック
 
-| *Item*                    | *Value*                                                                                |
-| ------------------------- | -------------------------------------------------------------------------------------- |
-| Web ACL name              | (任意) 例ではCloudfront の CNAME を設定しています。                                    |
-| CloudWatch metric name    | Web ACL name を入力すると自動で入力される。変更したい場合のみ変更                      |
-| Region                    | Global(CloudFront) 選択                                                                |
-| AWS resource to associate | 対象となるCloudfrontを選択する箇所。運用中の Cloudfront を対象とすると場合は後々設定。 |
+| _Item_                    | _Value_                                                                                  |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| Web ACL name              | (任意) 例では Cloudfront の CNAME を設定しています。                                     |
+| CloudWatch metric name    | Web ACL name を入力すると自動で入力される。変更したい場合のみ変更                        |
+| Region                    | Global(CloudFront) 選択                                                                  |
+| AWS resource to associate | 対象となる Cloudfront を選択する箇所。運用中の Cloudfront を対象とすると場合は後々設定。 |
 
 ### 条件作成
 
@@ -72,7 +72,7 @@ ACL (Access Control List) を設定していきます。
 以下設定し `Add filter` ボタンクリック。
 複数 filter がある場合、Add filter を繰り返します。
 
-| *Item*                           | *Value*                |
+| _Item_                           | _Value_                |
 | -------------------------------- | ---------------------- |
 | Name                             | (任意)                 |
 | Part of the request to filter on | Header                 |
@@ -122,7 +122,7 @@ Add conditions で条件を追加します。
 やはり Rule は反映されていない。ですが、続けて
 `Block all requests that don't match any rules` をチェックし `Review and create` ボタンクリック。
 
-※対象のCloudfront に反映させたくない場合は、Cloudfront を選択したリソースを解除する必要があります。
+※対象の Cloudfront に反映させたくない場合は、Cloudfront を選択したリソースを解除する必要があります。
 <span style="color: #ff0000">※最後に関連付けができるのでここではするべきではないと思います。</span>
 
 <div style="text-align:center;">
@@ -186,7 +186,7 @@ Cloudfront CNAME ドメインでのリソースを直接アクセスすると
 
 ### もう少しユーザフレンドリーに
 
-上記のエラーページは Cloudfront > Error Pages で  `Create Custom Error Response` で S3 上のパスを指定することでカスタマイズが可能です。
+上記のエラーページは Cloudfront > Error Pages で `Create Custom Error Response` で S3 上のパスを指定することでカスタマイズが可能です。
 
 是非サイトコンセプトに合ったエラーページをご用意されるとよりユーザフレンドリーな配信になるかと思います。
 

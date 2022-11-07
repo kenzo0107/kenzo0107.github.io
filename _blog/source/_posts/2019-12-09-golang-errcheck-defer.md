@@ -3,9 +3,8 @@ layout: post
 title: Golang errcheck による defer 警告対応
 date: 2019-12-09
 category: Go
-category: Go
 tags:
-- Go
+  - Go
 ---
 
 ## 概要
@@ -76,8 +75,8 @@ func hoge() (err error) {
 
 以下対応手順で `f.Close()` の `error` を `hoge()` の戻り値として返すことができます。
 
-* `hoge()` 関数の戻り値で `err error` と変数名を指定する
-* `defer` している `func(){}` 内で `f.Close()` の戻り値 `error` を `err` に格納する
+- `hoge()` 関数の戻り値で `err error` と変数名を指定する
+- `defer` している `func(){}` 内で `f.Close()` の戻り値 `error` を `err` に格納する
 
 [Go Playground](https://play.golang.org/p/cV03BwnnPd1)
 

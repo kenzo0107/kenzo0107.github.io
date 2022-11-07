@@ -2,16 +2,16 @@
 layout: post
 title: Rails に reCAPTCHA v3 導入して bot 対策
 date: 2019-02-17
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216210737.png
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216210737.png
 tags:
-- Ruby
-- reCAPTCHA
-- Rails
+  - Ruby
+  - reCAPTCHA
+  - Rails
 ---
 
 ## 概要
 
-Rails で構築した Webサービスで bot 攻撃を定期的に受けた為、問い合わせフォームに reCAPTCHA v3 を導入しました。
+Rails で構築した Web サービスで bot 攻撃を定期的に受けた為、問い合わせフォームに reCAPTCHA v3 を導入しました。
 
 ## 何故 v2 でなく、reCAPTCHA v3 ?
 
@@ -28,7 +28,7 @@ v2 は `I'm not a robot` チェックボックスにチェックを入れた後�
 
 ## v3 だと嬉しいことは何？
 
-v3 <a href="#f-6cff6d12" name="fn-6cff6d12" title="2019年2月現在最新バージョン">*1</a> は設置したページのユーザ行動をスコア化し bot か判断します。
+v3 <a href="#f-6cff6d12" name="fn-6cff6d12" title="2019年2月現在最新バージョン">\*1</a> は設置したページのユーザ行動をスコア化し bot か判断します。
 
 アクセスが増えるとより精度が高まってくる、という仕様です。
 
@@ -42,10 +42,8 @@ v3 <a href="#f-6cff6d12" name="fn-6cff6d12" title="2019年2月現在最新バー
 
 というのも、 以下理由からでした。
 
-
-* `gem 'recaptcha'` が v3 非対応。
-* `gem 'new_google_recaptcha'` は v3 対応してますが、スコアが返ってこないのでテストし辛い。
-
+- `gem 'recaptcha'` が v3 非対応。
+- `gem 'new_google_recaptcha'` は v3 対応してますが、スコアが返ってこないのでテストし辛い。
 
 その他に既にあるのかもわかりませんが、記事執筆時には探し出すことはできませんでした。
 
@@ -55,7 +53,7 @@ v3 <a href="#f-6cff6d12" name="fn-6cff6d12" title="2019年2月現在最新バー
 
 [https://g.co/recaptcha/v3](https://g.co/recaptcha/v3)
 
-v3 を選択し、今回導入するドメインを登録します。<a href="#f-a2800b5a" name="fn-a2800b5a" title="ドメインは複数登録可能です。ドメイン毎に集計や、 bot 対策の傾向を変えたい場合は、個々に発行します。 また、 RAILS_ENV = production とそれ以外で発行する方が本番への影響がないので推奨されます。">*2</a>
+v3 を選択し、今回導入するドメインを登録します。<a href="#f-a2800b5a" name="fn-a2800b5a" title="ドメインは複数登録可能です。ドメイン毎に集計や、 bot 対策の傾向を変えたい場合は、個々に発行します。 また、 RAILS_ENV = production とそれ以外で発行する方が本番への影響がないので推奨されます。">\*2</a>
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216214351.png" width="100%">
@@ -63,11 +61,10 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
 
 <p>発行されたサイトキー・シークレットキーを保存しておきます。</p>
 
-* サイトキー
+- サイトキー
   - ユーザがサイトにアクセスした際にトークンを取得する際に必要なキーです。こちらはユーザ公開して問題ありません。
-* シークレットキー
+- シークレットキー
   - トークンを元に Google に問い合わせする際に必要なキーです。こちらは秘密情報として扱います。
-
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216214558.png" width="100%">
@@ -82,7 +79,6 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
 <pre class="code lang-ruby" data-lang="ruby" data-unlink>recaptcha:
   <span class="synConstant">secret_key</span>: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 </pre>
-
 
 <p>シークレットを秘密情報に保存します。</p>
 
@@ -106,7 +102,6 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
 <span class="synPreProc">end</span>
 </pre>
 
-
 <p>共通メソッドとして、recaptcha の認証メソッド `verify_recaptcha?` を設定しています。</p>
 
 <p>ここで、bot となるスコアを 0.5 以下としています。</p>
@@ -120,7 +115,6 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
     errors:
       verification_failed: 'reCAPTCHA Authorization Failed. Please try again later.'</pre>
 
-
 <p>local en 設定です。</p>
 
 #### config/locales/ja.yml
@@ -129,7 +123,6 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
   recaptcha:
     errors:
       verification_failed: 'reCAPTCHA 認証失敗しました。しばらくしてからもう一度お試しください。'</pre>
-
 
 <p>local ja 設定です。</p>
 
@@ -153,14 +146,12 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
 <span class="synPreProc">end</span>
 </pre>
 
-
 <p>new から create に post して reCAPTCHA で bot 判定して</p>
 
 <ul>
 <li>OK → finish へ進む</li>
 <li>NG → new に戻る</li>
 </ul>
-
 
 <p>という設計です。</p>
 
@@ -189,7 +180,6 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
 <span class="synIdentifier">&lt;/</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
 </pre>
 
-
 ##### エラーメッセージ表示
 
 <pre class="code lang-html" data-lang="html" data-unlink><span class="synIdentifier">&lt;% if flash[:recaptcha_error] %&gt;</span>
@@ -199,11 +189,9 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
 <span class="synIdentifier">&lt;% end %&gt;</span>
 </pre>
 
-
 ##### `&lt;form&gt; ~ &lt;/form&gt;` 内に以下 `name=recaptcha_token` input タグを追加します。
 
 <pre class="code" data-lang="" data-unlink>&lt;input id=&#34;recaptcha_token&#34; name=&#34;recaptcha_token&#34; type=&#34;hidden&#34;/&gt;</pre>
-
 
 ##### ページアクセス時に reCAPTCHA の token を取得すべく、スクリプトを仕込みます。
 
@@ -218,14 +206,12 @@ v3 を選択し、今回導入するドメインを登録します。<a href="#f
 <span class="synIdentifier">&lt;/</span><span class="synStatement">script</span><span class="synIdentifier">&gt;</span>
 </pre>
 
-
 <p>reCAPTCHA トークン取得が成功した場合に以下実行します。</p>
 
 <ul>
 <li>id="recaptcha_token" input タグの value に トークンを設定</li>
 <li>submit ボタンの有効化</li>
 </ul>
-
 
 <p>`&lt;%= Settings.recaptcha.site_key %&gt;` について<br/>
 `gem 'settingslogic'` をインストールしている前提で設定しています。</p>

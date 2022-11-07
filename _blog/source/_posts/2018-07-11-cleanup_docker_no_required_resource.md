@@ -3,13 +3,13 @@ layout: post
 title: Docker 不要リソースお掃除 compose
 date: 2018-07-11
 tags:
-- Docker
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180711/20180711135636.png
+  - Docker
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180711/20180711135636.png
 ---
 
 ## 概要
 
-ECS EC2 で一部コンテナが 起動開始→失敗→起動開始→失敗 を繰り返し
+ECS EC2 で一部コンテナが 起動開始 → 失敗 → 起動開始 → 失敗 を繰り返し
 サーバが容量不足 `no space left` に陥る事象がありました。
 
 その時の対応をまとめました。

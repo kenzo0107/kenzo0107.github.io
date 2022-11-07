@@ -2,26 +2,25 @@
 layout: post
 title: jenkins が停止していますが PID ファイルが残っています
 date: 2016-08-15
-thumbnail: https://i.imgur.com/fHQQwXo.png
+cover: https://i.imgur.com/fHQQwXo.png
 ---
 
-
-プロセスIDの管理ファイルは通常停止すれば削除されます。
+プロセス ID の管理ファイルは通常停止すれば削除されます。
 但し、Jenkins 再起動時に サーバそのものを再起動させたとか、
 野暮なことをすると Jenkins おじさんが怒ります。
 
 ### 対策 1
-PIDが素直に残っているのであれば
-Jenkins PIDファイルを削除
+
+PID が素直に残っているのであれば
+Jenkins PID ファイルを削除
 
 ```console
 $ sudo rm /var/run/jenkins.pid
 ```
 
+### 対策 2
 
-### 対策2
-
-PIDが存在しない、という場合には
+PID が存在しない、という場合には
 以下ディレクトリにアクセス権限がないパターン
 
 - /var/log/jenkins

@@ -3,8 +3,8 @@ layout: post
 title: I used Phinx, DB migration Tool on Docker!
 date: 2017-07-21
 tags:
-- GKE
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170721/20170721210050.png
+  - GKE
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170721/20170721210050.png
 ---
 
 ## Overview
@@ -23,7 +23,6 @@ $ cd phinx-mysql
 ```sh
 $ make build
 ```
-
 
 ```sh
 $ docker-compose ps
@@ -45,7 +44,6 @@ $ make init
 ```
 
 In default setting, phinx select `development` environment.
-
 
 ## 1. Create Table
 

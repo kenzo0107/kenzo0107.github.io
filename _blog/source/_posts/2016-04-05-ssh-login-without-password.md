@@ -3,18 +3,18 @@ layout: post
 title: パスワードなし！公開鍵認証でSSHログイン
 date: 2016-04-05
 tags:
-- ssh
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160405/20160405163215.jpg
+  - ssh
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160405/20160405163215.jpg
 ---
 
 ## 概要
 
-rsyncをJenkinsやcrontabで利用する場合
-SSH経由で実行する際、
+rsync を Jenkins や crontab で利用する場合
+SSH 経由で実行する際、
 パスワードを求められ処理が中断してしまうということがあるかと思います。
 
-その為、SSHで公開鍵認証という方法でパスワードを求めることなく
-SSHアクセスできる様な設定を明示的にしました。
+その為、SSH で公開鍵認証という方法でパスワードを求めることなく
+SSH アクセスできる様な設定を明示的にしました。
 
 以下まとめます。
 
@@ -23,8 +23,7 @@ SSHアクセスできる様な設定を明示的にしました。
 - 接続元サーバ A の global IP を 192.168.11.200 とします。
 - 接続先サーバ B の global IP を 192.168.11.201 とします。
 
-サーバA → サーバB へ 公開鍵認証でSSHログインを目的とします。
-
+サーバ A → サーバ B へ 公開鍵認証で SSH ログインを目的とします。
 
 以下手順です。
 
@@ -77,7 +76,7 @@ id_rsa.pub
 
 ### 接続元サーバのアクセス許可設定
 
-- /etc/hosts.allow を編集し 接続元IP許可設定する。
+- /etc/hosts.allow を編集し 接続元 IP 許可設定する。
 
 ```sh
 [host B]# vi /etc/hosts.allow
@@ -93,7 +92,6 @@ sshd: xxx.x.xx.xx xxx.x.xxx. xx.xx.x. xx.xx.xxx.xx
 sshd: xxx.xx.xxx.xx
 sshd: 192.168.11.200 ← 追加
 ```
-
 
 ### 公開鍵認証許可設定
 
@@ -146,8 +144,7 @@ AuthorizedKeysFile   .ssh/authorized_keys
 
 以上で接続先サーバでの準備完了しました。
 
-
-## 接続元サーバ A から パスワードなしでSSH接続する
+## 接続元サーバ A から パスワードなしで SSH 接続する
 
 ```sh
 [host A]# ssh 192.168.11.201
@@ -163,19 +160,16 @@ Last login: Tue Apr  5 16:02:08 2016 from xxx.xx.xxx.xxx
 権限や所有権がよろしくない、
 ということで認証失敗理由がわかります。
 
-
 ```sh
 # tail -f /var/log/secure
 
 Authentication refused: bad ownership or modes for directory <homeディレクトリ>
 ```
 
-
 ## あとがき
 
 以下デフォルトの `sshd_config` の設定の場合
 パスワード認証と鍵認証、どちらも認証パス可能です。
-
 
 ```sh
 #PubkeyAuthentication yes
@@ -184,6 +178,6 @@ PasswordAuthentication yes
 ```
 
 インフラ専門の会社さんや街の噂では
-デフォルトでどちらも認証OKにしている企業さん多いという話でした。
+デフォルトでどちらも認証 OK にしている企業さん多いという話でした。
 
 以上です。

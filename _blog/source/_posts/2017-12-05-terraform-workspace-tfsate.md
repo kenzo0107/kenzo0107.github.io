@@ -3,8 +3,8 @@ layout: post
 title: terraform workspace で環境毎に tfsate 管理
 date: 2017-12-05
 tags:
-- Terraform
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205214728.jpg
+  - Terraform
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171205/20171205214728.jpg
 ---
 
 terraform workspace で環境毎に tfsate 管理した話です。
@@ -22,36 +22,33 @@ Terraform tfstate の管理をかつて
 なんてコードを見てきました。
 
 ですが、
-workspace で 1つの bucket に 環境毎に保管できる様になりました。
+workspace で 1 つの bucket に 環境毎に保管できる様になりました。
 
 厳密には環境毎でなくとも
 リソースの集合毎、module 毎等で管理するイメージですが
 
 今回はイメージを捉えやすく環境毎で分けました。
 
-
 ## 歴史
 
-* 0.5 で S3 で管理、
-* < 0.9 では、 remote config で管理場所を設定
-*  >= 0.9 では、terraform workspace で同一ディレクトリで複数のリソース群を管理
+- 0.5 で S3 で管理、
+- < 0.9 では、 remote config で管理場所を設定
+- > = 0.9 では、terraform workspace で同一ディレクトリで複数のリソース群を管理
 
 とより利用しやすくなりました。
-
 
 ## 前提
 
 以下条件とします。
 
-* tfstate は backend.tf で s3 管理
-
+- tfstate は backend.tf で s3 管理
 
 ## 移行手順
 
 ### 既存 terraform で tfstate 確認
 
-* 想定の実行計画通りか確認します。
-* 異なる場合は、そもそも現環境と差分が生じている、及び、tfstate が正しく取得できていない等、問題ありなのでそちらを修正します。
+- 想定の実行計画通りか確認します。
+- 異なる場合は、そもそも現環境と差分が生じている、及び、tfstate が正しく取得できていない等、問題ありなのでそちらを修正します。
 
 ```
 $ terraform plan
@@ -79,7 +76,7 @@ $ terraform remote config \
 macOS%$ terraform state pull > terraform.tfstate
 ```
 
-### terraform 0.11.x (2017年12月現在最新) へバージョンアップ
+### terraform 0.11.x (2017 年 12 月現在最新) へバージョンアップ
 
 Homebrew ならば upgrade で！
 
@@ -140,8 +137,6 @@ $ terraform plan
 
 想定の実行計画通りか確認して問題なければ移行完了です。
 
-
-
 ## おまけ
 
 terraform を指定したバージョンで実行するには
@@ -152,7 +147,7 @@ one-off Container で実行できる様に Makefile でラップする、
 
 #### one-off Container とは
 
-one-off Container は Docker コンテナを `run --rm` で1度のコマンド実行の為だけに起動する手法です。
+one-off Container は Docker コンテナを `run --rm` で 1 度のコマンド実行の為だけに起動する手法です。
 
 Makefile で Docker コマンドをラップしておくと
 `TERRAFORM_VERSION` を変更するだけで
@@ -190,11 +185,10 @@ apply
 	${DOCKER} apply -auto-approve
 ```
 
-* `make init ENV=stg` 実行で以下まとめてました
-	* tfstate 初期化
-	* workspace `stg` 作成
-	* 選択したworkspace の tfstate で初期化
-
+- `make init ENV=stg` 実行で以下まとめてました
+  - tfstate 初期化
+  - workspace `stg` 作成
+  - 選択した workspace の tfstate で初期化
 
 きっとさらに素敵なベストプラクティスがあれば教えてください！
 

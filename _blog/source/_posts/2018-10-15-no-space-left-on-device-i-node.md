@@ -3,8 +3,8 @@ layout: post
 title: No space left on device が発生して i-node 枯渇してた時の原因調査法
 date: 2018-10-15
 tags:
-- i-node
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20181015/20181015001102.jpg
+  - i-node
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20181015/20181015001102.jpg
 ---
 
 Linux Server で No space left on device が発生した時の対処まとめです。
@@ -55,7 +55,7 @@ tmpfs          492742      4 492738    1% /run/user/1098
 tmpfs          492742      4 492738    1% /run/user/1142
 ```
 
-i-node とは？と思ったら、 [「分かりそう」で「分からない」でも「分かった」気になれるIT用語辞典 i-node編](https://wa3.i-3-i.info/word14802.html) 辺りを見てみてください。
+i-node とは？と思ったら、 [「分かりそう」で「分からない」でも「分かった」気になれる IT 用語辞典 i-node 編](https://wa3.i-3-i.info/word14802.html) 辺りを見てみてください。
 
 簡単に言うと、ファイルの属性情報を管理しているデータです。
 
@@ -93,13 +93,13 @@ sudo find . -xdev -type f | cut -d "/" -f 2 | sort | uniq -c | sort -r
 
 `top` コマンド等で cpu 状況を監視しつつ、実行することをオススメします。
 
-本番環境の web サーバで直ちにユーザ影響が出そうな場合は、LBから一旦外して、とか、ユーザアクセスの少ない時間に実行する様に影響範囲を最小限にしたい所。
+本番環境の web サーバで直ちにユーザ影響が出そうな場合は、LB から一旦外して、とか、ユーザアクセスの少ない時間に実行する様に影響範囲を最小限にしたい所。
 
 状況見た上で進めましょう。
 
 ## 実際にあった i-node 枯渇原因
 
-/usr ディレクトリ以下に linux-headers-*** ファイルが溜まっており、30% 近く食ってました。
+/usr ディレクトリ以下に linux-headers-\*\*\* ファイルが溜まっており、30% 近く食ってました。
 
 以下記事に救われました。ありがとうございます。
 
@@ -107,7 +107,7 @@ sudo find . -xdev -type f | cut -d "/" -f 2 | sort | uniq -c | sort -r
 
 ### 追記 2020-07-02
 
-linux-headers-*** ファイルの削除について、不要な利用されていないファイルを削除するには以下コマンドで削除されます。
+linux-headers-\*\*\* ファイルの削除について、不要な利用されていないファイルを削除するには以下コマンドで削除されます。
 
 ```
 sudo apt autoremove

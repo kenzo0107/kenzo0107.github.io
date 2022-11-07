@@ -3,8 +3,8 @@ layout: post
 title: AWS EC2 t2 から t3 へ移行する為の step by step
 date: 2018-09-14
 tags:
-- AWS
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180914/20180914130511.jpg
+  - AWS
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180914/20180914130511.jpg
 ---
 
 ## 概要
@@ -40,7 +40,6 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180914/2
 <li>t3 インスタンス起動</li>
 </ol>
 
-
 ### ENA って？
 
 <p><a href="https://aws.amazon.com/jp/blogs/news/elastic-network-adapter-high-performance-network-interface-for-amazon-ec2/">Elastic Network Adapter – Amazon EC2 向けの高性能パフォーマンスネットワークインターフェイス</a></p>
@@ -64,7 +63,6 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180914/2
 <li>ENA というカーネルモジュールを介す事で、インスタンスに拡張されたネットワーキング機能が利用できる。</li>
 </ul>
 
-
 <p>pv/hvm は AWS コンソール＞EC2 説明の「仮想化」の項目で確認できます。<br/>
 pv の場合は、 hvm の移行を検討する必要があります。</p>
 
@@ -83,11 +81,9 @@ pv の場合は、 hvm の移行を検討する必要があります。</p>
 <li>t2.small から t3.small に移行する。</li>
 </ul>
 
-
 ## Ubuntu での拡張ネットワーキングの有効化
 
 <pre class="code" data-lang="" data-unlink>ubuntu:~$ sudo apt-get update && sudo apt-get upgrade -y linux-aws</pre>
-
 
 <p>他OSの対応法も先ほどの <a href="https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/enhanced-networking-ena.html#enhanced-networking-ena-ubuntu">Linux インスタンスにおける Elastic Network Adapter (ENA) を使用した拡張ネットワーキングの有効化</a> に記載されています。</p>
 
@@ -97,11 +93,9 @@ pv の場合は、 hvm の移行を検討する必要があります。</p>
 
 <pre class="code" data-lang="" data-unlink>ARRAY &lt;ignore&gt; devices=&lt;ルートデバイス&gt;</pre>
 
-
 <p>自分の場合は以下の一文を一番下に追記して、もう一度 コマンド実行したら通りました。</p>
 
 <pre class="code" data-lang="" data-unlink>ARRAY &lt;ignore&gt; devices=/dev/sda1</pre>
-
 
 ## ena カーネルモジュールに関する情報表示
 
@@ -115,7 +109,6 @@ license:        GPL
 description:    Elastic Network Adapter (ENA)
 author:         Amazon.com, Inc. or its affiliates
 ...</pre>
-
 
 ## EC2 ENA サポート有効化
 
@@ -136,7 +129,6 @@ macOS%$ aws ec2 modify-instance-attribute --instance-id &lt;instance id&gt; --in
 
 // インスタンス起動
 macOS%$ aws ec2 start-instances --instance-ids &lt;instance id&gt;</pre>
-
 
 <p>これで t3 デビューを飾ることができました♪</p>
 

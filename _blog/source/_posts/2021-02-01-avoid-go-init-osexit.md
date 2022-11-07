@@ -2,9 +2,9 @@
 title: Go で init() 内の os.Exit(1) を go test で回避する方法
 category: Go
 tags:
-- Go
+  - Go
 date: 2021-02-01
-thumbnail: https://i.imgur.com/YWgqCWD.png
+cover: https://i.imgur.com/YWgqCWD.png
 ---
 
 <div class="toc">
@@ -26,6 +26,7 @@ AWS Lambda Go プロジェクトを SAM で構築していた際、
 詳細は AWS Lambda ベストプラクティス参照
 
 https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/best-practices.html
+
 > 実行環境の再利用を活用して関数のパフォーマンスを向上させます。 関数ハンドラー外で SDK クライアントとデータベース接続を初期化し、静的なアセットを /tmp ディレクトリにローカルにキャッシュします。関数の同じインスタンスで処理された後続の呼び出しは、これらのリソースを再利用できます。これにより、実行時間とコストが節約されます。
 
 以下の様に `init()` でパラメータストアから秘匿情報を取得する処理をキャッシュし、コスト節約したいと考えました。
@@ -53,6 +54,7 @@ GitHub Actions で `go test` を実行しテストをしていますが、
 `log.Fatal` で `os.Exit(1)` 発生し処理が停止します。
 
 credentials が設定されてないというエラーです。
+
 ```
 NoCredentialProviders: no valid providers in chain. Deprecated.
 	For verbose messaging see aws.Config.CredentialsChainVerboseErrors
@@ -166,7 +168,6 @@ func TestMain(m *testing.M) {
 }
 ```
 
-
 `go test` を実行してみます。
 処理順序は以下の通りでした。
 
@@ -180,7 +181,6 @@ func TestMain(m *testing.M) {
 以上から `main_test.go` での如何なる処理も `main.init` より先に実行できません。
 
 `main_test.go` で `main.go` の変数 `var n` を上書きする処理は難しそうです。
-
 
 ## テスト実行時のみ環境変数で制御する
 
@@ -203,10 +203,11 @@ func logFatal(err error) {
 
 `log.Fatal` を `logFatal` という関数に置換し、以下処理を実行する様にします。
 
-* 環境変数 TEST が存在する → `log.Println`  でログを残し、 `os.Exit(1)` を実行しない
-* 環境変数 TEST が存在しない → `os.Exit(1)` 実施し強制停止
+- 環境変数 TEST が存在する → `log.Println` でログを残し、 `os.Exit(1)` を実行しない
+- 環境変数 TEST が存在しない → `os.Exit(1)` 実施し強制停止
 
 main.go を実行します。
+
 ```
 ＄ go run main.go
 
@@ -217,6 +218,7 @@ exit status 1
 ```
 
 環境変数 TEST=1 を設定し `go test` を実行してみる。
+
 ```
 $ TEST=1 go test -v .
 
@@ -233,8 +235,8 @@ ok      github.com/kenzo0107/sample  0.345s  coverage: 83.3% of statements [no t
 
 無事 `init()` 内の `os.Exit(1)` を回避し処理が継続して実行されました。
 
-
 GitHub Actions の設定も簡易的な設定です。
+
 ```
       - name: Test
         run: go test -v -count=1 -race -cover -coverprofile=coverage ./...
@@ -260,7 +262,6 @@ https://stackoverflow.com/questions/33885235/should-a-go-package-ever-use-log-fa
 ここで筆を置きたいと思います。
 
 ご清聴ありがとうございました。
-
 
 ## 追伸
 

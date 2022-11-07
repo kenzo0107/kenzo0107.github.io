@@ -3,10 +3,10 @@ layout: post
 title: AWS Elasticsearch Service バージョンアップ 2.2 → 5.5
 date: 2017-10-02
 tags:
-- AWS
-- Elasticsearch
--
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170924/20170924222936.png
+  - AWS
+  - Elasticsearch
+  -
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170924/20170924222936.png
 ---
 
 ## 概要
@@ -16,12 +16,11 @@ AWS Elasticsearch Service (ES) 2.3 → 5.5 へバージョンアップを実施�
 
 ## 大まかな流れ
 
-1. ESバージョン2.3のドメインからSnapshot取得
-2. ESバージョン5.5のドメイン作成
-3. アプリの fluentd の向け先をESバージョン5.5へ変更
-4. ESバージョン5.5のドメインにデータリストア
-5. ESバージョン2.3のドメイン削除
-
+1. ES バージョン 2.3 のドメインから Snapshot 取得
+2. ES バージョン 5.5 のドメイン作成
+3. アプリの fluentd の向け先を ES バージョン 5.5 へ変更
+4. ES バージョン 5.5 のドメインにデータリストア
+5. ES バージョン 2.3 のドメイン削除
 
 ## 現状バージョン確認
 
@@ -49,7 +48,6 @@ $ curl https://<Elasticsearch 2.3 Endpoint Domain>
 - インスタンスタイプ
 - アクセスポリシーの確認
 
-
 # AWS Elasticsearch Service スナップショットを S3 で管理する
 
 ## IAM role 作成
@@ -66,14 +64,13 @@ $ curl https://<Elasticsearch 2.3 Endpoint Domain>
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925113614.png" width="100%">
 </div>
 
-
 - ロール名を <b><span style="color: #1464b3">es-index-backups</span></b> とし作成
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925113908.png" width="100%">
 </div>
 
-ロールARN arn:aws:iam::<Account ID>:role/es-index-backups で作成されていることが確認できる
+ロール ARN arn:aws:iam::<Account ID>:role/es-index-backups で作成されていることが確認できる
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925114402.png" width="100%">
@@ -154,11 +151,9 @@ Service を es.amazonaws.com に編集
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170925/20170925120635.png" width="100%">
 </div>
 
-
 ## S3 バケット作成
 
 S3 > `バケットを作成する` でバケット作成してください。
-
 
 ## Elasticsearch にてスナップショットリポジトリ作成
 
@@ -208,7 +203,6 @@ $ python register_es_repository.py
 ```
 
 リポジトリ登録完了しました。
-
 
 ## Snapshot 取得
 
@@ -271,13 +265,12 @@ $ curl -XDELETE https://<Elasticsearch 2.3 Endpoint Domain>/_snapshot/index-back
 
 以下が作成されているのがわかります。
 
-- indices/*
-- meta-*
-- snap-*
+- indices/\*
+- meta-\*
+- snap-\*
 
-
-はじめ meta-* が作成できたら完了なのかなと思いきや
-snap-* も作られるまで待つ必要がありました。
+はじめ meta-_ が作成できたら完了なのかなと思いきや
+snap-_ も作られるまで待つ必要がありました。
 
 - CLI 上でスナップショット完了確認した方が確実です。
 
@@ -289,9 +282,6 @@ $ curl -s -GET https://<Elasticsearch 2.3 Endpoint Domain>/_snapshot/index-backu
 ...
 ...
 ```
-
-
-
 
 ## Elasticsearch 5.5 Service 新規ドメイン作成
 
@@ -342,7 +332,6 @@ $ python register_es55_repository.py
 // 成功
 {"acknowledged":true}
 ```
-
 
 ## スナップショットからリストア
 
@@ -401,7 +390,7 @@ curl -XPOST https://<Elasticsearch 5.5 Endpoint Domain>/_snapshot/index-backups/
 </div>
 
 Terraform で ES 2.2 → 5.5 バージョンアップを実施した所
-1時間以上経過してようやくアップデートが完了しました。
+1 時間以上経過してようやくアップデートが完了しました。
 
 ```
 aws_elasticsearch_domain.elasticsearch: Still destroying... (ID: arn:aws:es:ap-northeast-1:xxxxxxxxxxxx:domain/***, 59m11s elapsed)
@@ -410,7 +399,7 @@ aws_elasticsearch_domain.elasticsearch: Still destroying... (ID: arn:aws:es:ap-n
 aws_elasticsearch_domain.elasticsearch: Destruction complete after 59m41s
 ```
 
-これは辛い (>_<)
+これは辛い (>\_<)
 
 Terraform で管理している場合、
 スナップショットを取得したら aws console 上でドメイン削除した方が早い。

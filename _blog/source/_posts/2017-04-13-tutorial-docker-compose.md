@@ -3,14 +3,13 @@ layout: post
 title: Docker Compose チュートリアル
 date: 2017-04-13
 tags:
-- Docker
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170414/20170414222435.png
+  - Docker
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170414/20170414222435.png
 ---
 
 前回 Vagrant (Ubuntu)で Docker, Docker Compose 環境構築しました。
 
 {% linkPreview http://kenzo0107.hatenablog.com/entry/2017/04/13/225610 _blank %}
-
 
 上記環境を元に [Docker Compose チュートリアル](https://docs.docker.com/compose/gettingstarted/#step-1-setup)を実行しました。
 
@@ -65,21 +64,20 @@ CMD ["python", "app.py"]
 ```yml
 version: '2'
 services:
-
   web:
     build: .
     ports:
-     - "5000:5000"
+      - '5000:5000'
     volumes:
-     - .:/code
+      - .:/code
 
   redis:
-    image: "redis:alpine"
+    image: 'redis:alpine'
 ```
 
 ## Docker Compose でイメージビルド、コンテナ起動
 
-```
+````
 vagrant%$ docker-compose up
 
 Creating composetest_web_1
@@ -114,7 +112,7 @@ web_1    |  * Debugger is active!
 web_1    |  * Debugger PIN: 135-466-976
 web_1    | 192.168.35.1 - - [13/Apr/2017 14:25:53] "GET / HTTP/1.1" 200 -
 web_1    | 192.168.35.1 - - [13/Apr/2017 14:25:53] "GET /favicon.ico HTTP/1.1" 404 -
-```
+````
 
 ブラウザにアクセスしてみる。
 
@@ -125,8 +123,9 @@ web_1    | 192.168.35.1 - - [13/Apr/2017 14:25:53] "GET /favicon.ico HTTP/1.1" 4
 表示されました！
 
 リロードする度に以下数字部分がインクリメントされるのが確認できます。
+
 ```
 Hello from Docker! I have been seen 1 times.
 ```
 
-便利♪
+便利 ♪

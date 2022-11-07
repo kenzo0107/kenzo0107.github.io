@@ -3,8 +3,8 @@ layout: post
 title: EC2 Instance Connect API で ssh ログインできるインタラクティブ cli tool "omssh" を作ってみました。
 date: 2019-08-04
 tags:
-- AWS
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190804/20190804180237.png
+  - AWS
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190804/20190804180237.png
 ---
 
 ## 概要
@@ -31,7 +31,6 @@ mssh &lt;EC2 Instance ID&gt; --profile &lt;profile&gt;
 // Ubuntu
 mssh ubuntu@&lt;EC2 Instance ID&gt; --profile &lt;profile&gt;</pre>
 
-
 <p>mssh を利用するには `&lt;EC2 Instance ID&gt;` 情報が必要で、毎回 Instance ID を調べる手間がありました。</p>
 
 <p>もちろん踏み台サーバであれば、そうそう再起動され Instance ID が変更されることはないのでメモっておけば良いのでしょうが、
@@ -47,7 +46,6 @@ mssh ubuntu@&lt;EC2 Instance ID&gt; --profile &lt;profile&gt;</pre>
 $ cd omssh
 $ make build && make install</pre>
 
-
 ## 今後
 
 <p>現在、EC2 Instance Connect を利用した運用に切り替えきれないところがあります。</p>
@@ -62,4 +60,4 @@ $ make build && make install</pre>
 
 そうなれば、踏み台にも omssh を置いて、鍵を意識せず、 IAM の権限だけで、 ssh 権限を管理できる様な世界が実現できます。
 
-AWS サポートに願いを伝えておきます♪
+AWS サポートに願いを伝えておきます ♪

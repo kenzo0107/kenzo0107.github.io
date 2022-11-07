@@ -3,23 +3,22 @@ layout: post
 title: Jenkins + SonarQube で PHPコードメトリクス計測！
 date: 2016-05-21
 tags:
-- PHP
-- Jenkins
-- SonarQube
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521003213.png
+  - PHP
+  - Jenkins
+  - SonarQube
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521003213.png
 ---
 
 ## 前回
 
-Jenkinsとは別のサーバ上に
+Jenkins とは別のサーバ上に
 SonarQube をインストールし
 アクセスできるまでをまとめました。
 
 {% linkPreview http://kenzo0107.hatenablog.com/entry/2016/05/19/192058 _blank %}
 
-
 今回は Jenkins からソースを解析し
-SonarQubeでのメトリクス情報を表示までの実行方法をまとめます。
+SonarQube でのメトリクス情報を表示までの実行方法をまとめます。
 
 言語は どれでも良いですが、 今回は PHP とします。
 
@@ -31,11 +30,12 @@ SonarQubeでのメトリクス情報を表示までの実行方法をまとめ�
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521003213.png" width="100%">
 </div>
 
-## SonarQube側事前準備
+## SonarQube 側事前準備
 
 プロジェクトを作成しプロジェクトキーを発行します。
 
 ### 1. ログインページへアクセス
+
 http://<sonarqube IP>:9000/sessions/new
 
 <div style="text-align:center;">
@@ -84,13 +84,13 @@ http://<sonarqube IP>:9000/sessions/new
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521002115.png" width="100%">
 </div>
 
-- Available 選択 → 検索窓で「PHP」と入力 → 表示された PHP Plugin でInstallクリック
+- Available 選択 → 検索窓で「PHP」と入力 → 表示された PHP Plugin で Install クリック
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521002430.png" width="100%">
 </div>
 
-- Restart でSonarQubeに PHP Plugin インストール
+- Restart で SonarQube に PHP Plugin インストール
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521002605.png" width="100%">
@@ -120,28 +120,26 @@ http://<sonarqube IP>:9000/sessions/new
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521005757.png" width="100%">
 </div>
 
-- 任意の文字列を入力しcreate
+- 任意の文字列を入力し create
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521005946.png" width="100%">
 </div>
 
-- tokenコピー
-Jenkins側の設定時に利用します。
+- token コピー
+  Jenkins 側の設定時に利用します。
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521010037.png" width="100%">
 </div>
 
-以上でSonarQube側の事前準備は終了です。
-
-
+以上で SonarQube 側の事前準備は終了です。
 
 ## Jenkins 側準備
 
 ### 1. SonarQube Plugin インストール
 
-Jenkinsの管理 > Pluginの管理
+Jenkins の管理 > Plugin の管理
 にて SonarQube Plugin インストール
 
 <div style="text-align:center;">
@@ -161,9 +159,9 @@ $ unzip sonar-scanner-2.6.1.zip
 $ ln -s sonar-scanner-2.6.1 sonar-scanner
 ```
 
-### 3. Jenkinsシステム設定
+### 3. Jenkins システム設定
 
-- Jenkinsの管理 > システムの設定 へアクセス
+- Jenkins の管理 > システムの設定 へアクセス
 
 - JenkinsQube servers に必要項目入力
 
@@ -171,7 +169,7 @@ $ ln -s sonar-scanner-2.6.1 sonar-scanner
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521004429.png" width="100%">
 </div>
 
-- SonarQube Scanner に先ほどインストールした sonar-scannerパスを設定
+- SonarQube Scanner に先ほどインストールした sonar-scanner パスを設定
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521004625.png" width="100%">
@@ -183,7 +181,7 @@ $ ln -s sonar-scanner-2.6.1 sonar-scanner
 
 「sonarqubeTest」という名前のジョブを新規作成します。
 
-- git リポジトリよりPHPプロジェクト取得設定
+- git リポジトリより PHP プロジェクト取得設定
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521010200.png" width="100%">
@@ -195,8 +193,7 @@ $ ln -s sonar-scanner-2.6.1 sonar-scanner
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521010349.png" width="100%">
 </div>
 
-以上でJenkins側の設定完了です。
-
+以上で Jenkins 側の設定完了です。
 
 ## SonarQube 反映確認
 
@@ -204,10 +201,9 @@ $ ln -s sonar-scanner-2.6.1 sonar-scanner
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521010726.png" width="100%">
 </div>
 
+ちなみにこちら EC-CUBE 1.1 のプロジェクトでした。
 
-ちなみにこちら EC-CUBE 1.1のプロジェクトでした。
-
-EC-CUBEのコード重複率が多く
+EC-CUBE のコード重複率が多く
 無駄が如何に多いかがわかります。
 
 以上です。

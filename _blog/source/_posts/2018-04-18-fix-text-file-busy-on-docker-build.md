@@ -3,8 +3,8 @@ layout: post
 title: docker build 時に Text file busy で shell が実行できない対策
 date: 2018-04-18
 tags:
-- Docker
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180418/20180418215217.jpg
+  - Docker
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180418/20180418215217.jpg
 ---
 
 ## 概要
@@ -32,9 +32,9 @@ RUN chmod +x hoge.sh \
 
 ## 環境情報
 
-* Ubuntu 14.04.5 LTS \n \l
-* Docker version 17.05.0-ce, build 89658be
-* Base Image: ruby:2.5-alpine
+- Ubuntu 14.04.5 LTS \n \l
+- Docker version 17.05.0-ce, build 89658be
+- Base Image: ruby:2.5-alpine
 
 ## 対策
 
@@ -46,12 +46,9 @@ RUN chmod +x hoge.sh \
   && hoge.sh
 ```
 
-
 ## What is sync command ?
 
 {% linkPreview http://kazmax.zpp.jp/cmd/s/sync.8.html _blank %}
-
-
 
 ## 参考
 

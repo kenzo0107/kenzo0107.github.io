@@ -3,17 +3,16 @@ layout: post
 title: Prometheus でサーバ監視
 date: 2017-01-20
 tags:
-- Monitoring
-- Prometheus
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125140715.png
+  - Monitoring
+  - Prometheus
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125140715.png
 ---
 
 ## 概要
 
-以前 Ansible + Vagrant でPrometheusモニタリング環境構築について書きました。
+以前 Ansible + Vagrant で Prometheus モニタリング環境構築について書きました。
 
 {% linkPreview http://kenzo0107.hatenablog.com/entry/2016/06/21/003544 _blank %}
-
 
 今回は具体的によくある設定ユースケースを順追って設定していきます。
 
@@ -25,7 +24,7 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/2
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125134654.png" width="100%">
 </div>
 
-## 今回やること 3行まとめ
+## 今回やること 3 行まとめ
 
 - Prometheus Server モジュールインストール
 - Prometheus Server 起動スクリプト作成
@@ -46,7 +45,7 @@ Node Exporter の設定の後に実施したいと思います。
 ## Prometheus インストール
 
 - パッケージインストール
-[最新のバージョン](https://github.com/prometheus/prometheus/releases)をチェックしダウンロードしてください。
+  [最新のバージョン](https://github.com/prometheus/prometheus/releases)をチェックしダウンロードしてください。
 
 ```
 $ cd /usr/local/src
@@ -83,7 +82,7 @@ promtool, version 1.4.1 (branch: master, revision: 2a89e8733f240d3cd57a6520b52c3
 $ sudo prometheus -config.file=/usr/local/prometheus-server/prometheus.yml
 ```
 
-ただ↑これを毎回実行するのは辛いので起動スクリプトを作成して
+ただ ↑ これを毎回実行するのは辛いので起動スクリプトを作成して
 サーバ再起動時に自動起動したり
 `systemctl start ...` と実行したい。
 
@@ -132,7 +131,7 @@ $ sudo systemctl status prometheus.service -l
 
 ![Imgur](http://i.imgur.com/1gchGrW.png)
 
-オプション設定でも設定した、 `/usr/local/prometheus-server/consoles` の各htmlにもアクセスしてみてください。
+オプション設定でも設定した、 `/usr/local/prometheus-server/consoles` の各 html にもアクセスしてみてください。
 
 `<IP Address>:9090/consoles/prometheus-overview.html?instance=localhost%3a9090`
 

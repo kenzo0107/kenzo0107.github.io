@@ -3,12 +3,11 @@ layout: post
 title: Nginx 1.9.6 → 1.11.1 へバージョンアップ 脆弱性対応
 date: 2016-06-27
 tags:
-- Nginx
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627150549.png
+  - Nginx
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627150549.png
 ---
 
-
-脆弱性CVE-2016-4450 に対応した Nginx 1.11.1 が 2016-05-31 リリースされたということで
+脆弱性 CVE-2016-4450 に対応した Nginx 1.11.1 が 2016-05-31 リリースされたということで
 早速バージョンアップを試みました。
 
 [SIOS Tech. Lab - エンジニアのためになる技術トピックス](https://oss.sios.com/yorozu-blog/nginx-release-information-20160601)
@@ -41,7 +40,6 @@ configure arguments: --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --modules-p
 # yum install pcre-devel zlib-devel openssl-devel libxml2-devel libxslt-devel gd-devel perl-ExtUtils-Embed GeoIP-devel -y
 ```
 
-
 - gd-devel がインストールされていない場合の Nginx configure error
 
 ```
@@ -58,7 +56,7 @@ libraries. You can either do not enable the module or install the libraries.
 
 ## configure
 
-「現状の Nginx configure 確認」で取得したconfigure parameterから
+「現状の Nginx configure 確認」で取得した configure parameter から
 「--add-dynamic-module=njs-1c50334fbea6/nginx」を削除
 
 - `--add-dynamic-module=njs-1c50334fbea6/nginx` を指定した場合の Nginx configure error
@@ -132,7 +130,7 @@ nginx: configuration file /etc/nginx/nginx.conf test failed
 ```
 
 サードパーティに依存するディレクティブについては
-`load_module` で SharedObject(*.so) を呼び出す必要があります。
+`load_module` で SharedObject(\*.so) を呼び出す必要があります。
 
 - /etc/nignx/nginx.conf の冒頭に以下追加
 
@@ -155,4 +153,4 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 # systemctl reload nginx
 ```
 
-以上でNginx バージョンアップが無事完了しました。
+以上で Nginx バージョンアップが無事完了しました。
