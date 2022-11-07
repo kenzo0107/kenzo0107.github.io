@@ -3,23 +3,22 @@ layout: post
 title: 無料枠で運用！ GKE + Kubernetes で Hubot 〜独自ネットワーク作成、設定ファイルから起動編〜
 date: 2017-05-16
 tags:
-- GKE
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170604/20170604224801.png
+  - GKE
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170604/20170604224801.png
 ---
 
-前回手元のMacからコンテナクラスタ → Deployment → LB 作成する手順をまとめました。
+前回手元の Mac からコンテナクラスタ → Deployment → LB 作成する手順をまとめました。
 
 {% linkPreview http://kenzo0107.hatenablog.com/entry/2017/05/10/012945 _blank %}
 
-
-但し、8080ポートがフルオープンとなってしまい、誰でもアクセスが可能であるという、
+但し、8080 ポートがフルオープンとなってしまい、誰でもアクセスが可能であるという、
 セキュリティ的に非常によろしくない状態でした。
 
 その為、今回は以下実施します。
 
-* 独自ネットワーク(ファイアウォール)作成
-* 独自ネットワーク上にクラスタ作成
-* 設定ファイルでコンテナ起動・更新
+- 独自ネットワーク(ファイアウォール)作成
+- 独自ネットワーク上にクラスタ作成
+- 設定ファイルでコンテナ起動・更新
 
 前回の独自ネットワーク設定していないクラスタは削除して問題ないです。お任せします `m(_ _)m`
 
@@ -60,8 +59,8 @@ macOS%$ gcloud container clusters create hubot-cluster-free \
 ```
 
 - <span style="color: #ff0000">cluster-ipv4-cidr オプション必須！</span>
-指定しクラスタ内の Pod のIPアドレスの範囲指定しています。
-※サブネットマスク(10.0.0.0/14 の "/14" 部分)指定は9〜19で指定する必要があります。
+  指定しクラスタ内の Pod の IP アドレスの範囲指定しています。
+  ※サブネットマスク(10.0.0.0/14 の "/14" 部分)指定は 9〜19 で指定する必要があります。
 
 例) --cluster-ipv4-cidr=10.0.0.0/8 指定した場合のエラー
 
@@ -110,8 +109,7 @@ kubernetes     10.3.240.1     <none>          443/TCP          20m
 loadbalancer   10.3.241.129   zz.zzz.zzz.zzz   8080:31628/TCP   4m
 ```
 
-※EXTERNAL-IP : `zz.zzz.zzz.zzz` はグローバルIP
-
+※EXTERNAL-IP : `zz.zzz.zzz.zzz` はグローバル IP
 
 ## いざ、テスト !
 
@@ -139,8 +137,7 @@ http://zz.zzz.zzz.zzz:8080/hubot/jira-comment-dm
 ```
 
 - できた！
-[f:id:kenzo0107:20170516220548p:plain]
-
+  [f:id:kenzo0107:20170516220548p:plain]
 
 ## 更新（ローリングアップデート）
 
@@ -148,8 +145,8 @@ ReplicationController を利用することで無停止で更新します。
 
 実際に以下の様にして更新しているのが確認できます。
 
-* 既存の Running 中のコンテナの個数分、更新したイメージからビルドしたコンテナを起動
-* 更新版コンテナがRunning状態になったら既存コンテナを削除
+- 既存の Running 中のコンテナの個数分、更新したイメージからビルドしたコンテナを起動
+- 更新版コンテナが Running 状態になったら既存コンテナを削除
 
 ```
 // ローカルで更新した Docker Container を コミット
@@ -182,7 +179,7 @@ macOS%$ kubectl delete -f gke-lb.yml
 
 ## 総評
 
-ネットワークのファイアウォール設定してコンテナ起動したが動かなかった所、かなり詰まりました (; ~_~)
+ネットワークのファイアウォール設定してコンテナ起動したが動かなかった所、かなり詰まりました (; ~\_~)
 Stackoverflow にたまたま同様のイシューをあげている方がおり参考にさせて頂きました。
 助かった汗
 
@@ -190,4 +187,5 @@ Stackoverflow にたまたま同様のイシューをあげている方がおり
 まとまったらまた追記します！
 
 ## 参考
+
 [Unable to launch a GKE (Google Container Engine) cluster with a custom network](http://stackoverflow.com/questions/38057066/unable-to-launch-a-gke-google-container-engine-cluster-with-a-custom-network)

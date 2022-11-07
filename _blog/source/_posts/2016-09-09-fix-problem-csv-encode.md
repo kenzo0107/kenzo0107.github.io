@@ -2,38 +2,36 @@
 layout: post
 title: CSVエンコード問題解決
 date: 2016-09-09
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160909/20160909105642.jpg
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160909/20160909105642.jpg
 tags:
-- csv
+  - csv
 ---
 
 ## 概要
 
-Linux サーバで DBで集計してCSVファイルをレポートする
+Linux サーバで DB で集計して CSV ファイルをレポートする
 なんてことがあるかと思います。
 
-CSVファイルを Linux サーバで作成し
+CSV ファイルを Linux サーバで作成し
 Windows, Mac にメール添付して送信すると
-どちらもCSVファイルを開くと文字化けしてしまう問題に遭遇しました。
+どちらも CSV ファイルを開くと文字化けしてしまう問題に遭遇しました。
 
 この問題を解決すべく調査しました。
 
 ## そもそも何で文字化け？
 
-CSVファイルはWindows, Macでは基本Excelが起動し開きますが
+CSV ファイルは Windows, Mac では基本 Excel が起動し開きますが
 <span style="color:red">デフォルト Shift_Jis として開こうとします。</span>
 
 テキストファイルに一旦開いてコピーしてエクセルに貼り付ける対策を紹介しているブログもありましたが
 クライアント様がお相手となる場合やファイルサイズが非常に大きい場合は
-一手間かける方法はNGです。
+一手間かける方法は NG です。
 
-## 調査1 文字コードを変更してから mutt でメール添付送信
-
+## 調査 1 文字コードを変更してから mutt でメール添付送信
 
 1. 文字エンコードは nkf : Network Kanji Filter Version 2.0.7 (2006-06-13)
 2. メール送信は mutt 1.4.2.2i
 3. mutt の設定ファイルをいじりましたがうまくいかなかったです。
-
 
 ### Shift_JIS
 
@@ -56,7 +54,7 @@ $ nkf -g sjis.csv
 UTF-8
 ```
 
-あれ？ Shift_JISにエンコードして送ったんだけど UTF-8 になってる
+あれ？ Shift_JIS にエンコードして送ったんだけど UTF-8 になってる
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160909/20160909102427.png" width="100%">
@@ -111,7 +109,7 @@ UTF-8
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160909/20160909102942.png" width="100%">
 </div>
 
-### UTF-8 BOM付き
+### UTF-8 BOM 付き
 
 ```sh
 $ echo '大崎,yoshi,浜田,moto,松本' > utf8-bom.csv
@@ -129,7 +127,7 @@ $ nkf -g utf8-bom.csv
 ISO-2022-JP
 ```
 
-JISと同様の結果...
+JIS と同様の結果...
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160909/20160909103228.png" width="100%">
@@ -159,11 +157,11 @@ EUC-JP
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160909/20160909110133.png" width="100%">
 </div>
 
-## 調査2 BINARYファイルにしてみる
+## 調査 2 BINARY ファイルにしてみる
 
 もっと具体的にいうと 圧縮ファイルを送ってみる
 
-Shift_JIS で CSVが開かれるのでShift_JISにエンコードします。
+Shift_JIS で CSV が開かれるので Shift_JIS にエンコードします。
 
 ```
 $ echo '大崎,yoshi,浜田,moto,松本' > sjis.csv
@@ -197,5 +195,5 @@ Shift_JIS のままダウンロードできてる！
 
 ## 総評
 
-- Windows, Mac で送られてきたCSVファイルで文字化けせず開くことができました。
+- Windows, Mac で送られてきた CSV ファイルで文字化けせず開くことができました。
 - 圧縮した方が容量を下げて通信が行えるのでよくなりました。

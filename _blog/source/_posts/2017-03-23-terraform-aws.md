@@ -3,22 +3,21 @@ layout: post
 title: Terraform で AWS インフラストラクチャ！
 date: 2017-03-23
 tags:
-- AWS
-- Terraform
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170323/20170323222447.png
+  - AWS
+  - Terraform
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170323/20170323222447.png
 ---
-
 
 ## Terraform とは
 
 - インフラ構成や設定をコードにより実行計画を確認しながら自動化できるツール
 - AWS, Google Cloud 等多数のクラウドサービスで利用可能
-- HashiCorp社製
+- HashiCorp 社製
 
 ## 今回やること
 
 - インスタンス起動
-- Elastic IP付きインスタンス起動
+- Elastic IP 付きインスタンス起動
 - インスタンス破棄
 
 非常にミニマムなインフラ構築をしてみます。
@@ -109,7 +108,7 @@ resource "aws_instance" "example" {
 ```
 
 - terraform.tfvars
-	- terraform 実行時に自動で読み込まれるファイル
+  - terraform 実行時に自動で読み込まれるファイル
 
 ```
 access_key = "A******************Q"
@@ -131,8 +130,7 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 `terraform.tfvars` ファイルは .gitignore に登録しておくなど
 絶対に公開されない様な設定が望ましいと思います。
 
-
-## EC2 instance (t2.micro) AMI変更
+## EC2 instance (t2.micro) AMI 変更
 
 - main.tf
 
@@ -203,7 +201,6 @@ terraform で新規作成・変更ができました。
 
 次は破棄してみましょう。
 
-
 ## EC2 instance (t2.micro) 破棄
 
 - 実行計画確認
@@ -239,8 +236,7 @@ Amazon コンソールで破棄されたことを確認できます。
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170323/20170323225807.png" width="100%">
 </div>
 
-
-## インスタンス起動し Elastic IP (固定IP) 設定
+## インスタンス起動し Elastic IP (固定 IP) 設定
 
 - main.tf
 
@@ -318,13 +314,13 @@ $ terraform apply
 ```
 
 Elastic IP が設定されたインスタンスが起動していることが確認できます。
-※ただ、起動しただけで接続できないことがわかります(>_<) 次回実施します
+※ただ、起動しただけで接続できないことがわかります(>\_<) 次回実施します
 
 [f:id:kenzo0107:20170323230208p:plain]
 
 - 実行計画確認
 
-破棄されるElastic IP, インスタンスが確認できます。
+破棄される Elastic IP, インスタンスが確認できます。
 
 ```
 $ terraform plan -destroy
@@ -351,8 +347,6 @@ Destroy complete! Resources: 2 destroyed.
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170323/20170323230746.png" width="100%">
 </div>
-
-
 
 ## その他便利な設定
 
@@ -390,7 +384,7 @@ $ terraform apply -var region=us-west-2
 
 ### 出力設定
 
-生成されたElastic IPの値が知りたいときなど便利です。
+生成された Elastic IP の値が知りたいときなど便利です。
 
 - main.tf
 
@@ -456,12 +450,10 @@ $ terraform graph | dot -Tpng > graph.png
 $ brew install graphviz
 ```
 
-
-
 ## 総評
 
-簡単でしょ？と言われているようなツールでした♪
+簡単でしょ？と言われているようなツールでした ♪
 
-引き続きプロビジョニングやAWSの各種設定をしていきたいと思います。
+引き続きプロビジョニングや AWS の各種設定をしていきたいと思います。
 
-次回 [EC2インスタンスを起動し、ローカル環境で作った鍵をキーペア登録しSSHログイン](https://kenzo0107.github.io/2017/03/27/2017-03-27-create-keypair-by-terraform/)を実施します。
+次回 [EC2 インスタンスを起動し、ローカル環境で作った鍵をキーペア登録し SSH ログイン](https://kenzo0107.github.io/2017/03/27/2017-03-27-create-keypair-by-terraform/)を実施します。

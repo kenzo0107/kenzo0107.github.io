@@ -3,8 +3,8 @@ layout: post
 title: Install PHP7, PECL, PEAR on MacOS
 date: 2017-06-13
 tags:
-- PHP
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170604/20170604224801.png
+  - PHP
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170604/20170604224801.png
 ---
 
 備忘録です。
@@ -146,8 +146,8 @@ For more information about PEAR, see:
 Thanks for using go-pear!
 ```
 
-
 ## PECL インストール確認
+
 ```
 $ which pecl
 /usr/local/bin/pecl
@@ -160,6 +160,7 @@ Running on: Darwin pc-12-332.local 16.5.0 Darwin Kernel Version 16.5.0: Fri Mar 
 ```
 
 ## PEAR インストール確認
+
 ```
 $ which pear
 /usr/local/bin/pear

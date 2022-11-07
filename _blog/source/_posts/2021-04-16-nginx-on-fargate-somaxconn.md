@@ -1,9 +1,9 @@
 ---
 title: Nginx on Fargate で発生した Resource temporarily unavailable エラーを調査した
 tags:
-- AWS
+  - AWS
 date: 2021-04-16
-thumbnail: https://i.imgur.com/UvdQW0r.png
+cover: https://i.imgur.com/UvdQW0r.png
 ---
 
 Nginx を Fargate で起動しているが、検証中にすぐにリクエストが詰まってしまう事象に悩まされました。
@@ -61,7 +61,7 @@ net.core.somaxconn = 128
 RUN sysctl -w net.core.somaxconn=1024
 ```
 
-エラーになった (TへT)
+エラーになった (T へ T)
 
 ```
 #21 0.370 sysctl: error setting key 'net.core.somaxconn': Read-only file system

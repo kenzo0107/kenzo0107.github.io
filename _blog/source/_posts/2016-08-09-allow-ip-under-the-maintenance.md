@@ -3,9 +3,9 @@ layout: post
 title: メンテ時に社内Wifi IPのみサイトアクセス許可する
 date: 2016-08-09
 tags:
-- .htaccess
-- Apache
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160809/20160809105400.gif
+  - .htaccess
+  - Apache
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160809/20160809105400.gif
 ---
 
 備忘録です。
@@ -15,6 +15,7 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160809/2
 ## 手順
 
 ### maintenance.html
+
 DocumentRoot に maintenance.html を配置
 
 ### .htaccess にてアクセス制限

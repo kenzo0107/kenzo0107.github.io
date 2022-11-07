@@ -3,9 +3,9 @@ layout: post
 title: Vagrant (Ubuntu) に Docker, Docker Compose インストール
 date: 2017-04-13
 tags:
-- Docker
-- Vagrant
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170413/20170413222957.png
+  - Docker
+  - Vagrant
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170413/20170413222957.png
 ---
 
 ## 概要
@@ -30,7 +30,7 @@ end
 ```
 
 vagrant provision で docker compose をインストールすることも可能ですが
-vagrant ならではの provision だと他環境で利用できない為、OS上でインストールする方針です。
+vagrant ならではの provision だと他環境で利用できない為、OS 上でインストールする方針です。
 
 ## VM 起動
 
@@ -69,6 +69,7 @@ vagrant%$ uname -r
 別のカーネルバージョンの高い box を使用しましょう。
 
 ## 古いバージョンをアンインストール
+
 ```
 vagrant%$ sudo apt-get remove docker docker-engine
 ```
@@ -115,8 +116,8 @@ vagrant%$ docker-compose --version
 docker-compose version 1.12.0, build b31ff33
 ```
 
-
 ## 一度ログアウトし再度ログイン
+
 ```
 vagrant%$ exit
 MacOS%$ vagrant ssh
@@ -146,9 +147,7 @@ vagrant%$ sudo update-grub
 vagrant%$ sudo reboot
 ```
 
-
-以上で準備完了です♪
-
+以上で準備完了です ♪
 
 ## 早速試してみる
 
@@ -188,7 +187,7 @@ Status: Downloaded newer image for nginx:mainline-alpine
 ```
 
 MacOS → Vagrant → Docker
-とアクセスできるようになりました♪
+とアクセスできるようになりました ♪
 
 ## 追記
 
@@ -196,7 +195,7 @@ MacOS → Vagrant → Docker
 
 https://atlas.hashicorp.com/kenzo0107/boxes/ubuntu14.04.5LTS-docker-dockercompose/
 
-こちら設定を元にこれから様々な環境構築を記載していきたいと思います♪
+こちら設定を元にこれから様々な環境構築を記載していきたいと思います ♪
 
 ## 参照
 

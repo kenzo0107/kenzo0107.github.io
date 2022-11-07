@@ -3,9 +3,9 @@ layout: post
 title: Alertmanager 構築手順
 date: 2017-02-02
 tags:
-- Monitoring
-- Prometheus
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170202/20170202095647.png
+  - Monitoring
+  - Prometheus
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170202/20170202095647.png
 ---
 
 ## 概要
@@ -16,11 +16,11 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170202/2
 
 今回は監視実施サーバで Alertmanager 構築を実施します。
 
-## 今回やること 3行まとめ
+## 今回やること 3 行まとめ
 
 - Alertmanager インストール & 起動スクリプト作成
 - Prometheus 通知条件設定
-- Alertmanager でSlack通知
+- Alertmanager で Slack 通知
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170202/20170202095647.png" width="100%">
@@ -74,7 +74,7 @@ $ mv 71574c2d4d70ba7a9efaa88b4ff1be1b/alertmanager.yml .
 
 - alertmanager.yml
 
-slack  通知箇所を適宜変更して下さい。
+slack 通知箇所を適宜変更して下さい。
 
 {% gist kenzo0107/71574c2d4d70ba7a9efaa88b4ff1be1b %}
 
@@ -91,7 +91,6 @@ $ sudo alertmanager -config.file alertmanager.yml
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170126/20170126194507.png" width="100%">
 </div>
-
 
 Prometheus 同様、Alertmanager も起動スクリプトを作成しそこで起動管理をします。
 
@@ -166,9 +165,10 @@ Checking alerts.rules
   SUCCESS: 1 rules found
 ```
 
-## Prometheus Server でAlertmanager URL設定
+## Prometheus Server で Alertmanager URL 設定
 
 Prometheus の起動オプションで Alertmanager URL 設定します。
+
 ```
 -alertmanager.url=http://localhost:9093
 ```
@@ -186,9 +186,11 @@ $ sudo systemctl restart prometheus.service
 #### 注意
 
 今回 Alertmanager は Prometheus Server と同サーバ上に設定しているので
+
 ```
 http://localhost:9093
 ```
+
 となっていますが、ドメインが異なる場合は適宜設定してください。
 
 ## Prometheus Alerts ページアクセス
@@ -215,7 +217,6 @@ Slack に通知が届きました！
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170126/20170126200326.png" width="100%">
 </div>
 
-
 `http://alertmanager_server:9093/#/alerts` にアクセスすると通知内容一覧が表示されます。
 
 <div style="text-align:center;">
@@ -226,17 +227,15 @@ Slack に通知が届きました！
 Prometheus からリモートサーバを監視しアラート通知するところまでを
 まとめました。
 
-
-
 1. [Prometheus でサーバ監視](http://kenzo0107.hatenablog.com/entry/2017/01/20/233312)
-2. [Node Exporter 構築手順 + Prometheus からAWSオートスケール監視](http://kenzo0107.hatenablog.com/entry/2017/01/25/154144)
+2. [Node Exporter 構築手順 + Prometheus から AWS オートスケール監視](http://kenzo0107.hatenablog.com/entry/2017/01/25/154144)
 3. [Alertmanager 構築手順](http://kenzo0107.hatenablog.com/entry/2017/02/02/101011)
-
 
 ## 補足
 
 ### フロントエンド
-Grafana 3.x以降でデフォルトプラグインで Prometheus をサポートしていたりと
+
+Grafana 3.x 以降でデフォルトプラグインで Prometheus をサポートしていたりと
 Prometheus のフロントは Grafana が導入しやすく相性が良かったです。
 
 <div style="text-align:center;">
@@ -255,7 +254,7 @@ Prometheus のフロントは Grafana が導入しやすく相性が良かった
 改めて自身で構築してみて
 Line Casual Talks #1, #2 を見直すと非常に理解が深まると思います。
 
-- [Prometheus Casual Talks #1を開催しました](http://d.hatena.ne.jp/wyukawa/20160615/1465962814)
+- [Prometheus Casual Talks #1 を開催しました](http://d.hatena.ne.jp/wyukawa/20160615/1465962814)
 
 一助になれば何よりです。
 

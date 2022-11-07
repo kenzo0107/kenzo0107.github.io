@@ -1,9 +1,9 @@
 ---
 title: ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のアクセスログを保存許可する
 tags:
-- AWS
+  - AWS
 date: 2021-11-04
-thumbnail: https://i.imgur.com/SK23gOy.png
+cover: https://i.imgur.com/SK23gOy.png
 ---
 
 <div class="toc">
@@ -45,7 +45,6 @@ resource "aws_s3_bucket" "logs" {
   }
 ```
 
-
 ## CloudFront Log Delivery Canonical User ID が data ソースで取れる様になった！
 
 以下 issue を追っていたところ、対応されていました！
@@ -53,7 +52,7 @@ https://github.com/hashicorp/terraform-provider-aws/issues/12512
 
 これまで data ソースがなかった為、直接、文字列指定していたので、有り難い！
 
-* Data Source: aws_cloudfront_log_delivery_canonical_user_id
+- Data Source: aws_cloudfront_log_delivery_canonical_user_id
   https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/cloudfront_log_delivery_canonical_user_id
 
 ## まとめ

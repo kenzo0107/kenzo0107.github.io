@@ -1,7 +1,7 @@
 ---
 title: tfsec で terraform 管理リソースのセキュリティ強化
 date: 2022-09-13
-thumbnail: https://aquasecurity.github.io/tfsec/v0.63.1/imgs/homelogo.png
+cover: https://aquasecurity.github.io/tfsec/v0.63.1/imgs/homelogo.png
 ---
 
 <div class="toc">

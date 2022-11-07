@@ -3,8 +3,8 @@ layout: post
 title: AWS [Retirement Notification] 対応
 date: 2017-04-18
 tags:
-- AWS
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170418/20170418105821.png
+  - AWS
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170418/20170418105821.png
 ---
 
 ## 概要
@@ -39,8 +39,6 @@ Sincerely,
 Amazon Web Services
 ```
 
-
-
 - AWS Console イベントを見ると一覧で表示されている。
 
 <div style="text-align:center;">
@@ -57,20 +55,19 @@ Amazon Web Services
 
 ボリュームタイプによって異なります。
 
-- EBSボリューム
-	- インスタンスの停止後、起動 (Reboot は ×)
+- EBS ボリューム
 
+  - インスタンスの停止後、起動 (Reboot は ×)
 
 - インスタンスストアボリューム
-	- AMI からインスタンス再作成、データ移行
+  - AMI からインスタンス再作成、データ移行
 
 今回は EBS ボリューム対応について記載してます。
 
-
 ## 対応
 
-対象インスタンスが多かったのでローカルPC (macOS) から awscli でインスタンス停止→起動するシェル作成しました。
-本番環境で利用されるインスタンスも含まれていた為、1件ずつ実行することとしました。
+対象インスタンスが多かったのでローカル PC (macOS) から awscli でインスタンス停止 → 起動するシェル作成しました。
+本番環境で利用されるインスタンスも含まれていた為、1 件ずつ実行することとしました。
 
 ## 事前準備
 
@@ -108,12 +105,12 @@ $ sh stop_and_start_ec2_instance.sh "<profile>" "<instance id>"
 
 ## 結果確認
 
-大体 1インスタンス 5分程度で完了。
-問題なく停止起動でき、対象イベントが一覧から消えたことを確認しました♪
+大体 1 インスタンス 5 分程度で完了。
+問題なく停止起動でき、対象イベントが一覧から消えたことを確認しました ♪
 
 ## 所感
 
 メンテ対象インスタンスの Region が northeast に集中していたのが気になる点でした。
-このインスタンス何に使ってるんだっけ？とならない様に、インスタンスやprivate key の命名ルール必須と感じました。
+このインスタンス何に使ってるんだっけ？とならない様に、インスタンスや private key の命名ルール必須と感じました。
 
 以上です。

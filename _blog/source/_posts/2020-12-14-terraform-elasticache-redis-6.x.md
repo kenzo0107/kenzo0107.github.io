@@ -2,9 +2,9 @@
 title: Terraform Elasticache Redis 6.x 構築時の注意
 category: Terraform
 tags:
-- AWS
+  - AWS
 date: 2020-12-14
-thumbnail: https://i.imgur.com/aCEdhs4.png
+cover: https://i.imgur.com/aCEdhs4.png
 ---
 
 <div class="toc">

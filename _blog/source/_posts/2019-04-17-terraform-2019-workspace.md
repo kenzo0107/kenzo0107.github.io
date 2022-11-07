@@ -4,11 +4,11 @@ title: Terraform 運用ベストプラクティス 2019 ~workspace をやめて�
 date: 2019-04-17
 category: Terraform
 tags:
-- Terraform
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190417/20190417103456.png
+  - Terraform
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190417/20190417103456.png
 ---
 
-<span style="color: #ff0000"><b>2020-05-05 追記</b></span> 2020年春のベストプラクティス更新しています。
+<span style="color: #ff0000"><b>2020-05-05 追記</b></span> 2020 年春のベストプラクティス更新しています。
 
 {% linkPreview https://kenzo0107.github.io/2020/04/25/2020-04-25-terraform-bestpractice-2020/ _blank %}
 
@@ -39,13 +39,11 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190417/2
 <li>prd では、ip 制限なくアクセス可</li>
 </ul>
 
-
 #### サンプルコード
 
 <ul>
 <li>variables.tf</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>variable &#34;ips&#34; {
   type = &#34;map&#34;
@@ -55,11 +53,9 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190417/2
   }
 }</pre>
 
-
 <ul>
 <li>security_group.tf</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>resource &#34;aws_security_group&#34; &#34;hoge&#34; {
   name        = &#34;${terraform.workspace}-hoge-sg&#34;
@@ -84,7 +80,6 @@ resource &#34;aws_security_group_rule&#34; &#34;https&#34; {
   cidr_blocks       = [&#34;0.0.0.0/0&#34;]
 }</pre>
 
-
 <p>実際に terraform を plan/apply する前にまずは
 terraform workspace を定義する必要があります。</p>
 
@@ -93,7 +88,6 @@ terraform workspace select stg
 
 // terraform workspace = stg とした場合の tfstate をローカルのメモリ上で管理します。
 terraform init </pre>
-
 
 <p>上記のような処理があって、初めて、 `variable "ips"` の `stg.cidrs`, `prd.cidrs` が利用できるようになります。</p>
 
@@ -115,7 +109,6 @@ terraform init </pre>
 
 <pre class="code" data-lang="" data-unlink>count = &#34;${terraform.workspace == &#34;stg&#34; ? 1: 0}&#34;</pre>
 
-
 <p>では、本番用は設定しなければいいじゃないか！と言って設定しないと、本番用はエラーを出す様になり、その他の反映が何もできなくなります。</p>
 
 <p><b>これはステージングも本番も同じファイルを参照している為に発生しています。</b></p>
@@ -131,7 +124,6 @@ terraform init </pre>
 <li>「外部 API との連携試験をしたいので環境を別途増やして欲しいです！」</li>
 </ul>
 
-
 <p>例えば、 負荷試験環境を用意しようとすると、 loadtst という workspace を用意するとしたら variables.tf を以下のように修正が必要です。</p>
 
 <pre class="code" data-lang="" data-unlink>variable &#34;ips&#34; {
@@ -143,7 +135,6 @@ terraform init </pre>
   }
 }</pre>
 
-
 <p>上記例ですと variable "ips" に 1行加えただけで良いですが、実際は
 あらゆる変数に `loadtst.*** = ***` というコードを追加していく必要があります。</p>
 
@@ -153,11 +144,7 @@ terraform init </pre>
 
 <pre class="code" data-lang="" data-unlink>lookup(var.ips, &#34;${terraform.workspace}.cidrs&#34;)</pre>
 
-
-
-
 <pre class="code" data-lang="" data-unlink>&#34;${terraform.workspace == &#34;stg&#34; ? hoge: moge}&#34;</pre>
-
 
 ## workspace 運用をまとめると
 
@@ -172,7 +159,6 @@ terraform init </pre>
 <li><p>今、どの workspace なのかがわかりずらく、 terraform apply する際にかなり躊躇してしまう。<br/>
 → 実際 `terraform apply` 実行前に `terraform workspace show` で workspace 確認しても、実行中で少し時間が経つと、「あれ？どっちだっけ？」と不安になり、 Terminal を遡って確認することがあったりしました。</p></li>
 </ol>
-
 
 ## ではどうすると良いか？
 
@@ -246,7 +232,6 @@ terraform init </pre>
         ├── variable.tf
         └── waf.tf</pre>
 
-
 ### 前出のセキュリティグループの作成を例にするとどうなるか
 
 <p>以下の様になります。</p>
@@ -255,18 +240,15 @@ terraform init </pre>
 <li>envs/prd/variables.tf</li>
 </ul>
 
-
 <pre class="code" data-lang="" data-unlink>variable &#34;cidrs&#34; {
   default = [
     &#34;0.0.0.0/0&#34;,
   ]
 }</pre>
 
-
 <ul>
 <li>envs/stg/variables.tf</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>variable &#34;cidrs&#34; {
   default = [
@@ -275,11 +257,9 @@ terraform init </pre>
   ]
 }</pre>
 
-
 <ul>
 <li>envs/common/security_group.tf</li>
 </ul>
-
 
 <pre class="code" data-lang="" data-unlink>resource &#34;aws_security_group&#34; &#34;hoge&#34; {
   name        = &#34;${terraform.workspace}-hoge-sg&#34;
@@ -304,7 +284,6 @@ resource &#34;aws_security_group_rule&#34; &#34;https&#34; {
   cidr_blocks       = [&#34;0.0.0.0/0&#34;]
 }</pre>
 
-
 <p>もし stg だけに反映させたいセキュリティグループであれば、 `envs/stg/security_group.tf` に作成したいセキュリティグループを記述します。</p>
 
 <p>これで stg だけ反映という実運用をカバーできます。</p>
@@ -316,7 +295,6 @@ resource &#34;aws_security_group_rule&#34; &#34;https&#34; {
 <li>`modules/prd` → `modules/loadtst`</li>
 </ul>
 
-
 <p>多少構成に変更があろうとも、 loadtst 関連のリソースが prd, stg に影響することはない様に作成できます。</p>
 
 ### terraform コーディングルール
@@ -325,16 +303,11 @@ resource &#34;aws_security_group_rule&#34; &#34;https&#34; {
 
 <pre class="code" data-lang="" data-unlink>lookup(var.ips, &#34;${terraform.workspace}.cidrs&#34;)</pre>
 
-
-
-
 <pre class="code" data-lang="" data-unlink>&#34;${terraform.workspace == &#34;stg&#34; ? hoge: moge}&#34;</pre>
-
 
 <p>また、以下も NG とします。 stg だけ異なるのであれば、 modules/stg,prd と分けるべきです。</p>
 
 <pre class="code" data-lang="" data-unlink>&#34;${var.env == &#34;stg&#34; ? hoge: moge}&#34;</pre>
-
 
 ## terraform 実行手順
 
@@ -344,7 +317,6 @@ resource &#34;aws_security_group_rule&#34; &#34;https&#34; {
 terraform get -update
 terraform plan
 terraform apply</pre>
-
 
 ## AWS credentials の扱い
 
@@ -358,7 +330,6 @@ terraform apply</pre>
 
 <pre class="code" data-lang="" data-unlink>macOS%$ brew install tfenv</pre>
 
-
 <p>以前の執筆記事では terraform を one-off container で実行しバージョン差異を吸収する様にしていましたが、コマンドが長くなり、管理も煩雑になるので、tfenv が望ましいです。</p>
 
 <p>こちらも運用してみての実感です。</p>
@@ -371,7 +342,6 @@ terraform apply</pre>
   version = &#34;1.54.0&#34;
   region  = &#34;ap-northeast-1&#34;
 }</pre>
-
 
 <p>固定されていて、最新のリソースが利用できない時があります。<a href="#f-89d57f2f" name="fn-89d57f2f" title="Aurora MySQL が作れない！と思ったら、バージョン固定してた為だったことがありました。">*2</a></p>
 

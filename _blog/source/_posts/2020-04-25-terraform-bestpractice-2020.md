@@ -2,10 +2,10 @@
 title: Terraform ベストプラクティス 2020 春 ~moduleやめてみた~
 category: Terraform
 tags:
-- Terraform
+  - Terraform
 toc: true
 date: 2020-04-25
-thumbnail: https://i.imgur.com/PRuN9u8.png
+cover: https://i.imgur.com/PRuN9u8.png
 ---
 
 <div class="toc">
@@ -19,7 +19,7 @@ thumbnail: https://i.imgur.com/PRuN9u8.png
 
 `#InfraStudy` に刺激を受け、書きます！
 
-2019年に以下記事を書いてから早1年、terraform 運用歴を重ね、2020年春のベストプラクティスを更新しました。
+2019 年に以下記事を書いてから早 1 年、terraform 運用歴を重ね、2020 年春のベストプラクティスを更新しました。
 
 {% linkPreview https://kenzo0107.github.io/2019/04/17/2019-04-17-terraform-2019-workspace/ _blank %}
 
@@ -29,9 +29,9 @@ thumbnail: https://i.imgur.com/PRuN9u8.png
 
 ## 結論
 
-* module やめてみた
+- module やめてみた
 
-↓これをやめて、
+↓ これをやめて、
 
 ```
 .
@@ -47,7 +47,7 @@ thumbnail: https://i.imgur.com/PRuN9u8.png
     └── stg/
 ```
 
-↓これにした！
+↓ これにした！
 
 ```
 .
@@ -60,7 +60,6 @@ thumbnail: https://i.imgur.com/PRuN9u8.png
 ## module やめてみた
 
 一般的な Web サービスを構築する際に module を利用した時は以下の様に構成にしていました。
-
 
 ```
 .
@@ -107,7 +106,8 @@ resource "aws_s3_bucket" "assets" {
 modules/stg/iam.tf, modules/prd/iam.tf で処理を分ける、
 という案ならできそうです。
 
-* modules/stg/s3.tf
+- modules/stg/s3.tf
+
 ```
 resource "aws_s3_bucket" "assets" {
   bucket = "${var.env}.${var.service_name}.assets"
@@ -118,7 +118,8 @@ resource "aws_s3_bucket" "assets" {
 }
 ```
 
-* modules/prd/s3.tf
+- modules/prd/s3.tf
+
 ```
 resource "aws_s3_bucket" "assets" {
   bucket = "${var.env}.${var.service_name}.assets"
@@ -159,7 +160,6 @@ modules/common が再利用性がある、とし採用しました。
 同じサービスで stg, prd で再利用性を求める必要が少なく、むしろ、その構成に大きく差分が生じやすい方が運用しやすいことがわかった為、
 最初の結論の構成としました。
 
-
 ```
 .
 └──envs/
@@ -193,7 +193,7 @@ AWS Account a,b,c,d,e と複数所持し、
     └── iam_role/
 ```
 
-* env/a/main.tf
+- env/a/main.tf
 
 ```
 module "backend" {
@@ -207,7 +207,7 @@ module "iam_user" {
 }
 ```
 
-* env/b/main.tf
+- env/b/main.tf
 
 ```
 module "backend" {
@@ -228,7 +228,7 @@ module "iam_role" {
 
 運用してみて気付く問題があり、またそれを乗り越える度にまた新たな問題に出会います。
 
-ここ最近は 「terraform プロジェクトで Pull Request のレビュー依頼する時についついファイル数盛り盛りになっちゃう問題」がありましたw
+ここ最近は 「terraform プロジェクトで Pull Request のレビュー依頼する時についついファイル数盛り盛りになっちゃう問題」がありました w
 
 「お互いに知ってるいつもの構成だから」という甘い考えがあるとついつい攻撃的なファイル数になっちゃったり。
 
@@ -236,7 +236,8 @@ module "iam_role" {
 
 また、 GitHub Actions で terraform init, plan, fmt を実行し実行結果を PR コメントに追記することで、plan 情報の確認をしやすくしたり、 fmt の違反行為で失敗させたりしています。
 
-* .github/workflows/terraform.yml
+- .github/workflows/terraform.yml
+
 ```
 ---
 name: Terraform

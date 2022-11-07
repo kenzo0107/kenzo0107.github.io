@@ -3,26 +3,26 @@ layout: post
 title: 運用中のNginxをノーメンテでバージョンアップ&HTTP2.0モジュールを導入
 date: 2015-11-17
 tags:
-- Nginx
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160810/20160810163018.png
+  - Nginx
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160810/20160810163018.png
 ---
 
 ## 概要
 
-運用中の Nginx に HTTP2.0モジュール `http_v2_module` を導入し
+運用中の Nginx に HTTP2.0 モジュール `http_v2_module` を導入し
 サイトのパフォーマンス向上を図ります。
 
 ※ Nginx 1.9.5 から `http_spdy_module` は `http_v2_module` に変更しています。
 
 ## 環境
+
 - CentOS Linux release 7.1.1503 (Core)
 - Nginx 1.9.3 インストール済み/稼働中
 
 ## したいこと
 
-- Nginx のバージョンアップ (1.9.5以上)
+- Nginx のバージョンアップ (1.9.5 以上)
 - http_v2_module インストール
-
 
 ## 現状確認
 
@@ -36,9 +36,9 @@ TLS SNI support enabled
 configure arguments: --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nginx --group=nginx --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-threads --with-stream --with-stream_ssl_module --with-mail --with-mail_ssl_module --with-file-aio --with-ipv6 --with-http_spdy_module --with-cc-opt='-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic'
 ```
 
-※moduleやlog, pidのパスは各環境に毎に異なります。
+※module や log, pid のパスは各環境に毎に異なります。
 
-まずは 1.9.5以上にバージョンアップして `http_v2_module` を導入したいと思います。
+まずは 1.9.5 以上にバージョンアップして `http_v2_module` を導入したいと思います。
 
 ## Nginx 1.9.6 インストール
 
@@ -67,13 +67,12 @@ configure arguments: --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path
 version が 1.9.6 となり
 configure arguments に `--with-http_v2_module` が追加されていることがわかります。
 
-
 要点は元々導入済み `http_spdy_module` を `http_v2_module` に変更しビルドです。
 `--with-http_spdy_module` がなければ `--with-http_v2_module` 追加です。
 
-## nginx serverディレクティブ修正
+## nginx server ディレクティブ修正
 
-ssl http2.0対応する様、修正します
+ssl http2.0 対応する様、修正します
 
 ```
 server {
@@ -100,22 +99,21 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 ```
 
 上記で設定完了です。
-これまでノーメンテでバージョンアップし、http_v2_moduleインストールができました。
+これまでノーメンテでバージョンアップし、http_v2_module インストールができました。
 
-早速httpsスキーマとなるページにアクセスしてみましょう。
+早速 https スキーマとなるページにアクセスしてみましょう。
 
-## http2.0設定確認
+## http2.0 設定確認
 
-- Chrome ブラウザの Extension SPDYインディケータで確認
+- Chrome ブラウザの Extension SPDY インディケータで確認
 - FireFox 開発ツール> ネットワーク > ヘッダから確認
 
-
-#### SPDYインディケータで確認
+#### SPDY インディケータで確認
 
 [HTTP/2 and SPDY indicator](https://chrome.google.com/webstore/detail/http2-and-spdy-indicator/mpbpobfflnpcgagjijhmgnchggcjblin?hl=ja)
 
 拡張モジュールをインストールして確認してみると
-SPDYインディケータが青くなっていることが確認できます。
+SPDY インディケータが青くなっていることが確認できます。
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151117/20151117105049.png" width="100%">
@@ -129,5 +127,5 @@ SPDYインディケータが青くなっていることが確認できます。
 
 ## 参考サイト
 
-* [nginxでHTTP2接続(not spdy3.1)の検証](http://qiita.com/takapan/items/756be5b47134f9e51a11)
-* [HTTP/2, SPDY 対応の負荷テストツール h2load](http://qiita.com/tatsuhiro-t/items/6cbe5b095e24d7feb381)
+- [nginx で HTTP2 接続(not spdy3.1)の検証](http://qiita.com/takapan/items/756be5b47134f9e51a11)
+- [HTTP/2, SPDY 対応の負荷テストツール h2load](http://qiita.com/tatsuhiro-t/items/6cbe5b095e24d7feb381)

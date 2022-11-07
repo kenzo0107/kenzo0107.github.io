@@ -3,8 +3,8 @@ layout: post
 title: Docker コマンド早見表
 date: 2017-04-14
 tags:
-- Docker
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170414/20170414222435.png
+  - Docker
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170414/20170414222435.png
 ---
 
 ## バージョン

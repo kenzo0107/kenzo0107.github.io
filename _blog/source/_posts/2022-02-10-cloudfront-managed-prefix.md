@@ -2,7 +2,7 @@
 title: terraform で CloudFront マネージドプリフィックスリストを利用したアクセス制限
 date: 2022-02-10
 category: AWS
-thumbnail: https://i.imgur.com/raMMbxt.png
+cover: https://i.imgur.com/raMMbxt.png
 ---
 
 <div class="toc">

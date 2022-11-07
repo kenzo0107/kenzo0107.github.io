@@ -3,11 +3,12 @@ layout: post
 title: 無料枠で運用！ GKE + Kubernetes で Hubot 〜CLIから実行編〜
 date: 2017-05-10
 tags:
-- GKE
-thumbnail: http://i.imgur.com/Vvmetu1.png
+  - GKE
+cover: http://i.imgur.com/Vvmetu1.png
 ---
 
 ## 概要
+
 - 無料枠を使って Slack 連携する Hubot を GKE で構築します。
 - おまけで JIRA 連携も
 
@@ -34,7 +35,7 @@ macOS%$ gcloud components update kubectl
 以下は作成したプロジェクト、リージョン、ゾーンを設定してます。
 今後 gcloud コマンド実行時に region 指定等しなくて良くなります。
 
-- 作成したプロジェクトID : `hubot-167007`
+- 作成したプロジェクト ID : `hubot-167007`
 - us-west 利用で無料枠を使う為に US リージョンに設定してます。
 
 ```
@@ -43,7 +44,6 @@ macOS%$ gcloud config set project hubot-167007
 macOS%$ gcloud config set compute/region us-west1
 macOS%$ gcloud config set compute/zone us-west1-b
 ```
-
 
 [Google Cloud Platform の無料階層](https://cloud.google.com/free/) 参照してください。
 
@@ -95,7 +95,7 @@ Updated [https://container.googleapis.com/v1/projects/hubot-167007/zones/us-west
 
 ![Imgur](http://i.imgur.com/KTGg91y.png)
 
-リサイズできるなら初めから 1 ノードで作らせて欲しい (>_<)
+リサイズできるなら初めから 1 ノードで作らせて欲しい (>\_<)
 
 コンソール上だとやっぱりダメ (T_T)
 
@@ -103,7 +103,7 @@ Updated [https://container.googleapis.com/v1/projects/hubot-167007/zones/us-west
 
 ## 認証情報 取得
 
-- コンテナクラスタの認証情報を取得し、kubectlを利用してコンテナ クラスタ上にコンテナを作成できるようになります。
+- コンテナクラスタの認証情報を取得し、kubectl を利用してコンテナ クラスタ上にコンテナを作成できるようになります。
 
 ```
 macOS%$ gcloud container clusters get-credentials hubot-cluster-free
@@ -122,7 +122,6 @@ macOS%$ gcloud container clusters describe hubot-cluster-free
 
 [https://github.com/kenzo0107/hubot-slack-on-docker:embed:cite]
 
-
 ```
 macOS%$ git clone https://github.com/kenzo0107/hubot-slack-on-docker
 macOS%$ cd hubot-slack-on-docker
@@ -138,13 +137,13 @@ CONTAINER ID        IMAGE                      COMMAND                  CREATED 
 
 ## Hubot 動作確認
 
-Slack上に Hubot が登場していて `hello` と呼びかけると `Hi` と返してくれたら成功です。
+Slack 上に Hubot が登場していて `hello` と呼びかけると `Hi` と返してくれたら成功です。
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170510/20170510012328.png" width="100%">
 </div>
 
-## CONTAINER ID から イメージをcommit
+## CONTAINER ID から イメージを commit
 
 ```
 macOS%$ docker commit 12f77feb09b4 gcr.io/hubot-167007/hubot:latest
@@ -153,8 +152,6 @@ macOS%$ docker images
 REPOSITORY                       TAG                 IMAGE ID            CREATED             SIZE
 gcr.io/hubot-167007/hubot        latest              2f7336b3a3ce        3 seconds ago       484 MB
 ```
-
-
 
 ## gke registory に push
 
@@ -241,7 +238,7 @@ NAME         CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
 kubernetes   10.23.240.1   <none>        443/TCP   22m
 ```
 
-`EXTERNAL-IP: <none>` ... 外部へ開いているIPがない。という状態
+`EXTERNAL-IP: <none>` ... 外部へ開いている IP がない。という状態
 Private IP は付与されたが Public IP がない、外部のネットワークからアクセスできない状態です。
 
 ## コンテナ公開
@@ -249,7 +246,7 @@ Private IP は付与されたが Public IP がない、外部のネットワー�
 - Service にロードバランサ付与し公開
 
 ※ ロードバランサを追加すると課金の桁が跳ね上がります。。
-（2000円/月くらい。念の為、設定した予算アラートでわかりました。）
+（2000 円/月くらい。念の為、設定した予算アラートでわかりました。）
 
 ```
 macOS%$ kubectl expose deployment pod-hubot --type="LoadBalancer"
@@ -306,7 +303,6 @@ http://104.xxx.x.xxx:8080/hubot/jira-comment-dm
 
 ![Imgur](http://i.imgur.com/8FOYcyI.png)
 
-
 ## 後始末
 
 掃除しときたい場合に以下実行してください。
@@ -332,7 +328,7 @@ macOS%$ kubectl delete deployments pod-hubot
 ```
 
 - container clusters 削除
-container cluster を削除すれば紐付く deployments, service, pod も削除されます。
+  container cluster を削除すれば紐付く deployments, service, pod も削除されます。
 
 ```
 macOS%$ gcloud container clusters delete hubot-cluster-free
@@ -342,7 +338,7 @@ macOS%$ gcloud container clusters delete hubot-cluster-free
 
 ## 総評
 
-GKEは概念が多く、一概に deployment, pod, service, kubernetes 等覚えることが多いですが
+GKE は概念が多く、一概に deployment, pod, service, kubernetes 等覚えることが多いですが
 動かしつつ学ぶのは楽しいです。
 
 ほぼ手元の Mac で設定できました！

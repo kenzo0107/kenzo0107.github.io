@@ -1,7 +1,7 @@
 ---
 title: AWS ElastiCache Redis バージョンアップ&ノードタイプ変更時の注意点
 date: 2022-09-29
-thumbnail: https://i.imgur.com/6PU8EYE.png
+cover: https://i.imgur.com/6PU8EYE.png
 ---
 
 AWS より cache.m3 系から cache.m5 系へのアップグレードを促されました。

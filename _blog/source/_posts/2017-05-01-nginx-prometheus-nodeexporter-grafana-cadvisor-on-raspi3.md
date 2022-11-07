@@ -3,13 +3,13 @@ layout: post
 title: Raspberry PI3 Model B に docker-compose で Nginx で認証かけて Prometheus + Node Exporter + Grafana + cAdvisor構築
 date: 2017-05-01
 tags:
-- RaspberryPI
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170430/20170430235153.png
+  - RaspberryPI
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170430/20170430235153.png
 ---
 
 ## 概要
 
-Raspi3に docker-compose で Prometheus による監視機構を作成しました。
+Raspi3 に docker-compose で Prometheus による監視機構を作成しました。
 
 {% linkPreview https://github.com/kenzo0107/vagrant-docker/tree/master/docker/prometheus-grafana-on-raspi3 _blank %}
 
@@ -58,12 +58,14 @@ raspi%$ cd vagrant-docker/docker/prometheus-grafana-on-raspi3
 ```
 .htpasswd 作成時のユーザ/パス == GF_SECURITY_ADMIN_USER/GF_SECURITY_ADMIN_PASSWORD
 ```
+
 である必要があります。
 
 Grafana の認証機能により設定した Basic 認証でログインできる仕組みがあり、
 一致しない場合、ログインできず、失敗します。
 
 - grafana/env
+
 ```
 GF_SECURITY_ADMIN_USER=admin-user
 GF_SECURITY_ADMIN_PASSWORD=admin-pass
@@ -81,9 +83,9 @@ raspi%$ cat nginx/conf/conf.d/.htpasswd
 admin-user:$apr1$JLxC83lt$uO7aEn9Z59fZtba4EA7C6/
 ```
 
-## Cron設定
+## Cron 設定
 
-Raspi の温度や電圧を定期取得し Prometheus に読み込ませるファイル(*.prom)作成します。
+Raspi の温度や電圧を定期取得し Prometheus に読み込ませるファイル(\*.prom)作成します。
 
 ```
 */5 * * * * <home/to/path>/vagrant-docker/docker/prometheus-grafana-on-raspi3/node-exporter/collector/raspi.sh
@@ -113,12 +115,11 @@ raspi%$ docker-compose up -d
 
 ## Data Source 設定
 
-以下の様に設定し「Save & Test」をクリックししSuccessすることを確認します。
+以下の様に設定し「Save & Test」をクリックしし Success することを確認します。
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170501/20170501002606.png" width="100%">
 </div>
-
 
 ## Dashboard.json インポート
 
@@ -134,12 +135,12 @@ raspi%$ docker-compose up -d
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170501/20170501003051.png" width="100%">
 </div>
 
-
 ## ポイント !
 
 ### セキュリティ上の観点から外から直接 Grafana を参照させない様にしました。
 
 nginx/conf/conf.d/default.conf
+
 ```
 server {
     listen       80;
@@ -153,15 +154,14 @@ server {
 }
 ```
 
-
 ### image 選びは慎重に。
 
 以下の点で非常にハマりました。
 
-1. Raspberry Pi3 Model B (今回はarm7l)上で動作するか
+1. Raspberry Pi3 Model B (今回は arm7l)上で動作するか
 2. Nginx で Proxy 機能が正しく動作するか
 
-nginx のproxy機能で grafana に繋げても 以下の様に表示されてしまうケースにぶつかりまくりました。
+nginx の proxy 機能で grafana に繋げても 以下の様に表示されてしまうケースにぶつかりまくりました。
 
 ```
 {{alert.title}}
@@ -173,6 +173,6 @@ nginx のproxy機能で grafana に繋げても 以下の様に表示されて�
 自作した方が早かったかもと反省。
 
 今回は自身を監視するという仕組みにしましたが外部から監視し相互に監視し合う体制が必要です。
-家庭内稟議が通ればもう一台getしよう！
+家庭内稟議が通ればもう一台 get しよう！
 
 そして、家庭の為になるものを作ろう！

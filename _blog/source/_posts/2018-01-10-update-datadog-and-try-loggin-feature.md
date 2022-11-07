@@ -3,42 +3,41 @@ layout: post
 title: Datadog Agent 6系にアップデートして Logging 機能を試す！
 date: 2018-01-10
 tags:
-- Datadog
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180110/20180110145104.png
+  - Datadog
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180110/20180110145104.png
 ---
 
-Datadog Agent 6系にアップデートして Logging 機能を試す！
+Datadog Agent 6 系にアップデートして Logging 機能を試す！
 
-2017年末にβ版ですが、Datadog の Log 可視化ツールの利用が発表されました。
+2017 年末に β 版ですが、Datadog の Log 可視化ツールの利用が発表されました。
 
-* Unifying the views でグラフの高負荷時刻付近のログを参照する機能があったり
-* Elasticsearch+Fluentd の代替として期待できそう
+- Unifying the views でグラフの高負荷時刻付近のログを参照する機能があったり
+- Elasticsearch+Fluentd の代替として期待できそう
 
 と思い早速導入してみました。
 
 ## datadog-agent インストール方法
 
-2018年1月10日時点では 5系がインストールされます。
+2018 年 1 月 10 日時点では 5 系がインストールされます。
 
-## 5系、6系とで主に変わった点
+## 5 系、6 系とで主に変わった点
 
-* Datadog 設定ファイルパス変更
+- Datadog 設定ファイルパス変更
 
-|                    | *5系*                           | *6系*                                  |
+|                    | _5 系_                          | _6 系_                                 |
 | ------------------ | ------------------------------- | -------------------------------------- |
 | ベースディレクトリ | /etc/dd-agent                   | /etc/datadog-agent                     |
 | 各種設定ファイル   | /etc/dd-agent/conf.d/nginx.yaml | /etc/dd-agent/conf.d/nginx.d/conf.yaml |
 | メトリクス情報     | dd-agent info                   | datadog-agent status                   |
 
-6系では dd-agent コマンドがありませんでした。
+6 系では dd-agent コマンドがありませんでした。
 
-* dd-agent configcheck に該当するコマンドが見当たらない？
-どこにあるのか教えてください(;>_<)
+- dd-agent configcheck に該当するコマンドが見当たらない？
+  どこにあるのか教えてください(;>\_<)
 
-## 5系からのアップグレード方法
+## 5 系からのアップグレード方法
 
 https://github.com/DataDog/datadog-agent/blob/master/docs/beta.md
-
 
 自身の環境は Ubuntu 16.04.2 LTS だったので以下方法でアップグレードしました。
 
@@ -51,7 +50,7 @@ Automatic import failed, you can still try to manually run: datadog-agent import
 ```
 
 Error と出るので一瞬ハッとしましたが、Error Message をよく見ると
-6系の `/etc/datadog-agent/datadog.yaml` は問題ない設定となっている様に見えますが、上書きしたい場合は --force を使ってね、
+6 系の `/etc/datadog-agent/datadog.yaml` は問題ない設定となっている様に見えますが、上書きしたい場合は --force を使ってね、
 とあります。
 
 datadog-agent のアップグレードは無事完了していました。
@@ -70,8 +69,7 @@ Agent (v6.0.0-rc.2)
 
 また各種設定(/etc/datadog-agent/conf.d, checks.d)ファイルも問題なく移行できていました。
 
-
-## 5系の設定ファイルを 6系へオーバーライド
+## 5 系の設定ファイルを 6 系へオーバーライド
 
 特に上記の手法で問題ないですが強制的にオーバーライドする方法を明記しておきます。
 
@@ -125,15 +123,15 @@ logs:
 init_config:
 
 instances:
-    -  monitor_agent_url: http://localhost:24220/api/plugins.json
-       tag_by: type
+  - monitor_agent_url: http://localhost:24220/api/plugins.json
+    tag_by: type
 
 logs:
-    - type: file
-      service: hogehoge
-      path: /var/log/td-agent/td-agent.log
-      source: td-agent
-      sourcecategory: td-agent
+  - type: file
+    service: hogehoge
+    path: /var/log/td-agent/td-agent.log
+    source: td-agent
+    sourcecategory: td-agent
 ```
 
 ## datadog.conf 修正
@@ -143,7 +141,6 @@ logs:
 ```
 log_enabled: true
 ```
-
 
 ## 設定反映
 
@@ -193,7 +190,7 @@ logrotate で生成される新たな log のパーミッションにも注意�
 ```
 
 元々 0640 でしたが 0644 で生成するようにしました。
-これにて解決♪
+これにて解決 ♪
 
 ## Datadog Logging で確認
 
@@ -205,7 +202,7 @@ Kibana の Discover ページのような作りです。
 </div>
 
 今後フィルタリングしてグラフを作ったりできたりしてくるのか、
-Pro版なら無料で使わせてもらえないかな、
+Pro 版なら無料で使わせてもらえないかな、
 なんて期待が高まっております
 
 お願い、Datadog さん(-人-)

@@ -3,10 +3,9 @@ layout: post
 title: docker-compose で開発環境構築 〜Nginx アクセスログ(ltsv) を fluentd + elasticsearch + kibana で可視化〜
 date: 2017-04-21
 tags:
-- Docker
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421221055.png
+  - Docker
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421221055.png
 ---
-
 
 ## 概要
 
@@ -52,7 +51,8 @@ Git にまとめています。
 ```
 
 ### ポイント
-* nginx のログ格納場所を `volume` 指定しホスト側とシンク。 それを fluentd 側でも `volume` 指定し tail するようにしました。
+
+- nginx のログ格納場所を `volume` 指定しホスト側とシンク。 それを fluentd 側でも `volume` 指定し tail するようにしました。
 
 以下のようなイメージです。
 
@@ -68,7 +68,6 @@ Nginx の Welcome ページが確認できます。
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421222343.png" width="100%">
 </div>
-
 
 先程の `docker-compose up` 後に以下のようなログが見え
 fluentd が Nginx アクセスログを捕まえているのがわかります。
@@ -87,14 +86,16 @@ Kibana ページが表示されます。
 </div>
 
 1.  Index name or pattern
-    - fluentd-* 指定
 
-2. Time-field name
+    - fluentd-\* 指定
+
+2.  Time-field name
+
     - @timestamp 指定
 
-3. Create ボタン押下
+3.  Create ボタン押下
 
-4. レフトメニューから `Discover` クリック
+4.  レフトメニューから `Discover` クリック
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170421/20170421223626.png" width="100%">

@@ -1,9 +1,9 @@
 ---
 title: curl で Datadog ユーザ ID リスト取得
 tags:
-- Datadog
+  - Datadog
 date: 2021-10-20
-thumbnail: https://imgix.datadoghq.com/img/about/presskit/usage/logousage_white.png?auto=format&fit=max&w=847
+cover: https://imgix.datadoghq.com/img/about/presskit/usage/logousage_white.png?auto=format&fit=max&w=847
 ---
 
 <div class="toc">

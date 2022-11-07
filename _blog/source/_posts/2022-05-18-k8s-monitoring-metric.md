@@ -2,7 +2,7 @@
 title: k8s リソースをディスプレイに表示する
 date: 2022-05-18
 category: RaspberryPI
-thumbnail: https://i.imgur.com/ROKM81Z.jpg
+cover: https://i.imgur.com/ROKM81Z.jpg
 ---
 
 <div class="toc">

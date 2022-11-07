@@ -1,9 +1,9 @@
 ---
 title: Ansible のターゲットホストで Python3 を指定し pip install する
 tags:
-- Ansible
+  - Ansible
 date: 2021-03-07
-thumbnail: https://i.imgur.com/aKWcTG7.png
+cover: https://i.imgur.com/aKWcTG7.png
 ---
 
 <div class="toc">
@@ -23,7 +23,6 @@ Raspberry PI のセットアップは Ansible で管理しており、
 Ansible で `unlink python` して `ln -s /usr/bin/python3 /usr/bin/python` をすれば良いのかな？
 と思っていたら、もっとシンプルにできたのでメモ。
 
-
 ## OS バージョン情報は以下の通り
 
 ```
@@ -41,19 +40,19 @@ SUPPORT_URL="http://www.raspbian.org/RaspbianForums"
 BUG_REPORT_URL="http://www.raspbian.org/RaspbianBugs"
 ```
 
-
 ## サムネイルが全てですが、一応
 
 以下の ansible.cfg の設定が全てです。
 
-* ansible.cfg
+- ansible.cfg
 
 ```
 [defaults]
 interpreter_python=/usr/bin/python3
 ```
 
-* tasks/main.yml
+- tasks/main.yml
+
 ```
 # NOTE: pip3 として利用する
 - name: pip3 install packages

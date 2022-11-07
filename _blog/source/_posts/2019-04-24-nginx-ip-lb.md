@@ -3,8 +3,8 @@ layout: post
 title: Nginx IP 直アクセス不許可 & LB ヘルスチェック設定
 date: 2019-04-24
 tags:
-- Nginx
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190424/20190424103347.png
+  - Nginx
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190424/20190424103347.png
 ---
 
 よく設定している Nginx の configure file のアクセス元によっての振り分け方をまとめました。
@@ -17,7 +17,7 @@ LB → Nginx → Rails
 
 ## Nginx 設定
 
-* conf.d/default.conf
+- conf.d/default.conf
 
 ```
 # cannot allow ip direct
@@ -47,7 +47,7 @@ server {
 
 ### IP 直アクセス禁止
 
-`server_name  _` とすることで、ip 直アクセスをターゲットにしています。
+`server_name _` とすることで、ip 直アクセスをターゲットにしています。
 
 ```
 server {

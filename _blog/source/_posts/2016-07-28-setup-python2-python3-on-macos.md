@@ -3,23 +3,22 @@ layout: post
 title: MacOSX に Python2, Python3 仮想環境構築
 date: 2016-07-28
 tags:
-- Python
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160728/20160728142804.jpg
+  - Python
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160728/20160728142804.jpg
 ---
 
 ## 経緯
 
-MacOSX デフォルトでは python 2系。
+MacOSX デフォルトでは python 2 系。
 
-python 2.7 は 2020年までのサポート なので
+python 2.7 は 2020 年までのサポート なので
 python 3 系 に慣れておこうということで
 3 系環境を構築しようと思いました。
 
 ですが
-[dlib](http://dlib.net/) など Python 2系でないとうまく設定ができなかった経緯があり
+[dlib](http://dlib.net/) など Python 2 系でないとうまく設定ができなかった経緯があり
 (※自分の不手際の可能性もありますが)
 両方残そうということで両仮想環境を構築します。
-
 
 ## 環境
 
@@ -36,7 +35,6 @@ BuildVersion:   15F34
 以下オフィシャルサイト参照してください。
 
 [Homebrew Ja](http://brew.sh/index_ja.html)
-
 
 ## Python2, 3 インストール
 
@@ -99,8 +97,6 @@ $ which python3
 ```
 $ virtualenv -p /usr/local/bin/python3 ~/py3env
 ```
-
-
 
 ## 仮想環境切り替え
 

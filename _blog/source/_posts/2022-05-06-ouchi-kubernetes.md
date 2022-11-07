@@ -2,7 +2,7 @@
 title: おうち k8s 構築
 date: 2022-05-06
 category: RaspberryPI
-thumbnail: https://i.imgur.com/RgpOXr3.jpg
+cover: https://i.imgur.com/RgpOXr3.jpg
 ---
 
 <div class="toc">
@@ -89,8 +89,8 @@ $ sudo systemctl disable dphys-swapfile
 swap を無効化する理由は公式ドキュメントで言及されています。
 
 https://kubernetes.io/ja/docs/setup/production-environment/tools/kubeadm/_print/#始める前に
-> Swapがオフであること。kubeletが正常に動作するためにはswapは必ずオフでなければなりません。
 
+> Swap がオフであること。kubelet が正常に動作するためには swap は必ずオフでなければなりません。
 
 ## IP 固定
 

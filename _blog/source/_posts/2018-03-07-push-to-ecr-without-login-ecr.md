@@ -3,9 +3,9 @@ layout: post
 title: ECR にログイン(aws ecr get-login)無しでプッシュする
 date: 2018-03-07
 tags:
-- AWS
-- ECR
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180307/20180307231703.png
+  - AWS
+  - ECR
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180307/20180307231703.png
 ---
 
 ## 概要
@@ -33,7 +33,7 @@ $ docker pull pottava/amazon-ecr-credential-helper
 
 ## 認証設定
 
-以下3つの中から1つ利用ください。
+以下 3 つの中から 1 つ利用ください。
 EC2 であれば、`1. インスタンスロールで認証` が一番すっきりしていてコードの見通しが良いです。
 
 1. インスタンスロールで認証
@@ -86,8 +86,7 @@ sudo chmod +x /usr/bin/docker-credential-ecr-login
 
 ### 3. 環境変数で認証
 
-
-* 環境変数セット
+- 環境変数セット
 
 ```sh
 export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
@@ -128,4 +127,4 @@ cat << EOF > $HOME/.docker/config.json
 EOF
 ```
 
-これで `aws ecr get-login` から解放されます♪
+これで `aws ecr get-login` から解放されます ♪

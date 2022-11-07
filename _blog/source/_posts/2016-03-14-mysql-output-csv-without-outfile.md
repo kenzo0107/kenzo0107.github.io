@@ -3,31 +3,31 @@ layout: post
 title: MySQL SQL結果をINTO OUTFILEを使用せずCSV取得
 date: 2016-03-14
 tags:
-- MySQL
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160408/20160408142308.png
+  - MySQL
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160408/20160408142308.png
 ---
 
 ## 概要
 
-MySQL SELECT文の結果をcsvで取得する際
-以下のようにCLI上で実行することで取得できます。
+MySQL SELECT 文の結果を csv で取得する際
+以下のように CLI 上で実行することで取得できます。
 
 ```
 $ mysql -u <user> -p<password> <db_name>
 mysql> SELECT * FROM [table] WHERE hoge=hoge INTO OUTFILE "/tmp/output.csv" FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"';
 ```
 
-ですが、mysql ログインユーザ<user>の権限にFILEがない場合
+ですが、mysql ログインユーザ<user>の権限に FILE がない場合
 以下のようなエラーで出力できません。
 
 ```
 RROR 1 (HY000): Can't create/write to file '/tmp/output.csv' (Errcode: 13)
 ```
 
-FILE のREAD/WRITE権限を付与すれば問題ないですが
+FILE の READ/WRITE 権限を付与すれば問題ないですが
 権限周りをいじりたくないときなどあるかと思います。
 
-本番環境のDBで権限周りがブラックボックス化していて
+本番環境の DB で権限周りがブラックボックス化していて
 FLUSH PRIVILEGES すると何か障害が出るんじゃないかとか汗
 
 その際に実施したことを以下まとめました。
@@ -37,7 +37,8 @@ FLUSH PRIVILEGES すると何か障害が出るんじゃないかとか汗
 TXT として取得して sed で csv ファイルに加工する、
 という方法で実行しています。
 
-例) 以下のようなSQL実行結果を取得したとすると
+例) 以下のような SQL 実行結果を取得したとすると
+
 ```
 $ less output.txt
 
@@ -62,7 +63,7 @@ $ less output.txt
 $ mysql -u <user> -p<password> <db_name> -e"<query>"  > output.txt
 ```
 
-### Excel用に加工
+### Excel 用に加工
 
 - 力技
 
@@ -89,7 +90,7 @@ $ cat output3.txt | sed -e 's/\t/","/g' > ouptut4.txt
 
 ## 文字コード変更
 
-このCSVを利用する方(提出先)の方の文字コードに合わせます。
+この CSV を利用する方(提出先)の方の文字コードに合わせます。
 提出先では Shift JIS がデフォルトとのことで そこに変更します。
 
 ```
@@ -104,7 +105,7 @@ $ nkf -g output.csv
 Shift_JIS
 ```
 
-これで INTO OUTFILE を利用せず CSVファイルを取得できました。
+これで INTO OUTFILE を利用せず CSV ファイルを取得できました。
 ouput.csv
 
 ## おまけ

@@ -3,18 +3,16 @@ layout: post
 title: LINE Notify で Zabbix Alert 通知
 date: 2016-10-11
 tags:
-- Monitoring
-- LINE Notify
-- Zabbix
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011142249.png
+  - Monitoring
+  - LINE Notify
+  - Zabbix
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011142249.png
 ---
-
 
 ## 概要
 
 Zabbix アラート を LINE Notify を利用して
-LINEにメッセージを送るように設定しました。
-
+LINE にメッセージを送るように設定しました。
 
 ## 手順
 
@@ -25,7 +23,6 @@ LINEにメッセージを送るように設定しました。
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011140750.png" width="100%">
 </div>
-
 
 ### 登録してログイン
 
@@ -46,7 +43,6 @@ LINEにメッセージを送るように設定しました。
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011141027.png" width="100%">
 </div>
 
-
 ### トークルーム選択しトークン発行
 
 <div style="text-align:center;">
@@ -59,12 +55,12 @@ LINEにメッセージを送るように設定しました。
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011141349.png" width="100%">
 </div>
 
-
 ### Zabbix スクリプト設定
 
 {% linkPreview https://github.com/kenzo0107/Zabbix3-LineNotify _blank %}
 
 ## Env
+
 - Zabbix 3.0
 - CentOS Linux release 7.2.1511 (Core)
 
@@ -79,25 +75,25 @@ LINEにメッセージを送るように設定しました。
 ```
 
 ### Media Types 設定
+
 <div style="text-align:center;">
 <img src="http://i.imgur.com/mE5dEXI.png" width="100%">
 </div>
 
 ### Users > Media 設定
+
 <div style="text-align:center;">
 <img src="http://i.imgur.com/ovDFnTq.png" width="100%">
 </div>
 
-
 ### 通知テスト
 
 テスト環境などで
-Nginx の process が1つ以上になったらアラート出すように設定してみた結果
+Nginx の process が 1 つ以上になったらアラート出すように設定してみた結果
 
 <div style="text-align:center;">
 <img src="http://i.imgur.com/6B554NX.png" width="100%">
 </div>
-
 
 ## 所感
 
@@ -113,7 +109,7 @@ LINE アカウントはプライベートアカウントなので
 個人的に
 Twilio みたいに LINE Notify で電話通知出来たら嬉しいです。
 
-まずは障害がない世界を♪
+まずは障害がない世界を ♪
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011213827.jpg" width="100%">

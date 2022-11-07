@@ -3,8 +3,8 @@ layout: post
 title: 今更聞けない！CPU, Memory 使用率の見方
 date: 2016-08-10
 tags:
-- Linux
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810140724.png
+  - Linux
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810140724.png
 ---
 
 気持ちを抑えられずありがちなタイトルを付けました。
@@ -13,19 +13,17 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/2
 実際に手を動かして自分で見て解決するというチュートリアルとして
 本記事を参照いただければ何よりです。
 
-
 ## サーバに接続し辛い
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810141554.png" width="100%">
 </div>
 
-- ブラウザからURLを打ち込みサイトにアクセスするもページが表示されない
+- ブラウザから URL を打ち込みサイトにアクセスするもページが表示されない
 - API が timeout する
 
 上記の様な事象が発生した場合は
 監視グラフに異変が起きているはずです。
-
 
 その監視グラフを元に
 アクセスしづらくなった徴候のある負荷状況を確認し
@@ -33,13 +31,13 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/2
 
 以下、出来るだけ原理を知る上で CLI を元に話を進めていきます。
 
-## サーバにCPU負荷を掛ける
+## サーバに CPU 負荷を掛ける
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810142151.jpg" width="100%">
 </div>
 
-CPU負荷を掛けるツールとして[LinuxのI/OやCPUの負荷とロードアベレージの関係を詳しく見てみる](http://qiita.com/kunihirotanaka/items/21194f77713aa0663e3b)のスクリプトを拝借しました。
+CPU 負荷を掛けるツールとして[Linux の I/O や CPU の負荷とロードアベレージの関係を詳しく見てみる](http://qiita.com/kunihirotanaka/items/21194f77713aa0663e3b)のスクリプトを拝借しました。
 ※ありがとうございます @kunihirotanaka 社長！
 
 - loadtest.pl <arg1> <arg2>
@@ -65,14 +63,14 @@ for( my $i=0; $i<$nprocs; $i++ ){
 wait;
 ```
 
-ロードアベレージを 2 に近づける様にCPU負荷を掛ける
+ロードアベレージを 2 に近づける様に CPU 負荷を掛ける
 
 ```
 $ chmod +x ./loadtest.pl
 $ ./loadtest.pl 2
 ```
 
-## CPU使用状況確認コマンド
+## CPU 使用状況確認コマンド
 
 - リアルタイム監視 → `top`, `vmstat`
 - 過去確認 → `sar`
@@ -102,6 +100,7 @@ Swap:  2097148k total,   466724k used,  1630424k free,   410784k cached
 ```
 
 上記結果から
+
 - Load Average が上昇している
 - `%CPU`, `COMMAND` から上昇の原因は `loadtest.pl`
 
@@ -121,12 +120,11 @@ $ kill -9 6529
 $ ps ax --sort=-%cpu -o command,pid,pid,%cpu|head -n 11
 ```
 
-※ `-n 11` なのは 1行目はカラム名が入る為
+※ `-n 11` なのは 1 行目はカラム名が入る為
 
 ```sh
 COMMAND                       PID   PID %CPU
 ```
-
 
 #### グラフで見る
 
@@ -137,13 +135,14 @@ COMMAND                       PID   PID %CPU
 </div>
 
 - 12:07 辺りから負荷上昇
+
 * loadavg5 急上昇
 * CPU user 急上昇。 CPU system はそこまで上がっていない。
-→ アプリケーションのプロセスがCPUを食っている。
-*  memory は消費していない
+  → アプリケーションのプロセスが CPU を食っている。
+* memory は消費していない
 
 top コマンドの様にどのプロセスが原因かまではグラフからは不明です。
-サーバにアクセスして12:07 あたりからのログを調査する等原因を特定していきます。
+サーバにアクセスして 12:07 あたりからのログを調査する等原因を特定していきます。
 
 ##### 補足
 
@@ -151,16 +150,13 @@ top コマンドの様にどのプロセスが原因かまではグラフから�
 Apache のモジュールとして PHP を利用している場合は `COMMAND` に `httpd` と表示されます。
 `fluentd` は ruby で実行されているので `ruby` です。
 
->   PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
-> 12376 apache    20   0  833m 115m  19m S  2.4  3.1   0:03.52 httpd
->  1455 td-agent  20   0  461m  74m    0 S  1.2  2.0   1098:30 ruby
-
-
-
+> PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND
+> 12376 apache 20 0 833m 115m 19m S 2.4 3.1 0:03.52 httpd
+> 1455 td-agent 20 0 461m 74m 0 S 1.2 2.0 1098:30 ruby
 
 #### `vmstat` で CPU 使用率確認
 
-1秒ごとに出力
+1 秒ごとに出力
 
 ```sh
 $ vmstat 1
@@ -190,6 +186,7 @@ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
 ```
 
 上記から以下のことが確認できます。
+
 - `./loadtest.pl 2` を実行中は `procs r (実行中プロセス) = 2` となっている
 - `cpu us` が 100%, `cpu id` が 0%
   - `cpu id` がなくなり、プログラムが 100% CPU を食いつぶしている
@@ -210,24 +207,21 @@ $ sar -u -s 21:00:00 -e 22:10:00 -f /var/log/sa/sa31
 Average:            0       205      0.13      0.18      0.09
 ```
 
-
-
 sar コマンドは過去まで遡って確認できるので便利です。
 
 ##### sar -q 実行結果各項目
 
-| *Item*   | *Explain*                                                                                                                                                                     |
+| _Item_   | _Explain_                                                                                                                                                                     |
 | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | runq-sz  | CPU を実行する為のメモリー内で待機中のカーネルスレッド数。<br/>通常、この値は 2 未満になる。<br/>値が常に 2 より大きい場合は、システムが CPU の限界に到達している可能性がある |
 | plist-sz | プロセスリストのプロセスとスレッド数                                                                                                                                          |
-| ldavg-1  | 過去1分間のロードアベレージ                                                                                                                                                   |
-| ldavg-5  | 過去5分間のロードアベレージ                                                                                                                                                   |
-| ldavg-15 | 過去15分間のロードアベレージ                                                                                                                                                  |
+| ldavg-1  | 過去 1 分間のロードアベレージ                                                                                                                                                 |
+| ldavg-5  | 過去 5 分間のロードアベレージ                                                                                                                                                 |
+| ldavg-15 | 過去 15 分間のロードアベレージ                                                                                                                                                |
 
+#### システムコールを伴う CPU 負荷
 
-#### システムコールを伴うCPU負荷
-
-ロードアベレージを 2 に近づける & システムコールする様にCPU負荷を掛ける
+ロードアベレージを 2 に近づける & システムコールする様に CPU 負荷を掛ける
 
 ```
 $ ./loadtest.pl 2 1
@@ -265,9 +259,7 @@ procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
  0  0 597636 884512   3964  36568    0    0     0     0  104  195  0  0 100  0  1
 ```
 
-
 - loadtest.pl からシステムコールが多数実行される為、`cpu sy` 上昇している。
-
 
 #### グラフで見る
 
@@ -275,28 +267,20 @@ procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810123318.png" width="100%">
 </div>
 
-* 12:25 辺りから負荷急上昇
-* loadavg5 急上昇
-* CPU user, system 共に急上昇。 system の割合が多い
-→ システムコールを伴うアプリケーションのプロセスがCPUを食っている。
-*  memory は消費していない
+- 12:25 辺りから負荷急上昇
+- loadavg5 急上昇
+- CPU user, system 共に急上昇。 system の割合が多い
+  → システムコールを伴うアプリケーションのプロセスが CPU を食っている。
+- memory は消費していない
 
 ### 対応例
 
-- アプリケーションのCPU使用箇所の特定
+- アプリケーションの CPU 使用箇所の特定
   - datadog, NewRelic 等の APM(Aplication Performance Management) 導入しアプリケーションのボトルネック抽出し修正
     - コストこそ掛かりますが非常に有用です
-- CPU増設
+- CPU 増設
 - 対象アプリのプロセスを kill (先ほどの プロセス kill )
-	- 例）管理画面で集計処理し、DBに負荷掛けサービスに影響してしまった時に集計処理のプロセスを kill
-
-
-
-
-
-
-
-
+  - 例）管理画面で集計処理し、DB に負荷掛けサービスに影響してしまった時に集計処理のプロセスを kill
 
 ## サーバにメモリ負荷を掛ける
 
@@ -306,7 +290,7 @@ procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
 
 - memorytest.pl
 
-1秒毎に 20MB 消費する様に設定
+1 秒毎に 20MB 消費する様に設定
 
 ```
 #!/usr/bin/perl
@@ -340,10 +324,11 @@ $ top -a
 
 もしくは top 実行後、 Shift + m
 
->   PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
->  6780 mameko_d  20   0  385m 362m 1212 S  5.3 36.4   0:01.88 memorytest.pl
+> PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND
+> 6780 mameko_d 20 0 385m 362m 1212 S 5.3 36.4 0:01.88 memorytest.pl
 
 上記結果から
+
 - `%MEM`, `COMMAND` から上昇の原因は `memorytest.pl`
 
 暫定的な対処としては loadtest.pl と同様、プロセスを kill することで負荷を止めることができます。
@@ -351,7 +336,6 @@ $ top -a
 ```sh
 $ kill -9 6780
 ```
-
 
 #### `free` で残メモリ確認
 
@@ -365,6 +349,7 @@ Swap:      2097148     517696    1579452
 ```
 
 何度か実行すると徐々に `Mem` の
+
 - `used` 上昇
 - `free` 減少
 - free 減少に引っ張られて `buffers`, `cached` 減少
@@ -374,11 +359,11 @@ Swap:      2097148     517696    1579452
 - Mem: 実メモリ
 - Swap: 仮想メモリ
 
-| *Item*  | *Explain*                                                                                                            |
-| ------- | -------------------------------------------------------------------------------------------------------------------- |
-| shared  | プロセス間で共有できる領域用メモリ                                                                                   |
-| buffers | buffer に利用されるメモリ<br/>I/Oアクセスする時に、直接I/Oに行くのではなく、キャッシュ経由でアクセスさせる為のメモリ |
-| cached  | ページキャッシュ用メモリ<br/>アプリで実メモリが必要な際は、 cached のメモリが破棄される                              |
+| _Item_  | _Explain_                                                                                                               |
+| ------- | ----------------------------------------------------------------------------------------------------------------------- |
+| shared  | プロセス間で共有できる領域用メモリ                                                                                      |
+| buffers | buffer に利用されるメモリ<br/>I/O アクセスする時に、直接 I/O に行くのではなく、キャッシュ経由でアクセスさせる為のメモリ |
+| cached  | ページキャッシュ用メモリ<br/>アプリで実メモリが必要な際は、 cached のメモリが破棄される                                 |
 
 #### 確認観点
 
@@ -406,7 +391,6 @@ buffer + cache も含まれます。
 ##### Swap 発生は何を見ればわかる？
 
 `vmstat` 実行してスラッシングが発生しているか確認
-
 
 ##### スラッシング確認方法
 
@@ -441,13 +425,11 @@ procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
 - bo (block out to device) ... ブロックデバイスに送られたブロック
 - bi (block in from device) ... ブロックデバイスから受け取ったブロック
 
-
 #### 物理メモリ使用量(Resident Set Size)高いランキング Top10 表示
 
 ```
 $ ps ax --sort=-rss -o command,pid,ppid,vsz,rss|head -n 11
 ```
-
 
 #### グラフで見る
 
@@ -455,8 +437,8 @@ $ ps ax --sort=-rss -o command,pid,ppid,vsz,rss|head -n 11
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170810/20170810125452.png" width="100%">
 </div>
 
-* 12:35 辺りからメモリ急上昇
-* cached 減、 used 増
+- 12:35 辺りからメモリ急上昇
+- cached 減、 used 増
 
 #### 対応例
 
@@ -465,17 +447,9 @@ $ ps ax --sort=-rss -o command,pid,ppid,vsz,rss|head -n 11
 - メモリ増設
 - 対象アプリのプロセスを kill (先ほどの プロセス kill )
 
-
-
-
-
-
-
-
-
 # Disk I/O
 
-## I/Oディスク利用状況 確認
+## I/O ディスク利用状況 確認
 
 ```
 $ sar -b -s 13:00:00 -e 14:00:00 -f /var/log/sa/sa31
@@ -491,13 +465,13 @@ Average:         0.25      0.00      0.25      0.04      2.61
 
 #### `sar -b` 実行結果項目
 
-| *Item*  | *Explain*                                                        |
-| ------- | ---------------------------------------------------------------- |
-| tps     | １秒あたりの転送 (デバイスに対するIOリクエスト) 数の合計         |
-| rtps    | １秒あたりの読み込みIOリクエストの回数の合計                     |
-| wtps    | １秒あたりの書き込みIOリクエストの回数の合計                     |
-| bread/s | １秒あたりの（ブロック単位）読み込みIOリクエストのデータ量の合計 |
-| bwrtn/s | １秒あたりの（ブロック単位）書き込みIOリクエストのデータ量の合計 |
+| _Item_  | _Explain_                                                          |
+| ------- | ------------------------------------------------------------------ |
+| tps     | １秒あたりの転送 (デバイスに対する IO リクエスト) 数の合計         |
+| rtps    | １秒あたりの読み込み IO リクエストの回数の合計                     |
+| wtps    | １秒あたりの書き込み IO リクエストの回数の合計                     |
+| bread/s | １秒あたりの（ブロック単位）読み込み IO リクエストのデータ量の合計 |
+| bwrtn/s | １秒あたりの（ブロック単位）書き込み IO リクエストのデータ量の合計 |
 
 #### 確認観点
 
@@ -519,8 +493,6 @@ I/O 待ちプロセス増加
 
 - メモリの使用状況と Swap 確認
 
-
-
 ## まとめ
 
 CPU, Memory 使用率が上昇する原理を知った上で監視をすると
@@ -533,20 +505,14 @@ CPU, Memory 使用率が上昇する原理を知った上で監視をすると
 以上
 少しでも参考になれば幸いです。
 
-
-
 ## Reference
 
 - [vmstat コマンドの読み方](https://blogs.oracle.com/yappri/vmstat)
 - [単独のサーバーの「負荷」の正体を突き止める](http://tetsuyai.hatenablog.com/entry/20120105/1325750731)
-- [「非エンジニア」でもできるサーバ過負荷対策。ロードアベレージ、CPU使用率、I/Oディスク利用状況、メモリ使用量の調査方法](https://media.accel-brain.com/server-overload-pattern/)
+- [「非エンジニア」でもできるサーバ過負荷対策。ロードアベレージ、CPU 使用率、I/O ディスク利用状況、メモリ使用量の調査方法](https://media.accel-brain.com/server-overload-pattern/)
 - [サーバ負荷の原因を探る方法](http://beyondjapan.com/blog/2016/02/where-is-server-stress)
 - [Linux Performance Measurements using vmstat](https://www.thomas-krenn.com/en/wiki/Linux_Performance_Measurements_using_vmstat)
-- [LinuxのI/OやCPUの負荷とロードアベレージの関係を詳しく見てみる](http://qiita.com/kunihirotanaka/items/21194f77713aa0663e3b)
-
-
-
-
+- [Linux の I/O や CPU の負荷とロードアベレージの関係を詳しく見てみる](http://qiita.com/kunihirotanaka/items/21194f77713aa0663e3b)
 
 ## 補足
 

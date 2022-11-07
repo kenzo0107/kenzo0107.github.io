@@ -3,28 +3,27 @@ layout: post
 title: Ansible+Vagrant でシンプルなPrometheusモニタリング環境構築
 date: 2016-06-21
 tags:
-- Monitoring
-- Prometheus
-- Ansible
-- Vagrant
-thumbnail: http://i.imgur.com/pfazhaR.png
+  - Monitoring
+  - Prometheus
+  - Ansible
+  - Vagrant
+cover: http://i.imgur.com/pfazhaR.png
 ---
-
 
 ## 概要
 
-[Prometheus入門](https://prometheus.io/docs/introduction/getting_started/) にあるチュートリアルを
-Ansibleで簡単に構築できるようにした、
+[Prometheus 入門](https://prometheus.io/docs/introduction/getting_started/) にあるチュートリアルを
+Ansible で簡単に構築できるようにした、
 というものです。
 
-先日2016年6月14日、
-LINE株式会社での[Prometheus Casual Talks #1](http://connpass.com/event/32859/)に参加し
+先日 2016 年 6 月 14 日、
+LINE 株式会社での[Prometheus Casual Talks #1](http://connpass.com/event/32859/)に参加し
 ナレッジのおさらいなどしたく、
 構築法をまとめました。
 
-## Prometheusとは
+## Prometheus とは
 
-最近話題のPull型のQuery Filtering可能で Grafana等と連携できる モニタリング/Alertツールです。
+最近話題の Pull 型の Query Filtering 可能で Grafana 等と連携できる モニタリング/Alert ツールです。
 
 ## 構成
 
@@ -47,17 +46,15 @@ LINE株式会社での[Prometheus Casual Talks #1](http://connpass.com/event/328
 
 以下ツールをインストールしておいてください。
 
-* VirtualBox
-* Vagrant
-* Ansible
-
+- VirtualBox
+- Vagrant
+- Ansible
 
 ## 使い方
 
 ### 1. git repository を clone
 
 [https://github.com/kenzo0107/Vagrant-Prometheus]
-
 
 ```
 $ git clone https://github.com/kenzo0107/Vagrant-Prometheus
@@ -113,7 +110,7 @@ $ ansible-playbook set_clients_prometheus.yml
 
 ## 6. PrometheusClient の起動確認
 
-以下PrometheusClientを起動しているサーバにアクセスし
+以下 PrometheusClient を起動しているサーバにアクセスし
 起動されているか確認します。
 
 - <http://192.168.11.31:8080/metrics>
@@ -122,7 +119,6 @@ $ ansible-playbook set_clients_prometheus.yml
 以下のように表示されれば成功です。
 
 <img src="http://i.imgur.com/igPci2Z.png" width="400px" />
-
 
 ## 7. PrometheusServer 設定
 

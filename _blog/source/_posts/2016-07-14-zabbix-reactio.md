@@ -3,10 +3,10 @@ layout: post
 title: Zabbix + Reactio 連携
 date: 2016-07-14
 tags:
-- Monitoring
-- Zabbix
-- Reactio
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160728/20160728142804.jpg
+  - Monitoring
+  - Zabbix
+  - Reactio
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160728/20160728142804.jpg
 ---
 
 ## 概要
@@ -14,8 +14,7 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160728/2
 Reactio の無料化によりその機能が解放され、様々な監視・アラートツールとの連携が可能になりました。
 これを機に Zabbix + Reactio 連携したのでまとめました。
 
-[Reactioが無料になります](http://blog.reactio.jp/entry/2016/07/04/090000)
-
+[Reactio が無料になります](http://blog.reactio.jp/entry/2016/07/04/090000)
 
 ## 環境
 
@@ -23,7 +22,6 @@ Reactio の無料化によりその機能が解放され、様々な監視・ア
 - CentOS Linux release 7.2.1511 (Core)
 
 Zabbix 3.0 がインストールされ起動されていることを前提とします。
-
 
 ## Zabbix 管理画面で Host 設定
 
@@ -66,12 +64,13 @@ $ cd /usr/lib/zabbix/alertscripts
 $ git clone http://github.com/zabbix-reactio
 ```
 
-## Zabbix DB情報 と Reactio で作成した Project と 発行した API KEY を設定ファイルに設定
+## Zabbix DB 情報 と Reactio で作成した Project と 発行した API KEY を設定ファイルに設定
 
 ```
 $ cd /usr/lib/zabbix/alertscripts/zabbix-reactio
 $ vi config.inc
 ```
+
 - db_info に DB 情報設定
 - `<Organization ID>` 設定
 - Project = API KEY 設定
@@ -124,10 +123,10 @@ $ mysql -h <DB Host> -u <DB user> -p<DB pass> <DB name> -e "SHOW COLUMNS FROM al
 +---------------------+---------------------+------+-----+---------+-------+
 ```
 
->Reacito では全てのインシデントは ID で管理されています。
->Zabbix で障害アラート通知時に Reactio インシデント作成API をコールし インシデントID を保存します。
+> Reacito では全てのインシデントは ID で管理されています。
+> Zabbix で障害アラート通知時に Reactio インシデント作成 API をコールし インシデント ID を保存します。
 >
->このインシデントIDは Zabbix で障害回復アラート通知時に Reatio インシデントステータス更新API をコールする際に利用します。
+> このインシデント ID は Zabbix で障害回復アラート通知時に Reatio インシデントステータス更新 API をコールする際に利用します。
 
 ## Zabbix Media types: Reactio 作成
 
@@ -139,7 +138,7 @@ Administration > Media types `Create media type` ボタンクリック
 
 以下値を入力し `Add` ボタンクリック
 
-| *Item*              | *Value*                    |
+| _Item_              | _Value_                    |
 | ------------------- | -------------------------- |
 | Name                | Reactio                    |
 | Type                | Script                     |
@@ -167,7 +166,7 @@ Administration > Users `Create media type` ボタンクリック
 
 <img src="http://i.imgur.com/cpZkPUT.png" width="200px" />
 
-- Addボタン クリックし一覧に表示されることを確認
+- Add ボタン クリックし一覧に表示されることを確認
 
 <img src="http://i.imgur.com/5ubxAKL.png" width="800px" />
 
@@ -181,7 +180,7 @@ Configuration > Actions Create ボタンクリック
 
 <img src="http://i.imgur.com/6hi0LPf.png" width="400px" />
 
-| *Item*           | *Value*                                                                                                                                                                                                                                                                                                                                |
+| _Item_           | _Value_                                                                                                                                                                                                                                                                                                                                |
 | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Name             | Reactio Notification                                                                                                                                                                                                                                                                                                                   |
 | Default subject  | PROBLEM alert - {TRIGGER.NAME} is {TRIGGER.STATUS}                                                                                                                                                                                                                                                                                     |
@@ -199,7 +198,6 @@ Configuration > Actions Create ボタンクリック
 
 <span style="color:red">メッセージを整形する場合でも、 上記項目は残しておくようにしてください。</span>
 
-
 - Operations タブ選択し Operations 情報入力
 
 <img src="https://i.imgur.com/r7MXmVg.png" width="300px" />
@@ -210,7 +208,6 @@ Configuration > Actions Create ボタンクリック
 
 以上 Zabbix で Reactio 連携設定完了しました。
 
-
 ## 実行結果
 
 - インシデント作成できた！
@@ -219,7 +216,6 @@ Configuration > Actions Create ボタンクリック
 <div style="text-align:center;">
 <img src="https://i.imgur.com/zWJpmAi.png" width="100%">
 </div>
-
 
 ## 今後
 

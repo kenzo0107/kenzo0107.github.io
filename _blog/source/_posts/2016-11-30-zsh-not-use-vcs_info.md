@@ -2,14 +2,14 @@
 layout: post
 title: zsh vcs_info が使えない問題解決
 date: 2016-11-30
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161130/20161130152308.png
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161130/20161130152308.png
 tags:
-- zsh
+  - zsh
 ---
 
 ## 概要
 
-CentOS5系で yum でインストールした zsh で以下エラー発生
+CentOS5 系で yum でインストールした zsh で以下エラー発生
 
 ```
 precmd: vcs_info: function definition file not found

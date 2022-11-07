@@ -3,15 +3,15 @@ layout: post
 title: Terraform でキーペア登録し起動した EC2 に SSH接続
 date: 2017-03-27
 tags:
-- AWS
-- Terraform
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327212027.png
+  - AWS
+  - Terraform
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327212027.png
 ---
 
 ## 今回やること
 
 - Mac ローカルで公開鍵、秘密鍵を生成
-- Terraform でEC2起動、セキュリティグループで SSH (ポート22)許可、key-pair 登録
+- Terraform で EC2 起動、セキュリティグループで SSH (ポート 22)許可、key-pair 登録
 
 Terraform の Hello World 的なチュートリアルと思っていただけたら幸いです。
 
@@ -22,7 +22,7 @@ Terraform の Hello World 的なチュートリアルと思っていただけた
 
 ## 公開鍵、秘密鍵生成
 
-RSAフォーマットで鍵を生成します。
+RSA フォーマットで鍵を生成します。
 
 ```
 $ ssh-keygen -t rsa
@@ -40,7 +40,7 @@ $ ls ~/.ssh/terraform-test*
 /Users/kenzo_tanaka/.ssh/terraform-test.pub　# 公開鍵
 ```
 
-公開鍵を起動したEC2インスタンスに登録し
+公開鍵を起動した EC2 インスタンスに登録し
 秘密鍵でアクセスします。
 
 以下のように利用する予定です。
@@ -52,10 +52,11 @@ $ ssh -i ~/.ssh/terraform-test <ec2 user>@<ec2 public ip>
 ## Terraform 設定ファイル
 
 - Point !
-    - `resource "aws_key_pair"` で使用する公開鍵設定をしています。
-    - `resource "aws_security_group"` でSSH（ポート22）を開いてます。
-    - `resource "aws_instance"` で使用しているセキュリティグループの指定は  `vpc_security_group_ids` を利用
-        - セキュリティグループの条件追加・削除する場合にインスタンスを一度削除し作り直すことをしたくない場合に vpc_security_group_ids を利用すると良いです。
+
+  - `resource "aws_key_pair"` で使用する公開鍵設定をしています。
+  - `resource "aws_security_group"` で SSH（ポート 22）を開いてます。
+  - `resource "aws_instance"` で使用しているセキュリティグループの指定は `vpc_security_group_ids` を利用
+    - セキュリティグループの条件追加・削除する場合にインスタンスを一度削除し作り直すことをしたくない場合に vpc_security_group_ids を利用すると良いです。
 
 - main.tf
 
@@ -153,15 +154,15 @@ $ terraform apply
 
 - AWS コンソール上で起動確認
 
-    - キーペアに terraform-test が指定されています。
-    - vpc, subnet も自動的にアタッチされてます。
+  - キーペアに terraform-test が指定されています。
+  - vpc, subnet も自動的にアタッチされてます。
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214009.png" width="100%">
 </div>
 
 - キーペア
-一応キーペアを見てみると登録されているのがわかります。
+  一応キーペアを見てみると登録されているのがわかります。
 
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214404.png" width="100%">
@@ -173,7 +174,6 @@ $ terraform apply
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214628.png" width="100%">
 </div>
 
-
 - SSH ログイン確認
 
 ```
@@ -184,8 +184,7 @@ $ ssh -i ~/.ssh/terraform-test ubuntu@ec2-54-65-244-25.ap-northeast-1.compute.am
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170327/20170327214837.png" width="100%">
 </div>
 
-
-無事SSHログインできました！
+無事 SSH ログインできました！
 
 ## 所感
 
@@ -196,7 +195,6 @@ $ ssh -i ~/.ssh/terraform-test ubuntu@ec2-54-65-244-25.ap-northeast-1.compute.am
 [Teffaform のチュートリアル](https://www.terraform.io/intro/getting-started/build.html)に始まり
 その他 [Stack Overflow](http://stackoverflow.com/questions/tagged/terraform) で
 適宜パターンを蓄積していく学習が程よいと思います。
-
 
 ## 参考
 

@@ -2,17 +2,18 @@
 layout: post
 title: Digest 認証設定
 date: 2016-08-16
-thumbnail: https://i.imgur.com/NMKovma.jpg
+cover: https://i.imgur.com/NMKovma.jpg
 ---
-
 
 ## Basic 認証 と Digest 認証の違い
 
 ### Basic 認証
+
 - user と password を平文でサーバに送っている。
 - 通信内容を傍受されると user / password がわかってしまう。
 
 ### Digest 認証
+
 - user / password を MD5 で暗号化して通信してから送っている。
 
 以上から Digest 認証の方がセキュリティ面で良いです。

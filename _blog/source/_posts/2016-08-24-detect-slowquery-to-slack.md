@@ -3,22 +3,22 @@ layout: post
 title: SlowQuery を検知して Explain で解析し Slack へ通知
 date: 2016-08-24
 tags:
-- Monitoring
-- MySQL
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160824/20160824165806.png
+  - Monitoring
+  - MySQL
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160824/20160824165806.png
 ---
 
-
-[fluentdでエラーログをSlackへ通知](http://kenzo0107.hatenablog.com/entries/2015/09/24) の続きです。
+[fluentd でエラーログを Slack へ通知](http://kenzo0107.hatenablog.com/entries/2015/09/24) の続きです。
 
 {% linkPreview http://kenzo0107.hatenablog.com/entry/2015/09/24/011418 _blank %}
 
 ## 概要
 
-MySQL DB サーバ の SlowQuery状況を
-リアルタイムにSlackで確認できるようにする為に導入しました。
+MySQL DB サーバ の SlowQuery 状況を
+リアルタイムに Slack で確認できるようにする為に導入しました。
 
 ## 環境
+
 - CentOS 6.5
 - td-agent 0.12.26
 
@@ -33,18 +33,19 @@ MySQL DB サーバ の SlowQuery状況を
 ```
 
 - fluent-plugin-nata2
-  - SET timestamp をあらかじめ除外しアクセスしているDB情報も保持してくれる
+
+  - SET timestamp をあらかじめ除外しアクセスしている DB 情報も保持してくれる
   - [https://github.com/studio3104/fluent-plugin-nata2]
 
 - fluent-plugin-mysql_explain
-  - in_mysqlslowquery_ex で取得したJSONの sql 属性にEXPLAIN 実行結果を取得
+
+  - in_mysqlslowquery_ex で取得した JSON の sql 属性に EXPLAIN 実行結果を取得
   - [https://github.com/kikumoto/fluent-plugin-mysql_explain]
-[https://github.com/kikumoto/fluent-plugin-sql_fingerprint]
+    [https://github.com/kikumoto/fluent-plugin-sql_fingerprint]
 
 - fluent-plugin-sql_fingerprint
   - SQL のパラメータにマスクをする
   - [https://github.com/kikumoto/fluent-plugin-sql_fingerprint]
-
 
 ## Percona Tool Kit インストール
 
@@ -113,7 +114,7 @@ fluent-plugin-sql_fingerprint で利用する fingersprint をインストール
 </match>
 ```
 
-※slowquery のパス、DBのアクセスアカウントなどは各環境により変更してください。
+※slowquery のパス、DB のアクセスアカウントなどは各環境により変更してください。
 
 ## td-agent 再起動
 
@@ -123,9 +124,9 @@ fluent-plugin-sql_fingerprint で利用する fingersprint をインストール
 
 ## 確認
 
-SlowQueryを発行し、Slackに通知されるか確認します。
+SlowQuery を発行し、Slack に通知されるか確認します。
 
-- 3秒 sleep させ、my.cnf に設定されている long-query-time の閾値の秒数を超えるようにしています。
+- 3 秒 sleep させ、my.cnf に設定されている long-query-time の閾値の秒数を超えるようにしています。
 
 ```
 mysql > SELECT count(*), sleep(3) FROM <table>;
@@ -144,8 +145,6 @@ show more をクリックすると Explain が通知されているのがわか�
 <div style="text-align:center;">
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160824/20160824172810.png" width="100%">
 </div>
-
-
 
 ## 総評
 

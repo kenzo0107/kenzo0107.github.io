@@ -1,10 +1,10 @@
 ---
 title: Lambda Edge で Basic 認証 や CSP 対応
 tags:
-- AWS
-- Lambda
+  - AWS
+  - Lambda
 date: 2020-04-16
-thumbnail: https://docs.aws.amazon.com/ja_jp/AmazonCloudFront/latest/DeveloperGuide/images/cloudfront-events-that-trigger-lambda-functions.png
+cover: https://docs.aws.amazon.com/ja_jp/AmazonCloudFront/latest/DeveloperGuide/images/cloudfront-events-that-trigger-lambda-functions.png
 ---
 
 Basic 認証 や CSP 対応を Lambda Edge で対応した話です。
@@ -13,7 +13,7 @@ Basic 認証 や CSP 対応を Lambda Edge で対応した話です。
 
 ## CSP とは？
 
-* XSS, Data Injection の様な特定種類の攻撃を検知し、影響を軽減する為に追加できるセキュリティレイヤー
+- XSS, Data Injection の様な特定種類の攻撃を検知し、影響を軽減する為に追加できるセキュリティレイヤー
 
 参考: [コンテンツセキュリティポリシー (CSP)](https://developer.mozilla.org/ja/docs/Web/HTTP/CSP)
 
@@ -49,10 +49,10 @@ Rails 自体で設定する方法もありますが、後述します。
 
 https://github.com/kenzo0107/sample-lambda-edge
 
-* templates/csp.js
-  * CSP 対策 を Original Response に設定
-* templates/basic_auth.js
-  * Basic 認証を Vewer Request に設定
+- templates/csp.js
+  - CSP 対策 を Original Response に設定
+- templates/basic_auth.js
+  - Basic 認証を Vewer Request に設定
 
 ## 実際設定してみてどう？
 
@@ -62,8 +62,6 @@ Rails でフロントに Vue を使用している場合に `script-src 'unsafe-
 
 これは Rails 側で設定しないと開発環境では動いたけど、Lambda Edge 効いてる環境だと動かない、ということがありそうで Lambda Edge でできるにはできるが、アプリケーション側に任せる方が良いのでは？
 と思いました。
-
-
 
 ## 参考
 

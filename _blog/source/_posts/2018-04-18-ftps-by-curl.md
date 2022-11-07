@@ -2,9 +2,9 @@
 layout: post
 title: curl で FTPS (File Transfer Protocol over SSL/TLS) 接続確認
 date: 2018-04-18
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180418/20180418082402.png
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180418/20180418082402.png
 tags:
-- FTPS
+  - FTPS
 ---
 
 以下コマンドで FTPS 接続確認ができます。

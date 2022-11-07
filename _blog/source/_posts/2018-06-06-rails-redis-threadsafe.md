@@ -3,18 +3,18 @@ layout: post
 title: Rails × Redis でスレッドセーフなアクセス数ランキング実装
 date: 2018-06-06
 tags:
-- Ruby
-- Rails
-- Rails
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180606/20180606115540.jpg
+  - Ruby
+  - Rails
+  - Rails
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180606/20180606115540.jpg
 ---
 
 ## 概要
 
 メディアサイトで記事ページへアクセス数ランキングを実装しました。
 
-* Rails 5.1
-* Redis (AWS ElastiCache 3.2.10)
+- Rails 5.1
+- Redis (AWS ElastiCache 3.2.10)
 
 その際にマルチスレッド環境を考慮してスレッドセーフな実装を心がけました。
 
@@ -25,15 +25,13 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180606/2
 スレッドセーフとは複数のスレッドが同時並行的に実行しても問題が発生しないことを意味します。
 スレッドセーフでない場合は、あるスレッドで変更した共有データが、他のスレッドによって上書きされてしまう可能性があります。
 
-Webサーバーやデータベースなどのサーバー用ソフトウェアは、マルチスレッド（マルチプロセス）で動作しているので、サーバー向けアプリケーションを開発するときは、マルチスレッドで動作するように実装することが望ましいです。
+Web サーバーやデータベースなどのサーバー用ソフトウェアは、マルチスレッド（マルチプロセス）で動作しているので、サーバー向けアプリケーションを開発するときは、マルチスレッドで動作するように実装することが望ましいです。
 
 #### 参照
 
 [スレッドセーフ](https://ja.wikipedia.org/wiki/%E3%82%B9%E3%83%AC%E3%83%83%E3%83%89%E3%82%BB%E3%83%BC%E3%83%95)
 
-[JavaのThreadLocalとスレッドセーフについて](https://qiita.com/naoyoshinori/items/507c5c3ea6027033f4bb)
-
-
+[Java の ThreadLocal とスレッドセーフについて](https://qiita.com/naoyoshinori/items/507c5c3ea6027033f4bb)
 
 ## 仕様
 
@@ -74,7 +72,7 @@ end
 
 現在実行中のスレッドを取得しスレッド毎のデータを担保します。
 
-が、以下 2  点の問題があります。
+が、以下 2 点の問題があります。
 
 1. 他人が上書いてしまう
 2. 構造化されていない
@@ -97,7 +95,7 @@ end
 redis をスレッドローカル変数として定義し、そのアクセスをカプセル化し上書きされるのを防止しています。
 
 ですが、
-Rails 5.2 で [deprecated](http://api.rubyonrails.org/classes/ActiveSupport/PerThreadRegistry.html) となっておりました (TへT)
+Rails 5.2 で [deprecated](http://api.rubyonrails.org/classes/ActiveSupport/PerThreadRegistry.html) となっておりました (T へ T)
 
 ### thread_mattr_accessor
 
@@ -106,7 +104,7 @@ Rails 5.2 で [deprecated](http://api.rubyonrails.org/classes/ActiveSupport/PerT
 
 `thread_mattr_accessor` を利用して書き換えます。
 
-* config/initializers/redis.rb
+- config/initializers/redis.rb
 
 ```ruby
 require 'redis'

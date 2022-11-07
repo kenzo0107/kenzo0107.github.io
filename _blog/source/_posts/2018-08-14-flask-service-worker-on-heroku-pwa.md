@@ -3,8 +3,8 @@ layout: post
 title: Flask+Service Worker on Heroku で PWA チュートリアル
 date: 2018-08-14
 tags:
-- Python
-thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180814/20180814131355.png
+  - Python
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180814/20180814131355.png
 ---
 
 ## 概要
@@ -16,7 +16,7 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180814/2
 
 <!-- more -->
 
-{% linkPreview https://lit-wildwood-62785.herokuapp.com/ _blank }
+{% linkPreview https://lit-wildwood-62785.herokuapp.com/ \_blank }
 
 ## 経緯
 
@@ -24,15 +24,13 @@ thumbnail: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180814/2
 
 これまでは Docker コンテナをデプロイ出来るプラットフォームを試す為に以下試してました。
 
-* <a href="https://github.com/kenzo0107/toda-tocochan-bus-on-ibmbluemix">IBM Bluemix</a>
-* <a href="https://github.com/kenzo0107/toda-tocochan-bus-on-gcp">Google Cloud Platform</a>
-
-
+- <a href="https://github.com/kenzo0107/toda-tocochan-bus-on-ibmbluemix">IBM Bluemix</a>
+- <a href="https://github.com/kenzo0107/toda-tocochan-bus-on-gcp">Google Cloud Platform</a>
 
 上記プラットフォームでは、月数百円程度ですが、費用が発生します。
 
-2018年8月7日、Heroku の free プランが 月 1500 時間無料とあったので
-アプリ×2 つ動かしても無料でいける！ということで Heroku にしてみました。
+2018 年 8 月 7 日、Heroku の free プランが 月 1500 時間無料とあったので
+アプリ ×2 つ動かしても無料でいける！ということで Heroku にしてみました。
 
 sleep 対策として以下を参照しました。
 
@@ -49,7 +47,7 @@ Service Worker があればオフラインでもサービス動作させられ�
 
 ## 簡単に導入時のポイント
 
-* app.py というメインスクリプトに `/sw.js` へのアクセスできるようにします。
+- app.py というメインスクリプトに `/sw.js` へのアクセスできるようにします。
 
 ```js
 @app.route('/sw.js', methods=['GET'])
@@ -57,7 +55,7 @@ def sw():
     return app.send_static_file('sw.js')
 ```
 
-* static ディレクトリ内に空の sw.js を配置
+- static ディレクトリ内に空の sw.js を配置
 
 基本、上記 2 step をしてから Service Worker の各処理を実装していきます。
 
@@ -79,21 +77,19 @@ var urlsToCache = [
   '/static/js/jquery-3.1.0.min.js',
   '/static/js/jquery.countdown.min.js',
   '/static/js/superagent.js',
-  '/static/js/tether.min.js'
-]
+  '/static/js/tether.min.js',
+];
 
-self.addEventListener('install', event => {
-  console.log('install')
+self.addEventListener('install', (event) => {
+  console.log('install');
   event.waitUntil(
-    caches.open(cacheName)
-      .then(function(cache) {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache)
-      })
-  )
-})
+    caches.open(cacheName).then(function (cache) {
+      console.log('Opened cache');
+      return cache.addAll(urlsToCache);
+    })
+  );
+});
 ```
-
 
 Chrome > Developer Tool > Application > Cache Storage を見るとキャッシュされているのがわかります。
 
@@ -106,17 +102,15 @@ Chrome > Developer Tool > Application > Cache Storage を見るとキャッシ�
 以下処理は、fetch イベントでブラウザでキャッシュしたファイルを呼び出しています。
 
 ```js
-self.addEventListener('fetch', function(event) {
-  console.log('fetch')
+self.addEventListener('fetch', function (event) {
+  console.log('fetch');
   event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request)
+    caches.match(event.request).then(function (response) {
+      if (response) {
+        return response;
       }
-    )
+      return fetch(event.request);
+    })
   );
 });
 ```
@@ -131,10 +125,10 @@ Service Worker は active 状態になってもすぐにブラウザ上のリソ
 その為、 以下 activate イベントによって直ちに操作できるようにします。
 
 ```js
-self.addEventListener('activate', event => {
-  console.log('activate')
+self.addEventListener('activate', (event) => {
+  console.log('activate');
   event.waitUntil(self.clients.claim());
-})
+});
 ```
 
 基本、以上の設定で Service Worker 導入完了でした。
@@ -150,7 +144,7 @@ self.addEventListener('activate', event => {
 ## まとめ
 
 Service Worker で一度キャッシュさせた後はオフラインでも動作するような仕組みが作れました。
-オフラインでも動作する、というのは魅力的♪
+オフラインでも動作する、というのは魅力的 ♪
 
 ただし、クエリパラメータのパターンの多い URL がある場合などは
 キャッシュされにくく、この場合のキャッシュ戦略としては、ひとまず静的ファイルのみキャッシュするなどで対応するのが良いのか、
@@ -170,7 +164,7 @@ Workaround として以下提案がされているブログがありましたが
 {% linkPreview https://medium.com/web-on-the-edge/offline-posts-with-progressive-web-apps-fc2dc4ad895 _blank %}
 
 以下 Service Worker 導入時の苦労した点があり、涙無くして見られない内容でした。
-<a href="https://speakerdeck.com/sisidovski/nikkei-high-performance-pwa">日経電子版 サイト高速化とPWA対応</a>
+<a href="https://speakerdeck.com/sisidovski/nikkei-high-performance-pwa">日経電子版 サイト高速化と PWA 対応</a>
 
 他趣味アプリで <a href="https://developers.google.com/web/tools/workbox/">Workbox</a> を利用していますが、
 こちらも書いていきたいと思います。
