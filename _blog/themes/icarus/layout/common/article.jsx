@@ -47,7 +47,7 @@ module.exports = class extends Component {
                         <div class="level-left">
                             {/* Creation Date */}
                             {page.date && <span class="level-item" dangerouslySetInnerHTML={{
-                                __html: _p('article.created_at', `<time dateTime="${date_xml(page.date)}" title="${new Date(page.date).toLocaleString()}">${date(page.date)}</time>`)
+                                __html: _p('article.created_at', `<time dateTime="${date_xml(page.date)}" title="${new Date(page.date).toLocaleString()}">${date_xml(page.date)}</time>`)
                             }}></span>}
                             {/* Last Update Date */}
                             {shouldShowUpdated && <span class="level-item" dangerouslySetInnerHTML={{
