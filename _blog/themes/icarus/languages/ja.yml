@@ -26,7 +26,7 @@ widget:
   adsense: '広告'
   followit: 'follow.it'
 article:
-  created_at: 'Posted&nbsp;%s'
+  created_at: '%s'
   updated_at: 'Updated&nbsp;%s'
   more: '続きを読む'
   comments: 'コメント'
