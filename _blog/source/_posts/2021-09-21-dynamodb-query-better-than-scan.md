@@ -18,27 +18,25 @@ date: 2021-09-21
 
 AWS ベストプラクティス にもある通り、Scan による全件捜査はデータ量が増えるとパフォーマンスが劣化する為、極力 Query を利用することを推奨しています。
 
-
 ## 【例題】 どうやって Query を実行する？
 
 以下の様な `worriors` テーブルがあるとします。
 
-| id | category | name | score |
-| --- | --- | --- | --- |
-| 1 | a | tanahashi | 88 |
-| 2 | a | choshu | 70 |
-| 3 | a | maeda | 77 |
-| 4 | b | sayama | 90 |
-| 5 | b | antonio | 100 |
+| id  | category | name      | score |
+| --- | -------- | --------- | ----- |
+| 1   | a        | tanahashi | 88    |
+| 2   | a        | choshu    | 70    |
+| 3   | a        | maeda     | 77    |
+| 4   | b        | sayama    | 90    |
+| 5   | b        | antonio   | 100   |
 
-* Key Schema:
+- Key Schema:
   - id : （数値） パーティションキー
   - score: （数値）ソートキー
 
-
 ここで `category = a & score > 70` の name リストを取得したい場合、どの様に DynamoDB に処理を実行すれば良いでしょうか？
 
-* Scan を利用した場合
+- Scan を利用した場合
 
 ```console
 $ aws dynamodb scan \
@@ -105,10 +103,9 @@ DynamoDB コンソール上でもクエリ検索時はパーティションキ�
 
 Query で score の比較だけで検索できないのでしょうか？
 
-
 ## GSI を指定する
 
-Global Secondary Index を設定し、Query 実行時に指定することで意図した処理が可能です。
+[Global Secondary Index](https://docs.aws.amazon.com/ja_jp/amazondynamodb/latest/developerguide/GSI.html) を設定し、Query 実行時に指定することで意図した処理が可能です。
 
 GSI は指定したキーで新たなテーブルを作るイメージです。
 
