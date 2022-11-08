@@ -79,9 +79,9 @@ article:
 search:
   type: insight
   index_pages: true
-# comment:
-#   type: disqus
-#   shortname: 'kenzo0107'
+comment:
+  type: disqus
+  shortname: 'kenzo0107'
 donates:
   - type: patreon
     url: https://www.patreon.com/kenzo0107
