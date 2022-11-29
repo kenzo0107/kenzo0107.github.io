@@ -4,6 +4,15 @@ date: 2022-11-29
 category: AWS
 ---
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+---
+
 AWS で CloudFront + ECS で Web サービスを配信していますが、
 Bot が多く、その対策を WAF で実行しようとしたい際にいくつかつまづきましたので、その備忘録になります。
 
@@ -11,6 +20,8 @@ Bot が多く、その対策を WAF で実行しようとしたい際にいく�
 
 1. WAF v2 で GEO マッチステートメントで Bot のリクエスト元の海外 IP をブロック
 2. WAF v2 Bot Control で Bot 対策
+
+<!-- more -->
 
 ## WAF v2 で GEO マッチステートメントで対策
 
