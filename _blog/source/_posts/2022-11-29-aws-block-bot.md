@@ -1,6 +1,6 @@
 ---
 title: AWS Bot 対策
-date: 2022-11-16
+date: 2022-11-29
 category: AWS
 ---
 
@@ -76,9 +76,9 @@ https://github.com/hashicorp/terraform-provider-aws/issues/23290
 
 ※ 2022-11-29 時点
 
-<img width="661" alt="スクリーンショット 2022-11-29 14.32.07.png (177.4 kB)" src="https://files.esa.io/uploads/production/attachments/6675/2022/11/29/27979/1aae222c-10a3-4197-ba4d-b4a7f43a3d3e.png">
+Bot Control Rules の設定をサポートしていないので、手動で設定等が必要です。
 
-細かい設定ができない。
+![](https://i.imgur.com/I66XH5J.png)
 
 ### Override rule group action はサポートしている
 
