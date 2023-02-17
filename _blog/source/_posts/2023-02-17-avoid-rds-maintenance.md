@@ -86,7 +86,7 @@ AWS の回答としては以下の通りです。
 
 EventBridge でメンテイベントの検知 →Chatbot の仕組みは手っ取り早いと思います。
 
-{% linkPreview https://blog.serverworks.co.jp/aws-health-event-to-slack-via-aws-chatbot _blank %}
+参考: [EC2 等のメンテナンススケジュールを AWS Chatbot で Slack に通知する](https://blog.serverworks.co.jp/aws-health-event-to-slack-via-aws-chatbot)
 
 私自身はメンテイベントの詳細が把握しづらいので Lambda で整形してから Slack 通知する様にしています。
 Lambda は日次で実行し、メンテイベントが消えるまで通知し続ける様にしています。
