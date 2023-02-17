@@ -35,7 +35,7 @@
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
 </head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/PrivacyPolicy/">PrivacyPolicy</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2023/02/16/2023-02-17-avoid-rds-maintenance/"><img class="fill" src="https://i.imgur.com/7h0nRNw.png" alt="RDS DB メンテ回避方法"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-02-17</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/02/16/2023-02-17-avoid-rds-maintenance/">RDS DB メンテ回避方法</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
-<h3 class="menu-label"><span id="toc">ToC</span></h3>
+<h3 class="menu-label">ToC</h3>
 
 <!-- toc -->
 
@@ -55,42 +55,7 @@
 </div>
 
 <hr>
-<p>RDS で突如として対応必須のメンテナンスが現れた時の対応です。</p>
-<h2><span id="概要">概要</span></h2><p>突如として <code>2 日後</code> に自動適用される DB エンジンバージョンアップのメンテナンスが現れました。</p>
-<p>通常であれば AWS からの 1 ヶ月以上前に事前の通知メールがあり、余裕を持って対応できたいたのですが、あまりに突然で回避方法を AWS SA さんやサポートに問い合わせました。</p>
-<h2><span id="結論">結論</span></h2><p>メンテナンスウィンドウを変更することで延期することができました。</p>
-<p>元々の <code>Apply date</code> が <code>2023-02-19 04:30</code> です。</p>
-<p><code>2023年2月17日 金曜日</code> とすると<br>次回メンテナンスウィンドウを現在日より前の <code>木曜日</code> に変更します。</p>
-<p>terraform では以下のような修正です。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- maintenance_window = &quot;sat:19:30-thu:20:00&quot;</span><br><span class="line">+ maintenance_window = &quot;thu:19:30-thu:20:00&quot;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://i.imgur.com/8kiXsyT.png"></p>
-<p>すると <code>Apply date</code> が <code>2023年2月24日 木曜日</code> に変更されました。</p>
-<h3><span id="aws-cli-でも確認">aws-cli でも確認</span></h3><p><img src="https://i.imgur.com/IXctjg7.png"></p>
-<p><code>aws rds describe-pending-maintenance-actions</code> を実施した所、<br><code>AutoAppliedAfterDate</code> や <code>CurrentApplyDate</code> が無事更新されており、<br><code>ForceApplyDate</code> もなかったことから<br>無事メンテが延期されたことを確認しました。</p>
-<p>SA さんに念の為、確認した所、問題なさそうとのことでした。</p>
-<h2><span id="aws-ドキュメントでメンテ延期方法の記載があったが">AWS ドキュメントでメンテ延期方法の記載があったが…</span></h2><p><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/premiumsupport/knowledge-center/rds-maintenance-window/#Defer_maintenance_actions">メンテナンスアクションを延期する</a></p>
-<p>上記参考に実施しようとしたところ、 Action のメニューに「アップグレードを延期」(Defer upgrade) はありませんでした。</p>
-<p>※ 英語版のドキュメントでもなかったです。</p>
-<p>これについての AWS SA さんの回答は以下の通りでした。</p>
-<blockquote>
-<p>ちょっと私も自分の環境で再現ができておらず、ドキュメントも見つけられていないのですが、適用できるケースとできないケースがあるのかも知れません。<br>すでにスタートした Upgrade は延期できない、とは明記されているのですが(明確なお答えができずすみません)</p>
-</blockquote>
-<p>今回の件では適用できないケースだったのかもしれません。</p>
-<h2><span id="突発的なメンテは起こり得るものなのか-また検知方法は">突発的なメンテは起こり得るものなのか？ また検知方法は？</span></h2><p>AWS の回答としては以下の通りです。</p>
-<blockquote>
-<p>パッチの緊急性ほか、複数の要素によって、余裕を持って通知されるケースもあれば、事前通知がない状態で突然スケジュールされるケースもある</p>
-</blockquote>
-<blockquote>
-<p>社内でも確認しましたが、あいにく ○ 日前までに通知する、といった明確な SLA はない</p>
-</blockquote>
-<p>もしメンテナンスのメール通知だけ信じていたら危うく意図せぬサービスダウンが発生していた所でした。</p>
-<h2><span id="検知方法">検知方法</span></h2><p>EventBridge でメンテイベントの検知 →Chatbot の仕組みは手っ取り早いと思います。</p>
-
-
-<p>私自身はメンテイベントの詳細が把握しづらいので Lambda で整形してから Slack 通知する様にしています。<br>Lambda は日次で実行し、メンテイベントが消えるまで通知し続ける様にしています。</p>
-<p>以上<br>参考になれば幸いです。</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2022-11-29</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/11/28/2022-11-29-aws-block-bot/">AWS Bot 対策</a></h1><div class="content"><div class="toc">
+<p>RDS で突如として対応必須のメンテナンスが現れた時にメンテ延期した方法をまとめました。</p></div><a class="article-more button is-small is-size-7" href="/2023/02/16/2023-02-17-avoid-rds-maintenance/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2022-11-29</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/11/28/2022-11-29-aws-block-bot/">AWS Bot 対策</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
 <h3 class="menu-label">ToC</h3>
 
