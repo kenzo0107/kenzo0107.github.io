@@ -13,6 +13,10 @@ category: AWS
 
 ---
 
+RDS PostgreSQL のバージョンアップ時にハマったことをまとめておきます。
+
+<!-- more -->
+
 ## 概要
 
 RDS PostgreSQL のバージョンアップ時に以下エラーが発生しました。

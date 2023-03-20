@@ -35,7 +35,7 @@
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
 </head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/PrivacyPolicy/">PrivacyPolicy</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-03-20</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/03/19/2023-03-20-versionup-rds-postgresql/">RDS PostgreSQL バージョンアップ</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
-<h3 class="menu-label"><span id="toc">ToC</span></h3>
+<h3 class="menu-label">ToC</h3>
 
 <!-- toc -->
 
@@ -53,43 +53,7 @@
 </div>
 
 <hr>
-<h2><span id="概要">概要</span></h2><p>RDS PostgreSQL のバージョンアップ時に以下エラーが発生しました。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">│ Error: updating RDS DB Instance (stg-media-postgresql-10): operation error RDS: ModifyDBInstance, https response error StatusCode: 400, RequestID: 15badd67-ea50-4189-9542-deb2df162e05, api error InvalidParameterCombination: RDS does not support creating a DB instance with the following combination: DBInstanceClass=db.t2.micro, Engine=postgres, EngineVersion=14.6, LicenseModel=postgresql-license. For supported combinations of instance class and database engine version, see the documentation.</span><br></pre></td></tr></table></figure>
-
-<p>db.t2.micro の場合、 postgresql 14.6 の作成をサポートしていない、<br>とのこと。</p>
-<p>これは terraform で<br>db.t2.micro を db.t3.micro へ<br>postgresql を 10.23 を 14.6 へと<br>同時に変更しようとしても発生します。</p>
-<h2><span id="db-インスタンスクラス毎のサポートする-db-エンジンバージョンを確認">DB インスタンスクラス毎のサポートする DB エンジンバージョンを確認</span></h2><p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html#Concepts.DBInstanceClass.Support">DB インスタンスクラスでサポートされている DB エンジン</a></p>
-<p>db.t2 は PostgreSQL は 13 より前がサポート対象でした。</p>
-<h2><span id="1023-から-146-へのバージョンアップは可能か">10.23 から 14.6 へのバージョンアップは可能か</span></h2><p><img src="https://i.imgur.com/MCMwjkj.png"></p>
-<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.PostgreSQL.html#USER_UpgradeDBInstance.PostgreSQL.MajorVersion">Choosing a major version upgrade for PostgreSQL</a></p>
-<p>10.23 は 14.6 へのバージョンアップが可能であることが確認できた。</p>
-<h2><span id="reg-データがないか等の確認">reg* データがないか等の確認</span></h2><p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.PostgreSQL.html#USER_UpgradeDBInstance.PostgreSQL.MajorVersion.Process">メジャーバージョンのアップグレードを実施する方法</a></p>
-<p>上記手順に従って実施します。</p>
-<blockquote>
-<p>準備済みのトランザクション - アップグレードを実行する前に、すべての準備済みのトランザクションをコミットまたはロールバックします。</p>
-<p>次のクエリを使用して、開いている準備済みのトランザクションがインスタンスにないことを確認します。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM pg_catalog.pg_prepared_xacts;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Reg* データ型 - アップグレードの実施前に reg* データ型の使用をすべて削除します。regtype と regclass を除き、reg* データ型をアップグレードすることはできません。このデータ型は、Amazon RDS でのアップグレードで使用されているため、pg_upgrade ユーティリティで維持することはできません。</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM pg_catalog.pg_class c, pg_catalog.pg_namespace n, pg_catalog.pg_attribute a</span><br><span class="line">  WHERE c.oid = a.attrelid</span><br><span class="line">      AND NOT a.attisdropped</span><br><span class="line">      AND a.atttypid IN (&#x27;pg_catalog.regproc&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regprocedure&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regoper&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regoperator&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regconfig&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regdictionary&#x27;::pg_catalog.regtype)</span><br><span class="line">      AND c.relnamespace = n.oid</span><br><span class="line">      AND n.nspname NOT IN (&#x27;pg_catalog&#x27;, &#x27;information_schema&#x27;);</span><br></pre></td></tr></table></figure>
-
-<p>対象 DB では上記特段検出されず問題ないことを確認できました。</p>
-<h2><span id="最終的な対応内容">最終的な対応内容</span></h2><ol>
-<li>DB インスタンスクラスを変更 db.t2 → db.t3</li>
-<li>DB エンジンバージョン変更 10.23 → 14.6</li>
-</ol>
-<p>1 と 2 を同時実行はできず、冒頭のエラー文が表示されます。<br>terraform でも AWS コンソール上でも同様のエラー文です。</p>
-<p>1 を実行後、2 を実行する必要がありました。</p>
-<h2><span id="全体的な手順">全体的な手順</span></h2><ol>
-<li>検証環境でメンテナンスのリハーサル</li>
-<li>本番環境でメンテナンス</li>
-</ol>
-<p>全体的には上記手順で進めました。<br>リハーサルで全体のメンテ時間と作業内容の再確認をしておくと<br>本番でテンパらずにいけるかなと。</p>
-<p>以上<br>参考になれば幸いです。</p>
-</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2023/02/16/2023-02-17-avoid-rds-maintenance/"><img class="fill" src="https://i.imgur.com/7h0nRNw.png" alt="RDS DB メンテ回避方法"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-02-17</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/02/16/2023-02-17-avoid-rds-maintenance/">RDS DB メンテ回避方法</a></h1><div class="content"><div class="toc">
+<p>RDS PostgreSQL のバージョンアップ時にハマったことをまとめておきます。</p></div><a class="article-more button is-small is-size-7" href="/2023/03/19/2023-03-20-versionup-rds-postgresql/#more">続きを読む</a></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2023/02/16/2023-02-17-avoid-rds-maintenance/"><img class="fill" src="https://i.imgur.com/7h0nRNw.png" alt="RDS DB メンテ回避方法"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-02-17</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/02/16/2023-02-17-avoid-rds-maintenance/">RDS DB メンテ回避方法</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
 <h3 class="menu-label">ToC</h3>
 
