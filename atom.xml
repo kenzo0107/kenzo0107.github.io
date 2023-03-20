@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2023-02-16T15:00:00.000Z</updated>
+  <updated>2023-03-19T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RDS PostgreSQL バージョンアップ</title>
+    <link href="https://kenzo0107.github.io/2023/03/19/2023-03-20-versionup-rds-postgresql/"/>
+    <id>https://kenzo0107.github.io/2023/03/19/2023-03-20-versionup-rds-postgresql/</id>
+    <published>2023-03-19T15:00:00.000Z</published>
+    <updated>2023-03-19T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#db-%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E3%82%AF%E3%83%A9%E3%82%B9%E6%AF%8E%E3%81%AE%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%99%E3%82%8B-db-%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%92%E7%A2%BA%E8%AA%8D">DB インスタンスクラス毎のサポートする DB エンジンバージョンを確認</a></li><li><a href="#1023-%E3%81%8B%E3%82%89-146-%E3%81%B8%E3%81%AE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%A2%E3%83%83%E3%83%97%E3%81%AF%E5%8F%AF%E8%83%BD%E3%81%8B">10.23 から 14.6 へのバージョンアップは可能か</a></li><li><a href="#reg-%E3%83%87%E3%83%BC%E3%82%BF%E3%81%8C%E3%81%AA%E3%81%84%E3%81%8B%E7%AD%89%E3%81%AE%E7%A2%BA%E8%AA%8D">reg* データがないか等の確認</a></li><li><a href="#%E6%9C%80%E7%B5%82%E7%9A%84%E3%81%AA%E5%AF%BE%E5%BF%9C%E5%86%85%E5%AE%B9">最終的な対応内容</a></li><li><a href="#%E5%85%A8%E4%BD%93%E7%9A%84%E3%81%AA%E6%89%8B%E9%A0%86">全体的な手順</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>RDS PostgreSQL のバージョンアップ時に以下エラーが発生しました。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">│ Error: updating RDS DB Instance (stg-media-postgresql-10): operation error RDS: ModifyDBInstance, https response error StatusCode: 400, RequestID: 15badd67-ea50-4189-9542-deb2df162e05, api error InvalidParameterCombination: RDS does not support creating a DB instance with the following combination: DBInstanceClass=db.t2.micro, Engine=postgres, EngineVersion=14.6, LicenseModel=postgresql-license. For supported combinations of instance class and database engine version, see the documentation.</span><br></pre></td></tr></table></figure><p>db.t2.micro の場合、 postgresql 14.6 の作成をサポートしていない、<br>とのこと。</p><p>これは terraform で<br>db.t2.micro を db.t3.micro へ<br>postgresql を 10.23 を 14.6 へと<br>同時に変更しようとしても発生します。</p><h2><span id="db-インスタンスクラス毎のサポートする-db-エンジンバージョンを確認">DB インスタンスクラス毎のサポートする DB エンジンバージョンを確認</span></h2><p><a href="https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html#Concepts.DBInstanceClass.Support">DB インスタンスクラスでサポートされている DB エンジン</a></p><p>db.t2 は PostgreSQL は 13 より前がサポート対象でした。</p><h2><span id="1023-から-146-へのバージョンアップは可能か">10.23 から 14.6 へのバージョンアップは可能か</span></h2><p><img src="https://i.imgur.com/MCMwjkj.png"></p><p><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.PostgreSQL.html#USER_UpgradeDBInstance.PostgreSQL.MajorVersion">Choosing a major version upgrade for PostgreSQL</a></p><p>10.23 は 14.6 へのバージョンアップが可能であることが確認できた。</p><h2><span id="reg-データがないか等の確認">reg* データがないか等の確認</span></h2><p><a href="https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.PostgreSQL.html#USER_UpgradeDBInstance.PostgreSQL.MajorVersion.Process">メジャーバージョンのアップグレードを実施する方法</a></p><p>上記手順に従って実施します。</p><blockquote><p>準備済みのトランザクション - アップグレードを実行する前に、すべての準備済みのトランザクションをコミットまたはロールバックします。</p><p>次のクエリを使用して、開いている準備済みのトランザクションがインスタンスにないことを確認します。</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM pg_catalog.pg_prepared_xacts;</span><br></pre></td></tr></table></figure><blockquote><p>Reg* データ型 - アップグレードの実施前に reg* データ型の使用をすべて削除します。regtype と regclass を除き、reg* データ型をアップグレードすることはできません。このデータ型は、Amazon RDS でのアップグレードで使用されているため、pg_upgrade ユーティリティで維持することはできません。</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SELECT count(*) FROM pg_catalog.pg_class c, pg_catalog.pg_namespace n, pg_catalog.pg_attribute a</span><br><span class="line">  WHERE c.oid = a.attrelid</span><br><span class="line">      AND NOT a.attisdropped</span><br><span class="line">      AND a.atttypid IN (&#x27;pg_catalog.regproc&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regprocedure&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regoper&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regoperator&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regconfig&#x27;::pg_catalog.regtype,</span><br><span class="line">                         &#x27;pg_catalog.regdictionary&#x27;::pg_catalog.regtype)</span><br><span class="line">      AND c.relnamespace = n.oid</span><br><span class="line">      AND n.nspname NOT IN (&#x27;pg_catalog&#x27;, &#x27;information_schema&#x27;);</span><br></pre></td></tr></table></figure><p>対象 DB では上記特段検出されず問題ないことを確認できました。</p><h2><span id="最終的な対応内容">最終的な対応内容</span></h2><ol><li>DB インスタンスクラスを変更 db.t2 → db.t3</li><li>DB エンジンバージョン変更 10.23 → 14.6</li></ol><p>1 と 2 を同時実行はできず、冒頭のエラー文が表示されます。<br>terraform でも AWS コンソール上でも同様のエラー文です。</p><p>1 を実行後、2 を実行する必要がありました。</p><h2><span id="全体的な手順">全体的な手順</span></h2><ol><li>検証環境でメンテナンスのリハーサル</li><li>本番環境でメンテナンス</li></ol><p>全体的には上記手順で進めました。<br>リハーサルで全体のメンテ時間と作業内容の再確認をしておくと<br>本番でテンパらずにいけるかなと。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%8</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>RDS DB メンテ回避方法</title>
@@ -584,7 +613,7 @@
     <published>2022-05-13T15:00:00.000Z</published>
     <updated>2022-05-13T15:00:00.000Z</updated>
     
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E7%B5%90%E8%AB%96">結論</a></li><li><a href="#%E6%A4%9C%E8%A8%BC%E7%92%B0%E5%A2%83">検証環境</a></li></ul><!-- tocstop --></div></div><hr><p><code>kubeadm init</code> 時に以下エラーが発生した際の対処についてまとめます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level=fatal msg=&quot;getting status of runtime failed: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService&quot;</span><br></pre></td></tr></table></figure><h2><span id="結論">結論</span></h2><span id="more"></span><p>以下実行することで解決します。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /etc/containerd/config.toml</span><br><span class="line">sudo systemctl restart containerd</span><br></pre></td></tr></table></figure><p>以下参考</p><a href="https://github.com/containerd/containerd/issues/4581" class="link-preview"><div class="link-area"><div class="og-image"><img src="https://opengraph.githubassets.com/e13a5447013ed02cbd7bde4638710e497caa372cde5fafe7d1a6d59fff349619/containerd/containerd/issues/4581"></div><div class="descriptions"><div class="og-title">Kubeadm unknown service runtime.v1alpha2.RuntimeService · Issue #4581 · containerd/containerd</div><div class="og-description">Problem Following Kubernetes official installation instruction for containerd and kubeadm init will fail with unknown service runtime.v1alph…</div></div></div></a><h2><span id="検証環境">検証環境</span></h2><ul><li>kubeadm 1.22.7-00</li><li>kubelet 1.22.7-00</li><li>kubectl 1.22.7-00</li></ul><p>以上<br>参考になれば幸いです。</p>]]></content>
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E7%B5%90%E8%AB%96">結論</a></li><li><a href="#%E6%A4%9C%E8%A8%BC%E7%92%B0%E5%A2%83">検証環境</a></li></ul><!-- tocstop --></div></div><hr><p><code>kubeadm init</code> 時に以下エラーが発生した際の対処についてまとめます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">level=fatal msg=&quot;getting status of runtime failed: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService&quot;</span><br></pre></td></tr></table></figure><h2><span id="結論">結論</span></h2><span id="more"></span><p>以下実行することで解決します。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /etc/containerd/config.toml</span><br><span class="line">sudo systemctl restart containerd</span><br></pre></td></tr></table></figure><p>以下参考</p><a href="https://github.com/containerd/containerd/issues/4581" class="link-preview"><div class="link-area"><div class="og-image"><img src="https://opengraph.githubassets.com/c4ae0abfe10545f43f12580540cdd43c4aacb088334de52f00b3e5f6cd495de4/containerd/containerd/issues/4581"></div><div class="descriptions"><div class="og-title">Kubeadm unknown service runtime.v1alpha2.RuntimeService · Issue #4581 · containerd/containerd</div><div class="og-description">Problem Following Kubernetes official installation instruction for containerd and kubeadm init will fail with unknown service runtime.v1alph…</div></div></div></a><h2><span id="検証環境">検証環境</span></h2><ul><li>kubeadm 1.22.7-00</li><li>kubelet 1.22.7-00</li><li>kubectl 1.22.7-00</li></ul><p>以上<br>参考になれば幸いです。</p>]]></content>
     
     
     <summary type="html">&lt;div class=&quot;toc&quot;&gt;
@@ -645,30 +674,6 @@
     
     
     <category term="Terraform" scheme="https://kenzo0107.github.io/categories/Terraform/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Raspberry PI OS で vim インストール</title>
-    <link href="https://kenzo0107.github.io/2022/05/08/2022-05-09-install_vim_on_raspberrypi_os/"/>
-    <id>https://kenzo0107.github.io/2022/05/08/2022-05-09-install_vim_on_raspberrypi_os/</id>
-    <published>2022-05-08T15:00:00.000Z</published>
-    <updated>2022-05-08T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>備忘録です。</p><p>Raspberry PI OS (32-bit) Bullseye で vim インストールした際のメモです。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get --purge remove vim-common vim-tiny</span><br><span class="line">sudo apt-get install vim</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;備忘録です。&lt;/p&gt;
-&lt;p&gt;Raspberry PI OS (32-bit) Bullseye で vim インストールした際のメモです。&lt;/p&gt;
-&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutte</summary>
-      
-    
-    
-    
-    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
     
     
   </entry>
