@@ -16,6 +16,8 @@ category: Terraform
 terraform の linter として [tflint](https://github.com/terraform-linters/tflint) を導入し、
 GitHub Actions でチェックが良かったのでまとめます。
 
+<!-- more -->
+
 ## asdf で導入
 
 [asdf](https://asdf-vm.com/guide/introduction.html#nvm-n-rbenv-etc) で複数バージョンの導入・切り替えが可能です。

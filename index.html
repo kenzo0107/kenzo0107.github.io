@@ -61,7 +61,7 @@
 <hr>
 <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>パブリックアクセスのブロックが無効となっている S3 Bucket で<br>パブリックアクセスのブロックを有効化しその後、無効化した際に<br>Object の ACL に影響があるか確認します。</p></div><a class="article-more button is-small is-size-7" href="/2023/04/04/2023-04-05-s3-bucket-public-access-block/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-04-05</span><span class="level-item"><a class="link-muted" href="/categories/Terraform/">Terraform</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/04/04/2023-04-05-tflint-is-good/">terraform の linter tflin を導入し、GitHub Actions で構文チェック</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
-<h3 class="menu-label"><span id="toc">ToC</span></h3>
+<h3 class="menu-label">ToC</h3>
 
 <!-- toc -->
 
@@ -77,28 +77,7 @@
 </div>
 
 <hr>
-<p>terraform の linter として <a target="_blank" rel="noopener" href="https://github.com/terraform-linters/tflint">tflint</a> を導入し、<br>GitHub Actions でチェックが良かったのでまとめます。</p>
-<h2><span id="asdf-で導入">asdf で導入</span></h2><p><a target="_blank" rel="noopener" href="https://asdf-vm.com/guide/introduction.html#nvm-n-rbenv-etc">asdf</a> で複数バージョンの導入・切り替えが可能です。</p>
-<p>asdf 経由で導入</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asdf plugin-add tflint https://github.com/skyzyx/asdf-tflint</span><br></pre></td></tr></table></figure>
-
-<h2><span id="github-actions-で設定">GitHub Actions で設定</span></h2><p>Pull Request 作成・更新時に tflint を走らせる設定です。</p>
-<p>以下ディレクトリ毎に tflint を実行しています。</p>
-<ul>
-<li>envs/prd</li>
-<li>envs/stg</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">name: Lint</span><br><span class="line"></span><br><span class="line">on: [pull_request]</span><br><span class="line"></span><br><span class="line">jobs:</span><br><span class="line">  tflint:</span><br><span class="line">    name: tflint</span><br><span class="line">    timeout-minutes: 3</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line"></span><br><span class="line">    strategy:</span><br><span class="line">      fail-fast: false</span><br><span class="line">      matrix:</span><br><span class="line">        directory: [&#x27;envs/prd&#x27;, &#x27;envs/stg&#x27;]</span><br><span class="line"></span><br><span class="line">    steps:</span><br><span class="line">      - uses: actions/checkout@v3</span><br><span class="line"></span><br><span class="line">      - name: Pick terraform_version</span><br><span class="line">        id: tflint</span><br><span class="line">        run: echo &quot;tflint_version=$(grep tflint .tool-versions | awk &#x27;&#123;print $2&#125;&#x27;)&quot; &gt;&gt; $GITHUB_OUTPUT</span><br><span class="line"></span><br><span class="line">      - uses: terraform-linters/setup-tflint@v3</span><br><span class="line">        name: Setup TFLint</span><br><span class="line">        with:</span><br><span class="line">          tflint_version: v$&#123;&#123; steps.tflint.outputs.tflint_version &#125;&#125;</span><br><span class="line"></span><br><span class="line">      - name: Init TFLint</span><br><span class="line">        run: tflint --init</span><br><span class="line">        working-directory: ./$&#123;&#123; matrix.directory &#125;&#125;</span><br><span class="line">        env:</span><br><span class="line">          # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; github.token &#125;&#125;</span><br><span class="line"></span><br><span class="line">      - name: Execute tflint</span><br><span class="line">        run: tflint</span><br><span class="line">        working-directory: ./$&#123;&#123; matrix.directory &#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="timeout-minutes-3">timeout-minutes: 3</span></h2><p>おおよそ完了する時間は 1 分も掛からないですが、3 分もあれば終わるのと<br>意図せぬ長時間の実行を回避すべく、3 分でタイムアウトする様に設定しています。</p>
-<p>リソース数にもよるので適宜設定してください。</p>
-<h2><span id="github_token-を指定する理由">GITHUB_TOKEN を指定する理由</span></h2><p>いらなそう？と思いましたが、公式に以下コメントがあります。</p>
-<blockquote>
-<p>When you install plugins with tflint –init, TFLint calls the GitHub API to get release metadata. By default, this is an unauthenticated request, subject to a rate limit of 60 requests per hour per IP address.</p>
-</blockquote>
-<p>認証されていないリクエストで、IP アドレスあたり 1 時間あたり 60 リクエストというレート制限がある為、<br>それを回避する為に設定する必要があるとのこと。</p>
-<p>以上<br>参考になれば幸いです。</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-03-20</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/03/19/2023-03-20-versionup-rds-postgresql/">RDS PostgreSQL バージョンアップ</a></h1><div class="content"><div class="toc">
+<p>terraform の linter として <a target="_blank" rel="noopener" href="https://github.com/terraform-linters/tflint">tflint</a> を導入し、<br>GitHub Actions でチェックが良かったのでまとめます。</p></div><a class="article-more button is-small is-size-7" href="/2023/04/04/2023-04-05-tflint-is-good/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-03-20</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/03/19/2023-03-20-versionup-rds-postgresql/">RDS PostgreSQL バージョンアップ</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
 <h3 class="menu-label">ToC</h3>
 
