@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2023-04-04T15:00:00.000Z</updated>
+  <updated>2023-04-13T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>fix: curl: (48) An unknown option was passed in to libcurl</title>
+    <link href="https://kenzo0107.github.io/2023/04/13/2023-04-14-curl-not-match-libcurl-on-alpine/"/>
+    <id>https://kenzo0107.github.io/2023/04/13/2023-04-14-curl-not-match-libcurl-on-alpine/</id>
+    <published>2023-04-13T15:00:00.000Z</published>
+    <updated>2023-04-13T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#dockerfile">Dockerfile</a></li></ul><!-- tocstop --></div></div><hr><p>alpine イメージをベースで <code>RUN curl</code> が失敗し以下エラーが出力されました。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl: (48) An unknown option was passed in to libcurl</span><br></pre></td></tr></table></figure><p>curl と libcurl のバージョンの不一致が原因で<br>curl-dev をインストールすることで解決しました。</p><p>参考: <a href="https://stackoverflow.com/questions/11678085/curl-48-an-unknown-option-was-passed-in-to-libcurl/41651363#41651363">https://stackoverflow.com/questions/11678085/curl-48-an-unknown-option-was-passed-in-to-libcurl/41651363#41651363</a></p><h3><span id="dockerfile">Dockerfile</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM alpine</span><br><span class="line"></span><br><span class="line"># 以下追加した</span><br><span class="line">RUN apk add --update --no-cache curl-dev</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#dockerfi</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>S3 のパブリックアクセスブロック有効後、無効にした際の S3 Object の ACL の挙動</title>
@@ -667,29 +694,6 @@
 &lt;a href=&quot;https://kenzo0107.github.io/2022/05/05/2022-05-06-ouchi-kubernetes/#more&quot; class=&quot;link-preview&quot;&gt;&lt;div class=&quot;link-area&quot;&gt;&lt;div class=&quot;og-image&quot;&gt;&lt;img src=&quot;https://i.imgur.com/RgpOXr3.jpg&quot;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&quot;descriptions&quot;&gt;&lt;div class=&quot;og-title&quot;&gt;おうち k8s 構築&lt;/div&gt;&lt;div class=&quot;og-description&quot;&gt;ToC     目的 購入したものリスト Raspberry Pi Imager で OS 書き込み cgroup の有効化 swap 無効化 IP 固定 Docker インストール Cgroup Driver が systemd を使用するように設定されていることを確認   k…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
 
 &lt;p&gt;k8s cluster 各ノードの CPU, Memory を取得し、ディスプレイに表示します。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>RaspberryPI に Go をインストールする</title>
-    <link href="https://kenzo0107.github.io/2022/05/14/2022-05-15-install-golang-on-raspberrypios/"/>
-    <id>https://kenzo0107.github.io/2022/05/14/2022-05-15-install-golang-on-raspberrypios/</id>
-    <published>2022-05-14T15:00:00.000Z</published>
-    <updated>2022-05-14T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>RPi に Go をインストールする手順です。<br>2022.05.15 時点最新 1.18.2 をインストールします。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://golang.org/dl/go1.18.2.linux-armv6l.tar.gz</span><br><span class="line">sudo tar -C /usr/local -xzf go1.18.2.linux-armv6l.tar.gz</span><br><span class="line">echo &#x27;export PATH=$PATH:/usr/local/go/bin&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">echo &#x27;export PATH=$HOME/go/bin:$PATH&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br><span class="line"></span><br><span class="line">// バージョン確認</span><br><span class="line">go version</span><br></pre></td></tr></table></figure><p>※ Raspberry PI OS Bullseye 2022.04.04 リリースで検証しました。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;RPi に Go をインストールする手順です。&lt;br&gt;2022.05.15 時点最新 1.18.2 をインストールします。&lt;/p&gt;
-&lt;figure class=&quot;highlight console&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;s</summary>
-      
     
     
     
