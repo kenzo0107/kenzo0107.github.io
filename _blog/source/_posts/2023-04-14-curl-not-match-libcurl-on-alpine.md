@@ -18,6 +18,8 @@ alpine イメージをベースで `RUN curl` が失敗し以下エラーが出�
 curl: (48) An unknown option was passed in to libcurl
 ```
 
+<!-- more -->
+
 curl と libcurl のバージョンの不一致が原因で
 curl-dev をインストールすることで解決しました。
 
