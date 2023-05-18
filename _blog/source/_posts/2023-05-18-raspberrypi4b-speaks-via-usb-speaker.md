@@ -1,6 +1,6 @@
 ---
 title: Raspberry Pi に USB スピーカーを接続しテキストを音声変換しお話しさせる
-date: 2023-04-21
+date: 2023-05-18
 category: RaspberryPI
 cover: https://i.imgur.com/ZH5dJw5.png
 ---
