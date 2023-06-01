@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2023-05-17T15:00:00.000Z</updated>
+  <updated>2023-05-31T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AWS Savings Plans Coverage API 実行時に DataUnavailableException エラーが発生する</title>
+    <link href="https://kenzo0107.github.io/2023/05/31/2023-06-01-get-savings-plans-coverage-data-unavailable-exception/"/>
+    <id>https://kenzo0107.github.io/2023/05/31/2023-06-01-get-savings-plans-coverage-data-unavailable-exception/</id>
+    <published>2023-05-31T15:00:00.000Z</published>
+    <updated>2023-05-31T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AE%E5%9B%9E%E7%AD%94">サポートの回答</a></li><li><a href="#cost-explorer-%E3%81%A7%E7%A2%BA%E8%AA%8D">Cost Explorer で確認</a></li><li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>AWS Savings Plans Coverage API 実行時に DataUnavailableException エラーが発生しました。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">aws ce get-savings-plans-coverage --time-period Start=2023-05-31,End=2023-06-01 --group-by Type=DIMENSION,Key=INSTANCE_TYPE_FAMILY Type=DIMENSION,Key=REGION Type=DIMENSION,Key=SERVICE</span></span><br><span class="line"></span><br><span class="line">An error occurred (DataUnavailableException) when calling the GetSavingsPlansCoverage operation:</span><br></pre></td></tr></table></figure><p>発生する条件を AWS サポートに確認しました。</p><h2><span id="サポートの回答">サポートの回答</span></h2><p>「対象期間について Savings Plans 適用対象サービスを使用していない場合、上記エラーが発生する」<br>とのこと。</p><h2><span id="cost-explorer-で確認">Cost Explorer で確認</span></h2><p>Cost Explorer で Savings Plans &gt; Coverage report にも以下メッセージがありました。</p><blockquote><p>No savings plans coverage data was returned for this time period. Please adjust the time period or filters if this seems incorrect.」</p></blockquote><p><img src="https://i.imgur.com/ztLP9oV.png"></p><h2><span id="まとめ">まとめ</span></h2><p>Savings Plans カバレッジ取得時に DataUnavailableException エラーが発生する<br>= Savings Plans 適用対象サービスを使用していない<br>= Savings Plans を買う必要がない</p><p>ということでした。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%8</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Raspberry Pi に USB スピーカーを接続しテキストを音声変換しお話しさせる</title>
@@ -673,30 +702,6 @@
 &lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;CodePipline のソースアクションで GitHub からチェックアウトする処理がエラーとなり、異常終了する事象が発生しました。&lt;/p&gt;
 &lt;p&gt;チェックアウトする Rails プロジェクトの app/assets/images/ 以下のファイル容量が肥大化していたことが要因でした。&lt;/p&gt;
 &lt;p&gt;上記を回避すべく Git LFS を導入した話です。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>AWS コンソール上で CodeDeploy でデプロイ管理されている ECS Service をアップデートすると capacity provider が FARGATE になってしまう件</title>
-    <link href="https://kenzo0107.github.io/2022/05/26/2022-05-27-update-ecs-service-on-aws-console/"/>
-    <id>https://kenzo0107.github.io/2022/05/26/2022-05-27-update-ecs-service-on-aws-console/</id>
-    <published>2022-05-26T15:00:00.000Z</published>
-    <updated>2022-05-26T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>capacity provider strategy で FARGATE_SPOT に weight = 1 で全振りしていた FARGATE がいます。</p><p><img src="https://i.imgur.com/rqRuh2G.png"></p><ul><li>FARGATE_SPOT weight = 1</li><li>FARGATE weight = 0</li></ul><span id="more"></span><h2><span id="aws-コンソール上で-ecs-service-をアップデートした際の問題">AWS コンソール上で ECS Service をアップデートした際の問題</span></h2><p><img src="https://i.imgur.com/4RoXEV6.png"></p><p>Configure service で FARGATE_SPOT weight = 1 に指定しています。</p><p>ちょっとした検証でタスク定義をちょこっと変えたものを AWS コンソール上でタスク更新だけしてデプロイしました。</p><p>すると…</p><p>capacity provider strategy の設定がなくなっている…<br><img src="https://i.imgur.com/8kt06gl.png"></p><h2><span id="何故こんなことが起きるのか">何故こんなことが起きるのか？</span></h2><p><img src="https://i.imgur.com/N16Wks5.png"></p><p>AWS コンソール上で ECS Service 更新ステップを進むと<br><code>Configure CodeDeploy Deployment</code> の Revision の <code>AppSpec</code> をクリックしてみると以下設定になっていました。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;version&quot;: 1,</span><br><span class="line">    &quot;Resources&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;TargetService&quot;: &#123;</span><br><span class="line">                &quot;Type&quot;: &quot;AWS::ECS::Service&quot;,</span><br><span class="line">                &quot;Properties&quot;: &#123;</span><br><span class="line">                    &quot;TaskDefinition&quot;: &quot;&lt;タスク定義 ARN&gt;&quot;,</span><br><span class="line">                    &quot;LoadBalancerInfo&quot;: &#123;</span><br><span class="line">                        &quot;ContainerName&quot;: &quot;nginx&quot;,</span><br><span class="line">                        &quot;ContainerPort&quot;: 80</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &quot;PlatformVersion&quot;: &quot;LATEST&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>ここで capacity provider strategy の設定がありません。</p><p>その影響で更新完了後、 capacity provider strategy の設定がなくなってしまいました。</p><p>terraform で capacity provider strategy を管理していると<br>terraform apply 実施すると ECS Service が意図せず再作成となりダウンタイムが発生します。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  # aws_ecs_service.app must be replaced</span><br><span class="line">-/+ resource &quot;aws_ecs_service&quot; &quot;app&quot; &#123;</span><br><span class="line"></span><br><span class="line">      + capacity_provider_strategy &#123; # forces replacement</span><br><span class="line">          + capacity_provider = &quot;FARGATE&quot;</span><br><span class="line">          + weight            = 0</span><br><span class="line">        &#125;</span><br><span class="line">      + capacity_provider_strategy &#123; # forces replacement</span><br><span class="line">          + capacity_provider = &quot;FARGATE_SPOT&quot;</span><br><span class="line">          + weight            = 1</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure><h2><span id="対策">対策</span></h2><p>CodeDeploy で管理されている ECS Service の更新は<br>aws-cli や CodeDeploy 経由でデプロイします。</p><p><code>aws deploy create-deployment</code> のオプションで全て対応しようとするとやや複雑になります。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aws deploy create-deployment \</span><br><span class="line">--application-name xxx \</span><br><span class="line">--deployment-group-name yyy \</span><br><span class="line">--revision &#x27;&#123;&quot;revisionType&quot;: &quot;AppSpecContent&quot;, &quot;appSpecContent&quot;: &#123;&quot;content&quot;: &quot;&#123;\&quot;version\&quot;: 0.0, \&quot;Resources\&quot;: [&#123;\&quot;TargetService\&quot;: &#123;\&quot;Type\&quot;: \&quot;AWS::ECS::Service\&quot;, \&quot;Properties\&quot;: &#123;\&quot;TaskDefinition\&quot;: \&quot;&lt;タスク定義 ARN&gt;\&quot;, \&quot;LoadBalancerInfo\&quot;: &#123;\&quot;ContainerName\&quot;: \&quot;nginx\&quot;, \&quot;ContainerPort\&quot;: 80&#125;,\&quot;CapacityProviderStrategy\&quot;: [&#123;\&quot;Base\&quot;:0,\&quot;CapacityProvider\&quot;:\&quot;FARGATE_SPOT\&quot;,\&quot;Weight\&quot;:1&#125;,&#123;\&quot;Base\&quot;:0,\&quot;CapacityProvider\&quot;:\&quot;FARGATE\&quot;,\&quot;Weight\&quot;:0&#125;]&#125;&#125;&#125;]&#125;&quot;&#125;&#125;&#x27;</span><br></pre></td></tr></table></figure><p>ファイルにまとめておくとコマンドがシンプル ♪<br>（content の定義が String なので、1 行にまとめて文字列として定義しており見づらさはある）</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws deploy create-deployment --cli-input-json file://deployment.json</span><br></pre></td></tr></table></figure><p>deployment.json</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;applicationName&quot;: &quot;xxx&quot;,</span><br><span class="line">    &quot;deploymentGroupName&quot;: &quot;yyy&quot;,</span><br><span class="line">    &quot;revision&quot;: &#123;</span><br><span class="line">    &quot;revisionType&quot;: &quot;AppSpecContent&quot;,</span><br><span class="line">  &quot;appSpecContent&quot;: &#123;</span><br><span class="line">  &quot;content&quot;: &quot;&#123;\&quot;version\&quot;: 0.0, \&quot;Resources\&quot;: [&#123;\&quot;TargetService\&quot;: &#123;\&quot;Type\&quot;: \&quot;AWS::ECS::Service\&quot;, \&quot;Properties\&quot;: &#123;\&quot;TaskDefinition\&quot;: \&quot;&lt;タスク定義 ARN&gt;\&quot;, \&quot;LoadBalancerInfo\&quot;: &#123;\&quot;ContainerName\&quot;: \&quot;nginx\&quot;, \&quot;ContainerPort\&quot;: 80&#125;,\&quot;CapacityProviderStrategy\&quot;: [&#123;\&quot;Base\&quot;:0,\&quot;CapacityProvider\&quot;:\&quot;FARGATE_SPOT\&quot;,\&quot;Weight\&quot;:1&#125;,&#123;\&quot;Base\&quot;:0,\&quot;CapacityProvider\&quot;:\&quot;FARGATE\&quot;,\&quot;Weight\&quot;:0&#125;]&#125;&#125;&#125;]&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>appspec を明示的に指定することで capacity provider strategy を明示的に残すようにできることを確認しました。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;capacity provider strategy で FARGATE_SPOT に weight = 1 で全振りしていた FARGATE がいます。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/rqRuh2G.png&quot;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;FARGATE_SPOT weight = 1&lt;/li&gt;
-&lt;li&gt;FARGATE weight = 0&lt;/li&gt;
-&lt;/ul&gt;</summary>
     
     
     
