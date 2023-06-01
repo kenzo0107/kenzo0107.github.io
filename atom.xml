@@ -69,6 +69,28 @@
   </entry>
   
   <entry>
+    <title>Raspberry Pi 4 Model B に google-cloud-speech インストール時にハマったこと</title>
+    <link href="https://kenzo0107.github.io/2023/05/31/2023-06-01-install-google-cloud-speech-on-raspberrypi4b/"/>
+    <id>https://kenzo0107.github.io/2023/05/31/2023-06-01-install-google-cloud-speech-on-raspberrypi4b/</id>
+    <published>2023-05-31T15:00:00.000Z</published>
+    <updated>2023-05-31T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2><span id="raspberry-pi-4-model-b-の環境">Raspberry Pi 4 Model B の環境</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /etc/os-release</span></span><br><span class="line"></span><br><span class="line">PRETTY_NAME=&quot;Raspbian GNU/Linux 10 (buster)&quot;</span><br><span class="line">NAME=&quot;Raspbian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;10&quot;</span><br><span class="line">VERSION=&quot;10 (buster)&quot;</span><br><span class="line">VERSION_CODENAME=buster</span><br><span class="line">ID=raspbian</span><br><span class="line">ID_LIKE=debian</span><br><span class="line">HOME_URL=&quot;http://www.raspbian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;http://www.raspbian.org/RaspbianForums&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;http://www.raspbian.org/RaspbianBugs&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/version</span></span><br><span class="line"></span><br><span class="line">Linux version 5.10.103-v8+ (dom@buildbot) (aarch64-linux-gnu-gcc-8 (Ubuntu/Linaro 8.4.0-3ubuntu1) 8.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #1529 SMP PREEMPT Tue Mar 8 12:26:46 GMT 2022</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">uname</span> -a</span></span><br><span class="line"></span><br><span class="line">Linux pi4b-talk 5.10.103-v8+ #1529 SMP PREEMPT Tue Mar 8 12:26:46 GMT 2022 aarch64 GNU/Linux</span><br></pre></td></tr></table></figure><h2><span id="google-cloud-speech-インストール">google-cloud-speech インストール</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt-get install -y libffi-dev libssl-dev</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install grpcio google-cloud-speech</span></span><br></pre></td></tr></table></figure><h2><span id="デバイスに空き領域がありませんエラーが発生した場合">「デバイスに空き領域がありません」エラーが発生した場合</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Could not install packages due to an EnvironmentError: [Errno 28] デバイスに空き領域がありません</span><br></pre></td></tr></table></figure><p>一時的に tmp ディレクトリを指定してからインストールを再度実行することで回避できます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir $HOME/tmp</span><br><span class="line">$ export TMPDIR=$HOME/tmp</span><br></pre></td></tr></table></figure><p>それでも以下エラーが出ました。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install grpcio google-cloud-speech</span><br><span class="line"></span><br><span class="line">Command &quot;python setup.py egg_info&quot; failed with error code 1 in /home/pi/tmp/pip-install-qocpvlue/grpcio/</span><br></pre></td></tr></table></figure><p>デフォルトの pip でなく<br>python3 で <a href="https://bootstrap.pypa.io/get-pip.py">https://bootstrap.pypa.io/get-pip.py</a> 実行し<br>pip をインストールし直し、再チャレンジしてみます。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://bootstrap.pypa.io/get-pip.py</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo python3 get-pip.py</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip --version</span></span><br><span class="line"></span><br><span class="line">pip 23.1.2 from /usr/local/lib/python3.7/dist-packages/pip (python 3.7)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip install --upgrade google-cloud-speech</span></span><br></pre></td></tr></table></figure><p>以上で成功しました。</p><p>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2&gt;&lt;span id=&quot;raspberry-pi-4-model-b-の環境&quot;&gt;Raspberry Pi 4 Model B の環境&lt;/span&gt;&lt;/h2&gt;&lt;figure class=&quot;highlight console&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutt</summary>
+      
+    
+    
+    
+    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Raspberry Pi に USB スピーカーを接続しテキストを音声変換しお話しさせる</title>
     <link href="https://kenzo0107.github.io/2023/05/17/2023-05-18-raspberrypi4b-speaks-via-usb-speaker/"/>
     <id>https://kenzo0107.github.io/2023/05/17/2023-05-18-raspberrypi4b-speaks-via-usb-speaker/</id>
@@ -648,42 +670,6 @@
 &lt;blockquote&gt;
 &lt;p&gt;Raspberry Pi OS images from Bullseye onwards will contain only the libcamera-based stack.&lt;/p&gt;
 &lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Raspberry PI bullseye で motion を起動しブラウザで表示する</title>
-    <link href="https://kenzo0107.github.io/2022/07/15/2022-07-16-raspberrypi-bullseye-motion/"/>
-    <id>https://kenzo0107.github.io/2022/07/15/2022-07-16-raspberrypi-bullseye-motion/</id>
-    <published>2022-07-15T15:00:00.000Z</published>
-    <updated>2022-07-15T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#rpi-%E3%81%AE%E8%A8%AD%E5%AE%9A">RPi の設定</a></li><li><a href="#rpi-%E5%A4%96%E3%81%AE%E3%83%9E%E3%82%B7%E3%83%B3%E3%81%AE%E4%BD%9C%E6%A5%AD">RPi 外のマシンの作業</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>Raspberry PI bullseye で motion 起動しブラウザで表示します。</p><span id="more"></span><h2><span id="rpi-の設定">RPi の設定</span></h2><p>数行で完了します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://github.com/Motion-Project/motion/releases/download/release-4.4.0/bullseye_motion_4.4.0-1_armhf.deb</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt install -y ./bullseye_motion_4.4.0-1_armhf.deb</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo vim /etc/motion/motion.conf</span></span><br><span class="line">- stream_localhost on</span><br><span class="line">+ stream_localhost off</span><br></pre></td></tr></table></figure><h2><span id="rpi-外のマシンの作業">RPi 外のマシンの作業</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">open &lt;raspi ip&gt;:8081</span></span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#rpi-%E3%81%AE%E8%A8%AD%E5%AE%9A&quot;&gt;RPi の設定&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#rpi-%E5%A4%96%E3%81%AE%E3%83%9E%E3%82%B7%E3%83%B3%E3%81%AE%E4%BD%9C%E6%A5%AD&quot;&gt;RPi 外のマシンの作業&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;hr&gt;
-&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;Raspberry PI bullseye で motion 起動しブラウザで表示します。&lt;/p&gt;</summary>
     
     
     
