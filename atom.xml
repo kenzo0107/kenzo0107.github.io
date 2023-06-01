@@ -17,6 +17,29 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>fix: Could not install packages due to an EnvironmentError: [Errno 28] No space left on device</title>
+    <link href="https://kenzo0107.github.io/2023/05/31/2023-06-01-fix-no-space-left-on-device-when-pip-install/"/>
+    <id>https://kenzo0107.github.io/2023/05/31/2023-06-01-fix-no-space-left-on-device-when-pip-install/</id>
+    <published>2023-05-31T15:00:00.000Z</published>
+    <updated>2023-05-31T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>RPi 4B で以下エラーで詰まった時の備忘録です。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install xxx</span><br><span class="line"></span><br><span class="line">Could not install packages due to an EnvironmentError: [Errno 28] No space left on device</span><br></pre></td></tr></table></figure><p>一時的に tmp ディレクトリを指定してからインストールを再度実行することで回避してみます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir $HOME/tmp</span><br><span class="line">$ export TMPDIR=$HOME/tmp</span><br><span class="line"></span><br><span class="line">$ pip3 install xxx</span><br></pre></td></tr></table></figure><p>これでうまくいきました ♪</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;RPi 4B で以下エラーで詰まった時の備忘録です。&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;spa</summary>
+      
+    
+    
+    
+    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>AWS Savings Plans Coverage API 実行時に DataUnavailableException エラーが発生する</title>
     <link href="https://kenzo0107.github.io/2023/05/31/2023-06-01-get-savings-plans-coverage-data-unavailable-exception/"/>
     <id>https://kenzo0107.github.io/2023/05/31/2023-06-01-get-savings-plans-coverage-data-unavailable-exception/</id>
@@ -665,47 +688,6 @@
     
     
     <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>AWS CodeBuild で git lfs pull する</title>
-    <link href="https://kenzo0107.github.io/2022/06/15/2022-06-16-git-lfs-pull-on-codebuild/"/>
-    <id>https://kenzo0107.github.io/2022/06/15/2022-06-16-git-lfs-pull-on-codebuild/</id>
-    <published>2022-06-15T15:00:00.000Z</published>
-    <updated>2022-06-15T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E3%81%BE%E3%81%9A%E5%95%8F%E9%A1%8C%E7%99%BA%E7%94%9F%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6-aws-%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AB%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%9F">まず問題発生について AWS サポートに問い合わせた</a></li><li><a href="#git-large-file-storage-%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B">Git Large File Storage を利用する</a></li><li><a href="#%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%82%A2%E3%82%A6%E3%83%88%E3%81%99%E3%82%8B%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E5%81%B4%E3%81%AE%E5%AF%BE%E5%BF%9C">チェックアウトするリポジトリ側の対応</a></li><li><a href="#codepipeline-codebuild-%E5%81%B4%E3%81%AE%E5%AF%BE%E5%BF%9C">CodePipeline &amp; CodeBuild 側の対応</a></li><li><a href="#%E3%81%A1%E3%81%AA%E3%81%BF%E3%81%AB">ちなみに</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>CodePipline のソースアクションで GitHub からチェックアウトする処理がエラーとなり、異常終了する事象が発生しました。</p><p>チェックアウトする Rails プロジェクトの app/assets/images/ 以下のファイル容量が肥大化していたことが要因でした。</p><p>上記を回避すべく Git LFS を導入した話です。</p><span id="more"></span><h2><span id="まず問題発生について-aws-サポートに問い合わせた">まず問題発生について AWS サポートに問い合わせた</span></h2><p>GitHub ソースアクション v2 で障害が発生しているとのこと</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ただいまリポジトリサイズが大きい場合に GitHub ソースアクション v2 がお問い合わせいただいたエラーで失敗する事象が発生しており、製品担当部署にて原因調査を進めております。</span><br><span class="line">このたびは AWS 側の問題によりご不便ご迷惑をお掛けしておりますこと、深くお詫び申し上げます。</span><br><span class="line">誠に申し訳ございません。</span><br><span class="line"></span><br><span class="line">当該事象は CodeCommit または S3 ソースアクションで回避できることを確認しております。</span><br><span class="line">もしパイプラインの実行を急がれます場合は、これらの代替案をお試しくださいませ。</span><br></pre></td></tr></table></figure><p>CodeCommit や S3 なら回避できるとのこと。</p><ul><li>GitHub から CodeCommit に一時的に変更する<ul><li>開発フローに影響あり</li></ul></li><li>S3 へアップロードするファイルの生成等、デプロイフローを変更する<ul><li>ファイルの生成は GitHub Actions 等でやる？検証コスト掛かりそう</li></ul></li></ul><p>一時的な回避策でなく、現運用に極力影響なく、また、検証コストを下げる方法がないかと模索しました。</p><h2><span id="git-large-file-storage-を利用する">Git Large File Storage を利用する</span></h2><p><a href="https://git-lfs.github.com/">https://git-lfs.github.com</a></p><blockquote><p>Git Large File Storage（LFS）は、オーディオサンプル、ビデオ、データセット、グラフィックスなどの大きなファイルを Git 内部のテキストポインタに置き換え、ファイルの内容は GitHub.com や GitHub Enterprise などのリモートサーバに格納します。</p></blockquote><p>Git LFS を利用することで、GitHub からのチェックアウトする容量を抑え、必要箇所で git lfs pull することで回避できないかと考えました。</p><h2><span id="チェックアウトするリポジトリ側の対応">チェックアウトするリポジトリ側の対応</span></h2><p>対象のリポジトリに以下追加します。</p><p>.gitattributes</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app/assets/images/**.png filter=lfs diff=lfs merge=lfs -text</span><br><span class="line">app/assets/images/**.jpg filter=lfs diff=lfs merge=lfs -text</span><br><span class="line">app/assets/images/**.webp filter=lfs diff=lfs merge=lfs -text</span><br></pre></td></tr></table></figure><p>容量の肥大化要因が Rails の app/assets/images/ 以下の画像だったので上記のように指定しています。</p><h2><span id="codepipeline-amp-codebuild-側の対応">CodePipeline &amp; CodeBuild 側の対応</span></h2><p>terraform ベースで説明しています。</p><ul><li>CodePipeline のソースアクションで full clone 設定にします。<ul><li>git メタデータを利用する必要がない場合は shallow clone の方がチェックアウトするファイルが少なくて済む</li></ul></li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_codepipeline&quot; &quot;deploy&quot; &#123;</span><br><span class="line">  ...</span><br><span class="line">  stage &#123;</span><br><span class="line">    name = &quot;Source&quot;</span><br><span class="line">    action &#123;</span><br><span class="line">      configuration = &#123;</span><br><span class="line">        OutputArtifactFormat = &quot;CODEBUILD_CLONE_REF&quot; # Git LFS を利用すべく git メタデータを取得する為。</span><br></pre></td></tr></table></figure><ul><li>CodeBuild にアタッチしている IAM Role に権限追加</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Git LFS 管理のオブジェクトを pull する為</span><br><span class="line">statement &#123;</span><br><span class="line">  actions   = [&quot;codestar-connections:UseConnection&quot;]</span><br><span class="line">  resources = [&quot;&lt;codestarconnections_arn&gt;&quot;]</span><br></pre></td></tr></table></figure><ul><li>buildspec で git-lfs コマンドをインストールし git-lfs pull しています。<ul><li>執筆事典最新の v3.2.0 を指定</li></ul></li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">phases:</span><br><span class="line">  pre_build:</span><br><span class="line">    commands:</span><br><span class="line">      # Git LFS 管理のオブジェクトを pull する</span><br><span class="line">      - wget https://github.com/git-lfs/git-lfs/releases/download/v3.2.0/git-lfs-linux-amd64-v3.2.0.tar.gz</span><br><span class="line">      - tar vzxf git-lfs-linux-amd64-v3.2.0.tar.gz</span><br><span class="line">      - cd git-lfs-3.2.0 &amp;&amp; ./install.sh &amp;&amp; cd ..</span><br><span class="line">      - git remote set-url origin https://medpeer:$GITHUB_TOKEN@github.com/medpeer-dev/wac-rails</span><br><span class="line">      - git-lfs pull</span><br></pre></td></tr></table></figure><p>以上の対応でソースアクションのエラーを回避でき、無事デプロイできることを確認しました。</p><h2><span id="ちなみに">ちなみに</span></h2><p>CodePipeline がダメなら GitHub Actions ではどうか？という気持ちで試した所、<br><code>no left space on device</code> が発生してしまいました。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E3%81%BE%E3%81%9A%E5%95%8F%E9%A1%8C%E7%99%BA%E7%94%9F%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6-aws-%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AB%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%9F&quot;&gt;まず問題発生について AWS サポートに問い合わせた&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#git-large-file-storage-%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B&quot;&gt;Git Large File Storage を利用する&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%82%A2%E3%82%A6%E3%83%88%E3%81%99%E3%82%8B%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E5%81%B4%E3%81%AE%E5%AF%BE%E5%BF%9C&quot;&gt;チェックアウトするリポジトリ側の対応&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#codepipeline-codebuild-%E5%81%B4%E3%81%AE%E5%AF%BE%E5%BF%9C&quot;&gt;CodePipeline &amp;amp; CodeBuild 側の対応&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E3%81%A1%E3%81%AA%E3%81%BF%E3%81%AB&quot;&gt;ちなみに&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;hr&gt;
-&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;CodePipline のソースアクションで GitHub からチェックアウトする処理がエラーとなり、異常終了する事象が発生しました。&lt;/p&gt;
-&lt;p&gt;チェックアウトする Rails プロジェクトの app/assets/images/ 以下のファイル容量が肥大化していたことが要因でした。&lt;/p&gt;
-&lt;p&gt;上記を回避すべく Git LFS を導入した話です。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
     
     
   </entry>
