@@ -4,6 +4,15 @@ date: 2023-06-07
 category: AWS
 ---
 
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+<!-- toc -->
+</div>
+</div>
+
+---
+
 ## 手順
 
 ### CloudFormation のテンプレート取得
@@ -33,7 +42,9 @@ Resources:
 ```
 
 今回は API Gateway のアクセスログ管理用ロググループをインポートします。
-`DeletionPolicy: Retain` としているのは、リソースを作成せず、Stack にインポートします。
+`DeletionPolicy: Retain` としているのは、リソースを作成せず、Stack にインポートする為です。
+
+<!-- more -->
 
 ### import.json にインポートしたいリソースを記載
 
