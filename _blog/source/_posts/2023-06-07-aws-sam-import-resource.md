@@ -69,7 +69,7 @@ import.json にインポート対象のリソースを追加し
 $ aws cloudformation create-change-set \
     --stack-name xxx-Bot-Stack \
     --change-set-name import-apigateway-accesslog-loggroup \
-    --resources-to-import file://import.txt \
+    --resources-to-import file://import.json \
     --change-set-type IMPORT \
     --template-body file://template.yml \
     --capabilities CAPABILITY_IAM
