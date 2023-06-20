@@ -68,6 +68,21 @@ API Gateway のアクセスログ管理用ロググループへログを配信�
 import.json にインポート対象のリソースを追加し
 先程の template.yml と同じディレクトリに保存します。
 
+```console
+$ aws cloudformation create-change-set \
+    --stack-name xxx-Bot-Stack \
+    --change-set-name import-cwlogs-role4 \
+    --resources-to-import file://import.json \
+    --change-set-type IMPORT \
+    --template-body file://template.yml \
+    --capabilities CAPABILITY_NAMED_IAM
+```
+
+capabilities は CAPABILITY_NAMED_IAM にする必要があります。
+IAM Role リソースに独自の命名をしたい場合に利用します。
+
+参考: https://docs.aws.amazon.com/ja_jp/serverlessrepo/latest/devguide/acknowledging-application-capabilities.html
+
 あとは同様に手順を進めます。
 
 以上
