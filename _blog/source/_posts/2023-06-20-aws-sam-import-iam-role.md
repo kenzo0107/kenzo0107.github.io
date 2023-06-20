@@ -71,7 +71,7 @@ import.json にインポート対象のリソースを追加し
 ```console
 $ aws cloudformation create-change-set \
     --stack-name xxx-Bot-Stack \
-    --change-set-name import-cwlogs-role4 \
+    --change-set-name import-cwlogs-role \
     --resources-to-import file://import.json \
     --change-set-type IMPORT \
     --template-body file://template.yml \
