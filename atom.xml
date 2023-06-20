@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2023-06-06T15:00:00.000Z</updated>
+  <updated>2023-06-19T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -17,7 +17,51 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>SAM テンプレートに既存リソースをインポートする手順</title>
+    <title>SAM テンプレートに既存リソースをインポートする手順 - IAM Role 編 -</title>
+    <link href="https://kenzo0107.github.io/2023/06/19/2023-06-20-aws-sam-import-iam-role/"/>
+    <id>https://kenzo0107.github.io/2023/06/19/2023-06-20-aws-sam-import-iam-role/</id>
+    <published>2023-06-19T15:00:00.000Z</published>
+    <updated>2023-06-19T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%89%8B%E9%A0%86">手順</a><ul><li><a href="#cloudformation-%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%8F%96%E5%BE%97%E3%81%97-templateyml-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%BF%BD%E8%A8%98">CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記</a></li><li><a href="#importjson-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%A8%98%E8%BC%89">import.json にインポートしたいリソースを記載</a></li></ul></li></ul><!-- tocstop --></div></div><hr><a href="https://kenzo0107.github.io/2023/06/06/2023-06-07-aws-sam-import-resource" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://i.imgur.com/nieeIsl.png"></div><div class="descriptions"><div class="og-title">SAM テンプレートに既存リソースをインポートする手順</div><div class="og-description">ToC     手順 CloudFormation のテンプレート取得 template.yml にインポートしたいリソースを追記 import.json にインポートしたいリソースを記載 Change sets を作成する change set を実行 (インポート実行) イン…</div></div></div></a><p>以前は CloudWatch LogGroup をインポートしましたが<br>今回は IAM Role をインポートの設定例です。</p><p>基本手順は CloudWatch LogGroup と同様ですが、<br>異なる部分だけ記載します。</p><h2><span id="手順">手順</span></h2><h3><span id="cloudformation-のテンプレート取得し-templateyml-にインポートしたいリソースを追記">CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記</span></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">CWLogRole:</span></span><br><span class="line">    <span class="attr">DeletionPolicy:</span> <span class="string">Retain</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::IAM::Role</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="attr">RoleName:</span> <span class="string">xxx-Bot-Stack</span></span><br><span class="line">      <span class="attr">AssumeRolePolicyDocument:</span></span><br><span class="line">        <span class="attr">Version:</span> <span class="number">2012-10-17</span></span><br><span class="line">        <span class="attr">Statement:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">Effect:</span> <span class="string">Allow</span></span><br><span class="line">            <span class="attr">Principal:</span></span><br><span class="line">              <span class="attr">Service:</span> <span class="string">apigateway.amazonaws.com</span></span><br><span class="line">            <span class="attr">Action:</span> <span class="string">sts:AssumeRole</span></span><br><span class="line">      <span class="attr">Description:</span> <span class="string">Allows</span> <span class="string">API</span> <span class="string">Gateway</span> <span class="string">to</span> <span class="string">push</span> <span class="string">logs</span> <span class="string">to</span> <span class="string">CloudWatch</span> <span class="string">Logs.</span></span><br><span class="line">      <span class="attr">ManagedPolicyArns:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs</span></span><br></pre></td></tr></table></figure><p>API Gateway のアクセスログ管理用ロググループへログを配信する IAM Role をインポートします。</p><span id="more"></span><h3><span id="importjson-にインポートしたいリソースを記載">import.json にインポートしたいリソースを記載</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;ResourceType&quot;: &quot;AWS::IAM::Role&quot;,</span><br><span class="line">        &quot;LogicalResourceId&quot;: &quot;CWLogRole&quot;,</span><br><span class="line">        &quot;ResourceIdentifier&quot;: &#123;</span><br><span class="line">            &quot;RoleName&quot;:&quot;xxx-Bot-Stack&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>import.json にインポート対象のリソースを追加し<br>先程の template.yml と同じディレクトリに保存します。</p><p>あとは同様に手順を進めます。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%89%8B%E9%A0%86&quot;&gt;手順&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#cloudformation-%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%8F%96%E5%BE%97%E3%81%97-templateyml-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%BF%BD%E8%A8%98&quot;&gt;CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#importjson-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%A8%98%E8%BC%89&quot;&gt;import.json にインポートしたいリソースを記載&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;a href=&quot;https://kenzo0107.github.io/2023/06/06/2023-06-07-aws-sam-import-resource&quot; class=&quot;link-preview&quot; target=&quot;_blank&quot;&gt;&lt;div class=&quot;link-area&quot;&gt;&lt;div class=&quot;og-image&quot;&gt;&lt;img src=&quot;https://i.imgur.com/nieeIsl.png&quot;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&quot;descriptions&quot;&gt;&lt;div class=&quot;og-title&quot;&gt;SAM テンプレートに既存リソースをインポートする手順&lt;/div&gt;&lt;div class=&quot;og-description&quot;&gt;ToC     手順 CloudFormation のテンプレート取得 template.yml にインポートしたいリソースを追記 import.json にインポートしたいリソースを記載 Change sets を作成する change set を実行 (インポート実行) イン…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
+
+&lt;p&gt;以前は CloudWatch LogGroup をインポートしましたが&lt;br&gt;今回は IAM Role をインポートの設定例です。&lt;/p&gt;
+&lt;p&gt;基本手順は CloudWatch LogGroup と同様ですが、&lt;br&gt;異なる部分だけ記載します。&lt;/p&gt;
+&lt;h2 id=&quot;手順&quot;&gt;&lt;a href=&quot;#手順&quot; class=&quot;headerlink&quot; title=&quot;手順&quot;&gt;&lt;/a&gt;手順&lt;/h2&gt;&lt;h3 id=&quot;CloudFormation-のテンプレート取得し-template-yml-にインポートしたいリソースを追記&quot;&gt;&lt;a href=&quot;#CloudFormation-のテンプレート取得し-template-yml-にインポートしたいリソースを追記&quot; class=&quot;headerlink&quot; title=&quot;CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記&quot;&gt;&lt;/a&gt;CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記&lt;/h3&gt;&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;Resources:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;CWLogRole:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;DeletionPolicy:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Retain&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;Type:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;AWS::IAM::Role&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;Properties:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;RoleName:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;xxx-Bot-Stack&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;AssumeRolePolicyDocument:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;Version:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2012-10-17&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;Statement:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Effect:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Allow&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;Principal:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;attr&quot;&gt;Service:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;apigateway.amazonaws.com&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;Action:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;sts:AssumeRole&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;Description:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Allows&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;API&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Gateway&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;logs&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;CloudWatch&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Logs.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;ManagedPolicyArns:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;API Gateway のアクセスログ管理用ロググループへログを配信する IAM Role をインポートします。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SAM テンプレートに既存リソースをインポートする手順 - CloudWatch Logs 編 -</title>
     <link href="https://kenzo0107.github.io/2023/06/06/2023-06-07-aws-sam-import-resource/"/>
     <id>https://kenzo0107.github.io/2023/06/06/2023-06-07-aws-sam-import-resource/</id>
     <published>2023-06-06T15:00:00.000Z</published>
@@ -645,42 +689,6 @@
     
     
     <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Lake Formation で生成される Python スクリプトが動作しないので修正した</title>
-    <link href="https://kenzo0107.github.io/2022/08/04/2022-08-05-lake-formation-incremental-database-issue/"/>
-    <id>https://kenzo0107.github.io/2022/08/04/2022-08-05-lake-formation-incremental-database-issue/</id>
-    <published>2022-08-04T15:00:00.000Z</published>
-    <updated>2022-08-04T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E3%81%BE%E3%81%9A%E7%B5%90%E8%AB%96">まず結論</a></li><li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>2022.08.02 時点、<br>Lake Formation blueprint incremental database で生成された Glue Workflow を実行すると異常終了する事象がありました。</p><span id="more"></span><h2><span id="まず結論">まず結論</span></h2><p>最終的に修正されたスクリプトは以下に残しております。<br>対応内容はコミットログをご参照いただければと思います。</p><p><a href="https://github.com/kenzo0107/aws-glue-jobs-incremental-database-etl">https://github.com/kenzo0107/aws-glue-jobs-incremental-database-etl</a></p><p>主な対応内容は以下の通りです。</p><ol><li><a href="https://github.com/kenzo0107/aws-glue-jobs-incremental-database-etl/commit/24e310258bc824cac981ea0bd65a18280aa39ca7">fix: TypeError: object of type ‘filter’ has no len()</a></li><li><a href="https://github.com/kenzo0107/aws-glue-jobs-incremental-database-etl/commit/d023121709673fac768dbd2df85840e966a19955">fix: TypeError: Strings must be encoded before hashing</a></li><li><a href="https://github.com/kenzo0107/aws-glue-jobs-incremental-database-etl/commit/00112287a0deb5f85aeb3ba1c839271eb69fd4a3">fix: テーブルの suffix が重複する場合にテーブルが not found になる</a></li></ol><h2><span id="まとめ">まとめ</span></h2><p>生成されたスクリプトについては AWS SA さんに共有しており<br>ゆくゆくご対応いただけるのではないかと思います。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E3%81%BE%E3%81%9A%E7%B5%90%E8%AB%96&quot;&gt;まず結論&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E3%81%BE%E3%81%A8%E3%82%81&quot;&gt;まとめ&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;hr&gt;
-&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;2022.08.02 時点、&lt;br&gt;Lake Formation blueprint incremental database で生成された Glue Workflow を実行すると異常終了する事象がありました。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
     
     
   </entry>
