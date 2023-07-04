@@ -78,7 +78,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/ts?circuit_id=1&amp;station_id=1 はアクセスしたけど</span><br><span class="line">/ts?circuit_id=1&amp;station_id=2 はアクセスしてない</span><br><span class="line">という場合はオフラインにしたら /ts?circuit_id=1&amp;station_id=2 は閲覧できなくなる</span><br></pre></td></tr></table></figure>
 
 <p>また、POST method は Service Worker は未対応で <a target="_blank" rel="noopener" href="https://github.com/w3c/ServiceWorker/issues/693">issue</a> が上がっているようです。<br>Workaround として以下提案がされているブログがありましたが、実装が複雑で、まだこの辺りは開発の余地がある印象です。</p>
-<a href="https://medium.com/web-on-the-edge/offline-posts-with-progressive-web-apps-fc2dc4ad895" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://miro.medium.com/v2/resize:fit:1024/1*RxGD9_qEpGOTBY7Oss7Ebw.png"></div><div class="descriptions"><div class="og-title">Offline POSTs with Progressive Web Apps</div><div class="og-description">A Microsoft intern’s take on Progressive Web Apps, and providing a great offline experience with offline POSTs.</div></div></div></a>
+
 
 <p>以下 Service Worker 導入時の苦労した点があり、涙無くして見られない内容でした。<br><a target="_blank" rel="noopener" href="https://speakerdeck.com/sisidovski/nikkei-high-performance-pwa">日経電子版 サイト高速化と PWA 対応</a></p>
 <p>他趣味アプリで <a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/workbox/">Workbox</a> を利用していますが、<br>こちらも書いていきたいと思います。</p>
