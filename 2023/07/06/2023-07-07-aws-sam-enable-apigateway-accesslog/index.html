@@ -55,7 +55,9 @@
 <hr>
 <h2><span id="概要">概要</span></h2><p>SAM プロジェクトで管理する API Gateway について<br>AWS Config rule: <code>api-gw-execution-logging-enabled</code> に対応すべく、<br>アクセスログを有効化した際にハマった話です。</p>
 <p><code>Events.*.Type = Api</code> で作成した API Gateway では SAM 上でアクセスログ有効化の設定ができません。</p>
-<p>どのように上記設定から API Gateway のアクセスログ有効化できるか調査しました。</p>
+<p>どのようにしたら API Gateway のアクセスログ有効化できるか調査しました。</p>
+<span id="more"></span>
+
 <h3><span id="sam-templateyml-設定">SAM template.yml 設定</span></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="attr">Function:</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::Serverless::Function</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="string">...</span></span><br><span class="line">      <span class="attr">Events:</span></span><br><span class="line">        <span class="attr">Message:</span></span><br><span class="line">          <span class="attr">Type:</span> <span class="string">Api</span> <span class="comment"># この設定で生成した API Gateway だとアクセスログの有効化の設定ができない</span></span><br><span class="line">          <span class="attr">Properties:</span></span><br><span class="line">            <span class="attr">Path:</span> <span class="string">/message</span></span><br><span class="line">            <span class="attr">Method:</span> <span class="string">post</span></span><br></pre></td></tr></table></figure>
 
 <h2><span id="結論">結論</span></h2><p>2023-07-07 時点、<br>API Gateway を新たに作成しそちらに乗り換えるしか方法がありません。<br>その場合、カスタムドメインでない限り、API Gateway のドメインは変更されます。</p>
