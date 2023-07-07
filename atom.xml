@@ -46,6 +46,35 @@
   </entry>
   
   <entry>
+    <title>asdf で terraform 複数バージョン管理</title>
+    <link href="https://kenzo0107.github.io/2023/07/05/2023-07-06-install-terraform-multi-versions-by-asdf/"/>
+    <id>https://kenzo0107.github.io/2023/07/05/2023-07-06-install-terraform-multi-versions-by-asdf/</id>
+    <published>2023-07-05T15:00:00.000Z</published>
+    <updated>2023-07-05T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#asdf-%E6%8E%A8%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1">asdf 推した理由</a></li><li><a href="#macos-%E3%81%AB-asdf-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">MacOS に asdf インストール</a></li><li><a href="#terraform-plugin-%E8%BF%BD%E5%8A%A0-%E8%A4%87%E6%95%B0%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">terraform plugin 追加 &amp; 複数バージョンインストール</a></li><li><a href="#%E7%89%B9%E5%AE%9A%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%81%AE%E3%81%BF%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">特定ディレクトリのみバージョンを指定する</a></li><li><a href="#tflint-tfsec-%E3%82%82%E5%90%8C%E6%A7%98%E3%81%AB-asdf-%E3%81%A7%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86%E3%81%A7%E3%81%8D%E3%82%8B">tflint, tfsec も同様に asdf でバージョン管理できる</a></li></ul><!-- tocstop --></div></div><hr><p>terraform はバージョンアップ頻度が高く、<br>プロジェクトによってバージョン差分が生じるので<br>複数バージョンを管理できると運用スムーズです。</p><h2><span id="asdf-推した理由">asdf 推した理由</span></h2><p>terraform だけバージョン管理するのであれば <a href="https://github.com/tfutils/tfenv">tfenv</a> がメジャーです。</p><p>ですが、 tflint, tfsec も導入を推奨しているので<br>あらゆるライブラリのバージョン管理が同じ方式でできるので<br>asdf を推してます。</p><h2><span id="macos-に-asdf-インストール">MacOS に asdf インストール</span></h2><p>参考: <a href="https://asdf-vm.com/guide/getting-started.html">https://asdf-vm.com/guide/getting-started.html</a></p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">brew install asdf</span></span><br><span class="line"></span><br><span class="line">// zsh の場合</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> -e <span class="string">&quot;\n. \&quot;<span class="subst">$(brew --prefix asdf)</span>/libexec/asdf.sh\&quot;&quot;</span> &gt;&gt; ~/.zshrc</span></span><br><span class="line"></span><br><span class="line">// リロード</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">exec</span> <span class="variable">$SHELL</span> -l</span></span><br></pre></td></tr></table></figure><h2><span id="terraform-plugin-追加-amp-複数バージョンインストール">terraform plugin 追加 &amp; 複数バージョンインストール</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf plugin add terraform</span></span><br><span class="line"></span><br><span class="line">// asdf 経由でインストール可能な version のリスト表示</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf list all terraform</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">1.5.0</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">// 1.5.0 インストール</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf install terraform 1.5.0</span></span><br></pre></td></tr></table></figure><h2><span id="特定ディレクトリのみバージョンを指定する">特定ディレクトリのみバージョンを指定する</span></h2><p>注意: dietplus-terraform は既に設定済みです。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> path/to/dietplus-terraform</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf <span class="built_in">local</span> terraform 1.5.0</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf reshim terraform</span></span><br></pre></td></tr></table></figure><p><a href="https://github.com/medpeer-dev/dietplus-terraform/blob/master/.tool-versions">.tool-versions</a> が生成され、以下のようにバージョン管理されます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terraform 1.5.0</span><br></pre></td></tr></table></figure><p>.tool-versions が指定されていると<br>そのディレクトリ配下ではインストールされていればそのバージョンを利用する様になります。</p><h2><span id="tflint-tfsec-も同様に-asdf-でバージョン管理できる">tflint, tfsec も同様に asdf でバージョン管理できる</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ asdf plugin add tflint</span><br><span class="line">$ asdf plugin add tfsec</span><br></pre></td></tr></table></figure><p>ローカルで tflint, tfsec のバージョンアップによる挙動の変化を試したい場合に利用しています。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#asdf-%E6</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>SAM テンプレートに既存リソースをインポートする手順 - IAM Role 編 -</title>
     <link href="https://kenzo0107.github.io/2023/06/19/2023-06-20-aws-sam-import-iam-role/"/>
     <id>https://kenzo0107.github.io/2023/06/19/2023-06-20-aws-sam-import-iam-role/</id>
@@ -640,41 +669,6 @@
 
 &lt;hr&gt;
 &lt;p&gt;php の alpine ベースイメージに nodejs をセットアップする場合、&lt;br&gt;&lt;code&gt;apk add nodejs&lt;/code&gt; でインストールも可能ですが、&lt;br&gt;マルチステージビルドで node の alpine イメージから node を動作させるのに必要なファイルをコピーすることで実現可能なので設定がシンプルです。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>ebitengine インストール時に Xcode ライセンスに同意しておきましょう</title>
-    <link href="https://kenzo0107.github.io/2022/08/20/2022-08-21-install-ebitengine-on-mac/"/>
-    <id>https://kenzo0107.github.io/2022/08/20/2022-08-21-install-ebitengine-on-mac/</id>
-    <published>2022-08-20T15:00:00.000Z</published>
-    <updated>2022-08-20T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E5%AE%9F%E8%A1%8C%E7%92%B0%E5%A2%83">実行環境</a></li><li><a href="#ebiten-%E5%B0%8E%E5%85%A5%E6%99%82%E3%81%AB%E3%82%A8%E3%83%A9%E3%83%BC">ebiten 導入時にエラー</a></li><li><a href="#%E5%86%8D%E5%BA%A6%E5%AE%9F%E8%A1%8C">再度実行</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p><a href="https://ebiten.org/documents/install.html?os=darwin">公式 ebitengine インストール</a> の通り、<br>MacOS で ebitengine 導入時に一手間あったので備忘録</p><span id="more"></span><h2><span id="実行環境">実行環境</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sw_vers</span><br><span class="line"></span><br><span class="line">ProductName:    macOS</span><br><span class="line">ProductVersion: 11.6.3</span><br><span class="line">BuildVersion:   20G415</span><br></pre></td></tr></table></figure><h2><span id="ebiten-導入時にエラー">ebiten 導入時にエラー</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">go get github.com/hajimehoshi/ebiten/v2</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">github.com/go-gl/glfw/v3.3/glfw</span></span><br><span class="line"></span><br><span class="line">You have not agreed to the Xcode license agreements, please run &#x27;sudo xcodebuild -license&#x27; from within a Terminal window to review and agree to the Xcode license agreements.</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">github.com/hajimehoshi/ebiten/v2/internal/graphicsdriver/metal/mtl</span></span><br><span class="line"></span><br><span class="line">You have not agreed to the Xcode license agreements, please run &#x27;sudo xcodebuild -license&#x27; from within a Terminal window to revi</span><br><span class="line">ew and agree to the Xcode license agreements.</span><br></pre></td></tr></table></figure><p>上記エラー文の通り、Xcode ライセンスに同意します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo xcodebuild -license</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">By typing &#x27;agree&#x27; you are agreeing to the terms of the software license agreements. Type &#x27;print&#x27; to print them or anything else</span><br><span class="line">to cancel, [agree, print, cancel] (agree と入力し実行)</span><br></pre></td></tr></table></figure><h2><span id="再度実行">再度実行</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">go get github.com/hajimehoshi/ebiten/v2</span></span><br><span class="line">go get: added github.com/go-gl/glfw/v3.3/glfw v0.0.0-20220320163800-277f93cfa958</span><br><span class="line">go get: added github.com/gofrs/flock v0.8.1</span><br><span class="line">go get: added github.com/hajimehoshi/ebiten/v2 v2.3.7</span><br><span class="line">go get: added github.com/jezek/xgb v1.0.0</span><br><span class="line">go get: added golang.org/x/exp v0.0.0-20190731235908-ec7cb31e5a56</span><br><span class="line">go get: added golang.org/x/image v0.0.0-20220321031419-a8550c1d254a</span><br><span class="line">go get: added golang.org/x/mobile v0.0.0-20220518205345-8578da9835fd</span><br><span class="line">go get: added golang.org/x/sync v0.0.0-20210220032951-036812b2e83c</span><br><span class="line">go get: added golang.org/x/sys v0.0.0-20220408201424-a24fb2fb8a0f</span><br></pre></td></tr></table></figure><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">go run -tags=example github.com/hajimehoshi/ebiten/v2/examples/rotate</span></span><br></pre></td></tr></table></figure><p><img src="https://i.imgur.com/4It5iQF.png"></p><p>できた ♪</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%AE%9F%E8%A1%8C%E7%92%B0%E5%A2%83&quot;&gt;実行環境&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#ebiten-%E5%B0%8E%E5%85%A5%E6%99%82%E3%81%AB%E3%82%A8%E3%83%A9%E3%83%BC&quot;&gt;ebiten 導入時にエラー&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E5%86%8D%E5%BA%A6%E5%AE%9F%E8%A1%8C&quot;&gt;再度実行&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;hr&gt;
-&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://ebiten.org/documents/install.html?os=darwin&quot;&gt;公式 ebitengine インストール&lt;/a&gt; の通り、&lt;br&gt;MacOS で ebitengine 導入時に一手間あったので備忘録&lt;/p&gt;</summary>
     
     
     
