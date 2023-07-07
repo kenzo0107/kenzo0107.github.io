@@ -1,6 +1,6 @@
 ---
 title: asdf で terraform 複数バージョン管理
-date: 2023-07-06
+date: 2023-07-08
 category: AWS
 ---
 
@@ -59,15 +59,13 @@ $ asdf install terraform 1.5.0
 
 ## 特定ディレクトリのみバージョンを指定する
 
-注意: dietplus-terraform は既に設定済みです。
-
 ```console
-$ cd path/to/dietplus-terraform
+$ cd path/to/terraform-project
 $ asdf local terraform 1.5.0
 $ asdf reshim terraform
 ```
 
-[.tool-versions](https://github.com/medpeer-dev/dietplus-terraform/blob/master/.tool-versions) が生成され、以下のようにバージョン管理されます。
+.tool-versions が生成され、以下のようにバージョン管理されます。
 
 ```hcl
 terraform 1.5.0
