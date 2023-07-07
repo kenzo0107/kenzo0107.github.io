@@ -21,7 +21,9 @@ AWS Config rule: `api-gw-execution-logging-enabled` に対応すべく、
 
 `Events.*.Type = Api` で作成した API Gateway では SAM 上でアクセスログ有効化の設定ができません。
 
-どのように上記設定から API Gateway のアクセスログ有効化できるか調査しました。
+どのようにしたら API Gateway のアクセスログ有効化できるか調査しました。
+
+<!-- more -->
 
 ### SAM template.yml 設定
 
