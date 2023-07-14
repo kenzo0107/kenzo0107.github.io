@@ -30,6 +30,7 @@ module.exports = class extends Component {
                                 'is-8-tablet is-10-desktop is-6-widescreen': columnCount === 3
                             })} dangerouslySetInnerHTML={{ __html: body }}></div>
                             <Widgets site={site} config={config} helper={helper} page={page} position={'left'} />
+                            <Widgets site={site} config={config} helper={helper} page={page} position={'right'} />
                         </div>
                     </div>
                 </section>
