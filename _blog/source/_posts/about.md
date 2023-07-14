@@ -5,8 +5,6 @@ date: 2014-01-01 05:47:40
 
 ### Author
 
-kenzo0107
-
 <figure class="image is-128x128 mx-auto mb-2">
     <img class='avatar is-rounded' src="/img/avatar.png" alt="kenzo0107" />
 </figure>
