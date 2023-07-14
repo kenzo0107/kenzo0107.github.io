@@ -3,17 +3,17 @@
  * --------------------------------- */
 +widescreen()
     .is-1-column .container, .is-2-column .container
-        max-width: 100%
-        width: 100%
+        max-width: $desktop - 2 * $gap
+        width: $desktop - 2 * $gap
 
 +fullhd()
     .is-2-column .container
-        max-width: 100%
-        width: 100%
+        max-width: $widescreen - 2 * $gap
+        width: $widescreen - 2 * $gap
 
     .is-1-column .container
-        max-width: 100%
-        width: 100%
+        max-width: $desktop - 2 * $gap
+        width: $desktop - 2 * $gap
 
 +tablet()
     .is-sticky
