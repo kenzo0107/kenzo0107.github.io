@@ -33,7 +33,66 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
-</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/about/">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-12-widescreen"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/11/12/2017-11-13-prometheus-remote-storage/"><img class="fill" src="https://i.imgur.com/zFciewX.png" alt="Prometheus2.0 remote storage 検証"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-11-13</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/11/12/2017-11-13-prometheus-remote-storage/">Prometheus2.0 remote storage 検証</a></h1><div class="content"><p>いよいよ出ました Prometheus 2.0 ！</p>
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/about/">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-12-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-11-23</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/11/22/2017-11-23-slack-dm-pullrequest-or-issue-comment-by-Hubot/">Hubot で Git の Pull Request や Issue のコメントのメンション相手に Slack DM で通知</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>Git での Pull Request や Issue コメントのメンションがメール通知で気づけず困った！<br>という声を多く聞き、メンション相手に Slack DM を通知する様な仕組みを作りました。</p>
+<h2><span id="システム概要">システム概要</span></h2><p>今回は AWS 上に構築しました。</p>
+<ul>
+<li>Git は GHE on EC2<ul>
+<li>github.com の場合だと、IP 定まらない問題があるかと思うので、動的に IP を取得して解放させる様な仕組みを入れる必要がありそう。</li>
+</ul>
+</li>
+<li>hubot は t2.nano と最小<ul>
+<li>当初、IBM Bluemix で構築してみましたが、サポートから IP 制限はまだできていない、とのことなので on AWS にしました。</li>
+</ul>
+</li>
+<li>GHE からの hubot の受け口は ELB で EIP のみ許可させてます。<ul>
+<li>今後、受け口を色々作る目的で ELB 立てました。</li>
+<li>元々は JIRA のメンションを Slack DM に送るだけの目的だったので 同一 Private Subnet に置いてました。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/lAlhMpW.png"></p>
+<h2><span id="スクリプト">スクリプト</span></h2><ul>
+<li>getSlackUsernameByGitUsername<ul>
+<li>基本 git name と slack name は命名規則が統一されていたので正規表現で変換させる様に解決しています。</li>
+<li>git name: kenzo-tanaka だったら slack name: kenzo.tanaka に変換</li>
+<li>命名規則に即していないユーザは以下の <code>users</code> リストに変換を任せます。<ul>
+<li><code>kimika.himura</code> は DM 送られたくないと言う人を想定してます。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>依存ライブラリ<ul>
+<li>  “hubot-slack”: “^4.4.0”</li>
+<li>  “hubot-slack-attachement”: “^1.0.1”</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">users = &#123;</span><br><span class="line">    &quot;kenzo-tanaka&quot;: &quot;kenzo0107&quot;,</span><br><span class="line">    &quot;kimika.himura&quot;: &quot;no_send&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>ソース全容は以下になります。</p>
+<script src="//gist.github.com/kenzo0107/d9f3618633d0243453bae7ab5ef5a1dd.js"></script>
+
+
+<h2><span id="git-設定">Git 設定</span></h2><p>設定したい Organization or Owner &gt; Settings &gt; Hooks で hubot への URL を設定します。((Organization 跨いで一気に全部のリポジトリにHookかけるのは別途スクリプト組むなりしないと難しそう。GitHub社も Organization は 1つとすることを推奨とのことなので今回はこれで！))</p>
+<p>その他設定</p>
+<ul>
+<li>Content type: <code>application/json</code></li>
+<li>Let me select individual events:<ul>
+<li>Issues</li>
+<li>Issue comment</li>
+<li>Pull request</li>
+<li>Pull request review</li>
+<li>Pull request review comment</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/6lBkFAL.png"></p>
+<p>※ よりセキュアにする際には Secret 設定してください。</p>
+<h2><span id="通知が来た">通知が来た！</span></h2><p>早速 Pull Request でメンションしてみたら通知が来ました！<br>絵文字もしっかり！<br>URL も自動でリンクされている！</p>
+<p><img src="https://i.imgur.com/5sxmFVO.png"></p>
+<p>以上、参考になれば幸いです♪</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/11/12/2017-11-13-prometheus-remote-storage/"><img class="fill" src="https://i.imgur.com/zFciewX.png" alt="Prometheus2.0 remote storage 検証"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-11-13</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/11/12/2017-11-13-prometheus-remote-storage/">Prometheus2.0 remote storage 検証</a></h1><div class="content"><p>いよいよ出ました Prometheus 2.0 ！</p>
 <p><a target="_blank" rel="noopener" href="https://prometheus.io/blog/2017/11/08/announcing-prometheus-2-0/">Announcing Prometheus 2.0 | Prometheus</a></p>
 <p>先日<a target="_blank" rel="noopener" href="https://mackerel-ug.connpass.com/event/68478/">モニタリング勉強会</a>でも Paul Taylor さんの LT を拝聴させて頂き<br>パフォーマンス向上とストレージフォーマット変更による圧縮・バックアップがしやすくなった等、<br>良い話がたくさん出ていました。</p>
 <p><a target="_blank" rel="noopener" href="https://www.slideshare.net/PaulTraylor/20171027-81281205">Operating Prometheus</a></p>
@@ -792,33 +851,6 @@
 <p>DB は 3306 でオープンしてるので<br>Mac のローカルから <a target="_blank" rel="noopener" href="https://www.sequelpro.com/">Sequel Pro</a> で接続して確認できます。</p>
 <p>これをベースに EFK でログ確認できる様にしたり、<br>mailcatcher でメール機能を試験できる様にしたりと<br>何かと便利です。</p>
 <p>Docker 有難や ♪</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-08-09</span><span class="level-item"><a class="link-muted" href="/categories/Go/">Go</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/08/08/2017-08-09-go-revel-upload-to-s3/">Go+Revelフレームワーク 非同期でS3へ画像リサイズ/アップロード</a></h1><div class="content"><p>備忘録です。</p>
-<h2><span id="概要">概要</span></h2><p>AWS 向けの go ライブラリが乱立していて<br>どれ使ったらいい？という感じだったので<br>本家の <code>launchpad.net/goamz/aws</code> を利用して<br>実装することにしました。</p>
-<h2><span id="controller">Controller</span></h2><ul>
-<li>app/controllers/img.go</li>
-</ul>
-<script src="//gist.github.com/kenzo0107/e27a7efa27d11ceab8f6.js"></script>
-
-<h2><span id="component">Component</span></h2><p>画像アップロード部分を component 化しました。</p>
-<ul>
-<li>app/utility/aws.go</li>
-</ul>
-<script src="//gist.github.com/kenzo0107/a36c52f019ce75411a3f.js"></script>
-
-<h2><span id="views">Views</span></h2><ul>
-<li>Views/Img/Index.html</li>
-</ul>
-<script src="//gist.github.com/kenzo0107/871a8dc41105209ee38c.js"></script>
-
-<ul>
-<li>public/js/ajax.js</li>
-</ul>
-<script src="//gist.github.com/kenzo0107/260b7ff637fd58229824.js"></script>
-
-<ul>
-<li>public/js/jquery.uploadThumbs.js</li>
-</ul>
-<script src="//gist.github.com/kenzo0107/66609140fe7c144040fa.js"></script>
 </div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/13/">前</a></div><div class="pagination-next"><a href="/page/15/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/13/">13</a></li><li><a class="pagination-link is-current" href="/page/14/">14</a></li><li><a class="pagination-link" href="/page/15/">15</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/34/">34</a></li></ul></nav></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {

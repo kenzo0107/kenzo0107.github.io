@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2023-07-07T15:00:00.000Z</updated>
+  <updated>2023-07-13T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>dependabot が pull request を作成しているか確認するスクリプト</title>
+    <link href="https://kenzo0107.github.io/2023/07/13/2023-07-14-show-dependabot-pull-requests/"/>
+    <id>https://kenzo0107.github.io/2023/07/13/2023-07-14-show-dependabot-pull-requests/</id>
+    <published>2023-07-13T15:00:00.000Z</published>
+    <updated>2023-07-13T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E6%89%8B%E9%A0%86">手順</a><ul><li><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88">スクリプト</a></li></ul></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>terraform provider の更新等、 dependabot で Pull Request の作成をしていると<br>自分がアサインされていないので気づきにくいです。</p><p>その為、定期的に見ておく必要があります。</p><p>ですが、管理するリポジトリが多いと全て見に行くのは手間なのでまとめてスクリプトで見れる様にします。</p><h2><span id="手順">手順</span></h2><p>事前に gh コマンドで認証を済ませておく</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gh auth login</span><br></pre></td></tr></table></figure><h3><span id="スクリプト">スクリプト</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/zsh</span><br><span class="line"></span><br><span class="line">repos=(</span><br><span class="line">xxx-terraform</span><br><span class="line">yyy-terraform</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">WORKDIR=$HOME/ghq/github.com/kenzo0107</span><br><span class="line"></span><br><span class="line">for repo in &quot;$&#123;repos[@]&#125;&quot;</span><br><span class="line">do</span><br><span class="line">    cd $WORKDIR/$repo</span><br><span class="line">    gh pr list -A app/dependabot</span><br><span class="line">done</span><br></pre></td></tr></table></figure><p>console 実行結果</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Showing 1 of 1 pull request <span class="keyword">in</span> kenzo0107/xxx-terraform that matches your search</span><br><span class="line"></span><br><span class="line"><span class="comment">#49  Bump hashicorp/aws from 5.2.0 to 5.6.2  dependabot/terraform/hashicorp/aws-5.6.2</span></span><br><span class="line"></span><br><span class="line">Showing 2 of 2 pull requests <span class="keyword">in</span> kenzo0107/yyy-terraform that match your search</span><br><span class="line"></span><br><span class="line"><span class="comment">#433  Bump hashicorp/aws from 5.1.0 to 5.7.0 in /envs/prd        dependabot/terraform/envs/prd/hashicorp/aws-5.7.0</span></span><br></pre></td></tr></table></figure><p>ある程度数える程度だったので対応する terraform プロジェクトは配列で持たせましたが、<br>そこも動的にしたい場合は terraform プロジェクトとわかるファイルがあるリポジトリを抽出してもよいと思います。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%8</summary>
+      
+    
+    
+    
+    <category term="GitHub" scheme="https://kenzo0107.github.io/categories/GitHub/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>asdf で terraform 複数バージョン管理</title>
@@ -659,37 +688,6 @@
 
 &lt;hr&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/aquasecurity/tfsec&quot;&gt;tfsec&lt;/a&gt; を使用し &lt;a href=&quot;https://www.terraform.io/&quot;&gt;Terraform&lt;/a&gt; で管理するリソースのセキュリティを強化する手順を記載します。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>マルチステージビルドで alpine イメージに nodejs をセットアップする</title>
-    <link href="https://kenzo0107.github.io/2022/08/23/2022-08-24-setup-nodejs-on-alpine/"/>
-    <id>https://kenzo0107.github.io/2022/08/23/2022-08-24-setup-nodejs-on-alpine/</id>
-    <published>2022-08-23T15:00:00.000Z</published>
-    <updated>2022-08-23T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><!-- tocstop --></div></div><hr><p>php の alpine ベースイメージに nodejs をセットアップする場合、<br><code>apk add nodejs</code> でインストールも可能ですが、<br>マルチステージビルドで node の alpine イメージから node を動作させるのに必要なファイルをコピーすることで実現可能なので設定がシンプルです。</p><span id="more"></span><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FROM node:16.15.1-alpine AS node</span><br><span class="line"></span><br><span class="line">FROM php:8.0.19-fpm-alpine AS main</span><br><span class="line"></span><br><span class="line"># node イメージから nodejs セットアップに必要なファイルをコピー</span><br><span class="line">COPY --from=node /usr/lib /usr/lib</span><br><span class="line">COPY --from=node /usr/local/share /usr/local/share</span><br><span class="line">COPY --from=node /usr/local/lib /usr/local/lib</span><br><span class="line">COPY --from=node /usr/local/include /usr/local/include</span><br><span class="line">COPY --from=node /usr/local/bin /usr/local/bin</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-
-
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;hr&gt;
-&lt;p&gt;php の alpine ベースイメージに nodejs をセットアップする場合、&lt;br&gt;&lt;code&gt;apk add nodejs&lt;/code&gt; でインストールも可能ですが、&lt;br&gt;マルチステージビルドで node の alpine イメージから node を動作させるのに必要なファイルをコピーすることで実現可能なので設定がシンプルです。&lt;/p&gt;</summary>
     
     
     

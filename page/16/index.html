@@ -33,7 +33,152 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
-</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/about/">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-12-widescreen"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/04/30/2017-05-01-nginx-prometheus-nodeexporter-grafana-cadvisor-on-raspi3/"><img class="fill" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170430/20170430235153.png" alt="Raspberry PI3 Model B に docker-compose で Nginx で認証かけて Prometheus + Node Exporter + Grafana + cAdvisor構築"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-05-01</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/04/30/2017-05-01-nginx-prometheus-nodeexporter-grafana-cadvisor-on-raspi3/">Raspberry PI3 Model B に docker-compose で Nginx で認証かけて Prometheus + Node Exporter + Grafana + cAdvisor構築</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>Raspi3 に docker-compose で Prometheus による監視機構を作成しました。</p>
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/about/">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-12-widescreen"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/05/09/2017-05-10-gke-kubernetes-hubot-cli/"><img class="fill" src="http://i.imgur.com/Vvmetu1.png" alt="無料枠で運用！ GKE + Kubernetes で Hubot 〜CLIから実行編〜"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-05-10</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/05/09/2017-05-10-gke-kubernetes-hubot-cli/">無料枠で運用！ GKE + Kubernetes で Hubot 〜CLIから実行編〜</a></h1><div class="content"><h2><span id="概要">概要</span></h2><ul>
+<li>無料枠を使って Slack 連携する Hubot を GKE で構築します。</li>
+<li>おまけで JIRA 連携も</li>
+</ul>
+<h2><span id="google-cloud-sdk-のインストール方法と初期化">Google Cloud SDK のインストール方法と初期化</span></h2><p><a target="_blank" rel="noopener" href="https://cloud.google.com/sdk/docs/quickstart-mac-os-x">Mac OS X 用クイックスタート</a> を参照して SDK をダウンロードします。</p>
+<ul>
+<li>Mac OS X (x86_64), (x86) かは以下コマンドで確認</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ uname -m</span><br><span class="line"></span><br><span class="line">x86_64</span><br></pre></td></tr></table></figure>
+
+<h2><span id="kubectl-のインストール">kubectl のインストール</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud components update kubectl</span><br></pre></td></tr></table></figure>
+
+<h2><span id="gcloud-デフォルト設定">gcloud デフォルト設定</span></h2><p>以下は作成したプロジェクト、リージョン、ゾーンを設定してます。<br>今後 gcloud コマンド実行時に region 指定等しなくて良くなります。</p>
+<ul>
+<li>作成したプロジェクト ID : <code>hubot-167007</code></li>
+<li>us-west 利用で無料枠を使う為に US リージョンに設定してます。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud auth login</span><br><span class="line">macOS%$ gcloud config set project hubot-167007</span><br><span class="line">macOS%$ gcloud config set compute/region us-west1</span><br><span class="line">macOS%$ gcloud config set compute/zone us-west1-b</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://cloud.google.com/free/">Google Cloud Platform の無料階層</a> 参照してください。</p>
+<h2><span id="クラスタ作成">クラスタ作成</span></h2><ul>
+<li>無料枠を利用するべく f1-micro で 30GB 設定</li>
+<li>でも作成時は 3 ノード必須</li>
+<li>作成完了後、リサイズで 1 ノードに</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud container clusters create hubot-cluster-free \</span><br><span class="line">      --machine-type f1-micro \</span><br><span class="line">      --disk-size=30 \</span><br><span class="line">      --num-nodes=3</span><br><span class="line"></span><br><span class="line">Creating cluster hubot-cluster-free...done.</span><br><span class="line">Created [https://container.googleapis.com/v1/projects/hubot-167007/zones/us-west1-b/clusters/hubot-cluster-free].</span><br><span class="line">kubeconfig entry generated for hubot-cluster-free.</span><br><span class="line">NAME                ZONE        MASTER_VERSION  MASTER_IP       MACHINE_TYPE  NODE_VERSION  NUM_NODES  STATUS</span><br><span class="line">hubot-cluster-free  us-west1-b  1.5.7           35.xxx.xxx.xxx  f1-micro      1.5.7         3          RUNNING</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>コンソールを見ると作成中であることが確認できます。</li>
+</ul>
+<p><img src="http://i.imgur.com/O3LQy9q.png" alt="Imgur"></p>
+<ul>
+<li>以下コマンドで確認可</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">macOS% $ kubectl get nodes</span><br><span class="line">NAME                                                STATUS    AGE       VERSION</span><br><span class="line">gke-hubot-cluster-free-default-pool-a3b110d2-9k6s   Ready     59s       v1.5.7</span><br><span class="line">gke-hubot-cluster-free-default-pool-a3b110d2-lqxg   Ready     1m        v1.5.7</span><br><span class="line">gke-hubot-cluster-free-default-pool-a3b110d2-xqs8   Ready     1m        v1.5.7</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1 ノードにリサイズ</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud container clusters resize hubot-cluster-free --size=1</span><br><span class="line"></span><br><span class="line">Pool [default-pool] for [hubot-cluster-free] will be resized to 1.</span><br><span class="line"></span><br><span class="line">Do you want to continue (Y/n)?  y</span><br><span class="line"></span><br><span class="line">Resizing hubot-cluster-free...done.</span><br><span class="line">Updated [https://container.googleapis.com/v1/projects/hubot-167007/zones/us-west1-b/clusters/hubot-cluster-free].</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://i.imgur.com/KTGg91y.png" alt="Imgur"></p>
+<p>リサイズできるなら初めから 1 ノードで作らせて欲しい (&gt;_&lt;)</p>
+<p>コンソール上だとやっぱりダメ (T_T)</p>
+<p><img src="http://i.imgur.com/TpNz2yj.png" alt="Imgur"></p>
+<h2><span id="認証情報-取得">認証情報 取得</span></h2><ul>
+<li>コンテナクラスタの認証情報を取得し、kubectl を利用してコンテナ クラスタ上にコンテナを作成できるようになります。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud container clusters get-credentials hubot-cluster-free</span><br><span class="line"></span><br><span class="line">Fetching cluster endpoint and auth data.</span><br><span class="line">kubeconfig entry generated for hubot-cluster-free.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>コンテナクラスタ情報表示</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud container clusters describe hubot-cluster-free</span><br></pre></td></tr></table></figure>
+
+<h2><span id="ローカルの-docker-起動">ローカルの Docker 起動</span></h2><p>[<a target="_blank" rel="noopener" href="https://github.com/kenzo0107/hubot-slack-on-docker:embed:cite]">https://github.com/kenzo0107/hubot-slack-on-docker:embed:cite]</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ git clone https://github.com/kenzo0107/hubot-slack-on-docker</span><br><span class="line">macOS%$ cd hubot-slack-on-docker</span><br><span class="line">macOS%$ docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ docker ps</span><br><span class="line"></span><br><span class="line">CONTAINER ID        IMAGE                      COMMAND                  CREATED             STATUS              PORTS                              NAMES</span><br><span class="line">12f77feb09b4        hubotslackondocker_hubot   &quot;/bin/sh -c &#x27;bash ...&quot;   24 minutes ago      Up 24 minutes       6379/tcp, 0.0.0.0:8080-&gt;8080/tcp   hubotslackondocker_hubot_1</span><br></pre></td></tr></table></figure>
+
+<h2><span id="hubot-動作確認">Hubot 動作確認</span></h2><p>Slack 上に Hubot が登場していて <code>hello</code> と呼びかけると <code>Hi</code> と返してくれたら成功です。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170510/20170510012328.png" width="100%">
+</div>
+
+<h2><span id="container-id-から-イメージを-commit">CONTAINER ID から イメージを commit</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ docker commit 12f77feb09b4 gcr.io/hubot-167007/hubot:latest</span><br><span class="line"></span><br><span class="line">macOS%$ docker images</span><br><span class="line">REPOSITORY                       TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">gcr.io/hubot-167007/hubot        latest              2f7336b3a3ce        3 seconds ago       484 MB</span><br></pre></td></tr></table></figure>
+
+<h2><span id="gke-registory-に-push">gke registory に push</span></h2><p>参考: <a target="_blank" rel="noopener" href="https://cloud.google.com/container-registry/docs/pushing?hl=ja&_ga=1.49491107.421538973.1494071894">Container Registry への push</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud docker -- push gcr.io/hubot-167007/hubot:latest</span><br><span class="line"></span><br><span class="line">The push refers to a repository [gcr.io/hubot-167007/hubot]</span><br><span class="line">0569b419082b: Pushed</span><br><span class="line">a7637cfcdfba: Pushed</span><br><span class="line">9f0bdbb7b1fa: Pushed</span><br><span class="line">f1d85eafc75a: Pushed</span><br><span class="line">c2c2b58591f2: Pushed</span><br><span class="line">51c94eacef50: Pushed</span><br><span class="line">69e7fcf7ba41: Pushed</span><br><span class="line">293d09ca6a9d: Pushed</span><br><span class="line">247e72dfcaf5: Pushed</span><br><span class="line">8c2bc9bf1f19: Pushed</span><br><span class="line">40907ce0d959: Pushed</span><br><span class="line">bfba578a7fbe: Pushed</span><br><span class="line">561cbcaac156: Pushed</span><br><span class="line">293a1e72e88b: Pushed</span><br><span class="line">ae09eb3da3dc: Pushed</span><br><span class="line">c06c14d7f919: Pushed</span><br><span class="line">e14577d2cac5: Layer already exists</span><br><span class="line">e8829d5bbd2c: Layer already exists</span><br><span class="line">674ce3c5d814: Layer already exists</span><br><span class="line">308b39a73046: Layer already exists</span><br><span class="line">638903ee8579: Layer already exists</span><br><span class="line"></span><br><span class="line">latest: digest: sha256:0c3b29d18b64c1f8ecc1a1bf67462c84d5915a4a708fe87df714d09198eb5fa1 size: 4704</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>latest が被ると過去のイメージのタグが奪われます。容量の無駄になるので削除しましょう。</li>
+</ul>
+<p><img src="http://i.imgur.com/YlADlds.png" alt="Imgur"></p>
+<h2><span id="deployments-作成">Deployments 作成</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl run pod-hubot \</span><br><span class="line">      --image=gcr.io/hubot-167007/hubot:latest \</span><br><span class="line">      --env=&quot;HUBOT_SLACK_TOKEN=xoxb-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx&quot; \</span><br><span class="line">      --env=&quot;HUBOT_SLACK_TEAM=xxxxxx.slack.com&quot; \</span><br><span class="line">      --env=&quot;HUBOT_SLACK_BOTNAME=hubot&quot; \</span><br><span class="line">      --env=&quot;HUBOT_JIRA_URL=https://&lt;jira_server_domain_or_ip&gt;&quot; \</span><br><span class="line">      --port=8080 \</span><br><span class="line">      --restart=&#x27;Always&#x27;</span><br><span class="line"></span><br><span class="line">deployment &quot;pod-hubot&quot; created</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>deployments 状態確認</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl get deployments</span><br><span class="line">NAME        DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE</span><br><span class="line">pod-hubot   1         1         1            0           10s</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Pod 状態確認</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl get pods</span><br><span class="line"></span><br><span class="line">NAME                         READY     STATUS             RESTARTS   AGE</span><br><span class="line">pod-hubot-1713414922-b2dkq   0/1       ImagePullBackOff   0          23s</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Pod にログイン</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl exec -it pod-hubot-1713414922-b2dkq /bin/bash</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>service の状態確認</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl get service</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NAME         CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE</span><br><span class="line">kubernetes   10.23.240.1   &lt;none&gt;        443/TCP   22m</span><br></pre></td></tr></table></figure>
+
+<p><code>EXTERNAL-IP: &lt;none&gt;</code> … 外部へ開いている IP がない。という状態<br>Private IP は付与されたが Public IP がない、外部のネットワークからアクセスできない状態です。</p>
+<h2><span id="コンテナ公開">コンテナ公開</span></h2><ul>
+<li>Service にロードバランサ付与し公開</li>
+</ul>
+<p>※ ロードバランサを追加すると課金の桁が跳ね上がります。。<br>（2000 円/月くらい。念の為、設定した予算アラートでわかりました。）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl expose deployment pod-hubot --type=&quot;LoadBalancer&quot;</span><br><span class="line">service &quot;pod-hubot&quot; exposed</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Service 確認</li>
+</ul>
+<p><code>EXTERNAL-IP: &lt;pending&gt;</code> となっており、作成途中であることがわかります。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl get service</span><br><span class="line"></span><br><span class="line">NAME         CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE</span><br><span class="line">kubernetes   10.23.240.1     &lt;none&gt;        443/TCP          25m</span><br><span class="line">pod-hubot    10.23.244.214   &lt;pending&gt;     8080:30453/TCP   8s</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>再度 Service 確認</li>
+</ul>
+<p>無事付与されているのがわかりました。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl get service</span><br><span class="line">NAME         CLUSTER-IP      EXTERNAL-IP     PORT(S)          AGE</span><br><span class="line">kubernetes   10.23.240.1     &lt;none&gt;          443/TCP          27m</span><br><span class="line">pod-hubot    10.23.244.214   104.xxx.x.xxx   8080:30453/TCP   1m</span><br></pre></td></tr></table></figure>
+
+<h2><span id="テスト">テスト</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ curl \</span><br><span class="line">-X POST \</span><br><span class="line">-H &quot;Content-Type: application/json&quot; \</span><br><span class="line">-d \</span><br><span class="line">&#x27;&#123;</span><br><span class="line"> &quot;webhookEvent&quot;:&quot;jira:issue_updated&quot;,</span><br><span class="line"> &quot;comment&quot;:&#123;</span><br><span class="line">   &quot;author&quot;:&#123;</span><br><span class="line">     &quot;name&quot;:&quot;himuko&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;body&quot;:&quot;[~kenzo.tanaka] 東京03 秋山 ケンコバ 劇団ひとり&quot;</span><br><span class="line"> &#125;,</span><br><span class="line"> &quot;issue&quot;: &#123;</span><br><span class="line">   &quot;key&quot;:&quot;key&quot;,</span><br><span class="line">   &quot;fields&quot;:&#123;</span><br><span class="line">     &quot;summary&quot;:&quot;summary&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;&#x27; \</span><br><span class="line">http://104.xxx.x.xxx:8080/hubot/jira-comment-dm</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://i.imgur.com/8FOYcyI.png" alt="Imgur"></p>
+<h2><span id="後始末">後始末</span></h2><p>掃除しときたい場合に以下実行してください。</p>
+<ul>
+<li>service 削除</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl delete service pod-hubot</span><br><span class="line">service &quot;pod-hubot&quot; deleted</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pod 削除</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl delete pod pod-hubot-729436916-htw3r</span><br><span class="line">service &quot;pod-hubot&quot; deleted</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>deployments 削除</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ kubectl delete deployments pod-hubot</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>container clusters 削除<br>container cluster を削除すれば紐付く deployments, service, pod も削除されます。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ gcloud container clusters delete hubot-cluster-free</span><br></pre></td></tr></table></figure>
+
+<p>以上です。</p>
+<h2><span id="総評">総評</span></h2><p>GKE は概念が多く、一概に deployment, pod, service, kubernetes 等覚えることが多いですが<br>動かしつつ学ぶのは楽しいです。</p>
+<p>ほぼ手元の Mac で設定できました！<br>手元で済むから <code>macOS%$</code> は不要だった。。</p>
+<p>今回作成した service だと外部に 8080 ポート全開です。</p>
+<p><a target="_blank" rel="noopener" href="http://kenzo0107.hatenablog.com/entry/2017/05/16/222815">次回</a>はアクセス元を制限したポートアクセスやコンテナのアップデートについてまとめます。</p>
+<p>[<a target="_blank" rel="noopener" href="http://kenzo0107.hatenablog.com/entry/2017/05/16/222815:embed:cite]">http://kenzo0107.hatenablog.com/entry/2017/05/16/222815:embed:cite]</a></p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/04/30/2017-05-01-nginx-prometheus-nodeexporter-grafana-cadvisor-on-raspi3/"><img class="fill" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170430/20170430235153.png" alt="Raspberry PI3 Model B に docker-compose で Nginx で認証かけて Prometheus + Node Exporter + Grafana + cAdvisor構築"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-05-01</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/04/30/2017-05-01-nginx-prometheus-nodeexporter-grafana-cadvisor-on-raspi3/">Raspberry PI3 Model B に docker-compose で Nginx で認証かけて Prometheus + Node Exporter + Grafana + cAdvisor構築</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>Raspi3 に docker-compose で Prometheus による監視機構を作成しました。</p>
 <a href="https://github.com/kenzo0107/vagrant-docker/tree/master/docker/prometheus-grafana-on-raspi3" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://opengraph.githubassets.com/89a47091a63af4f49616b63ee97f0283565c7a3d3ce3a634d65147753e17cfe4/kenzo0107/vagrant-docker"></div><div class="descriptions"><div class="og-title">vagrant-docker/docker/prometheus-grafana-on-raspi3 at master · kenzo0107/vagrant-docker</div><div class="og-description">Docker on Vagrant(ubuntu). Contribute to kenzo0107/vagrant-docker development by creating an account on GitHub.</div></div></div></a>
 
 <h2><span id="環境">環境</span></h2><ul>
@@ -611,42 +756,6 @@
 <h2><span id="総評">総評</span></h2><p>簡単でしょ？と言われているようなツールでした ♪</p>
 <p>引き続きプロビジョニングや AWS の各種設定をしていきたいと思います。</p>
 <p>次回 <a href="https://kenzo0107.github.io/2017/03/27/2017-03-27-create-keypair-by-terraform/">EC2 インスタンスを起動し、ローカル環境で作った鍵をキーペア登録し SSH ログイン</a>を実施します。</p>
-</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2017/02/15/2017-02-16-node_exporter/"><img class="fill" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170216/20170216225748.png" alt="node_exporter シェルでクエリ自作"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-02-16</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/02/15/2017-02-16-node_exporter/">node_exporter シェルでクエリ自作</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>node_expoter のオプション <code>--collector.textfile.directory</code> で指定したディレクトリに <code>*.prom</code> という拡張子を配置することで<br>そこに記述したメトリクス情報を prometheus server が読み取ってくれます。</p>
-<p>この <code>*.prom</code> ファイルを一定時間毎に更新すればメトリクスが自作できる、というものです。</p>
-<h2><span id="手順">手順</span></h2><ul>
-<li>node_exporter 自体のインストール・セットアップは以下ご参照ください。</li>
-</ul>
-<a href="http://kenzo0107.hatenablog.com/entry/2017/01/25/154144" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125144719.png"></div><div class="descriptions"><div class="og-title">Node Exporter 構築手順 + Prometheus からAWSオートスケール監視 - 長生村本郷Engineers&#39;Blog</div><div class="og-description">以下に移行しました。 kenzo0107.github.io</div></div></div></a>
-
-<p>上記手順では以下に node_exporter を配置しています。<br>環境によって適宜書き換えてください。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/node_exporter/node_exporter</span><br></pre></td></tr></table></figure>
-
-<h2><span id="text_collector-ディレクトリ作成">text_collector ディレクトリ作成</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/node_exporter</span><br><span class="line">$ mkdir text_collector</span><br></pre></td></tr></table></figure>
-
-<h2><span id="shell-作成">shell 作成</span></h2><p>今回は httpd の process count のメトリクス追加することとします。</p>
-<ul>
-<li>/usr/local/node_exporter/text_collector/httpd.sh 作成</li>
-</ul>
-<script src="//gist.github.com/kenzo0107/cf245d3ba1d2f0faea7f0134414a8c81.js"></script>
-
-<h2><span id="cron-設定">cron 設定</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># node_exporter httpd 5分毎更新</span><br><span class="line">*/5 * * * * /usr/local/node_exporter/text_collector/httpd.sh</span><br></pre></td></tr></table></figure>
-
-<h2><span id="httpdprom-作成確認">httpd.prom 作成確認</span></h2><ul>
-<li>/usr/local/node_exporter/text_collector/httpd.prom</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_httpd_count 24</span><br></pre></td></tr></table></figure>
-
-<p>上記の <code>node_httpd_count</code> がメトリクス名になります。</p>
-<h2><span id="node_expoter-再起動">node_expoter 再起動</span></h2><p>以下のようにディレクトリ指定します。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_expoter --collector.textfile.directory /usr/local/node_exporter/text_collector</span><br></pre></td></tr></table></figure>
-
-<h2><span id="作成したメトリクスを指定し確認する">作成したメトリクスを指定し確認する。</span></h2><p>無事できました！</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170216/20170216225202.png" width="100%">
-</div>
-
-<p>これを利用してるとシェル芸で色々事足りることもあります ♪</p>
-<p>一助になれば何よりです。</p>
 </div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/15/">前</a></div><div class="pagination-next"><a href="/page/17/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/15/">15</a></li><li><a class="pagination-link is-current" href="/page/16/">16</a></li><li><a class="pagination-link" href="/page/17/">17</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/34/">34</a></li></ul></nav></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
