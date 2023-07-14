@@ -11645,17 +11645,17 @@ figure.highlight.foldable div.level-left {
   .is-1-column .container,
   .is-2-column .container {
     max-width: 100%;
-    width: 960px;
+    width: 100%;
   }
 }
 @media screen and (min-width: 1472px) {
   .is-2-column .container {
     max-width: 100%;
-    width: 1152px;
+    width: 100%;
   }
   .is-1-column .container {
     max-width: 100%;
-    width: 960px;
+    width: 100%;
   }
 }
 @media screen and (min-width: 769px), print {
