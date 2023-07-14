@@ -44,6 +44,7 @@ navbar:
     Home: /
     Archives: /archives
     PrivacyPolicy: /2013/12/31/PrivacyPolicy/
+    About: /2013/12/31/about/
   links:
     Download on GitHub:
       icon: fab fa-github
