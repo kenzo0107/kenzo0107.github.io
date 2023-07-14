@@ -2,6 +2,7 @@
 title: Raspberry Pi 4 Model B に google-cloud-speech インストール時にハマったこと
 date: 2023-06-01
 category: RaspberryPI
+cover: https://i.imgur.com/MObktiU.png
 ---
 
 ## Raspberry Pi 4 Model B の環境
