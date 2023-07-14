@@ -20,4 +20,5 @@ kenzo0107
 
 ### Links
 
+- [GitHub](https://github.com/kenzo0107)
 - [Twitter](https://twitter.com/kenzo0107)
