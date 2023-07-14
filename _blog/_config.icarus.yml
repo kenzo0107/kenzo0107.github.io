@@ -45,9 +45,15 @@ navbar:
     Archives: /archives
     About: /2013/12/31/about/
   links:
-    Download on GitHub:
+    GitHub:
       icon: fab fa-github
       url: 'https://github.com/kenzo0107'
+    Twitter:
+      icon: fab fa-twitter
+      url: https://twitter.com/kenzo0107
+    RSS:
+      icon: fas fa-rss
+      url: /atom.xml
 footer:
   links:
     Privacy Policy:
