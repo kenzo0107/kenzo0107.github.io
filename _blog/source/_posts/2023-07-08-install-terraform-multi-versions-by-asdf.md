@@ -2,6 +2,7 @@
 title: asdf で terraform 複数バージョン管理
 date: 2023-07-08
 category: AWS
+cover: https://i.imgur.com/9b8Lzio.png
 ---
 
 <div class="toc">
