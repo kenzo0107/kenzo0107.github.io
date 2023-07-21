@@ -12,6 +12,8 @@ cover: https://i.imgur.com/V4yCTSm.png
 </div>
 </div>
 
+<!-- more -->
+
 ---
 
 ## 概要
