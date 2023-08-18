@@ -18,6 +18,8 @@ cover: https://i.imgur.com/RgpOXr3.jpg
 
 Raspberry PI で Kubernetes クラスタを構築しました。
 
+![](https://i.imgur.com/RgpOXr3.jpg)
+
 会社の「テックサポート制度」により、 Raspberry PI がサポート対象となり、遺憾無くお金を使わせてもらうことができる様になりました。
 その甲斐あって、兼ねてより家で k8s cluster を飼う、というエンジニア冥利に尽きる所作を味わいたくチャレンジさせていただきました。
 
