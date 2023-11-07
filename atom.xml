@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2023-07-20T15:00:00.000Z</updated>
+  <updated>2023-11-06T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AWS CLI で EC2 インスタンス名一覧を取得</title>
+    <link href="https://kenzo0107.github.io/2023/11/06/2023-11-07-describe-ec2-specified-tag-key-value/"/>
+    <id>https://kenzo0107.github.io/2023/11/06/2023-11-07-describe-ec2-specified-tag-key-value/</id>
+    <published>2023-11-06T15:00:00.000Z</published>
+    <updated>2023-11-06T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><!-- tocstop --></div></div><span id="more"></span><hr><p>AWS CLI で EC2 に設定されたタグから特定のキーを指定し、その値をリストするスクリプトです。<br>以下は Key = Name でその値を取得しています。</p><p>EC2 インスタンス名の一覧を取得したい意図です。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-instances --query &#x27;Reservations[*].Instances[*].Tags[?Key == `Name`].Value&#x27; --output text</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+
+
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>python でファイルの内容を取得する</title>
@@ -677,30 +707,6 @@
     
     
     <category term="Terraform" scheme="https://kenzo0107.github.io/categories/Terraform/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>AWS ElastiCache Redis バージョンアップ&amp;ノードタイプ変更時の注意点</title>
-    <link href="https://kenzo0107.github.io/2022/09/28/2022-09-29-upgrade_elasticache_redis/"/>
-    <id>https://kenzo0107.github.io/2022/09/28/2022-09-29-upgrade_elasticache_redis/</id>
-    <published>2022-09-28T15:00:00.000Z</published>
-    <updated>2022-09-28T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>AWS より cache.m3 系から cache.m5 系へのアップグレードを促されました。</p><blockquote><p>One or more of your Amazon ElastiCache clusters is running on our previous generation node type cache.m3.medium. We strongly recommend that you migrate to one of our latest generation node types, and with ElastiCache it is fast and easy to choose a new instance type for your cluster.</p><p>Our latest generation node types offer benefits such as better price per compute performance, higher-performing CPUs, improved memory, network performance, and ElastiCache optimizations such as enhanced I/O that provides improved throughput per node.</p><p>Migration to the latest generation node types is available via our scale-up feature. To scale up your cluster:<br>First, determine the best upgrade path from your previous generation node type(s) to the latest generation, see <a href="https://aws.amazon.com/elasticache/previous-generation">https://aws.amazon.com/elasticache/previous-generation</a></p></blockquote><p>アップグレード時の注意事項をまとめます。</p><h2><span id="結論">結論</span></h2><span id="more"></span><ol><li>Redis のスナップショットを取る</li><li>スナップショットを元に希望のバージョン・ノードタイプの Redis を作成</li><li>アプリケーションのエンドポイントを変更</li></ol><p>バージョンアップ時に再作成となる場合があり上記の対応を取りました。<br>※ terraform plan でバージョン変更時に再作成となったことで発覚し、コンソール上で試しても実行できないことがわかった。</p><p>また、ノードタイプの変更時のデータ保持はベストエフォートとなる為、欠損する可能性があります。<br>その為、Redis にアクセスされない状態にした上でスナップショットを取り、それを元に新たに Redis を作成することで対応しました。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;AWS より cache.m3 系から cache.m5 系へのアップグレードを促されました。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;One or more of your Amazon ElastiCache clusters is running on our previous generation node type cache.m3.medium. We strongly recommend that you migrate to one of our latest generation node types, and with ElastiCache it is fast and easy to choose a new instance type for your cluster.&lt;/p&gt;
-&lt;p&gt;Our latest generation node types offer benefits such as better price per compute performance, higher-performing CPUs, improved memory, network performance, and ElastiCache optimizations such as enhanced I/O that provides improved throughput per node.&lt;/p&gt;
-&lt;p&gt;Migration to the latest generation node types is available via our scale-up feature. To scale up your cluster:&lt;br&gt;First, determine the best upgrade path from your previous generation node type(s) to the latest generation, see &lt;a href=&quot;https://aws.amazon.com/elasticache/previous-generation&quot;&gt;https://aws.amazon.com/elasticache/previous-generation&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;アップグレード時の注意事項をまとめます。&lt;/p&gt;
-&lt;h2 id=&quot;結論&quot;&gt;&lt;a href=&quot;#結論&quot; class=&quot;headerlink&quot; title=&quot;結論&quot;&gt;&lt;/a&gt;結論&lt;/h2&gt;</summary>
-    
-    
     
     
   </entry>
