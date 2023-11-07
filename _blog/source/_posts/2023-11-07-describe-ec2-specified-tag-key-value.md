@@ -4,17 +4,6 @@ date: 2023-11-07
 category: AWS
 ---
 
-<div class="toc">
-<div class="toc-content">
-<h3 class="menu-label">ToC</h3>
-<!-- toc -->
-</div>
-</div>
-
-<!-- more -->
-
----
-
 AWS CLI で EC2 に設定されたタグから特定のキーを指定し、その値をリストするスクリプトです。
 以下は Key = Name でその値を取得しています。
 

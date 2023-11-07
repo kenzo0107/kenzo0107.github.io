@@ -23,21 +23,15 @@
     <published>2023-11-06T15:00:00.000Z</published>
     <updated>2023-11-06T15:00:00.000Z</updated>
     
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><!-- tocstop --></div></div><span id="more"></span><hr><p>AWS CLI で EC2 に設定されたタグから特定のキーを指定し、その値をリストするスクリプトです。<br>以下は Key = Name でその値を取得しています。</p><p>EC2 インスタンス名の一覧を取得したい意図です。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-instances --query &#x27;Reservations[*].Instances[*].Tags[?Key == `Name`].Value&#x27; --output text</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
+    <content type="html"><![CDATA[<p>AWS CLI で EC2 に設定されたタグから特定のキーを指定し、その値をリストするスクリプトです。<br>以下は Key = Name でその値を取得しています。</p><p>EC2 インスタンス名の一覧を取得したい意図です。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-instances --query &#x27;Reservations[*].Instances[*].Tags[?Key == `Name`].Value&#x27; --output text</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
     
     
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-
-
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;</summary>
+      
+      
+    <summary type="html">&lt;p&gt;AWS CLI で EC2 に設定されたタグから特定のキーを指定し、その値をリストするスクリプトです。&lt;br&gt;以下は Key = Name でその値を取得しています。&lt;/p&gt;
+&lt;p&gt;EC2 インスタンス名の一覧を取得したい意図です。&lt;/p&gt;
+&lt;figure class=&quot;h</summary>
+      
     
     
     
