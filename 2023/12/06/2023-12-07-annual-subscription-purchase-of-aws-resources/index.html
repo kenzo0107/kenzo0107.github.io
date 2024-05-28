@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>AWS リソースの年間予約購入 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="ToC     年間予約購入まとめ RI 期限切れ通知 設定 Reserved Instance 購入前後のコスト削減額の計算 Savings Plans コスト削減額 計算 AWS Savings Plans コミット値推奨値を利用する場合 AWS Savings Plans 自前でコミット値を設定する場合   CloudFront Security Bundle コスト削減額"><meta property="og:type" content="blog"><meta property="og:title" content="AWS リソースの年間予約購入"><meta property="og:url" content="https://kenzo0107.github.io/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="ToC     年間予約購入まとめ RI 期限切れ通知 設定 Reserved Instance 購入前後のコスト削減額の計算 Savings Plans コスト削減額 計算 AWS Savings Plans コミット値推奨値を利用する場合 AWS Savings Plans 自前でコミット値を設定する場合   CloudFront Security Bundle コスト削減額"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://i.imgur.com/Kq3llTo.png"><meta property="og:image" content="https://i.imgur.com/cnwPI8X.png"><meta property="og:image" content="https://i.imgur.com/vBbJUik.png"><meta property="og:image" content="https://i.imgur.com/7KIypok.png"><meta property="og:image" content="https://i.imgur.com/2yW95Gh.png"><meta property="article:published_time" content="2023-12-06T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://i.imgur.com/Kq3llTo.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/"},"headline":"AWS リソースの年間予約購入","image":["https://i.imgur.com/Kq3llTo.png","https://i.imgur.com/cnwPI8X.png","https://i.imgur.com/vBbJUik.png","https://i.imgur.com/7KIypok.png","https://i.imgur.com/2yW95Gh.png"],"datePublished":"2023-12-06T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"ToC     年間予約購入まとめ RI 期限切れ通知 設定 Reserved Instance 購入前後のコスト削減額の計算 Savings Plans コスト削減額 計算 AWS Savings Plans コミット値推奨値を利用する場合 AWS Savings Plans 自前でコミット値を設定する場合   CloudFront Security Bundle コスト削減額"}</script><link rel="canonical" href="https://kenzo0107.github.io/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/about/">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-12-07</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile">AWS リソースの年間予約購入</h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E5%B9%B4%E9%96%93%E4%BA%88%E7%B4%84%E8%B3%BC%E5%85%A5%E3%81%BE%E3%81%A8%E3%82%81">年間予約購入まとめ</a></li>
+<li><a href="#ri-%E6%9C%9F%E9%99%90%E5%88%87%E3%82%8C%E9%80%9A%E7%9F%A5-%E8%A8%AD%E5%AE%9A">RI 期限切れ通知 設定</a></li>
+<li><a href="#reserved-instance-%E8%B3%BC%E5%85%A5%E5%89%8D%E5%BE%8C%E3%81%AE%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D%E3%81%AE%E8%A8%88%E7%AE%97">Reserved Instance 購入前後のコスト削減額の計算</a></li>
+<li><a href="#savings-plans-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D-%E8%A8%88%E7%AE%97">Savings Plans コスト削減額 計算</a><ul>
+<li><a href="#aws-savings-plans-%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E6%8E%A8%E5%A5%A8%E5%80%A4%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">AWS Savings Plans コミット値推奨値を利用する場合</a></li>
+<li><a href="#aws-savings-plans-%E8%87%AA%E5%89%8D%E3%81%A7%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">AWS Savings Plans 自前でコミット値を設定する場合</a></li>
+</ul>
+</li>
+<li><a href="#cloudfront-security-bundle-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D">CloudFront Security Bundle コスト削減額</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<p>AWS リソースの年間予約購入について備忘録です。</p>
+<h2><span id="年間予約購入まとめ">年間予約購入まとめ</span></h2><ul>
+<li><p>Reserved Instance</p>
+<ul>
+<li>対象:<ul>
+<li>RDS</li>
+<li>ElastiCache</li>
+<li>RedShift</li>
+<li>OpenSearch</li>
+</ul>
+</li>
+<li>以下指定し購入<ul>
+<li>インスタンスタイプ</li>
+<li>個数</li>
+<li>前払い</li>
+<li>年数（弊社は 1 年指定）</li>
+</ul>
+</li>
+<li>期限切れ通知<ul>
+<li><a target="_blank" rel="noopener" href="https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert">RI アラート管理</a> で設定</li>
+</ul>
+</li>
+<li>Pros:<ul>
+<li>どのリソースに対して購入するかが決定しやすい</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Savings Plans</p>
+<ul>
+<li>対象: コンピュートリソース（EC2 専用の Savings Plans もある）<ul>
+<li>EC2</li>
+<li>ECS</li>
+<li>Lambda</li>
+</ul>
+</li>
+<li>以下指定し購入<ul>
+<li>コンピュートリソースの利用量に対するコミット値</li>
+<li>年数</li>
+<li>前払い</li>
+</ul>
+</li>
+<li>期限切れ通知<ul>
+<li><a target="_blank" rel="noopener" href="https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/overview/alert">Savings Plans アラート管理</a> で設定</li>
+</ul>
+</li>
+<li>コミット値<ul>
+<li>過去・今後の推定利用量から算出する or AWS 推奨値を設定する</li>
+</ul>
+</li>
+<li>Pros:<ul>
+<li>EC2 から ECS のリプレイス後も適用される</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>どのリソースに対して購入したかが分かりづらい</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CloudFront Security Bundle</p>
+<ul>
+<li>対象:<ul>
+<li>CloudFront</li>
+<li>WAF</li>
+</ul>
+</li>
+<li>以下指定し購入<ul>
+<li>CloudFront の利用量に対するコミット値</li>
+<li>年数</li>
+<li>前払い</li>
+</ul>
+</li>
+<li>期限切れ通知<ul>
+<li>現状ない (2023-12-07 時点)</li>
+</ul>
+</li>
+<li>コミット値<ul>
+<li>過去・今後の推定利用量から算出する or AWS 推奨値を設定する</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+
+<h2><span id="ri-期限切れ通知-設定">RI 期限切れ通知 設定</span></h2><p>RI の期限が切れるとオンデマンド料金となりコスト増となります。<br>コストが上がってから気づく、ということがないように期限切れ前に通知する機能があります。</p>
+<p>以下ページから設定できます。</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert">RI アラート管理</a><br><img src="https://i.imgur.com/Kq3llTo.png"><br><img src="https://i.imgur.com/cnwPI8X.png"></p>
+</li>
+<li><p>On the day of expiration: 期限切れ当日</p>
+</li>
+<li><p>7 days: 期限切れ 7 日前</p>
+</li>
+<li><p>30 days: 期限切れ 30 日前</p>
+</li>
+<li><p>60 days: 期限切れ 60 日前</p>
+</li>
+<li><p>Email recipients: メールアドレスが複数ある場合は <code>,</code> で区切る</p>
+<ul>
+<li>Slack Email アプリで発行したメールアドレスを設定すると Slack 通知できる</li>
+</ul>
+</li>
+</ul>
+<h2><span id="reserved-instance-購入前後のコスト削減額の計算">Reserved Instance 購入前後のコスト削減額の計算</span></h2><p>RI は以下で年間コスト削減額を計算できます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">オンデマンド料金/hour × 365 days × 24 hours - (RI前払い料金 + RI 適用後料金/hour × 365 days × 24 hours)</span><br></pre></td></tr></table></figure>
+
+<p>RDS, ElastiCache, RedShift の各料金は AWS ドキュメントで確認可能です。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/rds/aurora/pricing/#Aurora_MySQL-Compatible_Edition">Aurora MySQL</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/rds/aurora/pricing/#Aurora_PostgreSQL-Compatible_Edition">Aurora PostgreSQL</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/rds/mysql/pricing/#RDS_for_MySQL">MySQL</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/rds/postgresql/pricing/#RDS_for_PostgreSQL">PostgreSQL</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/elasticache/pricing/#Reserved_nodes">ElastiCache</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/redshift/pricing/#Reserved_Instance_pricing">RedShift</a></li>
+</ul>
+<h2><span id="savings-plans-コスト削減額-計算">Savings Plans コスト削減額 計算</span></h2><h3><span id="aws-savings-plans-コミット値推奨値を利用する場合">AWS Savings Plans コミット値推奨値を利用する場合</span></h3><p>以下ページでコスト削減額の結果が確認できます。</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/recommendations?lookbackPeriodInDays=SEVEN_DAYS&paymentOption=ALL_UPFRONT&scope=PAYER&spType=COMPUTE_SP&termInYears=ONE_YEAR&tokens=%5B%5D">AWS Savings Plans 推奨値</a><br><img src="https://i.imgur.com/vBbJUik.png"></p>
+</li>
+<li><p>Savings Plans type: 節約プランタイプ</p>
+<ul>
+<li>Compute Savings Plans: コンピュートリソースに対する節約プラン<ul>
+<li>対象:<ul>
+<li>EC2</li>
+<li>ECS</li>
+<li>Lambda</li>
+</ul>
+</li>
+<li>EC2 から ECS へリプレイスを検討している、という場合に有利</li>
+</ul>
+</li>
+<li>EC2 Instance Savings Plans: EC2 に対する節約プラン<ul>
+<li>対象:<ul>
+<li>EC2</li>
+</ul>
+</li>
+<li>EC2 に特化しているため Compute Savings Plans よりコスト削減できる</li>
+</ul>
+</li>
+<li>SageMaker Savings Plans: SageMaker に対する節約プラン<ul>
+<li>対象:<ul>
+<li>SageMaker</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Term: 予約購入する期間 (最低 1 年)</p>
+<ul>
+<li>3-year: 3 年の予約購入 (最もコスト削減率が高い)<ul>
+<li>3 年後まで現状のインフラ構成が見込めない場合は 1-year を選択した方が良い</li>
+</ul>
+</li>
+<li>1-year: 1 年の予約購入</li>
+</ul>
+</li>
+<li><p>Payment Option: 前払いのタイプです。</p>
+<ul>
+<li>All upfront: 全額前払い（最もコスト削減率が高い）</li>
+<li>Partial upfront: 一部前払い</li>
+<li>No upfront: 前払いしない</li>
+</ul>
+</li>
+<li><p>Based on the past の値は推奨値を算出する為の過去の運用日数</p>
+<ul>
+<li>直近が安定しているのであれば 7 日間 を選択</li>
+<li>日常的に EC2, ECS タスクのスケーリングを繰り返している場合は 30 or 60 日間を選択</li>
+</ul>
+</li>
+</ul>
+<p>今後 1 年を見越して利用量が大きく減ることがなければ、過去の利用量から AWS が算出した推奨値を採用する、で問題ありません。</p>
+<h3><span id="aws-savings-plans-自前でコミット値を設定する場合">AWS Savings Plans 自前でコミット値を設定する場合</span></h3><p>自前でコミット値を設定する場合はコスト削減額が表示されません。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://us-east-1.console.aws.amazon.com/cost-management/home?region=us-east-1#/savings-plans/purchase">Savings Plans: 自前でコミット値を設定する</a><br><img src="https://i.imgur.com/7KIypok.png"></li>
+</ul>
+<p>今後利用量に変化がありそう、スケーリングのタイミングなどで利用料が安定しない場合は自前で計算し設定しま s。</p>
+<h2><span id="cloudfront-security-bundle-コスト削減額">CloudFront Security Bundle コスト削減額</span></h2><p>以下ページで確認できます。</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://us-east-1.console.aws.amazon.com/cloudfront/v3/home#/savings-bundle/purchase">CloudFront: 推奨値</a><br><img src="https://i.imgur.com/2yW95Gh.png"></p>
+</li>
+<li><p>Term: 1-year のみ</p>
+</li>
+<li><p>Payment option: Monthly のみ</p>
+</li>
+<li><p>Auto renew: 自動更新</p>
+<ul>
+<li>購入には稟議を通す必要がある等の理由でオフにすることが多いです（個人の感想）</li>
+</ul>
+</li>
+<li><p>期限切れ通知機能がないので適宜チェックする必要がある</p>
+</li>
+</ul>
+<p>AWS で過去の利用量を元にどの程度コスト削減できるか表示されます。</p>
+<p>自動更新の有効・無効については適宜判定してください。</p>
+<p>以上<br>参考になれば幸いです。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>AWS リソースの年間予約購入</p><p><a href="https://kenzo0107.github.io/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/">https://kenzo0107.github.io/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2023-12-07</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/05/27/2024-05-28-read-file-by-python/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Python ファイル読み込み</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/11/30/2023-12-01-show-running-aws-resources/"><span class="level-item">aws-cli で AWS 起動中のリソース一覧取得する</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/';
+            this.page.identifier = '2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="kenzo0107"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">kenzo0107</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">投稿</p><a href="/archives"><p class="title">342</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">カテゴリ</p><a href="/categories"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">タグ</p><a href="/tags"><p class="title">88</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/kenzo0107" target="_blank" rel="noopener">フォローする</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">カテゴリ</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/AWS/"><span class="level-start"><span class="level-item">AWS</span></span><span class="level-end"><span class="level-item tag">23</span></span></a></li><li><a class="level is-mobile" href="/categories/DIY/"><span class="level-start"><span class="level-item">DIY</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/GitHub/"><span class="level-start"><span class="level-item">GitHub</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/Go/"><span class="level-start"><span class="level-item">Go</span></span><span class="level-end"><span class="level-item tag">26</span></span></a></li><li><a class="level is-mobile" href="/categories/Python/"><span class="level-start"><span class="level-item">Python</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/RaspberryPI/"><span class="level-start"><span class="level-item">RaspberryPI</span></span><span class="level-end"><span class="level-item tag">12</span></span></a></li><li><a class="level is-mobile" href="/categories/Terraform/"><span class="level-start"><span class="level-item">Terraform</span></span><span class="level-end"><span class="level-item tag">13</span></span></a></li></ul></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最近の記事</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-05-27T15:00:00.000Z">2024-05-28</time></p><p class="title"><a href="/2024/05/27/2024-05-28-read-file-by-python/">Python ファイル読み込み</a></p><p class="categories"><a href="/categories/Python/">Python</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-12-06T15:00:00.000Z">2023-12-07</time></p><p class="title"><a href="/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/">AWS リソースの年間予約購入</a></p><p class="categories"><a href="/categories/AWS/">AWS</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-11-30T15:00:00.000Z">2023-12-01</time></p><p class="title"><a href="/2023/11/30/2023-12-01-show-running-aws-resources/">aws-cli で AWS 起動中のリソース一覧取得する</a></p><p class="categories"><a href="/categories/AWS/">AWS</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-11-06T15:00:00.000Z">2023-11-07</time></p><p class="title"><a href="/2023/11/06/2023-11-07-describe-ec2-specified-tag-key-value/">AWS CLI で EC2 インスタンス名一覧を取得</a></p><p class="categories"><a href="/categories/AWS/">AWS</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-07-20T15:00:00.000Z">2023-07-21</time></p><p class="title"><a href="/2023/07/20/2023-07-21-python-load-file/">python でファイルの内容を取得する</a></p><p class="categories"><a href="/categories/Python/">Python</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">タグ</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/htaccess/"><span class="tag">.htaccess</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ALB/"><span class="tag">ALB</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/AWS/"><span class="tag">AWS</span><span class="tag">43</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Android/"><span class="tag">Android</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Ansible/"><span class="tag">Ansible</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/AntiVirus/"><span class="tag">AntiVirus</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Apache/"><span class="tag">Apache</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Chef/"><span class="tag">Chef</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CodeBuild/"><span class="tag">CodeBuild</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Cookie/"><span class="tag">Cookie</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Corosync/"><span class="tag">Corosync</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Datadog/"><span class="tag">Datadog</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Docker/"><span class="tag">Docker</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ECR/"><span class="tag">ECR</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ECS/"><span class="tag">ECS</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ElastiCache/"><span class="tag">ElastiCache</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Elasticsearch/"><span class="tag">Elasticsearch</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Email/"><span class="tag">Email</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/FTPS/"><span class="tag">FTPS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Fluentd/"><span class="tag">Fluentd</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GKE/"><span class="tag">GKE</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GitHub-Actions/"><span class="tag">GitHub Actions</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Go/"><span class="tag">Go</span><span class="tag">24</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GooglePlay/"><span class="tag">GooglePlay</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hubot/"><span class="tag">Hubot</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/JavaScript/"><span class="tag">JavaScript</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Jenkins/"><span class="tag">Jenkins</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Kibana/"><span class="tag">Kibana</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/LINE-Notify/"><span class="tag">LINE Notify</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Lambda/"><span class="tag">Lambda</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Let-s-encrypt/"><span class="tag">Let&#039;s encrypt</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MachineLearning/"><span class="tag">MachineLearning</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Monitoring/"><span class="tag">Monitoring</span><span class="tag">12</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MySQL/"><span class="tag">MySQL</span><span class="tag">9</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nginx/"><span class="tag">Nginx</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/OpenSSL/"><span class="tag">OpenSSL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Outlook/"><span class="tag">Outlook</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PHP/"><span class="tag">PHP</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Pacemaker/"><span class="tag">Pacemaker</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Prometheus/"><span class="tag">Prometheus</span><span class="tag">7</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ProxySQL/"><span class="tag">ProxySQL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Puppeteer/"><span class="tag">Puppeteer</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Rails/"><span class="tag">Rails</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RaspberryPI/"><span class="tag">RaspberryPI</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Reactio/"><span class="tag">Reactio</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Redis/"><span class="tag">Redis</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Ruby/"><span class="tag">Ruby</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/S3/"><span class="tag">S3</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SSL/"><span class="tag">SSL</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Security/"><span class="tag">Security</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SendGrid/"><span class="tag">SendGrid</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Slack/"><span class="tag">Slack</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SonarQube/"><span class="tag">SonarQube</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/StatsBot/"><span class="tag">StatsBot</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Swift/"><span class="tag">Swift</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Terraform/"><span class="tag">Terraform</span><span class="tag">6</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Twilio/"><span class="tag">Twilio</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Unity/"><span class="tag">Unity</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Vagrant/"><span class="tag">Vagrant</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Vault/"><span class="tag">Vault</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/WAF/"><span class="tag">WAF</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Zabbix/"><span class="tag">Zabbix</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/awk/"><span class="tag">awk</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/casperjs/"><span class="tag">casperjs</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/cpu/"><span class="tag">cpu</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/csv/"><span class="tag">csv</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/flask/"><span class="tag">flask</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/git/"><span class="tag">git</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/i-node/"><span class="tag">i-node</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iftop/"><span class="tag">iftop</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ipinfo/"><span class="tag">ipinfo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/iptable/"><span class="tag">iptable</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/kibana/"><span class="tag">kibana</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/macos/"><span class="tag">macos</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/nginx/"><span class="tag">nginx</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/no-ip/"><span class="tag">no-ip</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ping/"><span class="tag">ping</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pip/"><span class="tag">pip</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/reCAPTCHA/"><span class="tag">reCAPTCHA</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/sftp/"><span class="tag">sftp</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/spam/"><span class="tag">spam</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ssh/"><span class="tag">ssh</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/vim/"><span class="tag">vim</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/wget/"><span class="tag">wget</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/yum/"><span class="tag">yum</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/zsh/"><span class="tag">zsh</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">更新を購読する</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="購読する"></div></div></form></div></div></div><div class="card widget" data-type="adsense"><div class="card-content"><div class="menu"><h3 class="menu-label">広告</h3><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6265337967545472" data-ad-slot="9975280607" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2024 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

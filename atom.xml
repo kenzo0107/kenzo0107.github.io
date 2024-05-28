@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2023-11-30T15:00:00.000Z</updated>
+  <updated>2024-05-27T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,164 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python ファイル読み込み</title>
+    <link href="https://kenzo0107.github.io/2024/05/27/2024-05-28-read-file-by-python/"/>
+    <id>https://kenzo0107.github.io/2024/05/27/2024-05-28-read-file-by-python/</id>
+    <published>2024-05-27T15:00:00.000Z</published>
+    <updated>2024-05-27T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><!-- tocstop --></div></div><hr><p>Python でファイル内容を読み込みして Azure OpenAI Service に読ませたい時があったのでまとめました。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</span><br><span class="line"><span class="keyword">from</span> pypdf <span class="keyword">import</span> PdfReader</span><br><span class="line"></span><br><span class="line"><span class="comment"># .docx</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_docx</span>(<span class="params">filepath</span>):</span><br><span class="line">    doc = Document(filepath)</span><br><span class="line">    full_text = []</span><br><span class="line">    <span class="keyword">for</span> para <span class="keyword">in</span> doc.paragraphs:</span><br><span class="line">        full_text.append(para.text)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;\n&quot;</span>.join(full_text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># .pdf</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_pdf</span>(<span class="params">filepath</span>):</span><br><span class="line">    reader = PdfReader(filepath)</span><br><span class="line">    full_text = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> reader.pages:</span><br><span class="line">        full_text += p.extract_text()</span><br><span class="line">    <span class="keyword">return</span> full_text</span><br><span class="line"></span><br><span class="line"><span class="comment"># .txt, .md etc...</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_txt</span>(<span class="params">filepath</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filepath, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        content = file.read()</span><br><span class="line">    <span class="keyword">return</span> content</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">filepath</span>):</span><br><span class="line">    _, ext = os.path.splitext(filepath)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ext == <span class="string">&#x27;.docx&#x27;</span>:</span><br><span class="line">        t = read_docx(filepath)</span><br><span class="line">    <span class="keyword">elif</span> ext == <span class="string">&#x27;.pdf&#x27;</span>:</span><br><span class="line">        t = read_pdf(filepath)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        t = read_txt(filepath)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(t)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    filepath = sys.argv[<span class="number">1</span>]</span><br><span class="line">    main(filepath)</span><br></pre></td></tr></table></figure><p><a href="https://gist.github.com/kenzo0107/456439de57b3640c053cf369ca42f358">https://gist.github.com/kenzo0107/456439de57b3640c053cf369ca42f358</a></p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+
+
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+</summary>
+      
+    
+    
+    
+    <category term="Python" scheme="https://kenzo0107.github.io/categories/Python/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AWS リソースの年間予約購入</title>
+    <link href="https://kenzo0107.github.io/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/"/>
+    <id>https://kenzo0107.github.io/2023/12/06/2023-12-07-annual-subscription-purchase-of-aws-resources/</id>
+    <published>2023-12-06T15:00:00.000Z</published>
+    <updated>2023-12-06T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E5%B9%B4%E9%96%93%E4%BA%88%E7%B4%84%E8%B3%BC%E5%85%A5%E3%81%BE%E3%81%A8%E3%82%81">年間予約購入まとめ</a></li><li><a href="#ri-%E6%9C%9F%E9%99%90%E5%88%87%E3%82%8C%E9%80%9A%E7%9F%A5-%E8%A8%AD%E5%AE%9A">RI 期限切れ通知 設定</a></li><li><a href="#reserved-instance-%E8%B3%BC%E5%85%A5%E5%89%8D%E5%BE%8C%E3%81%AE%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D%E3%81%AE%E8%A8%88%E7%AE%97">Reserved Instance 購入前後のコスト削減額の計算</a></li><li><a href="#savings-plans-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D-%E8%A8%88%E7%AE%97">Savings Plans コスト削減額 計算</a><ul><li><a href="#aws-savings-plans-%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E6%8E%A8%E5%A5%A8%E5%80%A4%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">AWS Savings Plans コミット値推奨値を利用する場合</a></li><li><a href="#aws-savings-plans-%E8%87%AA%E5%89%8D%E3%81%A7%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">AWS Savings Plans 自前でコミット値を設定する場合</a></li></ul></li><li><a href="#cloudfront-security-bundle-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D">CloudFront Security Bundle コスト削減額</a></li></ul><!-- tocstop --></div></div><hr><p>AWS リソースの年間予約購入について備忘録です。</p><h2><span id="年間予約購入まとめ">年間予約購入まとめ</span></h2><ul><li><p>Reserved Instance</p><ul><li>対象:<ul><li>RDS</li><li>ElastiCache</li><li>RedShift</li><li>OpenSearch</li></ul></li><li>以下指定し購入<ul><li>インスタンスタイプ</li><li>個数</li><li>前払い</li><li>年数（弊社は 1 年指定）</li></ul></li><li>期限切れ通知<ul><li><a href="https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert">RI アラート管理</a> で設定</li></ul></li><li>Pros:<ul><li>どのリソースに対して購入するかが決定しやすい</li></ul></li></ul></li><li><p>Savings Plans</p><ul><li>対象: コンピュートリソース（EC2 専用の Savings Plans もある）<ul><li>EC2</li><li>ECS</li><li>Lambda</li></ul></li><li>以下指定し購入<ul><li>コンピュートリソースの利用量に対するコミット値</li><li>年数</li><li>前払い</li></ul></li><li>期限切れ通知<ul><li><a href="https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/overview/alert">Savings Plans アラート管理</a> で設定</li></ul></li><li>コミット値<ul><li>過去・今後の推定利用量から算出する or AWS 推奨値を設定する</li></ul></li><li>Pros:<ul><li>EC2 から ECS のリプレイス後も適用される</li></ul></li><li>Cons:<ul><li>どのリソースに対して購入したかが分かりづらい</li></ul></li></ul></li><li><p>CloudFront Security Bundle</p><ul><li>対象:<ul><li>CloudFront</li><li>WAF</li></ul></li><li>以下指定し購入<ul><li>CloudFront の利用量に対するコミット値</li><li>年数</li><li>前払い</li></ul></li><li>期限切れ通知<ul><li>現状ない (2023-12-07 時点)</li></ul></li><li>コミット値<ul><li>過去・今後の推定利用量から算出する or AWS 推奨値を設定する</li></ul></li></ul></li></ul><span id="more"></span><h2><span id="ri-期限切れ通知-設定">RI 期限切れ通知 設定</span></h2><p>RI の期限が切れるとオンデマンド料金となりコスト増となります。<br>コストが上がってから気づく、ということがないように期限切れ前に通知する機能があります。</p><p>以下ページから設定できます。</p><ul><li><p><a href="https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert">RI アラート管理</a><br><img src="https://i.imgur.com/Kq3llTo.png"><br><img src="https://i.imgur.com/cnwPI8X.png"></p></li><li><p>On the day of expiration: 期限切れ当日</p></li><li><p>7 days: 期限切れ 7 日前</p></li><li><p>30 days: 期限切れ 30 日前</p></li><li><p>60 days: 期限切れ 60 日前</p></li><li><p>Email recipients: メールアドレスが複数ある場合は <code>,</code> で区切る</p><ul><li>Slack Email アプリで発行したメールアドレスを設定すると Slack 通知できる</li></ul></li></ul><h2><span id="reserved-instance-購入前後のコスト削減額の計算">Reserved Instance 購入前後のコスト削減額の計算</span></h2><p>RI は以下で年間コスト削減額を計算できます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">オンデマンド料金/hour × 365 days × 24 hours - (RI前払い料金 + RI 適用後料金/hour × 365 days × 24 hours)</span><br></pre></td></tr></table></figure><p>RDS, ElastiCache, RedShift の各料金は AWS ドキュメントで確認可能です。</p><ul><li><a href="https://aws.amazon.com/jp/rds/aurora/pricing/#Aurora_MySQL-Compatible_Edition">Aurora MySQL</a></li><li><a href="https://aws.amazon.com/jp/rds/aurora/pricing/#Aurora_PostgreSQL-Compatible_Edition">Aurora PostgreSQL</a></li><li><a href="https://aws.amazon.com/jp/rds/mysql/pricing/#RDS_for_MySQL">MySQL</a></li><li><a href="https://aws.amazon.com/jp/rds/postgresql/pricing/#RDS_for_PostgreSQL">PostgreSQL</a></li><li><a href="https://aws.amazon.com/jp/elasticache/pricing/#Reserved_nodes">ElastiCache</a></li><li><a href="https://aws.amazon.com/jp/redshift/pricing/#Reserved_Instance_pricing">RedShift</a></li></ul><h2><span id="savings-plans-コスト削減額-計算">Savings Plans コスト削減額 計算</span></h2><h3><span id="aws-savings-plans-コミット値推奨値を利用する場合">AWS Savings Plans コミット値推奨値を利用する場合</span></h3><p>以下ページでコスト削減額の結果が確認できます。</p><ul><li><p><a href="https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/recommendations?lookbackPeriodInDays=SEVEN_DAYS&paymentOption=ALL_UPFRONT&scope=PAYER&spType=COMPUTE_SP&termInYears=ONE_YEAR&tokens=%5B%5D">AWS Savings Plans 推奨値</a><br><img src="https://i.imgur.com/vBbJUik.png"></p></li><li><p>Savings Plans type: 節約プランタイプ</p><ul><li>Compute Savings Plans: コンピュートリソースに対する節約プラン<ul><li>対象:<ul><li>EC2</li><li>ECS</li><li>Lambda</li></ul></li><li>EC2 から ECS へリプレイスを検討している、という場合に有利</li></ul></li><li>EC2 Instance Savings Plans: EC2 に対する節約プラン<ul><li>対象:<ul><li>EC2</li></ul></li><li>EC2 に特化しているため Compute Savings Plans よりコスト削減できる</li></ul></li><li>SageMaker Savings Plans: SageMaker に対する節約プラン<ul><li>対象:<ul><li>SageMaker</li></ul></li></ul></li></ul></li><li><p>Term: 予約購入する期間 (最低 1 年)</p><ul><li>3-year: 3 年の予約購入 (最もコスト削減率が高い)<ul><li>3 年後まで現状のインフラ構成が見込めない場合は 1-year を選択した方が良い</li></ul></li><li>1-year: 1 年の予約購入</li></ul></li><li><p>Payment Option: 前払いのタイプです。</p><ul><li>All upfront: 全額前払い（最もコスト削減率が高い）</li><li>Partial upfront: 一部前払い</li><li>No upfront: 前払いしない</li></ul></li><li><p>Based on the past の値は推奨値を算出する為の過去の運用日数</p><ul><li>直近が安定しているのであれば 7 日間 を選択</li><li>日常的に EC2, ECS タスクのスケーリングを繰り返している場合は 30 or 60 日間を選択</li></ul></li></ul><p>今後 1 年を見越して利用量が大きく減ることがなければ、過去の利用量から AWS が算出した推奨値を採用する、で問題ありません。</p><h3><span id="aws-savings-plans-自前でコミット値を設定する場合">AWS Savings Plans 自前でコミット値を設定する場合</span></h3><p>自前でコミット値を設定する場合はコスト削減額が表示されません。</p><ul><li><a href="https://us-east-1.console.aws.amazon.com/cost-management/home?region=us-east-1#/savings-plans/purchase">Savings Plans: 自前でコミット値を設定する</a><br><img src="https://i.imgur.com/7KIypok.png"></li></ul><p>今後利用量に変化がありそう、スケーリングのタイミングなどで利用料が安定しない場合は自前で計算し設定しま s。</p><h2><span id="cloudfront-security-bundle-コスト削減額">CloudFront Security Bundle コスト削減額</span></h2><p>以下ページで確認できます。</p><ul><li><p><a href="https://us-east-1.console.aws.amazon.com/cloudfront/v3/home#/savings-bundle/purchase">CloudFront: 推奨値</a><br><img src="https://i.imgur.com/2yW95Gh.png"></p></li><li><p>Term: 1-year のみ</p></li><li><p>Payment option: Monthly のみ</p></li><li><p>Auto renew: 自動更新</p><ul><li>購入には稟議を通す必要がある等の理由でオフにすることが多いです（個人の感想）</li></ul></li><li><p>期限切れ通知機能がないので適宜チェックする必要がある</p></li></ul><p>AWS で過去の利用量を元にどの程度コスト削減できるか表示されます。</p><p>自動更新の有効・無効については適宜判定してください。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%B9%B4%E9%96%93%E4%BA%88%E7%B4%84%E8%B3%BC%E5%85%A5%E3%81%BE%E3%81%A8%E3%82%81&quot;&gt;年間予約購入まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#ri-%E6%9C%9F%E9%99%90%E5%88%87%E3%82%8C%E9%80%9A%E7%9F%A5-%E8%A8%AD%E5%AE%9A&quot;&gt;RI 期限切れ通知 設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#reserved-instance-%E8%B3%BC%E5%85%A5%E5%89%8D%E5%BE%8C%E3%81%AE%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D%E3%81%AE%E8%A8%88%E7%AE%97&quot;&gt;Reserved Instance 購入前後のコスト削減額の計算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#savings-plans-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D-%E8%A8%88%E7%AE%97&quot;&gt;Savings Plans コスト削減額 計算&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#aws-savings-plans-%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E6%8E%A8%E5%A5%A8%E5%80%A4%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88&quot;&gt;AWS Savings Plans コミット値推奨値を利用する場合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#aws-savings-plans-%E8%87%AA%E5%89%8D%E3%81%A7%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88&quot;&gt;AWS Savings Plans 自前でコミット値を設定する場合&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#cloudfront-security-bundle-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D&quot;&gt;CloudFront Security Bundle コスト削減額&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;AWS リソースの年間予約購入について備忘録です。&lt;/p&gt;
+&lt;h2 id=&quot;年間予約購入まとめ&quot;&gt;&lt;a href=&quot;#年間予約購入まとめ&quot; class=&quot;headerlink&quot; title=&quot;年間予約購入まとめ&quot;&gt;&lt;/a&gt;年間予約購入まとめ&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Reserved Instance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;対象:&lt;ul&gt;
+&lt;li&gt;RDS&lt;/li&gt;
+&lt;li&gt;ElastiCache&lt;/li&gt;
+&lt;li&gt;RedShift&lt;/li&gt;
+&lt;li&gt;OpenSearch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;以下指定し購入&lt;ul&gt;
+&lt;li&gt;インスタンスタイプ&lt;/li&gt;
+&lt;li&gt;個数&lt;/li&gt;
+&lt;li&gt;前払い&lt;/li&gt;
+&lt;li&gt;年数（弊社は 1 年指定）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;期限切れ通知&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert&quot;&gt;RI アラート管理&lt;/a&gt; で設定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Pros:&lt;ul&gt;
+&lt;li&gt;どのリソースに対して購入するかが決定しやすい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Savings Plans&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;対象: コンピュートリソース（EC2 専用の Savings Plans もある）&lt;ul&gt;
+&lt;li&gt;EC2&lt;/li&gt;
+&lt;li&gt;ECS&lt;/li&gt;
+&lt;li&gt;Lambda&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;以下指定し購入&lt;ul&gt;
+&lt;li&gt;コンピュートリソースの利用量に対するコミット値&lt;/li&gt;
+&lt;li&gt;年数&lt;/li&gt;
+&lt;li&gt;前払い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;期限切れ通知&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/overview/alert&quot;&gt;Savings Plans アラート管理&lt;/a&gt; で設定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;コミット値&lt;ul&gt;
+&lt;li&gt;過去・今後の推定利用量から算出する or AWS 推奨値を設定する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Pros:&lt;ul&gt;
+&lt;li&gt;EC2 から ECS のリプレイス後も適用される&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cons:&lt;ul&gt;
+&lt;li&gt;どのリソースに対して購入したかが分かりづらい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;CloudFront Security Bundle&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;対象:&lt;ul&gt;
+&lt;li&gt;CloudFront&lt;/li&gt;
+&lt;li&gt;WAF&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;以下指定し購入&lt;ul&gt;
+&lt;li&gt;CloudFront の利用量に対するコミット値&lt;/li&gt;
+&lt;li&gt;年数&lt;/li&gt;
+&lt;li&gt;前払い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;期限切れ通知&lt;ul&gt;
+&lt;li&gt;現状ない (2023-12-07 時点)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;コミット値&lt;ul&gt;
+&lt;li&gt;過去・今後の推定利用量から算出する or AWS 推奨値を設定する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>aws-cli で AWS 起動中のリソース一覧取得する</title>
@@ -226,7 +384,7 @@
     <published>2023-06-19T15:00:00.000Z</published>
     <updated>2023-06-19T15:00:00.000Z</updated>
     
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%89%8B%E9%A0%86">手順</a><ul><li><a href="#cloudformation-%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%8F%96%E5%BE%97%E3%81%97-templateyml-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%BF%BD%E8%A8%98">CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記</a></li><li><a href="#importjson-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%A8%98%E8%BC%89">import.json にインポートしたいリソースを記載</a></li></ul></li></ul><!-- tocstop --></div></div><hr><p>以前は CloudWatch LogGroup をインポートしましたが<br>今回は IAM Role をインポートの設定例です。</p><p>基本手順は CloudWatch LogGroup と同様ですが、<br>異なる部分だけ記載します。</p><h2><span id="手順">手順</span></h2><h3><span id="cloudformation-のテンプレート取得し-templateyml-にインポートしたいリソースを追記">CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記</span></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">CWLogRole:</span></span><br><span class="line">    <span class="attr">DeletionPolicy:</span> <span class="string">Retain</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::IAM::Role</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="attr">RoleName:</span> <span class="string">xxx-Bot-Stack</span></span><br><span class="line">      <span class="attr">AssumeRolePolicyDocument:</span></span><br><span class="line">        <span class="attr">Version:</span> <span class="number">2012-10-17</span></span><br><span class="line">        <span class="attr">Statement:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">Effect:</span> <span class="string">Allow</span></span><br><span class="line">            <span class="attr">Principal:</span></span><br><span class="line">              <span class="attr">Service:</span> <span class="string">apigateway.amazonaws.com</span></span><br><span class="line">            <span class="attr">Action:</span> <span class="string">sts:AssumeRole</span></span><br><span class="line">      <span class="attr">Description:</span> <span class="string">Allows</span> <span class="string">API</span> <span class="string">Gateway</span> <span class="string">to</span> <span class="string">push</span> <span class="string">logs</span> <span class="string">to</span> <span class="string">CloudWatch</span> <span class="string">Logs.</span></span><br><span class="line">      <span class="attr">ManagedPolicyArns:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs</span></span><br></pre></td></tr></table></figure><p>API Gateway のアクセスログ管理用ロググループへログを配信する IAM Role をインポートします。</p><span id="more"></span><h3><span id="importjson-にインポートしたいリソースを記載">import.json にインポートしたいリソースを記載</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;ResourceType&quot;: &quot;AWS::IAM::Role&quot;,</span><br><span class="line">        &quot;LogicalResourceId&quot;: &quot;CWLogRole&quot;,</span><br><span class="line">        &quot;ResourceIdentifier&quot;: &#123;</span><br><span class="line">            &quot;RoleName&quot;:&quot;xxx-Bot-Stack&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>import.json にインポート対象のリソースを追加し<br>先程の template.yml と同じディレクトリに保存します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">aws cloudformation create-change-set \</span></span><br><span class="line"><span class="language-bash">    --stack-name xxx-Bot-Stack \</span></span><br><span class="line"><span class="language-bash">    --change-set-name import-cwlogs-role \</span></span><br><span class="line"><span class="language-bash">    --resources-to-import file://import.json \</span></span><br><span class="line"><span class="language-bash">    --change-set-type IMPORT \</span></span><br><span class="line"><span class="language-bash">    --template-body file://template.yml \</span></span><br><span class="line"><span class="language-bash">    --capabilities CAPABILITY_NAMED_IAM</span></span><br></pre></td></tr></table></figure><p>capabilities は CAPABILITY_NAMED_IAM にする必要があります。<br>IAM Role リソースに独自の命名をしたい場合に利用します。</p><p>参考: <a href="https://docs.aws.amazon.com/ja_jp/serverlessrepo/latest/devguide/acknowledging-application-capabilities.html">https://docs.aws.amazon.com/ja_jp/serverlessrepo/latest/devguide/acknowledging-application-capabilities.html</a></p><p>あとは同様に手順を進めます。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%89%8B%E9%A0%86">手順</a><ul><li><a href="#cloudformation-%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%8F%96%E5%BE%97%E3%81%97-templateyml-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%BF%BD%E8%A8%98">CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記</a></li><li><a href="#importjson-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%A8%98%E8%BC%89">import.json にインポートしたいリソースを記載</a></li></ul></li></ul><!-- tocstop --></div></div><hr><a href="https://kenzo0107.github.io/2023/06/06/2023-06-07-aws-sam-import-resource" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://i.imgur.com/nieeIsl.png"></div><div class="descriptions"><div class="og-title">SAM テンプレートに既存リソースをインポートする手順 - CloudWatch Logs 編 -</div><div class="og-description">ToC     手順 CloudFormation のテンプレート取得 template.yml にインポートしたいリソースを追記 import.json にインポートしたいリソースを記載 Change sets を作成する change set を実行 (インポート実行) イン…</div></div></div></a><p>以前は CloudWatch LogGroup をインポートしましたが<br>今回は IAM Role をインポートの設定例です。</p><p>基本手順は CloudWatch LogGroup と同様ですが、<br>異なる部分だけ記載します。</p><h2><span id="手順">手順</span></h2><h3><span id="cloudformation-のテンプレート取得し-templateyml-にインポートしたいリソースを追記">CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記</span></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">CWLogRole:</span></span><br><span class="line">    <span class="attr">DeletionPolicy:</span> <span class="string">Retain</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::IAM::Role</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="attr">RoleName:</span> <span class="string">xxx-Bot-Stack</span></span><br><span class="line">      <span class="attr">AssumeRolePolicyDocument:</span></span><br><span class="line">        <span class="attr">Version:</span> <span class="number">2012-10-17</span></span><br><span class="line">        <span class="attr">Statement:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">Effect:</span> <span class="string">Allow</span></span><br><span class="line">            <span class="attr">Principal:</span></span><br><span class="line">              <span class="attr">Service:</span> <span class="string">apigateway.amazonaws.com</span></span><br><span class="line">            <span class="attr">Action:</span> <span class="string">sts:AssumeRole</span></span><br><span class="line">      <span class="attr">Description:</span> <span class="string">Allows</span> <span class="string">API</span> <span class="string">Gateway</span> <span class="string">to</span> <span class="string">push</span> <span class="string">logs</span> <span class="string">to</span> <span class="string">CloudWatch</span> <span class="string">Logs.</span></span><br><span class="line">      <span class="attr">ManagedPolicyArns:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs</span></span><br></pre></td></tr></table></figure><p>API Gateway のアクセスログ管理用ロググループへログを配信する IAM Role をインポートします。</p><span id="more"></span><h3><span id="importjson-にインポートしたいリソースを記載">import.json にインポートしたいリソースを記載</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;ResourceType&quot;: &quot;AWS::IAM::Role&quot;,</span><br><span class="line">        &quot;LogicalResourceId&quot;: &quot;CWLogRole&quot;,</span><br><span class="line">        &quot;ResourceIdentifier&quot;: &#123;</span><br><span class="line">            &quot;RoleName&quot;:&quot;xxx-Bot-Stack&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>import.json にインポート対象のリソースを追加し<br>先程の template.yml と同じディレクトリに保存します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">aws cloudformation create-change-set \</span></span><br><span class="line"><span class="language-bash">    --stack-name xxx-Bot-Stack \</span></span><br><span class="line"><span class="language-bash">    --change-set-name import-cwlogs-role \</span></span><br><span class="line"><span class="language-bash">    --resources-to-import file://import.json \</span></span><br><span class="line"><span class="language-bash">    --change-set-type IMPORT \</span></span><br><span class="line"><span class="language-bash">    --template-body file://template.yml \</span></span><br><span class="line"><span class="language-bash">    --capabilities CAPABILITY_NAMED_IAM</span></span><br></pre></td></tr></table></figure><p>capabilities は CAPABILITY_NAMED_IAM にする必要があります。<br>IAM Role リソースに独自の命名をしたい場合に利用します。</p><p>参考: <a href="https://docs.aws.amazon.com/ja_jp/serverlessrepo/latest/devguide/acknowledging-application-capabilities.html">https://docs.aws.amazon.com/ja_jp/serverlessrepo/latest/devguide/acknowledging-application-capabilities.html</a></p><p>あとは同様に手順を進めます。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
     
     
     <summary type="html">&lt;div class=&quot;toc&quot;&gt;
@@ -248,7 +406,7 @@
 &lt;/div&gt;
 
 &lt;hr&gt;
-
+&lt;a href=&quot;https://kenzo0107.github.io/2023/06/06/2023-06-07-aws-sam-import-resource&quot; class=&quot;link-preview&quot; target=&quot;_blank&quot;&gt;&lt;div class=&quot;link-area&quot;&gt;&lt;div class=&quot;og-image&quot;&gt;&lt;img src=&quot;https://i.imgur.com/nieeIsl.png&quot;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&quot;descriptions&quot;&gt;&lt;div class=&quot;og-title&quot;&gt;SAM テンプレートに既存リソースをインポートする手順 - CloudWatch Logs 編 -&lt;/div&gt;&lt;div class=&quot;og-description&quot;&gt;ToC     手順 CloudFormation のテンプレート取得 template.yml にインポートしたいリソースを追記 import.json にインポートしたいリソースを記載 Change sets を作成する change set を実行 (インポート実行) イン…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
 
 &lt;p&gt;以前は CloudWatch LogGroup をインポートしましたが&lt;br&gt;今回は IAM Role をインポートの設定例です。&lt;/p&gt;
 &lt;p&gt;基本手順は CloudWatch LogGroup と同様ですが、&lt;br&gt;異なる部分だけ記載します。&lt;/p&gt;
@@ -638,71 +796,6 @@
     
     
     <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>AWS Bot 対策</title>
-    <link href="https://kenzo0107.github.io/2022/11/28/2022-11-29-aws-block-bot/"/>
-    <id>https://kenzo0107.github.io/2022/11/28/2022-11-29-aws-block-bot/</id>
-    <published>2022-11-28T15:00:00.000Z</published>
-    <updated>2022-11-28T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#waf-v2-%E3%81%A7-geo-%E3%83%9E%E3%83%83%E3%83%81%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88%E3%81%A7%E5%AF%BE%E7%AD%96">WAF v2 で GEO マッチステートメントで対策</a></li><li><a href="#waf-v2-bot-control-%E3%81%A7-bot-%E5%AF%BE%E7%AD%96">WAF v2 Bot Control で Bot 対策</a><ul><li><a href="#managedrulegroupconfigs-%E3%82%92%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84">ManagedRuleGroupConfigs をサポートしていない</a></li><li><a href="#bot-control-rules-%E3%82%92%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84">Bot Control Rules をサポートしていない</a></li><li><a href="#override-rule-group-action-%E3%81%AF%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B">Override rule group action はサポートしている</a></li><li><a href="#local-exec-%E3%81%A7-aws-cli-%E3%81%8B%E3%82%89%E3%82%A2%E3%83%83%E3%83%97%E3%83%87%E3%83%BC%E3%83%88%E3%81%97%E3%81%A1%E3%82%83%E3%81%8A%E3%81%86%E3%81%A8%E3%81%84%E3%81%86%E7%8C%9B%E8%80%85%E3%81%8C%E3%81%84%E3%81%9F">local-exec で aws-cli からアップデートしちゃおうという猛者がいた</a></li></ul></li><li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li></ul><!-- tocstop --></div></div><hr><p>AWS で CloudFront + ECS で Web サービスを配信していますが、<br>Bot が多く、その対策を WAF で実行しようとしたい際にいくつかつまづきましたので、その備忘録になります。</p><p>以下 2 点を試しました。</p><ol><li>WAF v2 で GEO マッチステートメントで Bot のリクエスト元の海外 IP をブロック</li><li>WAF v2 Bot Control で Bot 対策</li></ol><span id="more"></span><h2><span id="waf-v2-で-geo-マッチステートメントで対策">WAF v2 で GEO マッチステートメントで対策</span></h2><p>JP (日本) 以外をブロックしました。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_wafv2_web_acl&quot; &quot;main&quot; &#123;</span><br><span class="line">  # 日本以外をブロック</span><br><span class="line">  rule &#123;</span><br><span class="line">    action &#123;</span><br><span class="line">      block &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    statement &#123;</span><br><span class="line">      not_statement &#123;</span><br><span class="line">        statement &#123;</span><br><span class="line">          geo_match_statement &#123;</span><br><span class="line">            country_codes = [&quot;JP&quot;]</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure><p>すると、日本からアクセスしたにも関わらず、<br>日本外と判断され、ブロックされてしまった事象がありました。</p><p>その際はスマートフォン (docomo, au, softbank) でのアクセスでした。</p><p>誤検知があったのでこの方法は回避しました。</p><h2><span id="waf-v2-bot-control-で-bot-対策">WAF v2 Bot Control で Bot 対策</span></h2><p>AWS Bot Control で bot 対策をしてみました。</p><p>こちらで現状特段大きな問題がないのですが、<br>AWS Bot Control を terraform で有効化しようとした際につまづいた点をまとめます。</p><h3><span id="managedrulegroupconfigs-をサポートしていない">ManagedRuleGroupConfigs をサポートしていない</span></h3><p>※2022-11-29 時点でサポートしておらず、 InspectionLevel の設定ができません。</p><p><a href="https://github.com/hashicorp/terraform-provider-aws/issues/23290">https://github.com/hashicorp/terraform-provider-aws/issues/23290</a></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;Name&quot;: &quot;AWS-AWSManagedRulesBotControlRuleSet&quot;,</span><br><span class="line">  &quot;Statement&quot;: &#123;</span><br><span class="line">    &quot;ManagedRuleGroupStatement&quot;: &#123;</span><br><span class="line">      &quot;VendorName&quot;: &quot;AWS&quot;,</span><br><span class="line">      &quot;Name&quot;: &quot;AWSManagedRulesBotControlRuleSet&quot;,</span><br><span class="line">      &quot;ManagedRuleGroupConfigs&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;AWSManagedRulesBotControlRuleSet&quot;: &#123;</span><br><span class="line">            &quot;InspectionLevel&quot;: &quot;COMMON&quot;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      ...</span><br></pre></td></tr></table></figure><h3><span id="bot-control-rules-をサポートしていない">Bot Control Rules をサポートしていない</span></h3><p>※ 2022-11-29 時点</p><p>Bot Control Rules の設定をサポートしていないので、手動で設定等が必要です。</p><p><img src="https://i.imgur.com/I66XH5J.png"></p><h3><span id="override-rule-group-action-はサポートしている">Override rule group action はサポートしている</span></h3><p>以下設定を <code>rule &#123;&#125;</code> ブロック内に設定すれば、検知モード (ブロック等せずカウントだけ実施する) にできます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">override_action &#123;</span><br><span class="line">  count &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>先述した <a href="https://github.com/hashicorp/terraform-provider-aws/issues/23290">issue</a> で既に言及されているのでいずれサポートされると思います。</p><p>利用時には要注意です。</p><h3><span id="local-exec-で-aws-cli-からアップデートしちゃおうという猛者がいた">local-exec で aws-cli からアップデートしちゃおうという猛者がいた</span></h3><p><a href="https://github.com/hashicorp/terraform-provider-aws/issues/23287">https://github.com/hashicorp/terraform-provider-aws/issues/23287</a></p><p>意図しない挙動があるとも否定できないので terraform で完結させたい。<br>shell スクリプトのテストや構文チェック等をするのも憚れる。</p><h2><span id="総評">総評</span></h2><p>rate limit やその他 SQLi, XSS を設定していたとしても<br>Bot が一時的に複数 IP 元からリクエストがあると防ぐことが難しいです。</p><p>GEO 制限で抑えられたら良かったのですが、リクエストの多いサービスの場合でご検知があると<br>それだけで商用環境での利用は憚れます。</p><p>Bot Control で検知モード (Count) で様子を見て、適宜ブロック設定をしていくのが安全でした。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#waf-v2-%E3%81%A7-geo-%E3%83%9E%E3%83%83%E3%83%81%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88%E3%81%A7%E5%AF%BE%E7%AD%96&quot;&gt;WAF v2 で GEO マッチステートメントで対策&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#waf-v2-bot-control-%E3%81%A7-bot-%E5%AF%BE%E7%AD%96&quot;&gt;WAF v2 Bot Control で Bot 対策&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#managedrulegroupconfigs-%E3%82%92%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84&quot;&gt;ManagedRuleGroupConfigs をサポートしていない&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#bot-control-rules-%E3%82%92%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84&quot;&gt;Bot Control Rules をサポートしていない&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#override-rule-group-action-%E3%81%AF%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B&quot;&gt;Override rule group action はサポートしている&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#local-exec-%E3%81%A7-aws-cli-%E3%81%8B%E3%82%89%E3%82%A2%E3%83%83%E3%83%97%E3%83%87%E3%83%BC%E3%83%88%E3%81%97%E3%81%A1%E3%82%83%E3%81%8A%E3%81%86%E3%81%A8%E3%81%84%E3%81%86%E7%8C%9B%E8%80%85%E3%81%8C%E3%81%84%E3%81%9F&quot;&gt;local-exec で aws-cli からアップデートしちゃおうという猛者がいた&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#%E7%B7%8F%E8%A9%95&quot;&gt;総評&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;hr&gt;
-&lt;p&gt;AWS で CloudFront + ECS で Web サービスを配信していますが、&lt;br&gt;Bot が多く、その対策を WAF で実行しようとしたい際にいくつかつまづきましたので、その備忘録になります。&lt;/p&gt;
-&lt;p&gt;以下 2 点を試しました。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;WAF v2 で GEO マッチステートメントで Bot のリクエスト元の海外 IP をブロック&lt;/li&gt;
-&lt;li&gt;WAF v2 Bot Control で Bot 対策&lt;/li&gt;
-&lt;/ol&gt;</summary>
-    
-    
-    
-    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>JavaScript で日付計算の妙</title>
-    <link href="https://kenzo0107.github.io/2022/10/30/2022-10-31-js-get-a-last-month/"/>
-    <id>https://kenzo0107.github.io/2022/10/30/2022-10-31-js-get-a-last-month/</id>
-    <published>2022-10-30T15:00:00.000Z</published>
-    <updated>2022-10-30T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>問題です。以下コードを実行した際に何と出力されるでしょう？<br>先月の 1 日を取得したい気持ちです。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let dt = new Date(&#x27;2022-10-31T15:00:00+0900&#x27;);</span><br><span class="line">dt.setMonth(dt.getMonth() - 1);</span><br><span class="line">dt.setDate(1)</span><br><span class="line">console.log(dt); // =&gt; ?</span><br></pre></td></tr></table></figure><span id="more"></span><p>答えは <code>2022-10-01T06:00:00.000Z</code> です。</p><p>10 月 31 日の 1 ヶ月前は 9 月 31 日、<br>9 月は 30 日までなのでその翌日の 10 月 1 日になってしまったというものです。</p><p>先月の 1 日を取得する場合は先に <code>setDate(1)</code> が必要です。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let dt = new Date(&#x27;2022-10-31T15:00:00+0900&#x27;);</span><br><span class="line">dt.setDate(1)</span><br><span class="line">dt.setMonth(dt.getMonth() - 1);</span><br><span class="line">console.log(dt); // =&gt; 2022-09-01T06:00:00.000Z</span><br></pre></td></tr></table></figure><p>ちなみに先月の月末は <code>setDate(0)</code> することで取得できます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let dt = new Date(&#x27;2022-10-31T15:00:00+0900&#x27;);</span><br><span class="line">dt.setDate(0);</span><br><span class="line">console.log(dt); // =&gt; 2022-09-30T06:00:00.000Z</span><br></pre></td></tr></table></figure><p>Lambda で 10 月 31 日の本日に 1 ヶ月前が取得できないな？となってちょっとハマってしまった問題でした。<br>terraform で簡易的な Lambda スクリプトを管理しており、極力 package を利用せずに nodejs で日付計算したかった背景があります。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;問題です。以下コードを実行した際に何と出力されるでしょう？&lt;br&gt;先月の 1 日を取得したい気持ちです。&lt;/p&gt;
-&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;let dt = new Date(&amp;#x27;2022-10-31T15:00:00+0900&amp;#x27;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;dt.setMonth(dt.getMonth() - 1);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;dt.setDate(1)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;console.log(dt); // =&amp;gt; ?&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
     
     
   </entry>
