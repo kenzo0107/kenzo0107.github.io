@@ -153,7 +153,7 @@ RDS, ElastiCache, RedShift の各料金は AWS ドキュメントで確認可能
 - [Savings Plans: 自前でコミット値を設定する](https://us-east-1.console.aws.amazon.com/cost-management/home?region=us-east-1#/savings-plans/purchase)
   ![](https://i.imgur.com/7KIypok.png)
 
-今後利用量に変化がありそう、スケーリングのタイミングなどで利用料が安定しない場合は自前で計算し設定しま s。
+今後利用量に変化がありそう、スケーリングのタイミングなどで利用料が安定しない場合は自前で計算し設定します。
 
 ## CloudFront Security Bundle コスト削減額
 
