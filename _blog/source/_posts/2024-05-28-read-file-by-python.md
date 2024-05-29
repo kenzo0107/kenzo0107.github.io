@@ -63,5 +63,9 @@ if __name__ == "__main__":
 
 https://gist.github.com/kenzo0107/456439de57b3640c053cf369ca42f358
 
+以前ファイル内容を 1 行ずつ、yaml をパース等は実施しましたので、そちらも参考まで。
+
+{% linkPreview https://kenzo0107.github.io/2023/07/20/2023-07-21-python-load-file/#more _blank %}
+
 以上
 参考になれば幸いです。
