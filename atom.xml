@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2024-06-23T15:00:00.000Z</updated>
+  <updated>2024-08-26T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,41 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Error: Docker is unreachable. Docker needs to be running to build inside a container.</title>
+    <link href="https://kenzo0107.github.io/2024/08/26/2024-08-27-docker-is-unreachable/"/>
+    <id>https://kenzo0107.github.io/2024/08/26/2024-08-27-docker-is-unreachable/</id>
+    <published>2024-08-26T15:00:00.000Z</published>
+    <updated>2024-08-26T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#docker_host-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">DOCKER_HOST を指定する</a></li></ul><!-- tocstop --></div></div><hr><p><code>sam build --use-container</code> でビルド実行した際に以下エラーが発生しました。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: Docker is unreachable. Docker needs to be running to build inside a container.</span><br></pre></td></tr></table></figure><span id="more"></span><h2><span id="docker_host-を指定する">DOCKER_HOST を指定する</span></h2><p>現在の Context を確認します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker info | grep <span class="string">&#x27;Context:&#x27;</span></span></span><br><span class="line"></span><br><span class="line"> Context:    desktop-linux</span><br></pre></td></tr></table></figure><p>エンドポイントを確認します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker context <span class="built_in">ls</span> | grep desktop-linux</span></span><br><span class="line"></span><br><span class="line">desktop-linux *     moby                Docker Desktop                            unix:///Users/kenzo.tanaka/.docker/run/docker.sock</span><br></pre></td></tr></table></figure><p>DOCKER_HOST を指定し再度実行することでエラーを回避できました。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">env</span> SAM_CLI_TELEMETRY=0 \</span></span><br><span class="line"><span class="language-bash">    DOCKER_HOST=unix:///Users/kenzo.tanaka/.docker/run/docker.sock \</span></span><br><span class="line"><span class="language-bash">    sam build --use-container --cached --parallel</span></span><br></pre></td></tr></table></figure><p>以上<br>参考まで</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#docker_host-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B&quot;&gt;DOCKER_HOST を指定する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;sam build --use-container&lt;/code&gt; でビルド実行した際に以下エラーが発生しました。&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Error: Docker is unreachable. Docker needs to be running to build inside a container.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>GitHub Profile Status をクリアする (busy 解除)</title>
@@ -728,43 +763,6 @@
     
     
     <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>terraform の linter tflin を導入し、GitHub Actions で構文チェック</title>
-    <link href="https://kenzo0107.github.io/2023/04/04/2023-04-05-tflint-is-good/"/>
-    <id>https://kenzo0107.github.io/2023/04/04/2023-04-05-tflint-is-good/</id>
-    <published>2023-04-04T15:00:00.000Z</published>
-    <updated>2023-04-04T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#asdf-%E3%81%A7%E5%B0%8E%E5%85%A5">asdf で導入</a></li><li><a href="#github-actions-%E3%81%A7%E8%A8%AD%E5%AE%9A">GitHub Actions で設定</a></li><li><a href="#timeout-minutes-3">timeout-minutes: 3</a></li><li><a href="#github_token-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E7%90%86%E7%94%B1">GITHUB_TOKEN を指定する理由</a></li></ul><!-- tocstop --></div></div><hr><p>terraform の linter として <a href="https://github.com/terraform-linters/tflint">tflint</a> を導入し、<br>GitHub Actions でチェックが良かったのでまとめます。</p><span id="more"></span><h2><span id="asdf-で導入">asdf で導入</span></h2><p><a href="https://asdf-vm.com/guide/introduction.html#nvm-n-rbenv-etc">asdf</a> で複数バージョンの導入・切り替えが可能です。</p><p>asdf 経由で導入</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asdf plugin-add tflint https://github.com/skyzyx/asdf-tflint</span><br></pre></td></tr></table></figure><h2><span id="github-actions-で設定">GitHub Actions で設定</span></h2><p>Pull Request 作成・更新時に tflint を走らせる設定です。</p><p>以下ディレクトリ毎に tflint を実行しています。</p><ul><li>envs/prd</li><li>envs/stg</li></ul><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">name: Lint</span><br><span class="line"></span><br><span class="line">on: [pull_request]</span><br><span class="line"></span><br><span class="line">jobs:</span><br><span class="line">  tflint:</span><br><span class="line">    name: tflint</span><br><span class="line">    timeout-minutes: 3</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line"></span><br><span class="line">    strategy:</span><br><span class="line">      fail-fast: false</span><br><span class="line">      matrix:</span><br><span class="line">        directory: [&#x27;envs/prd&#x27;, &#x27;envs/stg&#x27;]</span><br><span class="line"></span><br><span class="line">    steps:</span><br><span class="line">      - uses: actions/checkout@v3</span><br><span class="line"></span><br><span class="line">      - name: Pick terraform_version</span><br><span class="line">        id: tflint</span><br><span class="line">        run: echo &quot;tflint_version=$(grep tflint .tool-versions | awk &#x27;&#123;print $2&#125;&#x27;)&quot; &gt;&gt; $GITHUB_OUTPUT</span><br><span class="line"></span><br><span class="line">      - uses: terraform-linters/setup-tflint@v3</span><br><span class="line">        name: Setup TFLint</span><br><span class="line">        with:</span><br><span class="line">          tflint_version: v$&#123;&#123; steps.tflint.outputs.tflint_version &#125;&#125;</span><br><span class="line"></span><br><span class="line">      - name: Init TFLint</span><br><span class="line">        run: tflint --init</span><br><span class="line">        working-directory: ./$&#123;&#123; matrix.directory &#125;&#125;</span><br><span class="line">        env:</span><br><span class="line">          # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting</span><br><span class="line">          GITHUB_TOKEN: $&#123;&#123; github.token &#125;&#125;</span><br><span class="line"></span><br><span class="line">      - name: Execute tflint</span><br><span class="line">        run: tflint</span><br><span class="line">        working-directory: ./$&#123;&#123; matrix.directory &#125;&#125;</span><br></pre></td></tr></table></figure><h2><span id="timeout-minutes-3">timeout-minutes: 3</span></h2><p>おおよそ完了する時間は 1 分も掛からないですが、3 分もあれば終わるのと<br>意図せぬ長時間の実行を回避すべく、3 分でタイムアウトする様に設定しています。</p><p>リソース数にもよるので適宜設定してください。</p><h2><span id="github_token-を指定する理由">GITHUB_TOKEN を指定する理由</span></h2><p>いらなそう？と思いましたが、公式に以下コメントがあります。</p><blockquote><p>When you install plugins with tflint –init, TFLint calls the GitHub API to get release metadata. By default, this is an unauthenticated request, subject to a rate limit of 60 requests per hour per IP address.</p></blockquote><p>認証されていないリクエストで、IP アドレスあたり 1 時間あたり 60 リクエストというレート制限がある為、<br>それを回避する為に設定する必要があるとのこと。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#asdf-%E3%81%A7%E5%B0%8E%E5%85%A5&quot;&gt;asdf で導入&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#github-actions-%E3%81%A7%E8%A8%AD%E5%AE%9A&quot;&gt;GitHub Actions で設定&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#timeout-minutes-3&quot;&gt;timeout-minutes: 3&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#github_token-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E7%90%86%E7%94%B1&quot;&gt;GITHUB_TOKEN を指定する理由&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;hr&gt;
-&lt;p&gt;terraform の linter として &lt;a href=&quot;https://github.com/terraform-linters/tflint&quot;&gt;tflint&lt;/a&gt; を導入し、&lt;br&gt;GitHub Actions でチェックが良かったのでまとめます。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Terraform" scheme="https://kenzo0107.github.io/categories/Terraform/"/>
     
     
   </entry>
