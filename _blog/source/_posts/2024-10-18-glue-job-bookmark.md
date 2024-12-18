@@ -25,6 +25,8 @@ DB データを毎回全てダンプするよりも差分のみ抽出（増分�
 
 Glue Job は実行時間に対して従量課金されるのでコストも抑制できるメリットがあります。
 
+<!-- more -->
+
 ## Glue Job Bookmark の問題点
 
 Glue Job の Bookmark は `job.commit()` された際に更新されます。

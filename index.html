@@ -35,7 +35,7 @@
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
 </head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/about/">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-10-18</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/10/17/2024-10-18-glue-job-bookmark/">Glue Job Bookmark 機能でなく sampleQuery を使って DB データをエクスポートしてみた</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
-<h3 class="menu-label"><span id="toc">ToC</span></h3>
+<h3 class="menu-label">ToC</h3>
 
 <!-- toc -->
 
@@ -55,35 +55,10 @@
 </div>
 
 <hr>
-<h2><span id="概要">概要</span></h2><p>Glue Job で DB データを取得していた際に Glue Job Bookmark を利用していた際に問題があったので、その際の対応を備忘録として残しておきます。</p>
-<h2><span id="glue-job-bookmark-機能とは">Glue Job Bookmark 機能とは？</span></h2><p>Glue Job で DB やログ情報を取り込みしている場合、どこまで取り込んだかを記録する <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/glue/latest/dg/monitor-continuations.html">Bookmark 機能</a> があります。</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>Glue Job で DB データを取得していた際に Glue Job Bookmark を利用していた際に問題があったので、その際の対応を備忘録として残しておきます。</p>
+<h2 id="Glue-Job-Bookmark-機能とは？"><a href="#Glue-Job-Bookmark-機能とは？" class="headerlink" title="Glue Job Bookmark 機能とは？"></a>Glue Job Bookmark 機能とは？</h2><p>Glue Job で DB やログ情報を取り込みしている場合、どこまで取り込んだかを記録する <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/glue/latest/dg/monitor-continuations.html">Bookmark 機能</a> があります。</p>
 <p>DB データを毎回全てダンプするよりも差分のみ抽出（増分エクスポート: Incremental Export）でき、データの取り込み量も抑えられ、Glue Job の実行時間が短縮されます。</p>
-<p>Glue Job は実行時間に対して従量課金されるのでコストも抑制できるメリットがあります。</p>
-<h2><span id="glue-job-bookmark-の問題点">Glue Job Bookmark の問題点</span></h2><p>Glue Job の Bookmark は <code>job.commit()</code> された際に更新されます。</p>
-<p>取り込み処理中に一部のテーブルでエラーが発生し処理が中断された場合、エクスポート処理が成功したテーブルはデータ自体は更新されますが、Bookmark は更新されず、不整合が発生します。</p>
-<h3><span id="例-不整合が起こる例">例: 不整合が起こる例</span></h3><ul>
-<li>table1 処理成功 → データ自体は更新される</li>
-<li>table2 処理成功 → データ自体は更新される</li>
-<li>table3 処理失敗 → データ自体は更新されない<br>→ Bookmark は更新されない。</li>
-</ul>
-<p>全ての処理で transaction を貼ることが対策ではありますが、実行コストが高い場合に、取り込めた分は取り込めた分だけ更新してもらった方が再実行コストが低くて良いです。</p>
-<h2><span id="問題点への対応策">問題点への対応策</span></h2><p><code>glue context</code> の <code>create_data_frame.from_catalog</code> を利用して抽出する際は　<code>additional_options[&#39;sampleQuery&#39;]</code> を利用し、増分を抽出する、自前 Bookmark 機能で対応しました。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> is_table_exists:</span><br><span class="line">   <span class="comment"># テーブルが既に存在する場合</span></span><br><span class="line"></span><br><span class="line">   <span class="comment"># Glue Data Catalog テーブルの bookmark key に設定したカラムの最大値取得</span></span><br><span class="line">   df = self.glueContext.create_data_frame.from_catalog(database=dest_database, table_name=dest_table)</span><br><span class="line">   max_value = df.agg(&#123;bookmark_key: <span class="string">&quot;max&quot;</span>&#125;).collect()[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">   <span class="comment"># sampleQuery を利用し増分のみ取得</span></span><br><span class="line">   datasource = self.glueContext.create_dynamic_frame.from_catalog(</span><br><span class="line">      ...</span><br><span class="line">      additional_options=&#123;</span><br><span class="line">            <span class="string">&#x27;sampleQuery&#x27;</span>: <span class="string">f&quot;SELECT * FROM <span class="subst">&#123;source_database&#125;</span>.<span class="subst">&#123;source_table&#125;</span> WHERE <span class="subst">&#123;bookmark_key&#125;</span> &gt; <span class="subst">&#123;max_value&#125;</span> AND&quot;</span>,</span><br><span class="line">            ...</span><br><span class="line">      &#125;</span><br><span class="line">   )</span><br></pre></td></tr></table></figure>
-
-<p>これにより Bookmark 機能を利用せずとも差分抽出をできるように対策しました。</p>
-<p>ちなみにクエリの最後に <code>AND</code> があるのは、<code>enablePartitioningForSampleQuery: true</code> にし、JDBC テーブルから並列で読み込む設定をしている為です。</p>
-<h2><span id="まとめ">まとめ</span></h2><ul>
-<li>sampleQuery の方が Bookmark 機能より増分エクスポートはしやすい印象<ul>
-<li>DB 負荷を抑えながら取り込むこともできるメリットもある</li>
-</ul>
-</li>
-<li>Glue Job Bookmark は更新 API 等はなく、Glue Job の実行成功でのみ更新されるので、失敗した場合は全てを失敗と見なすしかなさそう<ul>
-<li>ハンドリングしづらい</li>
-</ul>
-</li>
-</ul>
-<p>以上<br>参考になれば何よりです。</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-09-03</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/09/02/2024-09-03-asdf-plugin-update-ruby/">asdf で ruby の最新バージョンが見つからない時</a></h1><div class="content"><div class="toc">
+<p>Glue Job は実行時間に対して従量課金されるのでコストも抑制できるメリットがあります。</p></div><a class="article-more button is-small is-size-7" href="/2024/10/17/2024-10-18-glue-job-bookmark/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-09-03</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/09/02/2024-09-03-asdf-plugin-update-ruby/">asdf で ruby の最新バージョンが見つからない時</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
 <h3 class="menu-label">ToC</h3>
 
