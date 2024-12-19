@@ -108,7 +108,7 @@ RDS--Zero-ETL-->Redshift</pre>
 </ul>
 <h2><span id="rdsdmss3gluejobiceberg-テーブル">RDS→DMS→S3→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
 
-RDS--CDC-->DMS-->S3--Glue Job-->Icebergテーブル</pre>
+RDS--CDC-->DMS-->S3--GlueJob-->Icebergテーブル</pre>
 
 <p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/big-data/modernize-your-legacy-databases-with-aws-data-lakes-part-2-build-a-data-lake-using-aws-dms-data-on-apache-iceberg/">Modernize your legacy databases with AWS data lakes, Part 2: Build a data lake using AWS DMS data on Apache Iceberg</a></p>
 <ul>
@@ -134,7 +134,11 @@ RDS--CDC-->DMS-->S3--Glue Job-->Icebergテーブル</pre>
 </ul>
 <h2><span id="rdsdebeziummsks3glue-jobiceberg-テーブル">RDS→debezium→MSK→S3→Glue Job→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
 
-RDS--CDC-->debezium-->MSK--Parquet-->S3-->GlueJob-->Icebergテーブル</pre>
+RDS--CDC-->debezium
+debezium-->MSK
+MSK--Parquet-->S3
+S3-->GlueJob
+GlueJob-->Icebergテーブル</pre>
 
 <p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/big-data/synchronize-data-lakes-with-cdc-based-upsert-using-open-table-format-aws-glue-and-amazon-msk/">Synchronize data lakes with CDC-based UPSERT using open table format, AWS Glue, and Amazon MSK</a></p>
 <p>MSK で CDC データを Parquet で S3 に保存し、 Glue Job で Iceberg テーブルに変換します。</p>

@@ -70,7 +70,7 @@ RDS の Zero-ETL 統合により完全マネージドで Redshift へレプリ�
 ```mermaid
 graph LR
 
-RDS--CDC-->DMS-->S3--Glue Job-->Icebergテーブル
+RDS--CDC-->DMS-->S3--GlueJob-->Icebergテーブル
 ```
 
 参考: [Modernize your legacy databases with AWS data lakes, Part 2: Build a data lake using AWS DMS data on Apache Iceberg](https://aws.amazon.com/jp/blogs/big-data/modernize-your-legacy-databases-with-aws-data-lakes-part-2-build-a-data-lake-using-aws-dms-data-on-apache-iceberg/)
@@ -94,7 +94,11 @@ DMS 採用企業はある
 ```mermaid
 graph LR
 
-RDS--CDC-->debezium-->MSK--Parquet-->S3-->GlueJob-->Icebergテーブル
+RDS--CDC-->debezium
+debezium-->MSK
+MSK--Parquet-->S3
+S3-->GlueJob
+GlueJob-->Icebergテーブル
 ```
 
 参考: [Synchronize data lakes with CDC-based UPSERT using open table format, AWS Glue, and Amazon MSK](https://aws.amazon.com/jp/blogs/big-data/synchronize-data-lakes-with-cdc-based-upsert-using-open-table-format-aws-glue-and-amazon-msk/)
