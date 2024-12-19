@@ -12324,7 +12324,7 @@ fieldset[disabled] article.article .article-more.is-inverted:before:before {
 .cc-window.cc-banner .cc-compliance > .cc-btn:focus {
   background-color: #02cce5;
 }
-.mermaid > svg {
-  max-width: none !important;
-  height: auto;
+.mermaid .label {
+  font-weight: normal;
+  font-size: 0.88rem;
 }
