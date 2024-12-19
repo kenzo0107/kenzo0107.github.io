@@ -35,7 +35,7 @@ subgraph AWS Account-a
   RDS
 end
 
-RDS--"SELECT * FROM table"-->GlueJob
+RDS--SELECT-->GlueJob
 
 subgraph AWS Account data-platform
   GlueJob-->Icebergテーブル
@@ -57,7 +57,7 @@ Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行�
 
 運用コストが高く、大規模な DB 環境には向かない。
 
-## RDS ー　 Zero-ETL 統合 → Redshift
+## RDS Zero-ETL 統合 →Redshift
 
 ```mermaid
 graph LR
