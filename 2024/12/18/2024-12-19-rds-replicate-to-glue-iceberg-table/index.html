@@ -57,6 +57,7 @@
 <hr>
 <h2><span id="概要">概要</span></h2><p>RDS のテーブルデータを分析用テーブルにレプリケートする方法が多数あったのでその一覧をまとめます。</p>
 <p>RDS をユーザ影響を極力低くすべく、分析用テーブルへレプリケートして、分析する方法が多々あったので私見ですが Pros/Cons をまとめます。</p>
+<p>アプリケーション DB を配置する AWS アカウントとデータ基盤を構築する AWS アカウントは分けている前提とします。</p>
 <span id="more"></span>
 
 <h2><span id="rdsgluejobiceberg-テーブル">RDS→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
@@ -233,7 +234,7 @@ end</pre>
 </li>
 <li>Cons:<ul>
 <li>定常的にリアルタイムにデータが参照できない</li>
-<li>軌道に少なくとも 10 分程度かかる</li>
+<li>起動に少なくとも 10 分程度かかる</li>
 </ul>
 </li>
 </ul>
