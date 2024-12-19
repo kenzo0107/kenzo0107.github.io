@@ -41,6 +41,7 @@
 
 <ul>
 <li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E5%89%8D%E6%8F%90">前提</a></li>
 <li><a href="#rdsgluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→GlueJob→Iceberg テーブル</a></li>
 <li><a href="#rds-%E3%83%BC-zero-etl-%E7%B5%B1%E5%90%88-redshift">RDS ー　 Zero-ETL 統合 → Redshift</a></li>
 <li><a href="#rdsdmss3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→DMS→S3→GlueJob→Iceberg テーブル</a></li>
@@ -57,7 +58,10 @@
 <hr>
 <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>RDS のテーブルデータを分析用テーブルにレプリケートする方法が多数あったのでその一覧をまとめます。</p>
 <p>RDS をユーザ影響を極力低くすべく、分析用テーブルへレプリケートして、分析する方法が多々あったので私見ですが Pros/Cons をまとめます。</p>
-<p>アプリケーション DB を配置する AWS アカウントとデータ基盤を構築する AWS アカウントは分けている前提とします。</p></div><a class="article-more button is-small is-size-7" href="/2024/12/18/2024-12-19-rds-replicate-to-glue-iceberg-table/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-10-18</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/10/17/2024-10-18-glue-job-bookmark/">Glue Job Bookmark 機能でなく sampleQuery を使って DB データをエクスポートしてみた</a></h1><div class="content"><div class="toc">
+<h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><ul>
+<li>アプリケーション DB を配置する AWS アカウントとデータ基盤を構築する AWS アカウントは分けます</li>
+<li>Glue テーブルは iceberg 形式を採用します</li>
+</ul></div><a class="article-more button is-small is-size-7" href="/2024/12/18/2024-12-19-rds-replicate-to-glue-iceberg-table/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-10-18</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/10/17/2024-10-18-glue-job-bookmark/">Glue Job Bookmark 機能でなく sampleQuery を使って DB データをエクスポートしてみた</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
 <h3 class="menu-label">ToC</h3>
 
