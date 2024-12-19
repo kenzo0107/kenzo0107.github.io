@@ -148,13 +148,15 @@ MSK で CDC データを Parquet で S3 に保存し、 Glue Job で Iceberg テ
 graph LR
 
 subgraph AWS Account-A
-    RDS-->NLB-->VPCエンドポイントサービス
+    RDS-->NLB
+    NLB-->VPCエンドポイントサービス
 end
 
 VPCエンドポイントサービス--CDCログ-->VPCエンドポイント
 
 subgraph AWS Account data-platform
-    VPCエンドポイント-->data_firehose[Data Firehose]-->Iceberg
+    VPCエンドポイント-->data_firehose[Data Firehose]
+    data_firehose[Data Firehose]-->Iceberg
 end
 ```
 

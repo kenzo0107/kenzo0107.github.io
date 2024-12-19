@@ -182,7 +182,7 @@
 
 <p><code>nano</code> or <code>vi</code> が入ってたのですが、 <code>vim</code> 使いたい場合は<a href="https://kenzo0107.github.io/2022/05/08/2022-05-09-install_vim_on_raspberrypi_os/">こちら</a> 参考</p>
 <p>cgroup への理解は以下参考になりました。</p>
-
+<a target="_blank" rel="noopener" href="https://valinux.hatenablog.com/entry/20210114" class="link-preview"><div class="link-area"><div class="og-image"><img src="https://cdn.image.st-hatena.com/image/scale/efb5a4359e4c4179a84b4988d3587c198a852b91/backend=imagemagick;version=1;width=1300/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fv%2Fvalinux%2F20210113%2F20210113115814.png"></div><div class="descriptions"><div class="og-title">Kubernetes で cgroup がどう利用されているか - VA Linux エンジニアブログ  </div><div class="og-description">cgroup とは、Linux カーネルの機能の1つであり、プロセスやスレッドが利用するリソースの制限や分離を行うための機能で、Linux コンテナの根幹を成す技術の1つでもあります。本記事では、Kubernetes のいくつかの機能を例に挙げ、cgroup がどう利用されている…</div></div></div></a>
 
 <h2><span id="swap-無効化">swap 無効化</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo swapoff --all</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo systemctl stop dphys-swapfile</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo systemctl <span class="built_in">disable</span> dphys-swapfile</span></span><br></pre></td></tr></table></figure>
 

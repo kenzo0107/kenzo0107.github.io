@@ -186,13 +186,15 @@ end</pre>
 <h2><span id="rdsdata-firehoseiceberg-テーブル-preview-版">RDS→Data Firehose→Iceberg テーブル (preview 版)</span></h2><pre class="mermaid">graph LR
 
 subgraph AWS Account-A
-    RDS-->NLB-->VPCエンドポイントサービス
+    RDS-->NLB
+    NLB-->VPCエンドポイントサービス
 end
 
 VPCエンドポイントサービス--CDCログ-->VPCエンドポイント
 
 subgraph AWS Account data-platform
-    VPCエンドポイント-->data_firehose[Data Firehose]-->Iceberg
+    VPCエンドポイント-->data_firehose[Data Firehose]
+    data_firehose[Data Firehose]-->Iceberg
 end</pre>
 
 <p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/news/replicate-changes-from-databases-to-apache-iceberg-tables-using-amazon-data-firehose/">Amazon Data Firehose を使用して、データベースから Apache Iceberg テーブルに変更をレプリケート (プレビュー)</a></p>

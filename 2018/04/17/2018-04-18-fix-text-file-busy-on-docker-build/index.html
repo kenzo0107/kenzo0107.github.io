@@ -49,7 +49,7 @@
 <h2><span id="対策">対策</span></h2><p>以下 sync 処理を追加し無事問題解決できました。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RUN chmod +x hoge.sh \</span><br><span class="line">  &amp;&amp; sync \</span><br><span class="line">  &amp;&amp; hoge.sh</span><br></pre></td></tr></table></figure>
 
-<h2><span id="what-is-sync-command">What is sync command ?</span></h2>
+<h2><span id="what-is-sync-command">What is sync command ?</span></h2><a href="http://kazmax.zpp.jp/cmd/s/sync.8.html" class="link-preview" target="_blank"><div class="link-area"><div class="descriptions"><div class="og-title">sync - システム管理コマンドの説明 - Linux コマンド集 一覧表</div><div class="og-description">sync - システム管理コマンドの説明。sync - ディスク上のデータをメモリと同期させる。</div></div></div></a>
 
 <h2><span id="参考">参考</span></h2><a href="https://github.com/moby/moby/issues/9547#issuecomment-77547893" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://opengraph.githubassets.com/2fed497f824e65f248f12ba9e609b5b25c7be7516e8456fba6ce67e568f772f0/moby/moby/issues/9547"></div><div class="descriptions"><div class="og-title">Running chmod on file results in &#39;text file busy&#39; when running straight after. · Issue #9547 · moby/moby</div><div class="og-description">Dockerfile contents are: FROM debian WORKDIR /app COPY . /app CMD [ &quot;/app/a.sh&quot; ] Contents of &#39;a.sh&#39; are: #!/bin/sh echo &#39;A&#39; sh /app/b.sh 1 …</div></div></div></a>
 
