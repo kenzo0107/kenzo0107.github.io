@@ -26,7 +26,7 @@ RDS をユーザ影響を極力低くすべく、分析用テーブルへレプ�
 ```mermaid
 graph LR
 
-RDS--SELECT * FROM table-->GlueJob-->Icebergテーブル
+RDS--"SELECT * FROM table"-->GlueJob-->Icebergテーブル
 ```
 
 Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行し、抽出したデータを Iceberg テーブルへレプリケートします。

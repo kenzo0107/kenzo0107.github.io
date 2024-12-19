@@ -61,7 +61,7 @@
 
 <h2><span id="rdsgluejobiceberg-テーブル">RDS→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
 
-RDS--SELECT * FROM table-->GlueJob-->Icebergテーブル</pre>
+RDS--"SELECT * FROM table"-->GlueJob-->Icebergテーブル</pre>
 
 <p>Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行し、抽出したデータを Iceberg テーブルへレプリケートします。</p>
 <ul>
