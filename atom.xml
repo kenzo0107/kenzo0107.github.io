@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2024-10-17T15:00:00.000Z</updated>
+  <updated>2024-12-18T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧</title>
+    <link href="https://kenzo0107.github.io/2024/12/18/2024-12-19-rds-replicate-to-glue-iceberg-table/"/>
+    <id>https://kenzo0107.github.io/2024/12/18/2024-12-19-rds-replicate-to-glue-iceberg-table/</id>
+    <published>2024-12-18T15:00:00.000Z</published>
+    <updated>2024-12-18T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#rdsgluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→GlueJob→Iceberg テーブル</a></li><li><a href="#rds-zero-etl-%E7%B5%B1%E5%90%88-redshift-%E3%81%B8%E3%83%AC%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%83%88">RDS Zero-ETL 統合 Redshift へレプリケート</a></li><li><a href="#rdsdmss3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→DMS→S3→GlueJob→Iceberg テーブル</a></li><li><a href="#rdsdebeziummsks3glue-jobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→S3→Glue Job→Iceberg テーブル</a></li><li><a href="#rdsdata-firehoseiceberg-preview-%E7%89%88">RDS→Data Firehose→Iceberg (preview 版)</a></li><li><a href="#rds-%E3%82%92%E5%85%B1%E6%9C%89%E3%81%97%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%B3">RDS を共有しクローン</a></li><li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>RDS のテーブルデータを分析用テーブルにレプリケートする方法が多数あったのでその一覧をまとめます。</p><p>RDS をユーザ影響を極力低くすべく、分析用テーブルへレプリケートして、分析する方法が多々あったので私見ですが Pros/Cons をまとめます。</p><span id="more"></span><h2><span id="rdsgluejobiceberg-テーブル">RDS→GlueJob→Iceberg テーブル</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"></span><br><span class="line">RDS--SELECT * FROM table--&gt;GlueJob--&gt;Icebergテーブル</span><br></pre></td></tr></table></figure><p>Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行し、抽出したデータを Iceberg テーブルへレプリケートします。</p><ul><li>Pros:<ul><li>コスト安</li></ul></li><li>Cons:<ul><li>レコード削除に対応できない<ul><li>論理削除であれば対応はできるが、物理削除されると検知できない</li><li>全データをエクスポートし直す、もしくは、削除されたレコードを特定する様、RDS 側と Iceberg テーブルで突き合わせる方法はあるが、リソース逼迫させてしまう恐れがある</li></ul></li><li>テーブル毎にデータ取得時の識別子 (PK 相当) となるカラムを決定する必要がある<ul><li>PK がない場合、別途指定する必要がある。</li><li>例えば更新されるレコードがある場合、 updated_at をキーにし、差分抽出するような処理が必要になる</li></ul></li><li>リアルタイム性を追求すると実行コストが嵩む</li></ul></li></ul><p>運用コストが高く、大規模な DB 環境には向かない。</p><h2><span id="rds-zero-etl-統合-redshift-へレプリケート">RDS Zero-ETL 統合 Redshift へレプリケート</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"></span><br><span class="line">RDS--Zero-ETL--&gt;Redshift</span><br></pre></td></tr></table></figure><p>参考: <a href="https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/zero-etl.html">Amazon Redshift との Amazon RDS ゼロ ETL 統合での作業</a></p><p>RDS の Zero-ETL 統合により完全マネージドで Redshift へレプリケートします。<br>他の手法と異なり、 Iceberg テーブルでなく Redshift がインターフェースになります。</p><ul><li>Pros:<ul><li>完全マネージドなサービスでスクリプト不要</li><li>Redshift は dbt との相性が良い</li></ul></li><li>Cons:<ul><li>Redshift コスト高<ul><li>Serverless でレプリケート間隔を広げることでコストを抑えることはできそうだが、リアルタイム性は損なわれる</li></ul></li><li>Aurora 以外はサポート外 (2024.12.19 時点)</li></ul></li></ul><h2><span id="rdsdmss3gluejobiceberg-テーブル">RDS→DMS→S3→GlueJob→Iceberg テーブル</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"></span><br><span class="line">RDS--CDC--&gt;DMS--&gt;S3--Glue Job--&gt;Icebergテーブル</span><br></pre></td></tr></table></figure><p>参考: <a href="https://aws.amazon.com/jp/blogs/big-data/modernize-your-legacy-databases-with-aws-data-lakes-part-2-build-a-data-lake-using-aws-dms-data-on-apache-iceberg/">Modernize your legacy databases with AWS data lakes, Part 2: Build a data lake using AWS DMS data on Apache Iceberg</a></p><ul><li>Pros:<ul><li>Redshift よりは安く済みそう</li></ul></li><li>Cons:<ul><li>DMS 運用コストが高い（AWS SA 様より頂いた意見）<ul><li>バージョン毎の仕様差による障害発生</li><li>比較的バージョンアップが多い</li><li>バージョンアップ時にレプリケートを停止し、再度テーブル作り直す必要があるなど手間が多い</li></ul></li><li>Glue Job によるデータ処理（更新・追加・削除）が煩雑化する</li><li>テーブルのスキーマ変更に Glue Job で対応する必要がある</li></ul></li></ul><p>DMS 採用企業はある</p><ul><li><a href="https://techlife.cookpad.com/entry/2024/10/16/101605">クックパッド - DMS を利用した継続的なデータ変更検知</a></li></ul><h2><span id="rdsdebeziummsks3glue-jobiceberg-テーブル">RDS→debezium→MSK→S3→Glue Job→Iceberg テーブル</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"></span><br><span class="line">RDS--CDC--&gt;debezium--&gt;MSK--Parquet--&gt;S3--&gt;GlueJob--&gt;Icebergテーブル</span><br></pre></td></tr></table></figure><p>参考: <a href="https://aws.amazon.com/jp/blogs/big-data/synchronize-data-lakes-with-cdc-based-upsert-using-open-table-format-aws-glue-and-amazon-msk/">Synchronize data lakes with CDC-based UPSERT using open table format, AWS Glue, and Amazon MSK</a></p><p>MSK で CDC データを Parquet で S3 に保存し、 Glue Job で Iceberg テーブルに変換します。</p><ul><li>Pros:<ul><li>RDS Zero-ETL サポート外の <code>MariaDB</code> にも対応できる</li></ul></li><li>Cons:<ul><li>debezium, MSK 等の学習コストが高い（個人の感想）</li><li>Glue Job によるデータ処理（更新・追加・削除）が煩雑化する</li><li>テーブルのスキーマ変更に Glue Job で対応する必要がある</li></ul></li></ul><h2><span id="rdsdata-firehoseiceberg-preview-版">RDS→Data Firehose→Iceberg (preview 版)</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"></span><br><span class="line">subgraph AWS Account-A</span><br><span class="line">    RDS--&gt;NLB--&gt;VPCエンドポイントサービス</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">VPCエンドポイントサービス--CDCログ--&gt;VPCエンドポイント</span><br><span class="line"></span><br><span class="line">subgraph AWS Account data-platform</span><br><span class="line">    VPCエンドポイント--&gt;data_firehose[Data Firehose]--&gt;Iceberg</span><br><span class="line">end</span><br></pre></td></tr></table></figure><p>参考: <a href="https://aws.amazon.com/jp/blogs/news/replicate-changes-from-databases-to-apache-iceberg-tables-using-amazon-data-firehose/">Amazon Data Firehose を使用して、データベースから Apache Iceberg テーブルに変更をレプリケート (プレビュー)</a></p><ul><li>Pros:<ul><li>運用・構築コスト安</li><li>インターフェースを S3 上の Iceberg テーブルに統合できる</li></ul></li><li>Cons:<ul><li>2024 年 12 月 19 日時点では、テーブルを <code>.*</code> で指定すると多数テーブルがある場合、内部エラーとなり実運用に向かない<ul><li>問い合わせ中</li></ul></li><li>PrivateLink の構築が必要</li></ul></li></ul><h2><span id="rds-を共有しクローン">RDS を共有しクローン</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"></span><br><span class="line">account_a[RDS]--共有--&gt;data_platform[RDS]</span><br><span class="line"></span><br><span class="line">subgraph AWS Account-A</span><br><span class="line">    account_a[RDS]</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">subgraph AWS data-platform</span><br><span class="line">    data_platform[RDS]--クローン--&gt;cloned[RDS]</span><br><span class="line">end</span><br></pre></td></tr></table></figure><p>RDS を共有し、その共有された RDS をクローン作成します。<br>クローン実施された時点の最新のデータをクローンされた RDS で参照することができます。<br>リアルタイム性を求めるには難しい構成です。</p><ul><li>Pros:<ul><li>簡易に最新データのスナップショットが参照できる</li></ul></li><li>Cons:<ul><li>定常的にリアルタイムにデータが参照できない</li><li>軌道に少なくとも 10 分程度かかる</li></ul></li></ul><h2><span id="総評">総評</span></h2><p>RDS→Data Firehose→Iceberg (preview 版) が運用・構築コスト安で大変期待しています。</p><p>様々手法がある中で CDC を利用した Iceberg テーブルへの統合はデファクトになっていく流れにあるかと推察します。</p><p>今後がより楽しみです。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsgluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB&quot;&gt;RDS→GlueJob→Iceberg テーブル&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rds-zero-etl-%E7%B5%B1%E5%90%88-redshift-%E3%81%B8%E3%83%AC%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%83%88&quot;&gt;RDS Zero-ETL 統合 Redshift へレプリケート&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsdmss3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB&quot;&gt;RDS→DMS→S3→GlueJob→Iceberg テーブル&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsdebeziummsks3glue-jobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB&quot;&gt;RDS→debezium→MSK→S3→Glue Job→Iceberg テーブル&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsdata-firehoseiceberg-preview-%E7%89%88&quot;&gt;RDS→Data Firehose→Iceberg (preview 版)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rds-%E3%82%92%E5%85%B1%E6%9C%89%E3%81%97%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%B3&quot;&gt;RDS を共有しクローン&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%B7%8F%E8%A9%95&quot;&gt;総評&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;RDS のテーブルデータを分析用テーブルにレプリケートする方法が多数あったのでその一覧をまとめます。&lt;/p&gt;
+&lt;p&gt;RDS をユーザ影響を極力低くすべく、分析用テーブルへレプリケートして、分析する方法が多々あったので私見ですが Pros/Cons をまとめます。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Glue Job Bookmark 機能でなく sampleQuery を使って DB データをエクスポートしてみた</title>
@@ -734,37 +776,6 @@
     
     
     <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>alpine イメージに awscli をインストールする</title>
-    <link href="https://kenzo0107.github.io/2023/04/20/2023-04-21-install-awscli-on-alpine/"/>
-    <id>https://kenzo0107.github.io/2023/04/20/2023-04-21-install-awscli-on-alpine/</id>
-    <published>2023-04-20T15:00:00.000Z</published>
-    <updated>2023-04-20T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><!-- tocstop --></div></div><hr><p>alpine イメージで awscli をインストールする際の備忘録です。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RUN apk add --no-cache \</span><br><span class="line">        python3 \</span><br><span class="line">        py3-pip \</span><br><span class="line">    &amp;&amp; pip3 install --upgrade pip \</span><br><span class="line">    &amp;&amp; pip3 install --no-cache-dir \</span><br><span class="line">        awscli \</span><br><span class="line">    &amp;&amp; rm -rf /var/cache/apk/*</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-
-
-&lt;!-- tocstop --&gt;
-
-&lt;/div&gt;
-</summary>
-      
-    
-    
     
     
   </entry>
