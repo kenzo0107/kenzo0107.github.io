@@ -61,7 +61,15 @@
 
 <h2><span id="rdsgluejobiceberg-テーブル">RDS→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
 
-RDS--"SELECT * FROM table"-->GlueJob-->Icebergテーブル</pre>
+subgraph AWS Account-a
+  RDS
+end
+
+RDS--"SELECT * FROM table"-->GlueJob
+
+subgraph AWS Account data-platform
+  GlueJob-->Icebergテーブル
+end</pre>
 
 <p>Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行し、抽出したデータを Iceberg テーブルへレプリケートします。</p>
 <ul>
@@ -87,7 +95,15 @@ RDS--"SELECT * FROM table"-->GlueJob-->Icebergテーブル</pre>
 <p>運用コストが高く、大規模な DB 環境には向かない。</p>
 <h2><span id="rds-zero-etl-統合-redshift-へレプリケート">RDS Zero-ETL 統合 Redshift へレプリケート</span></h2><pre class="mermaid">graph LR
 
-RDS--Zero-ETL-->Redshift</pre>
+subgraph AWS Account-a
+  RDS
+end
+
+RDS--Zero-ETL-->Redshift
+
+subgraph AWS Account data-platform
+  Redshift
+end</pre>
 
 <p>参考: <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/zero-etl.html">Amazon Redshift との Amazon RDS ゼロ ETL 統合での作業</a></p>
 <p>RDS の Zero-ETL 統合により完全マネージドで Redshift へレプリケートします。<br>他の手法と異なり、 Iceberg テーブルでなく Redshift がインターフェースになります。</p>
@@ -108,7 +124,15 @@ RDS--Zero-ETL-->Redshift</pre>
 </ul>
 <h2><span id="rdsdmss3gluejobiceberg-テーブル">RDS→DMS→S3→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
 
-RDS--CDC-->DMS-->S3--GlueJob-->Icebergテーブル</pre>
+subgraph AWS Account-a
+  RDS--CDC-->DMS
+end
+
+DMS-->S3
+
+subgraph AWS Account data-platform
+  S3--GlueJob-->Icebergテーブル
+end</pre>
 
 <p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/big-data/modernize-your-legacy-databases-with-aws-data-lakes-part-2-build-a-data-lake-using-aws-dms-data-on-apache-iceberg/">Modernize your legacy databases with AWS data lakes, Part 2: Build a data lake using AWS DMS data on Apache Iceberg</a></p>
 <ul>
@@ -134,11 +158,15 @@ RDS--CDC-->DMS-->S3--GlueJob-->Icebergテーブル</pre>
 </ul>
 <h2><span id="rdsdebeziummsks3glue-jobiceberg-テーブル">RDS→debezium→MSK→S3→Glue Job→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
 
-RDS--CDC-->debezium
-debezium-->MSK
+subgraph AWS Account-a
+  RDS--CDC-->debezium-->MSK
+end
+
 MSK--Parquet-->S3
-S3-->GlueJob
-GlueJob-->Icebergテーブル</pre>
+
+subgraph AWS Account data-platform
+  S3-->GlueJob-->Icebergテーブル
+end</pre>
 
 <p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/big-data/synchronize-data-lakes-with-cdc-based-upsert-using-open-table-format-aws-glue-and-amazon-msk/">Synchronize data lakes with CDC-based UPSERT using open table format, AWS Glue, and Amazon MSK</a></p>
 <p>MSK で CDC データを Parquet で S3 に保存し、 Glue Job で Iceberg テーブルに変換します。</p>

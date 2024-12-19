@@ -26,7 +26,15 @@ RDS をユーザ影響を極力低くすべく、分析用テーブルへレプ�
 ```mermaid
 graph LR
 
-RDS--"SELECT * FROM table"-->GlueJob-->Icebergテーブル
+subgraph AWS Account-a
+  RDS
+end
+
+RDS--"SELECT * FROM table"-->GlueJob
+
+subgraph AWS Account data-platform
+  GlueJob-->Icebergテーブル
+end
 ```
 
 Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行し、抽出したデータを Iceberg テーブルへレプリケートします。
@@ -49,7 +57,16 @@ Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行�
 ```mermaid
 graph LR
 
+subgraph AWS Account-a
+  RDS
+end
+
 RDS--Zero-ETL-->Redshift
+
+subgraph AWS Account data-platform
+  Redshift
+end
+
 ```
 
 参考: [Amazon Redshift との Amazon RDS ゼロ ETL 統合での作業](https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/zero-etl.html)
@@ -70,7 +87,15 @@ RDS の Zero-ETL 統合により完全マネージドで Redshift へレプリ�
 ```mermaid
 graph LR
 
-RDS--CDC-->DMS-->S3--GlueJob-->Icebergテーブル
+subgraph AWS Account-a
+  RDS--CDC-->DMS
+end
+
+DMS-->S3
+
+subgraph AWS Account data-platform
+  S3--GlueJob-->Icebergテーブル
+end
 ```
 
 参考: [Modernize your legacy databases with AWS data lakes, Part 2: Build a data lake using AWS DMS data on Apache Iceberg](https://aws.amazon.com/jp/blogs/big-data/modernize-your-legacy-databases-with-aws-data-lakes-part-2-build-a-data-lake-using-aws-dms-data-on-apache-iceberg/)
@@ -94,11 +119,15 @@ DMS 採用企業はある
 ```mermaid
 graph LR
 
-RDS--CDC-->debezium
-debezium-->MSK
+subgraph AWS Account-a
+  RDS--CDC-->debezium-->MSK
+end
+
 MSK--Parquet-->S3
-S3-->GlueJob
-GlueJob-->Icebergテーブル
+
+subgraph AWS Account data-platform
+  S3-->GlueJob-->Icebergテーブル
+end
 ```
 
 参考: [Synchronize data lakes with CDC-based UPSERT using open table format, AWS Glue, and Amazon MSK](https://aws.amazon.com/jp/blogs/big-data/synchronize-data-lakes-with-cdc-based-upsert-using-open-table-format-aws-glue-and-amazon-msk/)
