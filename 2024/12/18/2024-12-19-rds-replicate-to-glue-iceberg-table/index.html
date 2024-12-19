@@ -166,7 +166,7 @@ end
 MSK--Parquet-->S3
 
 subgraph AWS Account data-platform
-  S3-->GlueJob-->Icebergテーブル
+  S3--GlueJob-->Icebergテーブル
 end</pre>
 
 <p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/big-data/synchronize-data-lakes-with-cdc-based-upsert-using-open-table-format-aws-glue-and-amazon-msk/">Synchronize data lakes with CDC-based UPSERT using open table format, AWS Glue, and Amazon MSK</a></p>

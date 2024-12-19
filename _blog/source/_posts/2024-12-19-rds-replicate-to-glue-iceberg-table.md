@@ -127,7 +127,7 @@ end
 MSK--Parquet-->S3
 
 subgraph AWS Account data-platform
-  S3-->GlueJob-->Icebergテーブル
+  S3--GlueJob-->Icebergテーブル
 end
 ```
 
