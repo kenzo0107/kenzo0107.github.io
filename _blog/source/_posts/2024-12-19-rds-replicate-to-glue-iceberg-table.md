@@ -120,7 +120,8 @@ DMS 採用企業はある
 graph LR
 
 subgraph AWS Account-a
-  RDS--CDC-->debezium-->MSK
+  RDS--CDC-->debezium
+  debezium-->MSK
 end
 
 MSK--Parquet-->S3

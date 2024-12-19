@@ -159,7 +159,8 @@ end</pre>
 <h2><span id="rdsdebeziummsks3glue-jobiceberg-テーブル">RDS→debezium→MSK→S3→Glue Job→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
 
 subgraph AWS Account-a
-  RDS--CDC-->debezium-->MSK
+  RDS--CDC-->debezium
+  debezium-->MSK
 end
 
 MSK--Parquet-->S3
