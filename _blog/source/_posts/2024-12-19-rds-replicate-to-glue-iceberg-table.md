@@ -119,7 +119,7 @@ DMS 採用企業はある
 
 - [クックパッド - DMS を利用した継続的なデータ変更検知](https://techlife.cookpad.com/entry/2024/10/16/101605)
 
-## RDS→debezium→MSK→S3→Glue Job→Iceberg テーブル
+## RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル
 
 ```mermaid
 graph LR
