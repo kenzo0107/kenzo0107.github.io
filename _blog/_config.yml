@@ -114,3 +114,10 @@ feed:
   type: atom
   path: atom.xml
   limit: 20
+
+# mermaid chart
+mermaid: ## mermaid url https://github.com/knsv/mermaid
+  enable: true # default true
+  version: '7.1.2' # default v7.1.2
+  options:
+    #startOnload: true  // default true

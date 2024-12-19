@@ -108,7 +108,7 @@ MSK で CDC データを Parquet で S3 に保存し、 Glue Job で Iceberg テ
   - Glue Job によるデータ処理（更新・追加・削除）が煩雑化する
   - テーブルのスキーマ変更に Glue Job で対応する必要がある
 
-## RDS→Data Firehose→Iceberg (preview 版)
+## RDS→Data Firehose→Iceberg テーブル (preview 版)
 
 ```mermaid
 graph LR
