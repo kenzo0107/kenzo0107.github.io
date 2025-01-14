@@ -10,7 +10,7 @@ cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160824/20160
 
 [fluentd でエラーログを Slack へ通知](http://kenzo0107.hatenablog.com/entries/2015/09/24) の続きです。
 
-{% linkPreview http://kenzo0107.hatenablog.com/entry/2015/09/24/011418 _blank %}
+{% linkPreview https://kenzo0107.github.io/2015/09/23/2015-09-24-errorlog-to-slack/ _blank %}
 
 ## 概要
 
