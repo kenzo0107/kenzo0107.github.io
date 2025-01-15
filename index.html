@@ -34,17 +34,11 @@
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
 </head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item is-active" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/2013/12/31/about/">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2025-01-15</span><span class="level-item"><a class="link-muted" href="/categories/Datadog/">Datadog</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/01/14/2025-01-15-how-to-delete-datadog-child-org/">Datadog 子組織の削除方法</a></h1><div class="content"><p>備忘録として<br>Datadog の子組織の削除方法をまとめます。</p>
-<h2><span id="手順">手順</span></h2><ol>
-<li>監視や API Key, Application Key を削除</li>
-</ol>
-<ul>
+<h2><span id="手順">手順</span></h2><h3><span id="1-監視や-api-key-application-key-を削除">1. 監視や API Key, Application Key を削除</span></h3><ul>
 <li>監視が残っていると削除できない場合があります。</li>
 <li>API Key を削除することで API Key を利用した Datadog Agent からのデータ収集ができなくなり、意図しないコストの発生を抑える意図があります。</li>
 </ul>
-<ol start="2">
-<li>サポートに連絡</li>
-</ol>
-<ul>
+<h3><span id="2-サポートに連絡">2. サポートに連絡</span></h3><ul>
 <li>子組織を削除する API は存在せず、ドキュメントに記載のある通り、 Datadog サポートに連絡して削除する必要があります。</li>
 <li><a target="_blank" rel="noopener" href="https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B">https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B</a></li>
 <li>子組織削除 API が存在しない為、 terraform-provider-datadog でも子組織を管理するリソースを削除しても子組織自体は残ってしまいます。</li>

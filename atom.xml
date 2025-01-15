@@ -23,17 +23,13 @@
     <published>2025-01-14T15:00:00.000Z</published>
     <updated>2025-01-14T15:00:00.000Z</updated>
     
-    <content type="html"><![CDATA[<p>備忘録として<br>Datadog の子組織の削除方法をまとめます。</p><h2><span id="手順">手順</span></h2><ol><li>監視や API Key, Application Key を削除</li></ol><ul><li>監視が残っていると削除できない場合があります。</li><li>API Key を削除することで API Key を利用した Datadog Agent からのデータ収集ができなくなり、意図しないコストの発生を抑える意図があります。</li></ul><ol start="2"><li>サポートに連絡</li></ol><ul><li>子組織を削除する API は存在せず、ドキュメントに記載のある通り、 Datadog サポートに連絡して削除する必要があります。</li><li><a href="https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B">https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B</a></li><li>子組織削除 API が存在しない為、 terraform-provider-datadog でも子組織を管理するリソースを削除しても子組織自体は残ってしまいます。</li></ul><p>サポートの状況次第ですが、おおよそ 1週間程度で削除していただけました。</p><p>以上です。</p>]]></content>
+    <content type="html"><![CDATA[<p>備忘録として<br>Datadog の子組織の削除方法をまとめます。</p><h2><span id="手順">手順</span></h2><h3><span id="1-監視や-api-key-application-key-を削除">1. 監視や API Key, Application Key を削除</span></h3><ul><li>監視が残っていると削除できない場合があります。</li><li>API Key を削除することで API Key を利用した Datadog Agent からのデータ収集ができなくなり、意図しないコストの発生を抑える意図があります。</li></ul><h3><span id="2-サポートに連絡">2. サポートに連絡</span></h3><ul><li>子組織を削除する API は存在せず、ドキュメントに記載のある通り、 Datadog サポートに連絡して削除する必要があります。</li><li><a href="https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B">https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B</a></li><li>子組織削除 API が存在しない為、 terraform-provider-datadog でも子組織を管理するリソースを削除しても子組織自体は残ってしまいます。</li></ul><p>サポートの状況次第ですが、おおよそ 1週間程度で削除していただけました。</p><p>以上です。</p>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;備忘録として&lt;br&gt;Datadog の子組織の削除方法をまとめます。&lt;/p&gt;
-&lt;h2&gt;&lt;span id=&quot;手順&quot;&gt;手順&lt;/span&gt;&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;監視や API Key, Application Key を削除&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;監視が残</summary>
+&lt;h2&gt;&lt;span id=&quot;手順&quot;&gt;手順&lt;/span&gt;&lt;/h2&gt;&lt;h3&gt;&lt;span id=&quot;1-監視や-api-key-application-key-を削除&quot;&gt;1. 監視や API Key, A</summary>
       
     
     
