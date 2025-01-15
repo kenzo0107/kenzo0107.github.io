@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2024-12-18T15:00:00.000Z</updated>
+  <updated>2025-01-14T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Datadog 子組織の削除方法</title>
+    <link href="https://kenzo0107.github.io/2025/01/14/2025-01-15-how-to-delete-datadog-child-org/"/>
+    <id>https://kenzo0107.github.io/2025/01/14/2025-01-15-how-to-delete-datadog-child-org/</id>
+    <published>2025-01-14T15:00:00.000Z</published>
+    <updated>2025-01-14T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>備忘録として<br>Datadog の子組織の削除方法をまとめます。</p><h2><span id="手順">手順</span></h2><ol><li>監視や API Key, Application Key を削除</li></ol><ul><li>監視が残っていると削除できない場合があります。</li><li>API Key を削除することで API Key を利用した Datadog Agent からのデータ収集ができなくなり、意図しないコストの発生を抑える意図があります。</li></ul><ol start="2"><li>サポートに連絡</li></ol><ul><li>子組織を削除する API は存在せず、ドキュメントに記載のある通り、 Datadog サポートに連絡して削除する必要があります。</li><li><a href="https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B">https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B</a></li><li>子組織削除 API が存在しない為、 terraform-provider-datadog でも子組織を管理するリソースを削除しても子組織自体は残ってしまいます。</li></ul><p>サポートの状況次第ですが、おおよそ 1週間程度で削除していただけました。</p><p>以上です。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;備忘録として&lt;br&gt;Datadog の子組織の削除方法をまとめます。&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;手順&quot;&gt;手順&lt;/span&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;監視や API Key, Application Key を削除&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;監視が残</summary>
+      
+    
+    
+    
+    <category term="Datadog" scheme="https://kenzo0107.github.io/categories/Datadog/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧</title>
@@ -747,35 +774,6 @@
       
       
     <summary type="html">&lt;h2&gt;&lt;span id=&quot;raspberry-pi-4-model-b-の環境&quot;&gt;Raspberry Pi 4 Model B の環境&lt;/span&gt;&lt;/h2&gt;&lt;figure class=&quot;highlight console&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutt</summary>
-      
-    
-    
-    
-    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Raspberry Pi に USB スピーカーを接続しテキストを音声変換しお話しさせる</title>
-    <link href="https://kenzo0107.github.io/2023/05/17/2023-05-18-raspberrypi4b-speaks-via-usb-speaker/"/>
-    <id>https://kenzo0107.github.io/2023/05/17/2023-05-18-raspberrypi4b-speaks-via-usb-speaker/</id>
-    <published>2023-05-17T15:00:00.000Z</published>
-    <updated>2023-05-17T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E7%92%B0%E5%A2%83">環境</a></li><li><a href="#usb-%E3%82%B9%E3%83%94%E3%83%BC%E3%82%AB%E3%83%BC%E6%8E%A5%E7%B6%9A">usb スピーカー接続</a><ul><li><a href="#%E6%8E%A5%E7%B6%9A%E5%85%88%E3%81%AE-usb-%E3%82%B9%E3%83%94%E3%83%BC%E3%82%AB%E3%83%BC%E3%81%AE%E3%82%AB%E3%83%BC%E3%83%89%E7%95%AA%E5%8F%B7%E3%83%87%E3%83%90%E3%82%A4%E3%82%B9%E7%95%AA%E5%8F%B7%E3%82%92%E7%A2%BA%E8%AA%8D">接続先の USB スピーカーのカード番号・デバイス番号を確認</a></li><li><a href="#%E9%9F%B3%E3%81%8C%E3%82%B9%E3%83%94%E3%83%BC%E3%82%AB%E3%83%BC%E3%81%8B%E3%82%89%E8%81%9E%E3%81%93%E3%81%88%E3%82%8B%E3%81%8B%E3%83%86%E3%82%B9%E3%83%88">音がスピーカーから聞こえるかテスト</a></li></ul></li><li><a href="#python-%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%8B%E3%82%89%E5%86%8D%E7%94%9F%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B">python スクリプトから再生してみる</a></li><li><a href="#%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E3%81%8B%E3%82%89%E9%9F%B3%E5%A3%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E8%AA%AD%E3%81%BF%E4%B8%8A%E3%81%92%E3%82%8B">テキストから音声ファイルを作成し読み上げる</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>Raspberry Pi と OpenAI を通じて英会話しよう！という動機から<br>最初の一歩として USB スピーカーから指定したテキストを読み上げる様にしてみました。</p><h2><span id="環境">環境</span></h2><p><a href="https://www.amazon.co.jp/gp/product/B09FHGX1QQ/?&_encoding=UTF8&tag=kenzo0107-22&linkCode=ur2&linkId=82485e7160979d4bd9f1971203c46c58&camp=247&creative=1211">Marstudy Raspberry Pi 4 Model B Starter キット</a> で<br>プリインストールされた Raspbian OS を利用しています。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/os-release</span><br><span class="line"></span><br><span class="line">PRETTY_NAME=&quot;Raspbian GNU/Linux 10 (buster)&quot;</span><br><span class="line">NAME=&quot;Raspbian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;10&quot;</span><br><span class="line">VERSION=&quot;10 (buster)&quot;</span><br><span class="line">VERSION_CODENAME=buster</span><br><span class="line">ID=raspbian</span><br><span class="line">ID_LIKE=debian</span><br><span class="line">HOME_URL=&quot;http://www.raspbian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;http://www.raspbian.org/RaspbianForums&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;http://www.raspbian.org/RaspbianBugs&quot;</span><br></pre></td></tr></table></figure><h2><span id="usb-スピーカー接続">usb スピーカー接続</span></h2><p><a href="https://www.amazon.co.jp/gp/product/B071699KYN/?&_encoding=UTF8&tag=kenzo0107-22&linkCode=ur2&linkId=79fbe724887de803e45a5601f5548940&camp=247&creative=1211">サンワサプライ コンパクト PC スピーカー MS-P08UBK</a> を利用します。</p><p>自分が購入した 2023-05-10 は ¥857 でした。</p><h3><span id="接続先の-usb-スピーカーのカード番号デバイス番号を確認">接続先の USB スピーカーのカード番号・デバイス番号を確認</span></h3><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">aplay -l</span></span><br><span class="line">**** ハードウェアデバイス PLAYBACK のリスト ****</span><br><span class="line">カード 1: Headphones [bcm2835 Headphones], デバイス 0: bcm2835 Headphones [bcm2835 Headphones]</span><br><span class="line">  サブデバイス: 8/8</span><br><span class="line">  サブデバイス #0: subdevice #0</span><br><span class="line">  サブデバイス #1: subdevice #1</span><br><span class="line">  サブデバイス #2: subdevice #2</span><br><span class="line">  サブデバイス #3: subdevice #3</span><br><span class="line">  サブデバイス #4: subdevice #4</span><br><span class="line">  サブデバイス #5: subdevice #5</span><br><span class="line">  サブデバイス #6: subdevice #6</span><br><span class="line">  サブデバイス #7: subdevice #7</span><br></pre></td></tr></table></figure><ul><li>カード番号 = 1</li><li>デバイス番号 = 0</li></ul><h3><span id="音がスピーカーから聞こえるかテスト">音がスピーカーから聞こえるかテスト</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// plughw:&lt;カード&gt;,&lt;デバイス&gt;</span><br><span class="line">$ speaker-test -D plughw:1,0 -t wav</span><br><span class="line"></span><br><span class="line">// Ctrl+c で中断し終了します</span><br></pre></td></tr></table></figure><h2><span id="python-スクリプトから再生してみる">python スクリプトから再生してみる</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install pygame</span></span><br></pre></td></tr></table></figure><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">curl https://www.soundjay.com/buttons/button-3.mp3 -o button.mp3</span></span><br></pre></td></tr></table></figure><ul><li>play_sound.py</li></ul><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pygame</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">play_sound_file</span>(<span class="params">file_path</span>):</span><br><span class="line">    pygame.mixer.init()</span><br><span class="line">    pygame.mixer.music.load(file_path)</span><br><span class="line">    pygame.mixer.music.play()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> pygame.mixer.music.get_busy() == <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    play_sound_file(<span class="string">&#x27;button.mp3&#x27;</span>)</span><br></pre></td></tr></table></figure><p>以下実行し mp3 が再生されることが確認できます。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3 play_sound.py</span></span><br></pre></td></tr></table></figure><h2><span id="テキストから音声ファイルを作成し読み上げる">テキストから音声ファイルを作成し読み上げる</span></h2><ul><li>speech.py</li></ul><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install gTTS</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install pydub</span></span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gtts <span class="keyword">import</span> gTTS</span><br><span class="line"><span class="keyword">from</span> pydub <span class="keyword">import</span> AudioSegment</span><br><span class="line"><span class="keyword">from</span> pydub.playback <span class="keyword">import</span> play</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">speechja</span>(<span class="params">stext</span>):</span><br><span class="line">    tts = gTTS(stext, lang=<span class="string">&quot;ja&quot;</span>)</span><br><span class="line">    tts.save(<span class="string">&quot;/tmp/out.mp3&quot;</span>)</span><br><span class="line"></span><br><span class="line">    sound = AudioSegment.from_mp3(<span class="string">&quot;/tmp/out.mp3&quot;</span>)</span><br><span class="line">    play(sound)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    msg = <span class="string">&quot;はい、お元気ですか？&quot;</span></span><br><span class="line">    speechja(msg)</span><br></pre></td></tr></table></figure><p>以下実行しスピーカーから「はい、お元気ですか？」と再生されます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python3 speech.py</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p><p>次回はマイクから音声認識させる設定を執筆したいと思います。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
-&lt;div class=&quot;toc-content&quot;&gt;
-&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
-
-&lt;!-- toc --&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#%E6%A6%8</summary>
       
     
     
