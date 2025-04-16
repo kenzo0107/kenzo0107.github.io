@@ -147,6 +147,63 @@ MSK で CDC データを Parquet で S3 に保存し、 Glue Job で Iceberg テ
   - Glue Job によるデータ処理（更新・追加・削除）が煩雑化する
   - テーブルのスキーマ変更に Glue Job で対応する必要がある
 
+## RDS→debezium→MSK→DataFirehose→Iceberg テーブル
+
+```mermaid
+graph LR
+
+subgraph AWS Account-a
+    RDS
+end
+
+RDS-->msk_connector[MSK Connector]-->msk_cluster[MSK Cluster]-->Lambda--レコード変換-->Iceberg
+
+subgraph AWS Account data-platform
+    msk_connector[MSK Connector]
+    msk_cluster[MSK Cluster]
+    Iceberg
+
+    subgraph Data Firehose
+        Lambda
+    end
+end
+```
+
+- Pros:
+  - RDS Zero-ETL サポート外の `MariaDB` にも対応できる
+  - Data Firehose 側でバッファ調整やエラーハンドリングできる
+- Cons:
+  - debezium, MSK 等の学習コストが高い（個人の感想）
+  - テーブルのデータ・スキーマ変更に Lambda で対応する必要がある
+  - テーブル数分 Data Firehose を作成する必要がある
+    - リクエスト量による課金なのでコスト的な問題はないが、管理が煩雑になる
+
+## RDS→debezium→MSK→Icebergテーブル
+
+```mermaid
+graph LR
+
+subgraph AWS Account-a
+    RDS
+end
+
+RDS-->msk_connector[MSK Connector]-->msk_cluster[MSK Cluster]-->msk_connector_sink_iceberg[MSK Connector Sink Iceberg]-->Iceberg
+
+subgraph AWS Account data-platform
+    msk_connector[MSK Connector]
+    msk_connector_sink_iceberg[MSK Connector Sink Iceberg]
+    msk_cluster[MSK Cluster]
+    Iceberg
+end
+```
+
+- Pros:
+  - Data Firehose 管理が不要
+    - 「RDS→debezium→MSK→DataFirehose→Iceberg テーブル」のテーブル数分 Data Firehose を作る問題を解決
+    - どの程度のリクエスト量かや取りこぼしをハンドリグすることはできない → ad hoc snapshot があるので問題なさそうではある
+- Cons:
+  - Iceberg Sink Connector 設定の学習コストが高い
+
 ## RDS→Data Firehose→Iceberg テーブル (preview 版)
 
 ```mermaid
@@ -172,7 +229,7 @@ end
   - インターフェースを S3 上の Iceberg テーブルに統合できる
 - Cons:
   - 2024 年 12 月 19 日時点では、テーブルを `.*` で指定すると多数テーブルがある場合、内部エラーとなり実運用に向かない
-    - 問い合わせ中
+    - 問い合わせ中 → 想定しないバグだったとのこと。ワイルドカード `*` でなく、すべてのテーブルを指定することを推奨されました。
   - PrivateLink の構築が必要
 
 ## RDS を共有しクローン
