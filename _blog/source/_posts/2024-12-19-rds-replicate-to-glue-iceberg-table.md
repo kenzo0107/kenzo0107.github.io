@@ -177,6 +177,7 @@ end
   - テーブルのデータ・スキーマ変更に Lambda で対応する必要がある
   - テーブル数分 Data Firehose を作成する必要がある
     - リクエスト量による課金なのでコスト的な問題はないが、管理が煩雑になる
+  - 事前に Iceberg テーブルを作成しておく必要がある
 
 ## RDS→debezium→MSK→Icebergテーブル
 
@@ -201,6 +202,7 @@ end
   - Data Firehose 管理が不要
     - 「RDS→debezium→MSK→DataFirehose→Iceberg テーブル」のテーブル数分 Data Firehose を作る問題を解決
     - どの程度のリクエスト量かや取りこぼしをハンドリグすることはできない → ad hoc snapshot があるので問題なさそうではある
+  - テーブルを事前に作成する必要がなく、自動作成が可能
 - Cons:
   - Iceberg Sink Connector 設定の学習コストが高い
 
