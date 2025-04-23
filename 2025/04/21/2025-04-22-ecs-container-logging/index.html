@@ -108,7 +108,7 @@ ECS--ログ-->RDS</pre>
 <p>データ肥大化に対策した上で溜め込んでいるのであれば、まだ良いですが、<br>そうでなければ、いずれ肥大化してパフォーマンスを落としていくのが目に見えている為です。</p>
 <p>RDS から何億レコードを一括で取ろうものなら DB リソースを消費しアプリケーション DB であれば、ユーザ影響を及ぼすことは想像に難くないです。</p>
 <p>データ分析の観点からやって欲しくない構成です。</p>
-<p>ログを例えばリアルタイムランキングで使う、と言うことであれば、オンメモリでのデータ管理でアクセスを高速化し、データはログストレージに蓄積する方が望ましいです。</p>
+<p>ログは一旦ログストレージ (例: S3)に流し、アプリケーションで利用するデータは別途担保する、というのが望ましいです。</p>
 <h2><span id="総評">総評</span></h2><p>AWS ECS コンテナのロギングでの運用してみてほどよかったハイブリッド形式を紹介させていただきました。</p>
 <p>ECS ではサイドカーで fluentbit を起動し、ログをルーティングしました。</p>
 <p>参考: <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/firelens-using-fluentbit.html">https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/firelens-using-fluentbit.html</a></p>
