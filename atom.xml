@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2025-01-14T15:00:00.000Z</updated>
+  <updated>2025-04-21T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>データ分析観点から見た AWS ECS コンテナロギング</title>
+    <link href="https://kenzo0107.github.io/2025/04/21/2025-04-22-ecs-container-logging/"/>
+    <id>https://kenzo0107.github.io/2025/04/21/2025-04-22-ecs-container-logging/</id>
+    <published>2025-04-21T15:00:00.000Z</published>
+    <updated>2025-04-21T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>AWS ECS コンテナロギングをデータ分析観点からどの様な構成だと分析に都合が良いかの観点を記載します。</p><p>基本ログは追加のみで更新や削除はされない性質があるので、その点を考慮して登録されることを意識したアーキテクチャが望ましいです。</p><h2><span id="ecs-コンテナロギングの構成">ECS コンテナロギングの構成</span></h2><h3><span id="ecs-cloudwatch-logs">ECS → CloudWatch Logs</span></h3><p>デフォルトではこのような構成がよく見受けられます。</p><pre class="mermaid">graph LRECS-->cw_logs[CloudWatch Logs]</pre><ul><li>Pros:<ul><li>リアルタイムでデータ分析が可能</li><li>簡易的に設定できる</li></ul></li><li>Cons:<ul><li>CloudWatch Logs へのログ出力コストが掛かる</li><li>他データとの統合的な分析は一手間かかる</li></ul></li></ul><h4><span id="他データとの統合的な分析は一手間かかる">他データとの統合的な分析は一手間かかる ?</span></h4><p>CloudWatch Logs Insight もあり、ログのみを分析対象とする場合であれば特に問題ないですが、<br>他データと照合したい場合は統合的な管理が必要です。</p><p>例: 特定の時刻で ALB のログと付き合わせて、どの URI にアクセスされたかを集計したい場合</p><p><a href="https://docs.aws.amazon.com/ja_jp/athena/latest/ug/connectors-cloudwatch.html">Amazon Athena CloudWatch コネクタ</a> で<br>Athena から CloudWatch に接続可能ですが、Lambda を介するので Lambda の一度に返せるレスポンスの制限等でパフォーマンスが悪くなります。</p><h4><span id="cloudwatch-のサブスクリプションフィルターで-lambda-でデータ変換し-s3-保管">CloudWatch のサブスクリプションフィルターで Lambda でデータ変換し S3 保管</span></h4><pre class="mermaid">graph LRcw_logs[CloudWatch Logs]--Lambda-->S3</pre><p>こちらも処理量がお多い場合に Lambda のリソース制限でエラーハンドリングをする必要が出る可能性もあり、あまり利用を推奨しづらい構成です。</p><h3><span id="ecs-kinesis-firehose-s3">ECS → Kinesis Firehose → S3</span></h3><pre class="mermaid">graph LRECS-->kinesisfirehose[Kinesis Firehose]--parquet-->S3</pre><p>Kinesis Firehose 経由で S3 にデータを蓄積し、Athena から参照する構成です。</p><ul><li>Pros:<ul><li>S3転送時に失敗した場合にバックアップが取れる</li><li>大量リクエストがある場合、 CloudWatch Logs への put object する料金より安くすることができる</li><li>Athena で統合して分析可能</li></ul></li><li>Cons:<ul><li>Kinesis Firehose でデータをバッファリング (一定条件で溜め込む) するとリアルタイム性が損なわれる<ul><li>ある程度コストを抑えるには、最大 15 分のバッファリングが可能なので、まとめて S3 にデータを送信ができる</li></ul></li><li>設定に一手間</li></ul></li></ul><p>障害等で緊急のログ調査が必要な時にリアルタイム性が損なわれた状態では運用に懸念があります。<br>新規の開発時に検証でログが直ちに閲覧できないストレスは想像に難くありません。<br>データ分析の観点で言えば、Athena で統合でき、親和性が高いですが、実運用の観点では問題がある様に見えます。</p><h3><span id="ecs-kinesis-firehose-cloudwatch-logs-ハイブリッド">ECS → Kinesis Firehose / CloudWatch Logs ハイブリッド</span></h3><pre class="mermaid">graph LRECS-->kinesisfirehose[Kinesis Firehose]--parquet-->S3ECS-->cw_logs[CloudWatch Logs]</pre><p>ハイブリッドにすることで実運用を鑑みてリアルタイム性を担保しつつもデータ分析を Athena で統合的にデータ分析できる状態ができます。</p><ul><li>Pros:<ul><li>データ分析用のログとリアルタイムのログを担保できる</li></ul></li><li>Cons:<ul><li>CloudWatch Logs へのログ出力コストが掛かる</li><li>設定に一手間</li></ul></li></ul><p>リクエストの規模にもよりますが、データ分析をする、と言う背景を持った上でのアーキテクチャを鑑みるとこの辺りが落とし所かなと思います。</p><h2><span id="時折見る辛い構成">時折見る辛い構成</span></h2><pre class="mermaid">graph LRECS--ログ-->RDS</pre><p>ログデータを DB に溜め込んでいるのを時折見ます。<br>そのデータを元にリアルタイムにアクセスランキングを出したり、ということをやろうとしたのかな？と背景を想像したりしますが、<br>悪手である場合が多い印象です。</p><p>データ肥大化に対策した上で溜め込んでいるのであれば、まだ良いですが、<br>そうでなければ、いずれ肥大化してパフォーマンスを落としていくのが目に見えている為です。</p><p>RDS から何億レコードを一括で取ろうものなら DB リソースを消費しアプリケーション DB であれば、ユーザ影響を及ぼすことは想像に難くないです。</p><p>データ分析の観点からやって欲しくない構成です。</p><p>ログを例えばリアルタイムランキングで使う、と言うことであれば、オンメモリでのデータ管理でアクセスを高速化し、データはログストレージに蓄積する方が望ましいです。</p><h2><span id="総評">総評</span></h2><p>AWS ECS コンテナのロギングでの運用してみてほどよかったハイブリッド形式を紹介させていただきました。</p><p>ECS ではサイドカーで fluentbit を起動し、ログをルーティングしました。</p><p>参考: <a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/firelens-using-fluentbit.html">https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/firelens-using-fluentbit.html</a></p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;AWS ECS コンテナロギングをデータ分析観点からどの様な構成だと分析に都合が良いかの観点を記載します。&lt;/p&gt;
+&lt;p&gt;基本ログは追加のみで更新や削除はされない性質があるので、その点を考慮して登録されることを意識したアーキテクチャが望ましいです。&lt;/p&gt;
+&lt;h2&gt;&lt;spa</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Datadog 子組織の削除方法</title>
@@ -755,28 +779,6 @@
     
     
     <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Raspberry Pi 4 Model B に google-cloud-speech インストール時にハマったこと</title>
-    <link href="https://kenzo0107.github.io/2023/05/31/2023-06-01-install-google-cloud-speech-on-raspberrypi4b/"/>
-    <id>https://kenzo0107.github.io/2023/05/31/2023-06-01-install-google-cloud-speech-on-raspberrypi4b/</id>
-    <published>2023-05-31T15:00:00.000Z</published>
-    <updated>2023-05-31T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2><span id="raspberry-pi-4-model-b-の環境">Raspberry Pi 4 Model B の環境</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /etc/os-release</span></span><br><span class="line"></span><br><span class="line">PRETTY_NAME=&quot;Raspbian GNU/Linux 10 (buster)&quot;</span><br><span class="line">NAME=&quot;Raspbian GNU/Linux&quot;</span><br><span class="line">VERSION_ID=&quot;10&quot;</span><br><span class="line">VERSION=&quot;10 (buster)&quot;</span><br><span class="line">VERSION_CODENAME=buster</span><br><span class="line">ID=raspbian</span><br><span class="line">ID_LIKE=debian</span><br><span class="line">HOME_URL=&quot;http://www.raspbian.org/&quot;</span><br><span class="line">SUPPORT_URL=&quot;http://www.raspbian.org/RaspbianForums&quot;</span><br><span class="line">BUG_REPORT_URL=&quot;http://www.raspbian.org/RaspbianBugs&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> /proc/version</span></span><br><span class="line"></span><br><span class="line">Linux version 5.10.103-v8+ (dom@buildbot) (aarch64-linux-gnu-gcc-8 (Ubuntu/Linaro 8.4.0-3ubuntu1) 8.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #1529 SMP PREEMPT Tue Mar 8 12:26:46 GMT 2022</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">uname</span> -a</span></span><br><span class="line"></span><br><span class="line">Linux pi4b-talk 5.10.103-v8+ #1529 SMP PREEMPT Tue Mar 8 12:26:46 GMT 2022 aarch64 GNU/Linux</span><br></pre></td></tr></table></figure><h2><span id="google-cloud-speech-インストール">google-cloud-speech インストール</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo apt-get install -y libffi-dev libssl-dev</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip3 install grpcio google-cloud-speech</span></span><br></pre></td></tr></table></figure><h2><span id="デバイスに空き領域がありませんエラーが発生した場合">「デバイスに空き領域がありません」エラーが発生した場合</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Could not install packages due to an EnvironmentError: [Errno 28] デバイスに空き領域がありません</span><br></pre></td></tr></table></figure><p>一時的に tmp ディレクトリを指定してからインストールを再度実行することで回避できます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir $HOME/tmp</span><br><span class="line">$ export TMPDIR=$HOME/tmp</span><br></pre></td></tr></table></figure><p>それでも以下エラーが出ました。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install grpcio google-cloud-speech</span><br><span class="line"></span><br><span class="line">Command &quot;python setup.py egg_info&quot; failed with error code 1 in /home/pi/tmp/pip-install-qocpvlue/grpcio/</span><br></pre></td></tr></table></figure><p>デフォルトの pip でなく<br>python3 で <a href="https://bootstrap.pypa.io/get-pip.py">https://bootstrap.pypa.io/get-pip.py</a> 実行し<br>pip をインストールし直し、再チャレンジしてみます。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://bootstrap.pypa.io/get-pip.py</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo python3 get-pip.py</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip --version</span></span><br><span class="line"></span><br><span class="line">pip 23.1.2 from /usr/local/lib/python3.7/dist-packages/pip (python 3.7)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">pip install --upgrade google-cloud-speech</span></span><br></pre></td></tr></table></figure><p>以上で成功しました。</p><p>参考になれば幸いです。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h2&gt;&lt;span id=&quot;raspberry-pi-4-model-b-の環境&quot;&gt;Raspberry Pi 4 Model B の環境&lt;/span&gt;&lt;/h2&gt;&lt;figure class=&quot;highlight console&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutt</summary>
-      
-    
-    
-    
-    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
     
     
   </entry>
