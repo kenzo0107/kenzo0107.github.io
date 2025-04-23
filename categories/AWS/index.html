@@ -54,7 +54,7 @@ ECS-->cw_logs[CloudWatch Logs]</pre>
 </ul>
 <h4><span id="他データとの統合的な分析は一手間かかる">他データとの統合的な分析は一手間かかる ?</span></h4><p>CloudWatch Logs Insight もあり、ログのみを分析対象とする場合であれば特に問題ないですが、<br>他データと照合したい場合は統合的な管理が必要です。</p>
 <p>例: 特定の時刻で ALB のログと付き合わせて、どの URI にアクセスされたかを集計したい場合</p>
-<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/athena/latest/ug/connectors-cloudwatch.html">Amazon Athena CloudWatch コネクタ</a> で<br>Athena から CloudWatch に接続可能ですが、Lambda を介するので Lambda の一度に返せるレスポンスの制限等でパフォーマンスが悪くなります。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/athena/latest/ug/connectors-cloudwatch.html">Amazon Athena CloudWatch コネクタ</a> で<br>Athena から CloudWatch に接続可能ですが、Lambda を介するので Lambda の一度に返せるレスポンスの制限があり、レスポンスで返せないデータは一度 S3 に退避 (spill) したりすることで完全なレスポンスを返すまでに時間を要し、パフォーマンスが悪くなります。</p>
 <h4><span id="cloudwatch-のサブスクリプションフィルターで-lambda-でデータ変換し-s3-保管">CloudWatch のサブスクリプションフィルターで Lambda でデータ変換し S3 保管</span></h4><pre class="mermaid">graph LR
 
 cw_logs[CloudWatch Logs]--Lambda-->S3</pre>

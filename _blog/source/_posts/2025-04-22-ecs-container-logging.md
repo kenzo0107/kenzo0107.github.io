@@ -35,7 +35,7 @@ CloudWatch Logs Insight もあり、ログのみを分析対象とする場合�
 例: 特定の時刻で ALB のログと付き合わせて、どの URI にアクセスされたかを集計したい場合
 
 [Amazon Athena CloudWatch コネクタ](https://docs.aws.amazon.com/ja_jp/athena/latest/ug/connectors-cloudwatch.html) で
-Athena から CloudWatch に接続可能ですが、Lambda を介するので Lambda の一度に返せるレスポンスの制限等でパフォーマンスが悪くなります。
+Athena から CloudWatch に接続可能ですが、Lambda を介するので Lambda の一度に返せるレスポンスの制限があり、レスポンスで返せないデータは一度 S3 に退避 (spill) したりすることで完全なレスポンスを返すまでに時間を要し、パフォーマンスが悪くなります。
 
 #### CloudWatch のサブスクリプションフィルターで Lambda でデータ変換し S3 保管
 
