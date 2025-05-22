@@ -41,9 +41,9 @@ head:
   rss:
 navbar:
   menu:
-    Home: /
-    Archives: /archives
-    About: /2013/12/31/about/
+    About: /2014/01/01/about/
+    Posts: /archives
+    Categories: /categories/
   links:
     GitHub:
       icon: fab fa-github
@@ -94,45 +94,45 @@ sidebar:
   right:
     sticky: false
 widgets:
-  - position: right
-    type: profile
-    author: kenzo0107
-    avatar:
-    avatar_rounded: false
-    gravatar:
-    follow_link: 'https://github.com/kenzo0107'
-    social_links:
-      Github:
-        icon: fab fa-github
-        url: https://github.com/kenzo0107
-      Twitter:
-        icon: fab fa-twitter
-        url: https://twitter.com/kenzo0107
-      RSS:
-        icon: fas fa-rss
-        url: /atom.xml
-  - position: right
-    type: toc
-    index: true
-    collapsed: true
-    depth: 3
-  - position: right
-    type: categories
-  - position: right
-    type: recent_posts
-  - position: right
-    type: tags
-    order_by: name
-    amount:
-    show_count: true
-  - position: right
-    type: subscribe_email
-    description:
-    feedburner_id: ''
-  - position: right
-    type: adsense
-    client_id: 'ca-pub-6265337967545472'
-    slot_id: '9975280607'
+  # - position: right
+  #   type: profile
+  #   author: kenzo0107
+  #   avatar:
+  #   avatar_rounded: false
+  #   gravatar:
+  #   follow_link: 'https://github.com/kenzo0107'
+  #   social_links:
+  #     Github:
+  #       icon: fab fa-github
+  #       url: https://github.com/kenzo0107
+  #     Twitter:
+  #       icon: fab fa-twitter
+  #       url: https://twitter.com/kenzo0107
+  #     RSS:
+  #       icon: fas fa-rss
+  #       url: /atom.xml
+  # - position: right
+  #   type: toc
+  #   index: true
+  #   collapsed: true
+  #   depth: 3
+  # - position: right
+  #   type: categories
+  # - position: right
+  #   type: recent_posts
+  # - position: right
+  #   type: tags
+  #   order_by: name
+  #   amount:
+  #   show_count: true
+  # - position: right
+  #   type: subscribe_email
+  #   description:
+  #   feedburner_id: ''
+  # - position: right
+  #   type: adsense
+  #   client_id: 'ca-pub-6265337967545472'
+  #   slot_id: '9975280607'
 plugins:
   animejs: true
   back_to_top: true
