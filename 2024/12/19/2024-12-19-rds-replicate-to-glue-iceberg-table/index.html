@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="ToC     概要 前提 RDS→GlueJob→Iceberg テーブル RDS Zero-ETL 統合 →Redshift RDS→DMS→S3→GlueJob→Iceberg テーブル RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル RDS→debezium→MSK→DataFirehose→Iceberg テーブル RDS→debezium→MSK→"><meta property="og:type" content="blog"><meta property="og:title" content="RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧"><meta property="og:url" content="https://kenzo0107.github.io/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="ToC     概要 前提 RDS→GlueJob→Iceberg テーブル RDS Zero-ETL 統合 →Redshift RDS→DMS→S3→GlueJob→Iceberg テーブル RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル RDS→debezium→MSK→DataFirehose→Iceberg テーブル RDS→debezium→MSK→"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:published_time" content="2024-12-18T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/"},"headline":"RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧","image":["https://kenzo0107.github.io/img/og_image.png"],"datePublished":"2024-12-18T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"ToC     概要 前提 RDS→GlueJob→Iceberg テーブル RDS Zero-ETL 統合 →Redshift RDS→DMS→S3→GlueJob→Iceberg テーブル RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル RDS→debezium→MSK→DataFirehose→Iceberg テーブル RDS→debezium→MSK→"}</script><link rel="canonical" href="https://kenzo0107.github.io/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-12-19</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile">RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧</h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E5%89%8D%E6%8F%90">前提</a></li>
+<li><a href="#rdsgluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→GlueJob→Iceberg テーブル</a></li>
+<li><a href="#rds-zero-etl-%E7%B5%B1%E5%90%88-redshift">RDS Zero-ETL 統合 →Redshift</a></li>
+<li><a href="#rdsdmss3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→DMS→S3→GlueJob→Iceberg テーブル</a></li>
+<li><a href="#rdsdebeziummsks3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル</a></li>
+<li><a href="#rdsdebeziummskdatafirehoseiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→DataFirehose→Iceberg テーブル</a></li>
+<li><a href="#rdsdebeziummskiceberg%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→Icebergテーブル</a></li>
+<li><a href="#rdsdata-firehoseiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB-preview-%E7%89%88">RDS→Data Firehose→Iceberg テーブル (preview 版)</a></li>
+<li><a href="#rds-%E3%82%92%E5%85%B1%E6%9C%89%E3%81%97%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%B3">RDS を共有しクローン</a></li>
+<li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<h2><span id="概要">概要</span></h2><p>RDS のテーブルデータを分析用テーブルにレプリケートする方法が多数あったのでその一覧をまとめます。</p>
+<p>RDS をユーザ影響を極力低くすべく、分析用テーブルへレプリケートして、分析する方法が多々あったので私見ですが Pros/Cons をまとめます。</p>
+<h2><span id="前提">前提</span></h2><ul>
+<li>アプリケーション DB を配置する AWS アカウントとデータ基盤を構築する AWS アカウントは分けます</li>
+<li>Glue テーブルは iceberg 形式を採用します</li>
+</ul>
+<span id="more"></span>
+
+<h2><span id="rdsgluejobiceberg-テーブル">RDS→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
+
+subgraph AWS Account-a
+  RDS
+end
+
+RDS--SELECT-->GlueJob
+
+subgraph AWS Account data-platform
+  GlueJob-->Icebergテーブル
+end</pre>
+
+<p>Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行し、抽出したデータを Iceberg テーブルへレプリケートします。</p>
+<ul>
+<li>Pros:<ul>
+<li>コスト安</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>レコード削除に対応できない<ul>
+<li>論理削除であれば対応はできるが、物理削除されると検知できない</li>
+<li>全データをエクスポートし直す、もしくは、削除されたレコードを特定する様、RDS 側と Iceberg テーブルで突き合わせる方法はあるが、リソース逼迫させてしまう恐れがある</li>
+</ul>
+</li>
+<li>テーブル毎にデータ取得時の識別子 (PK 相当) となるカラムを決定する必要がある<ul>
+<li>PK がない場合、別途指定する必要がある。</li>
+<li>例えば更新されるレコードがある場合、 updated_at をキーにし、差分抽出するような処理が必要になる</li>
+</ul>
+</li>
+<li>リアルタイム性を追求すると実行コストが嵩む</li>
+</ul>
+</li>
+</ul>
+<p>運用コストが高く、大規模な DB 環境には向かない。</p>
+<h2><span id="rds-zero-etl-統合-redshift">RDS Zero-ETL 統合 →Redshift</span></h2><pre class="mermaid">graph LR
+
+subgraph AWS Account-a
+  RDS
+end
+
+RDS--Zero-ETL-->Redshift
+
+subgraph AWS Account data-platform
+  Redshift
+end</pre>
+
+<p>参考: <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/zero-etl.html">Amazon Redshift との Amazon RDS ゼロ ETL 統合での作業</a></p>
+<p>RDS の Zero-ETL 統合により完全マネージドで Redshift へレプリケートします。<br>他の手法と異なり、 Iceberg テーブルでなく Redshift がインターフェースになります。</p>
+<ul>
+<li>Pros:<ul>
+<li>完全マネージドなサービスでスクリプト不要</li>
+<li>Redshift は dbt との相性が良い</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>Redshift コスト高<ul>
+<li>Serverless でレプリケート間隔を広げることでコストを抑えることはできそうだが、リアルタイム性は損なわれる</li>
+</ul>
+</li>
+<li>Aurora 以外はサポート外 (2024.12.19 時点)</li>
+</ul>
+</li>
+</ul>
+<h2><span id="rdsdmss3gluejobiceberg-テーブル">RDS→DMS→S3→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
+
+subgraph AWS Account-a
+  RDS--CDC-->DMS
+end
+
+DMS-->S3
+
+subgraph AWS Account data-platform
+  S3--GlueJob-->Icebergテーブル
+end</pre>
+
+<p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/big-data/modernize-your-legacy-databases-with-aws-data-lakes-part-2-build-a-data-lake-using-aws-dms-data-on-apache-iceberg/">Modernize your legacy databases with AWS data lakes, Part 2: Build a data lake using AWS DMS data on Apache Iceberg</a></p>
+<ul>
+<li>Pros:<ul>
+<li>Redshift よりは安く済みそう</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>DMS 運用コストが高い（AWS SA 様より頂いた意見）<ul>
+<li>バージョン毎の仕様差による障害発生</li>
+<li>比較的バージョンアップが多い</li>
+<li>バージョンアップ時にレプリケートを停止し、再度テーブル作り直す必要があるなど手間が多い</li>
+</ul>
+</li>
+<li>Glue Job によるデータ処理（更新・追加・削除）が煩雑化する</li>
+<li>テーブルのスキーマ変更に Glue Job で対応する必要がある</li>
+</ul>
+</li>
+</ul>
+<p>DMS 採用企業はある</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://techlife.cookpad.com/entry/2024/10/16/101605">クックパッド - DMS を利用した継続的なデータ変更検知</a></li>
+</ul>
+<h2><span id="rdsdebeziummsks3gluejobiceberg-テーブル">RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
+
+subgraph AWS Account-a
+  RDS--CDC-->debezium
+  debezium-->MSK
+end
+
+MSK--Parquet-->S3
+
+subgraph AWS Account data-platform
+  S3--GlueJob-->Icebergテーブル
+end</pre>
+
+<p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/big-data/synchronize-data-lakes-with-cdc-based-upsert-using-open-table-format-aws-glue-and-amazon-msk/">Synchronize data lakes with CDC-based UPSERT using open table format, AWS Glue, and Amazon MSK</a></p>
+<p>MSK で CDC データを Parquet で S3 に保存し、 Glue Job で Iceberg テーブルに変換します。</p>
+<ul>
+<li>Pros:<ul>
+<li>RDS Zero-ETL サポート外の <code>MariaDB</code> にも対応できる</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>debezium, MSK 等の学習コストが高い（個人の感想）</li>
+<li>Glue Job によるデータ処理（更新・追加・削除）が煩雑化する</li>
+<li>テーブルのスキーマ変更に Glue Job で対応する必要がある</li>
+</ul>
+</li>
+</ul>
+<h2><span id="rdsdebeziummskdatafirehoseiceberg-テーブル">RDS→debezium→MSK→DataFirehose→Iceberg テーブル</span></h2><pre class="mermaid">graph LR
+
+subgraph AWS Account-a
+    RDS
+end
+
+RDS-->msk_connector[MSK Connector]-->msk_cluster[MSK Cluster]-->Lambda--レコード変換-->Iceberg
+
+subgraph AWS Account data-platform
+    msk_connector[MSK Connector]
+    msk_cluster[MSK Cluster]
+    Iceberg
+
+    subgraph Data Firehose
+        Lambda
+    end
+end</pre>
+
+<ul>
+<li>Pros:<ul>
+<li>RDS Zero-ETL サポート外の <code>MariaDB</code> にも対応できる</li>
+<li>Data Firehose 側でバッファ調整やエラーハンドリングできる</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>debezium, MSK 等の学習コストが高い（個人の感想）</li>
+<li>テーブルのデータ・スキーマ変更に Lambda で対応する必要がある</li>
+<li>テーブル数分 Data Firehose を作成する必要がある<ul>
+<li>リクエスト量による課金なのでコスト的な問題はないが、管理が煩雑になる</li>
+</ul>
+</li>
+<li>事前に Iceberg テーブルを作成しておく必要がある</li>
+</ul>
+</li>
+</ul>
+<h2><span id="rdsdebeziummskicebergテーブル">RDS→debezium→MSK→Icebergテーブル</span></h2><pre class="mermaid">graph LR
+
+subgraph AWS Account-a
+    RDS
+end
+
+RDS-->msk_connector[MSK Connector]-->msk_cluster[MSK Cluster]-->msk_connector_sink_iceberg[MSK Connector Sink Iceberg]-->Iceberg
+
+subgraph AWS Account data-platform
+    msk_connector[MSK Connector]
+    msk_connector_sink_iceberg[MSK Connector Sink Iceberg]
+    msk_cluster[MSK Cluster]
+    Iceberg
+end</pre>
+
+<ul>
+<li>Pros:<ul>
+<li>Data Firehose 管理が不要<ul>
+<li>「RDS→debezium→MSK→DataFirehose→Iceberg テーブル」のテーブル数分 Data Firehose を作る問題を解決</li>
+<li>どの程度のリクエスト量かや取りこぼしをハンドリグすることはできない → ad hoc snapshot があるので問題なさそうではある</li>
+</ul>
+</li>
+<li>テーブルを事前に作成する必要がなく、自動作成が可能</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>Iceberg Sink Connector 設定の学習コストが高い</li>
+</ul>
+</li>
+</ul>
+<h2><span id="rdsdata-firehoseiceberg-テーブル-preview-版">RDS→Data Firehose→Iceberg テーブル (preview 版)</span></h2><pre class="mermaid">graph LR
+
+subgraph AWS Account-A
+    RDS-->NLB
+    NLB-->VPCエンドポイントサービス
+end
+
+VPCエンドポイントサービス--CDCログ-->VPCエンドポイント
+
+subgraph AWS Account data-platform
+    VPCエンドポイント-->data_firehose[Data Firehose]
+    data_firehose[Data Firehose]-->Iceberg
+end</pre>
+
+<p>参考: <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/news/replicate-changes-from-databases-to-apache-iceberg-tables-using-amazon-data-firehose/">Amazon Data Firehose を使用して、データベースから Apache Iceberg テーブルに変更をレプリケート (プレビュー)</a></p>
+<ul>
+<li>Pros:<ul>
+<li>運用・構築コスト安</li>
+<li>インターフェースを S3 上の Iceberg テーブルに統合できる</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>2024 年 12 月 19 日時点では、テーブルを <code>.*</code> で指定すると多数テーブルがある場合、内部エラーとなり実運用に向かない<ul>
+<li>問い合わせ中 → 想定しないバグだったとのこと。ワイルドカード <code>*</code> でなく、すべてのテーブルを指定することを推奨されました。</li>
+</ul>
+</li>
+<li>PrivateLink の構築が必要</li>
+</ul>
+</li>
+</ul>
+<h2><span id="rds-を共有しクローン">RDS を共有しクローン</span></h2><pre class="mermaid">graph LR
+
+account_a[RDS]--共有-->data_platform[RDS]
+
+subgraph AWS Account-A
+    account_a[RDS]
+end
+
+subgraph AWS data-platform
+    data_platform[RDS]--クローン-->cloned[RDS]
+end</pre>
+
+<p>RDS を共有し、その共有された RDS をクローン作成します。<br>クローン実施された時点の最新のデータをクローンされた RDS で参照することができます。<br>リアルタイム性を求めるには難しい構成です。</p>
+<ul>
+<li>Pros:<ul>
+<li>簡易に最新データのスナップショットが参照できる</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>定常的にリアルタイムにデータが参照できない</li>
+<li>起動に少なくとも 10 分程度かかる</li>
+</ul>
+</li>
+</ul>
+<h2><span id="総評">総評</span></h2><p>RDS→Data Firehose→Iceberg (preview 版) が運用・構築コスト安で大変期待しています。</p>
+<p>様々手法がある中で CDC を利用した Iceberg テーブルへの統合はデファクトになっていく流れにあるかと推察します。</p>
+<p>今後がより楽しみです。</p>
+<p>以上<br>参考になれば幸いです。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧</p><p><a href="https://kenzo0107.github.io/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/">https://kenzo0107.github.io/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2024-12-19</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/01/15/2025-01-15-how-to-delete-datadog-child-org/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Datadog 子組織の削除方法</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2024/10/18/2024-10-18-glue-job-bookmark/"><span class="level-item">Glue Job Bookmark 機能でなく sampleQuery を使って DB データをエクスポートしてみた</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/';
+            this.page.identifier = '2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

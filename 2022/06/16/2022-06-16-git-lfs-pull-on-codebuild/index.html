@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>AWS CodeBuild で git lfs pull する - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="ToC     概要 まず問題発生について AWS サポートに問い合わせた Git Large File Storage を利用する チェックアウトするリポジトリ側の対応 CodePipeline &amp;amp; CodeBuild 側の対応 ちなみに        概要CodePipline のソースアクションで GitHub からチェックアウトする処理がエラーとなり、異常終了する事象が発生しま"><meta property="og:type" content="blog"><meta property="og:title" content="AWS CodeBuild で git lfs pull する"><meta property="og:url" content="https://kenzo0107.github.io/2022/06/16/2022-06-16-git-lfs-pull-on-codebuild/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="ToC     概要 まず問題発生について AWS サポートに問い合わせた Git Large File Storage を利用する チェックアウトするリポジトリ側の対応 CodePipeline &amp;amp; CodeBuild 側の対応 ちなみに        概要CodePipline のソースアクションで GitHub からチェックアウトする処理がエラーとなり、異常終了する事象が発生しま"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:published_time" content="2022-06-15T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2022/06/16/2022-06-16-git-lfs-pull-on-codebuild/"},"headline":"AWS CodeBuild で git lfs pull する","image":["https://kenzo0107.github.io/img/og_image.png"],"datePublished":"2022-06-15T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"ToC     概要 まず問題発生について AWS サポートに問い合わせた Git Large File Storage を利用する チェックアウトするリポジトリ側の対応 CodePipeline &amp; CodeBuild 側の対応 ちなみに        概要CodePipline のソースアクションで GitHub からチェックアウトする処理がエラーとなり、異常終了する事象が発生しま"}</script><link rel="canonical" href="https://kenzo0107.github.io/2022/06/16/2022-06-16-git-lfs-pull-on-codebuild/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2022-06-16</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile">AWS CodeBuild で git lfs pull する</h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E3%81%BE%E3%81%9A%E5%95%8F%E9%A1%8C%E7%99%BA%E7%94%9F%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6-aws-%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AB%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B%E3%81%9F">まず問題発生について AWS サポートに問い合わせた</a></li>
+<li><a href="#git-large-file-storage-%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B">Git Large File Storage を利用する</a></li>
+<li><a href="#%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%82%A2%E3%82%A6%E3%83%88%E3%81%99%E3%82%8B%E3%83%AA%E3%83%9D%E3%82%B8%E3%83%88%E3%83%AA%E5%81%B4%E3%81%AE%E5%AF%BE%E5%BF%9C">チェックアウトするリポジトリ側の対応</a></li>
+<li><a href="#codepipeline-codebuild-%E5%81%B4%E3%81%AE%E5%AF%BE%E5%BF%9C">CodePipeline &amp; CodeBuild 側の対応</a></li>
+<li><a href="#%E3%81%A1%E3%81%AA%E3%81%BF%E3%81%AB">ちなみに</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<h2><span id="概要">概要</span></h2><p>CodePipline のソースアクションで GitHub からチェックアウトする処理がエラーとなり、異常終了する事象が発生しました。</p>
+<p>チェックアウトする Rails プロジェクトの app/assets/images/ 以下のファイル容量が肥大化していたことが要因でした。</p>
+<p>上記を回避すべく Git LFS を導入した話です。</p>
+<span id="more"></span>
+
+<h2><span id="まず問題発生について-aws-サポートに問い合わせた">まず問題発生について AWS サポートに問い合わせた</span></h2><p>GitHub ソースアクション v2 で障害が発生しているとのこと</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ただいまリポジトリサイズが大きい場合に GitHub ソースアクション v2 がお問い合わせいただいたエラーで失敗する事象が発生しており、製品担当部署にて原因調査を進めております。</span><br><span class="line">このたびは AWS 側の問題によりご不便ご迷惑をお掛けしておりますこと、深くお詫び申し上げます。</span><br><span class="line">誠に申し訳ございません。</span><br><span class="line"></span><br><span class="line">当該事象は CodeCommit または S3 ソースアクションで回避できることを確認しております。</span><br><span class="line">もしパイプラインの実行を急がれます場合は、これらの代替案をお試しくださいませ。</span><br></pre></td></tr></table></figure>
+
+<p>CodeCommit や S3 なら回避できるとのこと。</p>
+<ul>
+<li>GitHub から CodeCommit に一時的に変更する<ul>
+<li>開発フローに影響あり</li>
+</ul>
+</li>
+<li>S3 へアップロードするファイルの生成等、デプロイフローを変更する<ul>
+<li>ファイルの生成は GitHub Actions 等でやる？検証コスト掛かりそう</li>
+</ul>
+</li>
+</ul>
+<p>一時的な回避策でなく、現運用に極力影響なく、また、検証コストを下げる方法がないかと模索しました。</p>
+<h2><span id="git-large-file-storage-を利用する">Git Large File Storage を利用する</span></h2><p><a target="_blank" rel="noopener" href="https://git-lfs.github.com/">https://git-lfs.github.com</a></p>
+<blockquote>
+<p>Git Large File Storage（LFS）は、オーディオサンプル、ビデオ、データセット、グラフィックスなどの大きなファイルを Git 内部のテキストポインタに置き換え、ファイルの内容は GitHub.com や GitHub Enterprise などのリモートサーバに格納します。</p>
+</blockquote>
+<p>Git LFS を利用することで、GitHub からのチェックアウトする容量を抑え、必要箇所で git lfs pull することで回避できないかと考えました。</p>
+<h2><span id="チェックアウトするリポジトリ側の対応">チェックアウトするリポジトリ側の対応</span></h2><p>対象のリポジトリに以下追加します。</p>
+<p>.gitattributes</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app/assets/images/**.png filter=lfs diff=lfs merge=lfs -text</span><br><span class="line">app/assets/images/**.jpg filter=lfs diff=lfs merge=lfs -text</span><br><span class="line">app/assets/images/**.webp filter=lfs diff=lfs merge=lfs -text</span><br></pre></td></tr></table></figure>
+
+<p>容量の肥大化要因が Rails の app/assets/images/ 以下の画像だったので上記のように指定しています。</p>
+<h2><span id="codepipeline-amp-codebuild-側の対応">CodePipeline &amp; CodeBuild 側の対応</span></h2><p>terraform ベースで説明しています。</p>
+<ul>
+<li>CodePipeline のソースアクションで full clone 設定にします。<ul>
+<li>git メタデータを利用する必要がない場合は shallow clone の方がチェックアウトするファイルが少なくて済む</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_codepipeline&quot; &quot;deploy&quot; &#123;</span><br><span class="line">  ...</span><br><span class="line">  stage &#123;</span><br><span class="line">    name = &quot;Source&quot;</span><br><span class="line">    action &#123;</span><br><span class="line">      configuration = &#123;</span><br><span class="line">        OutputArtifactFormat = &quot;CODEBUILD_CLONE_REF&quot; # Git LFS を利用すべく git メタデータを取得する為。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CodeBuild にアタッチしている IAM Role に権限追加</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Git LFS 管理のオブジェクトを pull する為</span><br><span class="line">statement &#123;</span><br><span class="line">  actions   = [&quot;codestar-connections:UseConnection&quot;]</span><br><span class="line">  resources = [&quot;&lt;codestarconnections_arn&gt;&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>buildspec で git-lfs コマンドをインストールし git-lfs pull しています。<ul>
+<li>執筆事典最新の v3.2.0 を指定</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">phases:</span><br><span class="line">  pre_build:</span><br><span class="line">    commands:</span><br><span class="line">      # Git LFS 管理のオブジェクトを pull する</span><br><span class="line">      - wget https://github.com/git-lfs/git-lfs/releases/download/v3.2.0/git-lfs-linux-amd64-v3.2.0.tar.gz</span><br><span class="line">      - tar vzxf git-lfs-linux-amd64-v3.2.0.tar.gz</span><br><span class="line">      - cd git-lfs-3.2.0 &amp;&amp; ./install.sh &amp;&amp; cd ..</span><br><span class="line">      - git remote set-url origin https://medpeer:$GITHUB_TOKEN@github.com/medpeer-dev/wac-rails</span><br><span class="line">      - git-lfs pull</span><br></pre></td></tr></table></figure>
+
+<p>以上の対応でソースアクションのエラーを回避でき、無事デプロイできることを確認しました。</p>
+<h2><span id="ちなみに">ちなみに</span></h2><p>CodePipeline がダメなら GitHub Actions ではどうか？という気持ちで試した所、<br><code>no left space on device</code> が発生してしまいました。</p>
+<p>以上<br>参考になれば幸いです。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>AWS CodeBuild で git lfs pull する</p><p><a href="https://kenzo0107.github.io/2022/06/16/2022-06-16-git-lfs-pull-on-codebuild/">https://kenzo0107.github.io/2022/06/16/2022-06-16-git-lfs-pull-on-codebuild/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2022-06-16</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2022/07/16/2022-07-16-raspberrypi-bullseye-motion/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Raspberry PI bullseye で motion を起動しブラウザで表示する</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2022/05/27/2022-05-27-update-ecs-service-on-aws-console/"><span class="level-item">AWS コンソール上で CodeDeploy でデプロイ管理されている ECS Service をアップデートすると capacity provider が FARGATE になってしまう件</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2022/06/16/2022-06-16-git-lfs-pull-on-codebuild/';
+            this.page.identifier = '2022/06/16/2022-06-16-git-lfs-pull-on-codebuild/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

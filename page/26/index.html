@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="tech"><meta property="og:type" content="blog"><meta property="og:title" content="長生村本郷Engineers&#039;Blog"><meta property="og:url" content="https://kenzo0107.github.io/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="tech"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io"},"headline":"長生村本郷Engineers'Blog","image":["https://kenzo0107.github.io/img/og_image.png"],"author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"tech"}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2015/12/09/2015-12-09-show-dotfile-on-macos/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151209/20151209101926.png" alt="今更ながらMacでドットファイルを表示する"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-12-09</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/12/09/2015-12-09-show-dotfile-on-macos/">今更ながらMacでドットファイルを表示する</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>Finder でドットファイルを開きたいという際にやっておく設定</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>MacOSX Yosemite 10.10.3</li>
+</ul>
+<h2><span id="手順">手順</span></h2><h3><span id="ターミナルを開き以下コマンド実行">ターミナルを開き以下コマンド実行</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults write com.apple.finder AppleShowAllFiles -boolean true</span><br></pre></td></tr></table></figure>
+
+<h3><span id="finder-アプリ再起動">Finder アプリ再起動</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ killall Finder</span><br></pre></td></tr></table></figure>
+
+<p>これでドットファイルが反映されています。</p>
+<h2><span id="元に戻したい場合">元に戻したい場合</span></h2><h3><span id="ターミナルで以下コマンド実行">ターミナルで以下コマンド実行</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults delete com.apple.finder AppleShowAllFiles</span><br></pre></td></tr></table></figure>
+
+<h3><span id="再起動">再起動</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ killall Finder</span><br></pre></td></tr></table></figure>
+
+<p>以上です</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2015/12/08/2015-12-08-tellme-twillio/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151208/20151208143258.png" alt="Twilio で電話通知"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-12-08</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/12/08/2015-12-08-tellme-twillio/">Twilio で電話通知</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>障害検知をメールや Slack に流しても休日に業務系連絡を見ることは少ない。<br><br>その為、より検知報告に気付きやすくする様、<br><br>電話通知にするべく Twilio を導入する運びとなりました。</p>
+<p>まずは利用するまでの簡単な手順をまとめました。<br></p>
+<p>※コードのサンプルが Twilio のサイト内にあるので導入しやすかったです。</p>
+<h2><span id="手順">手順</span></h2><h3><span id="1-twilio-にアクセス">1. Twilio にアクセス</span></h3><p>以下リンクから Twilio にアクセスします。</p>
+<p><a target="_blank" rel="noopener" href="http://twilio.kddi-web.com/">http://twilio.kddi-web.com</a></p>
+<h3><span id="2-新規登録">2. 新規登録</span></h3><p>名前、E-mail、パスワード(大小半角英数字)と</p>
+<p>何にどの言語で利用するかを選択して</p>
+<p>「始めましょう」をクリック。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151208/20151208104015.png" width="100%">
+</div>
+
+<p>「始めましょう」という日本語はユーザ目線でなく違和感ありますね。</p>
+<h3><span id="3-アカウント認証">3. アカウント認証</span></h3><p>以下２つの認証方法があります。</p>
+<ul>
+<li>電話番号に SMS に確認コードを送信させる</li>
+<li>電話番号に Twilio から着信があり確認コードのダイヤルキーを入力する。</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151208/20151208104800.png" width="100%">
+</div>
+
+<p>後者は Twilio の音声読み上げロボットから電話がかかって来るので<br><br>どんな感じで通知されるか試してみたい方は是非後者を選択してみてください。<br></p>
+<p>スムーズなイントネーションではないですが、伝えたい気持ちは誰よりもあります。</p>
+<h3><span id="4-twilio-から電話をかけてみる">4. Twilio から電話をかけてみる</span></h3><p>アカウント認証確認後、Twilio 製品の「プログラマブル Voice」ページ Top に遷移しました。<br>メニューから <code>ツール</code> をクリックしツールページに遷移してください。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151208/20151208110143.png" width="100%">
+</div>
+
+<h4><span id="to-指定">To 指定</span></h4><p>音声通話&gt;通話&gt;電話をかける の API Explorer にて<br><code>必須</code> の<code>To</code> に 電話番号認証した番号を入力してください。</p>
+<p>但し、日本番号（+81）の場合、<br><code>090********</code> の番号は<br><br>はじめの <code>0</code> を削除し、 <code>+81</code> を prefix として追加し、<br><br><code>+8190********</code> となりますので注意してください。<br></p>
+<h4><span id="url-指定">URL 指定</span></h4><p><code>条件</code> の<code>Url</code> に Twilio からの電話を受け取った際、<br><br>電話のキーダイヤルを押下した際の挙動を url 形式で指定可能です。</p>
+<p>適当に準備できる Url がない場合は、<br><br>以下のような適当な Url で良いです。</p>
+<p><code>http:/hogehoge.hogehoge.co.jp</code></p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151208/20151208110552.png" width="100%">
+</div>
+
+<h4><span id="通知実行">通知実行</span></h4><p>ページ下部の <code>リクエストを発行する</code> ボタンをクリックします。</p>
+<p><span style="color: #d32f2f">※</span> <code>※料金が発生します</code> とありますが、Trial は料金を請求されるということはありません。<br><br><span style="color: #d32f2f">※</span>同アカウントでアップグレードする際は、発信した電話料金も合わせて請求されることになるので、テスト完了後は別途アカウントを取得することを推奨します。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151208/20151208112301.png" width="100%">
+</div>
+
+<h4><span id="電話を受け取る">電話を受け取る</span></h4><p>Twilio から電話がかかってきたかと思います。<br><br>キーダイヤルを入力すると、 Url で指定したプログラムが動作しますが、<br><br>適当に入力したので<br><br><code>アプリケーションエラーが発生しました。電話を終了します。</code><br>と通知されるはずです。</p>
+<p>実際にプログラムから使用する際は、<br><br>指定した Url でキー入力を受け取ってその後の挙動を制御する、<br><br>という流れになります。</p>
+<h2><span id="実際に利用した例">実際に利用した例</span></h2><p>担当した業務では、Zabbix からの障害検知を Twilio で担当者に電話報告（エスカレーション）するという仕組みを構築しました。</p>
+<blockquote>
+<p>例）以下のような挙動が実現できます。<br><br>Zabbix で障害検知 <br><br>↓<br><br>Twilio<br><br>↓ 電話<br><br>対応者 <br><br>↓ 対応者が「1」をクリック<br><br>指定した Url のプログラム実行<br><br>↓「1」を受け取り、障害対応可能な旨を Zabbix へ通知<br><br>Zabbix (障害対応中)</p>
+</blockquote>
+<h5><span id="zabbix-amp-twilio-参考">Zabbix &amp; Twilio 参考</span></h5><p><a target="_blank" rel="noopener" href="http://begood-technology.github.io/zabbix-twilio/">zabbix-twillio</a></p>
+<p>上記サイトでの zabbix-twilio 連携の手順で進めた場合、<br><br>twilio でキーダイヤル入力後、 以下のようなエラーが発生し、イベント登録ができません。<br><br><code>API error -32602: The &quot;user.login&quot; method must be called without the &quot;auth&quot; parameter</code></p>
+<p>zabbix-twilio.php 内の <code>Zabbix_API</code>クラスが古い為です。<br></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/begood-technology/zabbix-twilio/blob/master/zabbix-twilio.php">zabbix-twilio.php</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/confirm/PhpZabbixApi">PhpZabbixApi</a></p>
+<p>上記をダウンロードし、 <code>php build.php</code> で 以下 2 ファイルを生成し、<br><br>こちらを呼び出し <code>Zabbix_Api</code> と <code>ZabbixApi</code> とを変更してください。</p>
+<ul>
+<li><p>ZabbixApi.class.php</p>
+</li>
+<li><p>ZabbixApiAbstract.class.php</p>
+</li>
+<li><p>/var/www/html/zabbix-twilio/zabbix-twilio.php</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+ require_once &#x27;ZabbixApi.class.php&#x27;;</span><br><span class="line">+ use ZabbixApi\ZabbixApi;</span><br><span class="line"></span><br><span class="line">-                                       $api = new Zabbix_API ( $ZABBIX_API, $ZABBIX_USER, $ZABBIX_PASS );</span><br><span class="line">+                                       $api = new ZabbixApi ( $ZABBIX_API, $ZABBIX_USER, $ZABBIX_PASS);</span><br></pre></td></tr></table></figure>
+
+<p><code>ZabbixApi </code> は Basic 認証を設定している場合にも対処しています。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 例)</span><br><span class="line">$api = new ZabbixApi ( $ZABBIX_API, $ZABBIX_USER, $ZABBIX_PASS, $BASIC_AUTH_USER, $BASIC_AUTH_PASS);</span><br></pre></td></tr></table></figure>
+
+<h4><span id="検証環境">検証環境</span></h4><ul>
+<li>Amazon Linux AMI release 2015.09</li>
+<li>Zabbix 2.5 (3.0α)</li>
+<li>PHP 5.6.14</li>
+<li>MySQL 5.5.46</li>
+</ul>
+<p>以上</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-11-26</span><span class="level-item">Updated&nbsp;<time dateTime="2020-05-07T03:41:24.046Z" title="2020/5/7 12:41:24">2020-05-07</time></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/11/26/2015-11-26-cleanup-yum-cache/">意外と容量食ってた yum cache</a></h1><div class="content"><h2><span id="yum-cache-容量">yum cache 容量</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># du -sh &#x2F;var&#x2F;cache&#x2F;yum</span><br><span class="line">155M    &#x2F;var&#x2F;cache&#x2F;yum</span><br></pre></td></tr></table></figure>
+
+<p>155MByteある汗</p>
+<h2><span id="yum-cache-削除">yum cache 削除</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># yum clean all</span><br><span class="line">読み込んだプラグイン:fastestmirror</span><br><span class="line">リポジトリーを清掃しています: base epel extras mysql-connectors-community mysql-tools-community mysql56-community nginx treasuredata updates</span><br><span class="line">Cleaning up everything</span><br><span class="line">Cleaning up list of fastest mirrors</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="yum-cache容量確認">yum cache容量確認</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># du -sh &#x2F;var&#x2F;cache&#x2F;yum</span><br><span class="line">8.0K    &#x2F;var&#x2F;cache&#x2F;yum</span><br></pre></td></tr></table></figure>
+
+<p>スッキリ！</p>
+<p>サーバから容量不足のアラートで少しでも容量減らしたいときに<br>役立ちました。</p>
+<p>潤沢にサーバスペックを用意できるクライアントでない場合もあるので<br>地道に必要な知識だと感じました。</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2015/11/24/2015-11-24-kibana-regex-pattern-match/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151124/20151124123137.png" alt="Kibana4 検索窓での検索 正規表現パターンマッチ等"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-11-24</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/11/24/2015-11-24-kibana-regex-pattern-match/">Kibana4 検索窓での検索 正規表現パターンマッチ等</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>アクセスログを fluentd で集積(aggregate)して<br>ElasticSearch へ保存、そのデータを kibana で表示しています。</p>
+<p>ちょっとしたアクセスログ解析したい場合、<br>かつては、SSH でサーバにログインして<br>コマンド実行し検索するという工程を踏んでいました。</p>
+<p>ですが、Kibana で検索することにより<br>サーバログインすることなく、検索がスムーズになりました。</p>
+<p>リモートログインして誤った操作等もなくなる、<br>また本番環境アカウントの公開範囲を絞ることができ<br>良いことが増えました。</p>
+<p>実際構築しても使う側がどう検索したら良いかわからないということが<br>ちょいちょいあったので<br>Kibana4 検索窓での検索方法を簡単にまとめました。</p>
+<h2><span id="前提">前提</span></h2><ul>
+<li>Kibana4</li>
+<li>ドメイン名を以下とする</li>
+</ul>
+<p><code>http(s)://hogehoge.jp</code></p>
+<h3><span id="範囲指定">範囲指定</span></h3><ul>
+<li>http ステータスコード 200 から 400 検索</li>
+</ul>
+<p>status: [200 TO 400]</p>
+<h3><span id="否定">否定</span></h3><ul>
+<li>例) 指定ドメイン以外のリファラ検索</li>
+<li><code>referer</code> という項目について 正規表現での否定(NOT)のパターンマッチで検索します。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NOT referer:/http(s?)\:\/\/hogehoge\.jp\/(.*)/</span><br></pre></td></tr></table></figure>
+
+<h3><span id="複合検索">複合検索</span></h3><ul>
+<li>例) 指定ドメイン以外、且つ、200 ステータス</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NOT referer:/http(s?)\:\/\/hogehoge\.jp\/(.*)/ AND status:200</span><br></pre></td></tr></table></figure>
+
+<p>随時、事例があれば追記していきます。</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2015/11/17/2015-11-17-versionup-nginx-without-maintenance/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160810/20160810163018.png" alt="運用中のNginxをノーメンテでバージョンアップ&amp;HTTP2.0モジュールを導入"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-11-17</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/11/17/2015-11-17-versionup-nginx-without-maintenance/">運用中のNginxをノーメンテでバージョンアップ&amp;HTTP2.0モジュールを導入</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>運用中の Nginx に HTTP2.0 モジュール <code>http_v2_module</code> を導入し<br>サイトのパフォーマンス向上を図ります。</p>
+<p>※ Nginx 1.9.5 から <code>http_spdy_module</code> は <code>http_v2_module</code> に変更しています。</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS Linux release 7.1.1503 (Core)</li>
+<li>Nginx 1.9.3 インストール済み/稼働中</li>
+</ul>
+<h2><span id="したいこと">したいこと</span></h2><ul>
+<li>Nginx のバージョンアップ (1.9.5 以上)</li>
+<li>http_v2_module インストール</li>
+</ul>
+<h2><span id="現状確認">現状確認</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># nginx -V</span><br><span class="line"></span><br><span class="line">nginx version: nginx/1.9.3</span><br><span class="line">built by gcc 4.8.3 20140911 (Red Hat 4.8.3-9) (GCC)</span><br><span class="line">built with OpenSSL 1.0.1e-fips 11 Feb 2013</span><br><span class="line">TLS SNI support enabled</span><br><span class="line">configure arguments: --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nginx --group=nginx --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-threads --with-stream --with-stream_ssl_module --with-mail --with-mail_ssl_module --with-file-aio --with-ipv6 --with-http_spdy_module --with-cc-opt=&#x27;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>※module や log, pid のパスは各環境に毎に異なります。</p>
+<p>まずは 1.9.5 以上にバージョンアップして <code>http_v2_module</code> を導入したいと思います。</p>
+<h2><span id="nginx-196-インストール">Nginx 1.9.6 インストール</span></h2><p>今回は <b>2015.11.17</b> 時点で最新の <code>1.9.6</code> をインストールします。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/local/src</span><br><span class="line"># wget http://nginx.org/download/nginx-1.9.6.tar.gz</span><br><span class="line"># tar xvf load/nginx-1.9.6.tar.gz</span><br><span class="line"># cd nginx-1.9.6</span><br><span class="line"># ./configure --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nginx --group=nginx --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-threads --with-stream --with-stream_ssl_module --with-mail --with-mail_ssl_module --with-file-aio --with-ipv6 --with-http_v2_module --with-cc-opt=&#x27;-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic&#x27;</span><br><span class="line"></span><br><span class="line"># make</span><br><span class="line"># make install</span><br><span class="line"></span><br><span class="line">   ~~~ インストール完了 ~~~</span><br><span class="line"></span><br><span class="line"># nginx -V</span><br><span class="line">nginx version: nginx/1.9.6</span><br><span class="line">built by gcc 4.8.3 20140911 (Red Hat 4.8.3-9) (GCC)</span><br><span class="line">built with OpenSSL 1.0.1e-fips 11 Feb 2013</span><br><span class="line">TLS SNI support enabled</span><br><span class="line">configure arguments: --prefix=/etc/nginx --sbin-path=/usr/sbin/nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --pid-path=/var/run/nginx.pid --lock-path=/var/run/nginx.lock --http-client-body-temp-path=/var/cache/nginx/client_temp --http-proxy-temp-path=/var/cache/nginx/proxy_temp --http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp --http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp --http-scgi-temp-path=/var/cache/nginx/scgi_temp --user=nginx --group=nginx --with-http_ssl_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_stub_status_module --with-http_auth_request_module --with-mail --with-mail_ssl_module --with-file-aio --with-ipv6 --with-http_v2_module --with-http_geoip_module --with-cc-opt=&#x27;-O2 -g -pipe -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>version が 1.9.6 となり<br>configure arguments に <code>--with-http_v2_module</code> が追加されていることがわかります。</p>
+<p>要点は元々導入済み <code>http_spdy_module</code> を <code>http_v2_module</code> に変更しビルドです。<br><code>--with-http_spdy_module</code> がなければ <code>--with-http_v2_module</code> 追加です。</p>
+<h2><span id="nginx-server-ディレクティブ修正">nginx server ディレクティブ修正</span></h2><p>ssl http2.0 対応する様、修正します</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">-    listen 443;</span><br><span class="line">+    listen 443 ssl http2;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="nginx-configure-test-amp-reload">Nginx configure test &amp; reload</span></h2><ul>
+<li>configure test 実施します。</li>
+<li>以下のように <code>syntax is ok</code> が出ない場合は設定に誤りがあるので修正してください。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># nginx -t</span><br><span class="line"></span><br><span class="line">nginx: the configuration file /etc/nginx/nginx.conf syntax is ok</span><br><span class="line">nginx: configuration file /etc/nginx/nginx.conf test is successful</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>設定を再読み込みします。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p>上記で設定完了です。<br>これまでノーメンテでバージョンアップし、http_v2_module インストールができました。</p>
+<p>早速 https スキーマとなるページにアクセスしてみましょう。</p>
+<h2><span id="http20-設定確認">http2.0 設定確認</span></h2><ul>
+<li>Chrome ブラウザの Extension SPDY インディケータで確認</li>
+<li>FireFox 開発ツール&gt; ネットワーク &gt; ヘッダから確認</li>
+</ul>
+<h4><span id="spdy-インディケータで確認">SPDY インディケータで確認</span></h4><p><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/http2-and-spdy-indicator/mpbpobfflnpcgagjijhmgnchggcjblin?hl=ja">HTTP/2 and SPDY indicator</a></p>
+<p>拡張モジュールをインストールして確認してみると<br>SPDY インディケータが青くなっていることが確認できます。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151117/20151117105049.png" width="100%">
+</div>
+
+<h4><span id="firefox-開発ツールgt-ネットワーク-gt-ヘッダから確認">FireFox 開発ツール&gt; ネットワーク &gt; ヘッダから確認</span></h4><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151117/20151117105530.png" width="100%">
+</div>
+
+<h2><span id="参考サイト">参考サイト</span></h2><ul>
+<li><a target="_blank" rel="noopener" href="http://qiita.com/takapan/items/756be5b47134f9e51a11">nginx で HTTP2 接続(not spdy3.1)の検証</a></li>
+<li><a target="_blank" rel="noopener" href="http://qiita.com/tatsuhiro-t/items/6cbe5b095e24d7feb381">HTTP/2, SPDY 対応の負荷テストツール h2load</a></li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-11-13</span><span class="level-item">Updated&nbsp;<time dateTime="2020-05-07T03:41:23.913Z" title="2020/5/7 12:41:23">2020-05-07</time></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/11/13/2015-11-12-elasticsearch-curator-delete-norequired-index/">Elasticsearch curatorで不要Indexをまとめて削除</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>fluentd + ElasticSearch + kibana を運用していますが<br>ある日ElasticSearchが動作しなくなる事象が発生しました。</p>
+<p>過去indexが溜まりに溜まってメモリ不足というエラー。</p>
+<p>logはS3にアップロードしているし、<br>不要なIndexは適宜削除して対策しました。</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS Linux release 7.0.1406 (Core)</li>
+<li>ElasticSearch 1.7.1</li>
+<li>Python 2.7.5</li>
+<li>pip 7.1.0</li>
+</ul>
+<h2><span id="curator-インストール">curator インストール</span></h2><ul>
+<li>ElasticSearchをインストールしているサーバにて以下実施</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pip install curator</span><br></pre></td></tr></table></figure>
+
+<h2><span id="curator-コマンド実行">curator コマンド実行</span></h2><ul>
+<li>ElasticSearchをインストールしているサーバにて以下実施</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 14日(2週間)経過でclose</span><br><span class="line">curator --host localhost close indices --prefix logstash --older-than 14 --time-unit days --timestring %Y.%m.%d</span><br><span class="line"></span><br><span class="line"># 35日(4週間)経過でdelete</span><br><span class="line">curator --host localhost delete indices --prefix logstash --older-than 35 --time-unit days --timestring %Y.%m.%d</span><br><span class="line"></span><br><span class="line"># 2日経過でbloom filter無効化</span><br><span class="line">curator --host localhost bloom indices --prefix logstash --older-than 2 --time-unit days --timestring %Y.%m.%d</span><br></pre></td></tr></table></figure>
+
+<p>上記をjenkinsで <a target="_blank" rel="noopener" href="https://wiki.jenkins-ci.org/display/JENKINS/SSH+plugin">SSH plugin</a> で<br>リモートサーバにログインして実行するよう、<br>設定して定期ポーリングで1日1回実行させてます。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151112/20151112142836.png" width="100%">
+</div>
+
+<p>以上</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2015/11/13/2015-11-13-check-gzip-compress/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160810/20160810163018.png" alt="コンテンツがgzip圧縮されているかチェック"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-11-13</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/11/13/2015-11-13-check-gzip-compress/">コンテンツがgzip圧縮されているかチェック</a></h1><div class="content"><p>本当にただの備忘録です。</p>
+<p>Nginx で <code>gzip on</code> にしたけど設定反映されているか shell で確認</p>
+<script src="//gist.github.com/kenzo0107/204bd3504301b2eeae0d.js"></script>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-11-10</span><span class="level-item">Updated&nbsp;<time dateTime="2020-05-07T03:41:23.879Z" title="2020/5/7 12:41:23">2020-05-07</time></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/11/10/2015-11-10-redis-python/">Use Redis via Python</a></h1><div class="content"><h2><span id="memorandum">Memorandum</span></h2><p>The below codes is how to use redis via Python.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># coding: UTF-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"></span><br><span class="line">r = redis.StrictRedis(host=<span class="string">'localhost'</span>, port=<span class="number">6379</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># set/get string.</span></span><br><span class="line">r.set(<span class="string">'test1'</span>, <span class="string">'aiueo'</span>)</span><br><span class="line">r.expire(<span class="string">'test1'</span>, <span class="number">1000</span>)</span><br><span class="line"><span class="keyword">print</span> r.get(<span class="string">'test1'</span>)     <span class="comment"># aiueo</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># set/get integer.</span></span><br><span class="line">r.set(<span class="string">'test2'</span>, <span class="number">2</span>)</span><br><span class="line"><span class="keyword">print</span> r.get(<span class="string">'test2'</span>)    <span class="comment"># 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check key exit.</span></span><br><span class="line"><span class="keyword">print</span> r.exists(<span class="string">'test1'</span>) <span class="comment"># True</span></span><br><span class="line"><span class="keyword">print</span> r.exists(<span class="string">'test0'</span>) <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pattern match</span></span><br><span class="line">keys = r.keys(<span class="string">'test*'</span>)</span><br><span class="line"><span class="keyword">if</span> len(keys) &gt; <span class="number">0</span> :</span><br><span class="line">	<span class="keyword">for</span> key <span class="keyword">in</span> keys:</span><br><span class="line">		<span class="keyword">print</span> <span class="string">'--------------------------------------------'</span></span><br><span class="line">		<span class="keyword">print</span> key			<span class="comment"># test1, test2</span></span><br><span class="line">		<span class="keyword">print</span> r.get(key) 	<span class="comment"># aiueo, 2</span></span><br><span class="line">		<span class="keyword">print</span> r.type(key)	<span class="comment"># Type : string, string</span></span><br><span class="line">		<span class="keyword">print</span> r.ttl(key)    <span class="comment"># Expire : if not set, set "-1"</span></span><br><span class="line"></span><br><span class="line">r.append(<span class="string">'test1'</span>, <span class="string">'_kkkkkkk'</span>)</span><br><span class="line"><span class="keyword">print</span> r.get(<span class="string">'test1'</span>)   <span class="comment"># aiueo_kkkkkkk</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># delete cache.</span></span><br><span class="line">r.delete(<span class="string">'test1'</span>)</span><br><span class="line"><span class="keyword">print</span> r.exists(<span class="string">'test1'</span>) <span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+
+<p>Thanks.</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2015/11/09/2015-11-09-grunt-uglify-js-minify-css-on-macos/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151109/20151109114223.jpg" alt="By grunt, uglify js &amp; minify css on MacOSX."></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-11-09</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/11/09/2015-11-09-grunt-uglify-js-minify-css-on-macos/">By grunt, uglify js &amp; minify css on MacOSX.</a></h1><div class="content"><h2><span id="environment">environment</span></h2><ul>
+<li>MacOSX 10.11</li>
+<li>grunt-cli v0.1.13</li>
+<li>grunt v0.4.5</li>
+</ul>
+<h2><span id="install-npm-initilize-npm">Install npm, Initilize npm</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~              # depending on your preference.</span><br><span class="line">brew install npm</span><br><span class="line">npm init</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Result</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">About</span> to write to /<span class="title class_">Users</span>/kenzo/go/src/github.<span class="property">com</span>/flag/public/package.<span class="property">json</span>:</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;public&quot;</span>,</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;description&quot;</span>: <span class="string">&quot;gruntfile&quot;</span>,</span><br><span class="line">  <span class="string">&quot;main&quot;</span>: <span class="string">&quot;Gruntfile.js&quot;</span>,</span><br><span class="line">  <span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;test&quot;</span>: <span class="string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;author&quot;</span>: <span class="string">&quot;xxxxxxxx@gmail.com&quot;</span>,</span><br><span class="line">  <span class="string">&quot;license&quot;</span>: <span class="string">&quot;ISC&quot;</span>,</span><br><span class="line">  <span class="string">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="install-grunt-cli">Install grunt-cli</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g grunt-cli</span><br></pre></td></tr></table></figure>
+
+<p>With <code>--save-dev</code> option, add install module infomation to package.json.</p>
+<h2><span id="install-grunt-modules">Install grunt modules</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">npm install -g grunt --save-dev</span><br><span class="line">npm install grunt-contrib-watch   --save-dev</span><br><span class="line">npm install grunt-contrib-copy    --save-dev</span><br><span class="line">npm install grunt-contrib-clean   --save-dev</span><br><span class="line">npm install grunt-contrib-cssmin  --save-dev</span><br><span class="line">npm install grunt-contrib-uglify  --save-dev</span><br><span class="line">npm install grunt-image           --save-dev</span><br><span class="line">npm install grunt-contrib-htmlmin --save-dev</span><br><span class="line">npm install load-grunt-tasks      --save-dev</span><br><span class="line">npm install grunt-jsbeautifier    --save-dev</span><br><span class="line">npm install grunt-cssbeautifier   --save-dev</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4><span id="module-map">Module map.</span></h4><table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>grunt-contrib-watch</td>
+<td>Monitoring update files.</td>
+</tr>
+<tr>
+<td>grunt-contrib-copy</td>
+<td>Copy file or directory.</td>
+</tr>
+<tr>
+<td>grunt-contrib-clean</td>
+<td>Clean file or directory.</td>
+</tr>
+<tr>
+<td>grunt-contrib-cssmin</td>
+<td>Minify CSS files.</td>
+</tr>
+<tr>
+<td>grunt-contrib-uglify</td>
+<td>Uglify &amp; Compress Javascript files.</td>
+</tr>
+<tr>
+<td>grunt-contrib-image</td>
+<td>Optimize image files (jpeg, jpg, gif, png, swf, etc…).</td>
+</tr>
+<tr>
+<td>grunt-contrib-htmlmin</td>
+<td>Minify HTML files.</td>
+</tr>
+<tr>
+<td>grunt-jsbeautifier</td>
+<td>beautify Javascript files.</td>
+</tr>
+<tr>
+<td>grunt-cssbeautifier</td>
+<td>beautify Javascript files.</td>
+</tr>
+</tbody></table>
+<h2><span id="confirm-packagejson">Confirm package.json</span></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">cat package.<span class="property">json</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;public&quot;</span>,</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;1.0.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;description&quot;</span>: <span class="string">&quot;grunt&quot;</span>,</span><br><span class="line">  <span class="string">&quot;main&quot;</span>: <span class="string">&quot;index.js&quot;</span>,</span><br><span class="line">  <span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;test&quot;</span>: <span class="string">&quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;author&quot;</span>: <span class="string">&quot;*********@gmail.com&quot;</span>,</span><br><span class="line">  <span class="string">&quot;license&quot;</span>: <span class="string">&quot;ISC&quot;</span>,</span><br><span class="line">  <span class="string">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;grunt&quot;</span>: <span class="string">&quot;^0.4.5&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-contrib-clean&quot;</span>: <span class="string">&quot;^0.6.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-contrib-copy&quot;</span>: <span class="string">&quot;^0.8.2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-contrib-cssmin&quot;</span>: <span class="string">&quot;^0.14.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-contrib-htmlmin&quot;</span>: <span class="string">&quot;^0.6.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-contrib-uglify&quot;</span>: <span class="string">&quot;^0.10.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-contrib-watch&quot;</span>: <span class="string">&quot;^0.6.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-cssbeautifier&quot;</span>: <span class="string">&quot;^0.1.2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-image&quot;</span>: <span class="string">&quot;^1.1.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;grunt-jsbeautifier&quot;</span>: <span class="string">&quot;^0.2.10&quot;</span>,</span><br><span class="line">    <span class="string">&quot;load-grunt-tasks&quot;</span>: <span class="string">&quot;^3.3.0&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Add dependencies of grunt modules to package.json !</li>
+</ul>
+<h2><span id="move-to-parent-directory-of-css-js-folder">move to parent directory of css, js folder</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /path/to/project/public/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">tree</span><br><span class="line"></span><br><span class="line">/public/</span><br><span class="line">│</span><br><span class="line">├─Gruntfile.coffee      # make `Gruntfile.coffee` at next step.</span><br><span class="line">│</span><br><span class="line">├── css</span><br><span class="line">│	├── bootstrap.css</span><br><span class="line">│	├── img.css</span><br><span class="line">│	├── style.css</span><br><span class="line">│	└── reset.css</span><br><span class="line">│</span><br><span class="line">└── js</span><br><span class="line">	├── jquery-1.9.1.js</span><br><span class="line">	├── img.js</span><br><span class="line">	├── login.js</span><br><span class="line">	└── signup.js</span><br></pre></td></tr></table></figure>
+
+<h3><span id="create-gruntfilecoffee-or-gruntfilejson">Create Gruntfile.coffee or Gruntfile.json</span></h3><ul>
+<li>Today, I create a Gruntfile.coffee.</li>
+<li>For example, Only Uglify js, Minify css, Beautify js, css.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim Gruntfile.coffee</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = (grunt) -&gt;</span><br><span class="line"></span><br><span class="line">  # current path.</span><br><span class="line">  path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line">  current = path.<span class="title function_">resolve</span>(<span class="string">&#x27;.&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  # load npm task.</span><br><span class="line">  grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-contrib-cssmin&#x27;</span>);</span><br><span class="line">  grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-contrib-uglify&#x27;</span>);</span><br><span class="line">  grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-jsbeautifier&#x27;</span>);</span><br><span class="line">  grunt.<span class="title function_">loadNpmTasks</span>(<span class="string">&#x27;grunt-cssbeautifier&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  grunt.<span class="property">initConfig</span></span><br><span class="line"></span><br><span class="line">    # define directory.</span><br><span class="line">    <span class="attr">dir</span>:</span><br><span class="line">      <span class="attr">js</span>:      <span class="string">&#x27;js&#x27;</span></span><br><span class="line">      <span class="attr">css</span>:     <span class="string">&#x27;css&#x27;</span></span><br><span class="line">      <span class="attr">img</span>:     <span class="string">&#x27;img&#x27;</span></span><br><span class="line"></span><br><span class="line">    # minify <span class="variable constant_">CSS</span>.</span><br><span class="line">    <span class="attr">cssmin</span>:</span><br><span class="line">      <span class="attr">all</span>:</span><br><span class="line">        <span class="attr">expand</span>: <span class="literal">true</span></span><br><span class="line">        <span class="attr">cwd</span>:  current + <span class="string">&#x27;/&lt;%= dir.css %&gt;/&#x27;</span></span><br><span class="line">        <span class="attr">src</span>:  <span class="string">&#x27;*.css&#x27;</span></span><br><span class="line">        <span class="attr">dest</span>: current + <span class="string">&#x27;/&lt;%= dir.css %&gt;/&#x27;</span></span><br><span class="line"></span><br><span class="line">    # uglify js.</span><br><span class="line">    <span class="attr">uglify</span>:</span><br><span class="line">      <span class="attr">options</span>:</span><br><span class="line">        <span class="attr">mangle</span>: <span class="literal">true</span></span><br><span class="line">        <span class="attr">compress</span>: <span class="literal">true</span></span><br><span class="line">      <span class="attr">all</span>:</span><br><span class="line">        <span class="attr">expand</span>: <span class="literal">true</span></span><br><span class="line">        <span class="attr">cwd</span>:  current + <span class="string">&#x27;/&lt;%= dir.js %&gt;/&#x27;</span></span><br><span class="line">        <span class="attr">src</span>:  <span class="string">&#x27;*.js&#x27;</span></span><br><span class="line">        <span class="attr">dest</span>: current + <span class="string">&#x27;/&lt;%= dir.js %&gt;/&#x27;</span></span><br><span class="line"></span><br><span class="line">    # beautify js.</span><br><span class="line">    <span class="attr">jsbeautifier</span>:</span><br><span class="line">      <span class="attr">files</span>: <span class="string">&#x27;**/*.js&#x27;</span></span><br><span class="line">      <span class="attr">options</span>: []</span><br><span class="line"></span><br><span class="line">    # beautify css.</span><br><span class="line">    <span class="attr">cssbeautifier</span>:</span><br><span class="line">      <span class="attr">files</span>: <span class="string">&#x27;**/*.css&#x27;</span></span><br><span class="line">      <span class="attr">options</span>: []</span><br><span class="line"></span><br><span class="line">  grunt.<span class="property">registerTask</span> <span class="string">&#x27;default&#x27;</span>, [<span class="string">&#x27;cssmin&#x27;</span>, <span class="string">&#x27;uglify&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2><span id="make-symbolilc-link-of-node_modules">Make symbolilc Link of ‘node_modules’</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;path where Gruntfile.coffee exist&gt;</span><br><span class="line">ln -s ~/node_modules .</span><br><span class="line">tree</span><br><span class="line"></span><br><span class="line">/public/</span><br><span class="line">├─Gruntfile.coffee</span><br><span class="line">├─node_modules -&gt; /Users/kenzo/node_modules</span><br><span class="line">│</span><br><span class="line">├── css</span><br><span class="line">│ ├── bootstrap.css</span><br><span class="line">│ ├── img.css</span><br><span class="line">│ ├── style.css</span><br><span class="line">│ └── reset.css</span><br><span class="line">│</span><br><span class="line">└── js</span><br><span class="line">  ├── jquery-1.9.1.js</span><br><span class="line">  ├── img.js</span><br><span class="line">  ├── login.js</span><br><span class="line">  └── signup.js</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2><span id="execute-grunt-command">Execute grunt command.</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;path where Gruntfile.coffee exist&gt;</span><br><span class="line">grunt   # By no parameter, execute default task.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>If You want to execute only cssmin, excute command <code>grunt cssmin</code></li>
+</ul>
+<p>Thakns.</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-10-22</span><span class="level-item">Updated&nbsp;<time dateTime="2020-05-07T03:41:23.799Z" title="2020/5/7 12:41:23">2020-05-07</time></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/10/22/2015-10-22-install-ruby-gem/">Ruby &amp; gem インストール</a></h1><div class="content"><p>備忘録です。</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS 5.8 (Final)</li>
+</ul>
+<h2><span id="ruby-212-インストール">ruby 2.1.2 インストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># cd &#x2F;usr&#x2F;local&#x2F;src</span><br><span class="line"># wget http:&#x2F;&#x2F;cache.ruby-lang.org&#x2F;pub&#x2F;ruby&#x2F;2.1&#x2F;ruby-2.1.2.tar.gz</span><br><span class="line"># tar xvfz ruby-2.1.2.tar.gz</span><br><span class="line"># rm ruby-2.1.2.tar.gz</span><br><span class="line"># cd ruby-2.1.2</span><br><span class="line"># .&#x2F;configure</span><br><span class="line"># make; make install</span><br></pre></td></tr></table></figure>
+
+<h2><span id="gem-インストール">gem インストール</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># wget http:&#x2F;&#x2F;production.cf.rubygems.org&#x2F;rubygems&#x2F;rubygems-2.2.2.zip</span><br><span class="line"># unzip rubygems-2.2.2.zip</span><br><span class="line"># cd rubygems-2.2.2</span><br><span class="line"># ruby setup.rb</span><br></pre></td></tr></table></figure>
+
+<p>以上</p>
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/25/">前</a></div><div class="pagination-next"><a href="/page/27/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/25/">25</a></li><li><a class="pagination-link is-current" href="/page/26/">26</a></li><li><a class="pagination-link" href="/page/27/">27</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/35/">35</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

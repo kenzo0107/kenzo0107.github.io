@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>SendGrid メール送信できるまで &amp; なりすまし対策 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="ToC     概要 メール送信設定手続き SubUser 作成 Username Email I.P. ADDRESSES   Domain Authentication 設定 Domain Authentication とは？ 設定手順   API Key 作成 Rails で SendGrid を利用しメール送信する設定   なりすまし対策 DMARC 設定 集計先メールアドレスを外部委"><meta property="og:type" content="blog"><meta property="og:title" content="SendGrid メール送信できるまで &amp; なりすまし対策"><meta property="og:url" content="https://kenzo0107.github.io/2020/10/08/2020-10-08-sendgrid-settings/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="ToC     概要 メール送信設定手続き SubUser 作成 Username Email I.P. ADDRESSES   Domain Authentication 設定 Domain Authentication とは？ 設定手順   API Key 作成 Rails で SendGrid を利用しメール送信する設定   なりすまし対策 DMARC 設定 集計先メールアドレスを外部委"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://i.imgur.com/4NdER1F.png"><meta property="article:published_time" content="2020-10-07T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="SendGrid"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://i.imgur.com/4NdER1F.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2020/10/08/2020-10-08-sendgrid-settings/"},"headline":"SendGrid メール送信できるまで & なりすまし対策","image":["https://i.imgur.com/4NdER1F.png"],"datePublished":"2020-10-07T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"ToC     概要 メール送信設定手続き SubUser 作成 Username Email I.P. ADDRESSES   Domain Authentication 設定 Domain Authentication とは？ 設定手順   API Key 作成 Rails で SendGrid を利用しメール送信する設定   なりすまし対策 DMARC 設定 集計先メールアドレスを外部委"}</script><link rel="canonical" href="https://kenzo0107.github.io/2020/10/08/2020-10-08-sendgrid-settings/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="https://i.imgur.com/4NdER1F.png" alt="SendGrid メール送信できるまで &amp; なりすまし対策"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2020-10-08</span></div></div><h1 class="title is-3 is-size-4-mobile">SendGrid メール送信できるまで &amp; なりすまし対策</h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%81%E4%BF%A1%E8%A8%AD%E5%AE%9A%E6%89%8B%E7%B6%9A%E3%81%8D">メール送信設定手続き</a><ul>
+<li><a href="#subuser-%E4%BD%9C%E6%88%90httpssendgridkkecojpdocsuser_manual_jpsettingssubusersindexhtml">SubUser 作成</a><ul>
+<li><a href="#username">Username</a></li>
+<li><a href="#email">Email</a></li>
+<li><a href="#ip-addresses">I.P. ADDRESSES</a></li>
+</ul>
+</li>
+<li><a href="#domain-authentication-%E8%A8%AD%E5%AE%9Ahttpssendgridkkecojpdocsuser_manual_jpsettingssender_authenticationhow_to_set_up_domain_authenticationhtml">Domain Authentication 設定</a><ul>
+<li><a href="#domain-authentication-%E3%81%A8%E3%81%AF">Domain Authentication とは？</a></li>
+<li><a href="#%E8%A8%AD%E5%AE%9A%E6%89%8B%E9%A0%86">設定手順</a></li>
+</ul>
+</li>
+<li><a href="#api-key-%E4%BD%9C%E6%88%90">API Key 作成</a></li>
+<li><a href="#rails-%E3%81%A7-sendgrid-%E3%82%92%E5%88%A9%E7%94%A8%E3%81%97%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E8%A8%AD%E5%AE%9A">Rails で SendGrid を利用しメール送信する設定</a></li>
+</ul>
+</li>
+<li><a href="#%E3%81%AA%E3%82%8A%E3%81%99%E3%81%BE%E3%81%97%E5%AF%BE%E7%AD%96">なりすまし対策</a><ul>
+<li><a href="#dmarc-%E8%A8%AD%E5%AE%9Ahttpssendgridkkecojpblogp1781">DMARC 設定</a><ul>
+<li><a href="#%E9%9B%86%E8%A8%88%E5%85%88%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%82%92%E5%A4%96%E9%83%A8%E5%A7%94%E8%A8%97%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">集計先メールアドレスを外部委託する場合</a></li>
+<li><a href="#p-%E3%82%BF%E3%82%B0%E3%81%AE%E6%89%B1%E3%81%84%E6%B3%A8%E6%84%8F">p タグの扱い注意</a></li>
+</ul>
+</li>
+<li><a href="#spf-%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E7%99%BB%E9%8C%B2">SPF レコード登録</a><ul>
+<li><a href="#spf-%E3%81%AE%E4%BB%95%E7%B5%84%E3%81%BF">SPF の仕組み</a></li>
+<li><a href="#sendgrid-%E3%81%A7%E3%81%AE-spf-%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E8%A8%AD%E5%AE%9A-%E6%8C%87%E9%87%9D">SendGrid での SPF レコード設定 指針</a></li>
+</ul>
+</li>
+<li><a href="#%E3%82%B9%E3%83%91%E3%83%A0%E3%83%A1%E3%83%BC%E3%83%AB%E6%89%B1%E3%81%84%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E3%81%8B%E3%83%86%E3%82%B9%E3%83%88%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95">スパムメール扱いされていないかテストする方法</a></li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<h1><span id="概要">概要</span></h1><p>SendGrid ダッシュボードで設定する手続きを運用上のフィードバックを入れつつまとめました。</p>
+<span id="more"></span>
+
+<h1><span id="メール送信設定手続き">メール送信設定手続き</span></h1><h2><span id="subuser-作成"></span></h2><ul>
+<li>サブユーザは、メール送信や API の処理を分けて管理ができる。</li>
+<li>Subuser Stats によって、Subuser 毎の集計が SendGrid ダッシュボードで確認できる。</li>
+<li>サブユーザの最大作成数は 15 で、それ以上作成したい場合はサポート問い合わせ必要。</li>
+</ul>
+<p><img src="https://i.imgur.com/NN7NOIT.png"></p>
+<!-- more -->
+
+<p>基本以下設定し、「Create Subuser」ボタンをクリックする。<br>（他は設定しなくても良い。）</p>
+<p><img src="https://i.imgur.com/s1j6nLh.png"></p>
+<h3><span id="username">Username</span></h3><ul>
+<li>環境毎(stg, prd 等)に作成すると Subuser 毎に SendGrid ダッシュボードの Stats の確認ができるなどのメリットがあり、管理しやすいので以下例の様に指定しています。</li>
+<li>例: <code>&lt;env&gt;-&lt;service name&gt;</code><ul>
+<li>stg-hogehoge</li>
+<li>prd-hogehoge</li>
+</ul>
+</li>
+</ul>
+<h3><span id="email">Email</span></h3><p>Gmail を利用している場合は、メールアドレスのエイリアスを設定すると送信先が 1 つにまとまり管理しやすいです。</p>
+<ul>
+<li>例: <code>sample+&lt;subuser name&gt;@&lt;your domain&gt;</code></li>
+</ul>
+<h3><span id="ip-addresses">I.P. ADDRESSES</span></h3><p>チェックを入れる。</p>
+<p>10 以上の subuser 間で共通の IP を指定して運用していますが、現状特段問題はない。</p>
+<p>各独自ドメイン毎に IP を指定したい所。追加時は 3,700 円/月/1 ドメイン。<br>到達率がどこまで上がるかは未検証です。</p>
+<p>コスト的に問題なければ、ドメイン毎に IP 指定しておくのが良さそう。</p>
+<p>参考: <a target="_blank" rel="noopener" href="https://support.sendgrid.kke.co.jp/hc/ja/articles/202688589-%E5%9B%BA%E5%AE%9AIP%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E3%83%A1%E3%83%AA%E3%83%83%E3%83%88%E3%81%AF%E4%BD%95%E3%81%A7%E3%81%97%E3%82%87%E3%81%86%E3%81%8B-">固定 IP アドレスを利用するメリットは何でしょうか？</a></p>
+<h2><span id="domain-authentication-設定"></span></h2><h3><span id="domain-authentication-とは">Domain Authentication とは？</span></h3><ul>
+<li>SendGrid がユーザの許可を得てメール送信していることを証明する機能。</li>
+<li>設定しておかないと「なりすまし」として扱われ、迷惑メールに振り分けられる可能性が高くなる。</li>
+</ul>
+<h3><span id="設定手順">設定手順</span></h3><p>使用している DNS を選択します。<br><img src="https://i.imgur.com/kKjpVre.png"></p>
+<p><img src="https://i.imgur.com/XIKpTtB.png"></p>
+<p>設定項目</p>
+<ul>
+<li>From Domain に メールのドメインパート（送信者のメールアドレスの@以降）を指定する。</li>
+<li>Advanced Settings &gt; Use automated security にチェック（デフォルトでチェック）<ul>
+<li>Use automated security … SPF/DKIM に関するレコードの制御を SendGrid に任せるかどうかを指定する機能です。</li>
+</ul>
+</li>
+<li>Assign to a subuser<ul>
+<li>stg, prd で共通のドメインパートを指定する場合は、チェックを外す。<ul>
+<li>stg, prd 各 subuser で Domain Authentication を指定する必要がある。</li>
+</ul>
+</li>
+<li>stg, prd で異なるドメインパートを指定する場合は subuser 紐付け。</li>
+</ul>
+</li>
+</ul>
+<p>発行された DNS レコードを DNS に登録する。<br><img src="https://i.imgur.com/TdlBOAQ.png"></p>
+<p>AWS なら Route53 にレコードを登録します。</p>
+<p>「Verify」をボタンをクリック</p>
+<ul>
+<li>レコード登録しただけでは自動で認証せず、「Verify」ボタンをクリックする必要があるので注意！</li>
+</ul>
+<h2><span id="api-key-作成">API Key 作成</span></h2><p>先ほど作成した Subuser に切り替えます。</p>
+<p><img src="https://i.imgur.com/6CEjSOJ.png"></p>
+<p>「Create API Key」クリック</p>
+<p><img src="https://i.imgur.com/1Luebo0.png"></p>
+<p>どの権限を持った API Key を発行するか決定します。<br>メールを送信するだけであれば、基本的に <code>Restricted Access</code> で Mail Send の Full Access のみあれば良い。</p>
+<p><img src="https://i.imgur.com/oOBAOml.png"></p>
+<p>「Create &amp; View」ボタンクリックで API Key が発行されます。</p>
+<h2><span id="rails-で-sendgrid-を利用しメール送信する設定">Rails で SendGrid を利用しメール送信する設定</span></h2><p>gem <a target="_blank" rel="noopener" href="https://github.com/eddiezane/sendgrid-actionmailer">sendgrid-actionmailer</a> をインストールして利用しています。</p>
+<ul>
+<li>Gemfile</li>
+</ul>
+<p>development, test では利用しない為、 staging, production のみにしています。こちらは適宜変更してください。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group <span class="symbol">:staging</span>, <span class="symbol">:production</span> <span class="keyword">do</span></span><br><span class="line">  gem <span class="string">&#x27;sendgrid-actionmailer&#x27;</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>production.credentials.enc, staging.credentials.enc</p>
+<ul>
+<li>prd, stg 用にそれぞれ別に発行した API Key を credentials に設定します。</li>
+</ul>
+</li>
+<li><p>sconfig/environments/production.rb</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">config.action_mailer.delivery_method = <span class="symbol">:sendgrid_actionmailer</span></span><br><span class="line">config.action_mailer.sendgrid_actionmailer_settings = &#123;</span><br><span class="line">  <span class="symbol">api_key:</span> Rails.application.credentials[<span class="symbol">:sendgrid_api_key</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上でメール送信ができる状態にはなりました。</p>
+<p>以降は送信者のドメイン認証によるメールが届かない問題への対応になります。</p>
+<h1><span id="なりすまし対策">なりすまし対策</span></h1><h2><span id="dmarc-設定"></span></h2><p>DMARC (Domain-based Message Authentication, Reporting, and Conformance) は送信ドメイン認証技術の 1 つで、SPF, DKIM 等の送信者ドメイン認証に失敗したメールの振る舞いを送信者が指定できるものです。</p>
+<p><img src="https://i.imgur.com/z07TUlW.png"></p>
+<p>主に以下 3 つの役割があります。</p>
+<ol>
+<li>メール送信者が認証失敗したメールの取り扱いを指定できる<ul>
+<li>認証失敗したら迷惑メールボックスに入れる or そもそも受信拒否させることができる。</li>
+</ul>
+</li>
+<li>メール送信者が認証結果をメール受信者から受け取れる<ul>
+<li>なりすましたメール送信者を把握できる。</li>
+</ul>
+</li>
+<li>第三者署名（代理署名）を許容しない<ul>
+<li>なりすましと判断されたメールを受信できない様にする。</li>
+</ul>
+</li>
+</ol>
+<p>つまり、DMARC 設定していないと？、第三者がなりすましたメールをユーザは疑いなく受信できてしまい、また、送信者はそのことを知る術がありません。</p>
+<p>DMARC 設定として、以下レコードを登録します。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_dmarc.example.com    CNAME    v=DMARC1;p=quarantine;rua=mailto:dmarc.rua@example.com</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Value</em></th>
+<th><em>Explain</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>v=DMARC1</td>
+<td>プロトコルバージョン</td>
+<td>バージョン 1 のみ存在する為、 DMARC1 を指定する。</td>
+</tr>
+<tr>
+<td>p=quarantine</td>
+<td>DMARC レコードのポリシー</td>
+<td>p=quarantine 指定で迷惑メールに振り分ける。</td>
+</tr>
+<tr>
+<td>pct=100</td>
+<td>DMARC を適用する割合</td>
+<td>pct=100 or pct タグを削除しないとなりすまし攻撃に晒される危険性がある為、pct タグを削除しとく。</td>
+</tr>
+<tr>
+<td>rua=mailto:…</td>
+<td>集計レポートの報告先 URI</td>
+<td>集計レポートの通知先。事前に通知先をアプリケーション担当者に確認しておく。</td>
+</tr>
+</tbody></table>
+<h3><span id="集計先メールアドレスを外部委託する場合">集計先メールアドレスを外部委託する場合</span></h3><p>DMARC レコードの設定ドメイン (example.com) と 集計先の mailto で指定しているドメイン (hogehoge.jp) が異なる場合、</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_dmarc.example.com    CNAME    v=DMARC1;p=quarantine;rua=mailto:dmarc.rua@hogehoge.jp</span><br></pre></td></tr></table></figure>
+
+<p>以下のレコードを集計先ドメイン (hogehoge.jp) で登録し、ドメインの関連性を示す必要があります。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example.com._report._dmarc.hogehoge.jp IN TXT &quot;v=DMARC1&quot;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="p-タグの扱い注意">p タグの扱い注意</span></h3><p>p=quarantine のみで pct タグは削除が良さそう。</p>
+<ul>
+<li><p>p=reject</p>
+<ul>
+<li><code>p=reject</code> にしてしまうと未認証メールは受信サーバは拒否する。</li>
+</ul>
+</li>
+<li><p><code>p=quarantine</code> 且つ、 <code>pct=0~99</code></p>
+<ul>
+<li>pct=100 でない場合は、なりすましの危険性に晒される可能性がある。<br>参考: <a target="_blank" rel="noopener" href="https://www.valimail.com/blog/what-you-need-to-know-about-the-pct-tag-in-dmarc-records/">https://www.valimail.com/blog/what-you-need-to-know-about-the-pct-tag-in-dmarc-records/</a><blockquote>
+<p>However, this can still leave your domain open to impersonation attacks until you set pct=100 or remove the pct tag entirely.</p>
+</blockquote>
+</li>
+<li>pct はデフォルト 100。pct を削除することでデフォルトの 100 が適用される。</li>
+</ul>
+</li>
+</ul>
+<h2><span id="spf-レコード登録">SPF レコード登録</span></h2><h3><span id="spf-の仕組み">SPF の仕組み</span></h3><p>SPF（Sender Policy Framework）は、DMARC 同様、送信ドメイン認証技術の 1 つです。</p>
+<p>送信者のメールアドレスのドメイン情報のある DNS に SPF レコードを登録し、<br>受信者が正しい送信元からの配信かをその SPF レコードを元に確認できる仕組みです。</p>
+<p>送信者は上記の仕組みで、受信者に「なりすましでないこと」を証明する一連の仕組みを SPF と呼びます。</p>
+<h3><span id="sendgrid-での-spf-レコード設定-指針">SendGrid での SPF レコード設定 指針</span></h3><p>SendGrid で独自ドメイン <code>hogehoge.jp</code> を SendGrid ドメイン認証しメール送信すると<br>Gmail のソース等で Return-Path を見ると <code>em1234.hogehoge.jp</code> の様にサブドメインが付与されていることがわかります。</p>
+<p>From で設定しているドメイン <code>hogehoge.jp</code> と エンベロープ From の<code>em1234.hogehoge.jp</code> が異なる為、 Sender ID や docomo の独自認証がパスしない場合があります。</p>
+<p>その対応として、以下 SPF レコードで以下を登録します。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;v=spf1 include:em1234.hogehoge.jp ~all&quot;</span><br></pre></td></tr></table></figure>
+
+<p>参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://support.sendgrid.kke.co.jp/hc/ja/articles/360000226322">SendGrid - エンベロープ From を変更したいのですが？</a></li>
+<li><a target="_blank" rel="noopener" href="https://techracho.bpsinc.jp/baba/2018_12_16/65691">SendGrid で独自ドメインから docomo 宛に送信するときの注意点</a></li>
+</ul>
+<h2><span id="スパムメール扱いされていないかテストする方法">スパムメール扱いされていないかテストする方法</span></h2><p>以下、送信元メールアカウントの評価サービスを利用できます。</p>
+<p><a target="_blank" rel="noopener" href="https://www.mail-tester.com/">https://www.mail-tester.com/</a></p>
+<p><img src="https://i.imgur.com/IbAz71X.png"></p>
+<p>上記の場合、 <code>test-00a9mdjzu@svr1.mail-tester.com</code> にメールを送ると、送信者を評価してくれます。</p>
+<p>以下結果を元に、対処する項目を定めます。</p>
+<p><img src="https://i.imgur.com/clKGETd.png"></p>
+<h2><span id="まとめ">まとめ</span></h2><p>SendGrid には SPF/DKIM の独自ドメイン化を支援する Domain Authentication 機能等、迷惑メール扱い防止対策があります。</p>
+<p>これらを適切に設定しないと迷惑メールに振り分けられたり、そもそもメールが拒否されたりということが起こりえる為、注意が必要です。</p>
+<p>以下の送信ドメイン認証の仕組みを把握しつつ設定を進めると、より理解を深めることができました。</p>
+<ul>
+<li>SPF（Sender Policy Framework）</li>
+<li>DKIM (DomainKeys Identified Mail)</li>
+<li>DMARC (Domain-based Message Authentication, Reporting, and Conformance)</li>
+</ul>
+<p>さらに到達率を上げる為に、気づいた対策があれば追記して参ります。<br>また、ご指摘いただけますと幸いです。</p>
+<p>以上<br>ご参考になれば幸いです。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>SendGrid メール送信できるまで &amp; なりすまし対策</p><p><a href="https://kenzo0107.github.io/2020/10/08/2020-10-08-sendgrid-settings/">https://kenzo0107.github.io/2020/10/08/2020-10-08-sendgrid-settings/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2020-10-08</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/SendGrid/">SendGrid</a></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/11/20/2020-11-20-terraform-codepipeline-github-oauth-error/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Terraform CodePipeline 認証エラー対応</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/10/06/2020-10-06-aws-startup/"><span class="level-item">You are not subscribed to this service</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2020/10/08/2020-10-08-sendgrid-settings/';
+            this.page.identifier = '2020/10/08/2020-10-08-sendgrid-settings/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

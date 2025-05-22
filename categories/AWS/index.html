@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="robots" content="noindex"><meta><title>カテゴリ: AWS - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="tech"><meta property="og:type" content="blog"><meta property="og:title" content="長生村本郷Engineers&#039;Blog"><meta property="og:url" content="https://kenzo0107.github.io/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="tech"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io"},"headline":"長生村本郷Engineers'Blog","image":["https://kenzo0107.github.io/img/og_image.png"],"author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"tech"}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/categories">カテゴリ</a></li><li class="is-active"><a href="#" aria-current="page">AWS</a></li></ul></nav></div></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2025-04-22</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2025/04/22/2025-04-22-ecs-container-logging/">データ分析観点から見た AWS ECS コンテナロギング</a></h1><div class="content"><p>AWS ECS コンテナロギングをデータ分析観点からどの様な構成だと分析に都合が良いかの観点を記載します。</p>
+<p>基本ログは追加のみで更新や削除はされない性質があるので、その点を考慮して登録されることを意識したアーキテクチャが望ましいです。</p>
+<h2 id="ECS-コンテナロギングの構成"><a href="#ECS-コンテナロギングの構成" class="headerlink" title="ECS コンテナロギングの構成"></a>ECS コンテナロギングの構成</h2><h3 id="ECS-→-CloudWatch-Logs"><a href="#ECS-→-CloudWatch-Logs" class="headerlink" title="ECS → CloudWatch Logs"></a>ECS → CloudWatch Logs</h3><p>デフォルトではこのような構成がよく見受けられます。</p></div><a class="article-more button is-small is-size-7" href="/2025/04/22/2025-04-22-ecs-container-logging/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-12-19</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/">RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E5%89%8D%E6%8F%90">前提</a></li>
+<li><a href="#rdsgluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→GlueJob→Iceberg テーブル</a></li>
+<li><a href="#rds-zero-etl-%E7%B5%B1%E5%90%88-redshift">RDS Zero-ETL 統合 →Redshift</a></li>
+<li><a href="#rdsdmss3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→DMS→S3→GlueJob→Iceberg テーブル</a></li>
+<li><a href="#rdsdebeziummsks3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル</a></li>
+<li><a href="#rdsdebeziummskdatafirehoseiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→DataFirehose→Iceberg テーブル</a></li>
+<li><a href="#rdsdebeziummskiceberg%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→Icebergテーブル</a></li>
+<li><a href="#rdsdata-firehoseiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB-preview-%E7%89%88">RDS→Data Firehose→Iceberg テーブル (preview 版)</a></li>
+<li><a href="#rds-%E3%82%92%E5%85%B1%E6%9C%89%E3%81%97%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%B3">RDS を共有しクローン</a></li>
+<li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>RDS のテーブルデータを分析用テーブルにレプリケートする方法が多数あったのでその一覧をまとめます。</p>
+<p>RDS をユーザ影響を極力低くすべく、分析用テーブルへレプリケートして、分析する方法が多々あったので私見ですが Pros/Cons をまとめます。</p>
+<h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><ul>
+<li>アプリケーション DB を配置する AWS アカウントとデータ基盤を構築する AWS アカウントは分けます</li>
+<li>Glue テーブルは iceberg 形式を採用します</li>
+</ul></div><a class="article-more button is-small is-size-7" href="/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-10-18</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/10/18/2024-10-18-glue-job-bookmark/">Glue Job Bookmark 機能でなく sampleQuery を使って DB データをエクスポートしてみた</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#glue-job-bookmark-%E6%A9%9F%E8%83%BD%E3%81%A8%E3%81%AF">Glue Job Bookmark 機能とは？</a></li>
+<li><a href="#glue-job-bookmark-%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9">Glue Job Bookmark の問題点</a><ul>
+<li><a href="#%E4%BE%8B-%E4%B8%8D%E6%95%B4%E5%90%88%E3%81%8C%E8%B5%B7%E3%81%93%E3%82%8B%E4%BE%8B">例: 不整合が起こる例</a></li>
+</ul>
+</li>
+<li><a href="#%E5%95%8F%E9%A1%8C%E7%82%B9%E3%81%B8%E3%81%AE%E5%AF%BE%E5%BF%9C%E7%AD%96">問題点への対応策</a></li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>Glue Job で DB データを取得していた際に Glue Job Bookmark を利用していた際に問題があったので、その際の対応を備忘録として残しておきます。</p>
+<h2 id="Glue-Job-Bookmark-機能とは？"><a href="#Glue-Job-Bookmark-機能とは？" class="headerlink" title="Glue Job Bookmark 機能とは？"></a>Glue Job Bookmark 機能とは？</h2><p>Glue Job で DB やログ情報を取り込みしている場合、どこまで取り込んだかを記録する <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/glue/latest/dg/monitor-continuations.html">Bookmark 機能</a> があります。</p>
+<p>DB データを毎回全てダンプするよりも差分のみ抽出（増分エクスポート: Incremental Export）でき、データの取り込み量も抑えられ、Glue Job の実行時間が短縮されます。</p>
+<p>Glue Job は実行時間に対して従量課金されるのでコストも抑制できるメリットがあります。</p></div><a class="article-more button is-small is-size-7" href="/2024/10/18/2024-10-18-glue-job-bookmark/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-08-27</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/08/27/2024-08-27-docker-is-unreachable/">Error: Docker is unreachable. Docker needs to be running to build inside a container.</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#docker_host-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">DOCKER_HOST を指定する</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<p><code>sam build --use-container</code> でビルド実行した際に以下エラーが発生しました。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: Docker is unreachable. Docker needs to be running to build inside a container.</span><br></pre></td></tr></table></figure></div><a class="article-more button is-small is-size-7" href="/2024/08/27/2024-08-27-docker-is-unreachable/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2024-05-29</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2024/05/29/2024-05-29-upgrade-alb-accesslog-format/">ALB アクセスログに新たな項目が追加された</a></h1><div class="content"><p>2024.05.22 より、ALB のアクセスログを Athena でクエリ実行してみると空の行が返るようになりました。<br>原因を調査してみるとどうやら ALB アクセスログに以下の項目が追加され、フォーマットが変更された為のようです。</p>
+<ul>
+<li>traceability_id string</li>
+<li>unknown_fields string</li>
+</ul>
+<p>テーブルを再作成することで事なきを得ました。</p>
+<p>※ ALB はパーティションして利用しており、<a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html">公式</a>とはやや異なるテーブル定義にしています。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">CREATE EXTERNAL TABLE `&lt;table name&gt;`(</span><br><span class="line">  `type` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `time` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `elb` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `client_ip` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `client_port` int COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_ip` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_port` int COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_processing_time` double COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_processing_time` double COMMENT &#x27;&#x27;,</span><br><span class="line">  `response_processing_time` double COMMENT &#x27;&#x27;,</span><br><span class="line">  `elb_status_code` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_status_code` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `received_bytes` bigint COMMENT &#x27;&#x27;,</span><br><span class="line">  `sent_bytes` bigint COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_verb` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_url` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_proto` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `user_agent` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `ssl_cipher` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `ssl_protocol` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_group_arn` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `trace_id` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `domain_name` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `chosen_cert_arn` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `matched_rule_priority` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_creation_time` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `actions_executed` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `redirect_url` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `lambda_error_reason` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_port_list` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_status_code_list` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `classification` string COMMENT &#x27;&#x27;,</span><br><span class="line"><span class="deletion">-  `classification_reason` string COMMENT &#x27;&#x27;</span></span><br><span class="line"><span class="addition">+  `classification_reason` string COMMENT &#x27;&#x27;,</span></span><br><span class="line"><span class="addition">+  `traceability_id` string COMMENT &#x27;&#x27;,</span></span><br><span class="line"><span class="addition">+  `unknown_fields` string COMMENT &#x27;&#x27;</span></span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (</span><br><span class="line">  `year` int COMMENT &#x27;&#x27;,</span><br><span class="line">  `month` int COMMENT &#x27;&#x27;,</span><br><span class="line">  `day` int COMMENT &#x27;&#x27;)</span><br><span class="line">ROW FORMAT SERDE &#x27;org.apache.hadoop.hive.serde2.RegexSerDe&#x27;</span><br><span class="line">WITH SERDEPROPERTIES (</span><br><span class="line"><span class="deletion">-  &#x27;input.regex&#x27; =</span></span><br><span class="line"><span class="deletion">-        &#x27;([^ ]*) ([^ ]*) ([^ ]*) ([^ ]*):([0-9]*) ([^ ]*)[:-]([0-9]*) ([-.0-9]*) ([-.0-9]*) ([-.0-9]*) (|[-0-9]*) (-|[-0-9]*) ([-0-9]*) ([-0-9]*) \&quot;([^ ]*) (.*) (- |[^ ]*)\&quot; \&quot;([^\&quot;]*)\&quot; ([A-Z0-9-_]+) ([A-Za-z0-9.-]*) ([^ ]*) \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; ([-.0-9]*) ([^ ]*) \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; \&quot;([^ ]*)\&quot; \&quot;([^\s]+?)\&quot; \&quot;([^\s]+)\&quot; \&quot;([^ ]*)\&quot; \&quot;([^ ]*)\&quot;&#x27;)</span></span><br><span class="line"><span class="addition">+  &#x27;input.regex&#x27; =</span></span><br><span class="line"><span class="addition">+        &#x27;([^ ]*) ([^ ]*) ([^ ]*) ([^ ]*):([0-9]*) ([^ ]*)[:-]([0-9]*) ([-.0-9]*) ([-.0-9]*) ([-.0-9]*) (|[-0-9]*) (-|[-0-9]*) ([-0-9]*) ([-0-9]*) \&quot;([^ ]*) (.*) (- |[^ ]*)\&quot; \&quot;([^\&quot;]*)\&quot; ([A-Z0-9-_]+) ([A-Za-z0-9.-]*) ([^ ]*) \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; ([-.0-9]*) ([^ ]*) \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; \&quot;([^ ]*)\&quot; \&quot;([^\s]+?)\&quot; \&quot;([^\s]+)\&quot; \&quot;([^ ]*)\&quot; \&quot;([^ ]*)\&quot; ?([^ ]*)?&#x27;)</span></span><br><span class="line">STORED AS INPUTFORMAT</span><br><span class="line">  &#x27;org.apache.hadoop.mapred.TextInputFormat&#x27;</span><br><span class="line">OUTPUTFORMAT</span><br><span class="line">  &#x27;org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat&#x27;</span><br><span class="line">LOCATION</span><br><span class="line">  &#x27;s3://&lt;s3 bucket&gt;/&lt;lb name&gt;/AWSLogs/&lt;aws account id&gt;/elasticloadbalancing/ap-northeast-1&#x27;</span><br><span class="line">TBLPROPERTIES (</span><br><span class="line">  &#x27;classification&#x27;=&#x27;csv&#x27;,</span><br><span class="line">  &#x27;compressionType&#x27;=&#x27;gzip&#x27;,</span><br><span class="line">  &#x27;projection.day.digits&#x27;=&#x27;2&#x27;,</span><br><span class="line">  &#x27;projection.day.range&#x27;=&#x27;01,31&#x27;,</span><br><span class="line">  &#x27;projection.day.type&#x27;=&#x27;integer&#x27;,</span><br><span class="line">  &#x27;projection.enabled&#x27;=&#x27;true&#x27;,</span><br><span class="line">  &#x27;projection.month.digits&#x27;=&#x27;2&#x27;,</span><br><span class="line">  &#x27;projection.month.range&#x27;=&#x27;01,12&#x27;,</span><br><span class="line">  &#x27;projection.month.type&#x27;=&#x27;integer&#x27;,</span><br><span class="line">  &#x27;projection.year.digits&#x27;=&#x27;4&#x27;,</span><br><span class="line">  &#x27;projection.year.range&#x27;=&#x27;2020,2100&#x27;,</span><br><span class="line">  &#x27;projection.year.type&#x27;=&#x27;integer&#x27;,</span><br><span class="line">  &#x27;storage.location.template&#x27;=&#x27;s3://&lt;s3 bucket&gt;/&lt;lb name&gt;/AWSLogs/&lt;aws account id&gt;/elasticloadbalancing/ap-northeast-1/$&#123;year&#125;/$&#123;month&#125;/$&#123;day&#125;&#x27;,</span><br><span class="line">  &#x27;typeOfData&#x27;=&#x27;file&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>以上<br>参考になれば幸いです。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-12-07</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/12/07/2023-12-07-annual-subscription-purchase-of-aws-resources/">AWS リソースの年間予約購入</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E5%B9%B4%E9%96%93%E4%BA%88%E7%B4%84%E8%B3%BC%E5%85%A5%E3%81%BE%E3%81%A8%E3%82%81">年間予約購入まとめ</a></li>
+<li><a href="#ri-%E6%9C%9F%E9%99%90%E5%88%87%E3%82%8C%E9%80%9A%E7%9F%A5-%E8%A8%AD%E5%AE%9A">RI 期限切れ通知 設定</a></li>
+<li><a href="#reserved-instance-%E8%B3%BC%E5%85%A5%E5%89%8D%E5%BE%8C%E3%81%AE%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D%E3%81%AE%E8%A8%88%E7%AE%97">Reserved Instance 購入前後のコスト削減額の計算</a></li>
+<li><a href="#savings-plans-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D-%E8%A8%88%E7%AE%97">Savings Plans コスト削減額 計算</a><ul>
+<li><a href="#aws-savings-plans-%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E6%8E%A8%E5%A5%A8%E5%80%A4%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">AWS Savings Plans コミット値推奨値を利用する場合</a></li>
+<li><a href="#aws-savings-plans-%E8%87%AA%E5%89%8D%E3%81%A7%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">AWS Savings Plans 自前でコミット値を設定する場合</a></li>
+</ul>
+</li>
+<li><a href="#cloudfront-security-bundle-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D">CloudFront Security Bundle コスト削減額</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<p>AWS リソースの年間予約購入について備忘録です。</p>
+<h2 id="年間予約購入まとめ"><a href="#年間予約購入まとめ" class="headerlink" title="年間予約購入まとめ"></a>年間予約購入まとめ</h2><ul>
+<li><p>Reserved Instance</p>
+<ul>
+<li>対象:<ul>
+<li>RDS</li>
+<li>ElastiCache</li>
+<li>RedShift</li>
+<li>OpenSearch</li>
+</ul>
+</li>
+<li>以下指定し購入<ul>
+<li>インスタンスタイプ</li>
+<li>個数</li>
+<li>前払い</li>
+<li>年数（弊社は 1 年指定）</li>
+</ul>
+</li>
+<li>期限切れ通知<ul>
+<li><a target="_blank" rel="noopener" href="https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert">RI アラート管理</a> で設定</li>
+</ul>
+</li>
+<li>Pros:<ul>
+<li>どのリソースに対して購入するかが決定しやすい</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Savings Plans</p>
+<ul>
+<li>対象: コンピュートリソース（EC2 専用の Savings Plans もある）<ul>
+<li>EC2</li>
+<li>ECS</li>
+<li>Lambda</li>
+</ul>
+</li>
+<li>以下指定し購入<ul>
+<li>コンピュートリソースの利用量に対するコミット値</li>
+<li>年数</li>
+<li>前払い</li>
+</ul>
+</li>
+<li>期限切れ通知<ul>
+<li><a target="_blank" rel="noopener" href="https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/overview/alert">Savings Plans アラート管理</a> で設定</li>
+</ul>
+</li>
+<li>コミット値<ul>
+<li>過去・今後の推定利用量から算出する or AWS 推奨値を設定する</li>
+</ul>
+</li>
+<li>Pros:<ul>
+<li>EC2 から ECS のリプレイス後も適用される</li>
+</ul>
+</li>
+<li>Cons:<ul>
+<li>どのリソースに対して購入したかが分かりづらい</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CloudFront Security Bundle</p>
+<ul>
+<li>対象:<ul>
+<li>CloudFront</li>
+<li>WAF</li>
+</ul>
+</li>
+<li>以下指定し購入<ul>
+<li>CloudFront の利用量に対するコミット値</li>
+<li>年数</li>
+<li>前払い</li>
+</ul>
+</li>
+<li>期限切れ通知<ul>
+<li>現状ない (2023-12-07 時点)</li>
+</ul>
+</li>
+<li>コミット値<ul>
+<li>過去・今後の推定利用量から算出する or AWS 推奨値を設定する</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></div><a class="article-more button is-small is-size-7" href="/2023/12/07/2023-12-07-annual-subscription-purchase-of-aws-resources/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-12-01</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/12/01/2023-12-01-show-running-aws-resources/">aws-cli で AWS 起動中のリソース一覧取得する</a></h1><div class="content"><p>備忘録です。</p>
+<p>複数 AWS アカウントで起動中のリソース一覧作りたい時によく利用しています。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">profiles=(</span><br><span class="line">  &lt;profile names <span class="keyword">in</span> ~/.aws/credentials&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> profile <span class="keyword">in</span> <span class="variable">$&#123;profiles[@]&#125;</span>; <span class="keyword">do</span></span><br><span class="line">    awsume <span class="variable">$profile</span> --session-name <span class="string">&quot;kenzo.tanaka&quot;</span> --output-profile tmp</span><br><span class="line">    account_id=$(aws sts get-caller-identity --profile tmp --query <span class="string">&#x27;Account&#x27;</span> --output text)</span><br><span class="line"></span><br><span class="line">    aws ec2 --profile tmp describe-instances --filters <span class="string">&quot;Name=instance-state-name,Values=running&quot;</span> \</span><br><span class="line">        | jq -r <span class="string">&quot;.Reservations[].Instances[] | \&quot;<span class="variable">$profile</span>,<span class="variable">$account_id</span>,ec2,\&quot;+ .InstanceType +\&quot;,1,\&quot;+ (.Tags[]|select(.Key == \&quot;Name\&quot;).Value)&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># aws rds describe-db-clusters だと cluster を利用していない場合に instance 情報が取得できない</span></span><br><span class="line">    aws rds --profile tmp describe-db-instances \</span><br><span class="line">        | jq -r <span class="string">&quot;.DBInstances[] | select(.DBInstanceStatus==\&quot;available\&quot;) | \&quot;<span class="variable">$profile</span>,<span class="variable">$account_id</span>,\&quot;+ .Engine +\&quot;,\&quot;+ .DBInstanceClass +\&quot;,1,\&quot;+ .DBInstanceIdentifier&quot;</span></span><br><span class="line"></span><br><span class="line">    aws elasticache --profile tmp describe-cache-clusters \</span><br><span class="line">        | jq -r <span class="string">&quot;.CacheClusters[] | \&quot;<span class="variable">$profile</span>,<span class="variable">$account_id</span>,\&quot;+ .Engine +\&quot;,\&quot;+ .CacheNodeType +\&quot;,\&quot;+ (.NumCacheNodes|tostring) +\&quot;,\&quot;+ .CacheClusterId&quot;</span></span><br><span class="line"></span><br><span class="line">    aws redshift --profile tmp describe-clusters \</span><br><span class="line">        | jq -r <span class="string">&quot;.Clusters[] | select(.ClusterStatus==\&quot;available\&quot;) | \&quot;<span class="variable">$profile</span>,<span class="variable">$account_id</span>,redshift,\&quot;+ .NodeType +\&quot;,\&quot;+ (.NumberOfNodes|tostring) +\&quot;,\&quot;+ .ClusterIdentifier&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-11-07</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/11/07/2023-11-07-describe-ec2-specified-tag-key-value/">AWS CLI で EC2 インスタンス名一覧を取得</a></h1><div class="content"><p>AWS CLI で EC2 に設定されたタグから特定のキーを指定し、その値をリストするスクリプトです。<br>以下は Key = Name でその値を取得しています。</p>
+<p>EC2 インスタンス名の一覧を取得したい意図です。</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-instances --query &#x27;Reservations[*].Instances[*].Tags[?Key == `Name`].Value&#x27; --output text</span><br></pre></td></tr></table></figure>
+
+<p>以上<br>参考になれば幸いです。</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2023/07/08/2023-07-08-install-terraform-multi-versions-by-asdf/"><img class="thumbnail" src="https://i.imgur.com/9b8Lzio.png" alt="asdf で terraform 複数バージョン管理"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-07-08</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/07/08/2023-07-08-install-terraform-multi-versions-by-asdf/">asdf で terraform 複数バージョン管理</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#asdf-%E6%8E%A8%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1">asdf 推した理由</a></li>
+<li><a href="#macos-%E3%81%AB-asdf-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">MacOS に asdf インストール</a></li>
+<li><a href="#terraform-plugin-%E8%BF%BD%E5%8A%A0-%E8%A4%87%E6%95%B0%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">terraform plugin 追加 &amp; 複数バージョンインストール</a></li>
+<li><a href="#%E7%89%B9%E5%AE%9A%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%81%AE%E3%81%BF%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">特定ディレクトリのみバージョンを指定する</a></li>
+<li><a href="#tflint-tfsec-%E3%82%82%E5%90%8C%E6%A7%98%E3%81%AB-asdf-%E3%81%A7%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86%E3%81%A7%E3%81%8D%E3%82%8B">tflint, tfsec も同様に asdf でバージョン管理できる</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<p>terraform はバージョンアップ頻度が高く、<br>プロジェクトによってバージョン差分が生じるので<br>複数バージョンを管理できると運用がスムーズです。</p></div><a class="article-more button is-small is-size-7" href="/2023/07/08/2023-07-08-install-terraform-multi-versions-by-asdf/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2023-07-07</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2023/07/07/2023-07-07-aws-sam-enable-apigateway-accesslog/">SAM プロジェクトで管理する API Gateway のアクセスログを有効化する</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a><ul>
+<li><a href="#sam-templateyml-%E8%A8%AD%E5%AE%9A">SAM template.yml 設定</a></li>
+</ul>
+</li>
+<li><a href="#%E7%B5%90%E8%AB%96">結論</a></li>
+<li><a href="#%E8%A9%A6%E3%81%97%E3%81%9F%E3%81%93%E3%81%A8-ng-%E9%9B%86">試したこと (NG 集)</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>SAM プロジェクトで管理する API Gateway について<br>AWS Config rule: <code>api-gw-execution-logging-enabled</code> に対応すべく、<br>アクセスログを有効化した際にハマった話です。</p>
+<p><code>Events.*.Type = Api</code> で作成した API Gateway では SAM 上でアクセスログ有効化の設定ができません。</p>
+<p>どのようにしたら API Gateway のアクセスログ有効化できるか調査しました。</p></div><a class="article-more button is-small is-size-7" href="/2023/07/07/2023-07-07-aws-sam-enable-apigateway-accesslog/#more">続きを読む</a></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/categories/AWS/page/0/">前</a></div><div class="pagination-next"><a href="/categories/AWS/page/2/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/categories/AWS/">1</a></li><li><a class="pagination-link" href="/categories/AWS/page/2/">2</a></li><li><a class="pagination-link" href="/categories/AWS/page/3/">3</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

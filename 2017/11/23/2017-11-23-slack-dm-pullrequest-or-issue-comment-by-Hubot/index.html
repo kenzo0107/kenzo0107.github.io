@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Hubot で Git の Pull Request や Issue のコメントのメンション相手に Slack DM で通知 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="概要Git での Pull Request や Issue コメントのメンションがメール通知で気づけず困った！という声を多く聞き、メンション相手に Slack DM を通知する様な仕組みを作りました。 システム概要今回は AWS 上に構築しました。  Git は GHE on EC2 github.com の場合だと、IP 定まらない問題があるかと思うので、動的に IP を取得して解放させる様な仕"><meta property="og:type" content="blog"><meta property="og:title" content="Hubot で Git の Pull Request や Issue のコメントのメンション相手に Slack DM で通知"><meta property="og:url" content="https://kenzo0107.github.io/2017/11/23/2017-11-23-slack-dm-pullrequest-or-issue-comment-by-Hubot/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="概要Git での Pull Request や Issue コメントのメンションがメール通知で気づけず困った！という声を多く聞き、メンション相手に Slack DM を通知する様な仕組みを作りました。 システム概要今回は AWS 上に構築しました。  Git は GHE on EC2 github.com の場合だと、IP 定まらない問題があるかと思うので、動的に IP を取得して解放させる様な仕"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://i.imgur.com/lAlhMpW.png"><meta property="og:image" content="https://i.imgur.com/6lBkFAL.png"><meta property="og:image" content="https://i.imgur.com/5sxmFVO.png"><meta property="article:published_time" content="2017-11-22T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://i.imgur.com/lAlhMpW.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2017/11/23/2017-11-23-slack-dm-pullrequest-or-issue-comment-by-Hubot/"},"headline":"Hubot で Git の Pull Request や Issue のコメントのメンション相手に Slack DM で通知","image":["https://i.imgur.com/lAlhMpW.png","https://i.imgur.com/6lBkFAL.png","https://i.imgur.com/5sxmFVO.png"],"datePublished":"2017-11-22T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"概要Git での Pull Request や Issue コメントのメンションがメール通知で気づけず困った！という声を多く聞き、メンション相手に Slack DM を通知する様な仕組みを作りました。 システム概要今回は AWS 上に構築しました。  Git は GHE on EC2 github.com の場合だと、IP 定まらない問題があるかと思うので、動的に IP を取得して解放させる様な仕"}</script><link rel="canonical" href="https://kenzo0107.github.io/2017/11/23/2017-11-23-slack-dm-pullrequest-or-issue-comment-by-Hubot/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-11-23</span></div></div><h1 class="title is-3 is-size-4-mobile">Hubot で Git の Pull Request や Issue のコメントのメンション相手に Slack DM で通知</h1><div class="content"><h2><span id="概要">概要</span></h2><p>Git での Pull Request や Issue コメントのメンションがメール通知で気づけず困った！<br>という声を多く聞き、メンション相手に Slack DM を通知する様な仕組みを作りました。</p>
+<h2><span id="システム概要">システム概要</span></h2><p>今回は AWS 上に構築しました。</p>
+<ul>
+<li>Git は GHE on EC2<ul>
+<li>github.com の場合だと、IP 定まらない問題があるかと思うので、動的に IP を取得して解放させる様な仕組みを入れる必要がありそう。</li>
+</ul>
+</li>
+<li>hubot は t2.nano と最小<ul>
+<li>当初、IBM Bluemix で構築してみましたが、サポートから IP 制限はまだできていない、とのことなので on AWS にしました。</li>
+</ul>
+</li>
+<li>GHE からの hubot の受け口は ELB で EIP のみ許可させてます。<ul>
+<li>今後、受け口を色々作る目的で ELB 立てました。</li>
+<li>元々は JIRA のメンションを Slack DM に送るだけの目的だったので 同一 Private Subnet に置いてました。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/lAlhMpW.png"></p>
+<h2><span id="スクリプト">スクリプト</span></h2><ul>
+<li>getSlackUsernameByGitUsername<ul>
+<li>基本 git name と slack name は命名規則が統一されていたので正規表現で変換させる様に解決しています。</li>
+<li>git name: kenzo-tanaka だったら slack name: kenzo.tanaka に変換</li>
+<li>命名規則に即していないユーザは以下の <code>users</code> リストに変換を任せます。<ul>
+<li><code>kimika.himura</code> は DM 送られたくないと言う人を想定してます。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>依存ライブラリ<ul>
+<li>  “hubot-slack”: “^4.4.0”</li>
+<li>  “hubot-slack-attachement”: “^1.0.1”</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">users = &#123;</span><br><span class="line">    &quot;kenzo-tanaka&quot;: &quot;kenzo0107&quot;,</span><br><span class="line">    &quot;kimika.himura&quot;: &quot;no_send&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>ソース全容は以下になります。</p>
+<script src="//gist.github.com/kenzo0107/d9f3618633d0243453bae7ab5ef5a1dd.js"></script>
+
+
+<h2><span id="git-設定">Git 設定</span></h2><p>設定したい Organization or Owner &gt; Settings &gt; Hooks で hubot への URL を設定します。((Organization 跨いで一気に全部のリポジトリにHookかけるのは別途スクリプト組むなりしないと難しそう。GitHub社も Organization は 1つとすることを推奨とのことなので今回はこれで！))</p>
+<p>その他設定</p>
+<ul>
+<li>Content type: <code>application/json</code></li>
+<li>Let me select individual events:<ul>
+<li>Issues</li>
+<li>Issue comment</li>
+<li>Pull request</li>
+<li>Pull request review</li>
+<li>Pull request review comment</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/6lBkFAL.png"></p>
+<p>※ よりセキュアにする際には Secret 設定してください。</p>
+<h2><span id="通知が来た">通知が来た！</span></h2><p>早速 Pull Request でメンションしてみたら通知が来ました！<br>絵文字もしっかり！<br>URL も自動でリンクされている！</p>
+<p><img src="https://i.imgur.com/5sxmFVO.png"></p>
+<p>以上、参考になれば幸いです♪</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Hubot で Git の Pull Request や Issue のコメントのメンション相手に Slack DM で通知</p><p><a href="https://kenzo0107.github.io/2017/11/23/2017-11-23-slack-dm-pullrequest-or-issue-comment-by-Hubot/">https://kenzo0107.github.io/2017/11/23/2017-11-23-slack-dm-pullrequest-or-issue-comment-by-Hubot/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2017-11-23</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2017/12/05/2017-12-05-terraform-workspace-tfsate/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">terraform workspace で環境毎に tfsate 管理</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2017/11/13/2017-11-13-prometheus-remote-storage/"><span class="level-item">Prometheus2.0 remote storage 検証</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2017/11/23/2017-11-23-slack-dm-pullrequest-or-issue-comment-by-Hubot/';
+            this.page.identifier = '2017/11/23/2017-11-23-slack-dm-pullrequest-or-issue-comment-by-Hubot/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

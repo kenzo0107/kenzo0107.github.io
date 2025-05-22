@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Hubot + Slack on Amazon Linux - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Prerequisite Amazon Linux AMI 2015.09.1 (HVM), SSD Volume Type(t2.nano) npm 1.3.6 hubot 2.17.0 coffeescript 1.10.0  I use t2.nano released at December 2015. first to do. summarized in the following si"><meta property="og:type" content="blog"><meta property="og:title" content="Hubot + Slack on Amazon Linux"><meta property="og:url" content="https://kenzo0107.github.io/2016/01/13/2016-01-13-hubot-slack-on-amazonlinux/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="Prerequisite Amazon Linux AMI 2015.09.1 (HVM), SSD Volume Type(t2.nano) npm 1.3.6 hubot 2.17.0 coffeescript 1.10.0  I use t2.nano released at December 2015. first to do. summarized in the following si"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="http://i.imgur.com/AdyvxbZ.png"><meta property="og:image" content="http://i.imgur.com/v3MK8VL.png"><meta property="og:image" content="http://i.imgur.com/in4XiYj.png"><meta property="article:published_time" content="2016-01-12T15:00:00.000Z"><meta property="article:modified_time" content="2020-05-07T03:41:24.623Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="Slack"><meta property="article:tag" content="Hubot"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://i.imgur.com/AdyvxbZ.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2016/01/13/2016-01-13-hubot-slack-on-amazonlinux/"},"headline":"Hubot + Slack on Amazon Linux","image":["http://i.imgur.com/AdyvxbZ.png","http://i.imgur.com/v3MK8VL.png","http://i.imgur.com/in4XiYj.png"],"datePublished":"2016-01-12T15:00:00.000Z","dateModified":"2020-05-07T03:41:24.623Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"Prerequisite Amazon Linux AMI 2015.09.1 (HVM), SSD Volume Type(t2.nano) npm 1.3.6 hubot 2.17.0 coffeescript 1.10.0  I use t2.nano released at December 2015. first to do. summarized in the following si"}</script><link rel="canonical" href="https://kenzo0107.github.io/2016/01/13/2016-01-13-hubot-slack-on-amazonlinux/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-01-13</span><span class="level-item">Updated&nbsp;<time dateTime="2020-05-07T03:41:24.623Z" title="2020/5/7 12:41:24">2020-05-07</time></span></div></div><h1 class="title is-3 is-size-4-mobile">Hubot + Slack on Amazon Linux</h1><div class="content"><h2><span id="prerequisite">Prerequisite</span></h2><ul>
+<li>Amazon Linux AMI 2015.09.1 (HVM), SSD Volume Type(t2.nano)</li>
+<li>npm 1.3.6</li>
+<li>hubot 2.17.0</li>
+<li>coffeescript 1.10.0</li>
+</ul>
+<p>I use t2.nano released at December 2015.</p>
+<h2><span id="first-to-do">first to do.</span></h2><ul>
+<li>summarized in the following site.</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://qiita.com/yangci/items/ef2ab9b6f0d28bad0881">AWS EC2 Amazon Linuxインスタンス起動後、最初にやることまとめ</a></p>
+<h2><span id="install-npm">Install npm</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install -y npm --enablerepo&#x3D;epel</span><br><span class="line"></span><br><span class="line">$ npm -v</span><br><span class="line">1.3.6</span><br></pre></td></tr></table></figure>
+
+<h2><span id="install-hubot-coffee-script-yo-generator-hubot">Install hubot, coffee-script, yo, generator-hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install -g hubot coffee-script yo generator-hubot</span><br><span class="line"></span><br><span class="line">$ hubot -v</span><br><span class="line">2.17.0</span><br><span class="line"></span><br><span class="line">$ coffee -v</span><br><span class="line">CoffeeScript version 1.10.0</span><br></pre></td></tr></table></figure>
+
+<h2><span id="create-hubot">create hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir mybot</span><br><span class="line">$ cd mybot</span><br><span class="line">$ yo hubot</span><br><span class="line"></span><br><span class="line">? &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">We&#39;re constantly looking for ways to make yo better!</span><br><span class="line">May we anonymously report usage statistics to improve the tool over time?</span><br><span class="line">More info: https:&#x2F;&#x2F;github.com&#x2F;yeoman&#x2F;insight &amp; http:&#x2F;&#x2F;yeoman.io</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; (Y&#x2F;n) n</span><br><span class="line">                     _____________________________</span><br><span class="line">                    &#x2F;                             \</span><br><span class="line">   &#x2F;&#x2F;\              |      Extracting input for    |</span><br><span class="line">  &#x2F;&#x2F;&#x2F;&#x2F;\    _____    |   self-replication process   |</span><br><span class="line"> &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;\  &#x2F;_____\   \                             &#x2F;</span><br><span class="line"> &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; |[^_&#x2F;\_]|   &#x2F;----------------------------</span><br><span class="line">  |   | _|___@@__|__</span><br><span class="line">  +&#x3D;&#x3D;&#x3D;+&#x2F;  &#x2F;&#x2F;&#x2F;     \_\</span><br><span class="line">   | |_\ &#x2F;&#x2F;&#x2F; HUBOT&#x2F;\\</span><br><span class="line">   |___&#x2F;\&#x2F;&#x2F;      &#x2F;  \\</span><br><span class="line">         \      &#x2F;   +---+</span><br><span class="line">          \____&#x2F;    |   |</span><br><span class="line">           | &#x2F;&#x2F;|    +&#x3D;&#x3D;&#x3D;+</span><br><span class="line">            \&#x2F;&#x2F;      |xx|</span><br><span class="line"></span><br><span class="line">? Owner (User &lt;user@example.com&gt;) tech@xxxxxxxx.jp</span><br><span class="line">? Bot name (mybot) hubot</span><br><span class="line">? Description xxxxxxx&#39;s hubot</span><br><span class="line">? Bot adapter slack</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">hubot-maps@0.0.2 node_modules&#x2F;hubot-maps</span><br><span class="line"></span><br><span class="line">$ ls</span><br><span class="line">Procfile   bin                    hubot-scripts.json  package.json</span><br><span class="line">README.md  external-scripts.json  node_modules        scripts</span><br></pre></td></tr></table></figure>
+
+<h3><span id="こんなエラーが出たときは">こんなエラーが出たときは</span></h3><p>/root/.config へのアクセス権限がないと言われています。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Error: EACCES, permission denied &#39;&#x2F;root&#x2F;.config&#39;</span><br><span class="line">    at Object.fs.mkdirSync (fs.js:654:18)</span><br><span class="line">    at sync (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;configstore&#x2F;node_modules&#x2F;mkdirp&#x2F;index.js:71:13)</span><br><span class="line">    at Function.sync (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;configstore&#x2F;node_modules&#x2F;mkdirp&#x2F;index.js:77:24)</span><br><span class="line">    at Object.create.all.get (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;configstore&#x2F;index.js:38:13)</span><br><span class="line">    at Object.Configstore (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;configstore&#x2F;index.js:27:44)</span><br><span class="line">    at new Insight (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;node_modules&#x2F;insight&#x2F;lib&#x2F;index.js:37:34)</span><br><span class="line">    at Object.&lt;anonymous&gt; (&#x2F;usr&#x2F;lib&#x2F;node_modules&#x2F;yo&#x2F;lib&#x2F;cli.js:156:11)</span><br><span class="line">    at Module._compile (module.js:456:26)</span><br><span class="line">    at Object.Module._extensions..js (module.js:474:10)</span><br><span class="line">    at Module.load (module.js:356:32)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>全権限付与</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mkdir &#x2F;root&#x2F;.config</span><br><span class="line"># chmod -R 0777 &#x2F;root&#x2F;.config</span><br></pre></td></tr></table></figure>
+
+<p>上記で問題なくyo コマンドが通りました。ほっ(-o-)</p>
+<ul>
+<li>Initial setting hubot.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Value</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Owner</td>
+<td>E-mail address</td>
+</tr>
+<tr>
+<td>Bot name</td>
+<td>same the hubot integrated slack</td>
+</tr>
+<tr>
+<td>Descriiption</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Bot adapter</td>
+<td>slack</td>
+</tr>
+</tbody></table>
+<p><img src="http://i.imgur.com/AdyvxbZ.png" alt="Imgur"></p>
+<h2><span id="install-hubot-slack">Install hubot-slack</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install hubot-slack --save</span><br></pre></td></tr></table></figure>
+
+<h2><span id="modify-external-scriptsjson">modify external-scripts.json</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ echo &#39;[]&#39; &gt; external-scripts.json</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; confirm setting.</span><br><span class="line">$ cat external-scripts.json</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+
+<h2><span id="add-to-binhubot">Add to bin/hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim bin&#x2F;hubot</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>run hubot via port 80</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line"></span><br><span class="line">set -e</span><br><span class="line"></span><br><span class="line">npm install</span><br><span class="line">export PATH&#x3D;&quot;node_modules&#x2F;.bin:node_modules&#x2F;hubot&#x2F;node_modules&#x2F;.bin:$PATH&quot;</span><br><span class="line"></span><br><span class="line"># add start</span><br><span class="line">export HUBOT_SLACK_TOKEN&#x3D;xoxb-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span><br><span class="line">export PORT&#x3D;80</span><br><span class="line"># add end</span><br><span class="line"></span><br><span class="line">exec node_modules&#x2F;.bin&#x2F;hubot --name &quot;hubot&quot; &quot;$@&quot;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="creat-hubot-script">creat hubot script</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim scripts&#x2F;hello.coffee</span><br></pre></td></tr></table></figure>
+
+<p>save the belowing scripts as scripts/hello.coffee</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># Description:</span><br><span class="line">#   hubot basic command.</span><br><span class="line">#</span><br><span class="line"># Commands:</span><br><span class="line">#   hubot who are you - I&#39;m hubot!</span><br><span class="line">#   hubot hello</span><br><span class="line">#   hubot who am I - You are &lt;user_name&gt;</span><br><span class="line">#   hubot what is this &lt;*&gt; - This is &lt;$1&gt;</span><br><span class="line"></span><br><span class="line">module.exports &#x3D; (robot) -&gt;</span><br><span class="line">  robot.respond &#x2F;who are you&#x2F;i, (msg) -&gt;</span><br><span class="line">    msg.send &quot;I&#39;m hubot!&quot;</span><br><span class="line"></span><br><span class="line">  robot.hear &#x2F;HELLO$&#x2F;i, (msg) -&gt;</span><br><span class="line">    msg.send &quot;hello!&quot;</span><br><span class="line"></span><br><span class="line">  robot.respond &#x2F;who am I&#x2F;i, (msg) -&gt;</span><br><span class="line">    msg.send &quot;You are #&#123;msg.message.user.name&#125;&quot;</span><br><span class="line"></span><br><span class="line">  robot.respond &#x2F;what is this (.*)&#x2F;i, (msg) -&gt;</span><br><span class="line">    msg.send &quot;This is #&#123;msg.match[1]&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="run-hubot">run hubot</span></h2><p><code>sudo</code> is required and in order to access http port.<br>You will require hubot integrated with outside site - ex) JIRA etc…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo bin&#x2F;hubot -a slack</span><br><span class="line"></span><br><span class="line">[Wed Jan 13 2016 13:43:08 GMT+0900 (JST)] INFO Connecting...</span><br><span class="line">[Wed Jan 13 2016 13:43:10 GMT+0900 (JST)] INFO Logged in as hubot of RUBY GROUPE, but not yet connected</span><br><span class="line">[Wed Jan 13 2016 13:43:11 GMT+0900 (JST)] INFO Slack client now connected</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>no sudo execution result …(&gt;_&lt;)<br>Error occured!!</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ bin&#x2F;hubot -a slack</span><br><span class="line"></span><br><span class="line">[Wed Jan 13 2016 16:40:59 GMT+0900 (JST)] INFO Connecting...</span><br><span class="line">[Wed Jan 13 2016 16:40:59 GMT+0900 (JST)] ERROR Error: listen EACCES</span><br><span class="line">  at errnoException (net.js:905:11)</span><br><span class="line">  at Server._listen2 (net.js:1024:19)</span><br><span class="line">  at listen (net.js:1065:10)</span><br><span class="line">  at net.js:1147:9</span><br><span class="line">  at dns.js:72:18</span><br><span class="line">  at process._tickCallback (node.js:442:13)</span><br><span class="line"></span><br><span class="line">[Wed Jan 13 2016 16:41:00 GMT+0900 (JST)] INFO Logged in as hubot of RUBY GROUPE, but not yet connected</span><br><span class="line">[Wed Jan 13 2016 16:41:02 GMT+0900 (JST)] INFO Slack client now connected</span><br></pre></td></tr></table></figure>
+
+<h2><span id="invite-hubot-at-slack">Invite hubot at Slack</span></h2><p>ex) botname=hubot</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;invite @hubot</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://i.imgur.com/v3MK8VL.png" alt="Imgur"></p>
+<h2><span id="input-text-at-slack">Input text at Slack</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[me]    hubot hello</span><br><span class="line">[hubot] hello!</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://i.imgur.com/in4XiYj.png" alt="Imgur"></p>
+<hr>
+<h1><span id="daemonize-hubot">daemonize hubot</span></h1><h2><span id="install-forever">Install forever</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install --save forever</span><br><span class="line"></span><br><span class="line">$ forever --version</span><br><span class="line">v0.15.1</span><br></pre></td></tr></table></figure>
+
+<h2><span id="set-path-as-not-root-user">set path as not root user.</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo &#39;export PATH&#x3D;$PATH:&#x2F;home&#x2F;&lt;user&gt;&#x2F;mybot&#x2F;node_modules&#x2F;forever&#x2F;bin&#39; &gt;&gt; ~&#x2F;.bashrc</span><br><span class="line">$ source ~&#x2F;.bashrc</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>root user too.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; change to super user.</span><br><span class="line">$ sudo su</span><br><span class="line"># echo &#39;export PATH&#x3D;$PATH:&#x2F;home&#x2F;&lt;user&gt;&#x2F;mybot&#x2F;node_modules&#x2F;forever&#x2F;bin&#39; &gt;&gt; ~&#x2F;.bashrc</span><br><span class="line"># source ~&#x2F;.bashrc</span><br><span class="line"># echo $PATH</span><br><span class="line">.......:&#x2F;home&#x2F;&lt;user&gt;&#x2F;mybot&#x2F;node_modules&#x2F;forever&#x2F;bin:......</span><br></pre></td></tr></table></figure>
+
+<h2><span id="modify-binhubot">Modify bin/hubot</span></h2><script src="//gist.github.com/kenzo0107/c6c713835918c3a75159.js"></script>
+
+
+
+<h2><span id="daemonize-start-hubot-sudo-binhubot-a-slack">daemonize start hubot - <code>sudo bin/hubot -a slack</code></span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo bin&#x2F;hubot start</span><br></pre></td></tr></table></figure>
+
+<h2><span id="stop-daemonized-hubot">stop daemonized hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo bin&#x2F;hubot stop</span><br></pre></td></tr></table></figure>
+
+<h2><span id="restart-hubot">restart hubot</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo bin&#x2F;hubot restart</span><br></pre></td></tr></table></figure>
+
+<h2><span id="check-forever-list">check forever list</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su</span><br><span class="line"># forever list</span><br><span class="line"></span><br><span class="line">info:    Forever processes running</span><br><span class="line">data:        uid  command script                           forever pid   id logfile                 uptime</span><br><span class="line">data:    [0] sICk coffee  node_modules&#x2F;.bin&#x2F;hubot -a slack 30494   30496    &#x2F;root&#x2F;.forever&#x2F;sICk.log 0:0:5:35.399</span><br></pre></td></tr></table></figure>
+
+<h2><span id="another-way-stop-forever-process">another way stop forever process</span></h2><ul>
+<li>check process. kill -9 process</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux | grep hubot | grep -v grep</span><br><span class="line"></span><br><span class="line">root     31144  0.3  3.1 723820 32392 ?        Ssl  17:58   0:00 &#x2F;usr&#x2F;bin&#x2F;node &#x2F;home&#x2F;hu&#x2F;mybot&#x2F;node_modules&#x2F;forever&#x2F;bin&#x2F;monitor node_modules&#x2F;.bin&#x2F;hubot</span><br><span class="line">root     31146  1.1  6.7 979588 69196 ?        Sl   17:58   0:00 node node_modules&#x2F;hubot&#x2F;node_modules&#x2F;.bin&#x2F;coffee &#x2F;home&#x2F;hu&#x2F;mybot&#x2F;node_modules&#x2F;.bin&#x2F;hubot -a slack</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; kill forcibly process</span><br><span class="line">$ sudo kill -9 31146</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>another one.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ps aux | grep hubot | grep -v grep | awk &#39;&#123;print &quot;kill -9&quot;, $2&#125;&#39; | sh</span><br></pre></td></tr></table></figure>
+
+<p>Thanks.</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Hubot + Slack on Amazon Linux</p><p><a href="https://kenzo0107.github.io/2016/01/13/2016-01-13-hubot-slack-on-amazonlinux/">https://kenzo0107.github.io/2016/01/13/2016-01-13-hubot-slack-on-amazonlinux/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2016-01-13</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2020-05-07</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Slack/">Slack</a><a class="link-muted mr-2" rel="tag" href="/tags/Hubot/">Hubot</a></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2016/01/15/2016-01-15-mysql-error-1045-28000-access-denied-for-user/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">MySQLトラブルシューティング - ERROR 1045 (28000): Access denied for user &#039;root&#039;@&#039;localhost&#039; (using password: NO)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2015/12/31/2015-12-31-pod-install-assersion/"><span class="level-item">pod install で ASSERSION対策</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2016/01/13/2016-01-13-hubot-slack-on-amazonlinux/';
+            this.page.identifier = '2016/01/13/2016-01-13-hubot-slack-on-amazonlinux/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>食洗機かけ終わったかわからなくなる問題を RaspberryPI + BlueButton + LINE Notify + Google Home で解決した話 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="概要食洗機かけ終わったかどうかわからなくなる問題が我が家で多発していました。  それを RaspberryPI + BluetButton + LINE Notify + Google Home で解決した話です。"><meta property="og:type" content="blog"><meta property="og:title" content="食洗機かけ終わったかわからなくなる問題を RaspberryPI + BlueButton + LINE Notify + Google Home で解決した話"><meta property="og:url" content="https://kenzo0107.github.io/2018/08/20/2018-08-20-raspberrypi-bluebutton-line-notify-google-home/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="概要食洗機かけ終わったかどうかわからなくなる問題が我が家で多発していました。  それを RaspberryPI + BluetButton + LINE Notify + Google Home で解決した話です。"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180820/20180820223225.jpg"><meta property="article:published_time" content="2018-08-19T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="RaspberryPI"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180820/20180820223225.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2018/08/20/2018-08-20-raspberrypi-bluebutton-line-notify-google-home/"},"headline":"食洗機かけ終わったかわからなくなる問題を RaspberryPI + BlueButton + LINE Notify + Google Home で解決した話","image":["https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180820/20180820223225.jpg"],"datePublished":"2018-08-19T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"概要食洗機かけ終わったかどうかわからなくなる問題が我が家で多発していました。  それを RaspberryPI + BluetButton + LINE Notify + Google Home で解決した話です。"}</script><link rel="canonical" href="https://kenzo0107.github.io/2018/08/20/2018-08-20-raspberrypi-bluebutton-line-notify-google-home/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180820/20180820223225.jpg" alt="食洗機かけ終わったかわからなくなる問題を RaspberryPI + BlueButton + LINE Notify + Google Home で解決した話"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2018-08-20</span></div></div><h1 class="title is-3 is-size-4-mobile">食洗機かけ終わったかわからなくなる問題を RaspberryPI + BlueButton + LINE Notify + Google Home で解決した話</h1><div class="content"><h2><span id="概要">概要</span></h2><p><b>食洗機かけ終わったかどうかわからなくなる問題</b>が我が家で多発していました。</p>
+
+<p>それを RaspberryPI + BluetButton + LINE Notify + Google Home で解決した話です。</p>
+
+<span id="more"></span>
+
+<h2><span id="何が問題">何が問題？</span></h2><p>我が家では、食洗機がある程度溜まったらかける、という風にしている為、必ずかける時間が決まっていません。</p>
+
+<p>その為、時折、妻or自分が食洗機を引き出した時に、「これ洗ったやつだっけ？」と疑心暗鬼・一触即発状態となり、
+駆け寄った息子にドラゴンストップしていただく事態が多発していました。</p>
+
+<p>記録が取れる様な仕組み、何か見ればわかる！<br>
+という状態にさえしといてもらえたら助かる、ということでエンジニアリングで解決できないか、と考えました。</p>
+
+<h2><span id="解決法">解決法</span></h2><p>開始した時刻を LINE グループに通知して記録する様にしました。<a href="#f-26e0fc97" name="fn-26e0fc97" title="curl 叩ければ、後々 Slack でも何でも、家族みんなが見る所に通知すれば良いかなと思ったので">*1</a></p>
+
+<p>その通知の仕組みをボタンを一押しで済ませられる様な、シンプルなものにできないか、と考え、<br>
+家にある Raspberry PI と組み合わせられる BlueButton で実装しようと考えました。</p>
+
+<h2><span id="仕組み">仕組み</span></h2><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180817/20180817003256.png" width="100%">
+</div>
+
+<ol>
+<li>食洗機を開始したら、BlueButton を押す</li>
+<li>BlueButton を押すと Bluetooth ペアリングしている Raspberry PI にボタン押したよ情報を渡す。</li>
+<li>Raspberry PI 側で起動させておいた BlueButton が押されたか判定するスクリプトが検知</li>
+<li>3をトリガーに LINE Notify で LINE に通知。</li>
+<li>3をトリガーに Google Home に食洗機開始したよメッセージを喋ってもらう。<a href="#f-08674585" name="fn-08674585" title="Google Home はあくまでスピーカー代りです。">*2</a></li>
+</ol>
+
+<p>押す長さによって処理分けしています。</p>
+
+<ul>
+<li><span style="color: #0000cc"><b>長押し</b></span>=食洗機開始をGoogle Home, Line へ通知</li>
+<li><span style="color: #286f2c"><b>短押し</b></span>=食洗機開始時刻読み上げ</li>
+</ul>
+
+<h2><span id="購入したもの">購入したもの</span></h2><p><div class="hatena-asin-detail"><a target="_blank" rel="noopener" href="https://www.amazon.co.jp/exec/obidos/ASIN/B01NAHBSUD/kenzo0107-22/"><img src="https://images-fe.ssl-images-amazon.com/images/I/51FuxBMPonL._SL160_.jpg" class="hatena-asin-detail-image" alt="Raspberry Pi 3 Model B V1.2 (日本製) 国内正規代理店品" title="Raspberry Pi 3 Model B V1.2 (日本製) 国内正規代理店品"></a><div class="hatena-asin-detail-info"><p class="hatena-asin-detail-title"><a target="_blank" rel="noopener" href="https://www.amazon.co.jp/exec/obidos/ASIN/B01NAHBSUD/kenzo0107-22/">Raspberry Pi 3 Model B V1.2 (日本製) 国内正規代理店品</a></p><ul><li><span class="hatena-asin-detail-label">出版社/メーカー:</span> Raspberry Pi</li><li><span class="hatena-asin-detail-label">発売日:</span> 2016/02/29</li><li><span class="hatena-asin-detail-label">メディア:</span> Tools & Hardware</li><li><a href="https://d.hatena.ne.jp/asin/B01NAHBSUD/kenzo0107-22" target="_blank">この商品を含むブログを見る</a></li></ul></div><div class="hatena-asin-detail-foot"></div></div>
+<div class="hatena-asin-detail"><a target="_blank" rel="noopener" href="https://www.amazon.co.jp/exec/obidos/ASIN/B0794XCHT3/kenzo0107-22/"><img src="https://images-fe.ssl-images-amazon.com/images/I/51za6FPlcyL._SL160_.jpg" class="hatena-asin-detail-image" alt="Punasi Raspberry Pi3/2/B+/B 5V 2.5A アダプタ 電源 マイクロUSB Boseスピーカー Androidタブレット スマートフォン" title="Punasi Raspberry Pi3/2/B+/B 5V 2.5A アダプタ 電源 マイクロUSB Boseスピーカー Androidタブレット スマートフォン"></a><div class="hatena-asin-detail-info"><p class="hatena-asin-detail-title"><a target="_blank" rel="noopener" href="https://www.amazon.co.jp/exec/obidos/ASIN/B0794XCHT3/kenzo0107-22/">Punasi Raspberry Pi3/2/B+/B 5V 2.5A アダプタ 電源 マイクロUSB Boseスピーカー Androidタブレット スマートフォン</a></p><ul><li><span class="hatena-asin-detail-label">出版社/メーカー:</span> Punasi</li><li><span class="hatena-asin-detail-label">メディア:</span> エレクトロニクス</li><li><a href="https://d.hatena.ne.jp/asin/B0794XCHT3/kenzo0107-22" target="_blank">この商品を含むブログを見る</a></li></ul></div><div class="hatena-asin-detail-foot"></div></div>
+<div class="hatena-asin-detail"><a target="_blank" rel="noopener" href="https://www.amazon.co.jp/exec/obidos/ASIN/B01LA7EYS0/kenzo0107-22/"><img src="https://images-fe.ssl-images-amazon.com/images/I/41Fw-FkJNJL._SL160_.jpg" class="hatena-asin-detail-image" alt="GOCOUP スマートフォン用 カメラリモコン A-Bシャッター Bluetoothリモートfor iPhone & Android 日本語説明書付き(黒)" title="GOCOUP スマートフォン用 カメラリモコン A-Bシャッター Bluetoothリモートfor iPhone & Android 日本語説明書付き(黒)"></a><div class="hatena-asin-detail-info"><p class="hatena-asin-detail-title"><a target="_blank" rel="noopener" href="https://www.amazon.co.jp/exec/obidos/ASIN/B01LA7EYS0/kenzo0107-22/">GOCOUP スマートフォン用 カメラリモコン A-Bシャッター Bluetoothリモートfor iPhone & Android 日本語説明書付き(黒)</a></p><ul><li><span class="hatena-asin-detail-label">出版社/メーカー:</span> GOCOUP</li><li><span class="hatena-asin-detail-label">メディア:</span> エレクトロニクス</li><li><a href="https://d.hatena.ne.jp/asin/B01LA7EYS0/kenzo0107-22" target="_blank">この商品を含むブログを見る</a></li></ul></div><div class="hatena-asin-detail-foot"></div></div>
+<div class="hatena-asin-detail"><a target="_blank" rel="noopener" href="https://www.amazon.co.jp/exec/obidos/ASIN/B01N10FAFU/kenzo0107-22/"><img src="https://images-fe.ssl-images-amazon.com/images/I/31u3OTwzfSL._SL160_.jpg" class="hatena-asin-detail-image" alt="Google Home" title="Google Home"></a><div class="hatena-asin-detail-info"><p class="hatena-asin-detail-title"><a target="_blank" rel="noopener" href="https://www.amazon.co.jp/exec/obidos/ASIN/B01N10FAFU/kenzo0107-22/">Google Home</a></p><ul><li><span class="hatena-asin-detail-label">出版社/メーカー:</span> google</li><li><span class="hatena-asin-detail-label">メディア:</span> オフィス用品</li><li><a href="https://d.hatena.ne.jp/asin/B01N10FAFU/kenzo0107-22" target="_blank">この商品を含むブログを見る</a></li></ul></div><div class="hatena-asin-detail-foot"></div></div></p>
+
+<p>BlueButton は Amazon で 100 円程度でした♪ お財布に優しい！</p>
+
+<p>Google Home はあくまでスピーカー代わりでボタンが押された時の確認用として使ってます。<br>
+USB スピーカーを接続するでも、Lチカで反応させる、でも確認できるものがあれば、それで良いと思います。</p>
+
+<h2><span id="raspberry-pi-でのセットアップ">Raspberry PI でのセットアップ</span></h2><h3><span id="raspberry-pi-情報">Raspberry PI 情報</span></h3><pre class="code" data-lang data-unlink>$ uname -a
+
+Linux raspberrypi 4.9.35-v7+ #1014 SMP Fri Jun 30 14:47:43 BST 2017 armv7l GNU/Linux</pre>
+
+<h3><span id="事前準備">事前準備</span></h3><ul>
+<li><p>LINE Notify に Signup し token 生成します。<br>
+<a target="_blank" rel="noopener" href="https://notify-bot.line.me/ja/">LINE Notify</a></p></li>
+<li><p>BlueButton を Bluetooth ペアリングしときます。</p></li>
+</ul>
+
+<p>ペアリングは既にいくつも記事があります。以下記事参考になるかと思います。<br>
+<a target="_blank" rel="noopener" href="https://qiita.com/nori-dev-akg/items/96584d9591d329f9dcb2">Bluetoothシャットダウンボタンを作る #300円でIoTボタン</a></p>
+
+<h3><span id="google-home-notifiler-インストール">google-home-notifiler インストール</span></h3><ul>
+<li>nodejs, npm インストール</li>
+</ul>
+
+<pre class="code" data-lang data-unlink>pi$ sudo apt-get update
+pi$ sudo apt-get install -y nodejs npm
+pi$ sudo npm cache clean
+pi$ sudo npm install npm n -g
+pi$ sudo n stable</pre>
+
+<ul>
+<li>google-home-notifiler 設定</li>
+</ul>
+
+<pre class="code" data-lang data-unlink>pi$ cd ~
+pi$ git clone https://github.com/noelportugal/google-home-notifier
+pi$ cd google-home-notifier/
+pi$ npm install</pre>
+
+<ul>
+<li>example.js 編集</li>
+</ul>
+
+<pre class="code" data-lang data-unlink>...
+const serverPort = 8091; // default port
+
++ var deviceName = 'ファミリールーム'; // Google Home's device name
++ var ip = '&lt;Google Home's IP&gt;'; // ex. 192.168.11.5
+...</pre>
+
+<p>Google Home's IP の確認は<a target="_blank" rel="noopener" href="https://www.kabegiwablog.com/entry/2018/03/14/090000">こちら</a></p>
+
+<h3><span id="google-home-notifler-サーバ起動スクリプト作成">google-home-notifler サーバ起動スクリプト作成</span></h3><ul>
+<li>/etc/systemd/system/googlehomenotifier.service</li>
+</ul>
+
+<pre class="code" data-lang data-unlink>[Unit]
+Description=google-home-notifier Server
+After=syslog.target network-online.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/node example.js
+Restart=on-failure
+RestartSec=10
+KillMode=process
+WorkingDirectory=/home/pi/google-home-notifier
+
+[Install]
+WantedBy=multi-user.target</pre>
+
+<p>上記追加後、daemon-reload し、`googlehomenotifier.service` を認識させます。</p>
+
+<pre class="code" data-lang data-unlink>pi$ sudo systemctl daemon-reload</pre>
+
+<h3><span id="いざ-google-home-notifiler-起動">いざ google-home-notifiler 起動</span></h3><pre class="code" data-lang data-unlink>pi$ sudo systemctl start google-home-notifiler</pre>
+
+<h3><span id="試しに-hello-と言わせる">試しに hello と言わせる ♪</span></h3><pre class="code" data-lang data-unlink>pi$ curl -X POST -d &#34;text=hello&#34; https://127.0.0.1:8091/google-home-notifier</pre>
+
+<h2><span id="bluebutton-セットアップ">BlueButton セットアップ</span></h2><pre class="code" data-lang data-unlink>pi$ sudo gem install bluebutton</pre>
+
+<h2><span id="食洗機-notify-スクリプト-インストール">食洗機 Notify スクリプト インストール</span></h2><p>元々 python で書きましたが、shell の方が速度が出たので shell にしています。</p>
+
+<pre class="code" data-lang data-unlink>pi$ cd ~
+pi$ git clone https://github.com/kenzo0107/dishwasher</pre>
+
+<ul>
+<li>dishwasher.sh の以下箇所を先に生成したものと変更してください。</li>
+</ul>
+
+<pre class="code" data-lang data-unlink>readonly LINENOTIFY_TOKEN=&#34;&lt;please change yours&gt;&#34;</pre>
+
+<h2><span id="起動スクリプト設定-amp-実行">起動スクリプト設定 &amp; 実行</span></h2><pre class="code" data-lang data-unlink>pi$ sudo cp bluebutton.service /etc/systemd/system/
+pi$ sudo systemctl daemon-reload
+pi$ sudo systemctl start bluebutton.service</pre>
+
+<h2><span id="いざ実行">いざ実行</span></h2><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180820/20180820220824.png" width="100%">
+</div>
+
+<p>できました♪</p>
+
+<h2><span id="bluebutton-についてちょっとだけ注意">BlueButton についてちょっとだけ注意</span></h2><p>BlueButton のボタンのトリガーの種類は以下ですが、</p>
+
+<ul>
+<li>key down ボタンを押す</li>
+<li>key up 押したボタンを離す</li>
+<li>long key down ボタン長押し</li>
+<li>long key up 長押しボタンを離す</li>
+</ul>
+
+<p>long key down (長押し)していると、まず最初に key down イベントが発生し、その後、 long key down のイベント発生となります。</p>
+
+<p>key down イベントに渡した処理がある場合、<br>
+long key down のイベントに渡した処理のみを実行する、<br>
+というのはできないので注意が必要です。</p>
+
+<h2><span id="総評">総評</span></h2><p>食洗機開始ボタンができたおかげで家庭から争いがなくなり<br>
+イヤイヤ期だった息子も朗らかになった様に思います。</p>
+
+<p>是非イヤイヤ期の子供と食洗機問題を抱えている方のお力になれば何よりです。</p>
+
+<p>以上です。</p>
+<div class="footnote">
+<p class="footnote"><a href="#fn-26e0fc97" name="f-26e0fc97" class="footnote-number">*1</a><span class="footnote-delimiter">:</span><span class="footnote-text">curl 叩ければ、後々 Slack でも何でも、家族みんなが見る所に通知すれば良いかなと思ったので</span></p>
+<p class="footnote"><a href="#fn-08674585" name="f-08674585" class="footnote-number">*2</a><span class="footnote-delimiter">:</span><span class="footnote-text">Google Home はあくまでスピーカー代りです。</span></p>
+</div>
+</div><div class="article-licensing box"><div class="licensing-title"><p>食洗機かけ終わったかわからなくなる問題を RaspberryPI + BlueButton + LINE Notify + Google Home で解決した話</p><p><a href="https://kenzo0107.github.io/2018/08/20/2018-08-20-raspberrypi-bluebutton-line-notify-google-home/">https://kenzo0107.github.io/2018/08/20/2018-08-20-raspberrypi-bluebutton-line-notify-google-home/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2018-08-20</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/RaspberryPI/">RaspberryPI</a></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2018/09/08/2018-09-08-cpu/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">プロセスの起動経過時間・CPU使用時間</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2018/08/15/2018-08-15-ffmpeg-nginx-rtmp-on-raspberrypi/"><span class="level-item">子供の笑顔と笑い声を聞く為に ffmpeg + Nginx + RTMP on RaspberryPI</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2018/08/20/2018-08-20-raspberrypi-bluebutton-line-notify-google-home/';
+            this.page.identifier = '2018/08/20/2018-08-20-raspberrypi-bluebutton-line-notify-google-home/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

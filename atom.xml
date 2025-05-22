@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>長生村本郷Engineers&#39;Blog</title>
+  
+  <subtitle>千葉県長生村本郷育ちのエンジニアが書いているブログ</subtitle>
+  <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://kenzo0107.github.io/"/>
+  <updated>2025-04-21T15:00:00.000Z</updated>
+  <id>https://kenzo0107.github.io/</id>
+  
+  <author>
+    <name>Kenzo Tanaka</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>データ分析観点から見た AWS ECS コンテナロギング</title>
+    <link href="https://kenzo0107.github.io/2025/04/22/2025-04-22-ecs-container-logging/"/>
+    <id>https://kenzo0107.github.io/2025/04/22/2025-04-22-ecs-container-logging/</id>
+    <published>2025-04-21T15:00:00.000Z</published>
+    <updated>2025-04-21T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>AWS ECS コンテナロギングをデータ分析観点からどの様な構成だと分析に都合が良いかの観点を記載します。</p><p>基本ログは追加のみで更新や削除はされない性質があるので、その点を考慮して登録されることを意識したアーキテクチャが望ましいです。</p><h2><span id="ecs-コンテナロギングの構成">ECS コンテナロギングの構成</span></h2><h3><span id="ecs-cloudwatch-logs">ECS → CloudWatch Logs</span></h3><p>デフォルトではこのような構成がよく見受けられます。</p><span id="more"></span><pre class="mermaid">graph LRECS-->cw_logs[CloudWatch Logs]</pre><ul><li>Pros:<ul><li>リアルタイムでデータ分析が可能</li><li>簡易的に設定できる</li></ul></li><li>Cons:<ul><li>CloudWatch Logs へのログ出力コストが掛かる</li><li>他データとの統合的な分析は一手間かかる</li></ul></li></ul><h4><span id="他データとの統合的な分析は一手間かかる">他データとの統合的な分析は一手間かかる ?</span></h4><p>CloudWatch Logs Insight もあり、ログのみを分析対象とする場合であれば特に問題ないですが、<br>他データと照合したい場合は統合的な管理が必要です。</p><p>例: 特定の時刻で ALB のログと付き合わせて、どの URI にアクセスされたかを集計したい場合</p><p><a href="https://docs.aws.amazon.com/ja_jp/athena/latest/ug/connectors-cloudwatch.html">Amazon Athena CloudWatch コネクタ</a> で<br>Athena から CloudWatch に接続可能ですが、Lambda を介するので Lambda の一度に返せるレスポンスの制限があり、レスポンスで返せないデータは一度 S3 に退避 (spill) したりすることで完全なレスポンスを返すまでに時間を要し、パフォーマンスが悪くなります。</p><h4><span id="cloudwatch-のサブスクリプションフィルターで-lambda-でデータ変換し-s3-保管">CloudWatch のサブスクリプションフィルターで Lambda でデータ変換し S3 保管</span></h4><pre class="mermaid">graph LRcw_logs[CloudWatch Logs]--Lambda-->S3</pre><p>こちらも処理量がお多い場合に Lambda のリソース制限でエラーハンドリングをする必要が出る可能性もあり、あまり利用を推奨しづらい構成です。</p><h3><span id="ecs-kinesis-firehose-s3">ECS → Kinesis Firehose → S3</span></h3><pre class="mermaid">graph LRECS-->kinesisfirehose[Kinesis Firehose]--parquet-->S3</pre><p>Kinesis Firehose 経由で S3 にデータを蓄積し、Athena から参照する構成です。</p><ul><li>Pros:<ul><li>S3転送時に失敗した場合にバックアップが取れる</li><li>大量リクエストがある場合、 CloudWatch Logs への put object する料金より安くすることができる</li><li>Athena で統合して分析可能</li></ul></li><li>Cons:<ul><li>Kinesis Firehose でデータをバッファリング (一定条件で溜め込む) するとリアルタイム性が損なわれる<ul><li>ある程度コストを抑えるには、最大 15 分のバッファリングが可能なので、まとめて S3 にデータを送信ができる</li></ul></li><li>設定に一手間</li></ul></li></ul><p>障害等で緊急のログ調査が必要な時にリアルタイム性が損なわれた状態では運用に懸念があります。<br>新規の開発時に検証でログが直ちに閲覧できないストレスは想像に難くありません。<br>データ分析の観点で言えば、Athena で統合でき、親和性が高いですが、実運用の観点では問題がある様に見えます。</p><h3><span id="ecs-kinesis-firehose-cloudwatch-logs-ハイブリッド">ECS → Kinesis Firehose / CloudWatch Logs ハイブリッド</span></h3><pre class="mermaid">graph LRECS-->kinesisfirehose[Kinesis Firehose]--parquet-->S3ECS-->cw_logs[CloudWatch Logs]</pre><p>ハイブリッドにすることで実運用を鑑みてリアルタイム性を担保しつつもデータ分析を Athena で統合的にデータ分析できる状態ができます。</p><ul><li>Pros:<ul><li>データ分析用のログとリアルタイムのログを担保できる</li></ul></li><li>Cons:<ul><li>CloudWatch Logs へのログ出力コストが掛かる</li><li>設定に一手間</li></ul></li></ul><p>リクエストの規模にもよりますが、データ分析をする、と言う背景を持った上でのアーキテクチャを鑑みるとこの辺りが落とし所かなと思います。</p><h2><span id="時折見る辛い構成">時折見る辛い構成</span></h2><pre class="mermaid">graph LRECS--ログ-->RDS</pre><p>ログデータを DB に溜め込んでいるのを時折見ます。<br>そのデータを元にリアルタイムにアクセスランキングを出したり、ということをやろうとしたのかな？と背景を想像したりしますが、<br>悪手である場合が多い印象です。</p><p>データ肥大化に対策した上で溜め込んでいるのであれば、まだ良いですが、<br>そうでなければ、いずれ肥大化してパフォーマンスを落としていくのが目に見えている為です。</p><p>RDS から何億レコードを一括で取ろうものなら DB リソースを消費しアプリケーション DB であれば、ユーザ影響を及ぼすことは想像に難くないです。</p><p>データ分析の観点からやって欲しくない構成です。</p><p>ログは一旦ログストレージ (例: S3)に流し、アプリケーションで利用するデータは別途担保する、というのが望ましいです。</p><h2><span id="総評">総評</span></h2><p>AWS ECS コンテナのロギングでの運用してみてほどよかったハイブリッド形式を紹介させていただきました。</p><p>ECS ではサイドカーで fluentbit を起動し、ログをルーティングしました。</p><p>参考: <a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/firelens-using-fluentbit.html">https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/firelens-using-fluentbit.html</a></p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;AWS ECS コンテナロギングをデータ分析観点からどの様な構成だと分析に都合が良いかの観点を記載します。&lt;/p&gt;
+&lt;p&gt;基本ログは追加のみで更新や削除はされない性質があるので、その点を考慮して登録されることを意識したアーキテクチャが望ましいです。&lt;/p&gt;
+&lt;h2 id=&quot;ECS-コンテナロギングの構成&quot;&gt;&lt;a href=&quot;#ECS-コンテナロギングの構成&quot; class=&quot;headerlink&quot; title=&quot;ECS コンテナロギングの構成&quot;&gt;&lt;/a&gt;ECS コンテナロギングの構成&lt;/h2&gt;&lt;h3 id=&quot;ECS-→-CloudWatch-Logs&quot;&gt;&lt;a href=&quot;#ECS-→-CloudWatch-Logs&quot; class=&quot;headerlink&quot; title=&quot;ECS → CloudWatch Logs&quot;&gt;&lt;/a&gt;ECS → CloudWatch Logs&lt;/h3&gt;&lt;p&gt;デフォルトではこのような構成がよく見受けられます。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Datadog 子組織の削除方法</title>
+    <link href="https://kenzo0107.github.io/2025/01/15/2025-01-15-how-to-delete-datadog-child-org/"/>
+    <id>https://kenzo0107.github.io/2025/01/15/2025-01-15-how-to-delete-datadog-child-org/</id>
+    <published>2025-01-14T15:00:00.000Z</published>
+    <updated>2025-01-14T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>備忘録として<br>Datadog の子組織の削除方法をまとめます。</p><h2><span id="手順">手順</span></h2><h3><span id="1-監視や-api-key-application-key-を削除">1. 監視や API Key, Application Key を削除</span></h3><ul><li>監視が残っていると削除できない場合があります。</li><li>API Key を削除することで API Key を利用した Datadog Agent からのデータ収集ができなくなり、意図しないコストの発生を抑える意図があります。</li></ul><h3><span id="2-サポートに連絡">2. サポートに連絡</span></h3><ul><li>子組織を削除する API は存在せず、ドキュメントに記載のある通り、 Datadog サポートに連絡して削除する必要があります。</li><li><a href="https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B">https://docs.datadoghq.com/ja/account_management/#%E7%B5%84%E7%B9%94%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%82%92%E7%84%A1%E5%8A%B9%E3%81%AB%E3%81%99%E3%82%8B</a></li><li>子組織削除 API が存在しない為、 terraform-provider-datadog でも子組織を管理するリソースを削除しても子組織自体は残ってしまいます。</li></ul><p>サポートの状況次第ですが、おおよそ 1週間程度で削除していただけました。</p><p>以上です。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;備忘録として&lt;br&gt;Datadog の子組織の削除方法をまとめます。&lt;/p&gt;
+&lt;h2&gt;&lt;span id=&quot;手順&quot;&gt;手順&lt;/span&gt;&lt;/h2&gt;&lt;h3&gt;&lt;span id=&quot;1-監視や-api-key-application-key-を削除&quot;&gt;1. 監視や API Key, A</summary>
+      
+    
+    
+    
+    <category term="Datadog" scheme="https://kenzo0107.github.io/categories/Datadog/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧</title>
+    <link href="https://kenzo0107.github.io/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/"/>
+    <id>https://kenzo0107.github.io/2024/12/19/2024-12-19-rds-replicate-to-glue-iceberg-table/</id>
+    <published>2024-12-18T15:00:00.000Z</published>
+    <updated>2024-12-18T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E5%89%8D%E6%8F%90">前提</a></li><li><a href="#rdsgluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→GlueJob→Iceberg テーブル</a></li><li><a href="#rds-zero-etl-%E7%B5%B1%E5%90%88-redshift">RDS Zero-ETL 統合 →Redshift</a></li><li><a href="#rdsdmss3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→DMS→S3→GlueJob→Iceberg テーブル</a></li><li><a href="#rdsdebeziummsks3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル</a></li><li><a href="#rdsdebeziummskdatafirehoseiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→DataFirehose→Iceberg テーブル</a></li><li><a href="#rdsdebeziummskiceberg%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">RDS→debezium→MSK→Icebergテーブル</a></li><li><a href="#rdsdata-firehoseiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB-preview-%E7%89%88">RDS→Data Firehose→Iceberg テーブル (preview 版)</a></li><li><a href="#rds-%E3%82%92%E5%85%B1%E6%9C%89%E3%81%97%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%B3">RDS を共有しクローン</a></li><li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>RDS のテーブルデータを分析用テーブルにレプリケートする方法が多数あったのでその一覧をまとめます。</p><p>RDS をユーザ影響を極力低くすべく、分析用テーブルへレプリケートして、分析する方法が多々あったので私見ですが Pros/Cons をまとめます。</p><h2><span id="前提">前提</span></h2><ul><li>アプリケーション DB を配置する AWS アカウントとデータ基盤を構築する AWS アカウントは分けます</li><li>Glue テーブルは iceberg 形式を採用します</li></ul><span id="more"></span><h2><span id="rdsgluejobiceberg-テーブル">RDS→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LRsubgraph AWS Account-a  RDSendRDS--SELECT-->GlueJobsubgraph AWS Account data-platform  GlueJob-->Icebergテーブルend</pre><p>Glue Job から Glue Connection 経由で RDS に接続し、クエリを実行し、抽出したデータを Iceberg テーブルへレプリケートします。</p><ul><li>Pros:<ul><li>コスト安</li></ul></li><li>Cons:<ul><li>レコード削除に対応できない<ul><li>論理削除であれば対応はできるが、物理削除されると検知できない</li><li>全データをエクスポートし直す、もしくは、削除されたレコードを特定する様、RDS 側と Iceberg テーブルで突き合わせる方法はあるが、リソース逼迫させてしまう恐れがある</li></ul></li><li>テーブル毎にデータ取得時の識別子 (PK 相当) となるカラムを決定する必要がある<ul><li>PK がない場合、別途指定する必要がある。</li><li>例えば更新されるレコードがある場合、 updated_at をキーにし、差分抽出するような処理が必要になる</li></ul></li><li>リアルタイム性を追求すると実行コストが嵩む</li></ul></li></ul><p>運用コストが高く、大規模な DB 環境には向かない。</p><h2><span id="rds-zero-etl-統合-redshift">RDS Zero-ETL 統合 →Redshift</span></h2><pre class="mermaid">graph LRsubgraph AWS Account-a  RDSendRDS--Zero-ETL-->Redshiftsubgraph AWS Account data-platform  Redshiftend</pre><p>参考: <a href="https://docs.aws.amazon.com/ja_jp/AmazonRDS/latest/UserGuide/zero-etl.html">Amazon Redshift との Amazon RDS ゼロ ETL 統合での作業</a></p><p>RDS の Zero-ETL 統合により完全マネージドで Redshift へレプリケートします。<br>他の手法と異なり、 Iceberg テーブルでなく Redshift がインターフェースになります。</p><ul><li>Pros:<ul><li>完全マネージドなサービスでスクリプト不要</li><li>Redshift は dbt との相性が良い</li></ul></li><li>Cons:<ul><li>Redshift コスト高<ul><li>Serverless でレプリケート間隔を広げることでコストを抑えることはできそうだが、リアルタイム性は損なわれる</li></ul></li><li>Aurora 以外はサポート外 (2024.12.19 時点)</li></ul></li></ul><h2><span id="rdsdmss3gluejobiceberg-テーブル">RDS→DMS→S3→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LRsubgraph AWS Account-a  RDS--CDC-->DMSendDMS-->S3subgraph AWS Account data-platform  S3--GlueJob-->Icebergテーブルend</pre><p>参考: <a href="https://aws.amazon.com/jp/blogs/big-data/modernize-your-legacy-databases-with-aws-data-lakes-part-2-build-a-data-lake-using-aws-dms-data-on-apache-iceberg/">Modernize your legacy databases with AWS data lakes, Part 2: Build a data lake using AWS DMS data on Apache Iceberg</a></p><ul><li>Pros:<ul><li>Redshift よりは安く済みそう</li></ul></li><li>Cons:<ul><li>DMS 運用コストが高い（AWS SA 様より頂いた意見）<ul><li>バージョン毎の仕様差による障害発生</li><li>比較的バージョンアップが多い</li><li>バージョンアップ時にレプリケートを停止し、再度テーブル作り直す必要があるなど手間が多い</li></ul></li><li>Glue Job によるデータ処理（更新・追加・削除）が煩雑化する</li><li>テーブルのスキーマ変更に Glue Job で対応する必要がある</li></ul></li></ul><p>DMS 採用企業はある</p><ul><li><a href="https://techlife.cookpad.com/entry/2024/10/16/101605">クックパッド - DMS を利用した継続的なデータ変更検知</a></li></ul><h2><span id="rdsdebeziummsks3gluejobiceberg-テーブル">RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル</span></h2><pre class="mermaid">graph LRsubgraph AWS Account-a  RDS--CDC-->debezium  debezium-->MSKendMSK--Parquet-->S3subgraph AWS Account data-platform  S3--GlueJob-->Icebergテーブルend</pre><p>参考: <a href="https://aws.amazon.com/jp/blogs/big-data/synchronize-data-lakes-with-cdc-based-upsert-using-open-table-format-aws-glue-and-amazon-msk/">Synchronize data lakes with CDC-based UPSERT using open table format, AWS Glue, and Amazon MSK</a></p><p>MSK で CDC データを Parquet で S3 に保存し、 Glue Job で Iceberg テーブルに変換します。</p><ul><li>Pros:<ul><li>RDS Zero-ETL サポート外の <code>MariaDB</code> にも対応できる</li></ul></li><li>Cons:<ul><li>debezium, MSK 等の学習コストが高い（個人の感想）</li><li>Glue Job によるデータ処理（更新・追加・削除）が煩雑化する</li><li>テーブルのスキーマ変更に Glue Job で対応する必要がある</li></ul></li></ul><h2><span id="rdsdebeziummskdatafirehoseiceberg-テーブル">RDS→debezium→MSK→DataFirehose→Iceberg テーブル</span></h2><pre class="mermaid">graph LRsubgraph AWS Account-a    RDSendRDS-->msk_connector[MSK Connector]-->msk_cluster[MSK Cluster]-->Lambda--レコード変換-->Icebergsubgraph AWS Account data-platform    msk_connector[MSK Connector]    msk_cluster[MSK Cluster]    Iceberg    subgraph Data Firehose        Lambda    endend</pre><ul><li>Pros:<ul><li>RDS Zero-ETL サポート外の <code>MariaDB</code> にも対応できる</li><li>Data Firehose 側でバッファ調整やエラーハンドリングできる</li></ul></li><li>Cons:<ul><li>debezium, MSK 等の学習コストが高い（個人の感想）</li><li>テーブルのデータ・スキーマ変更に Lambda で対応する必要がある</li><li>テーブル数分 Data Firehose を作成する必要がある<ul><li>リクエスト量による課金なのでコスト的な問題はないが、管理が煩雑になる</li></ul></li><li>事前に Iceberg テーブルを作成しておく必要がある</li></ul></li></ul><h2><span id="rdsdebeziummskicebergテーブル">RDS→debezium→MSK→Icebergテーブル</span></h2><pre class="mermaid">graph LRsubgraph AWS Account-a    RDSendRDS-->msk_connector[MSK Connector]-->msk_cluster[MSK Cluster]-->msk_connector_sink_iceberg[MSK Connector Sink Iceberg]-->Icebergsubgraph AWS Account data-platform    msk_connector[MSK Connector]    msk_connector_sink_iceberg[MSK Connector Sink Iceberg]    msk_cluster[MSK Cluster]    Icebergend</pre><ul><li>Pros:<ul><li>Data Firehose 管理が不要<ul><li>「RDS→debezium→MSK→DataFirehose→Iceberg テーブル」のテーブル数分 Data Firehose を作る問題を解決</li><li>どの程度のリクエスト量かや取りこぼしをハンドリグすることはできない → ad hoc snapshot があるので問題なさそうではある</li></ul></li><li>テーブルを事前に作成する必要がなく、自動作成が可能</li></ul></li><li>Cons:<ul><li>Iceberg Sink Connector 設定の学習コストが高い</li></ul></li></ul><h2><span id="rdsdata-firehoseiceberg-テーブル-preview-版">RDS→Data Firehose→Iceberg テーブル (preview 版)</span></h2><pre class="mermaid">graph LRsubgraph AWS Account-A    RDS-->NLB    NLB-->VPCエンドポイントサービスendVPCエンドポイントサービス--CDCログ-->VPCエンドポイントsubgraph AWS Account data-platform    VPCエンドポイント-->data_firehose[Data Firehose]    data_firehose[Data Firehose]-->Icebergend</pre><p>参考: <a href="https://aws.amazon.com/jp/blogs/news/replicate-changes-from-databases-to-apache-iceberg-tables-using-amazon-data-firehose/">Amazon Data Firehose を使用して、データベースから Apache Iceberg テーブルに変更をレプリケート (プレビュー)</a></p><ul><li>Pros:<ul><li>運用・構築コスト安</li><li>インターフェースを S3 上の Iceberg テーブルに統合できる</li></ul></li><li>Cons:<ul><li>2024 年 12 月 19 日時点では、テーブルを <code>.*</code> で指定すると多数テーブルがある場合、内部エラーとなり実運用に向かない<ul><li>問い合わせ中 → 想定しないバグだったとのこと。ワイルドカード <code>*</code> でなく、すべてのテーブルを指定することを推奨されました。</li></ul></li><li>PrivateLink の構築が必要</li></ul></li></ul><h2><span id="rds-を共有しクローン">RDS を共有しクローン</span></h2><pre class="mermaid">graph LRaccount_a[RDS]--共有-->data_platform[RDS]subgraph AWS Account-A    account_a[RDS]endsubgraph AWS data-platform    data_platform[RDS]--クローン-->cloned[RDS]end</pre><p>RDS を共有し、その共有された RDS をクローン作成します。<br>クローン実施された時点の最新のデータをクローンされた RDS で参照することができます。<br>リアルタイム性を求めるには難しい構成です。</p><ul><li>Pros:<ul><li>簡易に最新データのスナップショットが参照できる</li></ul></li><li>Cons:<ul><li>定常的にリアルタイムにデータが参照できない</li><li>起動に少なくとも 10 分程度かかる</li></ul></li></ul><h2><span id="総評">総評</span></h2><p>RDS→Data Firehose→Iceberg (preview 版) が運用・構築コスト安で大変期待しています。</p><p>様々手法がある中で CDC を利用した Iceberg テーブルへの統合はデファクトになっていく流れにあるかと推察します。</p><p>今後がより楽しみです。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%89%8D%E6%8F%90&quot;&gt;前提&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsgluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB&quot;&gt;RDS→GlueJob→Iceberg テーブル&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rds-zero-etl-%E7%B5%B1%E5%90%88-redshift&quot;&gt;RDS Zero-ETL 統合 →Redshift&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsdmss3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB&quot;&gt;RDS→DMS→S3→GlueJob→Iceberg テーブル&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsdebeziummsks3gluejobiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB&quot;&gt;RDS→debezium→MSK→S3→GlueJob→Iceberg テーブル&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsdebeziummskdatafirehoseiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB&quot;&gt;RDS→debezium→MSK→DataFirehose→Iceberg テーブル&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsdebeziummskiceberg%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB&quot;&gt;RDS→debezium→MSK→Icebergテーブル&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rdsdata-firehoseiceberg-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB-preview-%E7%89%88&quot;&gt;RDS→Data Firehose→Iceberg テーブル (preview 版)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#rds-%E3%82%92%E5%85%B1%E6%9C%89%E3%81%97%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%B3&quot;&gt;RDS を共有しクローン&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%B7%8F%E8%A9%95&quot;&gt;総評&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;RDS のテーブルデータを分析用テーブルにレプリケートする方法が多数あったのでその一覧をまとめます。&lt;/p&gt;
+&lt;p&gt;RDS をユーザ影響を極力低くすべく、分析用テーブルへレプリケートして、分析する方法が多々あったので私見ですが Pros/Cons をまとめます。&lt;/p&gt;
+&lt;h2 id=&quot;前提&quot;&gt;&lt;a href=&quot;#前提&quot; class=&quot;headerlink&quot; title=&quot;前提&quot;&gt;&lt;/a&gt;前提&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;アプリケーション DB を配置する AWS アカウントとデータ基盤を構築する AWS アカウントは分けます&lt;/li&gt;
+&lt;li&gt;Glue テーブルは iceberg 形式を採用します&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Glue Job Bookmark 機能でなく sampleQuery を使って DB データをエクスポートしてみた</title>
+    <link href="https://kenzo0107.github.io/2024/10/18/2024-10-18-glue-job-bookmark/"/>
+    <id>https://kenzo0107.github.io/2024/10/18/2024-10-18-glue-job-bookmark/</id>
+    <published>2024-10-17T15:00:00.000Z</published>
+    <updated>2024-10-17T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#glue-job-bookmark-%E6%A9%9F%E8%83%BD%E3%81%A8%E3%81%AF">Glue Job Bookmark 機能とは？</a></li><li><a href="#glue-job-bookmark-%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9">Glue Job Bookmark の問題点</a><ul><li><a href="#%E4%BE%8B-%E4%B8%8D%E6%95%B4%E5%90%88%E3%81%8C%E8%B5%B7%E3%81%93%E3%82%8B%E4%BE%8B">例: 不整合が起こる例</a></li></ul></li><li><a href="#%E5%95%8F%E9%A1%8C%E7%82%B9%E3%81%B8%E3%81%AE%E5%AF%BE%E5%BF%9C%E7%AD%96">問題点への対応策</a></li><li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>Glue Job で DB データを取得していた際に Glue Job Bookmark を利用していた際に問題があったので、その際の対応を備忘録として残しておきます。</p><h2><span id="glue-job-bookmark-機能とは">Glue Job Bookmark 機能とは？</span></h2><p>Glue Job で DB やログ情報を取り込みしている場合、どこまで取り込んだかを記録する <a href="https://docs.aws.amazon.com/ja_jp/glue/latest/dg/monitor-continuations.html">Bookmark 機能</a> があります。</p><p>DB データを毎回全てダンプするよりも差分のみ抽出（増分エクスポート: Incremental Export）でき、データの取り込み量も抑えられ、Glue Job の実行時間が短縮されます。</p><p>Glue Job は実行時間に対して従量課金されるのでコストも抑制できるメリットがあります。</p><span id="more"></span><h2><span id="glue-job-bookmark-の問題点">Glue Job Bookmark の問題点</span></h2><p>Glue Job の Bookmark は <code>job.commit()</code> された際に更新されます。</p><p>取り込み処理中に一部のテーブルでエラーが発生し処理が中断された場合、エクスポート処理が成功したテーブルはデータ自体は更新されますが、Bookmark は更新されず、不整合が発生します。</p><h3><span id="例-不整合が起こる例">例: 不整合が起こる例</span></h3><ul><li>table1 処理成功 → データ自体は更新される</li><li>table2 処理成功 → データ自体は更新される</li><li>table3 処理失敗 → データ自体は更新されない<br>→ Bookmark は更新されない。</li></ul><p>全ての処理で transaction を貼ることが対策ではありますが、実行コストが高い場合に、取り込めた分は取り込めた分だけ更新してもらった方が再実行コストが低くて良いです。</p><h2><span id="問題点への対応策">問題点への対応策</span></h2><p><code>glue context</code> の <code>create_data_frame.from_catalog</code> を利用して抽出する際は　<code>additional_options[&#39;sampleQuery&#39;]</code> を利用し、増分を抽出する、自前 Bookmark 機能で対応しました。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> is_table_exists:</span><br><span class="line">   <span class="comment"># テーブルが既に存在する場合</span></span><br><span class="line"></span><br><span class="line">   <span class="comment"># Glue Data Catalog テーブルの bookmark key に設定したカラムの最大値取得</span></span><br><span class="line">   df = self.glueContext.create_data_frame.from_catalog(database=dest_database, table_name=dest_table)</span><br><span class="line">   max_value = df.agg(&#123;bookmark_key: <span class="string">&quot;max&quot;</span>&#125;).collect()[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">   <span class="comment"># sampleQuery を利用し増分のみ取得</span></span><br><span class="line">   datasource = self.glueContext.create_dynamic_frame.from_catalog(</span><br><span class="line">      ...</span><br><span class="line">      additional_options=&#123;</span><br><span class="line">            <span class="string">&#x27;sampleQuery&#x27;</span>: <span class="string">f&quot;SELECT * FROM <span class="subst">&#123;source_database&#125;</span>.<span class="subst">&#123;source_table&#125;</span> WHERE <span class="subst">&#123;bookmark_key&#125;</span> &gt; <span class="subst">&#123;max_value&#125;</span> AND&quot;</span>,</span><br><span class="line">            ...</span><br><span class="line">      &#125;</span><br><span class="line">   )</span><br></pre></td></tr></table></figure><p>これにより Bookmark 機能を利用せずとも差分抽出をできるように対策しました。</p><p>ちなみにクエリの最後に <code>AND</code> があるのは、<code>enablePartitioningForSampleQuery: true</code> にし、JDBC テーブルから並列で読み込む設定をしている為です。</p><h2><span id="まとめ">まとめ</span></h2><ul><li>sampleQuery の方が Bookmark 機能より増分エクスポートはしやすい印象<ul><li>DB 負荷を抑えながら取り込むこともできるメリットもある</li></ul></li><li>Glue Job Bookmark は更新 API 等はなく、Glue Job の実行成功でのみ更新されるので、失敗した場合は全てを失敗と見なすしかなさそう<ul><li>ハンドリングしづらい</li></ul></li></ul><p>以上<br>参考になれば何よりです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#glue-job-bookmark-%E6%A9%9F%E8%83%BD%E3%81%A8%E3%81%AF&quot;&gt;Glue Job Bookmark 機能とは？&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#glue-job-bookmark-%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9&quot;&gt;Glue Job Bookmark の問題点&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E4%BE%8B-%E4%B8%8D%E6%95%B4%E5%90%88%E3%81%8C%E8%B5%B7%E3%81%93%E3%82%8B%E4%BE%8B&quot;&gt;例: 不整合が起こる例&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%95%8F%E9%A1%8C%E7%82%B9%E3%81%B8%E3%81%AE%E5%AF%BE%E5%BF%9C%E7%AD%96&quot;&gt;問題点への対応策&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%81%BE%E3%81%A8%E3%82%81&quot;&gt;まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;Glue Job で DB データを取得していた際に Glue Job Bookmark を利用していた際に問題があったので、その際の対応を備忘録として残しておきます。&lt;/p&gt;
+&lt;h2 id=&quot;Glue-Job-Bookmark-機能とは？&quot;&gt;&lt;a href=&quot;#Glue-Job-Bookmark-機能とは？&quot; class=&quot;headerlink&quot; title=&quot;Glue Job Bookmark 機能とは？&quot;&gt;&lt;/a&gt;Glue Job Bookmark 機能とは？&lt;/h2&gt;&lt;p&gt;Glue Job で DB やログ情報を取り込みしている場合、どこまで取り込んだかを記録する &lt;a href=&quot;https://docs.aws.amazon.com/ja_jp/glue/latest/dg/monitor-continuations.html&quot;&gt;Bookmark 機能&lt;/a&gt; があります。&lt;/p&gt;
+&lt;p&gt;DB データを毎回全てダンプするよりも差分のみ抽出（増分エクスポート: Incremental Export）でき、データの取り込み量も抑えられ、Glue Job の実行時間が短縮されます。&lt;/p&gt;
+&lt;p&gt;Glue Job は実行時間に対して従量課金されるのでコストも抑制できるメリットがあります。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>asdf で ruby の最新バージョンが見つからない時</title>
+    <link href="https://kenzo0107.github.io/2024/09/03/2024-09-03-asdf-plugin-update-ruby/"/>
+    <id>https://kenzo0107.github.io/2024/09/03/2024-09-03-asdf-plugin-update-ruby/</id>
+    <published>2024-09-02T15:00:00.000Z</published>
+    <updated>2024-09-02T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E5%AF%BE%E7%AD%96-asdf-ruby-plugin-%E3%82%92%E3%82%A2%E3%83%83%E3%83%97%E3%83%87%E3%83%BC%E3%83%88%E3%81%99%E3%82%8B">対策: asdf ruby plugin をアップデートする</a></li><li><a href="#%E5%86%8D%E5%BA%A6%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B">再度バージョンのリストを表示してみる</a></li></ul><!-- tocstop --></div></div><hr><p>asdf で ruby の最新バージョンを利用したかったけど、リストになくて困った時の話です。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf list all ruby</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">3.1.0</span><br><span class="line">3.1.1</span><br><span class="line">3.1.2</span><br><span class="line">3.1.3</span><br><span class="line">3.2.0-dev</span><br><span class="line">3.2.0-preview1</span><br><span class="line">3.2.0-preview2</span><br><span class="line">3.2.0-preview3</span><br><span class="line">3.2.0-rc1</span><br><span class="line">3.2.0</span><br><span class="line">3.3.0-dev</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>3.3.0 以上を利用したいのに出てこない💦</p><span id="more"></span><h2><span id="対策-asdf-ruby-plugin-をアップデートする">対策: asdf ruby plugin をアップデートする</span></h2><p><a href="https://github.com/asdf-vm/asdf-ruby?tab=readme-ov-file#use">asdf-ruby - Use</a> を参考に<br>plugin をアップデートします。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf plugin-update ruby</span></span><br><span class="line"></span><br><span class="line">Updating ruby to master</span><br><span class="line">From https://github.com/asdf-vm/asdf-ruby</span><br><span class="line">   16bc8ac..d6eb414  master     -&gt; master</span><br><span class="line">   16bc8ac..d6eb414  master     -&gt; origin/master</span><br><span class="line">Already on &#x27;master&#x27;</span><br><span class="line">Your branch is up to date with &#x27;origin/master&#x27;.</span><br></pre></td></tr></table></figure><h2><span id="再度バージョンのリストを表示してみる">再度バージョンのリストを表示してみる</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf list all ruby</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">3.3.0-rc1</span><br><span class="line">3.3.0</span><br><span class="line">3.3-dev</span><br><span class="line">3.3.1</span><br><span class="line">3.3.2</span><br><span class="line">3.3.3</span><br><span class="line">3.3.4</span><br><span class="line">3.3.5</span><br><span class="line">3.4.0-preview1</span><br><span class="line">3.4-dev</span><br><span class="line">...</span><br></pre></td></tr></table></figure><p>無事インストールできました。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf install ruby 3.3.5</span></span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%AF%BE%E7%AD%96-asdf-ruby-plugin-%E3%82%92%E3%82%A2%E3%83%83%E3%83%97%E3%83%87%E3%83%BC%E3%83%88%E3%81%99%E3%82%8B&quot;&gt;対策: asdf ruby plugin をアップデートする&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%86%8D%E5%BA%A6%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B&quot;&gt;再度バージョンのリストを表示してみる&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;asdf で ruby の最新バージョンを利用したかったけど、リストになくて困った時の話です。&lt;/p&gt;
+&lt;figure class=&quot;highlight console&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta prompt_&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;language-bash&quot;&gt;asdf list all ruby&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.1.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.1.1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.1.2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.1.3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.2.0-dev&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.2.0-preview1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.2.0-preview2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.2.0-preview3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.2.0-rc1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.2.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.3.0-dev&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;3.3.0 以上を利用したいのに出てこない💦&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Error: Docker is unreachable. Docker needs to be running to build inside a container.</title>
+    <link href="https://kenzo0107.github.io/2024/08/27/2024-08-27-docker-is-unreachable/"/>
+    <id>https://kenzo0107.github.io/2024/08/27/2024-08-27-docker-is-unreachable/</id>
+    <published>2024-08-26T15:00:00.000Z</published>
+    <updated>2024-08-26T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#docker_host-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">DOCKER_HOST を指定する</a></li></ul><!-- tocstop --></div></div><hr><p><code>sam build --use-container</code> でビルド実行した際に以下エラーが発生しました。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: Docker is unreachable. Docker needs to be running to build inside a container.</span><br></pre></td></tr></table></figure><span id="more"></span><h2><span id="docker_host-を指定する">DOCKER_HOST を指定する</span></h2><p>現在の Context を確認します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker info | grep <span class="string">&#x27;Context:&#x27;</span></span></span><br><span class="line"></span><br><span class="line"> Context:    desktop-linux</span><br></pre></td></tr></table></figure><p>エンドポイントを確認します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker context <span class="built_in">ls</span> | grep desktop-linux</span></span><br><span class="line"></span><br><span class="line">desktop-linux *     moby                Docker Desktop                            unix:///Users/kenzo.tanaka/.docker/run/docker.sock</span><br></pre></td></tr></table></figure><p>DOCKER_HOST を指定し再度実行することでエラーを回避できました。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">env</span> SAM_CLI_TELEMETRY=0 \</span></span><br><span class="line"><span class="language-bash">    DOCKER_HOST=unix:///Users/kenzo.tanaka/.docker/run/docker.sock \</span></span><br><span class="line"><span class="language-bash">    sam build --use-container --cached --parallel</span></span><br></pre></td></tr></table></figure><p>以上<br>参考まで</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#docker_host-%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B&quot;&gt;DOCKER_HOST を指定する&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;sam build --use-container&lt;/code&gt; でビルド実行した際に以下エラーが発生しました。&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Error: Docker is unreachable. Docker needs to be running to build inside a container.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>GitHub Profile Status をクリアする (busy 解除)</title>
+    <link href="https://kenzo0107.github.io/2024/06/24/2024-06-24-clear-github-profile-status/"/>
+    <id>https://kenzo0107.github.io/2024/06/24/2024-06-24-clear-github-profile-status/</id>
+    <published>2024-06-23T15:00:00.000Z</published>
+    <updated>2024-06-23T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>GitHub のプロフィールの busy を解除したい時に利用しています。</p><script src="//gist.github.com/kenzo0107/c14af761680ca725e807d29bc090d3bd.js"></script><p>以上<br>参考まで</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;GitHub のプロフィールの busy を解除したい時に利用しています。&lt;/p&gt;
+&lt;script src=&quot;//gist.github.com/kenzo0107/c14af761680ca725e807d29bc090d3bd.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;以上&lt;</summary>
+      
+    
+    
+    
+    <category term="Git" scheme="https://kenzo0107.github.io/categories/Git/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>ALB アクセスログに新たな項目が追加された</title>
+    <link href="https://kenzo0107.github.io/2024/05/29/2024-05-29-upgrade-alb-accesslog-format/"/>
+    <id>https://kenzo0107.github.io/2024/05/29/2024-05-29-upgrade-alb-accesslog-format/</id>
+    <published>2024-05-28T15:00:00.000Z</published>
+    <updated>2024-05-28T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>2024.05.22 より、ALB のアクセスログを Athena でクエリ実行してみると空の行が返るようになりました。<br>原因を調査してみるとどうやら ALB アクセスログに以下の項目が追加され、フォーマットが変更された為のようです。</p><ul><li>traceability_id string</li><li>unknown_fields string</li></ul><p>テーブルを再作成することで事なきを得ました。</p><p>※ ALB はパーティションして利用しており、<a href="https://docs.aws.amazon.com/athena/latest/ug/application-load-balancer-logs.html">公式</a>とはやや異なるテーブル定義にしています。</p><figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">CREATE EXTERNAL TABLE `&lt;table name&gt;`(</span><br><span class="line">  `type` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `time` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `elb` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `client_ip` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `client_port` int COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_ip` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_port` int COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_processing_time` double COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_processing_time` double COMMENT &#x27;&#x27;,</span><br><span class="line">  `response_processing_time` double COMMENT &#x27;&#x27;,</span><br><span class="line">  `elb_status_code` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_status_code` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `received_bytes` bigint COMMENT &#x27;&#x27;,</span><br><span class="line">  `sent_bytes` bigint COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_verb` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_url` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_proto` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `user_agent` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `ssl_cipher` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `ssl_protocol` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_group_arn` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `trace_id` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `domain_name` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `chosen_cert_arn` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `matched_rule_priority` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `request_creation_time` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `actions_executed` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `redirect_url` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `lambda_error_reason` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_port_list` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `target_status_code_list` string COMMENT &#x27;&#x27;,</span><br><span class="line">  `classification` string COMMENT &#x27;&#x27;,</span><br><span class="line"><span class="deletion">-  `classification_reason` string COMMENT &#x27;&#x27;</span></span><br><span class="line"><span class="addition">+  `classification_reason` string COMMENT &#x27;&#x27;,</span></span><br><span class="line"><span class="addition">+  `traceability_id` string COMMENT &#x27;&#x27;,</span></span><br><span class="line"><span class="addition">+  `unknown_fields` string COMMENT &#x27;&#x27;</span></span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (</span><br><span class="line">  `year` int COMMENT &#x27;&#x27;,</span><br><span class="line">  `month` int COMMENT &#x27;&#x27;,</span><br><span class="line">  `day` int COMMENT &#x27;&#x27;)</span><br><span class="line">ROW FORMAT SERDE &#x27;org.apache.hadoop.hive.serde2.RegexSerDe&#x27;</span><br><span class="line">WITH SERDEPROPERTIES (</span><br><span class="line"><span class="deletion">-  &#x27;input.regex&#x27; =</span></span><br><span class="line"><span class="deletion">-        &#x27;([^ ]*) ([^ ]*) ([^ ]*) ([^ ]*):([0-9]*) ([^ ]*)[:-]([0-9]*) ([-.0-9]*) ([-.0-9]*) ([-.0-9]*) (|[-0-9]*) (-|[-0-9]*) ([-0-9]*) ([-0-9]*) \&quot;([^ ]*) (.*) (- |[^ ]*)\&quot; \&quot;([^\&quot;]*)\&quot; ([A-Z0-9-_]+) ([A-Za-z0-9.-]*) ([^ ]*) \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; ([-.0-9]*) ([^ ]*) \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; \&quot;([^ ]*)\&quot; \&quot;([^\s]+?)\&quot; \&quot;([^\s]+)\&quot; \&quot;([^ ]*)\&quot; \&quot;([^ ]*)\&quot;&#x27;)</span></span><br><span class="line"><span class="addition">+  &#x27;input.regex&#x27; =</span></span><br><span class="line"><span class="addition">+        &#x27;([^ ]*) ([^ ]*) ([^ ]*) ([^ ]*):([0-9]*) ([^ ]*)[:-]([0-9]*) ([-.0-9]*) ([-.0-9]*) ([-.0-9]*) (|[-0-9]*) (-|[-0-9]*) ([-0-9]*) ([-0-9]*) \&quot;([^ ]*) (.*) (- |[^ ]*)\&quot; \&quot;([^\&quot;]*)\&quot; ([A-Z0-9-_]+) ([A-Za-z0-9.-]*) ([^ ]*) \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; ([-.0-9]*) ([^ ]*) \&quot;([^\&quot;]*)\&quot; \&quot;([^\&quot;]*)\&quot; \&quot;([^ ]*)\&quot; \&quot;([^\s]+?)\&quot; \&quot;([^\s]+)\&quot; \&quot;([^ ]*)\&quot; \&quot;([^ ]*)\&quot; ?([^ ]*)?&#x27;)</span></span><br><span class="line">STORED AS INPUTFORMAT</span><br><span class="line">  &#x27;org.apache.hadoop.mapred.TextInputFormat&#x27;</span><br><span class="line">OUTPUTFORMAT</span><br><span class="line">  &#x27;org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat&#x27;</span><br><span class="line">LOCATION</span><br><span class="line">  &#x27;s3://&lt;s3 bucket&gt;/&lt;lb name&gt;/AWSLogs/&lt;aws account id&gt;/elasticloadbalancing/ap-northeast-1&#x27;</span><br><span class="line">TBLPROPERTIES (</span><br><span class="line">  &#x27;classification&#x27;=&#x27;csv&#x27;,</span><br><span class="line">  &#x27;compressionType&#x27;=&#x27;gzip&#x27;,</span><br><span class="line">  &#x27;projection.day.digits&#x27;=&#x27;2&#x27;,</span><br><span class="line">  &#x27;projection.day.range&#x27;=&#x27;01,31&#x27;,</span><br><span class="line">  &#x27;projection.day.type&#x27;=&#x27;integer&#x27;,</span><br><span class="line">  &#x27;projection.enabled&#x27;=&#x27;true&#x27;,</span><br><span class="line">  &#x27;projection.month.digits&#x27;=&#x27;2&#x27;,</span><br><span class="line">  &#x27;projection.month.range&#x27;=&#x27;01,12&#x27;,</span><br><span class="line">  &#x27;projection.month.type&#x27;=&#x27;integer&#x27;,</span><br><span class="line">  &#x27;projection.year.digits&#x27;=&#x27;4&#x27;,</span><br><span class="line">  &#x27;projection.year.range&#x27;=&#x27;2020,2100&#x27;,</span><br><span class="line">  &#x27;projection.year.type&#x27;=&#x27;integer&#x27;,</span><br><span class="line">  &#x27;storage.location.template&#x27;=&#x27;s3://&lt;s3 bucket&gt;/&lt;lb name&gt;/AWSLogs/&lt;aws account id&gt;/elasticloadbalancing/ap-northeast-1/$&#123;year&#125;/$&#123;month&#125;/$&#123;day&#125;&#x27;,</span><br><span class="line">  &#x27;typeOfData&#x27;=&#x27;file&#x27;)</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;2024.05.22 より、ALB のアクセスログを Athena でクエリ実行してみると空の行が返るようになりました。&lt;br&gt;原因を調査してみるとどうやら ALB アクセスログに以下の項目が追加され、フォーマットが変更された為のようです。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;tra</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Python ファイル読み込み</title>
+    <link href="https://kenzo0107.github.io/2024/05/28/2024-05-28-read-file-by-python/"/>
+    <id>https://kenzo0107.github.io/2024/05/28/2024-05-28-read-file-by-python/</id>
+    <published>2024-05-27T15:00:00.000Z</published>
+    <updated>2024-05-27T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><!-- tocstop --></div></div><hr><p>Python でファイル内容を読み込みして Azure OpenAI Service に読ませたい時があったのでまとめました。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</span><br><span class="line"><span class="keyword">from</span> pypdf <span class="keyword">import</span> PdfReader</span><br><span class="line"></span><br><span class="line"><span class="comment"># .docx</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_docx</span>(<span class="params">filepath</span>):</span><br><span class="line">    doc = Document(filepath)</span><br><span class="line">    full_text = []</span><br><span class="line">    <span class="keyword">for</span> para <span class="keyword">in</span> doc.paragraphs:</span><br><span class="line">        full_text.append(para.text)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;\n&quot;</span>.join(full_text)</span><br><span class="line"></span><br><span class="line"><span class="comment"># .pdf</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_pdf</span>(<span class="params">filepath</span>):</span><br><span class="line">    reader = PdfReader(filepath)</span><br><span class="line">    full_text = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> reader.pages:</span><br><span class="line">        full_text += p.extract_text()</span><br><span class="line">    <span class="keyword">return</span> full_text</span><br><span class="line"></span><br><span class="line"><span class="comment"># .txt, .md etc...</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_txt</span>(<span class="params">filepath</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filepath, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        content = file.read()</span><br><span class="line">    <span class="keyword">return</span> content</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">filepath</span>):</span><br><span class="line">    _, ext = os.path.splitext(filepath)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ext == <span class="string">&#x27;.docx&#x27;</span>:</span><br><span class="line">        t = read_docx(filepath)</span><br><span class="line">    <span class="keyword">elif</span> ext == <span class="string">&#x27;.pdf&#x27;</span>:</span><br><span class="line">        t = read_pdf(filepath)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        t = read_txt(filepath)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(t)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    filepath = sys.argv[<span class="number">1</span>]</span><br><span class="line">    main(filepath)</span><br></pre></td></tr></table></figure><p><a href="https://gist.github.com/kenzo0107/456439de57b3640c053cf369ca42f358">https://gist.github.com/kenzo0107/456439de57b3640c053cf369ca42f358</a></p><p>以前ファイル内容を 1 行ずつ、yaml をパース等は実施しましたので、そちらも参考まで。</p><a href="https://kenzo0107.github.io/2023/07/20/2023-07-21-python-load-file/#more" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://i.imgur.com/V4yCTSm.png"></div><div class="descriptions"><div class="og-title">python でファイルの内容を取得する</div><div class="og-description">ToC     概要 テストで使用するファイル用意 ファイルの内容を取得 ファイルの 1 行目のみ取得 ファイルを行毎に取得 ファイルを取得し Yaml としてパースする</div></div></div></a><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+
+
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+</summary>
+      
+    
+    
+    
+    <category term="Python" scheme="https://kenzo0107.github.io/categories/Python/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AWS リソースの年間予約購入</title>
+    <link href="https://kenzo0107.github.io/2023/12/07/2023-12-07-annual-subscription-purchase-of-aws-resources/"/>
+    <id>https://kenzo0107.github.io/2023/12/07/2023-12-07-annual-subscription-purchase-of-aws-resources/</id>
+    <published>2023-12-06T15:00:00.000Z</published>
+    <updated>2023-12-06T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E5%B9%B4%E9%96%93%E4%BA%88%E7%B4%84%E8%B3%BC%E5%85%A5%E3%81%BE%E3%81%A8%E3%82%81">年間予約購入まとめ</a></li><li><a href="#ri-%E6%9C%9F%E9%99%90%E5%88%87%E3%82%8C%E9%80%9A%E7%9F%A5-%E8%A8%AD%E5%AE%9A">RI 期限切れ通知 設定</a></li><li><a href="#reserved-instance-%E8%B3%BC%E5%85%A5%E5%89%8D%E5%BE%8C%E3%81%AE%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D%E3%81%AE%E8%A8%88%E7%AE%97">Reserved Instance 購入前後のコスト削減額の計算</a></li><li><a href="#savings-plans-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D-%E8%A8%88%E7%AE%97">Savings Plans コスト削減額 計算</a><ul><li><a href="#aws-savings-plans-%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E6%8E%A8%E5%A5%A8%E5%80%A4%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">AWS Savings Plans コミット値推奨値を利用する場合</a></li><li><a href="#aws-savings-plans-%E8%87%AA%E5%89%8D%E3%81%A7%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88">AWS Savings Plans 自前でコミット値を設定する場合</a></li></ul></li><li><a href="#cloudfront-security-bundle-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D">CloudFront Security Bundle コスト削減額</a></li></ul><!-- tocstop --></div></div><hr><p>AWS リソースの年間予約購入について備忘録です。</p><h2><span id="年間予約購入まとめ">年間予約購入まとめ</span></h2><ul><li><p>Reserved Instance</p><ul><li>対象:<ul><li>RDS</li><li>ElastiCache</li><li>RedShift</li><li>OpenSearch</li></ul></li><li>以下指定し購入<ul><li>インスタンスタイプ</li><li>個数</li><li>前払い</li><li>年数（弊社は 1 年指定）</li></ul></li><li>期限切れ通知<ul><li><a href="https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert">RI アラート管理</a> で設定</li></ul></li><li>Pros:<ul><li>どのリソースに対して購入するかが決定しやすい</li></ul></li></ul></li><li><p>Savings Plans</p><ul><li>対象: コンピュートリソース（EC2 専用の Savings Plans もある）<ul><li>EC2</li><li>ECS</li><li>Lambda</li></ul></li><li>以下指定し購入<ul><li>コンピュートリソースの利用量に対するコミット値</li><li>年数</li><li>前払い</li></ul></li><li>期限切れ通知<ul><li><a href="https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/overview/alert">Savings Plans アラート管理</a> で設定</li></ul></li><li>コミット値<ul><li>過去・今後の推定利用量から算出する or AWS 推奨値を設定する</li></ul></li><li>Pros:<ul><li>EC2 から ECS のリプレイス後も適用される</li></ul></li><li>Cons:<ul><li>どのリソースに対して購入したかが分かりづらい</li></ul></li></ul></li><li><p>CloudFront Security Bundle</p><ul><li>対象:<ul><li>CloudFront</li><li>WAF</li></ul></li><li>以下指定し購入<ul><li>CloudFront の利用量に対するコミット値</li><li>年数</li><li>前払い</li></ul></li><li>期限切れ通知<ul><li>現状ない (2023-12-07 時点)</li></ul></li><li>コミット値<ul><li>過去・今後の推定利用量から算出する or AWS 推奨値を設定する</li></ul></li></ul></li></ul><span id="more"></span><h2><span id="ri-期限切れ通知-設定">RI 期限切れ通知 設定</span></h2><p>RI の期限が切れるとオンデマンド料金となりコスト増となります。<br>コストが上がってから気づく、ということがないように期限切れ前に通知する機能があります。</p><p>以下ページから設定できます。</p><ul><li><p><a href="https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert">RI アラート管理</a><br><img src="https://i.imgur.com/Kq3llTo.png"><br><img src="https://i.imgur.com/cnwPI8X.png"></p></li><li><p>On the day of expiration: 期限切れ当日</p></li><li><p>7 days: 期限切れ 7 日前</p></li><li><p>30 days: 期限切れ 30 日前</p></li><li><p>60 days: 期限切れ 60 日前</p></li><li><p>Email recipients: メールアドレスが複数ある場合は <code>,</code> で区切る</p><ul><li>Slack Email アプリで発行したメールアドレスを設定すると Slack 通知できる</li></ul></li></ul><h2><span id="reserved-instance-購入前後のコスト削減額の計算">Reserved Instance 購入前後のコスト削減額の計算</span></h2><p>RI は以下で年間コスト削減額を計算できます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">オンデマンド料金/hour × 365 days × 24 hours - (RI前払い料金 + RI 適用後料金/hour × 365 days × 24 hours)</span><br></pre></td></tr></table></figure><p>RDS, ElastiCache, RedShift の各料金は AWS ドキュメントで確認可能です。</p><ul><li><a href="https://aws.amazon.com/jp/rds/aurora/pricing/#Aurora_MySQL-Compatible_Edition">Aurora MySQL</a></li><li><a href="https://aws.amazon.com/jp/rds/aurora/pricing/#Aurora_PostgreSQL-Compatible_Edition">Aurora PostgreSQL</a></li><li><a href="https://aws.amazon.com/jp/rds/mysql/pricing/#RDS_for_MySQL">MySQL</a></li><li><a href="https://aws.amazon.com/jp/rds/postgresql/pricing/#RDS_for_PostgreSQL">PostgreSQL</a></li><li><a href="https://aws.amazon.com/jp/elasticache/pricing/#Reserved_nodes">ElastiCache</a></li><li><a href="https://aws.amazon.com/jp/redshift/pricing/#Reserved_Instance_pricing">RedShift</a></li></ul><h2><span id="savings-plans-コスト削減額-計算">Savings Plans コスト削減額 計算</span></h2><h3><span id="aws-savings-plans-コミット値推奨値を利用する場合">AWS Savings Plans コミット値推奨値を利用する場合</span></h3><p>以下ページでコスト削減額の結果が確認できます。</p><ul><li><p><a href="https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/recommendations?lookbackPeriodInDays=SEVEN_DAYS&paymentOption=ALL_UPFRONT&scope=PAYER&spType=COMPUTE_SP&termInYears=ONE_YEAR&tokens=%5B%5D">AWS Savings Plans 推奨値</a><br><img src="https://i.imgur.com/vBbJUik.png"></p></li><li><p>Savings Plans type: 節約プランタイプ</p><ul><li>Compute Savings Plans: コンピュートリソースに対する節約プラン<ul><li>対象:<ul><li>EC2</li><li>ECS</li><li>Lambda</li></ul></li><li>EC2 から ECS へリプレイスを検討している、という場合に有利</li></ul></li><li>EC2 Instance Savings Plans: EC2 に対する節約プラン<ul><li>対象:<ul><li>EC2</li></ul></li><li>EC2 に特化しているため Compute Savings Plans よりコスト削減できる</li></ul></li><li>SageMaker Savings Plans: SageMaker に対する節約プラン<ul><li>対象:<ul><li>SageMaker</li></ul></li></ul></li></ul></li><li><p>Term: 予約購入する期間 (最低 1 年)</p><ul><li>3-year: 3 年の予約購入 (最もコスト削減率が高い)<ul><li>3 年後まで現状のインフラ構成が見込めない場合は 1-year を選択した方が良い</li></ul></li><li>1-year: 1 年の予約購入</li></ul></li><li><p>Payment Option: 前払いのタイプです。</p><ul><li>All upfront: 全額前払い（最もコスト削減率が高い）</li><li>Partial upfront: 一部前払い</li><li>No upfront: 前払いしない</li></ul></li><li><p>Based on the past の値は推奨値を算出する為の過去の運用日数</p><ul><li>直近が安定しているのであれば 7 日間 を選択</li><li>日常的に EC2, ECS タスクのスケーリングを繰り返している場合は 30 or 60 日間を選択</li></ul></li></ul><p>今後 1 年を見越して利用量が大きく減ることがなければ、過去の利用量から AWS が算出した推奨値を採用する、で問題ありません。</p><h3><span id="aws-savings-plans-自前でコミット値を設定する場合">AWS Savings Plans 自前でコミット値を設定する場合</span></h3><p>自前でコミット値を設定する場合はコスト削減額が表示されません。</p><ul><li><a href="https://us-east-1.console.aws.amazon.com/cost-management/home?region=us-east-1#/savings-plans/purchase">Savings Plans: 自前でコミット値を設定する</a><br><img src="https://i.imgur.com/7KIypok.png"></li></ul><p>今後利用量に変化がありそう、スケーリングのタイミングなどで利用料が安定しない場合は自前で計算し設定します。</p><h2><span id="cloudfront-security-bundle-コスト削減額">CloudFront Security Bundle コスト削減額</span></h2><p>以下ページで確認できます。</p><ul><li><p><a href="https://us-east-1.console.aws.amazon.com/cloudfront/v3/home#/savings-bundle/purchase">CloudFront: 推奨値</a><br><img src="https://i.imgur.com/2yW95Gh.png"></p></li><li><p>Term: 1-year のみ</p></li><li><p>Payment option: Monthly のみ</p></li><li><p>Auto renew: 自動更新</p><ul><li>購入には稟議を通す必要がある等の理由でオフにすることが多いです（個人の感想）</li></ul></li><li><p>期限切れ通知機能がないので適宜チェックする必要がある</p></li></ul><p>AWS で過去の利用量を元にどの程度コスト削減できるか表示されます。</p><p>自動更新の有効・無効については適宜判定してください。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E5%B9%B4%E9%96%93%E4%BA%88%E7%B4%84%E8%B3%BC%E5%85%A5%E3%81%BE%E3%81%A8%E3%82%81&quot;&gt;年間予約購入まとめ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#ri-%E6%9C%9F%E9%99%90%E5%88%87%E3%82%8C%E9%80%9A%E7%9F%A5-%E8%A8%AD%E5%AE%9A&quot;&gt;RI 期限切れ通知 設定&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#reserved-instance-%E8%B3%BC%E5%85%A5%E5%89%8D%E5%BE%8C%E3%81%AE%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D%E3%81%AE%E8%A8%88%E7%AE%97&quot;&gt;Reserved Instance 購入前後のコスト削減額の計算&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#savings-plans-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D-%E8%A8%88%E7%AE%97&quot;&gt;Savings Plans コスト削減額 計算&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#aws-savings-plans-%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E6%8E%A8%E5%A5%A8%E5%80%A4%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88&quot;&gt;AWS Savings Plans コミット値推奨値を利用する場合&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#aws-savings-plans-%E8%87%AA%E5%89%8D%E3%81%A7%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E5%80%A4%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88&quot;&gt;AWS Savings Plans 自前でコミット値を設定する場合&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#cloudfront-security-bundle-%E3%82%B3%E3%82%B9%E3%83%88%E5%89%8A%E6%B8%9B%E9%A1%8D&quot;&gt;CloudFront Security Bundle コスト削減額&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;AWS リソースの年間予約購入について備忘録です。&lt;/p&gt;
+&lt;h2 id=&quot;年間予約購入まとめ&quot;&gt;&lt;a href=&quot;#年間予約購入まとめ&quot; class=&quot;headerlink&quot; title=&quot;年間予約購入まとめ&quot;&gt;&lt;/a&gt;年間予約購入まとめ&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Reserved Instance&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;対象:&lt;ul&gt;
+&lt;li&gt;RDS&lt;/li&gt;
+&lt;li&gt;ElastiCache&lt;/li&gt;
+&lt;li&gt;RedShift&lt;/li&gt;
+&lt;li&gt;OpenSearch&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;以下指定し購入&lt;ul&gt;
+&lt;li&gt;インスタンスタイプ&lt;/li&gt;
+&lt;li&gt;個数&lt;/li&gt;
+&lt;li&gt;前払い&lt;/li&gt;
+&lt;li&gt;年数（弊社は 1 年指定）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;期限切れ通知&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://us-east-1.console.aws.amazon.com/cost-management/home#/ri/alert&quot;&gt;RI アラート管理&lt;/a&gt; で設定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Pros:&lt;ul&gt;
+&lt;li&gt;どのリソースに対して購入するかが決定しやすい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Savings Plans&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;対象: コンピュートリソース（EC2 専用の Savings Plans もある）&lt;ul&gt;
+&lt;li&gt;EC2&lt;/li&gt;
+&lt;li&gt;ECS&lt;/li&gt;
+&lt;li&gt;Lambda&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;以下指定し購入&lt;ul&gt;
+&lt;li&gt;コンピュートリソースの利用量に対するコミット値&lt;/li&gt;
+&lt;li&gt;年数&lt;/li&gt;
+&lt;li&gt;前払い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;期限切れ通知&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://us-east-1.console.aws.amazon.com/cost-management/home#/savings-plans/overview/alert&quot;&gt;Savings Plans アラート管理&lt;/a&gt; で設定&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;コミット値&lt;ul&gt;
+&lt;li&gt;過去・今後の推定利用量から算出する or AWS 推奨値を設定する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Pros:&lt;ul&gt;
+&lt;li&gt;EC2 から ECS のリプレイス後も適用される&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Cons:&lt;ul&gt;
+&lt;li&gt;どのリソースに対して購入したかが分かりづらい&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;CloudFront Security Bundle&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;対象:&lt;ul&gt;
+&lt;li&gt;CloudFront&lt;/li&gt;
+&lt;li&gt;WAF&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;以下指定し購入&lt;ul&gt;
+&lt;li&gt;CloudFront の利用量に対するコミット値&lt;/li&gt;
+&lt;li&gt;年数&lt;/li&gt;
+&lt;li&gt;前払い&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;期限切れ通知&lt;ul&gt;
+&lt;li&gt;現状ない (2023-12-07 時点)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;コミット値&lt;ul&gt;
+&lt;li&gt;過去・今後の推定利用量から算出する or AWS 推奨値を設定する&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>aws-cli で AWS 起動中のリソース一覧取得する</title>
+    <link href="https://kenzo0107.github.io/2023/12/01/2023-12-01-show-running-aws-resources/"/>
+    <id>https://kenzo0107.github.io/2023/12/01/2023-12-01-show-running-aws-resources/</id>
+    <published>2023-11-30T15:00:00.000Z</published>
+    <updated>2023-11-30T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>備忘録です。</p><p>複数 AWS アカウントで起動中のリソース一覧作りたい時によく利用しています。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">profiles=(</span><br><span class="line">  &lt;profile names <span class="keyword">in</span> ~/.aws/credentials&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> profile <span class="keyword">in</span> <span class="variable">$&#123;profiles[@]&#125;</span>; <span class="keyword">do</span></span><br><span class="line">    awsume <span class="variable">$profile</span> --session-name <span class="string">&quot;kenzo.tanaka&quot;</span> --output-profile tmp</span><br><span class="line">    account_id=$(aws sts get-caller-identity --profile tmp --query <span class="string">&#x27;Account&#x27;</span> --output text)</span><br><span class="line"></span><br><span class="line">    aws ec2 --profile tmp describe-instances --filters <span class="string">&quot;Name=instance-state-name,Values=running&quot;</span> \</span><br><span class="line">        | jq -r <span class="string">&quot;.Reservations[].Instances[] | \&quot;<span class="variable">$profile</span>,<span class="variable">$account_id</span>,ec2,\&quot;+ .InstanceType +\&quot;,1,\&quot;+ (.Tags[]|select(.Key == \&quot;Name\&quot;).Value)&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># aws rds describe-db-clusters だと cluster を利用していない場合に instance 情報が取得できない</span></span><br><span class="line">    aws rds --profile tmp describe-db-instances \</span><br><span class="line">        | jq -r <span class="string">&quot;.DBInstances[] | select(.DBInstanceStatus==\&quot;available\&quot;) | \&quot;<span class="variable">$profile</span>,<span class="variable">$account_id</span>,\&quot;+ .Engine +\&quot;,\&quot;+ .DBInstanceClass +\&quot;,1,\&quot;+ .DBInstanceIdentifier&quot;</span></span><br><span class="line"></span><br><span class="line">    aws elasticache --profile tmp describe-cache-clusters \</span><br><span class="line">        | jq -r <span class="string">&quot;.CacheClusters[] | \&quot;<span class="variable">$profile</span>,<span class="variable">$account_id</span>,\&quot;+ .Engine +\&quot;,\&quot;+ .CacheNodeType +\&quot;,\&quot;+ (.NumCacheNodes|tostring) +\&quot;,\&quot;+ .CacheClusterId&quot;</span></span><br><span class="line"></span><br><span class="line">    aws redshift --profile tmp describe-clusters \</span><br><span class="line">        | jq -r <span class="string">&quot;.Clusters[] | select(.ClusterStatus==\&quot;available\&quot;) | \&quot;<span class="variable">$profile</span>,<span class="variable">$account_id</span>,redshift,\&quot;+ .NodeType +\&quot;,\&quot;+ (.NumberOfNodes|tostring) +\&quot;,\&quot;+ .ClusterIdentifier&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;備忘録です。&lt;/p&gt;
+&lt;p&gt;複数 AWS アカウントで起動中のリソース一覧作りたい時によく利用しています。&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AWS CLI で EC2 インスタンス名一覧を取得</title>
+    <link href="https://kenzo0107.github.io/2023/11/07/2023-11-07-describe-ec2-specified-tag-key-value/"/>
+    <id>https://kenzo0107.github.io/2023/11/07/2023-11-07-describe-ec2-specified-tag-key-value/</id>
+    <published>2023-11-06T15:00:00.000Z</published>
+    <updated>2023-11-06T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>AWS CLI で EC2 に設定されたタグから特定のキーを指定し、その値をリストするスクリプトです。<br>以下は Key = Name でその値を取得しています。</p><p>EC2 インスタンス名の一覧を取得したい意図です。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws ec2 describe-instances --query &#x27;Reservations[*].Instances[*].Tags[?Key == `Name`].Value&#x27; --output text</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;AWS CLI で EC2 に設定されたタグから特定のキーを指定し、その値をリストするスクリプトです。&lt;br&gt;以下は Key = Name でその値を取得しています。&lt;/p&gt;
+&lt;p&gt;EC2 インスタンス名の一覧を取得したい意図です。&lt;/p&gt;
+&lt;figure class=&quot;h</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>python でファイルの内容を取得する</title>
+    <link href="https://kenzo0107.github.io/2023/07/21/2023-07-21-python-load-file/"/>
+    <id>https://kenzo0107.github.io/2023/07/21/2023-07-21-python-load-file/</id>
+    <published>2023-07-20T15:00:00.000Z</published>
+    <updated>2023-07-20T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E3%83%86%E3%82%B9%E3%83%88%E3%81%A7%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E7%94%A8%E6%84%8F">テストで使用するファイル用意</a></li><li><a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E5%86%85%E5%AE%B9%E3%82%92%E5%8F%96%E5%BE%97">ファイルの内容を取得</a></li><li><a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE-1-%E8%A1%8C%E7%9B%AE%E3%81%AE%E3%81%BF%E5%8F%96%E5%BE%97">ファイルの 1 行目のみ取得</a></li><li><a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E8%A1%8C%E6%AF%8E%E3%81%AB%E5%8F%96%E5%BE%97">ファイルを行毎に取得</a></li><li><a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E5%8F%96%E5%BE%97%E3%81%97-yaml-%E3%81%A8%E3%81%97%E3%81%A6%E3%83%91%E3%83%BC%E3%82%B9%E3%81%99%E3%82%8B">ファイルを取得し Yaml としてパースする</a></li></ul><!-- tocstop --></div></div><span id="more"></span><hr><h2><span id="概要">概要</span></h2><p>Python3 でファイルの中身をロードする方法をまとめた備忘録です。</p><h2><span id="テストで使用するファイル用意">テストで使用するファイル用意</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF&gt; sample.txt</span><br><span class="line">greeting:</span><br><span class="line">  ja: こんにちは</span><br><span class="line">  en: hello</span><br><span class="line"></span><br><span class="line">sports:</span><br><span class="line">  ja: 相撲</span><br><span class="line">  en: バスケット</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure><h2><span id="ファイルの内容を取得">ファイルの内容を取得</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;sample.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">d = file.read()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(d)</span><br></pre></td></tr></table></figure><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">greeting:</span><br><span class="line">  ja: こんにちは</span><br><span class="line">  en: hello</span><br><span class="line"></span><br><span class="line">sports:</span><br><span class="line">  ja: 相撲</span><br><span class="line">  en: バスケット</span><br></pre></td></tr></table></figure><h2><span id="ファイルの-1-行目のみ取得">ファイルの 1 行目のみ取得</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;sample.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">d = file.readline()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(d)</span><br></pre></td></tr></table></figure><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">greeting:</span><br></pre></td></tr></table></figure><h2><span id="ファイルを行毎に取得">ファイルを行毎に取得</span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;sample.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">d = file.readlines()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(d)</span><br></pre></td></tr></table></figure><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;greeting:\n&#x27;, &#x27;  ja: こんにちは\n&#x27;, &#x27;  en: hello\n&#x27;, &#x27;\n&#x27;, &#x27;sports:\n&#x27;, &#x27;  ja: 相撲\n&#x27;, &#x27;  en: バスケット\n&#x27;]</span><br></pre></td></tr></table></figure><h2><span id="ファイルを取得し-yaml-としてパースする">ファイルを取得し Yaml としてパースする</span></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pyyaml</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> yaml</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;sample.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    d = yaml.safe_load(file)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(d)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;---&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(d[<span class="string">&#x27;greeting&#x27;</span>][<span class="string">&#x27;ja&#x27;</span>])</span><br></pre></td></tr></table></figure><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;greeting&#x27;: &#123;&#x27;ja&#x27;: &#x27;こんにちは&#x27;, &#x27;en&#x27;: &#x27;hello&#x27;&#125;, &#x27;sports&#x27;: &#123;&#x27;ja&#x27;: &#x27;相撲&#x27;, &#x27;en&#x27;: &#x27;バスケット&#x27;&#125;&#125;</span><br><span class="line">---</span><br><span class="line">こんにちは</span><br></pre></td></tr></table></figure><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%83%86%E3%82%B9%E3%83%88%E3%81%A7%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E7%94%A8%E6%84%8F&quot;&gt;テストで使用するファイル用意&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E5%86%85%E5%AE%B9%E3%82%92%E5%8F%96%E5%BE%97&quot;&gt;ファイルの内容を取得&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE-1-%E8%A1%8C%E7%9B%AE%E3%81%AE%E3%81%BF%E5%8F%96%E5%BE%97&quot;&gt;ファイルの 1 行目のみ取得&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E8%A1%8C%E6%AF%8E%E3%81%AB%E5%8F%96%E5%BE%97&quot;&gt;ファイルを行毎に取得&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E5%8F%96%E5%BE%97%E3%81%97-yaml-%E3%81%A8%E3%81%97%E3%81%A6%E3%83%91%E3%83%BC%E3%82%B9%E3%81%99%E3%82%8B&quot;&gt;ファイルを取得し Yaml としてパースする&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://kenzo0107.github.io/categories/Python/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>dependabot が pull request を作成しているか確認するスクリプト</title>
+    <link href="https://kenzo0107.github.io/2023/07/14/2023-07-14-show-dependabot-pull-requests/"/>
+    <id>https://kenzo0107.github.io/2023/07/14/2023-07-14-show-dependabot-pull-requests/</id>
+    <published>2023-07-13T15:00:00.000Z</published>
+    <updated>2023-07-13T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E6%89%8B%E9%A0%86">手順</a><ul><li><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88">スクリプト</a></li></ul></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>terraform provider の更新等、 dependabot で Pull Request の作成をしていると<br>自分がアサインされていないので気づきにくいです。</p><p>その為、定期的に見ておく必要があります。</p><p>ですが、管理するリポジトリが多いと全て見に行くのは手間なのでまとめてスクリプトで見れる様にします。</p><span id="more"></span><h2><span id="手順">手順</span></h2><p>事前に gh コマンドで認証を済ませておく</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gh auth login</span><br></pre></td></tr></table></figure><h3><span id="スクリプト">スクリプト</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/zsh</span><br><span class="line"></span><br><span class="line">repos=(</span><br><span class="line">xxx-terraform</span><br><span class="line">yyy-terraform</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">WORKDIR=$HOME/ghq/github.com/kenzo0107</span><br><span class="line"></span><br><span class="line">for repo in &quot;$&#123;repos[@]&#125;&quot;</span><br><span class="line">do</span><br><span class="line">    cd $WORKDIR/$repo</span><br><span class="line">    gh pr list -A app/dependabot</span><br><span class="line">done</span><br></pre></td></tr></table></figure><p>console 実行結果</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Showing 1 of 1 pull request <span class="keyword">in</span> kenzo0107/xxx-terraform that matches your search</span><br><span class="line"></span><br><span class="line"><span class="comment">#49  Bump hashicorp/aws from 5.2.0 to 5.6.2  dependabot/terraform/hashicorp/aws-5.6.2</span></span><br><span class="line"></span><br><span class="line">Showing 2 of 2 pull requests <span class="keyword">in</span> kenzo0107/yyy-terraform that match your search</span><br><span class="line"></span><br><span class="line"><span class="comment">#433  Bump hashicorp/aws from 5.1.0 to 5.7.0 in /envs/prd        dependabot/terraform/envs/prd/hashicorp/aws-5.7.0</span></span><br></pre></td></tr></table></figure><p>ある程度数える程度だったので対応する terraform プロジェクトは配列で持たせましたが、<br>そこも動的にしたい場合は terraform プロジェクトとわかるファイルがあるリポジトリを抽出してもよいと思います。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%89%8B%E9%A0%86&quot;&gt;手順&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88&quot;&gt;スクリプト&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;terraform provider の更新等、 dependabot で Pull Request の作成をしていると&lt;br&gt;自分がアサインされていないので気づきにくいです。&lt;/p&gt;
+&lt;p&gt;その為、定期的に見ておく必要があります。&lt;/p&gt;
+&lt;p&gt;ですが、管理するリポジトリが多いと全て見に行くのは手間なのでまとめてスクリプトで見れる様にします。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="GitHub" scheme="https://kenzo0107.github.io/categories/GitHub/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>asdf で terraform 複数バージョン管理</title>
+    <link href="https://kenzo0107.github.io/2023/07/08/2023-07-08-install-terraform-multi-versions-by-asdf/"/>
+    <id>https://kenzo0107.github.io/2023/07/08/2023-07-08-install-terraform-multi-versions-by-asdf/</id>
+    <published>2023-07-07T15:00:00.000Z</published>
+    <updated>2023-07-07T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#asdf-%E6%8E%A8%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1">asdf 推した理由</a></li><li><a href="#macos-%E3%81%AB-asdf-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">MacOS に asdf インストール</a></li><li><a href="#terraform-plugin-%E8%BF%BD%E5%8A%A0-%E8%A4%87%E6%95%B0%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB">terraform plugin 追加 &amp; 複数バージョンインストール</a></li><li><a href="#%E7%89%B9%E5%AE%9A%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%81%AE%E3%81%BF%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B">特定ディレクトリのみバージョンを指定する</a></li><li><a href="#tflint-tfsec-%E3%82%82%E5%90%8C%E6%A7%98%E3%81%AB-asdf-%E3%81%A7%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86%E3%81%A7%E3%81%8D%E3%82%8B">tflint, tfsec も同様に asdf でバージョン管理できる</a></li></ul><!-- tocstop --></div></div><hr><p>terraform はバージョンアップ頻度が高く、<br>プロジェクトによってバージョン差分が生じるので<br>複数バージョンを管理できると運用がスムーズです。</p><span id="more"></span><h2><span id="asdf-推した理由">asdf 推した理由</span></h2><p>terraform だけバージョン管理するのであれば <a href="https://github.com/tfutils/tfenv">tfenv</a> がメジャーです。</p><p>ですが、 tflint, tfsec も導入を推奨しているので<br>あらゆるライブラリのバージョン管理が同じ方式でできるので<br>asdf を推してます。</p><h2><span id="macos-に-asdf-インストール">MacOS に asdf インストール</span></h2><p>参考: <a href="https://asdf-vm.com/guide/getting-started.html">https://asdf-vm.com/guide/getting-started.html</a></p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">brew install asdf</span></span><br><span class="line"></span><br><span class="line">// zsh の場合</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> -e <span class="string">&quot;\n. \&quot;<span class="subst">$(brew --prefix asdf)</span>/libexec/asdf.sh\&quot;&quot;</span> &gt;&gt; ~/.zshrc</span></span><br><span class="line"></span><br><span class="line">// リロード</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">exec</span> <span class="variable">$SHELL</span> -l</span></span><br></pre></td></tr></table></figure><h2><span id="terraform-plugin-追加-amp-複数バージョンインストール">terraform plugin 追加 &amp; 複数バージョンインストール</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf plugin add terraform</span></span><br><span class="line"></span><br><span class="line">// asdf 経由でインストール可能な version のリスト表示</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf list all terraform</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">1.5.0</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">// 1.5.0 インストール</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf install terraform 1.5.0</span></span><br></pre></td></tr></table></figure><h2><span id="特定ディレクトリのみバージョンを指定する">特定ディレクトリのみバージョンを指定する</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> path/to/terraform-project</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf <span class="built_in">local</span> terraform 1.5.0</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">asdf reshim terraform</span></span><br></pre></td></tr></table></figure><p>.tool-versions が生成され、以下のようにバージョン管理されます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terraform 1.5.0</span><br></pre></td></tr></table></figure><p>.tool-versions が指定されていると<br>そのディレクトリ配下ではインストールされていればそのバージョンを利用する様になります。</p><h2><span id="tflint-tfsec-も同様に-asdf-でバージョン管理できる">tflint, tfsec も同様に asdf でバージョン管理できる</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ asdf plugin add tflint</span><br><span class="line">$ asdf plugin add tfsec</span><br></pre></td></tr></table></figure><p>ローカルで tflint, tfsec のバージョンアップによる挙動の変化を試したい場合に利用しています。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#asdf-%E6%8E%A8%E3%81%97%E3%81%9F%E7%90%86%E7%94%B1&quot;&gt;asdf 推した理由&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#macos-%E3%81%AB-asdf-%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB&quot;&gt;MacOS に asdf インストール&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#terraform-plugin-%E8%BF%BD%E5%8A%A0-%E8%A4%87%E6%95%B0%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB&quot;&gt;terraform plugin 追加 &amp;amp; 複数バージョンインストール&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%89%B9%E5%AE%9A%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E3%81%AE%E3%81%BF%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B&quot;&gt;特定ディレクトリのみバージョンを指定する&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#tflint-tfsec-%E3%82%82%E5%90%8C%E6%A7%98%E3%81%AB-asdf-%E3%81%A7%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%AE%A1%E7%90%86%E3%81%A7%E3%81%8D%E3%82%8B&quot;&gt;tflint, tfsec も同様に asdf でバージョン管理できる&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;p&gt;terraform はバージョンアップ頻度が高く、&lt;br&gt;プロジェクトによってバージョン差分が生じるので&lt;br&gt;複数バージョンを管理できると運用がスムーズです。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SAM プロジェクトで管理する API Gateway のアクセスログを有効化する</title>
+    <link href="https://kenzo0107.github.io/2023/07/07/2023-07-07-aws-sam-enable-apigateway-accesslog/"/>
+    <id>https://kenzo0107.github.io/2023/07/07/2023-07-07-aws-sam-enable-apigateway-accesslog/</id>
+    <published>2023-07-06T15:00:00.000Z</published>
+    <updated>2023-07-06T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a><ul><li><a href="#sam-templateyml-%E8%A8%AD%E5%AE%9A">SAM template.yml 設定</a></li></ul></li><li><a href="#%E7%B5%90%E8%AB%96">結論</a></li><li><a href="#%E8%A9%A6%E3%81%97%E3%81%9F%E3%81%93%E3%81%A8-ng-%E9%9B%86">試したこと (NG 集)</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>SAM プロジェクトで管理する API Gateway について<br>AWS Config rule: <code>api-gw-execution-logging-enabled</code> に対応すべく、<br>アクセスログを有効化した際にハマった話です。</p><p><code>Events.*.Type = Api</code> で作成した API Gateway では SAM 上でアクセスログ有効化の設定ができません。</p><p>どのようにしたら API Gateway のアクセスログ有効化できるか調査しました。</p><span id="more"></span><h3><span id="sam-templateyml-設定">SAM template.yml 設定</span></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="attr">Function:</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::Serverless::Function</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="string">...</span></span><br><span class="line">      <span class="attr">Events:</span></span><br><span class="line">        <span class="attr">Message:</span></span><br><span class="line">          <span class="attr">Type:</span> <span class="string">Api</span> <span class="comment"># この設定で生成した API Gateway だとアクセスログの有効化の設定ができない</span></span><br><span class="line">          <span class="attr">Properties:</span></span><br><span class="line">            <span class="attr">Path:</span> <span class="string">/message</span></span><br><span class="line">            <span class="attr">Method:</span> <span class="string">post</span></span><br></pre></td></tr></table></figure><h2><span id="結論">結論</span></h2><p>2023-07-07 時点、<br>API Gateway を新たに作成しそちらに乗り換えるしか方法がありません。<br>その場合、カスタムドメインでない限り、API Gateway のドメインは変更されます。</p><p><code>Type: AWS::Serverless::Api</code> 等、別途 API Gateway 作成し、<code>RestApiId</code> で参照することで<br>アクセスログや X-Ray Tracing の有効化が可能でした。</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="attr">Lambda:</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::Serverless::Function</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="attr">Events:</span></span><br><span class="line">        <span class="attr">foo:</span></span><br><span class="line">          <span class="attr">Type:</span> <span class="string">Api</span></span><br><span class="line">          <span class="attr">Properties:</span></span><br><span class="line">            <span class="attr">RestApiId:</span> <span class="type">!Ref</span> <span class="string">ApiGateway</span></span><br><span class="line">            <span class="attr">Path:</span> <span class="string">/message</span></span><br><span class="line">            <span class="attr">Method:</span> <span class="string">post</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">ApiGateway:</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::Serverless::Api</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="attr">StageName:</span> <span class="string">Prod</span></span><br><span class="line">      <span class="attr">TracingEnabled:</span> <span class="literal">true</span> <span class="comment"># X-Ray Tracing 有効化</span></span><br><span class="line">      <span class="attr">AccessLogSetting:</span></span><br><span class="line">        <span class="attr">DestinationArn:</span> <span class="type">!GetAtt</span> <span class="string">ApiGatewayAccessLogGroup.Arn</span></span><br><span class="line">        <span class="attr">Format:</span> <span class="string">&#x27;&#123; &quot;requestId&quot;:&quot;$context.requestId&quot;, &quot;ip&quot;: &quot;$context.identity.sourceIp&quot;, &quot;caller&quot;:&quot;$context.identity.caller&quot;, &quot;user&quot;:&quot;$context.identity.user&quot;,&quot;requestTime&quot;:&quot;$context.requestTime&quot;, &quot;httpMethod&quot;:&quot;$context.httpMethod&quot;,&quot;resourcePath&quot;:&quot;$context.resourcePath&quot;, &quot;status&quot;:&quot;$context.status&quot;,&quot;protocol&quot;:&quot;$context.protocol&quot;, &quot;responseLength&quot;:&quot;$context.responseLength&quot; &#125;&#x27;</span></span><br><span class="line">      <span class="attr">MethodSettings:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">DataTraceEnabled:</span> <span class="literal">false</span> <span class="comment"># true にし全てのログを記録する為、 false で error のみに絞る</span></span><br><span class="line">          <span class="attr">LoggingLevel:</span> <span class="string">ERROR</span> <span class="comment"># error のみログに記録</span></span><br><span class="line">          <span class="attr">ResourcePath:</span> <span class="string">&#x27;/*&#x27;</span> <span class="comment"># 全てのリソースパス対象</span></span><br><span class="line">          <span class="attr">HttpMethod:</span> <span class="string">&#x27;*&#x27;</span> <span class="comment"># 全ての HTTP Method 対象</span></span><br></pre></td></tr></table></figure><p>もしドメイン変更を許容しない場合は、コンソール上でアクセスログを有効化することは可能です。<br>sam deploy 後も上記処理について変更がないことを確認済みです。</p><h2><span id="試したこと-ng-集">試したこと (NG 集)</span></h2><ul><li><p>AWS::Serverless::Api  で定義し  API Gateway  をインポートしようとすると以下エラー発生</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ResourceTypes [AWS::Serverless::Api] are not supported for Import</span><br></pre></td></tr></table></figure><p>参考: <a href="https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/resource-import-supported-resources.html">インポートおよびドリフト検出オペレーションをサポートするリソース</a></p></li><li><p>AWS::ApiGateway::RestApi  で定義し  API Gateway  をインポートしようとすると以下エラー発生</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You have modified resources [ServerlessRestApi, ServerlessRestApiDeployment2ababeb14f, ServerlessRestApiProdStage, FunctionMessagePermissionProd] in your template that are not being imported. Update, create or delete operations cannot be executed during import operations.</span><br></pre></td></tr></table></figure><p>他リソースの設定が不足しているようだ。</p></li><li><p>AWS::ApiGateway::Stage のみインポートしようとすると以下エラー発生</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abcd1a2b3c|Prod already exists in stack arn:aws:cloudformation:ap-northeast-1:123456789012:stack/Bot-Stack/e50458c0-1234-12ab-a12f-123a4b5c6d7e</span><br></pre></td></tr></table></figure></li></ul><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%82%E8%A6%81&quot;&gt;概要&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#sam-templateyml-%E8%A8%AD%E5%AE%9A&quot;&gt;SAM template.yml 設定&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E7%B5%90%E8%AB%96&quot;&gt;結論&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E8%A9%A6%E3%81%97%E3%81%9F%E3%81%93%E3%81%A8-ng-%E9%9B%86&quot;&gt;試したこと (NG 集)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;SAM プロジェクトで管理する API Gateway について&lt;br&gt;AWS Config rule: &lt;code&gt;api-gw-execution-logging-enabled&lt;/code&gt; に対応すべく、&lt;br&gt;アクセスログを有効化した際にハマった話です。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Events.*.Type = Api&lt;/code&gt; で作成した API Gateway では SAM 上でアクセスログ有効化の設定ができません。&lt;/p&gt;
+&lt;p&gt;どのようにしたら API Gateway のアクセスログ有効化できるか調査しました。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SAM テンプレートに既存リソースをインポートする手順 - IAM Role 編 -</title>
+    <link href="https://kenzo0107.github.io/2023/06/20/2023-06-20-aws-sam-import-iam-role/"/>
+    <id>https://kenzo0107.github.io/2023/06/20/2023-06-20-aws-sam-import-iam-role/</id>
+    <published>2023-06-19T15:00:00.000Z</published>
+    <updated>2023-06-19T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%89%8B%E9%A0%86">手順</a><ul><li><a href="#cloudformation-%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%8F%96%E5%BE%97%E3%81%97-templateyml-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%BF%BD%E8%A8%98">CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記</a></li><li><a href="#importjson-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%A8%98%E8%BC%89">import.json にインポートしたいリソースを記載</a></li></ul></li></ul><!-- tocstop --></div></div><hr><a href="https://kenzo0107.github.io/2023/06/06/2023-06-07-aws-sam-import-resource" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://i.imgur.com/nieeIsl.png"></div><div class="descriptions"><div class="og-title">SAM テンプレートに既存リソースをインポートする手順 - CloudWatch Logs 編 -</div><div class="og-description">ToC     手順 CloudFormation のテンプレート取得 template.yml にインポートしたいリソースを追記 import.json にインポートしたいリソースを記載 Change sets を作成する change set を実行 (インポート実行) イン…</div></div></div></a><p>以前は CloudWatch LogGroup をインポートしましたが<br>今回は IAM Role をインポートの設定例です。</p><p>基本手順は CloudWatch LogGroup と同様ですが、<br>異なる部分だけ記載します。</p><h2><span id="手順">手順</span></h2><h3><span id="cloudformation-のテンプレート取得し-templateyml-にインポートしたいリソースを追記">CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記</span></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">CWLogRole:</span></span><br><span class="line">    <span class="attr">DeletionPolicy:</span> <span class="string">Retain</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::IAM::Role</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="attr">RoleName:</span> <span class="string">xxx-Bot-Stack</span></span><br><span class="line">      <span class="attr">AssumeRolePolicyDocument:</span></span><br><span class="line">        <span class="attr">Version:</span> <span class="number">2012-10-17</span></span><br><span class="line">        <span class="attr">Statement:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">Effect:</span> <span class="string">Allow</span></span><br><span class="line">            <span class="attr">Principal:</span></span><br><span class="line">              <span class="attr">Service:</span> <span class="string">apigateway.amazonaws.com</span></span><br><span class="line">            <span class="attr">Action:</span> <span class="string">sts:AssumeRole</span></span><br><span class="line">      <span class="attr">Description:</span> <span class="string">Allows</span> <span class="string">API</span> <span class="string">Gateway</span> <span class="string">to</span> <span class="string">push</span> <span class="string">logs</span> <span class="string">to</span> <span class="string">CloudWatch</span> <span class="string">Logs.</span></span><br><span class="line">      <span class="attr">ManagedPolicyArns:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs</span></span><br></pre></td></tr></table></figure><p>API Gateway のアクセスログ管理用ロググループへログを配信する IAM Role をインポートします。</p><span id="more"></span><h3><span id="importjson-にインポートしたいリソースを記載">import.json にインポートしたいリソースを記載</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;ResourceType&quot;: &quot;AWS::IAM::Role&quot;,</span><br><span class="line">        &quot;LogicalResourceId&quot;: &quot;CWLogRole&quot;,</span><br><span class="line">        &quot;ResourceIdentifier&quot;: &#123;</span><br><span class="line">            &quot;RoleName&quot;:&quot;xxx-Bot-Stack&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>import.json にインポート対象のリソースを追加し<br>先程の template.yml と同じディレクトリに保存します。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">aws cloudformation create-change-set \</span></span><br><span class="line"><span class="language-bash">    --stack-name xxx-Bot-Stack \</span></span><br><span class="line"><span class="language-bash">    --change-set-name import-cwlogs-role \</span></span><br><span class="line"><span class="language-bash">    --resources-to-import file://import.json \</span></span><br><span class="line"><span class="language-bash">    --change-set-type IMPORT \</span></span><br><span class="line"><span class="language-bash">    --template-body file://template.yml \</span></span><br><span class="line"><span class="language-bash">    --capabilities CAPABILITY_NAMED_IAM</span></span><br></pre></td></tr></table></figure><p>capabilities は CAPABILITY_NAMED_IAM にする必要があります。<br>IAM Role リソースに独自の命名をしたい場合に利用します。</p><p>参考: <a href="https://docs.aws.amazon.com/ja_jp/serverlessrepo/latest/devguide/acknowledging-application-capabilities.html">https://docs.aws.amazon.com/ja_jp/serverlessrepo/latest/devguide/acknowledging-application-capabilities.html</a></p><p>あとは同様に手順を進めます。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%89%8B%E9%A0%86&quot;&gt;手順&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#cloudformation-%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%8F%96%E5%BE%97%E3%81%97-templateyml-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%BF%BD%E8%A8%98&quot;&gt;CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#importjson-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%A8%98%E8%BC%89&quot;&gt;import.json にインポートしたいリソースを記載&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;a href=&quot;https://kenzo0107.github.io/2023/06/06/2023-06-07-aws-sam-import-resource&quot; class=&quot;link-preview&quot; target=&quot;_blank&quot;&gt;&lt;div class=&quot;link-area&quot;&gt;&lt;div class=&quot;og-image&quot;&gt;&lt;img src=&quot;https://i.imgur.com/nieeIsl.png&quot;&gt;&lt;/img&gt;&lt;/div&gt;&lt;div class=&quot;descriptions&quot;&gt;&lt;div class=&quot;og-title&quot;&gt;SAM テンプレートに既存リソースをインポートする手順 - CloudWatch Logs 編 -&lt;/div&gt;&lt;div class=&quot;og-description&quot;&gt;ToC     手順 CloudFormation のテンプレート取得 template.yml にインポートしたいリソースを追記 import.json にインポートしたいリソースを記載 Change sets を作成する change set を実行 (インポート実行) イン…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/a&gt;
+
+&lt;p&gt;以前は CloudWatch LogGroup をインポートしましたが&lt;br&gt;今回は IAM Role をインポートの設定例です。&lt;/p&gt;
+&lt;p&gt;基本手順は CloudWatch LogGroup と同様ですが、&lt;br&gt;異なる部分だけ記載します。&lt;/p&gt;
+&lt;h2 id=&quot;手順&quot;&gt;&lt;a href=&quot;#手順&quot; class=&quot;headerlink&quot; title=&quot;手順&quot;&gt;&lt;/a&gt;手順&lt;/h2&gt;&lt;h3 id=&quot;CloudFormation-のテンプレート取得し-template-yml-にインポートしたいリソースを追記&quot;&gt;&lt;a href=&quot;#CloudFormation-のテンプレート取得し-template-yml-にインポートしたいリソースを追記&quot; class=&quot;headerlink&quot; title=&quot;CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記&quot;&gt;&lt;/a&gt;CloudFormation のテンプレート取得し template.yml にインポートしたいリソースを追記&lt;/h3&gt;&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;Resources:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;CWLogRole:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;DeletionPolicy:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Retain&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;Type:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;AWS::IAM::Role&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;Properties:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;RoleName:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;xxx-Bot-Stack&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;AssumeRolePolicyDocument:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;Version:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2012-10-17&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;attr&quot;&gt;Statement:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;Effect:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Allow&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;Principal:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;              &lt;span class=&quot;attr&quot;&gt;Service:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;apigateway.amazonaws.com&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;attr&quot;&gt;Action:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;sts:AssumeRole&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;Description:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Allows&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;API&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Gateway&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;logs&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;CloudWatch&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Logs.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;ManagedPolicyArns:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;bullet&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;API Gateway のアクセスログ管理用ロググループへログを配信する IAM Role をインポートします。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SAM テンプレートに既存リソースをインポートする手順 - CloudWatch Logs 編 -</title>
+    <link href="https://kenzo0107.github.io/2023/06/07/2023-06-07-aws-sam-import-resource/"/>
+    <id>https://kenzo0107.github.io/2023/06/07/2023-06-07-aws-sam-import-resource/</id>
+    <published>2023-06-06T15:00:00.000Z</published>
+    <updated>2023-06-06T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%89%8B%E9%A0%86">手順</a><ul><li><a href="#cloudformation-%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%8F%96%E5%BE%97">CloudFormation のテンプレート取得</a></li><li><a href="#templateyml-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%BF%BD%E8%A8%98">template.yml にインポートしたいリソースを追記</a></li><li><a href="#importjson-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%A8%98%E8%BC%89">import.json にインポートしたいリソースを記載</a></li><li><a href="#change-sets-%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B">Change sets を作成する</a></li><li><a href="#change-set-%E3%82%92%E5%AE%9F%E8%A1%8C-%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E5%AE%9F%E8%A1%8C">change set を実行 (インポート実行)</a><ul><li><a href="#%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AB%E3%82%BF%E3%82%B0%E3%81%8C%E8%BF%BD%E5%8A%A0%E3%81%95%E3%82%8C%E3%82%8B">インポートしたリソースにタグが追加される</a></li></ul></li><li><a href="#sam-%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88-templateyml-%E6%9B%B4%E6%96%B0">SAM プロジェクト template.yml 更新</a></li></ul></li><li><a href="#%E3%81%8A%E3%81%BE%E3%81%91-sam-%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E7%AE%A1%E7%90%86%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B-import-%E3%81%AE%E9%80%86">おまけ: SAM リソースを管理除外する (import の逆)</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="手順">手順</span></h2><h3><span id="cloudformation-のテンプレート取得">CloudFormation のテンプレート取得</span></h3><p><img src="https://i.imgur.com/nieeIsl.png"></p><p>既にデプロイ済みの SAM プロジェクトは CloudFormation に Stack が作成されています。<br>その <code>Template</code> タグで template の内容をローカル環境で <code>template.yml</code> で保存しましょう。<br>保存先はどこでも良いです。</p><h3><span id="templateyml-にインポートしたいリソースを追記">template.yml にインポートしたいリソースを追記</span></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">...</span></span><br><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># インポートしたいリソースを追記</span></span><br><span class="line">  <span class="comment"># API Gateway の アクセスログ管理用ロググループ</span></span><br><span class="line">  <span class="attr">ApiGatewayAccessLogGroup:</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::Logs::LogGroup</span></span><br><span class="line">    <span class="comment"># <span class="doctag">NOTE:</span> リソースを作成せず、Stack にインポートする為の設定</span></span><br><span class="line">    <span class="comment"># see: https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html</span></span><br><span class="line">    <span class="attr">DeletionPolicy:</span> <span class="string">Retain</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="attr">LogGroupName:</span> <span class="string">/aws/apigateway/xxx-Bot-Stack</span></span><br></pre></td></tr></table></figure><p>今回は API Gateway のアクセスログ管理用ロググループをインポートします。<br><code>DeletionPolicy: Retain</code> としているのは、リソースを作成せず、Stack にインポートする為です。</p><span id="more"></span><h3><span id="importjson-にインポートしたいリソースを記載">import.json にインポートしたいリソースを記載</span></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;ResourceType&quot;: &quot;AWS::Logs::LogGroup&quot;,</span><br><span class="line">        &quot;LogicalResourceId&quot;: &quot;ApiGatewayAccessLogGroup&quot;,</span><br><span class="line">        &quot;ResourceIdentifier&quot;: &#123;</span><br><span class="line">            &quot;LogGroupName&quot;:&quot;/aws/apigateway/xxx-Bot-Stack&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><p>import.json にインポート対象のリソースを追加し<br>先程の template.yml と同じディレクトリに保存します。</p><h3><span id="change-sets-を作成する">Change sets を作成する</span></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ aws cloudformation create-change-set \</span><br><span class="line">    --stack-name xxx-Bot-Stack \</span><br><span class="line">    --change-set-name import-apigateway-accesslog-loggroup \</span><br><span class="line">    --resources-to-import file://import.json \</span><br><span class="line">    --change-set-type IMPORT \</span><br><span class="line">    --template-body file://template.yml \</span><br><span class="line">    --capabilities CAPABILITY_IAM</span><br></pre></td></tr></table></figure><p>※ このコマンド実行した時点ではインポートは実行されません。</p><p>コマンド実行後、以下のように <code>Change sets</code> にセットが追加されていれば OK です。</p><p><img src="https://i.imgur.com/5JVMX2A.png"></p><p>Change sets の Name がリンクになっているのでクリックします。</p><h3><span id="change-set-を実行-インポート実行">change set を実行 (インポート実行)</span></h3><p><img src="https://i.imgur.com/EbPH7XZ.png"></p><p>右上の <code>Execute change set</code> ボタンをクリックし Stack へのインポート処理を実行します。</p><p>ステータス= <code>IMPORT_COMPLETE</code> でインポート完了となります。<br><img src="https://i.imgur.com/e3pu5ih.png"></p><h4><span id="インポートしたリソースにタグが追加される">インポートしたリソースにタグが追加される</span></h4><p><img src="https://i.imgur.com/3BQeLUv.png"></p><p>Stack にインポートしたリソースに Stack で管理されている旨のタグが追加されていることが確認できます。</p><h3><span id="sam-プロジェクト-templateyml-更新">SAM プロジェクト template.yml 更新</span></h3><p>インポート用に用意した template.yml とは異なるデプロイ時に参照する yml ファイルにインポートしたリソースを定義します。<br>ここでは <code>DeletionPolicy: Retain</code> は不要です。</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Resources:</span></span><br><span class="line">  <span class="string">...</span></span><br><span class="line">  <span class="comment"># 追記</span></span><br><span class="line">  <span class="attr">ApiGatewayAccessLogGroup:</span></span><br><span class="line">    <span class="attr">Type:</span> <span class="string">AWS::Logs::LogGroup</span></span><br><span class="line">    <span class="attr">Properties:</span></span><br><span class="line">      <span class="attr">LogGroupName:</span> <span class="string">/aws/apigateway/xxx-Bot-Stack</span></span><br><span class="line">      <span class="attr">RetentionInDays:</span> <span class="number">14</span></span><br></pre></td></tr></table></figure><p>SAM プロジェクトで管理するテンプレートファイルで <code>DeletionPolicy: Retain</code> の差分がある為、変更の差分が出ます。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">$ sam deploy -t <span class="variable">$&#123;TEMPLATE_FILE&#125;</span> \</span><br><span class="line">--stack-name xxx-Bot-Stack \</span><br><span class="line">--s3-prefix xxx-Bot-Stack \</span><br><span class="line">--s3-bucket yyy \</span><br><span class="line">--capabilities CAPABILITY_IAM \</span><br><span class="line">--region ap-northeast-1 \</span><br><span class="line">--no-fail-on-empty-changeset \</span><br><span class="line">--no-progressbar</span><br><span class="line"></span><br><span class="line">Initiating deployment</span><br><span class="line">=====================</span><br><span class="line"></span><br><span class="line">File with same data already exists at xxx-Bot-Stack/nnn.template, skipping upload</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Waiting <span class="keyword">for</span> changeset to be created..</span><br><span class="line"></span><br><span class="line">CloudFormation stack changeset</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">Operation                        LogicalResourceId                ResourceType                     Replacement</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">* Modify                         ApiGatewayAccessLogGroup         AWS::Logs::LogGroup              False</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Changeset created successfully. arn:aws:cloudformation:ap-northeast-1:123456789012:changeSet/samcli-deploy123/zzz</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2023-06-07 12:22:16 - Waiting <span class="keyword">for</span> stack create/update to complete</span><br><span class="line"></span><br><span class="line">CloudFormation events from stack operations (refresh every 5.0 seconds)</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">ResourceStatus                   ResourceType                     LogicalResourceId                ResourceStatusReason</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">UPDATE_COMPLETE                  AWS::Logs::LogGroup              ApiGatewayAccessLogGroup         -</span><br><span class="line">UPDATE_COMPLETE_CLEANUP_IN_PRO   AWS::CloudFormation::Stack       xxx-Bot-Stack              -</span><br><span class="line">GRESS</span><br><span class="line">UPDATE_COMPLETE                  AWS::CloudFormation::Stack       xxx-Bot-Stack              -</span><br><span class="line">---------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">CloudFormation outputs from deployed stack</span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">Outputs</span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">Key                 SlackMessageApi</span><br><span class="line">Description         -</span><br><span class="line">Value               https://yyy.execute-api.ap-northeast-1.amazonaws.com/Prod/message/</span><br><span class="line">------------------------------------------------------------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Successfully created/updated stack - xxx-Bot-Stack <span class="keyword">in</span> ap-northeast-1</span><br></pre></td></tr></table></figure><p>デプロイ後、再度デプロイしようとすると差分がなくなることを確認できました。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sam deploy -t <span class="variable">$&#123;TEMPLATE_FILE&#125;</span> \</span><br><span class="line">--stack-name xxx-Bot-Stack \</span><br><span class="line">--s3-prefix xxx-Bot-Stack \</span><br><span class="line">--s3-bucket yyy \</span><br><span class="line">--capabilities CAPABILITY_IAM \</span><br><span class="line">--region ap-northeast-1 \</span><br><span class="line">--no-fail-on-empty-changeset \</span><br><span class="line">--no-progressbar</span><br><span class="line"></span><br><span class="line">File with same data already exists at xxx-Bot-Stack/7d47ca74f4c587c742cd0df1f7252ecd.template, skipping upload</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Waiting <span class="keyword">for</span> changeset to be created..</span><br><span class="line"></span><br><span class="line">No changes to deploy. Stack xxx-Bot-Stack is up to <span class="built_in">date</span></span><br></pre></td></tr></table></figure><p>これにてインポートが問題なくできたことを確認できました。</p><h2><span id="おまけ-sam-リソースを管理除外する-import-の逆">おまけ: SAM リソースを管理除外する (import の逆)</span></h2><p>Stack &gt; Template を template.yml で保存し、対象リソースを削除し以下コマンドを実行します。</p><p>インポートしたロググループを除外する Change set を作成します。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">aws cloudformation create-change-set \</span><br><span class="line">    --stack-name xxx-Bot-Stack \</span><br><span class="line">    --change-set-name remove-apigateway-loggroup \</span><br><span class="line">    --change-set-type UPDATE \</span><br><span class="line">    --template-body file://template.yml \</span><br><span class="line">    --capabilities CAPABILITY_IAM</span><br></pre></td></tr></table></figure><p>コンソール上で Execute change set を実行し削除できます。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;ToC&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%89%8B%E9%A0%86&quot;&gt;手順&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#cloudformation-%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E5%8F%96%E5%BE%97&quot;&gt;CloudFormation のテンプレート取得&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#templateyml-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%BF%BD%E8%A8%98&quot;&gt;template.yml にインポートしたいリソースを追記&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#importjson-%E3%81%AB%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%81%84%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E8%A8%98%E8%BC%89&quot;&gt;import.json にインポートしたいリソースを記載&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#change-sets-%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B&quot;&gt;Change sets を作成する&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#change-set-%E3%82%92%E5%AE%9F%E8%A1%8C-%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E5%AE%9F%E8%A1%8C&quot;&gt;change set を実行 (インポート実行)&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%AB%E3%82%BF%E3%82%B0%E3%81%8C%E8%BF%BD%E5%8A%A0%E3%81%95%E3%82%8C%E3%82%8B&quot;&gt;インポートしたリソースにタグが追加される&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#sam-%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88-templateyml-%E6%9B%B4%E6%96%B0&quot;&gt;SAM プロジェクト template.yml 更新&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#%E3%81%8A%E3%81%BE%E3%81%91-sam-%E3%83%AA%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%92%E7%AE%A1%E7%90%86%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B-import-%E3%81%AE%E9%80%86&quot;&gt;おまけ: SAM リソースを管理除外する (import の逆)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- tocstop --&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;hr&gt;
+&lt;h2 id=&quot;手順&quot;&gt;&lt;a href=&quot;#手順&quot; class=&quot;headerlink&quot; title=&quot;手順&quot;&gt;&lt;/a&gt;手順&lt;/h2&gt;&lt;h3 id=&quot;CloudFormation-のテンプレート取得&quot;&gt;&lt;a href=&quot;#CloudFormation-のテンプレート取得&quot; class=&quot;headerlink&quot; title=&quot;CloudFormation のテンプレート取得&quot;&gt;&lt;/a&gt;CloudFormation のテンプレート取得&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/nieeIsl.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;既にデプロイ済みの SAM プロジェクトは CloudFormation に Stack が作成されています。&lt;br&gt;その &lt;code&gt;Template&lt;/code&gt; タグで template の内容をローカル環境で &lt;code&gt;template.yml&lt;/code&gt; で保存しましょう。&lt;br&gt;保存先はどこでも良いです。&lt;/p&gt;
+&lt;h3 id=&quot;template-yml-にインポートしたいリソースを追記&quot;&gt;&lt;a href=&quot;#template-yml-にインポートしたいリソースを追記&quot; class=&quot;headerlink&quot; title=&quot;template.yml にインポートしたいリソースを追記&quot;&gt;&lt;/a&gt;template.yml にインポートしたいリソースを追記&lt;/h3&gt;&lt;figure class=&quot;highlight yaml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attr&quot;&gt;Resources:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;# インポートしたいリソースを追記&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;# API Gateway の アクセスログ管理用ロググループ&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;attr&quot;&gt;ApiGatewayAccessLogGroup:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;Type:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;AWS::Logs::LogGroup&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;# &lt;span class=&quot;doctag&quot;&gt;NOTE:&lt;/span&gt; リソースを作成せず、Stack にインポートする為の設定&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;# see: https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-attribute-deletionpolicy.html&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;DeletionPolicy:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;Retain&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attr&quot;&gt;Properties:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;attr&quot;&gt;LogGroupName:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;/aws/apigateway/xxx-Bot-Stack&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;今回は API Gateway のアクセスログ管理用ロググループをインポートします。&lt;br&gt;&lt;code&gt;DeletionPolicy: Retain&lt;/code&gt; としているのは、リソースを作成せず、Stack にインポートする為です。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>fix: Could not install packages due to an EnvironmentError: [Errno 28] No space left on device</title>
+    <link href="https://kenzo0107.github.io/2023/06/01/2023-06-01-fix-no-space-left-on-device-when-pip-install/"/>
+    <id>https://kenzo0107.github.io/2023/06/01/2023-06-01-fix-no-space-left-on-device-when-pip-install/</id>
+    <published>2023-05-31T15:00:00.000Z</published>
+    <updated>2023-05-31T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>RPi 4B で以下エラーで詰まった時の備忘録です。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install xxx</span><br><span class="line"></span><br><span class="line">Could not install packages due to an EnvironmentError: [Errno 28] No space left on device</span><br></pre></td></tr></table></figure><p>一時的に tmp ディレクトリを指定してからインストールを再度実行することで回避してみます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir $HOME/tmp</span><br><span class="line">$ export TMPDIR=$HOME/tmp</span><br><span class="line"></span><br><span class="line">$ pip3 install xxx</span><br></pre></td></tr></table></figure><p>これでうまくいきました ♪</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;RPi 4B で以下エラーで詰まった時の備忘録です。&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;spa</summary>
+      
+    
+    
+    
+    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AWS Savings Plans Coverage API 実行時に DataUnavailableException エラーが発生する</title>
+    <link href="https://kenzo0107.github.io/2023/06/01/2023-06-01-get-savings-plans-coverage-data-unavailable-exception/"/>
+    <id>https://kenzo0107.github.io/2023/06/01/2023-06-01-get-savings-plans-coverage-data-unavailable-exception/</id>
+    <published>2023-05-31T15:00:00.000Z</published>
+    <updated>2023-05-31T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<div class="toc"><div class="toc-content"><h3 class="menu-label"><span id="toc">ToC</span></h3><!-- toc --><ul><li><a href="#%E6%A6%82%E8%A6%81">概要</a></li><li><a href="#%E3%82%B5%E3%83%9D%E3%83%BC%E3%83%88%E3%81%AE%E5%9B%9E%E7%AD%94">サポートの回答</a></li><li><a href="#cost-explorer-%E3%81%A7%E7%A2%BA%E8%AA%8D">Cost Explorer で確認</a></li><li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li></ul><!-- tocstop --></div></div><hr><h2><span id="概要">概要</span></h2><p>AWS Savings Plans Coverage API 実行時に DataUnavailableException エラーが発生しました。</p><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">aws ce get-savings-plans-coverage --time-period Start=2023-05-31,End=2023-06-01 --group-by Type=DIMENSION,Key=INSTANCE_TYPE_FAMILY Type=DIMENSION,Key=REGION Type=DIMENSION,Key=SERVICE</span></span><br><span class="line"></span><br><span class="line">An error occurred (DataUnavailableException) when calling the GetSavingsPlansCoverage operation:</span><br></pre></td></tr></table></figure><p>発生する条件を AWS サポートに確認しました。</p><h2><span id="サポートの回答">サポートの回答</span></h2><p>「対象期間について Savings Plans 適用対象サービスを使用していない場合、上記エラーが発生する」<br>とのこと。</p><h2><span id="cost-explorer-で確認">Cost Explorer で確認</span></h2><p>Cost Explorer で Savings Plans &gt; Coverage report にも以下メッセージがありました。</p><blockquote><p>No savings plans coverage data was returned for this time period. Please adjust the time period or filters if this seems incorrect.」</p></blockquote><p><img src="https://i.imgur.com/ztLP9oV.png"></p><h2><span id="まとめ">まとめ</span></h2><p>Savings Plans カバレッジ取得時に DataUnavailableException エラーが発生する<br>= Savings Plans 適用対象サービスを使用していない<br>= Savings Plans を買う必要がない</p><p>ということでした。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;div class=&quot;toc&quot;&gt;
+&lt;div class=&quot;toc-content&quot;&gt;
+&lt;h3 class=&quot;menu-label&quot;&gt;&lt;span id=&quot;toc&quot;&gt;ToC&lt;/span&gt;&lt;/h3&gt;
+
+&lt;!-- toc --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#%E6%A6%8</summary>
+      
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+  </entry>
+  
+</feed>

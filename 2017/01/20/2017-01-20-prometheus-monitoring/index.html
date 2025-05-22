@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Prometheus でサーバ監視 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="概要以前 Ansible + Vagrant で Prometheus モニタリング環境構築について書きました。   今回は具体的によくある設定ユースケースを順追って設定していきます。  Prometheus Server 構築 監視対象で Node Exporter 構築 Alertmanager 構築      今回やること 3 行まとめ Prometheus Server モジュールインスト"><meta property="og:type" content="blog"><meta property="og:title" content="Prometheus でサーバ監視"><meta property="og:url" content="https://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="概要以前 Ansible + Vagrant で Prometheus モニタリング環境構築について書きました。   今回は具体的によくある設定ユースケースを順追って設定していきます。  Prometheus Server 構築 監視対象で Node Exporter 構築 Alertmanager 構築      今回やること 3 行まとめ Prometheus Server モジュールインスト"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125140715.png"><meta property="article:published_time" content="2017-01-19T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="Monitoring"><meta property="article:tag" content="Prometheus"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125140715.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring/"},"headline":"Prometheus でサーバ監視","image":["https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125140715.png"],"datePublished":"2017-01-19T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"概要以前 Ansible + Vagrant で Prometheus モニタリング環境構築について書きました。   今回は具体的によくある設定ユースケースを順追って設定していきます。  Prometheus Server 構築 監視対象で Node Exporter 構築 Alertmanager 構築      今回やること 3 行まとめ Prometheus Server モジュールインスト"}</script><link rel="canonical" href="https://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125140715.png" alt="Prometheus でサーバ監視"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-01-20</span></div></div><h1 class="title is-3 is-size-4-mobile">Prometheus でサーバ監視</h1><div class="content"><h2><span id="概要">概要</span></h2><p>以前 Ansible + Vagrant で Prometheus モニタリング環境構築について書きました。</p>
+
+
+<p>今回は具体的によくある設定ユースケースを順追って設定していきます。</p>
+<ol>
+<li><a href="http://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring">Prometheus Server 構築</a></li>
+<li><a href="http://kenzo0107.github.io/2017/01/25/2017-01-25-prometheus-aws-autoscaling">監視対象で Node Exporter 構築</a></li>
+<li><a href="http://kenzo0107.github.io/2017/02/02/2017-02-02-prometheus-alertmanager">Alertmanager 構築</a></li>
+</ol>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125134654.png" width="100%">
+</div>
+
+<h2><span id="今回やること-3-行まとめ">今回やること 3 行まとめ</span></h2><ul>
+<li>Prometheus Server モジュールインストール</li>
+<li>Prometheus Server 起動スクリプト作成</li>
+<li>Prometheus Server 起動し自身のサーバモニタリング</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170125/20170125140715.png" width="100%">
+</div>
+
+<p>Prometheus の設定ファイルについては<br>全体像を理解した後が良いと思いますので<br>Node Exporter の設定の後に実施したいと思います。</p>
+<h2><span id="環境">環境</span></h2><ul>
+<li>CentOS Linux release 7.3.1611 (Core)</li>
+</ul>
+<h2><span id="prometheus-インストール">Prometheus インストール</span></h2><ul>
+<li>パッケージインストール<br><a target="_blank" rel="noopener" href="https://github.com/prometheus/prometheus/releases">最新のバージョン</a>をチェックしダウンロードしてください。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/src</span><br><span class="line">$ sudo wget https://github.com/prometheus/prometheus/releases/download/v1.4.1/prometheus-1.4.1.linux-amd64.tar.gz</span><br><span class="line">$ sudo tar -C /usr/local -xvf prometheus-1.4.1.linux-amd64.tar.gz</span><br><span class="line">$ cd /usr/local</span><br><span class="line">$ sudo mv prometheus-1.4.1.linux-amd64 prometheus-server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>シンボリックリンク作成</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ln -s /usr/local/prometheus-server/prometheus /bin/prometheus</span><br><span class="line">$ sudo ln -s /usr/local/prometheus-server/promtool /bin/promtool</span><br><span class="line"></span><br><span class="line">$ prometheus --version</span><br><span class="line">prometheus, version 1.4.1 (branch: master, revision: 2a89e8733f240d3cd57a6520b52c36ac4744ce12)</span><br><span class="line">  build user:       root@e685d23d8809</span><br><span class="line">  build date:       20161128-09:59:22</span><br><span class="line">  go version:       go1.7.3</span><br><span class="line"></span><br><span class="line">$ promtool version</span><br><span class="line">promtool, version 1.4.1 (branch: master, revision: 2a89e8733f240d3cd57a6520b52c36ac4744ce12)</span><br><span class="line">  build user:       root@e685d23d8809</span><br><span class="line">  build date:       20161128-09:59:22</span><br><span class="line">  go version:       go1.7.3</span><br></pre></td></tr></table></figure>
+
+<h2><span id="prometheus-起動">Prometheus 起動</span></h2><p>とりあえず起動するならこれだけ</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo prometheus -config.file=/usr/local/prometheus-server/prometheus.yml</span><br></pre></td></tr></table></figure>
+
+<p>ただ ↑ これを毎回実行するのは辛いので起動スクリプトを作成して<br>サーバ再起動時に自動起動したり<br><code>systemctl start ...</code> と実行したい。</p>
+<h2><span id="起動スクリプト作成">起動スクリプト作成</span></h2><ul>
+<li>Prometheus オプションファイル作成</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt; &#x27;EOF&#x27; &gt; /usr/local/prometheus-server/option</span><br><span class="line">OPTIONS=&quot;-config.file=/usr/local/prometheus-server/prometheus.yml -web.console.libraries=/usr/local/prometheus-server/console_libraries -web.console.templates=/usr/local/prometheus-server/consoles&quot;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Prometheus 起動スクリプト</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cat &lt;&lt; &#x27;EOF&#x27; | sudo tee /usr/lib/systemd/system/prometheus.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Prometheus Service</span><br><span class="line">After=syslog.target prometheus.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">EnvironmentFile=-/usr/local/prometheus-server/option</span><br><span class="line">ExecStart=/bin/prometheus $OPTIONS</span><br><span class="line">PrivateTmp=false</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>起動設定</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ sudo systemctl enable prometheus.service</span><br><span class="line">$ sudo systemctl start prometheus.service</span><br><span class="line">$ sudo systemctl status prometheus.service -l</span><br></pre></td></tr></table></figure>
+
+<h2><span id="アクセスしてみる">アクセスしてみる</span></h2><p><code>&lt;IP Address&gt;:9090</code> にアクセスします。<br>以下のように表示されていれば Prometheus 起動成功です。</p>
+<p><img src="http://i.imgur.com/1gchGrW.png" alt="Imgur"></p>
+<p>オプション設定でも設定した、 <code>/usr/local/prometheus-server/consoles</code> の各 html にもアクセスしてみてください。</p>
+<p><code>&lt;IP Address&gt;:9090/consoles/prometheus-overview.html?instance=localhost%3a9090</code></p>
+<div style="text-align:center;">
+<img src="http://i.imgur.com/1gchGrW.png" width="100%">
+</div>
+
+<p>次回は <a href="http://kenzo0107.github.io/2017/01/25/2017-01-25-prometheus-aws-autoscaling">監視対象で Node Exporter 構築</a> します。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Prometheus でサーバ監視</p><p><a href="https://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring/">https://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2017-01-20</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Monitoring/">Monitoring</a><a class="link-muted mr-2" rel="tag" href="/tags/Prometheus/">Prometheus</a></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2017/01/25/2017-01-25-prometheus-aws-autoscaling/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Node Exporter 構築手順 + Prometheus からAWSオートスケール監視</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2017/01/10/2017-01-10-detect-diff-between-local-and-remote/"><span class="level-item">リモートサーバとローカルサーバとの差分のあるファイル情報を取得するツール作ってみた</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2017/01/20/2017-01-20-prometheus-monitoring/';
+            this.page.identifier = '2017/01/20/2017-01-20-prometheus-monitoring/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

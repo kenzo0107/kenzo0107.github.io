@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>pingを通すiptableの設定 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="環境 CentOS 5.8  実現したいことServer A が Server B からのみ ping を通す 12345+----------+  Ping Request   +----------+|          | &amp;lt;-------------- |          || Server A |                 | Server B ||          |"><meta property="og:type" content="blog"><meta property="og:title" content="pingを通すiptableの設定"><meta property="og:url" content="https://kenzo0107.github.io/2015/12/24/2015-12-24-iptables-allow-ping/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="環境 CentOS 5.8  実現したいことServer A が Server B からのみ ping を通す 12345+----------+  Ping Request   +----------+|          | &amp;lt;-------------- |          || Server A |                 | Server B ||          |"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:published_time" content="2015-12-23T15:00:00.000Z"><meta property="article:modified_time" content="2020-05-07T03:41:24.416Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="ping"><meta property="article:tag" content="iptable"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2015/12/24/2015-12-24-iptables-allow-ping/"},"headline":"pingを通すiptableの設定","image":["https://kenzo0107.github.io/img/og_image.png"],"datePublished":"2015-12-23T15:00:00.000Z","dateModified":"2020-05-07T03:41:24.416Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"環境 CentOS 5.8  実現したいことServer A が Server B からのみ ping を通す 12345+----------+  Ping Request   +----------+|          | &lt;-------------- |          || Server A |                 | Server B ||          |"}</script><link rel="canonical" href="https://kenzo0107.github.io/2015/12/24/2015-12-24-iptables-allow-ping/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-12-24</span><span class="level-item">Updated&nbsp;<time dateTime="2020-05-07T03:41:24.416Z" title="2020/5/7 12:41:24">2020-05-07</time></span></div></div><h1 class="title is-3 is-size-4-mobile">pingを通すiptableの設定</h1><div class="content"><h2><span id="環境">環境</span></h2><ul>
+<li>CentOS 5.8</li>
+</ul>
+<h2><span id="実現したいこと">実現したいこと</span></h2><p><code>Server A</code> が <code>Server B</code> からのみ ping を通す</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----------+  Ping Request   +----------+</span><br><span class="line">|          | &lt;-------------- |          |</span><br><span class="line">| Server A |                 | Server B |</span><br><span class="line">|          | --------------&gt; |          |</span><br><span class="line">+----------+  Ping Response  +----------+</span><br></pre></td></tr></table></figure>
+
+<h2><span id="特定ipからの-ping-を通す許可設定">特定IPからの ping を通す許可設定</span></h2><p>以下設定を <code>Server A</code> で実施する。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Server A]# iptables -A INPUT -p icmp --icmp-type 8 -s &lt;Server B の IP Address&gt; -j ACCEPT</span><br><span class="line">[Server A]# iptables -A OUTPUT -p icmp --icmp-type 0 -s &lt;Server B の IP Address&gt; -j ACCEPT</span><br><span class="line">[Server A]# service iptables restart</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><code>--icmp-type 8</code> は <code>Echo request (エコー要求)</code> を許可</li>
+<li><code>--icmp-type 0</code> は <code>Echo Reply (エコー応答)</code> を許可</li>
+</ul>
+</blockquote>
+<h2><span id="server-bから-ping実行">Server Bから ping実行</span></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Server B]# ping &lt;Server A の IP Address&gt;</span><br><span class="line"></span><br><span class="line">PING (&lt;Server A の IP Address&gt;): 56 data bytes</span><br><span class="line">64 bytes from (&lt;Server A の IP Address&gt;): icmp_seq&#x3D;0 ttl&#x3D;58 time&#x3D;4.411 ms</span><br><span class="line">64 bytes from (&lt;Server A の IP Address&gt;): icmp_seq&#x3D;1 ttl&#x3D;58 time&#x3D;4.079 ms</span><br><span class="line">64 bytes from (&lt;Server A の IP Address&gt;): icmp_seq&#x3D;2 ttl&#x3D;58 time&#x3D;4.027 ms</span><br><span class="line">^C</span><br><span class="line">--- (&lt;Server A の IP Address&gt;) ping statistics ---</span><br><span class="line">3 packets transmitted, 3 packets received, 0.0% packet loss</span><br><span class="line">round-trip min&#x2F;avg&#x2F;max&#x2F;stddev &#x3D; 4.027&#x2F;4.172&#x2F;4.411&#x2F;0.170 ms</span><br></pre></td></tr></table></figure>
+
+
+<h2><span id="icmp-type-list">icmp-type List</span></h2><p>以下<a target="_blank" rel="noopener" href="http://www.asahi-net.or.jp/~aa4t-nngk/ipttut/output/icmptypes.html">asahi-net Appendix C. ICMPタイプ</a>より参照</p>
+<table>
+<thead>
+<tr>
+<th>TYPE</th>
+<th>CODE</th>
+<th>意味</th>
+<th>問合せ</th>
+<th>エラー</th>
+<th>参照先</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>Echo Reply (エコー応答)</td>
+<td>x</td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>Network Unreachable (ネットワーク到達不能)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>Host Unreachable (ホスト到達不能)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>Protocol Unreachable (プロトコル到達不能)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td>Port Unreachable (ポート到達不能)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>Fragmentation needed but no frag. bit set (フラグメント必要だがフラグメント禁止ビットあり)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>Source routing failed (ソースルーティング失敗)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6</td>
+<td>Destination network unknown (宛先ネットワーク発見できず)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>7</td>
+<td>Destination host unknown (宛先ホスト発見できず)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>8</td>
+<td>Source host isolated (送信元ホストへのルートなし) (廃)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>9</td>
+<td>Destination network administratively prohibited (宛先ネットワークは設定によりアクセス禁止)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>10</td>
+<td>Destination host administratively prohibited (宛先ホストは設定によりアクセス禁止)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>11</td>
+<td>Network unreachable for TOS (TOS種別によりネットワーク到達不能)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>12</td>
+<td>Host unreachable for TOS (TOS種別によりホスト到達不能)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>3</td>
+<td>13</td>
+<td>Communication administratively prohibited by filtering (フィルタリング設定により通信禁止)</td>
+<td></td>
+<td>x</td>
+<td>RFC1812</td>
+</tr>
+<tr>
+<td>3</td>
+<td>14</td>
+<td>Host precedence violation (ホスト優先順位侵害)</td>
+<td></td>
+<td>x</td>
+<td>RFC1812</td>
+</tr>
+<tr>
+<td>3</td>
+<td>15</td>
+<td>Precedence cutoff in effect (優先順位により遮断発動)</td>
+<td></td>
+<td>x</td>
+<td>RFC1812</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>Source quench (輻輳発生による発信抑制)</td>
+<td></td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0</td>
+<td>Redirect for network (指定ネットワークへのリダイレクト要求)</td>
+<td></td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1</td>
+<td>Redirect for host (指定ホストへのリダイレクト要求)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>2</td>
+<td>Redirect for TOS and network (TOSとネットワークのリダイレクト要求)</td>
+<td></td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>5</td>
+<td>3</td>
+<td>Redirect for TOS and host (TOSとホストのリダイレクト要求)</td>
+<td></td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>8</td>
+<td>0</td>
+<td>Echo request(エコー要求)</td>
+<td>x</td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>9</td>
+<td>0</td>
+<td>Router advertisement - Normal router advertisement (ルータ広告 - 通常通知)</td>
+<td></td>
+<td></td>
+<td>RFC1256</td>
+</tr>
+<tr>
+<td>9</td>
+<td>16</td>
+<td>Router advertisement - Does not route common traffic (ルータ広告 - 通常トラフィックはルーティング不可)</td>
+<td></td>
+<td></td>
+<td>RFC2002</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0</td>
+<td>Route selection (ルート選択)</td>
+<td></td>
+<td></td>
+<td>RFC1256</td>
+</tr>
+<tr>
+<td>11</td>
+<td>0</td>
+<td>TTL equals 0 during transit (搬送中にTTLが0に)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>11</td>
+<td>1</td>
+<td>TTL equals 0 during reassembly (再構成時の欠損フラグメント待機中に時間超過)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>12</td>
+<td>0</td>
+<td>IP header bad (catchall error) (IPヘッダ異常) (あらゆるエラーに共通)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>12</td>
+<td>1</td>
+<td>Required options missing (必要なオプションが欠如)</td>
+<td></td>
+<td>x</td>
+<td>RFC1108</td>
+</tr>
+<tr>
+<td>12</td>
+<td>2</td>
+<td>IP Header bad length (IPヘッダ長の異常)</td>
+<td></td>
+<td>x</td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>13</td>
+<td>0</td>
+<td>Timestamp request (obsolete) (タイムスタンプ要求) (廃)</td>
+<td>x</td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>14</td>
+<td></td>
+<td>Timestamp reply (obsolete) (タイムスタンプ応答) (廃)</td>
+<td>x</td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>15</td>
+<td>0</td>
+<td>Information request (obsolete) (情報要求) (廃)</td>
+<td>x</td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>16</td>
+<td>0</td>
+<td>Information reply (obsolete) (情報応答) (廃)</td>
+<td>x</td>
+<td></td>
+<td>RFC792</td>
+</tr>
+<tr>
+<td>17</td>
+<td>0</td>
+<td>Address mask request (ネットマスク通知要求)</td>
+<td>x</td>
+<td></td>
+<td>RFC950</td>
+</tr>
+<tr>
+<td>18</td>
+<td>0</td>
+<td>Address mask reply (ネットマスク通知応答)</td>
+<td>x</td>
+<td></td>
+<td>RFC950</td>
+</tr>
+<tr>
+<td>20-29</td>
+<td></td>
+<td>Reserved for robustness experiment (信頼性試験のための予約域)</td>
+<td></td>
+<td></td>
+<td>Zaw-Sing Su</td>
+</tr>
+<tr>
+<td>30</td>
+<td>0</td>
+<td>Traceroute</td>
+<td>x</td>
+<td></td>
+<td>RFC1393</td>
+</tr>
+<tr>
+<td>31</td>
+<td>0</td>
+<td>Datagram Conversion Error (データグラム変換エラー)</td>
+<td></td>
+<td>x</td>
+<td>RFC1475</td>
+</tr>
+<tr>
+<td>32</td>
+<td>0</td>
+<td>Mobile Host Redirect (移動体ホストのリダイレクト)</td>
+<td></td>
+<td></td>
+<td>David Johnson</td>
+</tr>
+<tr>
+<td>33</td>
+<td>0</td>
+<td>IPv6 Where-Are-You (IPv6位置確認要求)</td>
+<td>x</td>
+<td></td>
+<td>Bill Simpson</td>
+</tr>
+<tr>
+<td>34</td>
+<td>0</td>
+<td>IPv6 I-Am-Here (IPv6位置確認応答)</td>
+<td>x</td>
+<td></td>
+<td>Bill Simpson</td>
+</tr>
+<tr>
+<td>35</td>
+<td>0</td>
+<td>Mobile Registration Request (移動体登録要求)</td>
+<td>x</td>
+<td></td>
+<td>Bill Simpson</td>
+</tr>
+<tr>
+<td>36</td>
+<td>0</td>
+<td>Mobile Registration Reply (移動体登録応答)</td>
+<td>x</td>
+<td></td>
+<td>Bill Simpson</td>
+</tr>
+<tr>
+<td>39</td>
+<td>0</td>
+<td>SKIP</td>
+<td></td>
+<td></td>
+<td>Tom Markson</td>
+</tr>
+<tr>
+<td>40</td>
+<td>0</td>
+<td>Photuris</td>
+<td></td>
+<td></td>
+<td>RFC2521</td>
+</tr>
+</tbody></table>
+</div><div class="article-licensing box"><div class="licensing-title"><p>pingを通すiptableの設定</p><p><a href="https://kenzo0107.github.io/2015/12/24/2015-12-24-iptables-allow-ping/">https://kenzo0107.github.io/2015/12/24/2015-12-24-iptables-allow-ping/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2015-12-24</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2020-05-07</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/ping/">ping</a><a class="link-muted mr-2" rel="tag" href="/tags/iptable/">iptable</a></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2015/12/26/2015-12-26-aws-multi-az-pacemaker-corosync-switching-eip/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">AWS Multi-AZにおける Pacemaker + Corosync による Elastic IP の付け替え</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2015/12/22/2015-12-22-cannot-get-mail-in-outlook/"><span class="level-item">Outlook にメールが届かない件対応</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2015/12/24/2015-12-24-iptables-allow-ping/';
+            this.page.identifier = '2015/12/24/2015-12-24-iptables-allow-ping/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

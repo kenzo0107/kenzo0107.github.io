@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="robots" content="noindex"><meta><title>カテゴリ: AWS - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="tech"><meta property="og:type" content="blog"><meta property="og:title" content="長生村本郷Engineers&#039;Blog"><meta property="og:url" content="https://kenzo0107.github.io/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="tech"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io"},"headline":"長生村本郷Engineers'Blog","image":["https://kenzo0107.github.io/img/og_image.png"],"author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"tech"}</script><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/categories">カテゴリ</a></li><li class="is-active"><a href="#" aria-current="page">AWS</a></li></ul></nav></div></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2022/03/25/2022-03-25-fluentbit-get-key-from-nested-list/"><img class="thumbnail" src="https://i.imgur.com/zlOM1Ii.png" alt="fluentbit JSON のネストしたキーの取得方法"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2022-03-25</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/25/2022-03-25-fluentbit-get-key-from-nested-list/">fluentbit JSON のネストしたキーの取得方法</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E3%82%AD%E3%83%BC-log-%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88">キー log の中身だけ欲しい場合</a></li>
+<li><a href="#%E3%82%AD%E3%83%BC-log-%E3%81%AE%E4%B8%AD%E3%81%AE-b-%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88">キー log の中の b の中身だけ欲しい場合</a></li>
+<li><a href="#%E3%82%AD%E3%83%BC-log-%E3%81%AE-b-%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%81%AE%E4%B8%AD%E8%BA%AB%E3%81%A0%E3%81%91%E6%AC%B2%E3%81%97%E3%81%84%E5%A0%B4%E5%90%88-%E3%81%9D%E3%81%AE-2">キー log の b のリストの中身だけ欲しい場合 その 2</a><ul>
+<li><a href="#lua-%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%81%A7%E5%AF%BE%E5%BF%9C">lua スクリプトで対応</a></li>
+</ul>
+</li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<p>ECS Service のコンテナログからネストされたキーの取得をどのように対応したかをまとめました。</p>
+<p>実施内容は <a target="_blank" rel="noopener" href="https://github.com/kenzo0107/sample-fluentbit-get-nested-key">https://github.com/kenzo0107/sample-fluentbit-get-nested-key</a> にてまとめています。</p></div><a class="article-more button is-small is-size-7" href="/2022/03/25/2022-03-25-fluentbit-get-key-from-nested-list/#more">続きを読む</a></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2022/03/13/2022-03-13-maintenance-mode-for-alb-or-cloudfront/"><img class="thumbnail" src="https://i.imgur.com/IwHAByw.png" alt="AWS ALB/CloudFront でのメンテナンス切り替え方法"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2022-03-13</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/03/13/2022-03-13-maintenance-mode-for-alb-or-cloudfront/">AWS ALB/CloudFront でのメンテナンス切り替え方法</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#alb-%E3%81%AE%E5%A0%B4%E5%90%88">ALB の場合</a><ul>
+<li><a href="#varmaintenance_mode-%E3%82%92%E3%83%A1%E3%83%B3%E3%83%86%E3%83%A2%E3%83%BC%E3%83%89%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%81%AB%E5%88%A9%E7%94%A8%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E7%90%86%E7%94%B1">var.maintenance_mode をメンテモード切り替えに利用している理由</a></li>
+<li><a href="#alb-%E3%81%AE%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92-404-%E3%81%AB%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E7%90%86%E7%94%B1">ALB のデフォルトアクションを 404 にしている理由</a></li>
+</ul>
+</li>
+<li><a href="#cloudfront-%E3%81%AE%E5%A0%B4%E5%90%88">CloudFront の場合</a></li>
+<li><a href="#%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%E3%82%A2%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92-allow-%E3%81%AB%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E7%90%86%E7%94%B1">デフォルトアクションを allow {} にしている理由</a></li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<p>ALB, CloudFront がインターフェースにある場合のメンテナンス切り替え方法をまとめました。</p></div><a class="article-more button is-small is-size-7" href="/2022/03/13/2022-03-13-maintenance-mode-for-alb-or-cloudfront/#more">続きを読む</a></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2022/02/10/2022-02-10-cloudfront-managed-prefix/"><img class="thumbnail" src="https://i.imgur.com/raMMbxt.png" alt="terraform で CloudFront マネージドプリフィックスリストを利用したアクセス制限"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2022-02-10</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/02/10/2022-02-10-cloudfront-managed-prefix/">terraform で CloudFront マネージドプリフィックスリストを利用したアクセス制限</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%97%A9%E9%80%9F-terraform-%E3%81%A7%E5%AE%9F%E8%A3%85%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F">早速 terraform で実装してみた</a></li>
+<li><a href="#cloudfront-%E3%81%AE%E3%83%97%E3%83%AC%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF%E3%82%B9%E3%83%AA%E3%82%B9%E3%83%88%E3%81%AE%E5%8F%96%E5%BE%97%E6%96%B9%E6%B3%95%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6">CloudFront のプレフィックスリストの取得方法について</a></li>
+<li><a href="#%E3%82%88%E3%82%8A%E3%82%BB%E3%82%AD%E3%83%A5%E3%82%A2%E3%81%AB">よりセキュアに</a></li>
+<li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<hr>
+<p><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/about-aws/whats-new/2022/02/amazon-cloudfront-managed-prefix-list/">https://aws.amazon.com/jp/about-aws/whats-new/2022/02/amazon-cloudfront-managed-prefix-list/</a></p>
+<p>VPC が CloudFront のマネージドプリフィックスリストをサポートするようになりました。<br>これにより CloudFront からのアクセスをセキュリティグループルールベースでアクセス制限できるようになります。</p></div><a class="article-more button is-small is-size-7" href="/2022/02/10/2022-02-10-cloudfront-managed-prefix/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2022-01-15</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2022/01/15/2022-01-15-aws-elasticache-redis-cpu-utilization-unnormally-up/">2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について</a></h1><div class="content"><p>2022-01-15 11:40 頃 AWS ElastiCache (ap-northeast-1) のいくつかの node で CPU 使用率が 100 % を優に超える値を記録する事象が確認されました。</p>
+<p><img src="https://i.imgur.com/JHvTN3N.png"></p>
+<p>状況整理し特段ユーザ影響がないことを確認しています。</p>
+<h2><span id="cpu-使用率上昇時の状況整理">CPU 使用率上昇時の状況整理</span></h2><ul>
+<li><a target="_blank" rel="noopener" href="https://status.aws.amazon.com/">Service Health Dashboard</a> には特に記録なし</li>
+<li>キャッシュヒット率が一時的に92% → 78% (-14%) 程度下がった</li>
+<li>アプリケーションの Redis 利用箇所で 5xx エラーはなし</li>
+<li>Redis を利用する worker のジョブも影響なし</li>
+<li>エンジン CPU 使用率 (=Redis エンジンスレッドの CPU 使用率) が低いことから Redis の処理自体の影響はないと思われる</li>
+<li>CPU 使用率 (Redis 以外のホスト全体の CPU 使用率) が高騰したことから、 AWS 側でホストに対する更新があったと思われる<ul>
+<li>この辺の影響だろうか？<br>  <a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/about-aws/whats-new/2022/01/amazon-elasticache-streaming-storing-redis-engine-logs/">https://aws.amazon.com/jp/about-aws/whats-new/2022/01/amazon-elasticache-streaming-storing-redis-engine-logs/</a></li>
+</ul>
+</li>
+</ul>
+<p>参考: <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html">https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html</a></p>
+<p>TODO: サポート問い合わせし、追記します。</p>
+<h2><span id="aws-サポートに問い合わせた結果">AWS サポートに問い合わせた結果</span></h2><p>メトリクスのバグとのことでした。（ほっ）</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2021/10/20/2021-10-20-aws-transfer-for-sftp/"><img class="thumbnail" src="https://i.imgur.com/hgb10nC.png" alt="AWS Transfer for sftp + S3 で IP 制限付き sftp サーバ構築"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2021-10-20</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/10/20/2021-10-20-aws-transfer-for-sftp/">AWS Transfer for sftp + S3 で IP 制限付き sftp サーバ構築</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#sftp-%E6%A7%8B%E7%AF%89%E6%96%B9%E6%B3%95-%E6%AF%94%E8%BC%83">SFTP 構築方法 比較</a></li>
+<li><a href="#%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3">アーキテクチャ</a></li>
+<li><a href="#terraform-%E3%81%A7%E5%AF%BE%E5%BF%9C">terraform で対応</a><ul>
+<li><a href="#transfer-for-sftp-%E3%82%B5%E3%83%BC%E3%83%90%E6%A7%8B%E7%AF%89">Transfer for sftp サーバ構築</a></li>
+<li><a href="#transfer-for-sftp-%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%8F%AF%E8%83%BD%E3%83%A6%E3%83%BC%E3%82%B6%E4%BD%9C%E6%88%90">Transfer for sftp アクセス可能ユーザ作成</a></li>
+</ul>
+</li>
+<li><a href="#%E6%93%8D%E4%BD%9C%E3%83%AD%E3%82%B0%E3%81%AE%E8%BF%BD%E8%B7%A1">操作ログの追跡</a></li>
+<li><a href="#%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%81%AB%E5%BF%85%E8%A6%81%E3%81%AA%E6%83%85%E5%A0%B1%E3%81%AE%E6%95%B4%E7%90%86">アクセスに必要な情報の整理</a></li>
+<li><a href="#%E7%B7%8F%E8%A9%95">総評</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div></div><a class="article-more button is-small is-size-7" href="/2021/10/20/2021-10-20-aws-transfer-for-sftp/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2021-09-29</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/09/29/2021-09-29-you-should-set-kms-key/">AWS KMS キーを設定する意味を考える</a></h1><div class="content"><p><code>aws_rds_cluster</code> の <code>kms_key_id</code> は <code>Optional</code> (任意) ですが、<br>これを設定するとどんなメリットがあるか考えたいと思います。</p>
+<div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#kms_key_id-%E3%81%A8%E3%81%AF">kms_key_id とは？</a></li>
+<li><a href="#%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E3%82%92%E6%9A%97%E5%8F%B7%E5%8C%96%E3%81%99%E3%82%8B%E7%90%86%E7%94%B1">ストレージを暗号化する理由</a></li>
+<li><a href="#%E5%BB%83%E6%A3%84%E8%A8%BC%E6%98%8E%E3%81%AB%E3%82%82%E3%81%AA%E3%82%8B">廃棄証明にもなる</a></li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+<li><a href="#%E8%80%83%E3%81%88%E3%82%8B%E3%81%AB%E8%87%B3%E3%81%A3%E3%81%9F%E7%B5%8C%E7%B7%AF">考えるに至った経緯</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div></div><a class="article-more button is-small is-size-7" href="/2021/09/29/2021-09-29-you-should-set-kms-key/#more">続きを読む</a></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2021/07/27/2021-07-27-ecs-execute-command-agent-not-running/"><img class="thumbnail" src="https://i.imgur.com/yK51axc.png" alt="ecs execute command が失敗した際に調査したこと"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2021-07-27</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/07/27/2021-07-27-ecs-execute-command-agent-not-running/">ecs execute command が失敗した際に調査したこと</a></h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label">ToC</h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#%E3%81%BE%E3%81%9A%E3%81%AF%E6%9C%AC%E5%BD%93%E3%81%AB%E6%9C%89%E5%8A%B9%E5%8C%96%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B%E8%AA%BF%E6%9F%BB%E3%81%99%E3%82%8B">まずは本当に有効化されているか調査する</a></li>
+<li><a href="#task-role-%E3%81%8C%E6%A8%A9%E9%99%90%E3%82%92%E6%89%80%E6%8C%81%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8B">Task Role が権限を所持しているか</a></li>
+<li><a href="#%E4%BB%96%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%A7%E8%A9%A6%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B">他のコンテナで試してみる</a></li>
+<li><a href="#%E5%AF%BE%E8%B1%A1%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%82%92%E5%86%8D%E5%BA%A6%E5%AE%9F%E8%A1%8C">対象のコンテナを再度実行</a></li>
+<li><a href="#%E5%90%8C%E4%B8%80%E3%82%BF%E3%82%B9%E3%82%AF%E3%81%A7%E5%BC%B7%E5%88%B6%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%81%A7%E3%82%BF%E3%82%B9%E3%82%AF%E3%82%92%E5%85%A5%E3%82%8C%E6%9B%BF%E3%81%88%E3%82%8B">同一タスクで強制デプロイでタスクを入れ替える</a></li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div></div><a class="article-more button is-small is-size-7" href="/2021/07/27/2021-07-27-ecs-execute-command-agent-not-running/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2017-07-18</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2017/07/18/2017-07-18-notify-to-slack-about-ec2-events-by-lambda/">5分でできる♪ AWS Lambda で EC2 Event を Slack 通知</a></h1><div class="content"><p>以前 AWS EC2 メンテ通知のイベントチェックスクリプトを作成しました。<br>合わせて、対象インスタンスを停止・起動する様にしました。</p>
+<a href="https://kenzo0107.github.io/2017/04/17/2017-04-18-aws-retairement-notification/" class="link-preview"><div class="link-area"><div class="og-image"><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170418/20170418105821.png"></div><div class="descriptions"><div class="og-title">AWS [Retirement Notification] 対応</div><div class="og-description">概要とある日、AWS よりこんなメール通知が来ました。 要約するとホストしている基盤のハードウェアで回復不可能な障害が検知されたので指定期限までに対応しないとインスタンスが停止する、とのこと。 今回こちらの対応をまとめました。 12345678910111213141516171…</div></div></div></a>
+
+
+<p>これを AWS Lamda で Slack 通知させる様にし<br>毎朝メンテの必要なイベントがわかる様にしました。</p>
+<h2><span id="事前準備">事前準備</span></h2><figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">macOS%</span><span class="language-bash">$ pip install lambda-uploader awscli</span></span><br><span class="line"><span class="meta prompt_">macOS%</span><span class="language-bash">$ aws configure --profile &lt;profile&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="プロジェクト-clone">プロジェクト clone</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ git clone https://github.com/kenzo0107/AWSEC2Events2Slack</span><br><span class="line">macOS%$ tree AWSEC2Events2Slack</span><br><span class="line">.</span><br><span class="line">├── README.md</span><br><span class="line">├── event.json</span><br><span class="line">├── lambda.json</span><br><span class="line">├── lambda_function.py</span><br><span class="line">└── requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h2><span id="各種環境に合わせて情報編集">各種環境に合わせて情報編集</span></h2><ul>
+<li>lambda.json</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;AWSEvent2Slack&quot;,</span><br><span class="line">    &quot;description&quot;: &quot;Notificate AWS events to Slack&quot;,</span><br><span class="line">    &quot;region&quot;: &quot;ap-northeast-1&quot;,</span><br><span class="line">    &quot;handler&quot;: &quot;lambda_function.lambda_handler&quot;,</span><br><span class="line">    &quot;role&quot;: &quot;arn:aws:iam::xxxxxxxxxxxx:role/lambda-check-events-to-slack&quot;,</span><br><span class="line">    &quot;timeout&quot;: 60,</span><br><span class="line">    &quot;memory&quot;: 128,</span><br><span class="line">    &quot;variables&quot;:</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;SLACK_INCOMING_WEBHOOK&quot;:&quot;https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX&quot;,</span><br><span class="line">        &quot;SLACK_CHANNEL&quot;:&quot;#channel&quot;,</span><br><span class="line">        &quot;SLACK_USERNAME&quot;:&quot;AWSEvent2Slack&quot;,</span><br><span class="line">        &quot;SLACK_ICON_URL&quot;:&quot;http://i.imgur.com/6RCTdfi.png&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Explain</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>role</td>
+<td>EC2リソースをdescribeする権限を所持したポリシーをアタッチ</td>
+</tr>
+<tr>
+<td>variables</td>
+<td>通知先Slack情報</td>
+</tr>
+</tbody></table>
+<h2><span id="aws-lambda-へソースアップロード">AWS Lambda へソースアップロード</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">macOS%$ lambda-uploader --profile &lt;profile&gt;</span><br><span class="line"></span><br><span class="line">Î» Building Package</span><br><span class="line">Î» Uploading Package</span><br><span class="line">Î» Fin</span><br></pre></td></tr></table></figure>
+
+<h2><span id="awsコンソールより-lambda-確認">AWSコンソールより Lambda 確認</span></h2><p>登録されていることがわかります。</p>
+<p><img src="https://i.imgur.com/lv6F5OD.png"></p>
+<h2><span id="テスト実行">テスト実行</span></h2><p>イベントを取得しSlackに通知させる様にすることができました。</p>
+<p><img src="https://i.imgur.com/E5TEXdN.png"></p>
+<h2><span id="トリガー設定">トリガー設定</span></h2><p>CloudWatch スケジュール式で cron 設定し 毎朝届ける様に指定しました。</p>
+<p><img src="https://i.imgur.com/8qzm6Eg.png"></p>
+<h2><span id="総評">総評</span></h2><p>lambda-uploader でのアップロードにより<br>ローカルで開発→テスト→デプロイ<br>とバージョン管理が明確になって良いです。</p>
+<p>但し、一点気になる点はアップロード後、ソースがコンソール上で見えません。</p>
+<p>具体的には</p>
+<blockquote>
+<p>Lambda 関数 「AWSEvent2Slack」のデプロイパッケージが大きすぎて、インラインコード編集を有効にできません。ただし、関数を今すぐ呼び出すことはできます。</p>
+</blockquote>
+<p>とコンソール上に表示されます。</p>
+<p>前まで zip にまとめてアップロードするシェルを書いていたけど<br>その時はソースは見ることができました。</p>
+<p>ローカルで挙動確認しておりコンソール上では見えなくても今のところ支障なしです。</p>
+<p>以上<br>参考になれば何よりです。</p>
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/categories/AWS/page/2/">前</a></div><div class="pagination-next is-invisible is-hidden-mobile"><a href="/categories/AWS/page/4/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/categories/AWS/">1</a></li><li><a class="pagination-link" href="/categories/AWS/page/2/">2</a></li><li><a class="pagination-link is-current" href="/categories/AWS/page/3/">3</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>既存 ECS Service の Fargate Spot への切り替え方法 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="ToC     概要 terraform で切り替える aws-cli で切り替える CodeDeploy のデプロイコントローラーで管理されている場合   ダウンタイムなしで切り替え &amp;amp; tfstate 更新手順 余談 ちなみに   余談2       概要既存 ECS Service の Farate Spot への切り替え方法は 2 つあります。  terraform aws-c"><meta property="og:type" content="blog"><meta property="og:title" content="既存 ECS Service の Fargate Spot への切り替え方法"><meta property="og:url" content="https://kenzo0107.github.io/2021/01/29/2021-01-29-apply-fargate-spot-for-existed-fargate/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="ToC     概要 terraform で切り替える aws-cli で切り替える CodeDeploy のデプロイコントローラーで管理されている場合   ダウンタイムなしで切り替え &amp;amp; tfstate 更新手順 余談 ちなみに   余談2       概要既存 ECS Service の Farate Spot への切り替え方法は 2 つあります。  terraform aws-c"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://i.imgur.com/r0W6OnK.png"><meta property="og:image" content="https://i.imgur.com/Qei5oJi.png"><meta property="og:image" content="https://i.imgur.com/mFMDfzc.png"><meta property="article:published_time" content="2021-01-28T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="AWS"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://i.imgur.com/r0W6OnK.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2021/01/29/2021-01-29-apply-fargate-spot-for-existed-fargate/"},"headline":"既存 ECS Service の Fargate Spot への切り替え方法","image":["https://i.imgur.com/r0W6OnK.png","https://i.imgur.com/Qei5oJi.png","https://i.imgur.com/mFMDfzc.png"],"datePublished":"2021-01-28T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"ToC     概要 terraform で切り替える aws-cli で切り替える CodeDeploy のデプロイコントローラーで管理されている場合   ダウンタイムなしで切り替え &amp; tfstate 更新手順 余談 ちなみに   余談2       概要既存 ECS Service の Farate Spot への切り替え方法は 2 つあります。  terraform aws-c"}</script><link rel="canonical" href="https://kenzo0107.github.io/2021/01/29/2021-01-29-apply-fargate-spot-for-existed-fargate/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2014/01/01/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2021-01-29</span><span class="level-item"><a class="link-muted" href="/categories/Terraform/">Terraform</a></span></div></div><h1 class="title is-3 is-size-4-mobile">既存 ECS Service の Fargate Spot への切り替え方法</h1><div class="content"><div class="toc">
+<div class="toc-content">
+<h3 class="menu-label"><span id="toc">ToC</span></h3>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#%E6%A6%82%E8%A6%81">概要</a></li>
+<li><a href="#terraform-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">terraform で切り替える</a></li>
+<li><a href="#aws-cli-%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88%E3%82%8B">aws-cli で切り替える</a><ul>
+<li><a href="#codedeploy-%E3%81%AE%E3%83%87%E3%83%97%E3%83%AD%E3%82%A4%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%E3%83%BC%E3%81%A7%E7%AE%A1%E7%90%86%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8B%E5%A0%B4%E5%90%88">CodeDeploy のデプロイコントローラーで管理されている場合</a></li>
+</ul>
+</li>
+<li><a href="#%E3%83%80%E3%82%A6%E3%83%B3%E3%82%BF%E3%82%A4%E3%83%A0%E3%81%AA%E3%81%97%E3%81%A7%E5%88%87%E3%82%8A%E6%9B%BF%E3%81%88-tfstate-%E6%9B%B4%E6%96%B0%E6%89%8B%E9%A0%86">ダウンタイムなしで切り替え &amp; tfstate 更新手順</a></li>
+<li><a href="#%E4%BD%99%E8%AB%87">余談</a><ul>
+<li><a href="#%E3%81%A1%E3%81%AA%E3%81%BF%E3%81%AB">ちなみに</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BD%99%E8%AB%872">余談2</a></li>
+</ul>
+<!-- tocstop -->
+
+</div>
+</div>
+
+<h2><span id="概要">概要</span></h2><p>既存 ECS Service の Farate Spot への切り替え方法は 2 つあります。</p>
+<ul>
+<li>terraform</li>
+<li>aws-cli</li>
+</ul>
+<span id="more"></span>
+
+<h2><span id="terraform-で切り替える">terraform で切り替える</span></h2><p>capacity_provider_strategy を追加し 100% FargateSpot で起動させるとします。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">resource &quot;aws_ecs_service&quot; &quot;app&quot; &#123;</span><br><span class="line">-  launch_type = &quot;FARGATE&quot;</span><br><span class="line"></span><br><span class="line">+  capacity_provider_strategy &#123;</span><br><span class="line">+    capacity_provider = &quot;FARGATE_SPOT&quot;</span><br><span class="line">+    weight            = 100</span><br><span class="line">+  &#125;</span><br><span class="line"></span><br><span class="line">+  capacity_provider_strategy &#123;</span><br><span class="line">+    capacity_provider = &quot;FARGATE&quot;</span><br><span class="line">+    weight            = 0</span><br><span class="line">+  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>terraform では再作成されます。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ terraform plan</span><br><span class="line"></span><br><span class="line"># aws_ecs_service.app must be replaced</span><br><span class="line">-/+ resource &quot;aws_ecs_service&quot; &quot;app&quot; &#123;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="aws-cli-で切り替える">aws-cli で切り替える</span></h2><p>aws-cli では再作成することなく更新が可能です。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws ecs update-service \</span><br><span class="line">	--capacity-provider-strategy capacityProvider=FARGATE,weight=0  capacityProvider=FARGATE_SPOT,weight=100 \</span><br><span class="line">     --cluster &lt;ecs cluster name&gt; \</span><br><span class="line">     --service &lt;ecs service name&gt; \</span><br><span class="line">     --force-new-deployment</span><br></pre></td></tr></table></figure>
+
+<p>直ちに強制デプロイが実行され、ダウンタイムなく CapacityProviderStrategy が適用されます。</p>
+<h3><span id="codedeploy-のデプロイコントローラーで管理されている場合">CodeDeploy のデプロイコントローラーで管理されている場合</span></h3><p>以下エラーが発生します。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">An error occurred (InvalidParameterException) when calling the UpdateService operation: Cannot force a new deployment on services with a CODE_DEPLOY deployment controller. Use AWS CodeDeploy to trigger a new deployment.</span><br></pre></td></tr></table></figure>
+
+<p><s>そもそも CodeDeploy でデプロイ管理している場合、 FargateSpot を利用できない。</s> 利用できる様になりました。 (2021-10-14 追記)<br><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html">https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/cluster-capacity-providers.html</a></p>
+<blockquote>
+<p>サービスで Blue/Green デプロイタイプを使用している場合、キャパシティープロバイダーの使用はサポートされません。</p>
+</blockquote>
+<p>aws-cli では CodeDeploy 経由でデプロイする様に警告されてしまう為、<br><s>terraform で再作成する以外方法がなさそうです。</s><br>CodeDeploy の appspec の設定で以下の様に指定することで<br>再作成せず管理できることを確認しました。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">version: 0.0</span><br><span class="line">Resources:</span><br><span class="line">  - TargetService:</span><br><span class="line">      Type: AWS::ECS::Service</span><br><span class="line">      Properties:</span><br><span class="line">        ...</span><br><span class="line">        CapacityProviderStrategy:</span><br><span class="line">          - CapacityProvider: &#x27;FARGATE_SPOT&#x27;</span><br><span class="line">            Weight: 100</span><br><span class="line">            Base: 0</span><br><span class="line">          - CapacityProvider: &#x27;FARGATE&#x27;</span><br><span class="line">            Weight: 0</span><br><span class="line">            Base: 0</span><br></pre></td></tr></table></figure>
+
+<p>※ Base や Weight の設定は適宜変更してください。</p>
+<h2><span id="ダウンタイムなしで切り替え-amp-tfstate-更新手順">ダウンタイムなしで切り替え &amp; tfstate 更新手順</span></h2><p>terraform でリソース管理をしている場合、以下の手続きでダウンタイムなしで切り替えできました。</p>
+<ol>
+<li>aws-cli で更新</li>
+<li>terraform apply で tfstate 更新</li>
+</ol>
+<p>terraform での管理もでき、且つ、ダウンタイムなしに更新ができます。</p>
+<h2><span id="余談">余談</span></h2><p>terraform で ECS Service 新規作成時だと CodeDeploy と CapacityProviderStrategy を両方指定できてしまいます。</p>
+<p>以下画像だけ見るとできるの？と思ってしまいます。<br><img src="https://i.imgur.com/r0W6OnK.png"></p>
+<p>これっぽい！</p>
+<div class="twitter-wrapper"><blockquote class="twitter-tweet"><a target="_blank" rel="noopener" href="https://twitter.com/t2ynkmr/status/1325684369416024065"></a></blockquote></div><script async defer src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>CodeDeploy のデプロイコントローラー管理を残し CapacityProviderStrategy を外そうとすると<br>再作成するしか今の所、対処法がなさそうです。</p>
+<p>aws-cli で<br>launch_type → capacity_provider_strategy はできるけど、<br>逆はできない。</p>
+<h3><span id="ちなみに">ちなみに</span></h3><p>AWS Console 上で ECS Service 構築時に capacity provider strategy を指定していると<br><code>Deployment type</code> は <code>Rolling update</code> しか選択できない様になっています。</p>
+<p><img src="https://i.imgur.com/Qei5oJi.png"></p>
+<p><img src="https://i.imgur.com/mFMDfzc.png"></p>
+<h2><span id="余談2">余談2</span></h2><p>今回の実装例にある FargateSpot weight 100% だと起動できなくなります。<br>非商用環境ではコスト削減の為、Spot化したくなりますが注意が必要です。</p>
+<p>以下 issue で Fargate Spot 枯渇時に Fargate へ切り替え、最低限起動できる様にする、という対処が進んでいる様です。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/aws/containers-roadmap/issues/773">https://github.com/aws/containers-roadmap/issues/773</a><br><a target="_blank" rel="noopener" href="https://github.com/aws/containers-roadmap/issues/852">https://github.com/aws/containers-roadmap/issues/852</a></p>
+<p>以上<br>ご参考になれば幸いです。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>既存 ECS Service の Fargate Spot への切り替え方法</p><p><a href="https://kenzo0107.github.io/2021/01/29/2021-01-29-apply-fargate-spot-for-existed-fargate/">https://kenzo0107.github.io/2021/01/29/2021-01-29-apply-fargate-spot-for-existed-fargate/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2021-01-29</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/AWS/">AWS</a></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/02/01/2021-02-01-avoid-go-init-osexit/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Go で init() 内の os.Exit(1) を go test で回避する方法</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/01/22/2021-01-22-pokemon/"><span class="level-item">2020年 RapberryPI で作ったおもちゃ達</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2021/01/29/2021-01-29-apply-fargate-spot-for-existed-fargate/';
+            this.page.identifier = '2021/01/29/2021-01-29-apply-fargate-spot-for-existed-fargate/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>
