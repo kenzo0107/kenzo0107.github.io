@@ -15,6 +15,8 @@ category: Python
 
 Python でファイル内容を読み込みして Azure OpenAI Service に読ませたい時があったのでまとめました。
 
+<!-- more -->
+
 ```python
 import os
 import sys
