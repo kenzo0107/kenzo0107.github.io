@@ -33,7 +33,160 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
-</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/03/09/2016-03-10-auto-shorten-url-js/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160310/20160310115924.png" alt="inputボックスにURL打ち込むと自動URL短縮化されるjs"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-03-10</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/03/09/2016-03-10-auto-shorten-url-js/">inputボックスにURL打ち込むと自動URL短縮化されるjs</a></h1><div class="content"><p>[f:id:kenzo0107:20160310115924p:plain]</p>
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/03/10/2016-03-11-statsbot-slack/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160311/20160311000758.png" alt="StatsBotのSlack通知 通知方法と通知時の見え方 一覧"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-03-11</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/03/10/2016-03-11-statsbot-slack/">StatsBotのSlack通知 通知方法と通知時の見え方 一覧</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p><a target="_blank" rel="noopener" href="https://statsbot.co/">Statsbot</a> は、GoogleAnalytics、NewRelic、Mixpanel と連携し<br>各データを Slack へ通知できるサービスです。</p>
+<p>連携自体は画面中央の <code>Add to Slack</code> ボタンを押下し<br>各種手続きを手順通り行えばすぐに連携できます。</p>
+<p>※導入まで 10 秒ほどでした。</p>
+<p>データホテルさんが導入法まとめていたので参考までに。</p>
+
+
+<p>各種設定方法がありますが、どんな見え方になるかは<br>試してみないとわからなかったので、まとめました。</p>
+<p>設定は大きく 3 つあります。</p>
+<table>
+<thead>
+<tr>
+<th><em>Item</em></th>
+<th><em>Detail</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Metrics</td>
+<td>セッション数,ユーザ数,コンバージョン,直帰率,新規ユーザ,</td>
+</tr>
+<tr>
+<td>Alert</td>
+<td>ユーザ,コンバージョン,イベントが閾値を超える or 下がると通知</td>
+</tr>
+<tr>
+<td>Reports</td>
+<td>まとめ(ユーザ数, 新規ユーザ数, PV, コンバージョン数, コンバージョン率, イベント数, 平均セッション時間(秒))を通知</td>
+</tr>
+</tbody></table>
+<p>以下設定を通知の見え方です。</p>
+<p>※データは知り合いの EC サイトです。<br>恥ずかしいデータもありますが、StatsBot の導入を条件に快く許諾いただきました(^-^)</p>
+<h2><span id="metrics">Metrics</span></h2><h3><span id="sessions">Sessions</span></h3><ul>
+<li>セッション数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot sessions [today, yesterday, this week, last week, this month, last month, this year]</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/rB8FGZE.png" width="100%">
+</div>
+
+<h3><span id="users">Users</span></h3><ul>
+<li>ユーザ数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot users [today, yesterday, this week, last week, this month, last month, this year]</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/20bo5fE.png" width="100%">
+</div>
+
+<h3><span id="conversions">Conversions</span></h3><ul>
+<li>コンバージョン</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot conversions [today, yesterday, this week, last week, this month, last month, this year]</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/Fjv0eVD.png" width="100%">
+</div>
+
+<h3><span id="conversion-rate">Conversion Rate</span></h3><ul>
+<li>コンバージョン率</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot conversion rate [today, yesterday, this week, last week, this month, last month, this year]</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/kMrvwWk.png" width="100%">
+</div>
+
+<h3><span id="bounce-rate">Bounce Rate</span></h3><ul>
+<li>直帰率</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot bounce rate [today, yesterday, this week, last week, this month, last month, this year]</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/FZHODZO.png" width="100%">
+</div>
+
+<h3><span id="new-users">New Users</span></h3><ul>
+<li>新規ユーザ</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot new users [today, yesterday, this week, last week, this month, last month, this year]</span><br></pre></td></tr></table></figure>
+
+<p>例) 今週の新規ユーザ (先週との比較)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot new users this week</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/wI4RZlY.png" width="100%">
+</div>
+
+<p>例) 今日の新規ユーザ (昨日との比較)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot new users today</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/6RQtQj2.png" width="100%">
+</div>
+
+<h3><span id="alert">Alert</span></h3><p>– Stay on top of your website traffic –</p>
+<ul>
+<li>Set Alert<br>アラート設定</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot alert [users, conversions, events] [above, below, &gt;, &lt;] NUM</span><br></pre></td></tr></table></figure>
+
+<p>例) ユーザ数が 1000 人を超えたらアラート設定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot alert users &gt; 1000</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/P6Bs21b.png" width="100%">
+</div>
+
+<ul>
+<li>アラート一覧 表示</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot list alerts</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/t9dymX8.png" width="100%">
+</div>
+
+<ul>
+<li>アラート一覧 削除</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot alert remove ID</span><br></pre></td></tr></table></figure>
+
+<h2><span id="reports">Reports</span></h2><h3><span id="summary">Summary</span></h3><ul>
+<li>まとめ (ユーザ数, 新規ユーザ数, PV, コンバージョン数, コンバージョン率, イベント数, 平均セッション時間(秒) )</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot summary [today, yesterday, this week, last week, this month, last month, this year]</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/xN05VKM.png" width="100%">
+</div>
+
+<h3><span id="source">Source</span></h3><ul>
+<li>流入</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot sources [today, yesterday, this week, last week, this month, last month, this year]</span><br></pre></td></tr></table></figure>
+
+<div style="text-align:center;">
+<img src="http://i.imgur.com/o7gpAFe.png" width="100%">
+</div>
+
+<h3><span id="schedule">Schedule</span></h3><ul>
+<li>スケジュール 日時週・頻度設定</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot schedule [summary, sources, status]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>スケジュール一覧表示</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot list schedule</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>スケジュール設定解除</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Statsbot unschedule ID</span><br></pre></td></tr></table></figure>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/03/09/2016-03-10-auto-shorten-url-js/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160310/20160310115924.png" alt="inputボックスにURL打ち込むと自動URL短縮化されるjs"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-03-10</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/03/09/2016-03-10-auto-shorten-url-js/">inputボックスにURL打ち込むと自動URL短縮化されるjs</a></h1><div class="content"><p>[f:id:kenzo0107:20160310115924p:plain]</p>
 <h2><span id="概要">概要</span></h2><p>最近では URL に日本語を利用するケースが増えてきました。</p>
 <p>SEO として価値がある作業かどうかは眉唾ではありますが<br>ネット利用率の低い方にとっては UI としては分かりやすいのかもしれません。</p>
 <p>その点を論じているブログがありました。</p>
@@ -393,40 +546,7 @@
 <p>内部関係者に聞いてみたいと思います。</p>
 <p>===追記===</p>
 <p>GREEさんの記事の件、内部関係者に聞いた所ubuntuのみで利用しているそうです。</p>
-</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/02/02/2016-02-03-buildscript-for-revel-go/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160203/20160203221206.png" alt="CentOS7用 Revel(Golang)フレームワークの起動スクリプト 書いてみた。"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-02-03</span><span class="level-item"><a class="link-muted" href="/categories/Go/">Go</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/02/02/2016-02-03-buildscript-for-revel-go/">CentOS7用 Revel(Golang)フレームワークの起動スクリプト 書いてみた。</a></h1><div class="content"><h2><span id="起動スクリプト作成">起動スクリプト作成</span></h2><p>まず成果物から</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /usr/lib/systemd/system/revel.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=RevelBuildScript</span><br><span class="line">After=nginx.service mysqld.service</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/bin/bash /var/golang/run.sh</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
-
-<p>※After … 上記では nginx と mysqld 起動後に revel を起動させるという設定です。</p>
-<p>※ExecStart … <code>/bin/bash /var/golang/run.sh</code> については<br>以前の記事でローカルビルドによる<br>デプロイ方法を採用しているというお話をしましたが<br>その際に作成される <code>run.sh</code> のパスを指しています。</p>
-
-
-<h4><span id="起動設定">起動設定</span></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl enable revel.service</span><br></pre></td></tr></table></figure>
-
-<h4><span id="起動">起動</span></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl start revel.service</span><br></pre></td></tr></table></figure>
-
-<h4><span id="停止">停止</span></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># systemctl start revel.service</span><br></pre></td></tr></table></figure>
-
-<p>以上です。</p>
-<h2><span id="導入経緯">導入経緯</span></h2><p>AWS での運用をしていると検証環境は<br>検証時のみに利用し余計なコストは掛けたくないものです。</p>
-<p>なので、しょっ中、起動・停止を繰り返します。</p>
-<p>Revel フレームワークは起動スクリプトが標準装備されていない為<br>インスタンス起動時に手動で起動する手間が発生していました。</p>
-<p>その為、デザインの修正でもシステムさんお願いします〜というような依頼があり<br>相互に手間が発生していたのでその解決として作成しました。</p>
-<p>現在は Slack 経由で hubot から Jenkins ジョブを実行させ<br>Revel の乗ってる AWS インスタンスの起動・停止できるようにしています。</p>
-<div style="text-align:center;">
-<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160203/20160203220906.png" width="100%">
-</div>
-
-<p>ip も ElasticIP は使用せず、No-IP を利用して Public IP が変更されても<br>同ドメインでアクセスできるようにしています。</p>
-<p>こちらもインスタンス起動時にドメイン管理している No-ip へ Public IP を通知し<br>動的にドメインと IP を紐付けるようにしています。</p>
-
-
-<p><a target="_blank" rel="noopener" href="http://www.noip.com/">http://www.noip.com/</a></p>
-<p>極力費用を抑えた、AWS における検証環境構築の参考にもしていただければと思います。</p>
-<p>以上です。</p>
-<p>※ 検証環境 はローカル開発環境と異なり、あくまで本番デプロイ前の検証用という認識です。</p>
-</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/23/">前</a></div><div class="pagination-next"><a href="/page/25/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/23/">23</a></li><li><a class="pagination-link is-current" href="/page/24/">24</a></li><li><a class="pagination-link" href="/page/25/">25</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/35/">35</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/23/">前</a></div><div class="pagination-next"><a href="/page/25/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/23/">23</a></li><li><a class="pagination-link is-current" href="/page/24/">24</a></li><li><a class="pagination-link" href="/page/25/">25</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/36/">36</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
                     clipboard: true,

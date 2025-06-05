@@ -33,7 +33,40 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
-</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-06-15</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/06/14/2015-06-15-go-framework-goji-on-vagrant/">Vagrant + Ansible で go実行環境構築し、フレームワーク(goji)で簡易的なCRUD処理実行</a></h1><div class="content"><h2><span id="環境">環境</span></h2><ul>
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-06-16</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/06/15/2015-06-16-sgc-supercerts/">SGC SuperCerts 購入手順</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>クライアントより指定ドメインにSSL証明書をインストールして欲しいとの依頼があり、<br>比較的安価なthawteによりSSL証明書発行するよう手配しました。<br>その手順を以下に記載します。</p>
+<p><span style="color: #ff0000">※2015年4月時点で値上げした模様です。SSL比較サイト等で改めて検討してください。</span></p>
+<p>SSL料金比較サイト</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://serverkurabe.com/ssl-matome/">http://serverkurabe.com/ssl-matome/</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ssl-concier.com/products/">http://www.ssl-concier.com/products/</a></li>
+</ul>
+<h2><span id="前提">前提</span></h2><p>対象ドメインに対して以下が完了していること。</p>
+<ul>
+<li>CSR生成済みであること。</li>
+<li>DUNSナンバー取得済みであること。</li>
+<li>クライアント担当者の氏名・役職・連絡先・会社住所を把握していること。</li>
+</ul>
+<h2><span id="手順">手順</span></h2><p><a target="_blank" rel="noopener" href="https://products.thawte.com/orders/thawte_sgc.do?ref=5480204MED80655&amp;contract=REF98555&amp;language_id=9&amp;change_lang=9:title">https://products.thawte.com/orders/thawte_sgc.do?ref=5480204MED80655&amp;contract=REF98555&amp;language_id=9&amp;change_lang=9:title</a></p>
+<p>必要項目を選択し「次へ」ボタン押下する。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150226/20150226185547.png"></p>
+<p><a target="_blank" rel="noopener" href="https://products.thawte.com/orders/enrollment/OrderInfo.do">CSRの入力</a></p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150616/20150616002737.png"></p>
+<p>補足サーバ名入力<br>「Common Name」項目が対象のドメインになっていることを確認する。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150615/20150615235757.png"></p>
+<p>サーバURLの確認</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150616/20150616001757.png"></p>
+<p>組織情報確認</p>
+<p><span style="color: #ff0000">赤枠</span>に入力していきます。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150616/20150616002052.png"></p>
+<p>連絡先情報入力<br>こちらで登録したメールアドレスへ、購入完了メールが送信されます。<br>クライアント窓口を確認し、記入する情報を貰い登録すること。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150616/20150616002431.png"></p>
+<p>クレジット情報入力<br>※クレジットのみの購入になります。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150616/20150616002820.png"></p>
+<p>注文確認<br>改めて全て再確認してください。<br>問題なければ「注文を送信」で購入完了です。</p>
+<p>数日すると問題なければSSL証明書がメールに添付されて届きます。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150616/20150616003641.png"></p>
+<p>以上</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-06-15</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/06/14/2015-06-15-go-framework-goji-on-vagrant/">Vagrant + Ansible で go実行環境構築し、フレームワーク(goji)で簡易的なCRUD処理実行</a></h1><div class="content"><h2><span id="環境">環境</span></h2><ul>
 <li>MacOSX Yosemite 10.10.3</li>
 <li>Virtual Box 4.3.28</li>
 <li>Vagrant 1.7.2</li>
@@ -156,21 +189,7 @@
 <a target="_blank" rel="noopener" href="https://github.com/kenzo0107/Vagrant-Ansible" class="link-preview"><div class="link-area"><div class="og-image"><img src="https://opengraph.githubassets.com/ee406c71a820d048264a1512a8c5a438d813f1ca62d4085d0b0b2dae5375dd6e/kenzo0107/Vagrant-Ansible"></div><div class="descriptions"><div class="og-title">GitHub - kenzo0107/Vagrant-Ansible: Default Ansible Setting on Vagrant</div><div class="og-description">Default Ansible Setting on Vagrant. Contribute to kenzo0107/Vagrant-Ansible development by creating an account on GitHub.</div></div></div></a>
 
 <p>Ansibleの初期設定が面倒だったのでそこを簡易化することに努めました。</p>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-05-02</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/05/01/2015-05-02-git-hooks-global-template/">独自git-hooksをglobal設定</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>ローカルの全git管理の開発環境に適用する。</p>
-<h2><span id="やったこと">やったこと</span></h2><p>今回はpre-commitの設定</p>
-<ul>
-<li>PHPのシンタックスチェック</li>
-<li>masterブランチでのcommit禁止<br>→ masterはmergeしてpushのみ。</li>
-</ul>
-<p>※PHPのシンタックスでphpmdを利用しているので phpmdインストールしておく</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">brew install phpmd</span></span><br></pre></td></tr></table></figure>
-
-
-<h2><span id="手順">手順</span></h2><p>以下、git-hookのREADMEに手順記載しました。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/kenzo0107/git-hooks">https://github.com/kenzo0107/git-hooks</a></p>
-<h2><span id="備考">備考</span></h2><p>その他、pre-pushで今いるbranchから<br>同名のリモートbranchにのみpushを許可するなど<br>諸々まとめたらまた記載します。</p>
-<p>以上</p>
-</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/30/">前</a></div><div class="pagination-next"><a href="/page/32/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/30/">30</a></li><li><a class="pagination-link is-current" href="/page/31/">31</a></li><li><a class="pagination-link" href="/page/32/">32</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/35/">35</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+</div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/30/">前</a></div><div class="pagination-next"><a href="/page/32/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/30/">30</a></li><li><a class="pagination-link is-current" href="/page/31/">31</a></li><li><a class="pagination-link" href="/page/32/">32</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/36/">36</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
                     clipboard: true,
