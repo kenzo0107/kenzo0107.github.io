@@ -54,5 +54,10 @@ AWS Marketplace版のConfluent Cloudの価格設定は、Confluent直販の価�
 
 料金以外の面では、AWS Marketplace版の方がAWS環境との統合や請求の簡素化において有利と言えるでしょう。
 
+## ⚠️ PrivateLink を利用する場合、 Enterprise プランを選択する必要がある
+
+秘匿性の高いデータを扱うことが想定されるのでインターネットには出ない内部通信をするとなると PrivateLink の設定が必要になってくるかと思います。
+その場合、 Confluent で Enterprise / Dedicated プランを選択する必要があり、そのコストも加味しておく必要があるのでご注意ください。
+
 以上
 参考になれば幸いです。
