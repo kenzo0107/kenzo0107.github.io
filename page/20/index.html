@@ -33,7 +33,64 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
-</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-09-28</span><span class="level-item">Updated&nbsp;<time dateTime="2020-05-07T03:41:26.788Z" title="5/7/2020, 3:41:26 AM">2020-05-07</time></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/09/27/2016-09-28-error-rpc-failed-curl-56-sslread-return-on-macos/">error RPC failed; curl 56 SSLRead() return on MacOS Sierra</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>みんなのGo言語を購入しまして<br>ghq でGit管理してみよう！<br>と心動いた方は多いはず</p>
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/10/10/2016-10-11-line-notify/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011142249.png" alt="LINE Notify で Zabbix Alert 通知"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-10-11</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/10/10/2016-10-11-line-notify/">LINE Notify で Zabbix Alert 通知</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>Zabbix アラート を LINE Notify を利用して<br>LINE にメッセージを送るように設定しました。</p>
+<h2><span id="手順">手順</span></h2><h3><span id="line-notify-アクセス">LINE Notify アクセス</span></h3><p>[<a target="_blank" rel="noopener" href="https://notify-bot.line.me/ja/]">https://notify-bot.line.me/ja/]</a></p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011140750.png" width="100%">
+</div>
+
+<h3><span id="登録してログイン">登録してログイン</span></h3><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011140920.png" width="100%">
+</div>
+
+<h3><span id="サービス登録">サービス登録</span></h3><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011141015.png" width="100%">
+</div>
+
+<p>この情報が審査されるということは特になかったですが<br>ある程度精度の高い情報を入力して登録しときました</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011141027.png" width="100%">
+</div>
+
+<h3><span id="トークルーム選択しトークン発行">トークルーム選択しトークン発行</span></h3><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011141314.png" width="100%">
+</div>
+
+<h3><span id="発行したトークンコピー">発行したトークンコピー</span></h3><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011141349.png" width="100%">
+</div>
+
+<h3><span id="zabbix-スクリプト設定">Zabbix スクリプト設定</span></h3><a href="https://github.com/kenzo0107/Zabbix3-LineNotify" class="link-preview" target="_blank"><div class="link-area"><div class="og-image"><img src="https://opengraph.githubassets.com/6df0d7f2c771a095a376369e27820b63caf89c7f504bd39da2935436f8fae49a/kenzo0107/Zabbix3-LineNotify"></div><div class="descriptions"><div class="og-title">GitHub - kenzo0107/Zabbix3-LineNotify: Zabbix3 + LineNotify</div><div class="og-description">Zabbix3 + LineNotify. Contribute to kenzo0107/Zabbix3-LineNotify development by creating an account on GitHub.</div></div></div></a>
+
+<h2><span id="env">Env</span></h2><ul>
+<li>Zabbix 3.0</li>
+<li>CentOS Linux release 7.2.1511 (Core)</li>
+</ul>
+<h2><span id="install-steps">Install Steps</span></h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Zabbix-Server]$ cd /usr/lib/zabbix/alertscripts    # AlertScriptsPath</span><br><span class="line">[Zabbix-Server]$ git clone https://github.com/kenzo0107/zabbix3-linenotify</span><br><span class="line">[Zabbix-Server]$ mv zabbix3-slack/line_notify.sh .</span><br><span class="line">[Zabbix-Server]$ rm -r zabbix3-linenotify</span><br><span class="line">[Zabbix-Server]$ chmod 755 line_notify.sh</span><br></pre></td></tr></table></figure>
+
+<h3><span id="media-types-設定">Media Types 設定</span></h3><div style="text-align:center;">
+<img src="http://i.imgur.com/mE5dEXI.png" width="100%">
+</div>
+
+<h3><span id="users-gt-media-設定">Users &gt; Media 設定</span></h3><div style="text-align:center;">
+<img src="http://i.imgur.com/ovDFnTq.png" width="100%">
+</div>
+
+<h3><span id="通知テスト">通知テスト</span></h3><p>テスト環境などで<br>Nginx の process が 1 つ以上になったらアラート出すように設定してみた結果</p>
+<div style="text-align:center;">
+<img src="http://i.imgur.com/6B554NX.png" width="100%">
+</div>
+
+<h2><span id="所感">所感</span></h2><p>トークルームに参加するにも<br>LINE アカウントはプライベートアカウントなので<br>ちょっと知られたくないわ〜という時は<br>何とも言えない気持ちになる方もいることがわかりました。</p>
+<p>ご利用は計画的に。</p>
+<h2><span id="今後の期待">今後の期待</span></h2><p>個人的に<br>Twilio みたいに LINE Notify で電話通知出来たら嬉しいです。</p>
+<p>まずは障害がない世界を ♪</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161011/20161011213827.jpg" width="100%">
+</div>
+
+<p>以上です。</p>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-09-28</span><span class="level-item">Updated&nbsp;<time dateTime="2020-05-07T03:41:26.788Z" title="5/7/2020, 3:41:26 AM">2020-05-07</time></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/09/27/2016-09-28-error-rpc-failed-curl-56-sslread-return-on-macos/">error RPC failed; curl 56 SSLRead() return on MacOS Sierra</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>みんなのGo言語を購入しまして<br>ghq でGit管理してみよう！<br>と心動いた方は多いはず</p>
 <p>昔から peco で Git Repository 移動コマンドはしてたけど、<br>ghq を利用したリポジトリ管理は便利ですね。</p>
 <p>そんな折、<br>ghq コマンドで git repository をクローンしようとした際に<br>掲題のエラーが発生しましたので備忘録。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ghq get &lt;git repository&gt;</span><br><span class="line">...</span><br><span class="line">error: RPC failed; curl 56 SSLRead() <span class="built_in">return</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
@@ -400,16 +457,6 @@
 <h2><span id="確認">確認</span></h2><p>実際に 指定した ServerName にアクセスして<br>Digest 認証 が設定されているか確認してください。</p>
 <p><img src="https://i.imgur.com/sy9RVO4.png"></p>
 <p>以上です。</p>
-</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/08/14/2016-08-15-jenkins-stopped-due-to-pid-file/"><img class="thumbnail" src="https://i.imgur.com/fHQQwXo.png" alt="jenkins が停止していますが PID ファイルが残っています"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-08-15</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/08/14/2016-08-15-jenkins-stopped-due-to-pid-file/">jenkins が停止していますが PID ファイルが残っています</a></h1><div class="content"><p>プロセス ID の管理ファイルは通常停止すれば削除されます。<br>但し、Jenkins 再起動時に サーバそのものを再起動させたとか、<br>野暮なことをすると Jenkins おじさんが怒ります。</p>
-<h3><span id="対策-1">対策 1</span></h3><p>PID が素直に残っているのであれば<br>Jenkins PID ファイルを削除</p>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo <span class="built_in">rm</span> /var/run/jenkins.pid</span></span><br></pre></td></tr></table></figure>
-
-<h3><span id="対策-2">対策 2</span></h3><p>PID が存在しない、という場合には<br>以下ディレクトリにアクセス権限がないパターン</p>
-<ul>
-<li>/var/log/jenkins</li>
-<li>/var/cache/jenkins</li>
-</ul>
-<p>chown / chmod で所有者・パーミッション変更してアクセス可能な状態にしましょう。</p>
 </div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/19/">前</a></div><div class="pagination-next"><a href="/page/21/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/19/">19</a></li><li><a class="pagination-link is-current" href="/page/20/">20</a></li><li><a class="pagination-link" href="/page/21/">21</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/36/">36</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {

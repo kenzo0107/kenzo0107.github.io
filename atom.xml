@@ -6,7 +6,7 @@
   <link href="https://kenzo0107.github.io/atom.xml" rel="self"/>
   
   <link href="https://kenzo0107.github.io/"/>
-  <updated>2025-06-04T15:00:00.000Z</updated>
+  <updated>2025-07-02T15:00:00.000Z</updated>
   <id>https://kenzo0107.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Confluent Cloud の料金比較：SaaS版 vs AWS Marketplace版</title>
+    <link href="https://kenzo0107.github.io/2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/"/>
+    <id>https://kenzo0107.github.io/2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/</id>
+    <published>2025-07-02T15:00:00.000Z</published>
+    <updated>2025-07-02T15:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Confluent Cloud の料金体系について、SaaS版と AWS Marketplace版の比較を調べてみました。</p><p>※ 本記事は Claude Code で調べ得た内容を Obsidian にまとめさせブログ化してもらいました。初の試み💓</p><span id="more"></span><h2><span id="料金比較の結論">💰 料金比較の結論</span></h2><p><strong>Confluent CloudとAWS Marketplace版の料金は同じです。</strong></p><p>AWS Marketplace版のConfluent Cloudの価格設定は、Confluent直販の価格設定と同じです。つまり、どちらを選んでも基本的な料金体系に違いはありません。</p><h2><span id="料金体系の詳細">料金体系の詳細</span></h2><h3><span id="共通の料金構造">🧮 共通の料金構造</span></h3><p>両方とも以下の要素で課金されます：</p><ol><li><strong>Kafka クラスター</strong>: eCKUs（Elastic Confluent Units for Kafka）による時間料金、ネットワーキング（GB単位）、ストレージ（GB-時間単位）</li><li><strong>Connect</strong>: コネクタの使用はスループット（GB単位）とタスクベース価格（タスク/時間単位）で課金</li><li><strong>Stream Processing</strong>: Apache FlinkによるCFUs（分単位）で課金</li><li><strong>Stream Governance</strong>: 環境単位（時間単位）で課金</li></ol><h3><span id="主な違い">主な違い</span></h3><p><strong>支払い方法と統合面</strong>：</p><ul><li><strong>SaaS版</strong>: Confluent直接支払い</li><li><strong>AWS Marketplace版</strong>: AWS Marketplaceを通じて直接課金され、既存のAWSコミットを活用でき、事務手続きを省略できます</li></ul><p><strong>特典</strong>：</p><ul><li>AWS Marketplace版では$1,000の無料クレジット（$400即座、$600はプロモコード経由）が提供されます</li><li>AWS Marketplace経由のすべてのConfluent Cloudサインアップには、追加費用なしでConfluent Cloud Engineersによるホワイトグローブオンボーディング、アーキテクチャレビュー、オンデマンドトレーニングが含まれます</li></ul><h2><span id="推奨">推奨</span></h2><p>料金面では差がないため、以下の要因で選択することをお勧めします：</p><ol><li><strong>AWS環境に統合したい場合</strong> → AWS Marketplace版</li><li><strong>既存のAWS契約やコミットを活用したい場合</strong> → AWS Marketplace版</li><li><strong>統一された請求を希望する場合</strong> → AWS Marketplace版</li><li><strong>初期の無料クレジットを活用したい場合</strong> → AWS Marketplace版</li></ol><p>料金以外の面では、AWS Marketplace版の方がAWS環境との統合や請求の簡素化において有利と言えるでしょう。</p><p>以上<br>参考になれば幸いです。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;Confluent Cloud の料金体系について、SaaS版と AWS Marketplace版の比較を調べてみました。&lt;/p&gt;
+&lt;p&gt;※ 本記事は Claude Code で調べ得た内容を Obsidian にまとめさせブログ化してもらいました。初の試み💓&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
+    
+    
+    <category term="AWS" scheme="https://kenzo0107.github.io/tags/AWS/"/>
+    
+    <category term="Confluent" scheme="https://kenzo0107.github.io/tags/Confluent/"/>
+    
+    <category term="Kafka" scheme="https://kenzo0107.github.io/tags/Kafka/"/>
+    
+  </entry>
   
   <entry>
     <title>Python tox を利用し複数の構文チェックツール管理</title>
@@ -661,29 +687,6 @@
     
     
     <category term="AWS" scheme="https://kenzo0107.github.io/categories/AWS/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>fix: Could not install packages due to an EnvironmentError: [Errno 28] No space left on device</title>
-    <link href="https://kenzo0107.github.io/2023/05/31/2023-06-01-fix-no-space-left-on-device-when-pip-install/"/>
-    <id>https://kenzo0107.github.io/2023/05/31/2023-06-01-fix-no-space-left-on-device-when-pip-install/</id>
-    <published>2023-05-31T15:00:00.000Z</published>
-    <updated>2023-05-31T15:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>RPi 4B で以下エラーで詰まった時の備忘録です。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 install xxx</span><br><span class="line"></span><br><span class="line">Could not install packages due to an EnvironmentError: [Errno 28] No space left on device</span><br></pre></td></tr></table></figure><p>一時的に tmp ディレクトリを指定してからインストールを再度実行することで回避してみます。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir $HOME/tmp</span><br><span class="line">$ export TMPDIR=$HOME/tmp</span><br><span class="line"></span><br><span class="line">$ pip3 install xxx</span><br></pre></td></tr></table></figure><p>これでうまくいきました ♪</p><p>以上<br>参考になれば幸いです。</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;RPi 4B で以下エラーで詰まった時の備忘録です。&lt;/p&gt;
-&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;spa</summary>
-      
-    
-    
-    
-    <category term="RaspberryPI" scheme="https://kenzo0107.github.io/categories/RaspberryPI/"/>
     
     
   </entry>

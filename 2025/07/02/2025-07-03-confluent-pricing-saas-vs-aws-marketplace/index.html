@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Confluent Cloud の料金比較：SaaS版 vs AWS Marketplace版 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Confluent Cloud の料金体系について、SaaS版と AWS Marketplace版の比較を調べてみました。 ※ 本記事は Claude Code で調べ得た内容を Obsidian にまとめさせブログ化してもらいました。初の試み💓"><meta property="og:type" content="blog"><meta property="og:title" content="Confluent Cloud の料金比較：SaaS版 vs AWS Marketplace版"><meta property="og:url" content="https://kenzo0107.github.io/2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="Confluent Cloud の料金体系について、SaaS版と AWS Marketplace版の比較を調べてみました。 ※ 本記事は Claude Code で調べ得た内容を Obsidian にまとめさせブログ化してもらいました。初の試み💓"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:published_time" content="2025-07-02T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="AWS"><meta property="article:tag" content="Confluent"><meta property="article:tag" content="Kafka"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/"},"headline":"Confluent Cloud の料金比較：SaaS版 vs AWS Marketplace版","image":["https://kenzo0107.github.io/img/og_image.png"],"datePublished":"2025-07-02T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"Confluent Cloud の料金体系について、SaaS版と AWS Marketplace版の比較を調べてみました。 ※ 本記事は Claude Code で調べ得た内容を Obsidian にまとめさせブログ化してもらいました。初の試み💓"}</script><link rel="canonical" href="https://kenzo0107.github.io/2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2025-07-03</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Confluent Cloud の料金比較：SaaS版 vs AWS Marketplace版</h1><div class="content"><p>Confluent Cloud の料金体系について、SaaS版と AWS Marketplace版の比較を調べてみました。</p>
+<p>※ 本記事は Claude Code で調べ得た内容を Obsidian にまとめさせブログ化してもらいました。初の試み💓</p>
+<span id="more"></span>
+
+<h2><span id="料金比較の結論">💰 料金比較の結論</span></h2><p><strong>Confluent CloudとAWS Marketplace版の料金は同じです。</strong></p>
+<p>AWS Marketplace版のConfluent Cloudの価格設定は、Confluent直販の価格設定と同じです。つまり、どちらを選んでも基本的な料金体系に違いはありません。</p>
+<h2><span id="料金体系の詳細">料金体系の詳細</span></h2><h3><span id="共通の料金構造">🧮 共通の料金構造</span></h3><p>両方とも以下の要素で課金されます：</p>
+<ol>
+<li><strong>Kafka クラスター</strong>: eCKUs（Elastic Confluent Units for Kafka）による時間料金、ネットワーキング（GB単位）、ストレージ（GB-時間単位）</li>
+<li><strong>Connect</strong>: コネクタの使用はスループット（GB単位）とタスクベース価格（タスク/時間単位）で課金</li>
+<li><strong>Stream Processing</strong>: Apache FlinkによるCFUs（分単位）で課金</li>
+<li><strong>Stream Governance</strong>: 環境単位（時間単位）で課金</li>
+</ol>
+<h3><span id="主な違い">主な違い</span></h3><p><strong>支払い方法と統合面</strong>：</p>
+<ul>
+<li><strong>SaaS版</strong>: Confluent直接支払い</li>
+<li><strong>AWS Marketplace版</strong>: AWS Marketplaceを通じて直接課金され、既存のAWSコミットを活用でき、事務手続きを省略できます</li>
+</ul>
+<p><strong>特典</strong>：</p>
+<ul>
+<li>AWS Marketplace版では$1,000の無料クレジット（$400即座、$600はプロモコード経由）が提供されます</li>
+<li>AWS Marketplace経由のすべてのConfluent Cloudサインアップには、追加費用なしでConfluent Cloud Engineersによるホワイトグローブオンボーディング、アーキテクチャレビュー、オンデマンドトレーニングが含まれます</li>
+</ul>
+<h2><span id="推奨">推奨</span></h2><p>料金面では差がないため、以下の要因で選択することをお勧めします：</p>
+<ol>
+<li><strong>AWS環境に統合したい場合</strong> → AWS Marketplace版</li>
+<li><strong>既存のAWS契約やコミットを活用したい場合</strong> → AWS Marketplace版</li>
+<li><strong>統一された請求を希望する場合</strong> → AWS Marketplace版</li>
+<li><strong>初期の無料クレジットを活用したい場合</strong> → AWS Marketplace版</li>
+</ol>
+<p>料金以外の面では、AWS Marketplace版の方がAWS環境との統合や請求の簡素化において有利と言えるでしょう。</p>
+<p>以上<br>参考になれば幸いです。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Confluent Cloud の料金比較：SaaS版 vs AWS Marketplace版</p><p><a href="https://kenzo0107.github.io/2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/">https://kenzo0107.github.io/2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-07-03</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/AWS/">AWS</a><a class="link-muted mr-2" rel="tag" href="/tags/Confluent/">Confluent</a><a class="link-muted mr-2" rel="tag" href="/tags/Kafka/">Kafka</a></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/06/04/2025-06-05-python-tox/"><span class="level-item">Python tox を利用し複数の構文チェックツール管理</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">コメント</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'https://kenzo0107.github.io/2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/';
+            this.page.identifier = '2025/07/02/2025-07-03-confluent-pricing-saas-vs-aws-marketplace/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'kenzo0107' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

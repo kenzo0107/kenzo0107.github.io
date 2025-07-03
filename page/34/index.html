@@ -33,7 +33,16 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
-</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-03-05</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/03/04/2015-03-05-install-munin-and-notify-alart-mail-on-centos/">CentOS にmuninインストール 監視しアラートメール受信</a></h1><div class="content"><h2><span id="概要">概要</span></h2><ul>
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-03-11</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/03/10/2015-03-11-off-ipv6-macosx/">MacOSX ipv6 OFF</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>Yosemite のネット回線遅い？と思うことが多く<br>初期設定でipv6設定されている為<br>世の中のipv6化しきっていないのもあり<br>一旦ipv6をOFF設定しようと思います。</p>
+<script src="//gist.github.com/kenzo0107/f14b2b659a0f41267476.js"></script>
+
+
+
+<h2><span id="ps">ps</span></h2><p>↓ こんな記事も</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://minoru.jetsets.jp/%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF/os-x-yosemite-%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8D%E3%83%83%E3%83%88%E3%81%8C%E3%82%84%E3%81%A3%E3%81%B1%E3%82%8A%E9%81%85%E3%81%84/">http://minoru.jetsets.jp/%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF/os-x-yosemite-%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8D%E3%83%83%E3%83%88%E3%81%8C%E3%82%84%E3%81%A3%E3%81%B1%E3%82%8A%E9%81%85%E3%81%84/</a></li>
+</ul>
+</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-03-05</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/03/04/2015-03-05-install-munin-and-notify-alart-mail-on-centos/">CentOS にmuninインストール 監視しアラートメール受信</a></h1><div class="content"><h2><span id="概要">概要</span></h2><ul>
 <li>CentOSにmuninをインストールし死活監視します。</li>
 <li>warning, criticalを検知した際にアラートメール送信をします。</li>
 <li>MySQL, Redisの監視設定も記載しました。</li>
@@ -292,26 +301,6 @@
 <li>phpMyAdmin 5.3.6</li>
 </ul>
 <h2><span id="手順">手順</span></h2><script src="//gist.github.com/kenzo0107/009df09c0b22e8c918dc.js"></script>
-</div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2015-02-20</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2015/02/19/2015-02-20-mamp-with-memcache/">MAMPにMemcacheをインストールしphpで動かすまで</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>ローカル開発環境にMemcacheをインストールしたい。</p>
-<h2><span id="環境">環境</span></h2><p>MacOSX Yosemite 10.10.1<br>MAMP3.0.7.3</p>
-<h2><span id="注意">注意</span></h2><p>インストールするのはMemcacheです。Memcache<span style="color: #d32f2f">d</span>ではないです。</p>
-<h2><span id="todo">ToDo</span></h2><ul>
-<li>Memcacheのソースダウンロードしコンパイル</li>
-<li>memcache.soをphp.iniから呼び出し</li>
-<li>MAMP再起動</li>
-</ul>
-<h2><span id="手順">手順</span></h2><ul>
-<li>Memcacheのソースダウンロードしコンパイル</li>
-<li>memcache.soをphp.iniから呼び出し</li>
-</ul>
-<script src="//gist.github.com/kenzo0107/dbcb15cbda2f3f85da27.js"></script>
-
-<ul>
-<li>php から利用 サンプル</li>
-</ul>
-<script src="//gist.github.com/kenzo0107/365890fe3fd6e44c1fc2.js"></script>
-
-<p>以上</p>
 </div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/33/">前</a></div><div class="pagination-next"><a href="/page/35/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/33/">33</a></li><li><a class="pagination-link is-current" href="/page/34/">34</a></li><li><a class="pagination-link" href="/page/35/">35</a></li><li><a class="pagination-link" href="/page/36/">36</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
