@@ -33,7 +33,44 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
-</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2021/04/29/2021-04-30-send-clientip-nlb-nginx-on-fargate/"><img class="thumbnail" src="https://i.imgur.com/4xB6wVP.png" alt="NLB+Fargate でクライアントIP を Fargate に送り届ける"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2021-04-30</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/29/2021-04-30-send-clientip-nlb-nginx-on-fargate/">NLB+Fargate でクライアントIP を Fargate に送り届ける</a></h1><div class="content"><div class="toc">
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2021-04-30</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/29/2021-04-30-nginx-process-count-on-fargate/">Fargate のタスクサイズ による Nginx の起動プロセス数</a></h1><div class="content"><p>備忘録です。</p>
+<p>Nginx の設定で、プロセス数を auto にして CPU コア数に委ねる設定があります。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">worker_processes auto;</span><br></pre></td></tr></table></figure>
+
+<p>Fargate のタスクサイズだとプロセス数はどの程度になるか調査しました。</p>
+<h2><span id="結果発表">結果発表</span></h2><table>
+<thead>
+<tr>
+<th>cpu</th>
+<th>mem</th>
+<th>nginx worker process 数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>256</td>
+<td>512</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1024</td>
+<td>2048</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2048</td>
+<td>4096</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p>タスクサイズを上げれば、ちゃんと auto で worker プロセス数が増えてくれた。</p>
+<p>ちなみに<br>プロセス数が増えても <a href="https://kenzo0107.github.io/2021/04/15/2021-04-16-nginx-on-fargate-somaxconn/">net.maxsoconn 値は Fargate で変更できない</a> ので<br>リクエストをより捌く様にするには、タスク数を増やした方が良いです。</p>
+<p>ちなみに、以下で同額のコスト♪</p>
+<ul>
+<li>cpu=256, mem=512 × 8 タスク</li>
+<li>cpu=2048, mem=4096 × 1 タスク</li>
+</ul>
+<p>タスク数を増やそう！</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2021/04/29/2021-04-30-send-clientip-nlb-nginx-on-fargate/"><img class="thumbnail" src="https://i.imgur.com/4xB6wVP.png" alt="NLB+Fargate でクライアントIP を Fargate に送り届ける"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2021-04-30</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/04/29/2021-04-30-send-clientip-nlb-nginx-on-fargate/">NLB+Fargate でクライアントIP を Fargate に送り届ける</a></h1><div class="content"><div class="toc">
 <div class="toc-content">
 <h3 class="menu-label">ToC</h3>
 
@@ -200,22 +237,7 @@
 </div>
 </div>
 
-<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。</p></div><a class="article-more button is-small is-size-7" href="/2020/12/10/2020-12-11-ruby-to-elasticache-redis-cluster-mode/#more">続きを読む</a></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2020-11-27</span><span class="level-item"><a class="link-muted" href="/categories/Go/">Go</a></span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2020/11/26/2020-11-27-go-logging-level/">Go logrus でログ出力レベルを変更する</a></h1><div class="content"><div class="toc">
-<div class="toc-content">
-<h3 class="menu-label">ToC</h3>
-
-<!-- toc -->
-
-<ul>
-<li><a href="#%E6%A6%82%E8%A6%81">概要</a><ul>
-<li><a href="#%E5%AE%9F%E9%9A%9B%E3%81%AB%E5%8B%95%E3%81%8B%E3%81%99%E3%81%A8%E3%82%8F%E3%81%8B%E3%82%8A%E3%82%84%E3%81%99%E3%81%84">実際に動かすとわかりやすい。</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-</div>
-</div></div><a class="article-more button is-small is-size-7" href="/2020/11/26/2020-11-27-go-logging-level/#more">続きを読む</a></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/7/">前</a></div><div class="pagination-next"><a href="/page/9/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/7/">7</a></li><li><a class="pagination-link is-current" href="/page/8/">8</a></li><li><a class="pagination-link" href="/page/9/">9</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/36/">36</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>ruby で ElastiCache Redis （クラスターモード有効）を利用した際にハマったことをまとめます。</p></div><a class="article-more button is-small is-size-7" href="/2020/12/10/2020-12-11-ruby-to-elasticache-redis-cluster-mode/#more">続きを読む</a></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/7/">前</a></div><div class="pagination-next"><a href="/page/9/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/7/">7</a></li><li><a class="pagination-link is-current" href="/page/8/">8</a></li><li><a class="pagination-link" href="/page/9/">9</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/36/">36</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
                     clipboard: true,

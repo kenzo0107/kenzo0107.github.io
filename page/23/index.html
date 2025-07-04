@@ -33,7 +33,180 @@
       window.addEventListener('hashchange', switchTab, false);
   })();
   </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
-</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/05/19/2016-05-20-mysql-cannot-allocate-memory-for-the-buffer-pool/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520103201.jpg" alt="MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-05-20</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/05/19/2016-05-20-mysql-cannot-allocate-memory-for-the-buffer-pool/">MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>AWS E2 インスタンス上に MySQL, SonarQube インストールし起動するものの<br>MySQL が落ちるという事象が発生。</p>
+</head><body class="is-1-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-12"><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/05/20/2016-05-21-jenkins-sonarqube-php-code-metrics/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521003213.png" alt="Jenkins + SonarQube で PHPコードメトリクス計測！"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-05-21</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/05/20/2016-05-21-jenkins-sonarqube-php-code-metrics/">Jenkins + SonarQube で PHPコードメトリクス計測！</a></h1><div class="content"><h2><span id="前回">前回</span></h2><p>Jenkins とは別のサーバ上に<br>SonarQube をインストールし<br>アクセスできるまでをまとめました。</p>
+
+
+<p>今回は Jenkins からソースを解析し<br>SonarQube でのメトリクス情報を表示までの実行方法をまとめます。</p>
+<p>言語は どれでも良いですが、 今回は PHP とします。</p>
+<h2><span id="overview">Overview</span></h2><p>以下概要になります。</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521003213.png" width="100%">
+</div>
+
+<h2><span id="sonarqube-側事前準備">SonarQube 側事前準備</span></h2><p>プロジェクトを作成しプロジェクトキーを発行します。</p>
+<h3><span id="1-ログインページへアクセス">1. ログインページへアクセス</span></h3><p>http://<sonarqube ip>:9000/sessions/new</sonarqube></p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520233944.png" width="100%">
+</div>
+
+<p>デフォルトでは以下 admin:admin アカウントでログイン</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ID</td>
+<td>admin</td>
+</tr>
+<tr>
+<td>PW</td>
+<td>admin</td>
+</tr>
+</tbody></table>
+<h3><span id="2-プロジェクト作成">2. プロジェクト作成</span></h3><ul>
+<li>ヘッダーメニュー Administration クリックし Administration ページへ遷移</li>
+<li>Projects &gt; Management クリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520234632.png" width="100%">
+</div>
+
+<ul>
+<li>Create ボタンクリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520235020.png" width="100%">
+</div>
+
+<ul>
+<li>Name, Key 入力し</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521000020.png" width="100%">
+</div>
+
+<ul>
+<li>プロジェクトが追加されたことがわかります。</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521001309.png" width="100%">
+</div>
+
+<h3><span id="3-php-plugin-インストール">3. PHP Plugin インストール</span></h3><ul>
+<li>Administration ページ System &gt; Update Center クリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521002115.png" width="100%">
+</div>
+
+<ul>
+<li>Available 選択 → 検索窓で「PHP」と入力 → 表示された PHP Plugin で Install クリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521002430.png" width="100%">
+</div>
+
+<ul>
+<li>Restart で SonarQube に PHP Plugin インストール</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521002605.png" width="100%">
+</div>
+
+<ul>
+<li>Installed タブで PHP Plugin がインストールされていることを確認</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521002918.png" width="100%">
+</div>
+
+<h3><span id="4-authentication-token-発行">4. authentication token 発行</span></h3><ul>
+<li>Security &gt; User クリック</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521005252.png" width="100%">
+</div>
+
+<ul>
+<li>TOKENS クリックしポップアップ表示</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521005424.png" width="100%">
+</div>
+
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521005757.png" width="100%">
+</div>
+
+<ul>
+<li>任意の文字列を入力し create</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521005946.png" width="100%">
+</div>
+
+<ul>
+<li>token コピー<br>Jenkins 側の設定時に利用します。</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521010037.png" width="100%">
+</div>
+
+<p>以上で SonarQube 側の事前準備は終了です。</p>
+<h2><span id="jenkins-側準備">Jenkins 側準備</span></h2><h3><span id="1-sonarqube-plugin-インストール">1. SonarQube Plugin インストール</span></h3><p>Jenkins の管理 &gt; Plugin の管理<br>にて SonarQube Plugin インストール</p>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521003400.png" width="100%">
+</div>
+
+<h3><span id="2-sonarqube-scanner-インストール">2. SonarQube Scanner インストール</span></h3><p>以下オフィシャルダウンロードページからリンク取得</p>
+<p><a target="_blank" rel="noopener" href="http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner">Analyzing+with+SonarQube+Scanner</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /var/lib/jenkins</span><br><span class="line">$ wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.6.1.zip</span><br><span class="line">$ unzip sonar-scanner-2.6.1.zip</span><br><span class="line">$ <span class="built_in">ln</span> -s sonar-scanner-2.6.1 sonar-scanner</span><br></pre></td></tr></table></figure>
+
+<h3><span id="3-jenkins-システム設定">3. Jenkins システム設定</span></h3><ul>
+<li><p>Jenkins の管理 &gt; システムの設定 へアクセス</p>
+</li>
+<li><p>JenkinsQube servers に必要項目入力</p>
+</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521004429.png" width="100%">
+</div>
+
+<ul>
+<li>SonarQube Scanner に先ほどインストールした sonar-scanner パスを設定</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521004625.png" width="100%">
+</div>
+
+<p>上記入力後保存</p>
+<h3><span id="4-ジョブ新規作成">4. ジョブ新規作成</span></h3><p>「sonarqubeTest」という名前のジョブを新規作成します。</p>
+<ul>
+<li>git リポジトリより PHP プロジェクト取得設定</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521010200.png" width="100%">
+</div>
+
+<ul>
+<li>SonarScanner 実行設定</li>
+</ul>
+<div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521010349.png" width="100%">
+</div>
+
+<p>以上で Jenkins 側の設定完了です。</p>
+<h2><span id="sonarqube-反映確認">SonarQube 反映確認</span></h2><div style="text-align:center;">
+<img src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160521/20160521010726.png" width="100%">
+</div>
+
+<p>ちなみにこちら EC-CUBE 1.1 のプロジェクトでした。</p>
+<p>EC-CUBE のコード重複率が多く<br>無駄が如何に多いかがわかります。</p>
+<p>以上です。</p>
+</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/05/19/2016-05-20-mysql-cannot-allocate-memory-for-the-buffer-pool/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520103201.jpg" alt="MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-05-20</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/05/19/2016-05-20-mysql-cannot-allocate-memory-for-the-buffer-pool/">MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>AWS E2 インスタンス上に MySQL, SonarQube インストールし起動するものの<br>MySQL が落ちるという事象が発生。</p>
 <p>ログを見ると以下のエラーが。。</p>
 <ul>
 <li>/var/log/mysqld.log</li>
@@ -311,30 +484,6 @@
 </div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/03/22/2016-03-23-get-host-data-from-ip/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160408/20160408142036.png" alt="IPアドレスからホスト情報取得"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-03-23</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/03/22/2016-03-23-get-host-data-from-ip/">IPアドレスからホスト情報取得</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p><a target="_blank" rel="noopener" href="http://ipinfo.io/">ipinfo.io</a> の API により<br>ホスト情報を取得するシェルを書きました。</p>
 <p>不審なアクセスが増えてきた、<br>というときに接続元ホストを探る際に利用しています。</p>
 <script src="//gist.github.com/kenzo0107/126e687ebc0a4b1747c7.js"></script>
-</div></article></div><div class="card"><div class="card-image"><a class="image is-7by3" href="/2016/03/15/2016-03-16-encode-filename/"><img class="thumbnail" src="https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160408/20160408142205.jpg" alt="ファイルの中身でなくファイル名の文字コードを変更する"></a></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2016-03-16</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2016/03/15/2016-03-16-encode-filename/">ファイルの中身でなくファイル名の文字コードを変更する</a></h1><div class="content"><h2><span id="概要">概要</span></h2><p>EC サイトの売上のレポートなどを送信したい、というとき<br>ファイル名に日本語を指定せざるを得ないとき(クライアントさんが「絶対に日本語！」)<br>がときたまあります。</p>
-<ul>
-<li>クライアント様の環境は Windows。</li>
-<li>Windows デスクトップのデフォルト文字コードは Shift JIS。</li>
-</ul>
-<p>Linux で作成したファイルのデフォルト文字コードが UTF-8 だった場合<br>メールに添付し送信し、受信した Windows PC でダウンロードすると<br>ファイル名が文字化けしてる、<br>なんてことがあります。</p>
-<p>そんなとき、ファイルの中身でなくファイル名自体の文字コードを変更したので<br>その対応まとめです。</p>
-<h2><span id="環境">環境</span></h2><ul>
-<li>CentOS release 5.11 (Final)</li>
-<li>convmv 1.10</li>
-</ul>
-<p>convmv を利用します。</p>
-<ul>
-<li>CentOS なら yum でインストール</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install -y convmv</span><br></pre></td></tr></table></figure>
-
-<h2><span id="手順">手順</span></h2><ul>
-<li>デフォルト文字コード UTF-8 とします。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// UTF-8 でファイル名「ほげほげ」作成</span><br><span class="line">$ touch ほげほげ</span><br><span class="line"></span><br><span class="line">// ファイル名の文字コードを UTF-8 から ShiftJIS に変換</span><br><span class="line">$ convmv -r -f utf8 -t sjis ほげほげ --notest</span><br><span class="line">mv &quot;./ほげほげ&quot; &quot;./ق°ق°&quot;</span><br><span class="line">Ready!</span><br><span class="line"></span><br><span class="line">$ ls -al</span><br><span class="line">-rw-rw-r-- 1 user group     0  3月 16 16:45 ?ق??ق?</span><br></pre></td></tr></table></figure>
-
-<p>全く読み取れないような文字になります。</p>
-<p>ごく稀に「絶対日本語で！」という方の一助になれば何よりです。</p>
 </div></article></div><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous"><a href="/page/22/">前</a></div><div class="pagination-next"><a href="/page/24/">次</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link" href="/">1</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/22/">22</a></li><li><a class="pagination-link is-current" href="/page/23/">23</a></li><li><a class="pagination-link" href="/page/24/">24</a></li><li><span class="pagination-ellipsis">&hellip;</span></li><li><a class="pagination-link" href="/page/36/">36</a></li></ul></nav></div><!--!--><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
             article: {
                 highlight: {
