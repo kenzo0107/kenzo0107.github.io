@@ -1,5 +1,5 @@
 ---
-title: awsume と peco を使って簡単にスイッチロールする
+title: awsume と peco を使ってスイッチロールを簡単に
 category: AWS
 date: 2025-07-04
 tags: [AWS, awsume, peco, shell, cli]
