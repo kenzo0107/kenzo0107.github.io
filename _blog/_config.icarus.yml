@@ -129,10 +129,10 @@ widgets:
   #   type: subscribe_email
   #   description:
   #   feedburner_id: ''
-  # - position: right
-  #   type: adsense
-  #   client_id: 'ca-pub-6265337967545472'
-  #   slot_id: '9975280607'
+  - position: bottom
+    type: adsense
+    client_id: 'ca-pub-6265337967545472'
+    slot_id: '9975280607'
 plugins:
   animejs: true
   back_to_top: true
