@@ -123,7 +123,6 @@ claude
 
 ```console
 claude mcp add -s user aws-price \
-  -e AWS_PROFILE="dummy-tmp" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx awslabs.aws-pricing-mcp-server@latest
@@ -292,7 +291,6 @@ claude
 
 ```console
 claude mcp add -s user aws-docs \
-  -e AWS_PROFILE="dummy-tmp" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx awslabs.aws-documentation-mcp-server@latest
@@ -419,7 +417,6 @@ CloudFront の設定を教えて
 
 ```console
 claude mcp add -s user aws-terraform-provider \
-  -e AWS_PROFILE="dummy-tmp" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx awslabs.terraform-mcp-server@latest
@@ -429,7 +426,6 @@ claude mcp add -s user aws-terraform-provider \
 
 ```console
 claude mcp add -s user aws-diagram \
-  -e AWS_PROFILE="dummy-tmp" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx awslabs.aws-diagram-mcp-server@latest
