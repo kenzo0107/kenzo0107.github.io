@@ -15,8 +15,10 @@ AWS NAT Gatewayには従来の**ゾーナル（Zonal）**モードに加えて�
 
 ## ⚠️ 重要な注意事項
 
-2025.11.26現在、 [terraform-provider-aws](https://github.com/hashicorp/terraform-provider-aws) はリージョナル NAT Gateway をサポートしていません。
+~~2025.11.26現在、 [terraform-provider-aws](https://github.com/hashicorp/terraform-provider-aws) はリージョナル NAT Gateway をサポートしていません。~~
 issue: https://github.com/hashicorp/terraform-provider-aws/issues/45151
+
+[v6.24.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v6.24.0) でサポートされました🎉
 
 ## リージョナル NAT Gateway のコスト優位性
 
