@@ -21,7 +21,48 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 awsume dummy --output-profile dummy-tmp
 ```
 
+## Claude Code + AWS MCP で接続先 AWS アカウント ID 確認
+
+```console
+claude mcp add -s user aws-mcp \
+  -e AWS_PROFILE="dummy-tmp" \
+  -e AWS_REGION="ap-northeast-1" \
+  -e FASTMCP_LOG_LEVEL="ERROR" \
+  -- uvx mcp-proxy-for-aws@latest https://aws-mcp.us-east-1.api.aws/mcp
+```
+
+<details>
+<summary>例: AWS アカウント ID を教えて</summary>
+
+```console
+⏺ AWS CLI機能を使用してAWSアカウントIDを取得します。
+
+⏺ aws-mcp - aws___call_aws (MCP)(cli_command: "aws sts get-caller-identity")
+  ⎿  {
+       "response": {
+         "status_code": 200,
+     … +14 lines (ctrl+o to expand)
+
+⏺ AWSアカウント情報を取得しました：
+
+  AWSアカウントID: 123456789012
+
+  詳細情報:
+  - ユーザーID: ABCDEFGHIJKLMNOPQRSTU:kenzo.tanaka
+  - ARN: arn:aws:sts::123456789012:assumed-role/admin/kenzo.tanaka
+  - ロール: admin
+
+  現在は管理者権限のロールでAWSアカウント 123456789012 にアクセスしています。
+```
+
+</details>
+
 ## Claude Code + CloudWatch Logs MCP　でログ調査
+
+2025年10月13日は非推奨となりました。
+https://pypi.org/project/awslabs.cloudwatch-logs-mcp-server/
+
+[awslabs.cloudwatch-mcp-server](https://github.com/awslabs/mcp/tree/main/src/cloudwatch-mcp-server) への切り替えが推奨されております。
 
 ```console
 claude mcp add -s user aws-cwlogs \
@@ -478,6 +519,62 @@ claude mcp add -s user aws-diagram \
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
+</details>
+
+## Claude Code + AWS CloudWatch + AWS Application Signals MCP で雑に直近のインシデントを知る
+
+```console
+claude mcp add -s user aws-cw \
+  -e AWS_PROFILE="dummy-tmp" \
+  -e AWS_REGION="ap-northeast-1" \
+  -e FASTMCP_LOG_LEVEL="ERROR" \
+  -- uvx awslabs.cloudwatch-mcp-server@latest
+
+claude mcp add -s user aws-appsignals \
+  -e AWS_PROFILE="dummy-tmp" \
+  -e AWS_REGION="ap-northeast-1" \
+  -e FASTMCP_LOG_LEVEL="ERROR" \
+  -- uvx awslabs.cloudwatch-appsignals-mcp-server@latest
+```
+
+<details>
+<summary>aws-appsignals MCP を利用し、直近のインシデントがあるか調べてください。</summary>
+
+```console
+  AWS Application Signalsの調査により、以下の状況が確認されました：
+
+  🚨 検出された問題
+
+  dummy-backend サービスで高レイテンシを検出
+
+  1. GET /health エンドポイント
+    - 現在のレイテンシ: 55.82ms（p99）
+    - 正常ベースライン: 1.58ms
+    - 重要度: HIGH
+    - 問題: 通常の35倍以上のレイテンシ
+  2. InternalOperation
+    - 現在のレイテンシ: 843.38ms（p99）
+    - 正常ベースライン: 281.20ms
+    - 重要度: HIGH
+    - 問題: 通常の3倍のレイテンシ
+
+  📊 監視状況
+
+  - 監視対象サービス: 8つ
+  - SLO設定: 現在未設定
+  - 期間: 過去24時間
+
+  💡 推奨アクション
+
+  1. 即座の対応
+    - dummy-backendサービスのパフォーマンス調査
+    - ヘルスチェックエンドポイントの応答遅延原因特定
+  2. 中期的対応
+    - SLOの設定を検討（現在未設定）
+    - アプリケーションログの詳細分析
+
+  現在進行中のインシデントとして、ステージング環境のバックエンドサービスでレイテンシ問題が発生していることが確認されました。
+```
 </details>
 
 <br/>
