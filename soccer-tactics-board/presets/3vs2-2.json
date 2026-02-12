@@ -1,0 +1,406 @@
+{
+  "version": "1.0.0",
+  "title": "3vs2 #2",
+  "description": "",
+  "fieldDimensions": {
+    "width": 400,
+    "height": 600
+  },
+  "createdAt": "2026-02-13T12:22:12.917Z",
+  "updatedAt": "2026-02-13T12:22:12.917Z",
+  "steps": [
+    {
+      "stepId": 0,
+      "timestamp": 1770980265680,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 159.16221033868092,
+          "y": 246.79322638146166,
+          "radius": 14,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 19.982174688057064,
+          "y": 204.58288770053477,
+          "radius": 14,
+          "number": 2,
+          "direction": 82,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 293.2085561497326,
+          "y": 207.4349376114082,
+          "radius": 14,
+          "number": 3,
+          "direction": 290,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 109.53654188948308,
+          "y": 91.03565062388591,
+          "radius": 14,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 208.2174688057041,
+          "y": 92.74688057040999,
+          "radius": 14,
+          "number": 2,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 173.4224598930481,
+          "y": 223.9590017825312,
+          "radius": 10
+        }
+      ],
+      "comments": []
+    },
+    {
+      "stepId": 1,
+      "timestamp": 1770985222512,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 159.16221033868092,
+          "y": 246.79322638146166,
+          "radius": 14,
+          "number": 1,
+          "direction": 311,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 19.982174688057064,
+          "y": 204.58288770053477,
+          "radius": 14,
+          "number": 2,
+          "direction": 82,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 302.90552584670235,
+          "y": 166.93582887700535,
+          "radius": 14,
+          "number": 3,
+          "direction": 290,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 103.8324420677362,
+          "y": 127.54188948306594,
+          "radius": 14,
+          "number": 1,
+          "direction": 217,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 209.35828877005346,
+          "y": 99.59180035650623,
+          "radius": 14,
+          "number": 2,
+          "direction": 182,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 43.36898395721924,
+          "y": 213.12121212121212,
+          "radius": 10
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770985191150",
+          "text": "赤①,②で 2vs1 作り",
+          "position": {
+            "x": 11.8840579710145,
+            "y": 281.7391304347826
+          }
+        },
+        {
+          "id": "comment-1770985214554",
+          "text": "赤③はひらいて青②をひきつける",
+          "position": {
+            "x": 11.30434782608694,
+            "y": 334.4927536231884
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 2,
+      "timestamp": 1770985262746,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 142.04991087344027,
+          "y": 137.84491978609623,
+          "radius": 14,
+          "number": 1,
+          "direction": 311,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 50.784313725490215,
+          "y": 158.95008912655973,
+          "radius": 14,
+          "number": 2,
+          "direction": 56,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 302.90552584670235,
+          "y": 145.4865535146865,
+          "radius": 14,
+          "number": 3,
+          "direction": 290,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 91.85383244206776,
+          "y": 134.3868092691622,
+          "radius": 14,
+          "number": 1,
+          "direction": 217,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 205.93582887700535,
+          "y": 98.45098039215684,
+          "radius": 14,
+          "number": 2,
+          "direction": 195,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 74.17112299465239,
+          "y": 167.4884135472371,
+          "radius": 10
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770980428518",
+          "text": "赤②がDFに向かってドリブルしDFをひきつける",
+          "position": {
+            "x": 9.732620320855602,
+            "y": 251.0516934046346
+          }
+        },
+        {
+          "id": "comment-1770980643204",
+          "text": "赤①は裏へ抜ける準備。DFの目線がボールに向かった時がチャンス",
+          "position": {
+            "x": 9.732620320855602,
+            "y": 325.61419824846934
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 3,
+      "timestamp": 1770985293587,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 107.82531194295899,
+          "y": 79.09269162210336,
+          "radius": 14,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 50.784313725490215,
+          "y": 158.95008912655973,
+          "radius": 14,
+          "number": 2,
+          "direction": 56,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 247.5757575757576,
+          "y": 83.65597147950088,
+          "radius": 14,
+          "number": 3,
+          "direction": 340,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 91.85383244206776,
+          "y": 134.3868092691622,
+          "radius": 14,
+          "number": 1,
+          "direction": 313,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 189.39393939393938,
+          "y": 75.63458110516932,
+          "radius": 14,
+          "number": 2,
+          "direction": 218,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 111.24777183600712,
+          "y": 54.54723707664886,
+          "radius": 10
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770980547690",
+          "text": "②から①へDFの裏のスペースへ前進させるパス",
+          "position": {
+            "x": 21.71122994652407,
+            "y": 252.76292335115866
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 4,
+      "timestamp": 1770985305363,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 119.27071223746415,
+          "y": 65.92676121832129,
+          "radius": 14,
+          "number": 1,
+          "direction": 25,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 51.9251336898396,
+          "y": 92.21212121212125,
+          "radius": 14,
+          "number": 2,
+          "direction": 24,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 218.48484848484853,
+          "y": 59.12834224598929,
+          "radius": 14,
+          "number": 3,
+          "direction": 340,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 92.99465240641713,
+          "y": 108.14795008912654,
+          "radius": 14,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 168.8591800356506,
+          "y": 53.959001782531175,
+          "radius": 14,
+          "number": 2,
+          "direction": 316,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 154.59893048128345,
+          "y": 10,
+          "radius": 10
+        }
+      ],
+      "comments": []
+    }
+  ]
+}

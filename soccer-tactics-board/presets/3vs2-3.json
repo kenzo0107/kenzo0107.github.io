@@ -1,0 +1,468 @@
+{
+  "version": "1.0.0",
+  "title": "3vs2 #3",
+  "description": "",
+  "fieldDimensions": {
+    "width": 400,
+    "height": 600
+  },
+  "createdAt": "2026-02-13T12:19:05.014Z",
+  "updatedAt": "2026-02-13T12:19:05.014Z",
+  "steps": [
+    {
+      "stepId": 0,
+      "timestamp": 1770980265680,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 159.16221033868092,
+          "y": 246.79322638146166,
+          "radius": 14,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 19.982174688057064,
+          "y": 204.58288770053477,
+          "radius": 14,
+          "number": 2,
+          "direction": 82,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 293.2085561497326,
+          "y": 207.4349376114082,
+          "radius": 14,
+          "number": 3,
+          "direction": 290,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 109.53654188948308,
+          "y": 91.03565062388591,
+          "radius": 14,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 208.2174688057041,
+          "y": 92.74688057040999,
+          "radius": 14,
+          "number": 2,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 175.03721399140878,
+          "y": 227.6106411267935,
+          "radius": 10
+        }
+      ],
+      "comments": []
+    },
+    {
+      "stepId": 1,
+      "timestamp": 1770985068360,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 159.16221033868092,
+          "y": 246.79322638146166,
+          "radius": 14,
+          "number": 1,
+          "direction": 53,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 20.053140794828803,
+          "y": 176.49597726068313,
+          "radius": 14,
+          "number": 2,
+          "direction": 82,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 293.2085561497326,
+          "y": 207.4349376114082,
+          "radius": 14,
+          "number": 3,
+          "direction": 337,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 111.57151804210629,
+          "y": 97.64932311991134,
+          "radius": 14,
+          "number": 1,
+          "direction": 169,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 217.88360553066434,
+          "y": 114.11413017295371,
+          "radius": 14,
+          "number": 2,
+          "direction": 149,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 294.2063414119827,
+          "y": 181.67430580400688,
+          "radius": 10
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770980843784",
+          "text": "赤①,③で 2vs1 作り",
+          "position": {
+            "x": 11.9310614962789,
+            "y": 267.7394530079952
+          }
+        },
+        {
+          "id": "comment-1770985028291",
+          "text": "赤②は青①を外に引き付ける",
+          "position": {
+            "x": 11.8840579710145,
+            "y": 318.2608695652174
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 3,
+      "timestamp": 1770985103718,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 269.0509225803344,
+          "y": 199.480030832972,
+          "radius": 14,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 18.45594257358966,
+          "y": 164.90085272438213,
+          "radius": 14,
+          "number": 2,
+          "direction": 82,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 236.22922387628267,
+          "y": 167.24415859709978,
+          "radius": 14,
+          "number": 3,
+          "direction": 337,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 104.44910150792505,
+          "y": 101.71927542515776,
+          "radius": 14,
+          "number": 1,
+          "direction": 169,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 211.7786770727947,
+          "y": 125.81524305053716,
+          "radius": 14,
+          "number": 2,
+          "direction": 149,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 237.22700913853276,
+          "y": 141.48352678969846,
+          "radius": 10
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770980978970",
+          "text": "赤③は青②に向かってドリブルしひきつける",
+          "position": {
+            "x": 11.351351351351326,
+            "y": 254.181240063593
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 3,
+      "timestamp": 1770985125582,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 245.258844056798,
+          "y": 92.58479800423537,
+          "radius": 14,
+          "number": 1,
+          "direction": 337,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 40.84068025244498,
+          "y": 99.27287180228356,
+          "radius": 14,
+          "number": 2,
+          "direction": 46,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 231.65052753288043,
+          "y": 168.2616466734114,
+          "radius": 14,
+          "number": 3,
+          "direction": 337,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 112.5890061184179,
+          "y": 93.57937081466491,
+          "radius": 14,
+          "number": 1,
+          "direction": 88,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 211.7786770727947,
+          "y": 125.81524305053716,
+          "radius": 14,
+          "number": 2,
+          "direction": 149,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 230.61333664250733,
+          "y": 71.27684952419764,
+          "radius": 10
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770981120007",
+          "text": "赤①がオーバーラップで青②の裏のスペースへ抜ける",
+          "position": {
+            "x": 8.227921015644768,
+            "y": 251.63751987281407
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 4,
+      "timestamp": 1770984960953,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 210.03661415426117,
+          "y": 71.78527725586551,
+          "radius": 14,
+          "number": 1,
+          "direction": 331,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 89.17136387724625,
+          "y": 64.67827720768898,
+          "radius": 14,
+          "number": 2,
+          "direction": 46,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 160.5129961395946,
+          "y": 107.7911506018923,
+          "radius": 14,
+          "number": 3,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 144.63988052223345,
+          "y": 66.10719275425156,
+          "radius": 14,
+          "number": 1,
+          "direction": 88,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 196.51635592812062,
+          "y": 109.02668979139567,
+          "radius": 14,
+          "number": 2,
+          "direction": 344,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 199.0951688583549,
+          "y": 48.59626612750172,
+          "radius": 10
+        }
+      ],
+      "comments": []
+    },
+    {
+      "stepId": 5,
+      "timestamp": 1770984789819,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 206.47540588717055,
+          "y": 57.540444187503034,
+          "radius": 14,
+          "number": 1,
+          "direction": 331,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 115.626053861348,
+          "y": 40.767307414366236,
+          "radius": 14,
+          "number": 2,
+          "direction": 46,
+          "name": ""
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 150.07821353089892,
+          "y": 82.36592998485582,
+          "radius": 14,
+          "number": 3,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 154.38896464471912,
+          "y": 47.59149035108113,
+          "radius": 14,
+          "number": 1,
+          "direction": 38,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 192.95514766103,
+          "y": 92.74688057040997,
+          "radius": 14,
+          "number": 2,
+          "direction": 344,
+          "name": ""
+        },
+        {
+          "id": "ball-1770977638241",
+          "type": "ball",
+          "color": "orange",
+          "x": 153.28424284282528,
+          "y": 10,
+          "radius": 10
+        }
+      ],
+      "comments": []
+    }
+  ]
+}
