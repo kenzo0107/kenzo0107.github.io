@@ -15,17 +15,18 @@ Claude Code + MCP で自然言語で調査指示できる様になった話で�
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-- awsume で MFA 回避用 profile 作成
+- awsume で MFA 付き profile 作成
+  - 複数の profile も `--output-profile claude` にすることで一時的なprofile名を claude に統合できる⭐️
 
 ```console
-awsume dummy --output-profile dummy-tmp
+awsume dummy --output-profile claude
 ```
 
 ## Claude Code + AWS MCP で接続先 AWS アカウント ID 確認
 
 ```console
 claude mcp add -s user aws-mcp \
-  -e AWS_PROFILE="dummy-tmp" \
+  -e AWS_PROFILE="claude" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx mcp-proxy-for-aws@latest https://aws-mcp.us-east-1.api.aws/mcp
@@ -66,7 +67,7 @@ https://pypi.org/project/awslabs.cloudwatch-logs-mcp-server/
 
 ```console
 claude mcp add -s user aws-cwlogs \
-  -e AWS_PROFILE="dummy-tmp" \
+  -e AWS_PROFILE="claude" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx awslabs.cloudwatch-logs-mcp-server@latest
@@ -113,7 +114,7 @@ t table)
 
 ```console
 claude mcp add -s user aws-ce \
-  -e AWS_PROFILE="dummy-tmp" \
+  -e AWS_PROFILE="claude" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx awslabs.cost-explorer-mcp-server@latest
@@ -525,13 +526,13 @@ claude mcp add -s user aws-diagram \
 
 ```console
 claude mcp add -s user aws-cw \
-  -e AWS_PROFILE="dummy-tmp" \
+  -e AWS_PROFILE="claude" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx awslabs.cloudwatch-mcp-server@latest
 
 claude mcp add -s user aws-appsignals \
-  -e AWS_PROFILE="dummy-tmp" \
+  -e AWS_PROFILE="claude" \
   -e AWS_REGION="ap-northeast-1" \
   -e FASTMCP_LOG_LEVEL="ERROR" \
   -- uvx awslabs.cloudwatch-appsignals-mcp-server@latest
