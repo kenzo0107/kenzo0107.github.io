@@ -2,6 +2,7 @@
 layout: post
 title: Apache + OpenSSL でSHA256対応CSR生成
 date: 2015-03-01
+cover: /img/cover/2015-03-01-apache-openssl-sha256.svg
 tags:
 - Apache
 - OpenSSL

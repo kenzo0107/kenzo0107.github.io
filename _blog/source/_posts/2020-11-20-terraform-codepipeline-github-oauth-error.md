@@ -4,6 +4,7 @@ category: Terraform
 tags:
 - AWS
 date: 2020-11-20
+cover: /img/cover/2020-11-20-terraform-codepipeline-github-oauth-error.svg
 ---
 
 <div class="toc">

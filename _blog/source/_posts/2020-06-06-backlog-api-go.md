@@ -4,6 +4,7 @@ category: Go
 tags:
 - Go
 date: 2020-06-06
+cover: /img/cover/2020-06-06-backlog-api-go.svg
 ---
 
 <div class="toc">

@@ -2,6 +2,7 @@
 title: awsume と peco を使ってスイッチロールを簡単に
 category: AWS
 date: 2025-07-04
+cover: /img/cover/2025-07-04-awsume-switch-role.svg
 tags: [AWS, awsume, peco, shell, cli]
 ---
 

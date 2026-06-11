@@ -1,6 +1,7 @@
 ---
 title: Claude Code + AWS 関連MCP で調査を円滑にする
 date: 2025-11-17
+cover: https://i.imgur.com/we5WNEm.png
 ---
 
 Claude Code + MCP で自然言語で調査指示できる様になった話です。

@@ -2,6 +2,7 @@
 layout: post
 title: gosec で警告される os.Open() 対応
 date: 2019-12-09
+cover: /img/cover/2019-12-09-gosec-os-open.svg
 category: Go
 tags:
   - Go

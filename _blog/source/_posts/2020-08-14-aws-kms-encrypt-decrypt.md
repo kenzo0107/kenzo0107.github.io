@@ -3,6 +3,7 @@ title: aws-cli KMS で暗号化・復号
 tags:
 - AWS
 date: 2020-08-14
+cover: /img/cover/2020-08-14-aws-kms-encrypt-decrypt.svg
 ---
 
 <div class="toc">

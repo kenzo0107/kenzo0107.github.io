@@ -2,6 +2,7 @@
 title: NAT Gateway リージョナル vs ゾーナル - コストとIPアドレス管理
 date: 2025-11-26
 category: AWS
+cover: https://i.imgur.com/apEIwWh.png
 ---
 
 Claude Code + AWS Document MCP で調査した内容をまとめます。

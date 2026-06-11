@@ -4,6 +4,7 @@ category: Terraform
 tags:
 - AWS
 date: 2020-06-01
+cover: /img/cover/2020-06-01-terraform-sensitive-data.svg
 ---
 
 <div class="toc">

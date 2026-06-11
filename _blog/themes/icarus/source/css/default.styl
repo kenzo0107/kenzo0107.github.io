@@ -13,6 +13,7 @@ $article-font-size = 1.05rem
 
 /* ---------------------------------
  *   Readability customizations
+ *   (index card grid imported via 'style'; 12:5 cover ratio; category placeholder)
  * --------------------------------- */
 
 // Tech-blog accent line on top of the navbar
@@ -89,10 +90,65 @@ article.article
         img
             border-radius: 6px
 
-// Code blocks: subtle border to separate from card background
+// 目次リンクをクリックしたら見出しまでスムーズにスクロールする
+html
+    scroll-behavior: smooth
+
+article.article
+    .content
+        h1, h2, h3, h4, h5, h6
+            scroll-margin-top: 1.2rem
+
+// Code blocks: dark console-style design
 figure.highlight
-    border: 1px solid #e4e9ee
+    background: #0d1117
+    border: 1px solid #30363d
+    border-radius: 8px
     overflow: hidden
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .35)
+    font-family: $family-code
+
+    // ターミナル風ヘッダーバー（左に信号機ドット）
+    figcaption
+        background: #161b22
+        border-bottom: 1px solid #30363d
+        padding-left: 4.4em
+        position: relative
+        color: #8b949e
+
+        &::before
+            content: ''
+            position: absolute
+            top: 50%
+            left: 1.1em
+            transform: translateY(-50%)
+            width: .72em
+            height: .72em
+            border-radius: 50%
+            background: #ff5f56
+            box-shadow: 1.25em 0 0 #ffbd2e, 2.5em 0 0 #27c93f
+
+        span
+            color: #c9d1d9
+
+        a, i, .fold
+            color: #8b949e
+
+            &:hover
+                color: #c9d1d9
+
+    // 行番号のガター
+    .gutter
+        background: #161b22
+        color: #6e7681
+        border-right: 1px solid #21262d
+
+    // コピーボタン
+    .copy
+        color: #8b949e
+
+        &:hover
+            color: #c9d1d9
 
 // Card hover feedback on index pages
 .card

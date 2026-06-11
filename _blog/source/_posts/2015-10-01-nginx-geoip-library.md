@@ -2,6 +2,7 @@
 layout: post
 title: インストール済みNginx にgeoIP Library追加
 date: 2015-10-01
+cover: /img/cover/2015-10-01-nginx-geoip-library.svg
 tags:
 - Nginx
 ---

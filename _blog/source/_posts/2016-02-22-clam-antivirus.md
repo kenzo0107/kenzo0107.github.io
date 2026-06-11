@@ -2,6 +2,7 @@
 layout: post
 title: Clam AntiVirus 導入
 date: 2016-02-23
+cover: /img/cover/2016-02-22-clam-antivirus.svg
 tags:
 - Security
 - AntiVirus

@@ -2,6 +2,7 @@
 layout: post
 title: Golang 簡易パフォーマンス測定
 date: 2016-11-21
+cover: /img/cover/2016-11-21-monitoring-performance-of-go.svg
 category: Go
 tags:
   - Go

@@ -2,6 +2,7 @@
 layout: post
 title: Safariで証明書情報確認
 date: 2015-08-05
+cover: https://i.imgur.com/Uk1IOKd.png
 ---
 
 ##### 鍵マークをクリック

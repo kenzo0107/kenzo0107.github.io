@@ -2,6 +2,7 @@
 layout: post
 title: MacOSXにHomebrewをインストールする
 date: 2015-02-28
+cover: /img/cover/2015-02-28-install-homebrew-on-macosx.svg
 ---
 
 ```console

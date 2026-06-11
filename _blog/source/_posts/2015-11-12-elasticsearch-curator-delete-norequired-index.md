@@ -2,6 +2,7 @@
 layout: post
 title: Elasticsearch curatorで不要Indexをまとめて削除
 date: 2015-11-13
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151112/20151112142836.png
 tags:
 - Elasticsearch
 ---

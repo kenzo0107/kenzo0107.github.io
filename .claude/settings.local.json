@@ -2,7 +2,32 @@
   "permissions": {
     "allow": [
       "Bash(ls:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(node -e \"console.log\\(require\\('hexo-renderer-marked/package.json'\\).version\\)\")",
+      "Bash(TZ=UTC node -e ' *)",
+      "Bash(cd *)",
+      "Read(//tmp/**)",
+      "Bash(npm run *)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(node -e ' *)",
+      "Bash(git -C /Users/kenzo.tanaka/ghq/github.com/kenzo0107/kenzo0107.github.io check-ignore _blog/db.json)",
+      "Bash(awk '{print $2}')",
+      "Bash(sort -t/ -k2 -n)",
+      "Bash(gh repo *)",
+      "Bash(gh search *)",
+      "Bash(gh api *)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('URL:', d.get\\('html_url'\\)\\)\")",
+      "Bash(awk '/figure\\\\.highlight \\\\{/{p=1} p{print} /^\\\\}/{if\\(p\\){c++; if\\(c>=4\\) exit}}' css/default.css)",
+      "Bash(awk '{print tolower\\($2\\)}')",
+      "Bash(python3 -c \"import PIL; print\\('Pillow', PIL.__version__\\)\")",
+      "Bash(python3 -c ' *)",
+      "Bash(awk -F/ '{print $1}')",
+      "Bash(.venv/bin/python render.py presets/2vs1-1.json out-2vs1.gif)",
+      "Bash(.venv/bin/python -c ' *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(echo \"commit1 exit: $?\")",
+      "Bash(echo \"commit2 exit: $?\")"
     ],
     "deny": []
   }

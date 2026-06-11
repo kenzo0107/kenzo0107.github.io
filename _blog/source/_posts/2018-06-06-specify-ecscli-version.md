@@ -2,6 +2,7 @@
 layout: post
 title: ecs-cli バージョン指定してインストール
 date: 2018-06-06
+cover: /img/cover/2018-06-06-specify-ecscli-version.svg
 tags:
 - AWS
 ---

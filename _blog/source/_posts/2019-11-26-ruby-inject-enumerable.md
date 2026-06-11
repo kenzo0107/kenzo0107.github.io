@@ -2,6 +2,7 @@
 layout: post
 title: Ruby inject (Enumerable) メソッドを学ぶ
 date: 2019-11-26
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20191123/20191123143247.png
 tags:
 - Ruby
 ---

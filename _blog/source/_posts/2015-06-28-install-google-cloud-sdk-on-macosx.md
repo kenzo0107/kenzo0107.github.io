@@ -2,6 +2,7 @@
 layout: post
 title: Google Cloud SDKインストール For MacOSX
 date: 2015-06-28
+cover: /img/cover/2015-06-28-install-google-cloud-sdk-on-macosx.svg
 ---
 
 ## 概要

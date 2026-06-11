@@ -2,6 +2,7 @@
 layout: post
 title: MacOSXにgoをインストール
 date: 2015-04-12
+cover: /img/cover/2015-04-12-install-go-on-macosx.svg
 ---
 
 ## 概要

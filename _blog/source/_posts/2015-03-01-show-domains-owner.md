@@ -2,6 +2,7 @@
 layout: post
 title: ドメインの所有者を確認する方法
 date: 2015-03-01
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150301/20150301001641.png
 ---
 
 ## 概要

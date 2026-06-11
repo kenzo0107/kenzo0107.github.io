@@ -10938,6 +10938,86 @@ a.article-nav-next span {
   word-wrap: break-word;
   white-space: normal;
 }
+.article-cards .column {
+  display: flex;
+}
+.article-cards .article-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.article-cards .article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.article-cards .article-card .card-image-link {
+  display: block;
+}
+.article-cards .article-card .article-card-cover {
+  padding-top: 41.67%;
+}
+.article-cards .article-card .article-card-cover img,
+.article-cards .article-card .article-card-cover .has-ratio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.article-cards .article-card .card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.25rem 1.25rem;
+}
+.article-cards .article-card .article-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  color: #7a7a7a;
+  margin-bottom: 0.4rem;
+}
+.article-cards .article-card .article-card-meta .article-card-date {
+  margin-right: 0.6rem;
+}
+.article-cards .article-card .article-card-meta .article-card-category a {
+  color: #7a7a7a;
+}
+.article-cards .article-card .article-card-meta .article-card-category a:hover {
+  color: #3273dc;
+}
+.article-cards .article-card .article-card-meta .article-card-category a + a:before {
+  content: '/';
+  margin: 0 0.3em;
+  color: #7a7a7a;
+}
+.article-cards .article-card .article-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.article-cards .article-card .article-card-noimage .article-card-noimage-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #3273dc 0%, #1a4a99 100%);
+  color: rgba(255,255,255,0.95);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  padding: 1rem 1.25rem;
+  text-align: center;
+}
 .navbar-main {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
@@ -11683,6 +11763,7 @@ figure.highlight.foldable div.level-left {
 }
 /* ---------------------------------
  *   Readability customizations
+ *   (index card grid imported via 'style'; 12:5 cover ratio; category placeholder)
  * --------------------------------- */
 .navbar-main {
   position: relative;
@@ -11763,9 +11844,67 @@ article.article .content a:not(.article-more):hover {
 article.article .content img {
   border-radius: 6px;
 }
+html {
+  scroll-behavior: smooth;
+}
+article.article .content h1,
+article.article .content h2,
+article.article .content h3,
+article.article .content h4,
+article.article .content h5,
+article.article .content h6 {
+  scroll-margin-top: 1.2rem;
+}
 figure.highlight {
-  border: 1px solid #e4e9ee;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  font-family: 'JetBrains Mono', 'Source Code Pro', Menlo, Consolas, monospace;
+}
+figure.highlight figcaption {
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  padding-left: 4.4em;
+  position: relative;
+  color: #8b949e;
+}
+figure.highlight figcaption::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 1.1em;
+  transform: translateY(-50%);
+  width: 0.72em;
+  height: 0.72em;
+  border-radius: 50%;
+  background: #ff5f56;
+  box-shadow: 1.25em 0 0 #ffbd2e, 2.5em 0 0 #27c93f;
+}
+figure.highlight figcaption span {
+  color: #c9d1d9;
+}
+figure.highlight figcaption a,
+figure.highlight figcaption i,
+figure.highlight figcaption .fold {
+  color: #8b949e;
+}
+figure.highlight figcaption a:hover,
+figure.highlight figcaption i:hover,
+figure.highlight figcaption .fold:hover {
+  color: #c9d1d9;
+}
+figure.highlight .gutter {
+  background: #161b22;
+  color: #6e7681;
+  border-right: 1px solid #21262d;
+}
+figure.highlight .copy {
+  color: #8b949e;
+}
+figure.highlight .copy:hover {
+  color: #c9d1d9;
 }
 .card {
   transition: box-shadow 0.2s ease;

@@ -4,6 +4,7 @@ category: Go
 tags:
 - Go
 date: 2020-05-20
+cover: /img/cover/2020-05-20-go-json-time.svg
 ---
 
 <div class="toc">

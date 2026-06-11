@@ -4,6 +4,7 @@ category: Terraform
 tags:
 - AWS
 date: 2020-08-13
+cover: /img/cover/2020-08-13-external-s3-bucket.svg
 ---
 
 <div class="toc">

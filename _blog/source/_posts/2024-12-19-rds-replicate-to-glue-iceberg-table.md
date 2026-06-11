@@ -2,6 +2,7 @@
 title: RDS のテーブルデータを分析用テーブルにレプリケートする方法一覧
 category: AWS
 date: 2024-12-19
+cover: /img/cover/2024-12-19-rds-replicate-to-glue-iceberg-table.svg
 ---
 
 <div class="toc">

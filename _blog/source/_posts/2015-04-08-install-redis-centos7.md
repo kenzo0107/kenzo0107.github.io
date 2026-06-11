@@ -2,6 +2,7 @@
 layout: post
 title: CentOS7にredisインストール
 date: 2015-04-08
+cover: /img/cover/2015-04-08-install-redis-centos7.svg
 ---
 
 ## 概要

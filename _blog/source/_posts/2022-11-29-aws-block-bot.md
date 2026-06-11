@@ -1,6 +1,7 @@
 ---
 title: AWS Bot 対策
 date: 2022-11-29
+cover: https://i.imgur.com/I66XH5J.png
 category: AWS
 ---
 

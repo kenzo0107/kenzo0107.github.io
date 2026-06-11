@@ -2,6 +2,7 @@
 layout: post
 title: SSL証明書インストール
 date: 2015-06-16
+cover: /img/cover/2015-06-16-install-ssl-certificate.svg
 ---
 
 対象サーバにアクセスし以下SSL証明書インストール手順に沿って進めます。

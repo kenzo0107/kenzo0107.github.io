@@ -2,6 +2,7 @@
 layout: post
 title: 無料SSL証明書発行しセキュリティでA+を取る！ 〜Apache編〜
 date: 2016-02-25
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160224/20160224185554.png
 tags:
 - SSL
 - Apache

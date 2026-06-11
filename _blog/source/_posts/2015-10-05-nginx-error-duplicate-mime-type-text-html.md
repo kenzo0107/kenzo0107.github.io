@@ -2,6 +2,7 @@
 layout: post
 title: "Nginxエラー調査 「duplicate MIME type 'text/html' in /etc/nginx/nginx.conf」"
 date: 2015-10-05
+cover: /img/cover/2015-10-05-nginx-error-duplicate-mime-type-text-html.svg
 tags:
 - Nginx
 ---

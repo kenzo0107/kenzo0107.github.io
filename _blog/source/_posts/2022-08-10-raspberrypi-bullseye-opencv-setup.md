@@ -1,6 +1,7 @@
 ---
 title: RPi opencv で笑顔検知して Slack に通知するカメラを作った
 date: 2022-08-10
+cover: /img/cover/2022-08-10-raspberrypi-bullseye-opencv-setup.svg
 category: RaspberryPI
 ---
 

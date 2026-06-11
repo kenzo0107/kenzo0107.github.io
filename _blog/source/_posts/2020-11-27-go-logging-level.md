@@ -4,6 +4,7 @@ category: Go
 tags:
 - Go
 date: 2020-11-27
+cover: /img/cover/2020-11-27-go-logging-level.svg
 ---
 
 <div class="toc">

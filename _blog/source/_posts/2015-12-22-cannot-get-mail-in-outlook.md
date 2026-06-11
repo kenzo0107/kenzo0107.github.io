@@ -2,6 +2,7 @@
 layout: post
 title: Outlook にメールが届かない件対応
 date: 2015-12-22
+cover: /img/cover/2015-12-22-cannot-get-mail-in-outlook.svg
 tags:
 - Outlook
 - Email

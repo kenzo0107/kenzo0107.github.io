@@ -1,6 +1,7 @@
 ---
 title: SAM テンプレートに既存リソースをインポートする手順 - CloudWatch Logs 編 -
 date: 2023-06-07
+cover: https://i.imgur.com/nieeIsl.png
 category: AWS
 ---
 

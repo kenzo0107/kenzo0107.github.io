@@ -1,6 +1,7 @@
 ---
 title: fix the system should be configured for the legacy camera stack
 date: 2022-07-30
+cover: /img/cover/2022-07-30-fix-the-system-should-be-configured-for-the-legacy-camera-stack.svg
 category: RaspberryPI
 ---
 

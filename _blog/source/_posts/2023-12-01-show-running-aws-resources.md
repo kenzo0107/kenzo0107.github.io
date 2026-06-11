@@ -1,6 +1,7 @@
 ---
 title: aws-cli で AWS 起動中のリソース一覧取得する
 date: 2023-12-01
+cover: /img/cover/2023-12-01-show-running-aws-resources.svg
 category: AWS
 ---
 

@@ -2,6 +2,7 @@
 layout: post
 title: CentOS7 に MySQL 5.6インストール
 date: 2015-08-05
+cover: /img/cover/2015-08-05-install-mysql5.6-on-centos7.svg
 ---
 
 参照: http://www.kakiro-web.com/linux/mysql-yum-repository-install.html

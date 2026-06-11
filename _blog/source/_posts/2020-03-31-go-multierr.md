@@ -4,6 +4,7 @@ category: Go
 tags:
 - Go
 date: 2020-03-31
+cover: /img/cover/2020-03-31-go-multierr.svg
 ---
 
 こんなツイートを見つけた！

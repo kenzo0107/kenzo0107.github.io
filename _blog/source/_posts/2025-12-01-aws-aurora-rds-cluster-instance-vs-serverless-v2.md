@@ -2,6 +2,7 @@
 title: Aurora PostgreSQL db.t4g.medium 相当の Aurora Serverless v2 のキャパシティ設定どのくらい？
 date: 2025-12-01
 category: AWS
+cover: https://i.imgur.com/7XgGjaF.png
 ---
 
 ## 概要

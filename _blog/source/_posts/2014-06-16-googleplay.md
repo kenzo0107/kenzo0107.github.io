@@ -2,6 +2,7 @@
 layout: post
 title: 「購入しようとしたアイテムが見つかりませんでした」 GooglePlay
 date: 2014-06-16
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140616/20140616214045.png
 tags:
 - Android
 - GooglePlay

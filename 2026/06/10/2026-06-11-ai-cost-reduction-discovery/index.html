@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Claude Code でコスト削減 ── AI の主戦場は「実装」より「課題発見」だった - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Claude Code のような AI コーディングエージェントは、つい「コードを書かせる道具」として見てしまいます。でも SRE 業務でコスト削減に取り組んでみて気づいたのは、AI の費用対効果が一番高いのは「課題発見」フェーズだということでした。 「どこにコスト削減の余地があるか」を網羅的に探させる ── ここに AI を当てると、これまで人手では割に合わず放置されていた領域が、一気に着手可能"><meta property="og:type" content="blog"><meta property="og:title" content="Claude Code でコスト削減 ── AI の主戦場は「実装」より「課題発見」だった"><meta property="og:url" content="https://kenzo0107.github.io/2026/06/10/2026-06-11-ai-cost-reduction-discovery/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="Claude Code のような AI コーディングエージェントは、つい「コードを書かせる道具」として見てしまいます。でも SRE 業務でコスト削減に取り組んでみて気づいたのは、AI の費用対効果が一番高いのは「課題発見」フェーズだということでした。 「どこにコスト削減の余地があるか」を網羅的に探させる ── ここに AI を当てると、これまで人手では割に合わず放置されていた領域が、一気に着手可能"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/cover/2026-06-11-ai-cost-reduction-discovery.svg"><meta property="article:published_time" content="2026-06-10T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="AWS"><meta property="article:tag" content="Claude Code"><meta property="article:tag" content="SRE"><meta property="article:tag" content="Cost"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/cover/2026-06-11-ai-cost-reduction-discovery.svg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2026/06/10/2026-06-11-ai-cost-reduction-discovery/"},"headline":"Claude Code でコスト削減 ── AI の主戦場は「実装」より「課題発見」だった","image":[],"datePublished":"2026-06-10T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"Claude Code のような AI コーディングエージェントは、つい「コードを書かせる道具」として見てしまいます。でも SRE 業務でコスト削減に取り組んでみて気づいたのは、AI の費用対効果が一番高いのは「課題発見」フェーズだということでした。 「どこにコスト削減の余地があるか」を網羅的に探させる ── ここに AI を当てると、これまで人手では割に合わず放置されていた領域が、一気に着手可能"}</script><link rel="canonical" href="https://kenzo0107.github.io/2026/06/10/2026-06-11-ai-cost-reduction-discovery/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github-dark.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;600"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目次" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="/img/cover/2026-06-11-ai-cost-reduction-discovery.svg" alt="Claude Code でコスト削減 ── AI の主戦場は「実装」より「課題発見」だった"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2026-06-11</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span><span class="level-item">15分で読む (約2233語)</span></div></div><h1 class="title is-3 is-size-4-mobile">Claude Code でコスト削減 ── AI の主戦場は「実装」より「課題発見」だった</h1><div class="content"><html><head></head><body><p>Claude Code のような AI コーディングエージェントは、つい「コードを書かせる道具」として見てしまいます。<br>でも SRE 業務でコスト削減に取り組んでみて気づいたのは、<strong>AI の費用対効果が一番高いのは「課題発見」フェーズ</strong>だということでした。</p>
+<p>「どこにコスト削減の余地があるか」を網羅的に探させる ── ここに AI を当てると、<br>これまで人手では割に合わず放置されていた領域が、一気に着手可能になります。</p>
+<span id="more"></span>
+
+<h2><span id="従来のコスト削減はなぜ進まないのか">従来のコスト削減はなぜ進まないのか</span></h2><p>手作業でのコスト削減調査は、だいたいこういう流れになります。</p>
+<ol>
+<li>Cost Explorer を開いてサービス別コストを目視確認</li>
+<li>気になるサービスを 1 つずつ深掘り（Usage Type 別の内訳を手動確認）</li>
+<li>メトリクスツールで使用率を確認（別タブでダッシュボードを見比べ）</li>
+<li>Terraform コードを読む（該当リポジトリを clone して設定確認）</li>
+<li>調査結果をまとめて Issue を手書き</li>
+</ol>
+<p>これを <strong>1 アカウントやるのに半日〜1 日</strong>。アカウントが数十あれば、全アカウントの網羅調査は事実上不可能です。</p>
+<p>結果、何が起きるか。<br><strong>「月数十ドル程度の最適化」は、調査コストの方が高くついて放置される</strong>んですね。<br>費用対効果に見合わないので、誰も手を出さない領域が積み上がっていきます。</p>
+<h2><span id="ai-を課題発見器として使う">AI を「課題発見器」として使う</span></h2><p>そこで、コスト調査を Claude Code のカスタムコマンドに落としました。<br>アカウントを指定すると、以下を自動で回します。</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">① 対象サービス情報の読み込み</span><br><span class="line">② Cost Explorer API で 3 段階の深掘り</span><br><span class="line">     Level 1: サービス別コスト    → 何が高いか</span><br><span class="line">     Level 2: Usage Type 別コスト → コストの構成要素は何か</span><br><span class="line">     Level 3: 根本原因の特定       → なぜ高いか / どう減らすか</span><br><span class="line">③ メトリクス（Datadog 等）でリソース使用率の実態確認</span><br><span class="line">④ Terraform コードを読み、現在の設定と突き合わせ</span><br><span class="line">⑤ 既存 Issue（却下済み含む）との重複チェック</span><br><span class="line">⑥ コスト削減提案の一覧を提示</span><br><span class="line">⑦ 人間が承認したものだけ Issue 化</span><br></pre></td></tr></tbody></table></figure>
+
+<p>3 段階深掘りが重要なのは、Level 1 だけでは「何が高いか」しか分からないからです。<br>Usage Type（Level 2）まで割って、根本原因（Level 3）まで辿って、初めて<strong>具体的なアクション</strong>になります。</p>
+<p>これにより、<strong>1 アカウントの調査が半日〜1 日 → 15〜30 分</strong>になりました。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>従来（手作業）</th>
+<th>Claude Code 活用後</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1 アカウントの調査時間</td>
+<td>半日〜1 日</td>
+<td>15〜30 分</td>
+</tr>
+<tr>
+<td>調査の深さ</td>
+<td>サービス別 + 1〜2 個の深掘り</td>
+<td>全サービス → 全 Usage Type → 根本原因</td>
+</tr>
+<tr>
+<td>成果物</td>
+<td>メモ or なし</td>
+<td>構造化された Issue</td>
+</tr>
+<tr>
+<td>対象アカウント数</td>
+<td>主要数件のみ</td>
+<td>全主要アカウント</td>
+</tr>
+</tbody></table>
+<p><strong>今まで放置されていた小規模な最適化に、初めて手が届くようになった</strong>のが一番の変化でした。<br>月数十ドルの施策でも、数分で分析〜起票まで終わるなら、やった方が得です。</p>
+<h2><span id="issue-をハブにする-却下理由も残す">Issue をハブにする ── 却下理由も残す</span></h2><p>このワークフローのもう一つの肝は、<strong>調査結果を Issue として構造化して残す</strong>ことです。</p>
+<p>各 Issue には「現状コスト・提案内容・削減予想額・副作用/リスク」を網羅的に書かせます。<br>そして大事なのが、<strong>却下した場合も理由を Issue に残す</strong>こと。</p>
+<p>コスト削減は一度きりの活動ではなく、四半期ごとに回します。<br>却下理由が残っていれば、<strong>次回の調査で同じ提案を繰り返さずに済む</strong>。<br>「なぜこの変更をしたのか / なぜやらなかったのか」が、コードと同じ場所に蓄積されていきます。</p>
+<h2><span id="人間はどこにいたか">人間はどこにいたか</span></h2><p>ここを誤解されたくないのですが、<strong>全部を AI に丸投げできたわけではありません</strong>。<br>むしろ、人間（SRE）の判断が不可欠な場面は多く残りました。</p>
+<table>
+<thead>
+<tr>
+<th>人間がジャッジした部分</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Go / No Go 判断</td>
+<td>冗長構成を 1 つに減らせるか？（可用性リスク vs コスト）</td>
+</tr>
+<tr>
+<td>副作用の許容判断</td>
+<td>メモリを半分に減らして OOM が起きないか？</td>
+</tr>
+<tr>
+<td>組織的な意思決定</td>
+<td>あるサービスの撤廃 → 利用者への事前確認</td>
+</tr>
+<tr>
+<td>優先度付け</td>
+<td>多数の Issue のうち、どれから着手するか</td>
+</tr>
+<tr>
+<td>却下判断</td>
+<td>技術的には正しいが、運用上やらない</td>
+</tr>
+</tbody></table>
+<p>なぜ人間が必要かというと、AI には見えない文脈があるからです。</p>
+<ul>
+<li><strong>インフラ全体の文脈</strong>：「この冗長構成は実は DR の一部」といった暗黙知</li>
+<li><strong>過去の障害履歴</strong>：「以前ここのメモリを削ったら OOM が頻発した」という経験則</li>
+<li><strong>ビジネス影響</strong>：「このサービスは来月大規模キャンペーンを控えている」</li>
+</ul>
+<p>体感としては、<strong>AI が調査・分析・実装の 8 割を担い、人間は判断・意思決定の 2 割に集中する</strong>。<br>この分業が一番効率的でした。<br>逆に言えば、インフラ全体を分かっている人間がジャッジ役として高速に捌けるからこそ、AI の調査速度が活きます。</p>
+<h2><span id="学んだこと">学んだこと</span></h2><p>ワークフロー全体を振り返ると、AI が活きたのは実装だけではありませんでした。</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 課題発見:  AI がコストデータを網羅分析 → 削減余地を特定   ★ここが一番効いた</span><br><span class="line">2. 調査・深掘り: AI が多段階分析 → 根本原因を特定</span><br><span class="line">3. 提案作成:  AI が Issue として構造化 → 判断材料を整理</span><br><span class="line">4. 判断:     人間が Go / No Go を決定</span><br><span class="line">5. 実装:     AI が Terraform を修正 → PR を作成</span><br><span class="line">6. 横断展開:  AI が複数リポジトリへ一斉適用</span><br></pre></td></tr></tbody></table></figure>
+
+<p>実装（5）は全体の一部にすぎません。<br><strong>課題発見・調査こそ、AI 活用のインパクトが最も大きい領域</strong>でした。</p>
+<p>そしてもう一つ。<strong>カスタムコマンドの設計が成否を分けます。</strong><br>3 段階の深掘り、既存 Issue との重複チェック、人間の承認フロー ── この設計があってこそ、出力が使える品質になりました。<br>コマンドを設計できる人間がいなければ、この成果は出なかったと思います。</p>
+<h2><span id="まとめ">まとめ</span></h2><ul>
+<li>AI コーディングエージェントの主戦場は「実装」だけではなく、<strong>「課題発見」にこそ価値がある</strong></li>
+<li>費用対効果に見合わず放置されていた小規模最適化が、AI の調査速度で着手可能になる</li>
+<li>コスト分析は <strong>3 段階深掘り</strong>でアクションに落とし、<strong>Issue に却下理由まで残す</strong></li>
+<li>AI は 8 割（調査・分析・実装）、人間は 2 割（判断・意思決定）の分業が効率的</li>
+<li>成否を分けるのは <strong>カスタムコマンドの設計</strong></li>
+</ul>
+<p>「AI にコードを書かせる」の一歩手前、「AI に課題を見つけさせる」に視点をずらすと、SRE 業務での活用範囲はまだまだ広がります。</p>
+</body></html></div><div class="article-licensing box"><div class="licensing-title"><p>Claude Code でコスト削減 ── AI の主戦場は「実装」より「課題発見」だった</p><p><a href="https://kenzo0107.github.io/2026/06/10/2026-06-11-ai-cost-reduction-discovery/">https://kenzo0107.github.io/2026/06/10/2026-06-11-ai-cost-reduction-discovery/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2026-06-11</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/AWS/">AWS</a><a class="link-muted mr-2" rel="tag" href="/tags/Claude-Code/">Claude Code</a><a class="link-muted mr-2" rel="tag" href="/tags/SRE/">SRE</a><a class="link-muted mr-2" rel="tag" href="/tags/Cost/">Cost</a></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2026/06/10/2026-06-11-langfuse-vs-datadog-llm-observability/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">LLM 監視ツール比較 Langfuse vs Datadog LLM Observability</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2026/06/10/2026-06-11-ai-system-monthly-report/"><span class="level-item">AI にシステム月次レポートを書かせる ─ Claude Code × MCP で運用レポートを自動生成する</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目次</h3><ul class="menu-list"><li><a class="level is-mobile" href="#従来のコスト削減はなぜ進まないのか"><span class="level-left"><span class="level-item">1</span><span class="level-item">従来のコスト削減はなぜ進まないのか</span></span></a></li><li><a class="level is-mobile" href="#ai-を課題発見器として使う"><span class="level-left"><span class="level-item">2</span><span class="level-item">AI を「課題発見器」として使う</span></span></a></li><li><a class="level is-mobile" href="#issue-をハブにする-却下理由も残す"><span class="level-left"><span class="level-item">3</span><span class="level-item">Issue をハブにする ── 却下理由も残す</span></span></a></li><li><a class="level is-mobile" href="#人間はどこにいたか"><span class="level-left"><span class="level-item">4</span><span class="level-item">人間はどこにいたか</span></span></a></li><li><a class="level is-mobile" href="#学んだこと"><span class="level-left"><span class="level-item">5</span><span class="level-item">学んだこと</span></span></a></li><li><a class="level is-mobile" href="#まとめ"><span class="level-left"><span class="level-item">6</span><span class="level-item">まとめ</span></span></a></li></ul></div></div><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2026 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div><div class="level"><div class="level-item"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6265337967545472" crossorigin="anonymous"></script><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6265337967545472" data-ad-slot="2943157215" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script data-pjax src="/js/insight.js" defer></script><script data-pjax>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>

@@ -4,6 +4,7 @@ category: AWS
 tags:
 - AWS
 date: 2021-09-29
+cover: /img/cover/2021-09-29-you-should-set-kms-key.svg
 ---
 
 `aws_rds_cluster` の `kms_key_id` は `Optional` (任意) ですが、

@@ -9,6 +9,7 @@ tags:
   - MongoDB
   - Firebase
   - CockroachDB
+cover: https://i.imgur.com/cDGWdGF.png
 ---
 
 小規模サービスやプロトタイプ開発において、24時間365日稼働可能で、セキュリティも担保できる完全無料のデータベースサービスを比較検証しました。

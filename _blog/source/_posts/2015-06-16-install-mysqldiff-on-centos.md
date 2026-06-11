@@ -2,6 +2,7 @@
 layout: post
 title: CentOSにmysqldiffインストールし実行確認
 date: 2015-06-16
+cover: /img/cover/2015-06-16-install-mysqldiff-on-centos.svg
 ---
 
 ### rootユーザに切り替え

@@ -1,6 +1,7 @@
 ---
 title: no-cache, no-store の違い
 date: 2021-12-30
+cover: https://i.imgur.com/c3MFmbk.png
 ---
 
 <div class="toc">

@@ -2,6 +2,7 @@
 layout: post
 title: Mac OS X に SonarQube 導入 - UnityのC#コーディング規約チェック
 date: 2014-06-22
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140620/20140620232146.png
 tags:
 - SonarQube
 - Unity

@@ -2,6 +2,7 @@
 layout: post
 title: net-tools vs. iproute2 対応表
 date: 2015-05-11
+cover: /img/cover/2015-05-11-net-tools-vs-iproute2.svg
 ---
 
 RHEL7/CentOS7ではnet-toolsを廃止予定としています。

@@ -1,6 +1,7 @@
 ---
 title: PrivacyPolicy
 date: 2014-01-01 05:47:40
+cover: /img/cover/PrivacyPolicy.svg
 ---
 
 ## 個人情報の利用目的

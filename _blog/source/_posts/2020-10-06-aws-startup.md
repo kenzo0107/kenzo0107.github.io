@@ -3,6 +3,7 @@ title: You are not subscribed to this service
 tags:
 - AWS
 date: 2020-10-06
+cover: https://i.imgur.com/CWMs1IV.png
 ---
 
 <div class="toc">

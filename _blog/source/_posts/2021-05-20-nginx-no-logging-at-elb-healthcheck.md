@@ -3,6 +3,7 @@ title: Nginx で ELB のヘルスチェックのログを出力させない
 tags:
 - AWS
 date: 2021-05-20
+cover: /img/cover/2021-05-20-nginx-no-logging-at-elb-healthcheck.svg
 ---
 
 ## 概要

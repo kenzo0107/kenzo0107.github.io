@@ -2,6 +2,7 @@
 layout: post
 title: MacOSX ipv6 OFF
 date: 2015-03-11
+cover: /img/cover/2015-03-11-off-ipv6-macosx.svg
 ---
 
 ## 概要

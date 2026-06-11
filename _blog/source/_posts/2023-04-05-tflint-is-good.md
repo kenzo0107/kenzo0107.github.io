@@ -1,6 +1,7 @@
 ---
 title: terraform の linter tflin を導入し、GitHub Actions で構文チェック
 date: 2023-04-05
+cover: /img/cover/2023-04-05-tflint-is-good.svg
 category: Terraform
 ---
 

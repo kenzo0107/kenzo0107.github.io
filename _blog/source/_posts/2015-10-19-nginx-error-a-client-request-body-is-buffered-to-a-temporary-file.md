@@ -2,6 +2,7 @@
 layout: post
 title: Nginxエラー対策 a client request body is buffered to a temporary file
 date: 2015-10-19
+cover: /img/cover/2015-10-19-nginx-error-a-client-request-body-is-buffered-to-a-temporary-file.svg
 tags:
 - Nginx
 ---

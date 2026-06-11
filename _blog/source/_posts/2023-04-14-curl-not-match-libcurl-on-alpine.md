@@ -1,6 +1,7 @@
 ---
 title: 'fix: curl: (48) An unknown option was passed in to libcurl'
 date: 2023-04-14
+cover: /img/cover/2023-04-14-curl-not-match-libcurl-on-alpine.svg
 ---
 
 <div class="toc">

@@ -2,6 +2,7 @@
 layout: post
 title: EC-CUBE管理画面でパスワード不用でログインさせる方法
 date: 2015-03-18
+cover: /img/cover/2015-03-18-login-without-password-to-admin.svg
 ---
 
 ## 概要
