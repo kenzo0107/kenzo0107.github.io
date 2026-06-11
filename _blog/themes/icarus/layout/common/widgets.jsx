@@ -66,7 +66,9 @@ function isColumnSticky(config, position) {
 class Widgets extends Component {
     render() {
         const { site, config, helper, page, position } = this.props;
-        const widgets = formatWidgets(config.widgets)[position] || [];
+        const showToc = (config.toc === true) && ['page', 'post'].includes(page.layout);
+        const widgets = (formatWidgets(config.widgets)[position] || [])
+            .filter(widget => widget.type !== 'toc' || showToc);
         const columnCount = getColumnCount(config.widgets, config, page);
 
         if (!widgets.length) {

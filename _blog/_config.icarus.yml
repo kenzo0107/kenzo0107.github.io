@@ -64,7 +64,7 @@ article:
     theme: atom-one-light
     clipboard: true
     fold: unfolded
-  readtime: false
+  readtime: true
   update_time: true
   licenses:
     Creative Commons:
@@ -89,7 +89,7 @@ sidebar:
   left:
     sticky: false
   right:
-    sticky: false
+    sticky: true
 widgets:
   # - position: right
   #   type: profile
@@ -108,11 +108,11 @@ widgets:
   #     RSS:
   #       icon: fas fa-rss
   #       url: /atom.xml
-  # - position: right
-  #   type: toc
-  #   index: true
-  #   collapsed: true
-  #   depth: 3
+  - position: right
+    type: toc
+    index: true
+    collapsed: false
+    depth: 3
   # - position: right
   #   type: categories
   # - position: right
@@ -153,15 +153,8 @@ providers:
   fontcdn: google
   iconcdn: fontawesome
 
-toc:
-  maxdepth: 3
-  class: toc
-  slugify: transliteration
-  decodeEntities: false
-  anchor:
-    position: after
-    symbol: '#'
-    style: header-anchor
+# Icarus の目次ウィジェット (widgets の type: toc) を有効化するスイッチ
+toc: true
 
 # link preview
 linkPreview:
