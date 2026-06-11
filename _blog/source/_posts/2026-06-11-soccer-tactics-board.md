@@ -20,7 +20,7 @@ tags:
 
 きっかけは、この本を買って子供にサッカーの「フォーメーション」や「数的優位」を説明しようとしたことでした。
 
-{% affiliate "小学生から知っておくべきフットボールのフォーマット" "https://m.media-amazon.com/images/P/4862557732.jpg" "https://www.amazon.co.jp/exec/obidos/ASIN/4862557732/kenzo0107-22/" "https://item.rakuten.co.jp/bookfan/bk-4862557732/" %}
+{% affiliate "小学生から知っておくべきフットボールのフォーマット" "https://m.media-amazon.com/images/P/4862557732.jpg" "https://www.amazon.co.jp/exec/obidos/ASIN/4862557732/kenzo0107-22/" "https://hb.afl.rakuten.co.jp/ichiba/54d10c45.2c0cfeee.54d10c46.43e102da/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookfan%2Fbk-4862557732%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" %}
 
 内容はとても良いのですが、いざ盤上で再現しようとすると、物理的な戦術ボード（マグネット式）では次の点が難しいと感じました。
 
