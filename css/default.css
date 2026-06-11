@@ -1,3 +1,7 @@
+/* ---------------------------------
+ *   Variable overrides
+ *   (must be defined before import)
+ * --------------------------------- */
 @-moz-keyframes spinAround {
   from {
     transform: rotate(0deg);
@@ -389,7 +393,7 @@ th:not([align]) {
 }
 html {
   background-color: #f7f7f7;
-  font-size: 14px;
+  font-size: 16px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   min-width: 300px;
@@ -412,13 +416,13 @@ button,
 input,
 select,
 textarea {
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
 }
 code,
 pre {
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: auto;
-  font-family: 'Source Code Pro', monospace, 'Microsoft YaHei';
+  font-family: 'JetBrains Mono', 'Source Code Pro', Menlo, Consolas, monospace;
 }
 body {
   color: #4a4a4a;
@@ -1064,19 +1068,19 @@ a.has-text-grey-lightest:focus {
   font-weight: 700 !important;
 }
 .is-family-primary {
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif !important;
 }
 .is-family-secondary {
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif !important;
 }
 .is-family-sans-serif {
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif !important;
 }
 .is-family-monospace {
   font-family: monospace !important;
 }
 .is-family-code {
-  font-family: 'Source Code Pro', monospace, 'Microsoft YaHei' !important;
+  font-family: 'JetBrains Mono', 'Source Code Pro', Menlo, Consolas, monospace !important;
 }
 .is-block {
   display: block !important;
@@ -5262,7 +5266,7 @@ fieldset[disabled] .button {
 .content h5,
 .content h6 {
   color: #363636;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.125;
 }
 .content h1 {
@@ -6229,7 +6233,7 @@ a.tag:hover {
 .title {
   color: #363636;
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.125;
 }
 .title strong {
@@ -10813,7 +10817,7 @@ article.article .article-meta {
 }
 article.article .content {
   word-wrap: break-word;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 article.article .content h1 {
   font-size: 1.75em;
@@ -11299,7 +11303,7 @@ figure.highlight figcaption * {
 }
 figure.highlight figcaption span {
   font-weight: 500;
-  font-family: 'Source Code Pro', monospace, 'Microsoft YaHei';
+  font-family: 'JetBrains Mono', 'Source Code Pro', Menlo, Consolas, monospace;
 }
 figure.highlight figcaption .level-left *:not(:last-child) {
   margin-right: 0.5em;
@@ -11600,7 +11604,7 @@ figure.highlight.foldable div.level-left {
 .cc-window,
 .cc-revoke {
   font-size: 1.1rem !important;
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif !important;
 }
 .cc-window {
   color: #4a4a4a !important;
@@ -11676,4 +11680,96 @@ figure.highlight.foldable div.level-left {
   .section {
     padding: 1.5rem 1rem;
   }
+}
+/* ---------------------------------
+ *   Readability customizations
+ * --------------------------------- */
+.navbar-main {
+  position: relative;
+}
+.navbar-main::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3273dc 0%, #00d1b2 100%);
+  z-index: 1;
+}
+article.article .content {
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+}
+article.article .content p {
+  margin-bottom: 1.2em;
+}
+article.article .content h2 {
+  margin-top: 2.5em;
+  padding: 0.5em 0.6em;
+  background: #f4f6f8;
+  border-left: 5px solid #3273dc;
+  border-radius: 3px;
+  line-height: 1.4;
+}
+article.article .content h3 {
+  margin-top: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid #e4e9ee;
+  line-height: 1.4;
+}
+article.article .content h4 {
+  margin-top: 1.8em;
+}
+article.article .content p code,
+article.article .content li code,
+article.article .content td code,
+article.article .content th code,
+article.article .content h1 code,
+article.article .content h2 code,
+article.article .content h3 code,
+article.article .content h4 code,
+article.article .content blockquote code,
+article.article .content dd code {
+  padding: 0.15em 0.45em;
+  background: #f1f3f5;
+  color: #d6336c;
+  border-radius: 4px;
+  font-size: 0.875em;
+}
+article.article .content blockquote:not(.pullquote) {
+  border-left: 4px solid #3273dc;
+  background: #f6f9fd;
+  color: #4a4a4a;
+}
+article.article .content table {
+  font-size: 0.95em;
+}
+article.article .content table thead th {
+  background: #f4f6f8;
+  white-space: nowrap;
+}
+article.article .content table tbody tr:nth-child(even) {
+  background-color: #fafbfc;
+}
+article.article .content a:not(.article-more) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(50,115,220,0.35);
+}
+article.article .content a:not(.article-more):hover {
+  text-decoration-color: currentColor;
+}
+article.article .content img {
+  border-radius: 6px;
+}
+figure.highlight {
+  border: 1px solid #e4e9ee;
+  overflow: hidden;
+}
+.card {
+  transition: box-shadow 0.2s ease;
+}
+.card:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08), 0 0 1px rgba(0,0,0,0.1);
 }

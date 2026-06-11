@@ -1,0 +1,1315 @@
+{
+  "version": "1.0.0",
+  "title": "build-up-ititial",
+  "description": "ゴールキックからのビルドアップ。相手FW2枚のプレスに対して、CBの開き・ボランチの降り・サイドチェンジで数的優位を作り前進する",
+  "fieldDimensions": {
+    "width": 400,
+    "height": 600
+  },
+  "createdAt": "2026-02-19T02:38:48.628Z",
+  "updatedAt": "2026-02-19T12:00:00.000Z",
+  "steps": [
+    {
+      "stepId": 0,
+      "timestamp": 1771468714043,
+      "objects": [
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 475,
+          "radius": 12,
+          "number": 1,
+          "direction": 0,
+          "name": "GK"
+        },
+        {
+          "id": "ball-1771468468274",
+          "type": "ball",
+          "color": "orange",
+          "x": 160,
+          "y": 454,
+          "radius": 10
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 194,
+          "y": 469,
+          "radius": 12,
+          "number": 2,
+          "direction": 0,
+          "name": "CB右"
+        },
+        {
+          "id": "player-blue-3",
+          "type": "player",
+          "color": "blue",
+          "x": 131,
+          "y": 468,
+          "radius": 12,
+          "number": 3,
+          "direction": 0,
+          "name": "CB左"
+        },
+        {
+          "id": "player-blue-4",
+          "type": "player",
+          "color": "blue",
+          "x": 299,
+          "y": 454,
+          "radius": 12,
+          "number": 4,
+          "direction": 0,
+          "name": "RB"
+        },
+        {
+          "id": "player-blue-5",
+          "type": "player",
+          "color": "blue",
+          "x": 23,
+          "y": 448,
+          "radius": 12,
+          "number": 5,
+          "direction": 0,
+          "name": "LB"
+        },
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 160,
+          "y": 99,
+          "radius": 12,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 182,
+          "y": 417,
+          "radius": 12,
+          "number": 2,
+          "direction": 180,
+          "name": "FW右"
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 135,
+          "y": 416,
+          "radius": 12,
+          "number": 3,
+          "direction": 180,
+          "name": "FW左"
+        },
+        {
+          "id": "player-blue-6",
+          "type": "player",
+          "color": "blue",
+          "x": 170,
+          "y": 387,
+          "radius": 12,
+          "number": 6,
+          "direction": 0,
+          "name": "ボランチ"
+        },
+        {
+          "id": "player-blue-7",
+          "type": "player",
+          "color": "blue",
+          "x": 137,
+          "y": 390,
+          "radius": 12,
+          "number": 7,
+          "direction": 0,
+          "name": "MF"
+        },
+        {
+          "id": "player-red-4",
+          "type": "player",
+          "color": "red",
+          "x": 137,
+          "y": 345,
+          "radius": 12,
+          "number": 4,
+          "direction": 178,
+          "name": ""
+        },
+        {
+          "id": "player-red-5",
+          "type": "player",
+          "color": "red",
+          "x": 186,
+          "y": 318,
+          "radius": 12,
+          "number": 5,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-8",
+          "type": "player",
+          "color": "blue",
+          "x": 159,
+          "y": 249,
+          "radius": 12,
+          "number": 8,
+          "direction": 0,
+          "name": "FW"
+        },
+        {
+          "id": "player-red-6",
+          "type": "player",
+          "color": "red",
+          "x": 229,
+          "y": 399,
+          "radius": 12,
+          "number": 6,
+          "direction": 173,
+          "name": ""
+        },
+        {
+          "id": "player-red-7",
+          "type": "player",
+          "color": "red",
+          "x": 62,
+          "y": 367,
+          "radius": 12,
+          "number": 7,
+          "direction": 180,
+          "name": ""
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-step0",
+          "text": "【問い】GKがボールを持っている。CB②と③の距離を見てみよう。近すぎない？このままCBにパスしたら相手FW②③に挟まれてしまう。どうすればいい？",
+          "position": { "x": 10, "y": 140 }
+        }
+      ]
+    },
+    {
+      "stepId": 1,
+      "timestamp": 1771468724043,
+      "objects": [
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 475,
+          "radius": 12,
+          "number": 1,
+          "direction": 315,
+          "name": "GK"
+        },
+        {
+          "id": "ball-1771468468274",
+          "type": "ball",
+          "color": "orange",
+          "x": 160,
+          "y": 454,
+          "radius": 10
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 275,
+          "y": 430,
+          "radius": 12,
+          "number": 2,
+          "direction": 0,
+          "name": "CB右"
+        },
+        {
+          "id": "player-blue-3",
+          "type": "player",
+          "color": "blue",
+          "x": 50,
+          "y": 430,
+          "radius": 12,
+          "number": 3,
+          "direction": 0,
+          "name": "CB左"
+        },
+        {
+          "id": "player-blue-4",
+          "type": "player",
+          "color": "blue",
+          "x": 310,
+          "y": 370,
+          "radius": 12,
+          "number": 4,
+          "direction": 0,
+          "name": "RB"
+        },
+        {
+          "id": "player-blue-5",
+          "type": "player",
+          "color": "blue",
+          "x": 15,
+          "y": 370,
+          "radius": 12,
+          "number": 5,
+          "direction": 0,
+          "name": "LB"
+        },
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 160,
+          "y": 99,
+          "radius": 12,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 175,
+          "y": 400,
+          "radius": 12,
+          "number": 2,
+          "direction": 180,
+          "name": "FW右"
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 140,
+          "y": 400,
+          "radius": 12,
+          "number": 3,
+          "direction": 180,
+          "name": "FW左"
+        },
+        {
+          "id": "player-blue-6",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 445,
+          "radius": 12,
+          "number": 6,
+          "direction": 0,
+          "name": "ボランチ"
+        },
+        {
+          "id": "player-blue-7",
+          "type": "player",
+          "color": "blue",
+          "x": 140,
+          "y": 355,
+          "radius": 12,
+          "number": 7,
+          "direction": 0,
+          "name": "MF"
+        },
+        {
+          "id": "player-red-4",
+          "type": "player",
+          "color": "red",
+          "x": 137,
+          "y": 345,
+          "radius": 12,
+          "number": 4,
+          "direction": 178,
+          "name": ""
+        },
+        {
+          "id": "player-red-5",
+          "type": "player",
+          "color": "red",
+          "x": 186,
+          "y": 318,
+          "radius": 12,
+          "number": 5,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-8",
+          "type": "player",
+          "color": "blue",
+          "x": 159,
+          "y": 249,
+          "radius": 12,
+          "number": 8,
+          "direction": 0,
+          "name": "FW"
+        },
+        {
+          "id": "player-red-6",
+          "type": "player",
+          "color": "red",
+          "x": 229,
+          "y": 399,
+          "radius": 12,
+          "number": 6,
+          "direction": 173,
+          "name": ""
+        },
+        {
+          "id": "player-red-7",
+          "type": "player",
+          "color": "red",
+          "x": 62,
+          "y": 367,
+          "radius": 12,
+          "number": 7,
+          "direction": 180,
+          "name": ""
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-step1",
+          "text": "【準備】CB③が左に、CB②が右に大きく開いた。ボランチ⑥がCBの間に降りてきた。相手FW2枚に対して何人いる？→GK①+CB③+ボランチ⑥+CB②=4人。4対2の数的優位だ！",
+          "position": { "x": 10, "y": 140 }
+        }
+      ]
+    },
+    {
+      "stepId": 2,
+      "timestamp": 1771468734043,
+      "objects": [
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 475,
+          "radius": 12,
+          "number": 1,
+          "direction": 315,
+          "name": "GK"
+        },
+        {
+          "id": "ball-1771468468274",
+          "type": "ball",
+          "color": "orange",
+          "x": 50,
+          "y": 430,
+          "radius": 10
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 275,
+          "y": 430,
+          "radius": 12,
+          "number": 2,
+          "direction": 0,
+          "name": "CB右"
+        },
+        {
+          "id": "player-blue-3",
+          "type": "player",
+          "color": "blue",
+          "x": 50,
+          "y": 430,
+          "radius": 12,
+          "number": 3,
+          "direction": 45,
+          "name": "CB左"
+        },
+        {
+          "id": "player-blue-4",
+          "type": "player",
+          "color": "blue",
+          "x": 310,
+          "y": 370,
+          "radius": 12,
+          "number": 4,
+          "direction": 0,
+          "name": "RB"
+        },
+        {
+          "id": "player-blue-5",
+          "type": "player",
+          "color": "blue",
+          "x": 15,
+          "y": 370,
+          "radius": 12,
+          "number": 5,
+          "direction": 0,
+          "name": "LB"
+        },
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 160,
+          "y": 99,
+          "radius": 12,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 175,
+          "y": 400,
+          "radius": 12,
+          "number": 2,
+          "direction": 180,
+          "name": "FW右"
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 75,
+          "y": 420,
+          "radius": 12,
+          "number": 3,
+          "direction": 225,
+          "name": "FW左"
+        },
+        {
+          "id": "player-blue-6",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 445,
+          "radius": 12,
+          "number": 6,
+          "direction": 0,
+          "name": "ボランチ"
+        },
+        {
+          "id": "player-blue-7",
+          "type": "player",
+          "color": "blue",
+          "x": 140,
+          "y": 355,
+          "radius": 12,
+          "number": 7,
+          "direction": 0,
+          "name": "MF"
+        },
+        {
+          "id": "player-red-4",
+          "type": "player",
+          "color": "red",
+          "x": 137,
+          "y": 345,
+          "radius": 12,
+          "number": 4,
+          "direction": 178,
+          "name": ""
+        },
+        {
+          "id": "player-red-5",
+          "type": "player",
+          "color": "red",
+          "x": 186,
+          "y": 318,
+          "radius": 12,
+          "number": 5,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-8",
+          "type": "player",
+          "color": "blue",
+          "x": 159,
+          "y": 249,
+          "radius": 12,
+          "number": 8,
+          "direction": 0,
+          "name": "FW"
+        },
+        {
+          "id": "player-red-6",
+          "type": "player",
+          "color": "red",
+          "x": 229,
+          "y": 399,
+          "radius": 12,
+          "number": 6,
+          "direction": 173,
+          "name": ""
+        },
+        {
+          "id": "player-red-7",
+          "type": "player",
+          "color": "red",
+          "x": 62,
+          "y": 367,
+          "radius": 12,
+          "number": 7,
+          "direction": 180,
+          "name": ""
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-step2",
+          "text": "【パス①】GK→CB左③。相手FW③がCB左にプレスに来た。ここで考えよう。FW③がCBに寄ったということは…中央の誰がフリーになる？",
+          "position": { "x": 10, "y": 140 }
+        }
+      ]
+    },
+    {
+      "stepId": 3,
+      "timestamp": 1771468744043,
+      "objects": [
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 465,
+          "radius": 12,
+          "number": 1,
+          "direction": 0,
+          "name": "GK"
+        },
+        {
+          "id": "ball-1771468468274",
+          "type": "ball",
+          "color": "orange",
+          "x": 160,
+          "y": 445,
+          "radius": 10
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 275,
+          "y": 425,
+          "radius": 12,
+          "number": 2,
+          "direction": 0,
+          "name": "CB右"
+        },
+        {
+          "id": "player-blue-3",
+          "type": "player",
+          "color": "blue",
+          "x": 50,
+          "y": 430,
+          "radius": 12,
+          "number": 3,
+          "direction": 45,
+          "name": "CB左"
+        },
+        {
+          "id": "player-blue-4",
+          "type": "player",
+          "color": "blue",
+          "x": 310,
+          "y": 360,
+          "radius": 12,
+          "number": 4,
+          "direction": 0,
+          "name": "RB"
+        },
+        {
+          "id": "player-blue-5",
+          "type": "player",
+          "color": "blue",
+          "x": 15,
+          "y": 360,
+          "radius": 12,
+          "number": 5,
+          "direction": 0,
+          "name": "LB"
+        },
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 160,
+          "y": 99,
+          "radius": 12,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 175,
+          "y": 405,
+          "radius": 12,
+          "number": 2,
+          "direction": 180,
+          "name": "FW右"
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 65,
+          "y": 425,
+          "radius": 12,
+          "number": 3,
+          "direction": 225,
+          "name": "FW左"
+        },
+        {
+          "id": "player-blue-6",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 445,
+          "radius": 12,
+          "number": 6,
+          "direction": 0,
+          "name": "ボランチ"
+        },
+        {
+          "id": "player-blue-7",
+          "type": "player",
+          "color": "blue",
+          "x": 140,
+          "y": 355,
+          "radius": 12,
+          "number": 7,
+          "direction": 0,
+          "name": "MF"
+        },
+        {
+          "id": "player-red-4",
+          "type": "player",
+          "color": "red",
+          "x": 137,
+          "y": 345,
+          "radius": 12,
+          "number": 4,
+          "direction": 178,
+          "name": ""
+        },
+        {
+          "id": "player-red-5",
+          "type": "player",
+          "color": "red",
+          "x": 186,
+          "y": 318,
+          "radius": 12,
+          "number": 5,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-8",
+          "type": "player",
+          "color": "blue",
+          "x": 159,
+          "y": 249,
+          "radius": 12,
+          "number": 8,
+          "direction": 0,
+          "name": "FW"
+        },
+        {
+          "id": "player-red-6",
+          "type": "player",
+          "color": "red",
+          "x": 229,
+          "y": 399,
+          "radius": 12,
+          "number": 6,
+          "direction": 173,
+          "name": ""
+        },
+        {
+          "id": "player-red-7",
+          "type": "player",
+          "color": "red",
+          "x": 62,
+          "y": 367,
+          "radius": 12,
+          "number": 7,
+          "direction": 180,
+          "name": ""
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-step3",
+          "text": "【パス②】CB左③→ボランチ⑥。正解！相手FW③がCB左に寄ったから、ボランチ⑥がフリーになった。「相手が寄せてきたら、その裏が空く」。次はどこを見る？右のCB②は？",
+          "position": { "x": 10, "y": 140 }
+        }
+      ]
+    },
+    {
+      "stepId": 4,
+      "timestamp": 1771468754043,
+      "objects": [
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 460,
+          "radius": 12,
+          "number": 1,
+          "direction": 0,
+          "name": "GK"
+        },
+        {
+          "id": "ball-1771468468274",
+          "type": "ball",
+          "color": "orange",
+          "x": 275,
+          "y": 425,
+          "radius": 10
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 275,
+          "y": 420,
+          "radius": 12,
+          "number": 2,
+          "direction": 340,
+          "name": "CB右"
+        },
+        {
+          "id": "player-blue-3",
+          "type": "player",
+          "color": "blue",
+          "x": 55,
+          "y": 425,
+          "radius": 12,
+          "number": 3,
+          "direction": 0,
+          "name": "CB左"
+        },
+        {
+          "id": "player-blue-4",
+          "type": "player",
+          "color": "blue",
+          "x": 310,
+          "y": 345,
+          "radius": 12,
+          "number": 4,
+          "direction": 0,
+          "name": "RB"
+        },
+        {
+          "id": "player-blue-5",
+          "type": "player",
+          "color": "blue",
+          "x": 15,
+          "y": 355,
+          "radius": 12,
+          "number": 5,
+          "direction": 0,
+          "name": "LB"
+        },
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 160,
+          "y": 99,
+          "radius": 12,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 170,
+          "y": 410,
+          "radius": 12,
+          "number": 2,
+          "direction": 135,
+          "name": "FW右"
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 65,
+          "y": 425,
+          "radius": 12,
+          "number": 3,
+          "direction": 225,
+          "name": "FW左"
+        },
+        {
+          "id": "player-blue-6",
+          "type": "player",
+          "color": "blue",
+          "x": 170,
+          "y": 400,
+          "radius": 12,
+          "number": 6,
+          "direction": 45,
+          "name": "ボランチ"
+        },
+        {
+          "id": "player-blue-7",
+          "type": "player",
+          "color": "blue",
+          "x": 140,
+          "y": 350,
+          "radius": 12,
+          "number": 7,
+          "direction": 0,
+          "name": "MF"
+        },
+        {
+          "id": "player-red-4",
+          "type": "player",
+          "color": "red",
+          "x": 137,
+          "y": 345,
+          "radius": 12,
+          "number": 4,
+          "direction": 178,
+          "name": ""
+        },
+        {
+          "id": "player-red-5",
+          "type": "player",
+          "color": "red",
+          "x": 186,
+          "y": 318,
+          "radius": 12,
+          "number": 5,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-8",
+          "type": "player",
+          "color": "blue",
+          "x": 159,
+          "y": 249,
+          "radius": 12,
+          "number": 8,
+          "direction": 0,
+          "name": "FW"
+        },
+        {
+          "id": "player-red-6",
+          "type": "player",
+          "color": "red",
+          "x": 240,
+          "y": 385,
+          "radius": 12,
+          "number": 6,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-red-7",
+          "type": "player",
+          "color": "red",
+          "x": 62,
+          "y": 367,
+          "radius": 12,
+          "number": 7,
+          "direction": 180,
+          "name": ""
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-step4",
+          "text": "【パス③】ボランチ⑥→CB右②へサイドチェンジ！相手FW②がボランチに寄ったためCB右②がフリー。ボールを左→中央→右と動かすと相手の体の向きが変わり、ついてこれない",
+          "position": { "x": 10, "y": 140 }
+        }
+      ]
+    },
+    {
+      "stepId": 5,
+      "timestamp": 1771468764043,
+      "objects": [
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 450,
+          "radius": 12,
+          "number": 1,
+          "direction": 0,
+          "name": "GK"
+        },
+        {
+          "id": "ball-1771468468274",
+          "type": "ball",
+          "color": "orange",
+          "x": 310,
+          "y": 340,
+          "radius": 10
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 270,
+          "y": 400,
+          "radius": 12,
+          "number": 2,
+          "direction": 340,
+          "name": "CB右"
+        },
+        {
+          "id": "player-blue-3",
+          "type": "player",
+          "color": "blue",
+          "x": 70,
+          "y": 410,
+          "radius": 12,
+          "number": 3,
+          "direction": 0,
+          "name": "CB左"
+        },
+        {
+          "id": "player-blue-4",
+          "type": "player",
+          "color": "blue",
+          "x": 310,
+          "y": 330,
+          "radius": 12,
+          "number": 4,
+          "direction": 345,
+          "name": "RB"
+        },
+        {
+          "id": "player-blue-5",
+          "type": "player",
+          "color": "blue",
+          "x": 25,
+          "y": 340,
+          "radius": 12,
+          "number": 5,
+          "direction": 0,
+          "name": "LB"
+        },
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 160,
+          "y": 99,
+          "radius": 12,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 190,
+          "y": 410,
+          "radius": 12,
+          "number": 2,
+          "direction": 90,
+          "name": "FW右"
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 80,
+          "y": 420,
+          "radius": 12,
+          "number": 3,
+          "direction": 180,
+          "name": "FW左"
+        },
+        {
+          "id": "player-blue-6",
+          "type": "player",
+          "color": "blue",
+          "x": 185,
+          "y": 375,
+          "radius": 12,
+          "number": 6,
+          "direction": 0,
+          "name": "ボランチ"
+        },
+        {
+          "id": "player-blue-7",
+          "type": "player",
+          "color": "blue",
+          "x": 140,
+          "y": 340,
+          "radius": 12,
+          "number": 7,
+          "direction": 0,
+          "name": "MF"
+        },
+        {
+          "id": "player-red-4",
+          "type": "player",
+          "color": "red",
+          "x": 137,
+          "y": 340,
+          "radius": 12,
+          "number": 4,
+          "direction": 178,
+          "name": ""
+        },
+        {
+          "id": "player-red-5",
+          "type": "player",
+          "color": "red",
+          "x": 186,
+          "y": 318,
+          "radius": 12,
+          "number": 5,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-8",
+          "type": "player",
+          "color": "blue",
+          "x": 159,
+          "y": 249,
+          "radius": 12,
+          "number": 8,
+          "direction": 0,
+          "name": "FW"
+        },
+        {
+          "id": "player-red-6",
+          "type": "player",
+          "color": "red",
+          "x": 260,
+          "y": 360,
+          "radius": 12,
+          "number": 6,
+          "direction": 90,
+          "name": ""
+        },
+        {
+          "id": "player-red-7",
+          "type": "player",
+          "color": "red",
+          "x": 62,
+          "y": 360,
+          "radius": 12,
+          "number": 7,
+          "direction": 180,
+          "name": ""
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-step5",
+          "text": "【パス④】CB右②→RB④へ。相手のプレスが左に寄っていた裏をついて右サイドで前進！RB④が高い位置でフリーで受けた。相手⑥が追うが遅れている",
+          "position": { "x": 10, "y": 140 }
+        }
+      ]
+    },
+    {
+      "stepId": 6,
+      "timestamp": 1771468774043,
+      "objects": [
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160,
+          "y": 440,
+          "radius": 12,
+          "number": 1,
+          "direction": 0,
+          "name": "GK"
+        },
+        {
+          "id": "ball-1771468468274",
+          "type": "ball",
+          "color": "orange",
+          "x": 230,
+          "y": 260,
+          "radius": 10
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 250,
+          "y": 380,
+          "radius": 12,
+          "number": 2,
+          "direction": 0,
+          "name": "CB右"
+        },
+        {
+          "id": "player-blue-3",
+          "type": "player",
+          "color": "blue",
+          "x": 85,
+          "y": 395,
+          "radius": 12,
+          "number": 3,
+          "direction": 0,
+          "name": "CB左"
+        },
+        {
+          "id": "player-blue-4",
+          "type": "player",
+          "color": "blue",
+          "x": 300,
+          "y": 300,
+          "radius": 12,
+          "number": 4,
+          "direction": 330,
+          "name": "RB"
+        },
+        {
+          "id": "player-blue-5",
+          "type": "player",
+          "color": "blue",
+          "x": 35,
+          "y": 320,
+          "radius": 12,
+          "number": 5,
+          "direction": 0,
+          "name": "LB"
+        },
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 160,
+          "y": 99,
+          "radius": 12,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 210,
+          "y": 400,
+          "radius": 12,
+          "number": 2,
+          "direction": 90,
+          "name": "FW右"
+        },
+        {
+          "id": "player-red-3",
+          "type": "player",
+          "color": "red",
+          "x": 100,
+          "y": 415,
+          "radius": 12,
+          "number": 3,
+          "direction": 180,
+          "name": "FW左"
+        },
+        {
+          "id": "player-blue-6",
+          "type": "player",
+          "color": "blue",
+          "x": 190,
+          "y": 355,
+          "radius": 12,
+          "number": 6,
+          "direction": 0,
+          "name": "ボランチ"
+        },
+        {
+          "id": "player-blue-7",
+          "type": "player",
+          "color": "blue",
+          "x": 130,
+          "y": 310,
+          "radius": 12,
+          "number": 7,
+          "direction": 0,
+          "name": "MF"
+        },
+        {
+          "id": "player-red-4",
+          "type": "player",
+          "color": "red",
+          "x": 137,
+          "y": 330,
+          "radius": 12,
+          "number": 4,
+          "direction": 178,
+          "name": ""
+        },
+        {
+          "id": "player-red-5",
+          "type": "player",
+          "color": "red",
+          "x": 200,
+          "y": 300,
+          "radius": 12,
+          "number": 5,
+          "direction": 90,
+          "name": ""
+        },
+        {
+          "id": "player-blue-8",
+          "type": "player",
+          "color": "blue",
+          "x": 230,
+          "y": 255,
+          "radius": 12,
+          "number": 8,
+          "direction": 0,
+          "name": "FW"
+        },
+        {
+          "id": "player-red-6",
+          "type": "player",
+          "color": "red",
+          "x": 275,
+          "y": 330,
+          "radius": 12,
+          "number": 6,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-7",
+          "type": "player",
+          "color": "red",
+          "x": 62,
+          "y": 350,
+          "radius": 12,
+          "number": 7,
+          "direction": 180,
+          "name": ""
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-step6",
+          "text": "【成功】RB④→FW⑧へ。ビルドアップ成功！覚えておこう→①CBは開いて幅を作る ②ボランチが降りて数的優位 ③ボールを動かして相手を引きつけ逆サイドを使う ④前向きの選手を見つけて前進",
+          "position": { "x": 10, "y": 140 }
+        }
+      ]
+    }
+  ]
+}

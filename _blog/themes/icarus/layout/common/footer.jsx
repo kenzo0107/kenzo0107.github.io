@@ -11,6 +11,7 @@ class Footer extends Component {
             siteYear,
             author,
             links,
+            copyright,
             showVisitorCounter,
             visitorCounterTitle
         } = this.props;
@@ -41,6 +42,7 @@ class Footer extends Component {
                             {showVisitorCounter ? <span id="busuanzi_container_site_uv"
                                 dangerouslySetInnerHTML={{ __html: visitorCounterTitle }}></span> : null}
                         </p>
+                        {copyright ? <p class="is-size-7" dangerouslySetInnerHTML={{ __html: copyright }}></p> : null}
                     </div>
                     <div class="level-end">
                         {Object.keys(links).length ? <div class="field has-addons">
@@ -53,6 +55,21 @@ class Footer extends Component {
                                 </p>;
                             })}
                         </div> : null}
+                    </div>
+                </div>
+                <div class="level">
+                    <div class="level-item">
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6265337967545472"
+                                crossorigin="anonymous"></script>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-6265337967545472"
+                             data-ad-slot="2943157215"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script dangerouslySetInnerHTML={{
+                            __html: `(adsbygoogle = window.adsbygoogle || []).push({});`
+                        }}></script>
                     </div>
                 </div>
             </div>
@@ -84,6 +101,7 @@ module.exports = cacheComponent(Footer, 'common.footer', props => {
         siteYear: date(new Date(), 'YYYY'),
         author,
         links,
+        copyright: footer?.copyright ?? '',
         showVisitorCounter: plugins && plugins.busuanzi === true,
         visitorCounterTitle: _p('plugin.visitor_count', '<span id="busuanzi_value_site_uv">0</span>')
     };

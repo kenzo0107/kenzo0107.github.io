@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soccer Tactics Board</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="field-container">
+      <canvas id="field"></canvas>
+
+      <div class="top-left-buttons">
+        <button id="clearAll" class="btn btn-delete-all step-action-btn">X</button>
+      </div>
+
+      <div class="top-right-buttons">
+        <button id="menuButton" class="menu-button">
+          <i class="fa-solid fa-list"></i>
+        </button>
+      </div>
+
+
+      <div class="toolbar">
+        <button id="deleteSelected" class="btn btn-icon btn-delete-selected" style="display: none;">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+        <button id="addMarker" class="btn btn-icon btn-ball">
+          <canvas class="btn-canvas" width="56" height="56"></canvas>
+        </button>
+        <button id="addComment" class="btn btn-icon btn-comment">
+          <i class="fa-solid fa-comment"></i>
+        </button>
+        <button id="addBall" class="btn btn-icon btn-ball">
+          <canvas class="btn-canvas" width="56" height="56"></canvas>
+        </button>
+        <button id="addBluePlayer" class="btn btn-icon btn-blue">
+          <canvas class="btn-canvas" width="56" height="56"></canvas>
+        </button>
+        <button id="addRedPlayer" class="btn btn-icon btn-red">
+          <canvas class="btn-canvas" width="56" height="56"></canvas>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="step-controller">
+      <div class="step-controls">
+        <button id="playPause" class="step-btn step-btn-play">▶</button>
+        <button id="saveStep" class="step-btn step-btn-add">+</button>
+        <div class="step-display">
+          <span id="stepInfo">0/0</span>
+          <input type="range" id="stepSlider" min="0" max="0" value="0" step="1">
+        </div>
+        <button id="deleteStep" class="step-btn step-btn-delete">−</button>
+        <button id="updateStep" class="step-btn step-btn-update">✓</button>
+      </div>
+      <div class="step-actions">
+        <button id="exportJson" class="btn step-action-btn">
+          <i class="fa-solid fa-file-export"></i>
+        </button>
+        <button id="saveAnimation" class="btn step-action-btn">
+          <i class="fa-solid fa-floppy-disk"></i>
+        </button>
+        <label for="importJson" class="btn btn-file-label step-action-btn">
+          <i class="fa-solid fa-file-import"></i>
+          <input type="file" id="importJson" accept=".json" style="display: none;">
+        </label>
+        <button id="exportGif" class="btn step-action-btn">
+          <i class="fa-solid fa-film"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="rotationControl" class="rotation-control">
+    <div class="rotation-control-header">
+      <button id="closeRotationControl" class="rotation-control-close">x</button>
+    </div>
+    <div class="rotation-control-body">
+      <div class="rotation-preview">
+        <canvas id="rotationPreviewCanvas" width="80" height="80"></canvas>
+        <div class="rotation-angle-display">
+          <span id="rotationAngleValue">0</span>°
+        </div>
+      </div>
+      <div class="player-name-container">
+        <label for="playerNameInput" class="player-name-label">Player Name</label>
+        <input type="text" id="playerNameInput" class="player-name-input" placeholder="Enter player name">
+      </div>
+      <div class="rotation-slider-container">
+        <input type="range" id="rotationSlider" min="0" max="360" value="0" step="1" class="rotation-slider">
+        <div class="rotation-slider-labels">
+          <span>0°</span>
+          <span>90°</span>
+          <span>180°</span>
+          <span>270°</span>
+          <span>360°</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="menuOverlay" class="menu-overlay"></div>
+  <div id="sideMenu" class="side-menu">
+    <div class="side-menu-header">
+      <button id="closeSideMenu" class="close-menu-btn">×</button>
+    </div>
+
+    <div class="side-menu-content">
+      <div class="preset-section">
+        <div class="preset-list">
+          <p class="empty-message">Loading...</p>
+        </div>
+      </div>
+
+      <div class="saved-animations-section">
+        <div id="savedAnimationsList" class="saved-animations-list">
+          <p class="empty-message">No saved animations</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="exportOverlay" class="export-overlay">
+    <div class="export-overlay-content">
+      <i class="fa-solid fa-spinner fa-spin fa-5x"></i>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js?v=1.2.0"></script>
+</body>
+</html>

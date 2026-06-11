@@ -1,0 +1,886 @@
+{
+  "version": "1.0.0",
+  "title": "Training 2vs1 #1",
+  "description": "",
+  "fieldDimensions": {
+    "width": 400,
+    "height": 600
+  },
+  "createdAt": "2026-02-13T14:54:32.294Z",
+  "updatedAt": "2026-02-13T14:54:32.294Z",
+  "steps": [
+    {
+      "stepId": 0,
+      "timestamp": 1770991962926,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 96.3030303030303,
+          "y": 245.42424242424246,
+          "radius": 16,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 224.94949494949495,
+          "y": 246.7171717171718,
+          "radius": 16,
+          "number": 2,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 120.22222222222223,
+          "y": 16,
+          "radius": 16,
+          "number": 2,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 119.57575757575759,
+          "y": 36.63636363636365,
+          "radius": 10
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8
+        }
+      ],
+      "comments": []
+    },
+    {
+      "stepId": 1,
+      "timestamp": 1770993074794,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 96.3030303030303,
+          "y": 245.42424242424246,
+          "radius": 16,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 224.94949494949495,
+          "y": 246.7171717171718,
+          "radius": 16,
+          "number": 2,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 161.5959595959596,
+          "y": 131.7171717171717,
+          "radius": 16,
+          "number": 2,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 148.02020202020202,
+          "y": 153.64646464646466,
+          "radius": 10
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770993068574",
+          "text": "ディフェンスはドリブルで運び、マーカーのラインを超えたら赤①か赤②へパス",
+          "position": {
+            "x": 17.101449275362313,
+            "y": 281.7391304347826
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 2,
+      "timestamp": 1770992209774,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 96.3030303030303,
+          "y": 245.42424242424246,
+          "radius": 16,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 224.94949494949495,
+          "y": 246.7171717171718,
+          "radius": 16,
+          "number": 2,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 144.7878787878788,
+          "y": 163.3939393939394,
+          "radius": 16,
+          "number": 2,
+          "direction": 210,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 111.8181818181818,
+          "y": 227.34343434343435,
+          "radius": 10
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770992135549",
+          "text": "ディフェンスはパスと同時にプレスをかける",
+          "position": {
+            "x": 20.646464646464636,
+            "y": 281.77777777777777
+          }
+        },
+        {
+          "id": "comment-1770992193796",
+          "text": "オフェンスは最初から縦だけを意識しているとディフェンスにつかまるので縦にも横にもいける置き所を意識する",
+          "position": {
+            "x": 20.646464646464665,
+            "y": 353.2050944224858
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 3,
+      "timestamp": 1770994463977,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 109.87878787878786,
+          "y": 218.91919191919195,
+          "radius": 16,
+          "number": 1,
+          "direction": 20,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 228.1818181818182,
+          "y": 224.09090909090918,
+          "radius": 16,
+          "number": 2,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 144.14141414141417,
+          "y": 169.21212121212122,
+          "radius": 16,
+          "number": 2,
+          "direction": 210,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 125.39393939393936,
+          "y": 200.83838383838383,
+          "radius": 10
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8
+        }
+      ],
+      "comments": []
+    },
+    {
+      "stepId": 4,
+      "timestamp": 1770993140504,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 98.88888888888887,
+          "y": 178.19191919191923,
+          "radius": 16,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 224.94949494949495,
+          "y": 187.88888888888897,
+          "radius": 16,
+          "number": 2,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 144.14141414141417,
+          "y": 168.56565656565658,
+          "radius": 16,
+          "number": 2,
+          "direction": 151,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 222.36363636363632,
+          "y": 164.63636363636363,
+          "radius": 10
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770993127989",
+          "text": "試合を想定してできるだけ時間をかけないことを意識させる。",
+          "position": {
+            "x": 16.52173913043478,
+            "y": 284.0579710144927
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 5,
+      "timestamp": 1770994268615,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 98.88888888888887,
+          "y": 178.19191919191923,
+          "radius": 16,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 224.94949494949495,
+          "y": 187.88888888888897,
+          "radius": 16,
+          "number": 2,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8,
+          "direction": 0
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8,
+          "direction": 0
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 144.14141414141417,
+          "y": 168.56565656565658,
+          "radius": 16,
+          "number": 2,
+          "direction": 151,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 221.076865137777,
+          "y": 120.24275634421646,
+          "radius": 10,
+          "direction": 0
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8,
+          "direction": 0
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8,
+          "direction": 0
+        }
+      ],
+      "comments": [
+        {
+          "id": "comment-1770994245557",
+          "text": "ファーストタッチで前方へコントロールする。足元でトラップするよりも次のプレイがスムーズになる。",
+          "position": {
+            "x": 18.260869565217376,
+            "y": 281.7391304347826
+          }
+        }
+      ]
+    },
+    {
+      "stepId": 6,
+      "timestamp": 1770992670074,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 96.30303030303028,
+          "y": 157.50505050505052,
+          "radius": 16,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 221.71717171717174,
+          "y": 145.2222222222223,
+          "radius": 16,
+          "number": 2,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 153.83838383838386,
+          "y": 158.22222222222223,
+          "radius": 16,
+          "number": 2,
+          "direction": 59,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 221.07070707070704,
+          "y": 120.03030303030302,
+          "radius": 10
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8
+        }
+      ],
+      "comments": []
+    },
+    {
+      "stepId": 7,
+      "timestamp": 1770992692457,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 105.84890173198991,
+          "y": 117.41239050342006,
+          "radius": 16,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 200.71625457346053,
+          "y": 97.49286507742417,
+          "radius": 16,
+          "number": 2,
+          "direction": -23.626031786675085,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8,
+          "direction": 0
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8,
+          "direction": 0
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 159.56590669575962,
+          "y": 114.94760507760523,
+          "radius": 16,
+          "number": 2,
+          "direction": 0.9193385244237504,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 194.34226706962008,
+          "y": 74.21012017129681,
+          "radius": 10,
+          "direction": 0
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8,
+          "direction": 0
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8,
+          "direction": 0
+        }
+      ],
+      "comments": []
+    },
+    {
+      "stepId": 8,
+      "timestamp": 1770992709369,
+      "objects": [
+        {
+          "id": "player-red-1",
+          "type": "player",
+          "color": "red",
+          "x": 105.99999999999999,
+          "y": 101.26262626262627,
+          "radius": 16,
+          "number": 1,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "player-red-2",
+          "type": "player",
+          "color": "red",
+          "x": 200.3838383838384,
+          "y": 82.51515151515162,
+          "radius": 16,
+          "number": 2,
+          "direction": 336,
+          "name": ""
+        },
+        {
+          "id": "marker-1770991888985",
+          "type": "marker",
+          "color": "purple",
+          "x": 72.3838383838384,
+          "y": 245.44444444444449,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991892254",
+          "type": "marker",
+          "color": "purple",
+          "x": 248.22222222222223,
+          "y": 245.44444444444443,
+          "radius": 8
+        },
+        {
+          "id": "player-blue-1",
+          "type": "player",
+          "color": "blue",
+          "x": 160.3030303030303,
+          "y": 16,
+          "radius": 16,
+          "number": 1,
+          "direction": 180,
+          "name": ""
+        },
+        {
+          "id": "player-blue-2",
+          "type": "player",
+          "color": "blue",
+          "x": 159.01010101010104,
+          "y": 99.3939393939394,
+          "radius": 16,
+          "number": 2,
+          "direction": 0,
+          "name": ""
+        },
+        {
+          "id": "ball-1770991952201",
+          "type": "ball",
+          "color": "orange",
+          "x": 148.02020202020196,
+          "y": 10.131313131313137,
+          "radius": 10
+        },
+        {
+          "id": "marker-1770991978843",
+          "type": "marker",
+          "color": "purple",
+          "x": 9.030303030303019,
+          "y": 125.84848484848484,
+          "radius": 8
+        },
+        {
+          "id": "marker-1770991982185",
+          "type": "marker",
+          "color": "purple",
+          "x": 310.2828282828283,
+          "y": 126.49494949494951,
+          "radius": 8
+        }
+      ],
+      "comments": []
+    }
+  ]
+}
