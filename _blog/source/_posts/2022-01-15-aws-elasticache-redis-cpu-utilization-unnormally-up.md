@@ -1,6 +1,7 @@
 ---
 title: 2022-01-15 昼頃に発生した AWS ElastiCache CPU 使用率の異常上昇について
 date: 2022-01-15
+cover: https://i.imgur.com/JHvTN3N.png
 category: AWS
 ---
 

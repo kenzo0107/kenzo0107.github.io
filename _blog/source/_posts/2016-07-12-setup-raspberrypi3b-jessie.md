@@ -2,6 +2,7 @@
 layout: post
 title: Raspberry Pi 3 B に Raspberry Jessie セットアップ
 date: 2016-07-12
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160710/20160710180905.png
 tags:
 - RaspberryPI
 ---

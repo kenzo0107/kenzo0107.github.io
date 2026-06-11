@@ -2,6 +2,7 @@
 layout: post
 title: Go言語 開発整備 on MacOSX
 date: 2015-08-02
+cover: https://i.imgur.com/EZZA6Kl.png
 ---
 
 ## 環境

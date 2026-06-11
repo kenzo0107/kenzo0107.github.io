@@ -4,6 +4,7 @@ tags:
 - AWS
 - Ruby
 date: 2020-12-11
+cover: https://i.imgur.com/mESrwk7.png
 ---
 
 <div class="toc">

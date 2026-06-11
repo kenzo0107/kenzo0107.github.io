@@ -2,6 +2,7 @@
 layout: post
 title: Hubot で Git の Pull Request や Issue のコメントのメンション相手に Slack DM で通知
 date: 2017-11-23
+cover: https://i.imgur.com/lAlhMpW.png
 ---
 
 ## 概要

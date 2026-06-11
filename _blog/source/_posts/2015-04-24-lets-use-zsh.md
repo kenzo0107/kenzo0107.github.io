@@ -2,6 +2,7 @@
 layout: post
 title: MacOSX  zsh を使おう！
 date: 2015-04-24
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150430/20150430115842.png
 ---
 
 ## メリット

@@ -2,6 +2,7 @@
 layout: post
 title: エラーログをSlack通知する
 date: 2015-09-24
+cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150924/20150924011032.png
 tags:
 - Fluentd
 ---

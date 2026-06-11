@@ -2,6 +2,7 @@
 layout: post
 title: Jenkins 死亡時の対策
 date: 2016-08-15
+cover: https://i.imgur.com/qds0pDI.png
 ---
 
 スレッドが死亡するとこんな表示に...

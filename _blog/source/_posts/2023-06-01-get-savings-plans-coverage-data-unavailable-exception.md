@@ -1,6 +1,7 @@
 ---
 title: AWS Savings Plans Coverage API 実行時に DataUnavailableException エラーが発生する
 date: 2023-06-01
+cover: https://i.imgur.com/ztLP9oV.png
 category: AWS
 ---
 

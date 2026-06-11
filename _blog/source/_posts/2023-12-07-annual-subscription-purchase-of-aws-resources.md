@@ -1,6 +1,7 @@
 ---
 title: AWS リソースの年間予約購入
 date: 2023-12-07
+cover: https://i.imgur.com/Kq3llTo.png
 category: AWS
 ---
 
