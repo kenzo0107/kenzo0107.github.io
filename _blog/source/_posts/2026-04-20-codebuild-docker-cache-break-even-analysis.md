@@ -7,6 +7,7 @@ tags:
   - CodeBuild
   - Docker
   - Cost Optimization
+cover: https://i.imgur.com/H65Q7Ed.png
 ---
 
 AWS CodeBuild の Docker キャッシュは S3 とローカルどちらを選ぶべきか。結論から言うと、**ほとんどの場合ローカルキャッシュが最適**です。本記事では具体的な損益分岐点を示します。

@@ -2,6 +2,7 @@
 title: AWS CloudWatch Application Signals の料金体系
 date: 2025-12-19
 category: AWS
+cover: https://i.imgur.com/Ozk9mO9.png
 ---
 
 [AWS Pricing MCP](https://github.com/awslabs/mcp/tree/main/src/aws-pricing-mcp-server) を利用し取得した価格データから AWS CloudWatch Application Signals の料金体系は以下の通りです。

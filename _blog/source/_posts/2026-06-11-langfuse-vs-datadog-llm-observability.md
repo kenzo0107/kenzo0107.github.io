@@ -7,6 +7,7 @@ tags:
   - Langfuse
   - Datadog
   - Observability
+cover: https://i.imgur.com/0WWWDfD.png
 ---
 
 LLM 監視ツールの Langfuse と Datadog LLM Observability を一次資料（公式ドキュメント・GitHub）をもとに比較しました。

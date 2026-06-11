@@ -2,6 +2,7 @@
 title: Application Signals MCP に問い合わせしてできること
 date: 2025-12-17
 category: AWS
+cover: https://i.imgur.com/XccV9Ug.png
 ---
 
 CloudWatch Application Signals で AIOps 強化が進んでおり期待が高まっております。
