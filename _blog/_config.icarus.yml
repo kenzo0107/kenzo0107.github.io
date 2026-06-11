@@ -61,7 +61,7 @@ footer:
       url: /2013/12/31/PrivacyPolicy/
 article:
   highlight:
-    theme: atom-one-light
+    theme: github-dark
     clipboard: true
     fold: unfolded
   readtime: true
