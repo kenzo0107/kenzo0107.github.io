@@ -1,7 +1,6 @@
 ---
 title: about
 date: 2014-01-01 05:47:40
-cover: /img/cover/about.svg
 ---
 
 <figure class="image is-128x128 mx-auto mb-2">
