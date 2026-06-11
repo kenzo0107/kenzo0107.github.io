@@ -12,7 +12,13 @@ module.exports = class extends Component {
                     const cover = post.cover || post.thumbnail;
                     const coverUrl = cover ? url_for(cover) : null;
                     const link = url_for(post.link || post.path);
-                    return <div class="column is-half-tablet is-one-third-desktop">
+                    // Placeholder label for posts without a cover: prefer the
+                    // category, then the first tag. Falls back to a plain
+                    // decorative band so the post title is never duplicated.
+                    const catName = post.categories && post.categories.length ? post.categories.map(c => c.name)[0] : null;
+                    const tagName = post.tags && post.tags.length ? post.tags.map(t => t.name)[0] : null;
+                    const coverLabel = catName || tagName;
+                    return <div class="column is-half-tablet is-one-third-desktop is-one-quarter-widescreen">
                         <div class="card article-card">
                             <a href={link} class="card-image-link" aria-label={post.title}>
                                 <div class="card-image">
@@ -21,7 +27,7 @@ module.exports = class extends Component {
                                             <img class="fill" src={coverUrl} alt={post.title || coverUrl} />
                                         </figure>
                                         : <figure class="image article-card-cover article-card-noimage">
-                                            <span class="article-card-noimage-text has-ratio">{post.title}</span>
+                                            <span class="article-card-noimage-text has-ratio">{coverLabel}</span>
                                         </figure>}
                                 </div>
                             </a>
