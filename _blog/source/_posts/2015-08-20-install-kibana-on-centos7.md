@@ -4,7 +4,7 @@ title: Kibana4 インストール on CentOS7
 date: 2015-08-20
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150820/20150820233520.png
 tags:
-- kibana
+- Kibana
 ---
 
 
