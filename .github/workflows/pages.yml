@@ -5,6 +5,12 @@ on:
     branches:
       - main
 
+# Pages 環境は同時に1つしかデプロイできないため、デプロイを直列化する。
+# 進行中のデプロイは中断せず完了させる。
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
