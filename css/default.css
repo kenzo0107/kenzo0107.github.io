@@ -11844,9 +11844,67 @@ article.article .content a:not(.article-more):hover {
 article.article .content img {
   border-radius: 6px;
 }
+html {
+  scroll-behavior: smooth;
+}
+article.article .content h1,
+article.article .content h2,
+article.article .content h3,
+article.article .content h4,
+article.article .content h5,
+article.article .content h6 {
+  scroll-margin-top: 1.2rem;
+}
 figure.highlight {
-  border: 1px solid #e4e9ee;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  font-family: 'JetBrains Mono', 'Source Code Pro', Menlo, Consolas, monospace;
+}
+figure.highlight figcaption {
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  padding-left: 4.4em;
+  position: relative;
+  color: #8b949e;
+}
+figure.highlight figcaption::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 1.1em;
+  transform: translateY(-50%);
+  width: 0.72em;
+  height: 0.72em;
+  border-radius: 50%;
+  background: #ff5f56;
+  box-shadow: 1.25em 0 0 #ffbd2e, 2.5em 0 0 #27c93f;
+}
+figure.highlight figcaption span {
+  color: #c9d1d9;
+}
+figure.highlight figcaption a,
+figure.highlight figcaption i,
+figure.highlight figcaption .fold {
+  color: #8b949e;
+}
+figure.highlight figcaption a:hover,
+figure.highlight figcaption i:hover,
+figure.highlight figcaption .fold:hover {
+  color: #c9d1d9;
+}
+figure.highlight .gutter {
+  background: #161b22;
+  color: #6e7681;
+  border-right: 1px solid #21262d;
+}
+figure.highlight .copy {
+  color: #8b949e;
+}
+figure.highlight .copy:hover {
+  color: #c9d1d9;
 }
 .card {
   transition: box-shadow 0.2s ease;
