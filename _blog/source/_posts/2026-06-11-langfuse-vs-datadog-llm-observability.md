@@ -40,6 +40,8 @@ LLM 監視ツールの Langfuse と Datadog LLM Observability を一次資料（
 | プロンプト管理 | あり（バージョニング・デプロイ） | 確認できず |
 | ガードレール | （公式に明確な記載を確認できず） | Sensitive Data Scanner 統合 + AI Guard（Preview） |
 | 既存 APM との統合 | 標準では弱い | APM / ログ / RUM と同一基盤 |
+| OpenTelemetry | OTLP 受信対応（GenAI 規約準拠） | GenAI 規約スパンを直接取り込み（SDK 不要） |
+| AWS との親和性 | 公式 Terraform モジュールでセルフホスト、Bedrock / AgentCore 連携 | Bedrock 自動計装、Bedrock Agents / SageMaker 統合 |
 
 ## Langfuse
 
@@ -114,10 +116,88 @@ Python（3.7+）/ Node.js（16+）/ Java（8+）に対応。llm・workflow・age
 - [SDK Reference](https://docs.datadoghq.com/llm_observability/instrumentation/sdk/)
 - [AI Guard](https://docs.datadoghq.com/security/ai_guard/)
 
-## 注意点
+## 料金比較（2026年6月時点）
 
-- **料金の具体的な数値は本記事では扱っていません**。Datadog の LLM リクエスト単価や Langfuse Cloud の料金ティアは変動があるため、[Langfuse Pricing](https://langfuse.com/pricing) と [Datadog Pricing](https://www.datadoghq.com/pricing/list/) を直接確認してください
-- Langfuse の既存 APM 統合（OpenTelemetry 連携の深さ）は今回未検証です
+### Langfuse Cloud
+
+| プラン | 月額 | 含まれるユニット | 超過分 | データ保持 |
+|---|---|---|---|---|
+| Hobby | 無料 | 50k/月 | なし（上限） | 30日 |
+| Core | $29 | 100k/月 | $8/100k〜 | 90日 |
+| Pro | $199 | 100k/月 | $8/100k〜 | 3年 |
+| Enterprise | $2,499 | 100k/月 | $8/100k〜 | 3年 |
+
+- 課金単位（ユニット）は**トレース・オブザベーション・スコアを含むすべてのトレースデータポイント**
+- 超過分は段階制: 〜1M は $8/100k、1M〜10M は $7/100k、最大 $6/100k まで逓減
+- セルフホスト（OSS）は**無制限・無料**（Enterprise 機能のみ商用ライセンス）
+
+### Datadog LLM Observability（Agent Observability）
+
+| プラン | 月額 | 含まれる LLM スパン | データ保持 |
+|---|---|---|---|
+| Free | 無料 | 40k/月 | 15日 |
+| Pro | $160〜 | 100k/月（超過は従量課金） | 15日（有償で 30/60/90日に延長可） |
+
+- 課金単位（LLM スパン）は **LLM プロバイダーへの1回の呼び出し**。評価（Evals）に別途課金はなく、評価が発行する LLM 呼び出しも LLM スパンとして計上される
+- Sensitive Data Scanner は 10K リクエストごとに 1GB 分が利用料に含まれる
+- 超過分の公表単価は料金ページに明示がないため、契約時に要確認
+
+### 比較時の注意
+
+**課金単位が異なるため、単純な数量比較はできません**。Langfuse は1トレース内のオブザベーションやスコアも個別にカウントするのに対し、Datadog は LLM 呼び出しのみをカウントします。同じアプリケーションでも計上数は大きく変わります。
+
+また、Langfuse はセルフホストすれば利用量課金がゼロになる（インフラ費は別途）のに対し、Datadog は SaaS のみのため利用量に比例した課金が常に発生します。
+
+**参考**:
+- [Langfuse Pricing](https://langfuse.com/pricing) / [Pricing (Self-Host)](https://langfuse.com/pricing-self-host)
+- [Datadog Agent Observability](https://www.datadoghq.com/products/ai/agent-observability/)
+
+## OpenTelemetry との親和性
+
+結論: **どちらも OTel GenAI セマンティック規約ベースのトレースを直接受信でき、親和性は高い**です。ただし対応範囲に差があります。
+
+| 観点 | Langfuse | Datadog |
+|---|---|---|
+| OTLP 受信 | `/api/public/otel`（HTTP/JSON, HTTP/protobuf） | OTLP エンドポイント（http/protobuf + `dd-otlp-source=llmobs` ヘッダー） |
+| gRPC | 未対応 | — |
+| GenAI セマンティック規約 | 準拠（規約が進化中のため `langfuse.*` 属性を優先） | OTel 1.37+ の GenAI 規約スパンを直接取り込み可（SDK / Agent 不要） |
+| OTel ベース計装ライブラリ | OpenLIT、OpenLLMetry、Arize、MLflow 等 | OpenLLMetry v0.47+ 対応 / **OpenInference・OpenLLMetry v0.47 未満は非対応** |
+| OTel Collector | 設定例あり（フィルタリング可） | Datadog Distribution of OTel Collector（DDOT）あり |
+| 制限 | トレースレベル属性（userId 等）は全スパンへの伝播が必要 | OTel 経由はトレース表示に 3〜5分の遅延、APM トレースにも記録され得る |
+
+- Langfuse は OTel SDK / Collector から環境変数設定だけで送信でき、EU / US / **Japan** / HIPAA リージョンのエンドポイントを提供
+- Datadog は OTel 経由でも Prompt Tracking・Experiments・外部評価に対応。ベンダー非依存の計装（OTel）を選んでもどちらにも送信できるため、**OTel で計装しておけば将来の乗り換えコストを抑えられます**
+
+**参考**:
+- [Langfuse OpenTelemetry Integration](https://langfuse.com/integrations/native/opentelemetry)
+- [Datadog OTel Instrumentation for Agent Observability](https://docs.datadoghq.com/llm_observability/instrumentation/otel_instrumentation/)
+- [Datadog Distribution of OTel Collector](https://docs.datadoghq.com/opentelemetry/setup/ddot_collector/)
+
+## AWS との親和性
+
+結論: **アプローチが異なります**。Langfuse は「AWS 上にセルフホストする基盤」として、Datadog は「Bedrock を自動計装する SaaS」として親和性が高いです。
+
+### Langfuse
+
+- **公式 Terraform モジュール**（[langfuse/langfuse-terraform-aws](https://langfuse.com/changelog/2025-05-22-terraform-modules)）で AWS セルフホストを公式サポート。VPC・RDS・S3・ElastiCache を含む高可用構成を ECS Fargate 上にデプロイ（Langfuse Cloud 自体も ECS Fargate で運用）
+- **Amazon Bedrock 計装**: LangChain / LlamaIndex / Vercel AI SDK 等のフレームワーク経由、または SDK デコレータによる手動計装。トークン数・モデル ID・パラメータ・エラーを記録
+- **Bedrock AgentCore 対応**: AgentCore ランタイムから OTel 経由でトレースを受信（ADOT の無効化設定が必要）。エージェント実行フロー・ツール呼び出し・MCP インタラクションを可視化
+- プラットフォーム内部（Playground / Evals）の Bedrock 接続で **AWS SDK デフォルト認証プロバイダーチェーン**（IAM ロール等）を利用可能
+
+### Datadog
+
+- **Bedrock の自動計装**: Bedrock Runtime SDK（boto3 / botocore）の呼び出しをコード変更なしでトレース。Java SDK も Bedrock 対応
+- **Bedrock Agents の監視統合**: レイテンシ・エラー率・トークン使用量・ツール呼び出しの詳細を自動取得（[AWS 公式ブログ](https://aws.amazon.com/blogs/machine-learning/monitor-agents-built-on-bedrock-with-datadog-llm-observability/)でも紹介）
+- **SageMaker インテグレーション**: ML エンドポイント / ジョブのメトリクス収集・可視化・アラート（既存の Datadog AWS インテグレーションの一部）
+- ただしバックエンドは Datadog SaaS のため、トレースデータは AWS 外（Datadog）に送信される
+
+**参考**:
+- [Deploy Langfuse on AWS with Terraform](https://langfuse.com/self-hosting/deployment/aws)
+- [Langfuse - Amazon Bedrock](https://langfuse.com/integrations/model-providers/amazon-bedrock) / [Bedrock AgentCore](https://langfuse.com/integrations/frameworks/amazon-agentcore)
+- [Datadog - Monitor agents built on Amazon Bedrock](https://www.datadoghq.com/blog/llm-observability-bedrock-agents/)
+- [Datadog - Amazon SageMaker](https://www.datadoghq.com/blog/monitor-sagemaker-with-datadog/)
+
+## 注意点
 - Datadog はリブランド進行中でドキュメント URL・名称が変わる可能性があります
 
 ## まとめ
