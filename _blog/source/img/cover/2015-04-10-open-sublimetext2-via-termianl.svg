@@ -1,14 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" role="img" aria-label="ターミナルからファイル指定しSublime Text 2で開く">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" role="img" aria-label="Tech Note">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="hsl(49, 62%, 46%)"/>
       <stop offset="1" stop-color="hsl(87, 64%, 30%)"/>
     </linearGradient>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="3" fill="#ffffff" opacity="0.10"/>
+    </pattern>
   </defs>
   <rect width="1200" height="500" fill="url(#g)"/>
-  <circle cx="1080" cy="90" r="220" fill="#ffffff" opacity="0.06"/>
-  <circle cx="940" cy="460" r="160" fill="#000000" opacity="0.06"/>
-  <rect x="72" y="46" width="46" height="6" rx="3" fill="#ffffff" opacity="0.9"/>
-  <text x="72" y="92" font-family="'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic','Meiryo',system-ui,sans-serif" font-size="30" font-weight="700" letter-spacing="3" fill="#ffffff" opacity="0.92">BLOG</text>
-  <text font-family="'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic','Meiryo',system-ui,sans-serif" font-size="64" font-weight="800" fill="#ffffff"><tspan x="72" y="240">ターミナルからファイル指定しSub</tspan><tspan x="72" y="318">lime Text 2で開く</tspan></text>
+  <rect x="880" y="270" width="320" height="230" fill="url(#dots)"/>
+  <circle cx="1060" cy="120" r="240" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.14"/>
+  <circle cx="1060" cy="120" r="150" fill="#ffffff" opacity="0.05"/>
+  <rect x="72" y="64" width="46" height="6" rx="3" fill="#ffffff" opacity="0.9"/>
+  <text x="72" y="108" font-family="'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic','Meiryo',system-ui,sans-serif" font-size="26" font-weight="700" letter-spacing="3" fill="#ffffff" opacity="0.85">KENZO0107.GITHUB.IO</text>
+  <text x="72" y="317" font-family="'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic','Meiryo',system-ui,sans-serif" font-size="132" font-weight="800" fill="#ffffff">Tech Note</text>
+  
 </svg>

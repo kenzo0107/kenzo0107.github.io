@@ -76,9 +76,26 @@ function pickHue(meta) {
   return hashHue(seed);
 }
 
-function label(meta) {
-  const lab = meta.category || meta.tags[0] || (matchTopic(meta) && matchTopic(meta).kw) || 'BLOG';
-  return lab.toUpperCase();
+// 見栄えの良い表記へ整える表示名マップ（キーは小文字キーワード）
+const DISPLAY = {
+  aws: 'AWS', lambda: 'Lambda', ec2: 'EC2', ecs: 'ECS', fargate: 'Fargate', s3: 'S3',
+  rds: 'RDS', aurora: 'Aurora', dynamodb: 'DynamoDB', cloudwatch: 'CloudWatch', vpc: 'VPC',
+  terraform: 'Terraform', datadog: 'Datadog', prometheus: 'Prometheus', kibana: 'Kibana',
+  elasticsearch: 'Elasticsearch', fluentd: 'Fluentd', go: 'Go', golang: 'Go', python: 'Python',
+  ruby: 'Ruby', php: 'PHP', node: 'Node.js', docker: 'Docker', kubernetes: 'Kubernetes',
+  gke: 'GKE', nginx: 'Nginx', mysql: 'MySQL', postgresql: 'PostgreSQL', redis: 'Redis',
+  raspberrypi: 'Raspberry Pi', raspberry: 'Raspberry Pi', iot: 'IoT', slack: 'Slack',
+  git: 'Git', github: 'GitHub', ssl: 'SSL', ssh: 'SSH', mac: 'macOS', macosx: 'macOS',
+  centos: 'CentOS', ansible: 'Ansible', jenkins: 'Jenkins',
+};
+
+// カバーの主役テキスト。タイトルは使わず、トピック/技術名・カテゴリを表示する。
+function headline(meta) {
+  const t = matchTopic(meta);
+  if (t) return DISPLAY[t.kw] || t.kw.toUpperCase();
+  if (meta.category) return meta.category;
+  if (meta.tags[0]) return meta.tags[0];
+  return 'Tech Note';
 }
 
 // ---- title wrapping (CJK aware) ----------------------------------------
@@ -126,57 +143,93 @@ function esc(s) {
 
 // ---- SVG builder --------------------------------------------------------
 const W = 1200, H = 500;
+const FONT = "'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic','Meiryo',system-ui,sans-serif";
+const BRAND = 'KENZO0107.GITHUB.IO';
+
+// テキスト幅の概算（フォントサイズに対する単位幅の合計）
+function textWidth(s, fontSize) {
+  return [...s].reduce((a, ch) => a + charWidth(ch), 0) * fontSize;
+}
+
+// maxPx に収まるフォントサイズを返す（max/min でクランプ）
+function fitFont(s, maxPx, max, min) {
+  const units = [...s].reduce((a, ch) => a + charWidth(ch), 0) || 1;
+  return Math.max(min, Math.min(max, Math.floor(maxPx / units)));
+}
+
 function buildSvg(meta) {
   const hue = pickHue(meta);
   const c1 = `hsl(${hue}, 62%, 46%)`;
   const c2 = `hsl(${(hue + 38) % 360}, 64%, 30%)`;
-  const lab = esc(label(meta));
-  const maxLines = 4;
-  let lines = wrap(meta.title, 16, maxLines);
-  const truncated = wrap(meta.title, 16, maxLines + 1).length > maxLines;
-  if (truncated) {
-    let last = lines[lines.length - 1];
-    while ([...last].reduce((a, ch) => a + charWidth(ch), 0) > 15 && last.length) last = last.slice(0, -1);
-    lines[lines.length - 1] = last + '…';
+  const PAD = 72;
+  const maxW = W - PAD * 2;
+
+  // 主役テキスト（タイトルではなくトピック/カテゴリ）
+  const head = headline(meta);
+  const headSize = fitFont(head, maxW, 132, 46);
+
+  // タグ pill（最大4件、主役と重複するものは除く）
+  const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const headNorm = norm(head);
+  const pillFont = 26;
+  const pills = [];
+  let px = PAD;
+  for (const tag of meta.tags) {
+    if (norm(tag) === headNorm) continue;
+    const tw = textWidth(tag, pillFont);
+    const pw = Math.round(tw + 36);
+    if (px + pw > W - PAD) break;
+    pills.push({ tag, x: px, w: pw });
+    px += pw + 14;
+    if (pills.length >= 4) break;
   }
-  const fontSize = lines.length >= 4 ? 54 : lines.length === 3 ? 60 : 64;
-  const lineH = fontSize * 1.22;
-  const blockH = lines.length * lineH;
-  let y = (H - blockH) / 2 + fontSize * 0.82 + 16; // nudge below label
-  const tspans = lines.map((ln, i) =>
-    `<tspan x="72" y="${Math.round(y + i * lineH)}">${esc(ln)}</tspan>`).join('');
-  const font = "'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic','Meiryo',system-ui,sans-serif";
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(meta.title)}">
+  const pillH = 44;
+  const pillY = H - PAD - pillH + 8;
+  const pillSvg = pills.map(p =>
+    `<rect x="${p.x}" y="${pillY}" width="${p.w}" height="${pillH}" rx="${pillH / 2}" fill="#ffffff" opacity="0.16"/>` +
+    `<text x="${p.x + p.w / 2}" y="${pillY + pillH / 2 + pillFont * 0.36}" text-anchor="middle" font-family="${FONT}" font-size="${pillFont}" font-weight="600" fill="#ffffff">${esc(p.tag)}</text>`
+  ).join('\n  ');
+
+  // 主役テキストの縦位置（中央やや上）
+  const headY = pills.length ? H * 0.5 + headSize * 0.32 : H * 0.55 + headSize * 0.32;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc(head)}">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="${c1}"/>
       <stop offset="1" stop-color="${c2}"/>
     </linearGradient>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="3" fill="#ffffff" opacity="0.10"/>
+    </pattern>
   </defs>
   <rect width="${W}" height="${H}" fill="url(#g)"/>
-  <circle cx="${W - 120}" cy="90" r="220" fill="#ffffff" opacity="0.06"/>
-  <circle cx="${W - 260}" cy="${H - 40}" r="160" fill="#000000" opacity="0.06"/>
-  <rect x="72" y="46" width="46" height="6" rx="3" fill="#ffffff" opacity="0.9"/>
-  <text x="72" y="92" font-family="${font}" font-size="30" font-weight="700" letter-spacing="3" fill="#ffffff" opacity="0.92">${lab}</text>
-  <text font-family="${font}" font-size="${fontSize}" font-weight="800" fill="#ffffff">${tspans}</text>
+  <rect x="${W - 320}" y="${H - 230}" width="320" height="230" fill="url(#dots)"/>
+  <circle cx="${W - 140}" cy="120" r="240" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.14"/>
+  <circle cx="${W - 140}" cy="120" r="150" fill="#ffffff" opacity="0.05"/>
+  <rect x="${PAD}" y="64" width="46" height="6" rx="3" fill="#ffffff" opacity="0.9"/>
+  <text x="${PAD}" y="108" font-family="${FONT}" font-size="26" font-weight="700" letter-spacing="3" fill="#ffffff" opacity="0.85">${BRAND}</text>
+  <text x="${PAD}" y="${Math.round(headY)}" font-family="${FONT}" font-size="${headSize}" font-weight="800" fill="#ffffff">${esc(head)}</text>
+  ${pillSvg}
 </svg>
 `;
 }
 
 // ---- main ---------------------------------------------------------------
 const files = fs.readdirSync(POSTS).filter(f => f.endsWith('.md'));
-let made = 0, skipped = 0;
+let made = 0, regenerated = 0, skipped = 0;
 for (const f of files) {
   const full = path.join(POSTS, f);
   const text = fs.readFileSync(full, 'utf8');
   const parts = splitFrontMatter(text);
   if (!parts) { skipped++; continue; }
-  if (/^cover:/m.test(parts.fm)) continue; // already has cover
   const meta = parseMeta(parts.fm);
   if (!meta.title) { skipped++; continue; }
   const base = f.replace(/\.md$/, '');
   const svgRel = `/img/cover/${base}.svg`;
+  // SVG は常に再生成する（デザイン更新を既存記事へも反映するため）
   fs.writeFileSync(path.join(IMG_DIR, `${base}.svg`), buildSvg(meta));
+  if (/^cover:/m.test(parts.fm)) { regenerated++; continue; } // cover 行は既にある
   // insert cover after date line (or after title if no date)
   const fmLines = parts.fm.split('\n');
   let idx = fmLines.findIndex(l => /^date:/.test(l));
@@ -185,4 +238,4 @@ for (const f of files) {
   fs.writeFileSync(full, fmLines.join('\n') + parts.body);
   made++;
 }
-console.log(`generated: ${made} svg + cover, skipped: ${skipped}`);
+console.log(`cover added: ${made}, svg regenerated: ${regenerated}, skipped: ${skipped}`);
