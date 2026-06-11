@@ -11912,3 +11912,72 @@ figure.highlight .copy:hover {
 .card:hover {
   box-shadow: 0 6px 16px rgba(0,0,0,0.08), 0 0 1px rgba(0,0,0,0.1);
 }
+.link-preview {
+  display: block;
+  margin: 1.5em 0;
+  border: 1px solid #e4e9ee;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  color: #4a4a4a;
+  text-decoration: none;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.link-preview:hover {
+  border-color: rgba(50,115,220,0.4);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+.link-preview .link-area {
+  display: flex;
+  align-items: stretch;
+}
+.link-preview .og-image {
+  flex: 0 0 30%;
+  max-width: 200px;
+  overflow: hidden;
+  background: #f4f6f8;
+}
+.link-preview .og-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+.link-preview .descriptions {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.9em 1.1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.link-preview .og-title {
+  font-weight: 600;
+  line-height: 1.4;
+  color: #3273dc;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.link-preview .og-description {
+  margin-top: 0.4em;
+  font-size: 0.85em;
+  color: #7a7a7a;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@media screen and (max-width: 768px) {
+  .link-preview .link-area {
+    flex-direction: column;
+  }
+  .link-preview .og-image {
+    flex-basis: auto;
+    max-width: 100%;
+    max-height: 180px;
+  }
+}
