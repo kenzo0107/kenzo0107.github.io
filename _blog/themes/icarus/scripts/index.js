@@ -44,8 +44,8 @@ hexo.extend.tag.register('affiliate', function (args) {
         <a href="${amazon_url}" target="_blank" rel="nofollow">${title}</a>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:0.5em;">
-        <a class="button is-link" href="${amazon_url}" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900">Amazonでチェック</a>
-        <a class="button is-link" href="${rakuten_url}" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956">楽天市場でチェック</a>
+        <a class="button is-link" href="${amazon_url}" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#ff9900;text-decoration:none">Amazon</a>
+        <a class="button is-link" href="${rakuten_url}" target="_blank" rel="nofollow" referrerpolicy="no-referrer-when-downgrade" style="background:#f76956;text-decoration:none">楽天市場</a>
       </div>
     </div>
   </div>`;

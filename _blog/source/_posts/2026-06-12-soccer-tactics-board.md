@@ -1,7 +1,9 @@
 ---
 title: ブラウザで動くサッカー作戦盤を作った ── 子供に戦術を説明したくて
 category: JavaScript
-date: 2026-06-11
+date: 2026-06-12
+lang: ja
+translation_id: soccer-tactics-board
 cover: /img/cover/2026-06-11-soccer-tactics-board.svg
 tags:
   - JavaScript
@@ -11,6 +13,8 @@ tags:
 ---
 
 選手を配置して動きを 1 ステップずつ保存し、なめらかなアニメーションとして再生できるサッカー作戦盤を作りました。GitHub Pages にもそのまま置ける、ビルド不要の HTML + Pure JavaScript アプリです。
+
+{% linkPreview https://kenzo0107.github.io/soccer-tactics-board/ %}
 
 リポジトリ: [kenzo0107/soccer-tactics-board](https://github.com/kenzo0107/soccer-tactics-board)
 
