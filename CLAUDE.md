@@ -16,7 +16,7 @@ This is a Hexo-based static blog site for `kenzo0107.github.io` - a Japanese tec
 - **Static Generator**: Hexo 6.3.0 with Icarus theme 5.1.0
 - **Content**: Markdown posts in `_blog/source/_posts/`
 - **Deployment**: GitHub Actions CI/CD pipeline
-- **Hosting**: GitHub Pages (master branch serves static files)
+- **Hosting**: GitHub Pages (GitHub Actions artifact deployment)
 
 ## Development Commands
 
@@ -35,8 +35,8 @@ npm run deploy    # Deploy to Git (hexo deploy)
 1. **Development**: Work in `_blog/` directory
 2. **Local Testing**: `npm run server` to preview changes
 3. **Build**: `npm run build` generates static files to repository root
-4. **Deploy**: Push to `release` branch triggers GitHub Actions
-5. **Publication**: GitHub Actions builds and deploys to `master` branch
+4. **Deploy**: Push to `main` branch triggers GitHub Actions
+5. **Publication**: GitHub Actions builds and deploys the artifact to GitHub Pages
 
 ## Content Structure
 
@@ -63,8 +63,7 @@ Content here...
 
 ## Branch Strategy
 
-- `release`: Development and content updates
-- `master`: Production static files (auto-deployed)
+- `main`: 単一ブランチ運用。push すると GitHub Actions がビルドし GitHub Pages へ自動デプロイ
 
 ## Content Categories
 
