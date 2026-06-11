@@ -10952,6 +10952,17 @@ a.article-nav-next span {
 .article-cards .article-card .card-image-link {
   display: block;
 }
+.article-cards .article-card .article-card-cover {
+  padding-top: 41.67%;
+}
+.article-cards .article-card .article-card-cover img,
+.article-cards .article-card .article-card-cover .has-ratio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
 .article-cards .article-card .card-content {
   flex: 1;
   display: flex;

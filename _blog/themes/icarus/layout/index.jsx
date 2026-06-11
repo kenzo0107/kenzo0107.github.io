@@ -17,10 +17,10 @@ module.exports = class extends Component {
                             <a href={link} class="card-image-link" aria-label={post.title}>
                                 <div class="card-image">
                                     {coverUrl
-                                        ? <figure class="image is-16by9">
+                                        ? <figure class="image article-card-cover">
                                             <img class="fill" src={coverUrl} alt={post.title || coverUrl} />
                                         </figure>
-                                        : <figure class="image is-16by9 article-card-noimage">
+                                        : <figure class="image article-card-cover article-card-noimage">
                                             <span class="article-card-noimage-text has-ratio">{post.title}</span>
                                         </figure>}
                                 </div>
