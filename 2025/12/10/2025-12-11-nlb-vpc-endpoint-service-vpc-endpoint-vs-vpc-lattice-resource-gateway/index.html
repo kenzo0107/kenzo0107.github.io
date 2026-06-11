@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>AWS VPC Lattice Resource Gateway と NLB+VPC Endpoint 構成の比較分析 - 長生村本郷Engineers&#039;Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="長生村本郷Engineers&#039;Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="長生村本郷Engineers&#039;Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="概要本記事では、AWS VPC Lattice の Resource Gateway と、従来の Network Load Balancer (NLB) + VPC Endpoint Service + VPC Endpoint 構成について、コスト・セキュリティ・パフォーマンスの観点から詳細な比較分析を行います。 AWS Documentation MCP を利用し調査した結果です。"><meta property="og:type" content="blog"><meta property="og:title" content="AWS VPC Lattice Resource Gateway と NLB+VPC Endpoint 構成の比較分析"><meta property="og:url" content="https://kenzo0107.github.io/2025/12/10/2025-12-11-nlb-vpc-endpoint-service-vpc-endpoint-vs-vpc-lattice-resource-gateway/"><meta property="og:site_name" content="長生村本郷Engineers&#039;Blog"><meta property="og:description" content="概要本記事では、AWS VPC Lattice の Resource Gateway と、従来の Network Load Balancer (NLB) + VPC Endpoint Service + VPC Endpoint 構成について、コスト・セキュリティ・パフォーマンスの観点から詳細な比較分析を行います。 AWS Documentation MCP を利用し調査した結果です。"><meta property="og:locale" content="ja_JP"><meta property="og:image" content="https://kenzo0107.github.io/img/og_image.png"><meta property="article:published_time" content="2025-12-10T15:00:00.000Z"><meta property="article:author" content="Kenzo Tanaka"><meta property="article:tag" content="aws golang"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://kenzo0107.github.io/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://kenzo0107.github.io/2025/12/10/2025-12-11-nlb-vpc-endpoint-service-vpc-endpoint-vs-vpc-lattice-resource-gateway/"},"headline":"AWS VPC Lattice Resource Gateway と NLB+VPC Endpoint 構成の比較分析","image":["https://kenzo0107.github.io/img/og_image.png"],"datePublished":"2025-12-10T15:00:00.000Z","author":{"@type":"Person","name":"Kenzo Tanaka"},"publisher":{"@type":"Organization","name":"長生村本郷Engineers'Blog","logo":{"@type":"ImageObject","url":"https://kenzo0107.github.io/img/logo.svg"}},"description":"概要本記事では、AWS VPC Lattice の Resource Gateway と、従来の Network Load Balancer (NLB) + VPC Endpoint Service + VPC Endpoint 構成について、コスト・セキュリティ・パフォーマンスの観点から詳細な比較分析を行います。 AWS Documentation MCP を利用し調査した結果です。"}</script><link rel="canonical" href="https://kenzo0107.github.io/2025/12/10/2025-12-11-nlb-vpc-endpoint-service-vpc-endpoint-vs-vpc-lattice-resource-gateway/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&amp;family=JetBrains+Mono:wght@400;600"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-162026478-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-162026478-1');</script><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><script data-ad-client="ca-pub-6265337967545472" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="長生村本郷Engineers'Blog" type="application/atom+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/2013/12/31/about/">About</a><a class="navbar-item" href="/archives">Posts</a><a class="navbar-item" href="/categories/">Categories</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="GitHub" href="https://github.com/kenzo0107"><i class="fab fa-github"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Twitter" href="https://twitter.com/kenzo0107"><i class="fab fa-twitter"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="カタログ" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="検索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-10-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">2025-12-11</span><span class="level-item"><a class="link-muted" href="/categories/AWS/">AWS</a></span><span class="level-item">16分で読む (約2400語)</span></div></div><h1 class="title is-3 is-size-4-mobile">AWS VPC Lattice Resource Gateway と NLB+VPC Endpoint 構成の比較分析</h1><div class="content"><h2><span id="概要">概要</span></h2><p>本記事では、AWS VPC Lattice の Resource Gateway と、従来の Network Load Balancer (NLB) + VPC Endpoint Service + VPC Endpoint 構成について、コスト・セキュリティ・パフォーマンスの観点から詳細な比較分析を行います。</p>
+<p><a target="_blank" rel="noopener" href="https://awslabs.github.io/mcp/servers/aws-documentation-mcp-server">AWS Documentation MCP</a> を利用し調査した結果です。</p>
+<span id="more"></span>
+
+<h2><span id="比較する構成">比較する構成</span></h2><h3><span id="構成1-nlb-vpc-endpoint-service-vpc-endpoint">構成1: NLB + VPC Endpoint Service + VPC Endpoint</span></h3><ul>
+<li>Network Load Balancer</li>
+<li>VPC Endpoint Service</li>
+<li>VPC Endpoint</li>
+</ul>
+<h3><span id="構成2-vpc-lattice-resource-gateway">構成2: VPC Lattice Resource Gateway</span></h3><ul>
+<li>VPC Lattice Service</li>
+<li>Resource Gateway</li>
+<li>Resource Configuration</li>
+</ul>
+<h2><span id="コスト比較">コスト比較</span></h2><p>AWS Pricing APIを用いた2025年12月時点の料金調査結果に基づく比較です。</p>
+<h3><span id="nlb-vpc-endpoint-service-vpc-endpoint">NLB + VPC Endpoint Service + VPC Endpoint</span></h3><table>
+<thead>
+<tr>
+<th>コンポーネント</th>
+<th>時間単価</th>
+<th>月額基本料金</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Network Load Balancer</td>
+<td>$0.0225/時間</td>
+<td>$16.20</td>
+</tr>
+<tr>
+<td>NLB LCU使用量</td>
+<td>$0.006/LCU時間</td>
+<td>使用量による</td>
+</tr>
+<tr>
+<td>VPC Endpoint Service</td>
+<td>$0.05/時間（リモートリージョン毎）</td>
+<td>$36.00</td>
+</tr>
+<tr>
+<td>VPC Endpoint</td>
+<td>$0.01/時間</td>
+<td>$7.20</td>
+</tr>
+<tr>
+<td>データ処理費</td>
+<td>$0.01/GB（1PBまで）</td>
+<td>使用量による</td>
+</tr>
+</tbody></table>
+<p><strong>月額基本料金合計</strong>: 約 <strong>$59.40</strong> + 使用量ベース料金</p>
+<h3><span id="vpc-lattice-resource-gateway">VPC Lattice Resource Gateway</span></h3><table>
+<thead>
+<tr>
+<th>コンポーネント</th>
+<th>時間単価</th>
+<th>月額基本料金</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VPC Lattice Service</td>
+<td>$0.025/時間</td>
+<td>$18.00</td>
+</tr>
+<tr>
+<td>Resource Gateway</td>
+<td>$0.02/時間（リソース毎）</td>
+<td>$14.40</td>
+</tr>
+<tr>
+<td>データ処理費</td>
+<td>$0.025/GB</td>
+<td>使用量による</td>
+</tr>
+<tr>
+<td>接続・リクエスト</td>
+<td>$0.0000001/時間</td>
+<td>微小</td>
+</tr>
+</tbody></table>
+<p><strong>月額基本料金合計</strong>: 約 <strong>$32.40</strong> + データ処理費</p>
+<h3><span id="コスト分析結果">コスト分析結果</span></h3><ul>
+<li>VPC Lattice の基本料金は約 <strong>45%安い</strong></li>
+<li>データ処理費は VPC Lattice の方が2.5倍高い</li>
+<li>低〜中程度のデータ転送量であれば VPC Lattice が有利</li>
+</ul>
+<h2><span id="セキュリティ比較">セキュリティ比較</span></h2><table>
+<thead>
+<tr>
+<th>セキュリティ項目</th>
+<th>NLB+VPC Endpoint</th>
+<th>VPC Lattice Resource Gateway</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ネットワーク分離</strong></td>
+<td>✅ 完全なプライベート通信</td>
+<td>✅ 完全なプライベート通信</td>
+</tr>
+<tr>
+<td><strong>IAM統合</strong></td>
+<td>⚠️ 限定的なサポート</td>
+<td>✅ 細かなアクセス制御が可能</td>
+</tr>
+<tr>
+<td><strong>認証・認可</strong></td>
+<td>❌ NLBレベルでは基本的</td>
+<td>✅ サービス・リソースレベル対応</td>
+</tr>
+<tr>
+<td><strong>ネットワークACL</strong></td>
+<td>✅ VPC・サブネットレベル</td>
+<td>✅ Service Network レベル</td>
+</tr>
+<tr>
+<td><strong>セキュリティグループ</strong></td>
+<td>✅ 標準対応</td>
+<td>✅ 標準対応</td>
+</tr>
+<tr>
+<td><strong>監査ログ</strong></td>
+<td>⚠️ CloudTrail, VPC Flow Logs</td>
+<td>✅ CloudTrail + VPC Lattice専用ログ</td>
+</tr>
+<tr>
+<td><strong>暗号化</strong></td>
+<td>✅ TLS終端可能</td>
+<td>✅ TLS終端可能</td>
+</tr>
+</tbody></table>
+<h3><span id="セキュリティ分析結果">セキュリティ分析結果</span></h3><p>VPC Lattice は <strong>IAM統合による細かなアクセス制御</strong> と <strong>統合された監査ログ</strong> でセキュリティ面において優位性があります。</p>
+<h2><span id="パフォーマンス比較">パフォーマンス比較</span></h2><table>
+<thead>
+<tr>
+<th>パフォーマンス項目</th>
+<th>NLB+VPC Endpoint</th>
+<th>VPC Lattice Resource Gateway</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>レイテンシ</strong></td>
+<td>⚠️ 複数ホップ（NLB→Target）</td>
+<td>✅ 直接ルーティングで低レイテンシ</td>
+</tr>
+<tr>
+<td><strong>スループット</strong></td>
+<td>✅ 高い（NLBの実績ある性能）</td>
+<td>✅ 高い（専用設計）</td>
+</tr>
+<tr>
+<td><strong>可用性</strong></td>
+<td>✅ Multi-AZ NLB + Endpoint</td>
+<td>✅ Service Network の自動冗長化</td>
+</tr>
+<tr>
+<td><strong>スケーラビリティ</strong></td>
+<td>✅ NLBの自動スケール</td>
+<td>✅ 自動スケール対応</td>
+</tr>
+<tr>
+<td><strong>ヘルスチェック</strong></td>
+<td>✅ NLBターゲットヘルスチェック</td>
+<td>✅ Resource Configuration ヘルスチェック</td>
+</tr>
+<tr>
+<td><strong>ロードバランシング</strong></td>
+<td>✅ 複数アルゴリズム対応</td>
+<td>⚠️ 基本的なロードバランシング</td>
+</tr>
+</tbody></table>
+<h3><span id="パフォーマンス分析結果">パフォーマンス分析結果</span></h3><ul>
+<li><strong>レイテンシ</strong>: VPC Lattice が優位</li>
+<li><strong>柔軟性</strong>: NLB が多様なロードバランシングオプションで優位</li>
+<li><strong>総合</strong>: 用途により優位性が変わる</li>
+</ul>
+<h2><span id="運用管理比較">運用・管理比較</span></h2><table>
+<thead>
+<tr>
+<th>運用管理項目</th>
+<th>NLB+VPC Endpoint</th>
+<th>VPC Lattice Resource Gateway</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>設定の複雑さ</strong></td>
+<td>❌ 複雑（複数コンポーネント管理）</td>
+<td>✅ シンプル（統合管理）</td>
+</tr>
+<tr>
+<td><strong>監視・メトリクス</strong></td>
+<td>⚠️ 複数サービスの個別監視</td>
+<td>✅ 統合メトリクス</td>
+</tr>
+<tr>
+<td><strong>トラブルシューティング</strong></td>
+<td>❌ 複数ポイントの調査必要</td>
+<td>✅ 一元化されたログとメトリクス</td>
+</tr>
+<tr>
+<td><strong>マルチリージョン対応</strong></td>
+<td>❌ リージョン毎の個別設定</td>
+<td>✅ Service Network での統一管理</td>
+</tr>
+<tr>
+<td><strong>学習コスト</strong></td>
+<td>✅ 既存技術の組み合わせ</td>
+<td>⚠️ 新しいサービスの理解が必要</td>
+</tr>
+</tbody></table>
+<h2><span id="総合比較とメリットデメリット">総合比較とメリット・デメリット</span></h2><h3><span id="nlb-vpc-endpoint-service-vpc-endpoint">NLB + VPC Endpoint Service + VPC Endpoint</span></h3><h4><span id="メリット">メリット</span></h4><ul>
+<li>✅ <strong>成熟した技術</strong>: 長期間の運用実績と安定性</li>
+<li>✅ <strong>既存インフラとの親和性</strong>: VPCベースの既存構成と自然に統合</li>
+<li>✅ <strong>豊富なロードバランシング機能</strong>: 複数のアルゴリズムとヘルスチェックオプション</li>
+<li>✅ <strong>詳細なネットワーク制御</strong>: セキュリティグループ、NACLによる細かな制御</li>
+<li>✅ <strong>豊富なドキュメント</strong>: 多くの事例と解決策が存在</li>
+</ul>
+<h4><span id="デメリット">デメリット</span></h4><ul>
+<li>🤔 <strong>高い初期コスト</strong>: 基本料金が月額約$59.40</li>
+<li>🤔 <strong>複雑な設定・管理</strong>: 複数コンポーネントの個別管理が必要</li>
+<li>🤔 <strong>運用負荷</strong>: 複数サービスの監視・トラブルシューティング</li>
+<li>🤔 <strong>レイテンシ</strong>: 複数ホップによる若干の遅延</li>
+</ul>
+<h3><span id="vpc-lattice-resource-gateway">VPC Lattice Resource Gateway</span></h3><h4><span id="メリット">メリット</span></h4><ul>
+<li>✅ <strong>低い初期コスト</strong>: 基本料金が月額約$32.40（45%安い）</li>
+<li>✅ <strong>シンプルな管理</strong>: 統合されたサービスによる一元管理</li>
+<li>✅ <strong>優れたIAM統合</strong>: サービス・リソースレベルでの細かなアクセス制御</li>
+<li>✅ <strong>統合監視</strong>: 一元化されたメトリクスとログ</li>
+<li>✅ <strong>低レイテンシ</strong>: 直接ルーティングによる高速通信</li>
+<li>✅ <strong>マルチリージョン対応</strong>: Service Network での統一管理</li>
+</ul>
+<h4><span id="デメリット">デメリット</span></h4><ul>
+<li>🤔 <strong>データ処理費</strong>: 高トラフィック時の従量課金（$0.025/GB）</li>
+<li>🤔 <strong>機能制約</strong>: NLBほど柔軟なロードバランシングオプションがない</li>
+</ul>
+<h2><span id="推奨シナリオ">推奨シナリオ</span></h2><h3><span id="vpc-lattice-resource-gateway-を推奨する場合">VPC Lattice Resource Gateway を推奨する場合</span></h3><p>🎯 <strong>以下の条件に当てはまる場合に最適</strong>:</p>
+<ul>
+<li>新規システム構築</li>
+<li>シンプルな管理・運用を重視</li>
+<li>IAMによる細かなアクセス制御が重要</li>
+<li>データ転送量が中程度以下（月数TB程度）</li>
+<li>運用コストを重視</li>
+<li>マルチリージョン展開を予定</li>
+</ul>
+<h3><span id="nlb-vpc-endpoint-を推奨する場合">NLB + VPC Endpoint を推奨する場合</span></h3><p>🎯 <strong>以下の条件に当てはまる場合に最適</strong>:</p>
+<ul>
+<li>既存VPCインフラとの整合性重視</li>
+<li>高度なロードバランシング機能が必要</li>
+<li>運用実績・安定性を最重視</li>
+<li>非常に高いデータ転送量（月数十TB以上）</li>
+<li>既存チームのNLB運用スキルを活用したい</li>
+</ul>
+<h2><span id="実装時の考慮事項">実装時の考慮事項</span></h2><h3><span id="移行戦略">移行戦略</span></h3><ul>
+<li><strong>段階的移行</strong>: 重要度の低いサービスから VPC Lattice へ段階的に移行</li>
+<li><strong>ハイブリッド運用</strong>: 要件に応じて両方式を使い分け</li>
+<li><strong>コスト監視</strong>: データ転送量の実測値に基づく定期的なコスト見直し</li>
+</ul>
+<h3><span id="技術的考慮事項">技術的考慮事項</span></h3><ul>
+<li><strong>モニタリング設計</strong>: VPC Lattice の新しいメトリクスに対応した監視設計</li>
+<li><strong>セキュリティポリシー</strong>: IAMポリシーベースのアクセス制御設計</li>
+<li><strong>ディザスタリカバリ</strong>: Service Network の冗長性設計</li>
+</ul>
+<h2><span id="まとめ">まとめ</span></h2><p>AWS VPC Lattice Resource Gateway は、従来のNLB+VPC Endpoint構成と比較して、<strong>コスト効率性・運用性・セキュリティ機能</strong>において優位性を持つ新しいソリューションです。</p>
+<p>特に <strong>新規システム構築</strong> や <strong>シンプルな運用</strong> を重視する場合には、VPC Lattice の採用を強く推奨します。一方、<strong>既存インフラとの整合性</strong> や <strong>運用実績</strong> を重視する場合には、従来のNLB+VPC Endpoint構成も依然として有効な選択肢です。</p>
+<p>最終的な選択は、システムの要件・制約・チームのスキルレベルを総合的に評価して決定することが重要です。</p>
+<h2><span id="参考">参考</span></h2><h3><span id="aws-公式ドキュメント">AWS 公式ドキュメント</span></h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/vpc-lattice/latest/ug/what-is-vpc-lattice.html">Amazon VPC Lattice User Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/elasticloadbalancing/latest/network/">Elastic Load Balancing - Network Load Balancer</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints.html">VPC Endpoints - AWS PrivateLink</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/vpc-lattice/pricing/">AWS Pricing - VPC Lattice</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/elasticloadbalancing/pricing/">AWS Pricing - Elastic Load Balancing</a></li>
+</ul>
+<h3><span id="aws-ブログ技術記事">AWS ブログ・技術記事</span></h3><ul>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/blogs/aws/introducing-amazon-vpc-lattice-simplify-networking-for-service-to-service-communication/">Introducing Amazon VPC Lattice – Simplify Networking for Service-to-Service Communication</a></li>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/jp/blogs/news/introducing-amazon-vpc-lattice/">Amazon VPC Lattice でマイクロサービス間の通信を簡単に</a></li>
+</ul>
+<h3><span id="価格情報ソース">価格情報ソース</span></h3><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/price-list-api.html">AWS Price List API</a> - 本分析で使用した料金データの取得元</li>
+</ul>
+<hr>
+<p><em>本分析は2025年12月時点のAWS Pricing APIデータに基づいています。料金は変更される可能性があるため、最新情報は公式ドキュメントをご確認ください。</em></p>
+<p>以上<br><br>参考になれば幸いです。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>AWS VPC Lattice Resource Gateway と NLB+VPC Endpoint 構成の比較分析</p><p><a href="https://kenzo0107.github.io/2025/12/10/2025-12-11-nlb-vpc-endpoint-service-vpc-endpoint-vs-vpc-lattice-resource-gateway/">https://kenzo0107.github.io/2025/12/10/2025-12-11-nlb-vpc-endpoint-service-vpc-endpoint-vs-vpc-lattice-resource-gateway/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Kenzo Tanaka</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-12-11</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8" defer></script></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">この記事は気に入りましたか？ 著者をサポートする</h3><div class="buttons is-centered"><a class="button donate" href="https://www.patreon.com/kenzo0107" target="_blank" rel="noopener" data-type="patreon"><span class="icon is-small"><i class="fab fa-patreon"></i></span><span>Patreon</span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2025/12/16/2025-12-17-what-application-signals-mcp-can-do/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Application Signals MCP に問い合わせしてできること</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2025/12/04/2025-12-05-migrate-from-performance-insights-to-database-insights/"><span class="level-item">RDS Performance Insights が 2026年6月に EOL、 Database Insights への移行を考える</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">カタログ</h3><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">1</span><span class="level-item">概要</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">2</span><span class="level-item">比較する構成</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">構成1: NLB + VPC Endpoint Service + VPC Endpoint</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">構成2: VPC Lattice Resource Gateway</span></span></a></li></ul></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">3</span><span class="level-item">コスト比較</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">NLB + VPC Endpoint Service + VPC Endpoint</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">VPC Lattice Resource Gateway</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">コスト分析結果</span></span></a></li></ul></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">4</span><span class="level-item">セキュリティ比較</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">セキュリティ分析結果</span></span></a></li></ul></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">5</span><span class="level-item">パフォーマンス比較</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">パフォーマンス分析結果</span></span></a></li></ul></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">6</span><span class="level-item">運用・管理比較</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">7</span><span class="level-item">総合比較とメリット・デメリット</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">7.1</span><span class="level-item">NLB + VPC Endpoint Service + VPC Endpoint</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">7.1.1</span><span class="level-item">メリット</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">7.1.2</span><span class="level-item">デメリット</span></span></a></li></ul></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">7.2</span><span class="level-item">VPC Lattice Resource Gateway</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">7.2.1</span><span class="level-item">メリット</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">7.2.2</span><span class="level-item">デメリット</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">8</span><span class="level-item">推奨シナリオ</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">8.1</span><span class="level-item">VPC Lattice Resource Gateway を推奨する場合</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">8.2</span><span class="level-item">NLB + VPC Endpoint を推奨する場合</span></span></a></li></ul></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">9</span><span class="level-item">実装時の考慮事項</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">9.1</span><span class="level-item">移行戦略</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">9.2</span><span class="level-item">技術的考慮事項</span></span></a></li></ul></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">10</span><span class="level-item">まとめ</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">11</span><span class="level-item">参考</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">11.1</span><span class="level-item">AWS 公式ドキュメント</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">11.2</span><span class="level-item">AWS ブログ・技術記事</span></span></a></li><li><a class="level is-mobile" href="#"><span class="level-left"><span class="level-item">11.3</span><span class="level-item">価格情報ソース</span></span></a></li></ul></li></ul></div></div><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="長生村本郷Engineers&#039;Blog" height="28"></a><p class="is-size-7"><span>&copy; 2026 Kenzo Tanaka</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Privacy Policy" href="/2013/12/31/PrivacyPolicy/"><i class="fab fa-p"></i></a></p></div></div></div><div class="level"><div class="level-item"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6265337967545472" crossorigin="anonymous"></script><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6265337967545472" data-ad-slot="2943157215" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("ja");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="トップに戻る" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><script src="https://cdn.jsdelivr.net/npm/mermaid@8.11.0/dist/mermaid.min.js"></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="何かを入力してください..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"何かを入力してください...","untitled":"(無題)","posts":"投稿","pages":"ページ","categories":"カテゴリ","tags":"タグ"});
+        });</script></body></html>
