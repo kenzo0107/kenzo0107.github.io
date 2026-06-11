@@ -1,6 +1,7 @@
 ---
 title: Nginx access_log $host が _ になる件調査
 date: 2021-09-07
+cover: /img/cover/2021-09-07-nginx_access_log_host_empty.svg
 ---
 
 Nginx access_log で指定している $host が `_` となるケースがあるので調査したことをまとめます。

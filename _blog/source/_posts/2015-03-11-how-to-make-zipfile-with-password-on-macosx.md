@@ -2,6 +2,7 @@
 layout: post
 title: MacOSX パスワード付きzipファイル作成法
 date: 2015-03-11
+cover: /img/cover/2015-03-11-how-to-make-zipfile-with-password-on-macosx.svg
 ---
 
 ## 概要

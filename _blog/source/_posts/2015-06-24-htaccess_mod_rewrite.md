@@ -2,6 +2,7 @@
 layout: post
 title: .htaccessでmod_rewriteを利用可能にする
 date: 2015-06-24
+cover: /img/cover/2015-06-24-htaccess_mod_rewrite.svg
 ---
 
 # 概要

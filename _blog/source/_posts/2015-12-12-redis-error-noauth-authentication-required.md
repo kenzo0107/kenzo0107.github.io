@@ -2,6 +2,7 @@
 layout: post
 title: Redis - (error) NOAUTH Authentication required への対応
 date: 2015-12-12
+cover: /img/cover/2015-12-12-redis-error-noauth-authentication-required.svg
 tags:
 - Redis
 ---

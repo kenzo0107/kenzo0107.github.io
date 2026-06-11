@@ -2,6 +2,7 @@
 layout: post
 title: MySQL テーブル単位の容量確認
 date: 2016-06-27
+cover: /img/cover/2016-06-27-each-table-mysql.svg
 tags:
 - MySQL
 ---

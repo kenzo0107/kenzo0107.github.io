@@ -2,6 +2,7 @@
 layout: post
 title: CentOSに phpMyAdminインストール利用するまで
 date: 2015-02-24
+cover: /img/cover/2015-02-24-install-phpadmin-centos.svg
 ---
 
 ## 概要

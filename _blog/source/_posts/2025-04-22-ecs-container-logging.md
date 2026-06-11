@@ -2,6 +2,7 @@
 title: データ分析観点から見た AWS ECS コンテナロギング
 category: AWS
 date: 2025-04-22
+cover: /img/cover/2025-04-22-ecs-container-logging.svg
 ---
 
 AWS ECS コンテナロギングをデータ分析観点からどの様な構成だと分析に都合が良いかの観点を記載します。

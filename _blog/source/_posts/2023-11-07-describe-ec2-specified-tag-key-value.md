@@ -1,6 +1,7 @@
 ---
 title: AWS CLI で EC2 インスタンス名一覧を取得
 date: 2023-11-07
+cover: /img/cover/2023-11-07-describe-ec2-specified-tag-key-value.svg
 category: AWS
 ---
 

@@ -2,6 +2,7 @@
 title: Datadog 子組織の削除方法
 category: Datadog
 date: 2025-01-15
+cover: /img/cover/2025-01-15-how-to-delete-datadog-child-org.svg
 ---
 
 備忘録として

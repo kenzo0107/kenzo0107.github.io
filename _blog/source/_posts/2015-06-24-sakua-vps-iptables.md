@@ -2,6 +2,7 @@
 layout: post
 title: さくらVPS iptables設定 ~ある日警告文が届いた「ご利用中のサーバから、外部へ向けてUDP FloodによるDoSと思わしきトラフィックを確認いたしました。」~
 date: 2015-06-24
+cover: /img/cover/2015-06-24-sakua-vps-iptables.svg
 ---
 
 # iptables (FireWall) Setting

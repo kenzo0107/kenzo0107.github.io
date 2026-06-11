@@ -2,6 +2,7 @@
 layout: post
 title: 3分で出来る！ AWS EC2(CentOS7)に td-agent2インストール
 date: 2015-09-19
+cover: /img/cover/2015-09-19-install-td-agent2-centos7.svg
 tags:
 - Fluentd
 - Slack

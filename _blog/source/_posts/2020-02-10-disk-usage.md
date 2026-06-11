@@ -3,6 +3,7 @@ title: ディスク使用量が増加した際の調査方法
 tags:
 - Linux
 date: 2020-02-10
+cover: /img/cover/2020-02-10-disk-usage.svg
 ---
 
 

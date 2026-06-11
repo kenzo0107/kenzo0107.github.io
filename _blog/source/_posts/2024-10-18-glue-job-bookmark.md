@@ -2,6 +2,7 @@
 title: Glue Job Bookmark 機能でなく sampleQuery を使って DB データをエクスポートしてみた
 category: AWS
 date: 2024-10-18
+cover: /img/cover/2024-10-18-glue-job-bookmark.svg
 ---
 
 <div class="toc">

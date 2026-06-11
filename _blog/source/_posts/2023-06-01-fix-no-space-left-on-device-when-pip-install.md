@@ -1,6 +1,7 @@
 ---
 title: 'fix: Could not install packages due to an EnvironmentError: [Errno 28] No space left on device'
 date: 2023-06-01
+cover: /img/cover/2023-06-01-fix-no-space-left-on-device-when-pip-install.svg
 category: RaspberryPI
 ---
 

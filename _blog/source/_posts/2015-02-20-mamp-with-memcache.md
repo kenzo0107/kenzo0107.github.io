@@ -2,6 +2,7 @@
 layout: post
 title: MAMPにMemcacheをインストールしphpで動かすまで
 date: 2015-02-20
+cover: /img/cover/2015-02-20-mamp-with-memcache.svg
 ---
 
 ## 概要

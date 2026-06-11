@@ -1,6 +1,7 @@
 ---
 title: parquet 解析ツール on macOS
 date: 2025-10-03
+cover: /img/cover/2025-10-03-parquet-cli-on-macos.svg
 ---
 
 iceberg テーブルの圧縮形式は snappy や gzip 等が選択できますが、

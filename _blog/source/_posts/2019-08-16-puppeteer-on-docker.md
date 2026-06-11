@@ -2,6 +2,7 @@
 layout: post
 title: 'puppeteer on Docker '
 date: 2019-08-16
+cover: /img/cover/2019-08-16-puppeteer-on-docker.svg
 tags:
 - Puppeteer
 ---

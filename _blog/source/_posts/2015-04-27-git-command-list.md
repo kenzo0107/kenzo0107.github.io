@@ -2,6 +2,7 @@
 layout: post
 title: git コマンドまとめ
 date: 2015-04-27
+cover: /img/cover/2015-04-27-git-command-list.svg
 ---
 
 ```console

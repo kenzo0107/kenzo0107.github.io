@@ -1,6 +1,7 @@
 ---
 title: 'warning: reattach-to-user-namespace: unsupported new OS, trying as if it were 10.10'
 date: 2022-01-04
+cover: /img/cover/2022-01-04-rettach-to-user-namespace-unsupported-new-os.svg
 ---
 
 macOS を Catalina から BigSur にアップグレードしたところ、ターミナル起動で以下 warning が見られる様になりました。

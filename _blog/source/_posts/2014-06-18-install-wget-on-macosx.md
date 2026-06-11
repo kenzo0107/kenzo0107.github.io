@@ -2,6 +2,7 @@
 layout: post
 title: Mac OS X に wget インストール
 date: 2014-06-18
+cover: /img/cover/2014-06-18-install-wget-on-macosx.svg
 tags:
 - wget
 ---

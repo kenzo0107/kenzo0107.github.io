@@ -2,6 +2,7 @@
 layout: post
 title: MacOSX環境にgoインストールして実行確認まで
 date: 2015-05-18
+cover: /img/cover/2015-05-18-install-go-macosx.svg
 ---
 
 ## 環境

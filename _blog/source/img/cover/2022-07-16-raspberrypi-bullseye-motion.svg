@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500" role="img" aria-label="Raspberry PI bullseye で motion を起動しブラウザで表示する">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(340, 62%, 46%)"/>
+      <stop offset="1" stop-color="hsl(18, 64%, 30%)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="500" fill="url(#g)"/>
+  <circle cx="1080" cy="90" r="220" fill="#ffffff" opacity="0.06"/>
+  <circle cx="940" cy="460" r="160" fill="#000000" opacity="0.06"/>
+  <rect x="72" y="46" width="46" height="6" rx="3" fill="#ffffff" opacity="0.9"/>
+  <text x="72" y="92" font-family="'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic','Meiryo',system-ui,sans-serif" font-size="30" font-weight="700" letter-spacing="3" fill="#ffffff" opacity="0.92">RASPBERRYPI</text>
+  <text font-family="'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic','Meiryo',system-ui,sans-serif" font-size="60" font-weight="800" fill="#ffffff"><tspan x="72" y="205">Raspberry PI bullseye で</tspan><tspan x="72" y="279">motion を起動しブラウザで表示す</tspan><tspan x="72" y="352">る</tspan></text>
+</svg>

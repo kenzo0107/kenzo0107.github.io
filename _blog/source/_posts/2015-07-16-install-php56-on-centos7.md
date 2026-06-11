@@ -2,6 +2,7 @@
 layout: post
 title: CentOS7 に PHP5.6インストール
 date: 2015-07-16
+cover: /img/cover/2015-07-16-install-php56-on-centos7.svg
 ---
 
 ## 概要

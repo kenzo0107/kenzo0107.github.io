@@ -4,6 +4,7 @@ category: Go
 tags:
   - Go
 date: 2019-12-26
+cover: /img/cover/2019-12-26-go_static_analytics_and_unit_test_on_github_actions.svg
 comments: true
 ---
 

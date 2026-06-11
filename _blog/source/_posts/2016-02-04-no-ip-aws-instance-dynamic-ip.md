@@ -2,6 +2,7 @@
 layout: post
 title: no-ipでAWSインスタンスの動的ip更新対応 ~いつも同じドメイン名でアクセスしたい~
 date: 2016-02-04
+cover: /img/cover/2016-02-04-no-ip-aws-instance-dynamic-ip.svg
 tags:
 - AWS
 - no-ip

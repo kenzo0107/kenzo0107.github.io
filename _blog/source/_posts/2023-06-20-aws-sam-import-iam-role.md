@@ -1,6 +1,7 @@
 ---
 title: SAM テンプレートに既存リソースをインポートする手順 - IAM Role 編 -
 date: 2023-06-20
+cover: /img/cover/2023-06-20-aws-sam-import-iam-role.svg
 category: AWS
 ---
 

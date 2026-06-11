@@ -2,6 +2,7 @@
 layout: post
 title: CentOSにPHPUnitをComposer.phar経由でインストールする。
 date: 2015-05-14
+cover: /img/cover/2015-05-14-install-phpunit-via-composer.phar-on-centos.svg
 ---
 
 ## 概要

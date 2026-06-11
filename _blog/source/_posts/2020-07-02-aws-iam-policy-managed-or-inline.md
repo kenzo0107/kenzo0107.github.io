@@ -4,6 +4,7 @@ category: Terraform
 tags:
 - AWS
 date: 2020-07-02
+cover: /img/cover/2020-07-02-aws-iam-policy-managed-or-inline.svg
 ---
 
 <div class="toc">

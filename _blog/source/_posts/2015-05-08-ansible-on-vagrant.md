@@ -2,6 +2,7 @@
 layout: post
 title: 簡単♪ Vagrant で Ansible 設定 -  pingで疎通確認までを3分で実施
 date: 2015-05-08
+cover: /img/cover/2015-05-08-ansible-on-vagrant.svg
 ---
 
 Vagrantでローカル開発環境構築を簡易的にAnsibleで実施した手順を

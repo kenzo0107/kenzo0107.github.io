@@ -2,6 +2,7 @@
 title: Python tox を利用し複数の構文チェックツール管理
 category: Python
 date: 2025-06-05
+cover: /img/cover/2025-06-05-python-tox.svg
 ---
 
 Python の構文チェックツールが乱立しており、それぞれ用途が異なり、設定が大変だったところを [tox](https://tox.wiki/) というツールでまとめてみました。

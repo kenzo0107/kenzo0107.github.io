@@ -4,6 +4,7 @@ tags:
 - AWS
 - Lambda
 date: 2020-03-24
+cover: /img/cover/2020-03-24-serverlessfw-environment.svg
 ---
 
 Serverless Framework での上書き設定について詰まった点をまとめました。

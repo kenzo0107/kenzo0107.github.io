@@ -2,6 +2,7 @@
 title: Kafka への流入量の試算
 category: AWS
 date: 2025-07-17
+cover: /img/cover/2025-07-17-aws-aurora-cdc-calculator.svg
 tags: [AWS, Aurora, CDC, CloudWatch, MySQL, PostgreSQL]
 ---
 

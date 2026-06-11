@@ -1,6 +1,7 @@
 ---
 title: ALB アクセスログに新たな項目が追加された
 date: 2024-05-29
+cover: /img/cover/2024-05-29-upgrade-alb-accesslog-format.svg
 category: AWS
 ---
 

@@ -2,6 +2,7 @@
 layout: post
 title: コマンドラインでURLの存在チェック
 date: 2015-06-16
+cover: /img/cover/2015-06-16-check-whether-the-url-exists.svg
 ---
 
 以下コマンドをMacローカルでterminalから実行

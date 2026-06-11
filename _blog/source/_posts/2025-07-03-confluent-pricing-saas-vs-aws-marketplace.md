@@ -2,6 +2,7 @@
 title: Confluent Cloud の料金比較：SaaS版 vs AWS Marketplace版
 category: AWS
 date: 2025-07-03
+cover: /img/cover/2025-07-03-confluent-pricing-saas-vs-aws-marketplace.svg
 tags:
   - Confluent
   - AWS

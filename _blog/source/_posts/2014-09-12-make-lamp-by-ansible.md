@@ -2,6 +2,7 @@
 layout: post
 title: Ansible でサーバ環境構築
 date: 2014-09-12
+cover: /img/cover/2014-09-12-make-lamp-by-ansible.svg
 ---
 
 ## 目的

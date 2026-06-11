@@ -2,6 +2,7 @@
 layout: post
 title: Use Redis via Python
 date: 2015-11-10
+cover: /img/cover/2015-11-10-redis-python.svg
 tags:
 - Redis
 - Python

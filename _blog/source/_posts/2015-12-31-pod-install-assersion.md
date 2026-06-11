@@ -2,6 +2,7 @@
 layout: post
 title: pod install で ASSERSION対策
 date: 2015-12-31
+cover: /img/cover/2015-12-31-pod-install-assersion.svg
 tags:
 - Swift
 ---

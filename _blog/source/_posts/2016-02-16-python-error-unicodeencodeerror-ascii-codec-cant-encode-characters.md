@@ -2,6 +2,7 @@
 layout: post
 title: "Pythonエラー対応: UnicodeEncodeError: 'ascii' codec can't encode characters"
 date: 2016-02-16
+cover: /img/cover/2016-02-16-python-error-unicodeencodeerror-ascii-codec-cant-encode-characters.svg
 tags:
 - Python
 ---
