@@ -10938,6 +10938,73 @@ a.article-nav-next span {
   word-wrap: break-word;
   white-space: normal;
 }
+.article-cards .column {
+  display: flex;
+}
+.article-cards .article-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.article-cards .article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.article-cards .article-card .card-image-link {
+  display: block;
+}
+.article-cards .article-card .card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.25rem 1.25rem;
+}
+.article-cards .article-card .article-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  color: #7a7a7a;
+  margin-bottom: 0.4rem;
+}
+.article-cards .article-card .article-card-meta .article-card-date {
+  margin-right: 0.6rem;
+}
+.article-cards .article-card .article-card-meta .article-card-category a {
+  color: #7a7a7a;
+}
+.article-cards .article-card .article-card-meta .article-card-category a:hover {
+  color: #3273dc;
+}
+.article-cards .article-card .article-card-meta .article-card-category a + a:before {
+  content: '/';
+  margin: 0 0.3em;
+  color: #7a7a7a;
+}
+.article-cards .article-card .article-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.article-cards .article-card .article-card-noimage .article-card-noimage-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #3273dc 0%, #1a4a99 100%);
+  color: rgba(255,255,255,0.95);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.45;
+  padding: 1rem 1.25rem;
+  text-align: center;
+}
 .navbar-main {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
@@ -11683,6 +11750,7 @@ figure.highlight.foldable div.level-left {
 }
 /* ---------------------------------
  *   Readability customizations
+ *   (index card grid imported via 'style')
  * --------------------------------- */
 .navbar-main {
   position: relative;
