@@ -20,7 +20,7 @@ function getWordCount(content) {
 
 module.exports = class extends Component {
     render() {
-        const { config, helper, page, index } = this.props;
+        const { site, config, helper, page, index } = this.props;
         const { article, plugins } = config;
         const { url_for, date, date_xml, __, _p } = helper;
 
@@ -88,6 +88,26 @@ module.exports = class extends Component {
                     {/* Title */}
                     {page.title !== '' && index ? <p class="title is-3 is-size-4-mobile"><a class="link-muted" href={url_for(page.link || page.path)}>{page.title}</a></p> : null}
                     {page.title !== '' && !index ? <h1 class="title is-3 is-size-4-mobile">{page.title}</h1> : null}
+                    {/* Language switcher */}
+                    {!index && page.translation_id && site ? (() => {
+                        const currentLang = page.lang || page.language || defaultLanguage || 'ja';
+                        const isJapanese = currentLang === 'ja';
+                        const targetLang = isJapanese ? 'en' : 'ja';
+                        let targetPath = null;
+                        if (site.posts) {
+                            site.posts.forEach(p => {
+                                if (p.translation_id === page.translation_id && (p.lang || 'ja') === targetLang) {
+                                    targetPath = url_for(p.path);
+                                }
+                            });
+                        }
+                        if (!targetPath) return null;
+                        return <div class="article-lang-switch mb-4">
+                            <a href={targetPath} class="button is-small is-light">
+                                {isJapanese ? '🌐 Read in English' : '🌐 日本語で読む'}
+                            </a>
+                        </div>;
+                    })() : null}
                     {/* Content/Excerpt */}
                     <div class="content" dangerouslySetInnerHTML={{ __html: index && page.excerpt ? page.excerpt : page.content }}></div>
                     {/* Licensing block */}
