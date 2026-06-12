@@ -81,17 +81,22 @@ $navbar-item-margin-h ?= 0
 
     .lang-toggle-option
         padding: .28em .75em
-        color: $primary
+        color: #aaa
+        text-decoration: none
         transition: background .18s, color .18s
         white-space: nowrap
         line-height: 1.4
+        cursor: pointer
 
         &.is-active
             background: $primary
             color: #fff
+            cursor: default
+            pointer-events: none
 
         &:not(.is-active):hover
             background: rgba($primary, .08)
+            color: $primary
 
 // ダーク / ライト トグル
 .theme-toggle

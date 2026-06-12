@@ -69,14 +69,17 @@ html[data-theme='dark']
             border-color: $dark-link
 
         .lang-toggle-option
-            color: $dark-link
+            color: #666
 
             &.is-active
                 background: $dark-link
                 color: #fff
+                cursor: default
+                pointer-events: none
 
             &:not(.is-active):hover
                 background: rgba($dark-link, .12)
+                color: $dark-link
 
     // --- Cards (記事一覧 / サイドバーウィジェット) ---
     .card
