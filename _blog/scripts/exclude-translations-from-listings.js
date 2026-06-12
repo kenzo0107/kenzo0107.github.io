@@ -68,7 +68,7 @@ hexo.extend.filter.register('before_generate', function () {
                 perPage,
                 layout: ['category', 'archive', 'index'],
                 format: paginationDir + '/%d/',
-                data: { category: category.name }
+                data: { category: category.name, parents: [] }
             }));
         }, []);
     });
