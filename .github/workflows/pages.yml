@@ -47,7 +47,7 @@ jobs:
             hexo-db-
 
       - name: Build
-        run: npm run build
+        run: npm run clean && npm run build
         working-directory: _blog
         env:
           TZ: UTC
