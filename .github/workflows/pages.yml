@@ -49,7 +49,10 @@ jobs:
           TZ: UTC
 
       - name: Debug output directory
-        run: ls -la ../ | head -30
+        run: |
+          echo "=== ../ ===" && ls -la ../
+          echo "=== public/ ===" && ls -la public/ 2>/dev/null || echo "no public dir"
+          echo "=== Hexo public_dir ===" && grep public_dir _config.yml
         working-directory: _blog
 
       - name: Upload Pages artifact
