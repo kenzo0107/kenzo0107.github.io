@@ -139,21 +139,32 @@
         function toggleToc() { // eslint-disable-line no-inner-declarations
             $toc.toggleClass('is-active');
             $mask.toggleClass('is-active');
-            $('.navbar-main .catalogue').toggleClass('is-toc-open');
+            $('.catalogue').toggleClass('is-toc-open');
         }
 
         $toc.on('click', toggleToc);
         $mask.on('click', toggleToc);
-        $('.navbar-main .catalogue').on('click', toggleToc);
+        // SP目次バーのトリガー + PC ナビの catalogue ボタン
+        $('.catalogue').on('click', toggleToc);
     }
 
-    // ハンバーガーメニュー（スマホ）の開閉
-    $('.navbar-burger').on('click', function() {
+    // カテゴリーハンバーガーパネルの開閉
+    $('#cat-burger').on('click', function(e) {
+        e.stopPropagation();
         const $burger = $(this);
-        const $menu = $('#' + $burger.attr('data-target'));
+        const $panel = $('#cat-panel');
         $burger.toggleClass('is-active');
-        $menu.toggleClass('is-active');
+        $panel.toggleClass('is-active');
         $burger.attr('aria-expanded', $burger.hasClass('is-active'));
+    });
+
+    // パネル外クリックで閉じる
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('#cat-burger, #cat-panel').length) {
+            $('#cat-burger').removeClass('is-active');
+            $('#cat-panel').removeClass('is-active');
+            $('#cat-burger').attr('aria-expanded', 'false');
+        }
     });
 
     // ダーク / ライトモードの切り替え（描画前の適用は head.jsx のインラインスクリプトで実施）

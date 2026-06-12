@@ -2,7 +2,6 @@ const { Component } = require('inferno');
 const classname = require('hexo-component-inferno/lib/util/classname');
 const Head = require('./common/head');
 const Navbar = require('./common/navbar');
-const CategoryBar = require('./common/category_bar');
 const Widgets = require('./common/widgets');
 const Footer = require('./common/footer');
 const Scripts = require('./common/scripts');
@@ -11,15 +10,28 @@ const Search = require('./common/search');
 module.exports = class extends Component {
     render() {
         const { site, config, page, helper, body } = this.props;
+        const { __ } = helper;
 
         const language = page.lang || page.language || config.language;
         const columnCount = Widgets.getColumnCount(config.widgets, config, page);
+
+        // SP版目次バー: post/page かつ TOC ウィジェットが有効な場合のみ表示
+        const hasTocWidget = Array.isArray(config.widgets) && config.widgets.find(w => w.type === 'toc');
+        const showSpTocBar = (config.toc === true || page.toc) && hasTocWidget && ['page', 'post'].includes(page.layout);
 
         return <html lang={language ? language.substr(0, 2) : ''}>
             <Head site={site} config={config} helper={helper} page={page} />
             <body class={`is-${columnCount}-column page-${page.layout || 'unknown'}`}>
                 <Navbar site={site} config={config} helper={helper} page={page} />
-                <CategoryBar site={site} config={config} helper={helper} page={page} />
+                {/* SP専用目次バー（スクロール時にナビバー直下に固定） */}
+                {showSpTocBar ? <div class="sp-toc-bar is-hidden-tablet">
+                    <div class="container">
+                        <a class="sp-toc-trigger catalogue" href="javascript:;" aria-label={__('widget.catalogue')}>
+                            <span>{__('widget.catalogue')}</span>
+                            <i class="fas fa-list-ul"></i>
+                        </a>
+                    </div>
+                </div> : null}
                 <section class="section">
                     <div class="container">
                         <div class="columns">

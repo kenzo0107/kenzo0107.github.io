@@ -41,73 +41,101 @@ $navbar-item-margin-h ?= 0
             justify-content: flex-end
             margin-left: auto
 
-    // --- スマホ / タブレット幅: ハンバーガーメニューで開閉 ---
+    // --- スマホ / タブレット幅 ---
     +until($navbar-breakpoint)
-        // ロゴ左固定・他アイテム右寄せ・縦位置揃え
         .navbar-brand
             align-items: center
 
-        .navbar-brand .navbar-logo
-            margin-right: auto
-
         .navbar-menu
-            box-shadow: 0 8px 16px rgba(10, 10, 10, .1)
-            background-color: #fff
+            display: none  // ハンバーガーで開くメニューは不要（カテゴリーは cat-panel で）
 
-            .navbar-item
-                padding: .4rem .75rem
+// ナビバーコンテナ: cat-panel の絶対位置基準
+.navbar-container
+    position: relative
 
-            .navbar-item.has-dropdown
-                padding: 0
+// navbar-brand: ロゴと右側アイコン群のレイアウト
+.navbar-brand-right
+    display: flex
+    align-items: center
+    margin-left: auto  // SP で右寄せ
 
-            // ハンバーガー内はカテゴリーのみ表示
-            .navbar-start
-                .navbar-item:not(.navbar-categories)
-                    display: none
+// ---------------------------------
+// カテゴリーハンバーガーボタン（PC・SP共通、ロゴ左）
+// ---------------------------------
+.navbar-cat-burger
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    padding: 0 .85rem
+    height: $navbar-height
+    color: $text
+    text-decoration: none
+    transition: color .18s
 
-            .navbar-end
-                display: none
+    span
+        display: block
+        width: 18px
+        height: 2px
+        background-color: currentColor
+        margin: 3px 0
+        border-radius: 1px
+        transition: background-color .18s
 
-            // ハンバーガー開放時: コンテンツに被さるオーバーレイ表示
-            &.is-active
-                position: absolute
-                top: 100%
-                left: 0
-                right: 0
-                z-index: 30
-                max-height: "calc(100vh - %s)" % $navbar-height
-                overflow-y: auto
+    &:hover,
+    &.is-active
+        color: $primary
 
-// Categories: モバイルのみドロップダウン表示
-.navbar-categories
-    +until($navbar-breakpoint)
-        .navbar-dropdown
-            display: block
-            position: static
-            box-shadow: none
-            padding: 0
-            border-top: none
-            .navbar-item
-                display: flex !important
+// ---------------------------------
+// カテゴリーパネル（絶対位置・左寄せ・固定幅でオーバーレイ）
+// ---------------------------------
+.navbar-cat-panel
+    display: none
+    position: absolute
+    top: 100%
+    left: 0
+    min-width: 240px
+    max-width: 320px
+    background-color: $scheme-main
+    box-shadow: 0 8px 24px rgba(10, 10, 10, .12), 0 0 0 1px rgba(10, 10, 10, .05)
+    border-radius: 0 0 6px 0
+    z-index: 35
+    padding: .5rem 0
+    overflow-y: auto
+    max-height: "calc(100vh - %s)" % $navbar-height
 
-        .navbar-dropdown
-            .navbar-item
-                display: flex
-                justify-content: space-between
-                align-items: center
+    &.is-active
+        display: block
 
-            .navbar-category-count
-                margin-left: 1.5em
-                min-width: 1.6em
-                padding: .05em .5em
-                border-radius: 10px
-                background: $primary
-                color: #fff
-                font-size: .72rem
-                font-weight: 600
-                text-align: center
+.navbar-cat-panel-item
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: .55rem 1.25rem
+    color: $text
+    text-decoration: none
+    white-space: nowrap
+    font-size: .9rem
+    transition: background-color .15s, color .15s
 
+    &:hover
+        background-color: $background
+        color: $primary
+
+.navbar-category-count
+    margin-left: 1.5em
+    min-width: 1.6em
+    padding: .05em .5em
+    border-radius: 10px
+    background: $primary
+    color: #fff
+    font-size: .72rem
+    font-weight: 600
+    text-align: center
+
+// ---------------------------------
 // 言語ピルトグル
+// ---------------------------------
 .lang-toggle
     padding-left: .5rem
     padding-right: .5rem
@@ -139,7 +167,9 @@ $navbar-item-margin-h ?= 0
         &:not(.is-active):hover
             background: rgba($text, .08)
 
+// ---------------------------------
 // ダーク / ライト トグル
+// ---------------------------------
 .theme-toggle
     cursor: pointer
 
@@ -162,36 +192,37 @@ html[data-theme='dark']
     .navbar > .container .navbar-menu, .container > .navbar .navbar-menu
         margin-right: 0rem
 
-// カテゴリーバー（PC 専用、ナビバー直下の横並びリンク）
-.category-bar
+// ---------------------------------
+// SP専用目次バー（スクロール時にナビバー直下に固定）
+// ---------------------------------
+.sp-toc-bar
+    background-color: $scheme-main
     border-bottom: 1px solid $border
-    +from($navbar-breakpoint)
-        position: sticky
-        top: var(--navbar-h, $navbar-height)
-        z-index: 29
-        background-color: $scheme-main
+    position: sticky
+    top: var(--navbar-h, $navbar-height)
+    z-index: 28
 
-.category-bar-inner
-    display: flex
-    flex-wrap: wrap
+.sp-toc-trigger
+    display: inline-flex
     align-items: center
-    padding: 0 .5rem
-
-.category-bar-item
-    padding: .45rem .75rem
-    font-size: .875rem
+    gap: .4rem
+    padding: .4rem .75rem
+    font-size: .85rem
     color: $text
     text-decoration: none
-    white-space: nowrap
+    cursor: pointer
     transition: color .18s
 
-    &:hover
+    i
+        font-size: .8rem
+
+    &:hover,
+    &.is-toc-open
         color: $primary
 
 // 記事詳細ページ: ナビバーのスティッキーを解除（PC・SP共通）
 body.page-post
     .navbar-main
         position: static
-    +from($navbar-breakpoint)
-        .category-bar
-            position: static
+    .sp-toc-bar
+        position: sticky  // 記事ページでは目次バーはスティッキーを維持

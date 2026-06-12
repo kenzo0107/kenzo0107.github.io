@@ -230,15 +230,28 @@ html[data-theme='dark']
         &::placeholder
             color: $dark-text-muted
 
-    // --- Category Bar ---
-    .category-bar
-        border-bottom-color: $dark-border
+    // --- カテゴリーパネル ---
+    .navbar-cat-panel
         background-color: $dark-surface
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .5)
 
-        .category-bar-item
+        .navbar-cat-panel-item
             color: $dark-text
 
             &:hover
+                background-color: $dark-surface-2
+                color: $dark-link
+
+    // --- SP 目次バー ---
+    .sp-toc-bar
+        background-color: $dark-surface
+        border-bottom-color: $dark-border
+
+        .sp-toc-trigger
+            color: $dark-text
+
+            &:hover,
+            &.is-toc-open
                 color: $dark-link
 
     // --- 区切り線 ---

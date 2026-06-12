@@ -29,12 +29,7 @@ class Navbar extends Component {
             menu,
             links,
             categories,
-            categoriesTitle,
-            translations,
-            showToc,
-            tocTitle,
-            showSearch,
-            searchTitle
+            translations
         } = this.props;
 
         let navbarLogo = '';
@@ -53,45 +48,45 @@ class Navbar extends Component {
         return <nav class="navbar navbar-main">
             <div class="container navbar-container">
                 <div class="navbar-brand">
+                    {/* カテゴリーハンバーガー（ロゴより左、PC・SP共通） */}
+                    {hasCategories ? <a role="button" class="navbar-item navbar-cat-burger" id="cat-burger" aria-label="カテゴリー" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a> : null}
+                    {/* ロゴ */}
                     <a class="navbar-item navbar-logo" href={siteUrl}>
                         {navbarLogo}
                     </a>
-                    {/* 言語ピルトグル（スマホ: ハンバーガーの外に常時表示） */}
-                    <div class="navbar-item lang-toggle is-hidden-desktop">
-                        <div class="lang-toggle-pill">
-                            {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.text}</a>)}
+                    {/* SP用右側アイコン群 */}
+                    <div class="navbar-brand-right">
+                        {/* 言語ピルトグル（スマホ常時表示） */}
+                        <div class="navbar-item lang-toggle is-hidden-desktop">
+                            <div class="lang-toggle-pill">
+                                {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.text}</a>)}
+                            </div>
                         </div>
+                        {/* ダーク/ライト切り替え（スマホ常時表示） */}
+                        <a class="navbar-item theme-toggle is-hidden-desktop" title="Toggle dark mode" href="javascript:;" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon theme-toggle-dark"></i>
+                            <i class="fas fa-sun theme-toggle-light"></i>
+                        </a>
                     </div>
-                    {/* スマホ常時表示: ダーク/ライト切り替え + 検索 */}
-                    <a class="navbar-item theme-toggle is-hidden-desktop" title="Toggle dark mode" href="javascript:;" aria-label="Toggle dark mode">
-                        <i class="fas fa-moon theme-toggle-dark"></i>
-                        <i class="fas fa-sun theme-toggle-light"></i>
-                    </a>
-                    {showSearch ? <a class="navbar-item search is-hidden-desktop" title={searchTitle} href="javascript:;">
-                        <i class="fas fa-search"></i>
-                    </a> : null}
-                    {/* SP用目次ボタン（タブレット以上は非表示） */}
-                    {showToc ? <a class="navbar-item catalogue is-hidden-tablet" title={tocTitle} href="javascript:;" aria-label={tocTitle}>
-                        <i class="fas fa-list-ul"></i>
-                    </a> : null}
-                    {/* スマホ用ハンバーガーボタン */}
-                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
                 </div>
+
+                {/* カテゴリーパネル（絶対位置・左寄せ・固定幅） */}
+                {hasCategories ? <div class="navbar-cat-panel" id="cat-panel">
+                    {categories.map(category => (
+                        <a class="navbar-cat-panel-item" href={category.url}>
+                            <span>{category.name}</span>
+                            <span class="navbar-category-count">{category.count}</span>
+                        </a>
+                    ))}
+                </div> : null}
+
+                {/* PC用ナビメニュー */}
                 <div id="navbar-menu" class="navbar-menu">
                     <div class="navbar-start">
-                        {/* Categories: モバイルはハンバーガー内グループ、PC はナビバー直下のカテゴリーバーで表示 */}
-                        {hasCategories ? <div class="navbar-item has-dropdown navbar-categories is-hidden-desktop">
-                            <div class="navbar-dropdown">
-                                {categories.slice(0, 5).map(category => <a class="navbar-item" href={category.url}>
-                                    <span>{category.name}</span>
-                                    <span class="navbar-category-count">{category.count}</span>
-                                </a>)}
-                            </div>
-                        </div> : null}
                         {Object.keys(menu).map(name => {
                             const item = menu[name];
                             return <a class={classname({ 'navbar-item': true, 'is-active': item.active })} href={item.url}>{name}</a>;
@@ -106,23 +101,17 @@ class Navbar extends Component {
                                 </a>;
                             })}
                         </Fragment> : null}
-                        {/* 言語ピルトグル（デスクトップのみ; スマホは navbar-brand に表示） */}
+                        {/* 言語ピルトグル（デスクトップのみ） */}
                         {Array.isArray(translations) && translations.length > 1 ? <div class="navbar-item lang-toggle is-hidden-touch">
                             <div class="lang-toggle-pill">
                                 {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.text}</a>)}
                             </div>
                         </div> : null}
-                        {/* ダーク / ライト切り替えトグル（デスクトップ; スマホは navbar-brand に表示） */}
+                        {/* ダーク/ライト切り替え（デスクトップのみ） */}
                         <a class="navbar-item theme-toggle is-hidden-touch" title="Toggle dark mode" href="javascript:;" aria-label="Toggle dark mode">
                             <i class="fas fa-moon theme-toggle-dark"></i>
                             <i class="fas fa-sun theme-toggle-light"></i>
                         </a>
-                        {showToc ? <a class="navbar-item is-hidden-tablet catalogue" title={tocTitle} href="javascript:;">
-                            <i class="fas fa-list-ul"></i>
-                        </a> : null}
-                        {showSearch ? <a class="navbar-item search is-hidden-touch" title={searchTitle} href="javascript:;">
-                            <i class="fas fa-search"></i>
-                        </a> : null}
                     </div>
                 </div>
             </div>
@@ -132,11 +121,8 @@ class Navbar extends Component {
 
 module.exports = cacheComponent(Navbar, 'common.navbar', props => {
     const { site, config, helper, page } = props;
-    const { url_for, _p, __ } = helper;
-    const { logo, title, navbar, widgets, search } = config;
-
-    const hasTocWidget = Array.isArray(widgets) && widgets.find(widget => widget.type === 'toc');
-    const showToc = (config.toc === true || page.toc) && hasTocWidget && ['page', 'post'].includes(page.layout);
+    const { url_for, _p } = helper;
+    const { logo, title, navbar } = config;
 
     const pageUrl = typeof page.path !== 'undefined' ? url_for(page.path) : '';
 
@@ -160,8 +146,7 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         });
     }
 
-    // site.categories から投稿数の多い順にカテゴリ一覧を生成（ヘッダーのドロップダウン用）
-    // 翻訳記事(lang: en)は日本語サイトの集計から除外する
+    // site.categories から投稿数の多い順にカテゴリ一覧を生成（翻訳記事除外）
     const categories = [];
     if (site && site.categories && site.categories.length) {
         const seen = new Set();
@@ -181,7 +166,7 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
             .forEach(category => categories.push(category));
     }
 
-    // 翻訳リンク（front-matter の translation_id が一致する記事 / ページを言語別に収集）
+    // 翻訳リンク
     const translations = [];
     if (page.translation_id && site) {
         const collect = collection => {
@@ -202,16 +187,13 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         };
         collect(site.posts);
         collect(site.pages);
-        // 言語順を固定（ja → en の順）
         const order = Object.keys(LANGUAGE_LABELS);
         translations.sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang));
     } else if (page.listLang) {
-        // 記事一覧ページ（/ と /en/）のピルトグル
         translations.push({ lang: 'ja', url: url_for('/'), text: LANGUAGE_LABELS.ja.text, active: page.listLang === 'ja' });
         translations.push({ lang: 'en', url: url_for('/en/'), text: LANGUAGE_LABELS.en.text, active: page.listLang === 'en' });
     }
 
-    // 翻訳が存在しないページでも常にトグルを表示（/ と /en/ へのリンク）
     if (translations.length === 0) {
         const pageLang = page.lang || 'ja';
         translations.push({ lang: 'ja', url: url_for('/'), text: LANGUAGE_LABELS.ja.text, active: pageLang !== 'en' });
@@ -227,10 +209,6 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         links,
         categories,
         categoriesTitle: _p('common.category', Infinity),
-        translations,
-        showToc,
-        tocTitle: _p('widget.catalogue', Infinity),
-        showSearch: search && search.type,
-        searchTitle: __('search.search')
+        translations
     };
 });
