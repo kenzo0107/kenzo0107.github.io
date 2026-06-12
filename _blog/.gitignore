@@ -114,3 +114,4 @@ dist
 
 # Hexo キャッシュ
 public/
+db.json
