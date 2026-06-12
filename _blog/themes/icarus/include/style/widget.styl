@@ -39,10 +39,10 @@
         top: calc(var(--navbar-h, 3.25rem) + 0.5rem)
         right: 0.5rem
         left: auto
-        bottom: auto
+        bottom: 0.5rem
         width: 78vw
         max-width: 22rem
-        max-height: 55vh
+        max-height: calc(100vh - var(--navbar-h, 3.25rem) - 1rem)
         margin: 0
         z-index: 100
         overflow: hidden
@@ -52,7 +52,7 @@
 
         .menu
             padding: 1rem
-            max-height: calc(55vh - 2.5rem)
+            max-height: calc(100vh - var(--navbar-h, 3.25rem) - 1rem - 2.5rem)
             overflow-y: auto
             font-size: 0.85rem
 
