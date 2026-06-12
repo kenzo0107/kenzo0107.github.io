@@ -62,6 +62,14 @@ class Navbar extends Component {
                             {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.label}</a>)}
                         </div>
                     </div>
+                    {/* スマホ常時表示: ダーク/ライト切り替え + 検索 */}
+                    <a class="navbar-item theme-toggle is-hidden-desktop" title="Toggle dark mode" href="javascript:;" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon theme-toggle-dark"></i>
+                        <i class="fas fa-sun theme-toggle-light"></i>
+                    </a>
+                    {showSearch ? <a class="navbar-item search is-hidden-desktop" title={searchTitle} href="javascript:;">
+                        <i class="fas fa-search"></i>
+                    </a> : null}
                     {/* スマホ用ハンバーガーボタン */}
                     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
                         <span aria-hidden="true"></span>
@@ -101,15 +109,15 @@ class Navbar extends Component {
                                 {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.label}</a>)}
                             </div>
                         </div> : null}
-                        {/* ダーク / ライト切り替えトグル */}
-                        <a class="navbar-item theme-toggle" title="Toggle dark mode" href="javascript:;" aria-label="Toggle dark mode">
+                        {/* ダーク / ライト切り替えトグル（デスクトップ; スマホは navbar-brand に表示） */}
+                        <a class="navbar-item theme-toggle is-hidden-touch" title="Toggle dark mode" href="javascript:;" aria-label="Toggle dark mode">
                             <i class="fas fa-moon theme-toggle-dark"></i>
                             <i class="fas fa-sun theme-toggle-light"></i>
                         </a>
                         {showToc ? <a class="navbar-item is-hidden-tablet catalogue" title={tocTitle} href="javascript:;">
                             <i class="fas fa-list-ul"></i>
                         </a> : null}
-                        {showSearch ? <a class="navbar-item search" title={searchTitle} href="javascript:;">
+                        {showSearch ? <a class="navbar-item search is-hidden-touch" title={searchTitle} href="javascript:;">
                             <i class="fas fa-search"></i>
                         </a> : null}
                     </div>
