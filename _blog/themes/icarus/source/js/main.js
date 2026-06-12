@@ -136,4 +136,23 @@
         $mask.on('click', toggleToc);
         $('.navbar-main .catalogue').on('click', toggleToc);
     }
+
+    // ハンバーガーメニュー（スマホ）の開閉
+    $('.navbar-burger').on('click', function() {
+        const $burger = $(this);
+        const $menu = $('#' + $burger.attr('data-target'));
+        $burger.toggleClass('is-active');
+        $menu.toggleClass('is-active');
+        $burger.attr('aria-expanded', $burger.hasClass('is-active'));
+    });
+
+    // ダーク / ライトモードの切り替え（描画前の適用は head.jsx のインラインスクリプトで実施）
+    $('.theme-toggle').on('click', function() {
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try {
+            localStorage.setItem('theme', next);
+        } catch (e) { /* localStorage 不可の環境は無視 */ }
+    });
 }(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings));

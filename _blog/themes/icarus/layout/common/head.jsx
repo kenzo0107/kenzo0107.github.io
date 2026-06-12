@@ -117,9 +117,13 @@ module.exports = class extends Component {
             }
         }
 
+        // 描画前にテーマを適用してダークモードのちらつき(FOUC)を防ぐ
+        const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
+
         return <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+            <script dangerouslySetInnerHTML={{ __html: themeInitScript }}></script>
             {noIndex ? <meta name="robots" content="noindex" /> : null}
             {meta && meta.length ? <MetaTags meta={meta} /> : null}
 

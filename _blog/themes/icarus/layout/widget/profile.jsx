@@ -134,7 +134,7 @@ Profile.Cacheable = cacheComponent(Profile, 'widget.profile', props => {
             post: {
                 count: postCount,
                 title: _p('common.post', postCount),
-                url: url_for('/archives/')
+                url: url_for('/')
             },
             category: {
                 count: categoryCount,

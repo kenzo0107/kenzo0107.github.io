@@ -9,28 +9,6 @@ $navbar-item-margin-h ?= 0
 .navbar-main
     box-shadow: $shadow
 
-    .navbar-container
-        overflow-x: auto
-
-    .navbar-menu, .navbar-start, .navbar-end
-        align-items: stretch
-        display: flex
-        padding: 0
-        flex-shrink: 0
-
-    .navbar-menu
-        flex-grow: 1
-        flex-shrink: 0
-        overflow-x: auto
-
-    .navbar-start
-        justify-content: flex-start
-        margin-right: auto
-
-    .navbar-end
-        justify-content: flex-end
-        margin-left: auto
-
     .navbar-item
         display: flex
         align-items: center
@@ -40,16 +18,80 @@ $navbar-item-margin-h ?= 0
         &.is-active
             background-color: transparent
 
-    +until($navbar-breakpoint)
+    // --- デスクトップ (PC幅): メニューを横並びでヘッダーに表示 ---
+    +from($navbar-breakpoint)
         .navbar-menu
-            justify-content: center
-            box-shadow: none
+            align-items: stretch
+            display: flex
+            flex-grow: 1
+            padding: 0
 
         .navbar-start
-            margin-right: 0
+            align-items: stretch
+            display: flex
+            justify-content: flex-start
+            margin-right: auto
 
         .navbar-end
-            margin-left: 0
+            align-items: stretch
+            display: flex
+            justify-content: flex-end
+            margin-left: auto
+
+    // --- スマホ / タブレット幅: ハンバーガーメニューで開閉 ---
+    +until($navbar-breakpoint)
+        .navbar-menu
+            box-shadow: 0 8px 16px rgba(10, 10, 10, .1)
+
+            .navbar-item
+                padding: .75rem 1rem
+
+// Categories ドロップダウン
+.navbar-categories
+    .navbar-dropdown
+        .navbar-item
+            display: flex
+            justify-content: space-between
+            align-items: center
+
+        .navbar-category-count
+            margin-left: 1.5em
+            min-width: 1.6em
+            padding: .05em .5em
+            border-radius: 10px
+            background: $primary
+            color: #fff
+            font-size: .72rem
+            font-weight: 600
+            text-align: center
+
+// 言語スイッチャー
+.navbar-langs
+    .navbar-lang
+        padding: 0 .3em
+        color: $grey
+
+        &.is-active
+            color: $primary
+            font-weight: 600
+
+    .navbar-lang-sep
+        color: $grey-lighter
+
+// ダーク / ライト トグル
+.theme-toggle
+    cursor: pointer
+
+    .theme-toggle-light
+        display: none
+
+html[data-theme='dark']
+    .theme-toggle
+        .theme-toggle-dark
+            display: none
+
+        .theme-toggle-light
+            display: inline-block
 
 .navbar-logo
     img

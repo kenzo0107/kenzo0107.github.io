@@ -13,6 +13,12 @@ function isSameLink(a, b) {
     return santize(a) === santize(b);
 }
 
+// 言語コード → 表示ラベル
+const LANGUAGE_LABELS = {
+    ja: '日本語',
+    en: 'English'
+};
+
 class Navbar extends Component {
     render() {
         const {
@@ -22,6 +28,10 @@ class Navbar extends Component {
             siteTitle,
             menu,
             links,
+            categories,
+            categoriesUrl,
+            categoriesTitle,
+            translations,
             showToc,
             tocTitle,
             showSearch,
@@ -39,20 +49,38 @@ class Navbar extends Component {
             navbarLogo = siteTitle;
         }
 
+        const hasCategories = Array.isArray(categories) && categories.length > 0;
+
         return <nav class="navbar navbar-main">
             <div class="container navbar-container">
                 <div class="navbar-brand justify-content-center">
                     <a class="navbar-item navbar-logo" href={siteUrl}>
                         {navbarLogo}
                     </a>
+                    {/* スマホ用ハンバーガーボタン */}
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
                 </div>
-                <div class="navbar-menu">
-                    {Object.keys(menu).length ? <div class="navbar-start">
+                <div id="navbar-menu" class="navbar-menu">
+                    <div class="navbar-start">
+                        {/* Categories ドロップダウン（PC: ホバー表示 / スマホ: ハンバーガー内で展開） */}
+                        {hasCategories ? <div class="navbar-item has-dropdown is-hoverable navbar-categories">
+                            <a class="navbar-link" href={categoriesUrl}>{categoriesTitle}</a>
+                            <div class="navbar-dropdown">
+                                {categories.map(category => <a class="navbar-item" href={category.url}>
+                                    <span>{category.name}</span>
+                                    <span class="navbar-category-count">{category.count}</span>
+                                </a>)}
+                            </div>
+                        </div> : null}
                         {Object.keys(menu).map(name => {
                             const item = menu[name];
                             return <a class={classname({ 'navbar-item': true, 'is-active': item.active })} href={item.url}>{name}</a>;
                         })}
-                    </div> : null}
+                    </div>
                     <div class="navbar-end">
                         {Object.keys(links).length ? <Fragment>
                             {Object.keys(links).map(name => {
@@ -62,6 +90,18 @@ class Navbar extends Component {
                                 </a>;
                             })}
                         </Fragment> : null}
+                        {/* 言語スイッチャー（翻訳が存在する記事のみ表示） */}
+                        {Array.isArray(translations) && translations.length > 1 ? <div class="navbar-item navbar-langs">
+                            {translations.map((t, i) => <Fragment>
+                                {i > 0 ? <span class="navbar-lang-sep">/</span> : null}
+                                <a class={classname({ 'navbar-lang': true, 'is-active': t.active })} href={t.url}>{t.label}</a>
+                            </Fragment>)}
+                        </div> : null}
+                        {/* ダーク / ライト切り替えトグル */}
+                        <a class="navbar-item theme-toggle" title="Toggle dark mode" href="javascript:;" aria-label="Toggle dark mode">
+                            <i class="fas fa-moon theme-toggle-dark"></i>
+                            <i class="fas fa-sun theme-toggle-light"></i>
+                        </a>
                         {showToc ? <a class="navbar-item is-hidden-tablet catalogue" title={tocTitle} href="javascript:;">
                             <i class="fas fa-list-ul"></i>
                         </a> : null}
@@ -76,16 +116,17 @@ class Navbar extends Component {
 }
 
 module.exports = cacheComponent(Navbar, 'common.navbar', props => {
-    const { config, helper, page } = props;
+    const { site, config, helper, page } = props;
     const { url_for, _p, __ } = helper;
     const { logo, title, navbar, widgets, search } = config;
 
     const hasTocWidget = Array.isArray(widgets) && widgets.find(widget => widget.type === 'toc');
     const showToc = (config.toc === true || page.toc) && hasTocWidget && ['page', 'post'].includes(page.layout);
 
+    const pageUrl = typeof page.path !== 'undefined' ? url_for(page.path) : '';
+
     const menu = {};
     if (navbar && navbar.menu) {
-        const pageUrl = typeof page.path !== 'undefined' ? url_for(page.path) : '';
         Object.keys(navbar.menu).forEach(name => {
             const url = url_for(navbar.menu[name]);
             const active = isSameLink(url, pageUrl);
@@ -104,6 +145,46 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         });
     }
 
+    // site.categories から投稿数の多い順にカテゴリ一覧を生成（ヘッダーのドロップダウン用）
+    // 翻訳記事(lang: en)は日本語サイトの集計から除外する
+    const categories = [];
+    if (site && site.categories && site.categories.length) {
+        site.categories.toArray()
+            .map(category => ({
+                name: category.name,
+                url: url_for(category.path),
+                count: category.posts.filter(post => post.lang !== 'en').length
+            }))
+            .filter(category => category.count > 0)
+            .sort((a, b) => b.count - a.count)
+            .forEach(category => categories.push(category));
+    }
+
+    // 翻訳リンク（front-matter の translation_id が一致する記事 / ページを言語別に収集）
+    const translations = [];
+    if (page.translation_id && site) {
+        const collect = collection => {
+            if (collection && typeof collection.forEach === 'function') {
+                collection.forEach(item => {
+                    if (item.translation_id === page.translation_id && item.path) {
+                        const lang = item.lang || item.language || 'ja';
+                        translations.push({
+                            lang,
+                            url: url_for(item.path),
+                            label: LANGUAGE_LABELS[lang] || lang,
+                            active: url_for(item.path) === pageUrl
+                        });
+                    }
+                });
+            }
+        };
+        collect(site.posts);
+        collect(site.pages);
+        // 言語順を固定（ja → en の順）
+        const order = Object.keys(LANGUAGE_LABELS);
+        translations.sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang));
+    }
+
     return {
         logo,
         logoUrl: url_for(logo),
@@ -111,6 +192,10 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         siteTitle: title,
         menu,
         links,
+        categories,
+        categoriesUrl: url_for('/categories/'),
+        categoriesTitle: _p('common.category', Infinity),
+        translations,
         showToc,
         tocTitle: _p('widget.catalogue', Infinity),
         showSearch: search && search.type,
