@@ -20,7 +20,7 @@ module.exports = class extends Component {
 
         return <html lang={language ? language.substr(0, 2) : ''}>
             <Head site={site} config={config} helper={helper} page={page} />
-            <body class={`is-${columnCount}-column`}>
+            <body class={`is-${columnCount}-column page-${page.layout || 'unknown'}`}>
                 <Navbar site={site} config={config} helper={helper} page={page} />
                 <CategoryBar site={site} config={config} helper={helper} page={page} />
                 <section class="section">
