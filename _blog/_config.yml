@@ -65,6 +65,9 @@ index_generator:
 archive_generator:
   enabled: false
 
+category_generator:
+  per_page: 36
+
 # Category & Tag
 default_category: uncategorized
 category_map:
