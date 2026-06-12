@@ -2,6 +2,7 @@
 layout: post
 title: Installing the Google Cloud SDK on Mac OS X
 date: 2015-06-28
+category: Infrastructure
 lang: en
 translation_id: install-google-cloud-sdk-on-macosx
 permalink: en/2015/06/28/install-google-cloud-sdk-on-macosx/

@@ -2,6 +2,7 @@
 layout: post
 title: Configuring Android Studio AVD (Emulator) to Connect to the Desktop's localhost
 date: 2016-03-09
+category: Infrastructure
 lang: en
 translation_id: android-studio-avd-from-desktop-to-localhost
 permalink: en/2016/03/09/android-studio-avd-from-desktop-to-localhost/

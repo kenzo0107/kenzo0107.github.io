@@ -2,6 +2,7 @@
 layout: post
 title: Configuring Nginx Basic Authentication and Allowing Only Specific IPs Such as the Office Network
 date: 2015-10-19
+category: Infrastructure
 lang: en
 translation_id: allow-specified-ip-nginx
 permalink: en/2015/10/19/allow-specified-ip-nginx/

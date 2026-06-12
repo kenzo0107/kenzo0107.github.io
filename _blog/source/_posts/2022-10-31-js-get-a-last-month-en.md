@@ -1,6 +1,7 @@
 ---
 title: The Subtleties of Date Arithmetic in JavaScript
 date: 2022-10-31
+category: Infrastructure
 lang: en
 translation_id: js-get-a-last-month
 permalink: en/2022/10/31/js-get-a-last-month/

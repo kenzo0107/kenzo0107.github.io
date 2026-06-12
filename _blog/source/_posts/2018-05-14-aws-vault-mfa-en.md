@@ -2,6 +2,7 @@
 layout: post
 title: Passing MFA Authentication for Multiple Accounts with AWS Vault
 date: 2018-05-14
+category: AWS
 lang: en
 translation_id: aws-vault-mfa
 permalink: en/2018/05/14/aws-vault-mfa/

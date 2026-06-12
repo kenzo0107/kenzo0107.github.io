@@ -2,6 +2,7 @@
 layout: post
 title: Elasticsearch インデックス一覧・マッピング一覧・マッピング設定
 date: 2015-10-08
+category: Database
 lang: ja
 translation_id: elasticsearch-index-mapping
 cover: /img/cover/2015-10-08-elasticsearch-index-mapping.svg

@@ -2,6 +2,7 @@
 layout: post
 title: How to Investigate "No space left on device" Caused by i-node Exhaustion
 date: 2018-10-15
+category: Infrastructure
 lang: en
 translation_id: no-space-left-on-device-i-node
 permalink: en/2018/10/15/no-space-left-on-device-i-node/

@@ -2,6 +2,7 @@
 layout: post
 title: Allow Site Access Only From the Office Wi-Fi IP During Maintenance
 date: 2016-08-09
+category: Infrastructure
 lang: en
 translation_id: allow-ip-under-the-maintenance
 permalink: en/2016/08/09/allow-ip-under-the-maintenance/

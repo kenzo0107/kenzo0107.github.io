@@ -2,6 +2,7 @@
 layout: post
 title: Checking FTPS (File Transfer Protocol over SSL/TLS) Connectivity with curl
 date: 2018-04-18
+category: Infrastructure
 lang: en
 translation_id: ftps-by-curl
 permalink: en/2018/04/18/ftps-by-curl/

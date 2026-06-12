@@ -2,6 +2,7 @@
 layout: post
 title: Configuring logrotate to Append a Daily Date to Log File Names, Set Retention Period, and Compress Old Files
 date: 2015-03-17
+category: Infrastructure
 lang: en
 translation_id: logrotate-daily
 permalink: en/2015/03/17/logrotate-daily/

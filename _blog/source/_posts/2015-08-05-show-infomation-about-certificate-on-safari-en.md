@@ -2,6 +2,7 @@
 layout: post
 title: Viewing Certificate Information in Safari
 date: 2015-08-05
+category: Infrastructure
 lang: en
 translation_id: show-infomation-about-certificate-on-safari
 permalink: en/2015/08/05/show-infomation-about-certificate-on-safari/

@@ -2,6 +2,9 @@
 layout: post
 title: MacOSX環境にgoインストールして実行確認まで
 date: 2015-05-18
+categories:
+  - [Go]
+  - [Infrastructure]
 lang: ja
 translation_id: install-go-macosx
 cover: /img/cover/2015-05-18-install-go-macosx.svg

@@ -2,6 +2,7 @@
 layout: post
 title: Setting Up Raspbian Jessie on the Raspberry Pi 3 B
 date: 2016-07-12
+category: RaspberryPI
 lang: en
 translation_id: setup-raspberrypi3b-jessie
 permalink: en/2016/07/12/setup-raspberrypi3b-jessie/

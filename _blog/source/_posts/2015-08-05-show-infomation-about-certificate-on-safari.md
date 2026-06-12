@@ -2,6 +2,7 @@
 layout: post
 title: Safariで証明書情報確認
 date: 2015-08-05
+category: Infrastructure
 lang: ja
 translation_id: show-infomation-about-certificate-on-safari
 cover: https://i.imgur.com/Uk1IOKd.png

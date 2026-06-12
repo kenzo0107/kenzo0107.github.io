@@ -2,6 +2,7 @@
 layout: post
 title: とにかくシンプルにPHPでLineBotApiを書きました
 date: 2016-04-28
+category: Infrastructure
 lang: ja
 translation_id: simple-php-linebotapi
 tags:

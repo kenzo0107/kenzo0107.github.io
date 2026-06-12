@@ -2,6 +2,7 @@
 layout: post
 title: "error RPC failed; curl 56 SSLRead() return on macOS Sierra"
 date: 2016-09-28
+category: Infrastructure
 lang: en
 translation_id: error-rpc-failed-curl-56-sslread-return-on-macos
 permalink: en/2016/09/28/error-rpc-failed-curl-56-sslread-return-on-macos/

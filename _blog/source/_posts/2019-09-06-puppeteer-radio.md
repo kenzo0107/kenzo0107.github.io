@@ -2,6 +2,7 @@
 layout: post
 title: puppeteer で radio ボタンチェック
 date: 2019-09-06
+category: Infrastructure
 lang: ja
 translation_id: puppeteer-radio
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: MySQL vs PostgreSQL Command Comparison
 date: 2015-04-07
+category: Database
 lang: en
 translation_id: mysql-vs-postgresql
 permalink: en/2015/04/07/mysql-vs-postgresql/

@@ -2,6 +2,7 @@
 layout: post
 title: Searching in the Kibana4 Search Bar with Regular Expression Pattern Matching and More
 date: 2015-11-24
+category: Monitoring
 lang: en
 translation_id: kibana-regex-pattern-match
 permalink: en/2015/11/24/kibana-regex-pattern-match/

@@ -2,6 +2,7 @@
 layout: post
 title: pod install で ASSERSION対策
 date: 2015-12-31
+category: Infrastructure
 lang: ja
 translation_id: pod-install-assersion
 cover: /img/cover/2015-12-31-pod-install-assersion.svg

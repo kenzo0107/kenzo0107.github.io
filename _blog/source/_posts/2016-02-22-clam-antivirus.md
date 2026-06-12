@@ -2,6 +2,7 @@
 layout: post
 title: Clam AntiVirus 導入
 date: 2016-02-23
+category: Infrastructure
 lang: ja
 translation_id: clam-antivirus
 cover: /img/cover/2016-02-22-clam-antivirus.svg

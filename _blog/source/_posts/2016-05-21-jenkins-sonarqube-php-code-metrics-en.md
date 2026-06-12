@@ -2,6 +2,7 @@
 layout: post
 title: Measuring PHP Code Metrics with Jenkins + SonarQube!
 date: 2016-05-21
+category: Infrastructure
 lang: en
 translation_id: jenkins-sonarqube-php-code-metrics
 permalink: en/2016/05/21/jenkins-sonarqube-php-code-metrics/

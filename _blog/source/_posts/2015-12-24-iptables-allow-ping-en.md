@@ -2,6 +2,7 @@
 layout: post
 title: iptables Configuration to Allow ping
 date: 2015-12-24
+category: Infrastructure
 lang: en
 translation_id: iptables-allow-ping
 permalink: en/2015/12/24/iptables-allow-ping/

@@ -2,6 +2,7 @@
 layout: post
 title: SSH autologin でサーバログイン 〜毎回sshコマンドいちいち打つのはやめよう〜
 date: 2015-05-01
+category: Infrastructure
 lang: ja
 translation_id: ssh-autologin
 cover: /img/cover/2015-05-01-ssh-autologin.svg

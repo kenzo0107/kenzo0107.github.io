@@ -2,6 +2,7 @@
 layout: post
 title: Nginx 1.9.6 → 1.11.1 へバージョンアップ 脆弱性対応
 date: 2016-06-27
+category: Infrastructure
 lang: ja
 translation_id: versionup-nginx
 tags:

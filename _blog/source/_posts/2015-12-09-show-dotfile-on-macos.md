@@ -2,6 +2,7 @@
 layout: post
 title: 今更ながらMacでドットファイルを表示する
 date: 2015-12-09
+category: Infrastructure
 lang: ja
 translation_id: show-dotfile-on-macos
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: 'Upgrading Nginx 1.9.6 → 1.11.1 to Address a Vulnerability'
 date: 2016-06-27
+category: Infrastructure
 lang: en
 translation_id: versionup-nginx
 permalink: en/2016/06/27/versionup-nginx/

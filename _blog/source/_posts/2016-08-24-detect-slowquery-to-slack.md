@@ -2,6 +2,9 @@
 layout: post
 title: SlowQuery を検知して Explain で解析し Slack へ通知
 date: 2016-08-24
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: ja
 translation_id: detect-slowquery-to-slack
 tags:

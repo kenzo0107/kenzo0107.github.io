@@ -2,6 +2,9 @@
 layout: post
 title: Checking Your Google Analytics Tag Setup
 date: 2015-03-24
+categories:
+  - [Data Analytics]
+  - [Infrastructure]
 lang: en
 translation_id: check-google-analytics-tag
 permalink: en/2015/03/24/check-google-analytics-tag/

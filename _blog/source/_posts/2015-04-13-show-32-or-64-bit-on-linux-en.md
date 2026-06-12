@@ -2,6 +2,7 @@
 layout: post
 title: Check Whether Linux Is 32-bit or 64-bit
 date: 2015-04-13
+category: Infrastructure
 lang: en
 translation_id: show-32-or-64-bit-on-linux
 permalink: en/2015/04/13/show-32-or-64-bit-on-linux/

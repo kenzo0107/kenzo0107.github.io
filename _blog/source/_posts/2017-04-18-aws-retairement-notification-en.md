@@ -2,6 +2,7 @@
 layout: post
 title: Handling the AWS [Retirement Notification]
 date: 2017-04-18
+category: AWS
 lang: en
 translation_id: aws-retairement-notification
 permalink: en/2017/04/18/aws-retairement-notification/

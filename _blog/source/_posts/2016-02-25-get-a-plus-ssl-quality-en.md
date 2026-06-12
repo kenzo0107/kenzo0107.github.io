@@ -2,6 +2,7 @@
 layout: post
 title: Issuing a Free SSL Certificate and Scoring an A+ on Security! ~Apache Edition~
 date: 2016-02-25
+category: Infrastructure
 lang: en
 translation_id: get-a-plus-ssl-quality
 permalink: en/2016/02/25/get-a-plus-ssl-quality/

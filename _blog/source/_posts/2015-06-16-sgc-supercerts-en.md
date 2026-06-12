@@ -2,6 +2,7 @@
 layout: post
 title: How to Purchase an SGC SuperCerts SSL Certificate
 date: 2015-06-16
+category: Infrastructure
 lang: en
 translation_id: sgc-supercerts
 permalink: en/2015/06/16/sgc-supercerts/

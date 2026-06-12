@@ -2,6 +2,7 @@
 layout: post
 title: MySQL 一定秒以上 Sleep しているプロセスを一括 kill
 date: 2017-08-25
+category: Database
 lang: ja
 translation_id: mysql-kill-sleep-process
 cover: /img/cover/2017-08-25-mysql-kill-sleep-process.svg

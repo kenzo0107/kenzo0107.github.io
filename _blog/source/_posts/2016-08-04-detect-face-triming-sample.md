@@ -2,6 +2,7 @@
 layout: post
 title: 複数画像ファイルから顔検知し顔部分をトリミングしたサンプルを集める
 date: 2016-08-04
+category: AI
 lang: ja
 translation_id: detect-face-triming-sample
 tags:

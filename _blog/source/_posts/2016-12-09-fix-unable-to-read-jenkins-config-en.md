@@ -2,6 +2,9 @@
 layout: post
 title: Jenkins Won't Start - Unable to read /var/lib/jenkins/config.xml
 date: 2016-12-09
+categories:
+  - [AWS]
+  - [Infrastructure]
 lang: en
 translation_id: fix-unable-to-read-jenkins-config
 permalink: en/2016/12/09/fix-unable-to-read-jenkins-config/

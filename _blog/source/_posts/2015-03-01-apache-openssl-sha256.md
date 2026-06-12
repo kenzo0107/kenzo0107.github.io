@@ -2,6 +2,7 @@
 layout: post
 title: Apache + OpenSSL でSHA256対応CSR生成
 date: 2015-03-01
+category: Infrastructure
 lang: ja
 translation_id: apache-openssl-sha256
 cover: /img/cover/2015-03-01-apache-openssl-sha256.svg

@@ -2,6 +2,9 @@
 layout: post
 title: Installing Sentry on macOS X + Vagrant (CentOS7) and Verifying It Works
 date: 2015-04-11
+categories:
+  - [Monitoring]
+  - [Infrastructure]
 lang: en
 translation_id: install-sentry-on-centos7
 permalink: en/2015/04/11/install-sentry-on-centos7/

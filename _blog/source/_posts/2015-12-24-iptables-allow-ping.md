@@ -2,6 +2,7 @@
 layout: post
 title: pingを通すiptableの設定
 date: 2015-12-24
+category: Infrastructure
 lang: ja
 translation_id: iptables-allow-ping
 cover: /img/cover/2015-12-24-iptables-allow-ping.svg

@@ -2,6 +2,7 @@
 layout: post
 title: Installing a NeoBundle-Compatible vim on CentOS 5
 date: 2016-11-30
+category: Infrastructure
 lang: en
 translation_id: install-neobundle-vim
 permalink: en/2016/11/30/install-neobundle-vim/

@@ -2,6 +2,7 @@
 layout: post
 title: The yum cache was eating up more disk space than I expected
 date: 2015-11-26
+category: Infrastructure
 lang: en
 translation_id: cleanup-yum-cache
 permalink: en/2015/11/26/cleanup-yum-cache/

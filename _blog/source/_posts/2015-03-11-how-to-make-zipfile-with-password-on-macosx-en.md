@@ -2,6 +2,7 @@
 layout: post
 title: How to Create a Password-Protected Zip File on Mac OS X
 date: 2015-03-11
+category: Infrastructure
 lang: en
 translation_id: how-to-make-zipfile-with-password-on-macosx
 permalink: en/2015/03/11/how-to-make-zipfile-with-password-on-macosx/

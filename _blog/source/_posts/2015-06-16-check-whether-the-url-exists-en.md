@@ -2,6 +2,7 @@
 layout: post
 title: Checking Whether a URL Exists from the Command Line
 date: 2015-06-16
+category: Infrastructure
 lang: en
 translation_id: check-whether-the-url-exists
 permalink: en/2015/06/16/check-whether-the-url-exists/

@@ -2,6 +2,7 @@
 layout: post
 title: Let's Use zsh on macOS X!
 date: 2015-04-24
+category: Infrastructure
 lang: en
 translation_id: lets-use-zsh
 permalink: en/2015/04/24/lets-use-zsh/

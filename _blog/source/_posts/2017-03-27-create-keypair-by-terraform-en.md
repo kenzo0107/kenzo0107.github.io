@@ -2,6 +2,10 @@
 layout: post
 title: SSH into an EC2 Instance Launched with a Key Pair Registered via Terraform
 date: 2017-03-27
+categories:
+  - [AWS]
+  - [Terraform]
+  - [Infrastructure]
 lang: en
 translation_id: create-keypair-by-terraform
 permalink: en/2017/03/27/create-keypair-by-terraform/

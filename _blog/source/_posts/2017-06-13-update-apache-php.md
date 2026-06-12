@@ -2,6 +2,7 @@
 layout: post
 title: Apache 2.2.15 → 2.4.25   PHP 5.6 → 7 へアップデート on CentOS 6.9
 date: 2017-06-13
+category: Infrastructure
 lang: ja
 translation_id: update-apache-php
 tags:

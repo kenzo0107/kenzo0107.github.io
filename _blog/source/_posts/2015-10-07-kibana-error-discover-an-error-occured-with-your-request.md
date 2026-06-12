@@ -2,6 +2,7 @@
 layout: post
 title: "Kibana エラー対応 - Discover: An error occurred with your request. Reset your inputs and try again."
 date: 2015-10-07
+category: Monitoring
 lang: ja
 translation_id: kibana-error-discover-an-error-occured-with-your-request
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151007/20151007120432.png

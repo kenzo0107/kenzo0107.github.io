@@ -2,6 +2,7 @@
 layout: post
 title: Installing Homebrew on Mac OS X
 date: 2015-02-28
+category: Infrastructure
 lang: en
 translation_id: install-homebrew-on-macosx
 permalink: en/2015/02/28/install-homebrew-on-macosx/

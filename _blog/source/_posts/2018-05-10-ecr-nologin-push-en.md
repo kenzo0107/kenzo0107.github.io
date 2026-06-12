@@ -2,6 +2,7 @@
 layout: post
 title: 'Sequel: Pushing to ECR Without Logging In (aws ecr get-login)'
 date: 2018-05-10
+category: AWS
 lang: en
 translation_id: ecr-nologin-push
 permalink: en/2018/05/10/ecr-nologin-push/

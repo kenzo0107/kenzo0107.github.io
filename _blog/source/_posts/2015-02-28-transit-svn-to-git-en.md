@@ -2,6 +2,7 @@
 layout: post
 title: Migrating from SVN to Git While Preserving Past Commit Logs
 date: 2015-02-28
+category: Git
 lang: en
 translation_id: transit-svn-to-git
 permalink: en/2015/02/28/transit-svn-to-git/

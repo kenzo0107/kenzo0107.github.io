@@ -2,6 +2,7 @@
 layout: post
 title: MySQL COUNT, SUM, GROUP BY, CASE WHEN THEN で集計する
 date: 2016-10-20
+category: Database
 lang: ja
 translation_id: totalization-mysql
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161020/20161020182836.png

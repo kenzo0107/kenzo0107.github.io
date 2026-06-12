@@ -2,6 +2,7 @@
 layout: post
 title: Docker Command Cheat Sheet
 date: 2017-04-14
+category: Infrastructure
 lang: en
 translation_id: teat-docker
 permalink: en/2017/04/14/teat-docker/

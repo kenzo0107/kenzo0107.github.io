@@ -2,6 +2,7 @@
 layout: post
 title: Building a LAMP Environment with Vagrant + Chef
 date: 2014-05-30
+category: Infrastructure
 lang: en
 translation_id: vagrant-chef
 permalink: en/2014/05/30/vagrant-chef/

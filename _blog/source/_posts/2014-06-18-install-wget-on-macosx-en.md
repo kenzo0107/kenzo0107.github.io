@@ -2,6 +2,7 @@
 layout: post
 title: Installing wget on Mac OS X
 date: 2014-06-18
+category: Infrastructure
 lang: en
 translation_id: install-wget-on-macosx
 permalink: en/2014/06/18/install-wget-on-macosx/

@@ -3,6 +3,7 @@ title: You are not subscribed to this service
 tags:
 - AWS
 date: 2020-10-06
+category: AWS
 lang: en
 translation_id: aws-startup
 permalink: en/2020/10/06/aws-startup/

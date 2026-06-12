@@ -1,6 +1,7 @@
 ---
 title: The Difference Between no-cache and no-store
 date: 2021-12-30
+category: Infrastructure
 lang: en
 translation_id: web-delivery
 permalink: en/2021/12/30/web-delivery/

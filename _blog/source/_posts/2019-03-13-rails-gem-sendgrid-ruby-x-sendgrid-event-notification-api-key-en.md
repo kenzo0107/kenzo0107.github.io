@@ -2,6 +2,7 @@
 layout: post
 title: Setting Per-API-Key Custom Metadata in SendGrid Event Notification with Rails (gem 'sendgrid-ruby')
 date: 2019-03-13
+category: Infrastructure
 lang: en
 translation_id: rails-gem-sendgrid-ruby-x-sendgrid-event-notification-api-key
 permalink: en/2019/03/13/rails-gem-sendgrid-ruby-x-sendgrid-event-notification-api-key/

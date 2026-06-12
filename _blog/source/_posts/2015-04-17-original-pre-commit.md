@@ -2,6 +2,7 @@
 layout: post
 title: 独自pre-commit設定
 date: 2015-04-17
+category: Git
 lang: ja
 translation_id: original-pre-commit
 cover: /img/cover/2015-04-17-original-pre-commit.svg

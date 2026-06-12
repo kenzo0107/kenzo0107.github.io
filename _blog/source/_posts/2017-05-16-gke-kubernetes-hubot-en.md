@@ -2,6 +2,7 @@
 layout: post
 title: "Run Hubot for Free! GKE + Kubernetes - Creating a Custom Network and Launching from Config Files"
 date: 2017-05-16
+category: Infrastructure
 lang: en
 translation_id: gke-kubernetes-hubot
 permalink: en/2017/05/16/gke-kubernetes-hubot/

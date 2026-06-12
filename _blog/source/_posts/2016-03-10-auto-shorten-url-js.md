@@ -2,6 +2,7 @@
 layout: post
 title: inputボックスにURL打ち込むと自動URL短縮化されるjs
 date: 2016-03-10
+category: Infrastructure
 lang: ja
 translation_id: auto-shorten-url-js
 tags:

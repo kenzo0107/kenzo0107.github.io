@@ -2,6 +2,7 @@
 layout: post
 title: Mac - Remapping Caps Lock to Control
 date: 2015-04-27
+category: Infrastructure
 lang: en
 translation_id: capslock-to-control-on-macosx
 permalink: en/2015/04/27/capslock-to-control-on-macosx/

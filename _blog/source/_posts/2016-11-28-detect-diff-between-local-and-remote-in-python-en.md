@@ -2,6 +2,7 @@
 layout: post
 title: 'Python: A Tool to Detect File Differences Between Local and Remote Servers'
 date: 2016-11-30
+category: Python
 lang: en
 translation_id: detect-diff-between-local-and-remote-in-python
 permalink: en/2016/11/28/detect-diff-between-local-and-remote-in-python/

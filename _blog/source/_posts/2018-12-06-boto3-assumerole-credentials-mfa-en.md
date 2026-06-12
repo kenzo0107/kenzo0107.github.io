@@ -2,6 +2,9 @@
 layout: post
 title: Handling MFA When Using Account-Switch Credentials Obtained via boto3 AssumeRole
 date: 2018-12-06
+categories:
+  - [AWS]
+  - [Python]
 lang: en
 translation_id: boto3-assumerole-credentials-mfa
 permalink: en/2018/12/06/boto3-assumerole-credentials-mfa/

@@ -2,6 +2,7 @@
 layout: post
 title: "Handling the error key_read: uudecode error when you thought you ran cat id_rsa.pub >> authorized_keys"
 date: 2016-07-29
+category: Infrastructure
 lang: en
 translation_id: error-key-read-uudecode
 permalink: en/2016/07/29/error-key-read-uudecode/

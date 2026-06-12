@@ -2,6 +2,7 @@
 layout: post
 title: "MySQL Troubleshooting - ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)"
 date: 2016-01-15
+category: Database
 lang: en
 translation_id: mysql-error-1045-28000-access-denied-for-user
 permalink: en/2016/01/15/mysql-error-1045-28000-access-denied-for-user/

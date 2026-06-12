@@ -2,6 +2,7 @@
 layout: post
 title: When du shows the device is almost full and you have to delete something
 date: 2016-08-15
+category: Infrastructure
 lang: en
 translation_id: reduce-disk-usage
 permalink: en/2016/08/15/reduce-disk-usage/

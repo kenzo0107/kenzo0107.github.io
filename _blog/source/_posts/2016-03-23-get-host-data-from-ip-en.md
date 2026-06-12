@@ -2,6 +2,7 @@
 layout: post
 title: Getting Host Information from an IP Address
 date: 2016-03-23
+category: Infrastructure
 lang: en
 translation_id: get-host-data-from-ip
 permalink: en/2016/03/23/get-host-data-from-ip/

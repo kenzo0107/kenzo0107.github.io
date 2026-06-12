@@ -2,6 +2,7 @@
 layout: post
 title: AWS [Retirement Notification] 対応
 date: 2017-04-18
+category: AWS
 lang: ja
 translation_id: aws-retairement-notification
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: UnityでAndroidアプリ「マメコラン！」公開♪
 date: 2015-06-16
+category: Infrastructure
 lang: ja
 translation_id: mamekorun-android-application-by-unity
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150616/20150616004701.png

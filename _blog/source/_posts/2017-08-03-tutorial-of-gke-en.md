@@ -2,6 +2,7 @@
 layout: post
 title: Building and Operating a Site with the GKE Tutorial
 date: 2017-08-03
+category: Infrastructure
 lang: en
 translation_id: tutorial-of-gke
 permalink: en/2017/08/03/tutorial-of-gke/

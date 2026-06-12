@@ -2,6 +2,7 @@
 layout: post
 title: Android Studio AVD (エミュレータ) からデスクトップのローカルホストに接続させる設定
 date: 2016-03-09
+category: Infrastructure
 lang: ja
 translation_id: android-studio-avd-from-desktop-to-localhost
 tags:

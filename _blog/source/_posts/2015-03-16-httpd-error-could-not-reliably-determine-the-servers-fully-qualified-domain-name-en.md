@@ -2,6 +2,7 @@
 layout: post
 title: "httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName"
 date: 2015-03-16
+category: Infrastructure
 lang: en
 translation_id: httpd-error-could-not-reliably-determine-the-servers-fully-qualified-domain-name
 permalink: en/2015/03/16/httpd-error-could-not-reliably-determine-the-servers-fully-qualified-domain-name/

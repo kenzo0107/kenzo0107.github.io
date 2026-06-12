@@ -2,6 +2,7 @@
 layout: post
 title: Ansible でサーバ環境構築
 date: 2014-09-12
+category: Infrastructure
 lang: ja
 translation_id: make-lamp-by-ansible
 cover: /img/cover/2014-09-12-make-lamp-by-ansible.svg

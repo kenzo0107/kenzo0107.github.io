@@ -2,6 +2,7 @@
 layout: post
 title: terraform workspace で環境毎に tfsate 管理
 date: 2017-12-05
+category: Terraform
 lang: ja
 translation_id: terraform-workspace-tfsate
 tags:

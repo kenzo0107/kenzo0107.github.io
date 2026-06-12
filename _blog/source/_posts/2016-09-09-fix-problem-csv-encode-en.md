@@ -2,6 +2,7 @@
 layout: post
 title: Solving CSV Encoding Problems
 date: 2016-09-09
+category: Infrastructure
 lang: en
 translation_id: fix-problem-csv-encode
 permalink: en/2016/09/09/fix-problem-csv-encode/

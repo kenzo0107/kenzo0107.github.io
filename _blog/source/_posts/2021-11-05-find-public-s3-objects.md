@@ -3,6 +3,7 @@ title: 公開された S3 Objcet を探せ！
 tags:
   - AWS
 date: 2021-11-05
+category: AWS
 lang: ja
 translation_id: find-public-s3-objects
 cover: https://i.imgur.com/ZskUBGT.png

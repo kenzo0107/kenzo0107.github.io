@@ -2,6 +2,7 @@
 layout: post
 title: Setting Up the Go Debugger gdb in Eclipse on MacOSX
 date: 2015-08-02
+category: Infrastructure
 lang: en
 translation_id: setting-for-gdb
 permalink: en/2015/08/02/setting-for-gdb/

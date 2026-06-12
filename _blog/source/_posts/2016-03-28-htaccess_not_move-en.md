@@ -2,6 +2,7 @@
 layout: post
 title: What to Do When .htaccess Doesn't Work or Has No Effect
 date: 2016-03-28
+category: Infrastructure
 lang: en
 translation_id: htaccess_not_move
 permalink: en/2016/03/28/htaccess_not_move/

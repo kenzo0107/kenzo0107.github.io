@@ -2,6 +2,7 @@
 layout: post
 title: No Password Needed! SSH Login with Public Key Authentication
 date: 2016-04-05
+category: Infrastructure
 lang: en
 translation_id: ssh-login-without-password
 permalink: en/2016/04/05/ssh-login-without-password/

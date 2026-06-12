@@ -2,6 +2,7 @@
 layout: post
 title: docker build 時に Text file busy で shell が実行できない対策
 date: 2018-04-18
+category: Infrastructure
 lang: ja
 translation_id: fix-text-file-busy-on-docker-build
 tags:

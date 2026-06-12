@@ -2,6 +2,7 @@
 layout: post
 title: Solving the "Did the Dishwasher Finish?" Problem with RaspberryPI + BlueButton + LINE Notify + Google Home
 date: 2018-08-20
+category: RaspberryPI
 lang: en
 translation_id: raspberrypi-bluebutton-line-notify-google-home
 permalink: en/2018/08/20/raspberrypi-bluebutton-line-notify-google-home/

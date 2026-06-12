@@ -2,6 +2,7 @@
 layout: post
 title: net-tools vs. iproute2 対応表
 date: 2015-05-11
+category: Infrastructure
 lang: ja
 translation_id: net-tools-vs-iproute2
 cover: /img/cover/2015-05-11-net-tools-vs-iproute2.svg

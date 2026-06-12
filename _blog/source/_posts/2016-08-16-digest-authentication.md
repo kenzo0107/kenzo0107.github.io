@@ -2,6 +2,7 @@
 layout: post
 title: Digest 認証設定
 date: 2016-08-16
+category: Infrastructure
 lang: ja
 translation_id: digest-authentication
 cover: https://i.imgur.com/NMKovma.jpg

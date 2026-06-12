@@ -2,6 +2,7 @@
 layout: post
 title: 'puppeteer on Docker '
 date: 2019-08-16
+category: Infrastructure
 lang: en
 translation_id: puppeteer-on-docker
 permalink: en/2019/08/16/puppeteer-on-docker/

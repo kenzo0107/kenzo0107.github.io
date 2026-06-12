@@ -1,6 +1,7 @@
 ---
 title: alpine イメージに awscli をインストールする
 date: 2023-04-21
+category: AWS
 lang: ja
 translation_id: install-awscli-on-alpine
 cover: /img/cover/2023-04-21-install-awscli-on-alpine.svg

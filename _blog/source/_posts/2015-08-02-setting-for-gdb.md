@@ -2,6 +2,7 @@
 layout: post
 title: Eclipse でGoコードデバッグツールgdb設定  on MacOSX
 date: 2015-08-02
+category: Infrastructure
 lang: ja
 translation_id: setting-for-gdb
 cover: https://i.imgur.com/bJO8cHQ.png

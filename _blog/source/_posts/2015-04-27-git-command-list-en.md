@@ -2,6 +2,7 @@
 layout: post
 title: Git Command Cheat Sheet
 date: 2015-04-27
+category: Git
 lang: en
 translation_id: git-command-list
 permalink: en/2015/04/27/git-command-list/

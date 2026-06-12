@@ -2,6 +2,7 @@
 layout: post
 title: Installing Docker and Docker Compose on Vagrant (Ubuntu)
 date: 2017-04-13
+category: Infrastructure
 lang: en
 translation_id: install-docker-and-docker-compose-on-vagrant
 permalink: en/2017/04/13/install-docker-and-docker-compose-on-vagrant/

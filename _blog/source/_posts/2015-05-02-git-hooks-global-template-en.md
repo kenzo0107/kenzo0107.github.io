@@ -2,6 +2,7 @@
 layout: post
 title: Setting Up Custom git-hooks Globally
 date: 2015-05-02
+category: Git
 lang: en
 translation_id: git-hooks-global-template
 permalink: en/2015/05/02/git-hooks-global-template/

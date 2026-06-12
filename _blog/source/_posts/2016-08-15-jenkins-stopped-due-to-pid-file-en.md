@@ -2,6 +2,7 @@
 layout: post
 title: Jenkins is stopped, but the PID file remains
 date: 2016-08-15
+category: Infrastructure
 lang: en
 translation_id: jenkins-stopped-due-to-pid-file
 permalink: en/2016/08/15/jenkins-stopped-due-to-pid-file/

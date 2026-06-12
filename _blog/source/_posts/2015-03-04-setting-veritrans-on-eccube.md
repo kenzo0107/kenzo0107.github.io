@@ -2,6 +2,7 @@
 layout: post
 title: EC-CUBEベリトランス設定
 date: 2015-03-04
+category: Infrastructure
 lang: ja
 translation_id: setting-veritrans-on-eccube
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150304/20150304132031.png

@@ -2,6 +2,7 @@
 layout: post
 title: Showing a Maintenance Page to All but Specific IPs with AWS Application Load Balancer Listener Rules
 date: 2019-09-30
+category: AWS
 lang: en
 translation_id: aws-applicationloadbalancer-ip
 permalink: en/2019/09/30/aws-applicationloadbalancer-ip/

@@ -3,6 +3,7 @@ title: Encrypting and Decrypting with the aws-cli KMS
 tags:
 - AWS
 date: 2020-08-14
+category: AWS
 lang: en
 translation_id: aws-kms-encrypt-decrypt
 permalink: en/2020/08/14/aws-kms-encrypt-decrypt/

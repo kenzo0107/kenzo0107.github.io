@@ -2,6 +2,7 @@
 layout: post
 title: Docker Compose チュートリアル
 date: 2017-04-13
+category: Infrastructure
 lang: ja
 translation_id: tutorial-docker-compose
 tags:

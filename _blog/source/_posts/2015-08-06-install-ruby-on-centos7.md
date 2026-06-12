@@ -2,6 +2,7 @@
 layout: post
 title: "Ruby インストール on CentOS7"
 date: 2015-08-06
+category: Infrastructure
 lang: ja
 translation_id: install-ruby-on-centos7
 cover: /img/cover/2015-08-06-install-ruby-on-centos7.svg

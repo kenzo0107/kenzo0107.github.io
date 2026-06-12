@@ -2,6 +2,7 @@
 layout: post
 title: I used Phinx, a DB migration tool, on Docker!
 date: 2017-07-21
+category: Infrastructure
 lang: en
 translation_id: commit-to-phinx-migration-tool
 permalink: en/2017/07/21/commit-to-phinx-migration-tool/

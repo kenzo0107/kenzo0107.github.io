@@ -2,6 +2,9 @@
 layout: post
 title: Use Redis via Python
 date: 2015-11-10
+categories:
+  - [Python]
+  - [Database]
 lang: en
 translation_id: redis-python
 permalink: en/2015/11/10/redis-python/

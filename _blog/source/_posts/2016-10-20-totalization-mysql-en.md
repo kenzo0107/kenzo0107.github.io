@@ -2,6 +2,7 @@
 layout: post
 title: Aggregating Data in MySQL with COUNT, SUM, GROUP BY, and CASE WHEN THEN
 date: 2016-10-20
+category: Database
 lang: en
 translation_id: totalization-mysql
 permalink: en/2016/10/20/totalization-mysql/

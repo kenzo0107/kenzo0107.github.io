@@ -4,6 +4,7 @@ tags:
   - AWS
   - Lambda
 date: 2020-04-16
+category: AWS
 lang: en
 translation_id: cloudfront-csp
 permalink: en/2020/04/16/cloudfront-csp/

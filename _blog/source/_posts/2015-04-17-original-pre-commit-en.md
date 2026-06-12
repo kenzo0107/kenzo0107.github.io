@@ -2,6 +2,7 @@
 layout: post
 title: Custom pre-commit Configuration
 date: 2015-04-17
+category: Git
 lang: en
 translation_id: original-pre-commit
 permalink: en/2015/04/17/original-pre-commit/

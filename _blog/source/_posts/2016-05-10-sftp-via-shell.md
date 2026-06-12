@@ -2,6 +2,7 @@
 layout: post
 title: sftpをシェル化してファイルアップロード
 date: 2016-05-10
+category: Infrastructure
 lang: ja
 translation_id: sftp-via-shell
 cover: /img/cover/2016-05-10-sftp-via-shell.svg

@@ -2,6 +2,10 @@
 layout: post
 title: Terraform でキーペア登録し起動した EC2 に SSH接続
 date: 2017-03-27
+categories:
+  - [AWS]
+  - [Terraform]
+  - [Infrastructure]
 lang: ja
 translation_id: create-keypair-by-terraform
 tags:

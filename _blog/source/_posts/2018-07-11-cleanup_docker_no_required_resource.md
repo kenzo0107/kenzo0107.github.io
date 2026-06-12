@@ -2,6 +2,7 @@
 layout: post
 title: Docker 不要リソースお掃除 compose
 date: 2018-07-11
+category: Infrastructure
 lang: ja
 translation_id: cleanup_docker_no_required_resource
 tags:

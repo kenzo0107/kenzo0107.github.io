@@ -2,6 +2,9 @@
 layout: post
 title: Installing Python 3.4.3 on macOS
 date: 2016-02-19
+categories:
+  - [Python]
+  - [Infrastructure]
 lang: en
 translation_id: install-python343-on-macos
 permalink: en/2016/02/19/install-python343-on-macos/

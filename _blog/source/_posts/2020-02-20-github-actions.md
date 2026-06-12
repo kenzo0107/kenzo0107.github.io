@@ -1,6 +1,7 @@
 ---
 title: GitHub Actions で job を 直列 と 並列 実行どっちにしよう？
 date: 2020-02-20
+category: Git
 lang: ja
 translation_id: github-actions
 cover: /img/cover/2020-02-20-github-actions.svg

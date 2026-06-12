@@ -2,6 +2,7 @@
 layout: post
 title: Installing ecs-cli with a Pinned Version
 date: 2018-06-06
+category: AWS
 lang: en
 translation_id: specify-ecscli-version
 permalink: en/2018/06/06/specify-ecscli-version/

@@ -2,6 +2,7 @@
 layout: post
 title: "MySQL Troubleshooting - mysqldump: Couldn't execute 'FLUSH TABLES': Access denied; you need (at least one of) the RELOAD privilege(s) for this operation (1227)"
 date: 2016-01-19
+category: Database
 lang: en
 translation_id: mysqldump-couldnt-execute-flush-tables-access-denied
 permalink: en/2016/01/19/mysqldump-couldnt-execute-flush-tables-access-denied/

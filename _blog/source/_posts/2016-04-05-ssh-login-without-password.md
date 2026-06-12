@@ -2,6 +2,7 @@
 layout: post
 title: パスワードなし！公開鍵認証でSSHログイン
 date: 2016-04-05
+category: Infrastructure
 lang: ja
 translation_id: ssh-login-without-password
 tags:

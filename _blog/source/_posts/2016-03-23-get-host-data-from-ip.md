@@ -2,6 +2,7 @@
 layout: post
 title: IPアドレスからホスト情報取得
 date: 2016-03-23
+category: Infrastructure
 lang: ja
 translation_id: get-host-data-from-ip
 tags:

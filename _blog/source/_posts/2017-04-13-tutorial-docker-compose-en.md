@@ -2,6 +2,7 @@
 layout: post
 title: Docker Compose Tutorial
 date: 2017-04-13
+category: Infrastructure
 lang: en
 translation_id: tutorial-docker-compose
 permalink: en/2017/04/13/tutorial-docker-compose/

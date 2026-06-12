@@ -4,6 +4,7 @@ categories:
 - [AWS]
 - [AI]
 date: 2026-06-11
+category: AWS
 lang: en
 translation_id: aws-cost-comparison-pitfalls
 permalink: en/2026/06/11/aws-cost-comparison-pitfalls/

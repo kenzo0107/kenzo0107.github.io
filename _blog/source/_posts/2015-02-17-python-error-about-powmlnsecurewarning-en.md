@@ -2,6 +2,7 @@
 layout: post
 title: 'Python Error Fix: PowmInsecureWarning: Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.   _warn("Not using mpz_powm_sec.  You should rebuild using libgmp >= 5 to avoid timing attack vulnerability.", PowmInsec'
 date: 2015-02-17
+category: Python
 lang: en
 translation_id: python-error-about-powmlnsecurewarning
 permalink: en/2015/02/17/python-error-about-powmlnsecurewarning/

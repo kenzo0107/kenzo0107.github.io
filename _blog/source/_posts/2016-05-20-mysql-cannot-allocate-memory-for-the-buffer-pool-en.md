@@ -2,6 +2,7 @@
 layout: post
 title: 'Troubleshooting MySQL Crashes: Cannot allocate memory for the buffer pool'
 date: 2016-05-20
+category: Database
 lang: en
 translation_id: mysql-cannot-allocate-memory-for-the-buffer-pool
 permalink: en/2016/05/20/mysql-cannot-allocate-memory-for-the-buffer-pool/

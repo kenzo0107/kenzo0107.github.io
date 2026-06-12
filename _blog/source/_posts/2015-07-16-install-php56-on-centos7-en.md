@@ -2,6 +2,7 @@
 layout: post
 title: Installing PHP 5.6 on CentOS 7
 date: 2015-07-16
+category: Infrastructure
 lang: en
 translation_id: install-php56-on-centos7
 permalink: en/2015/07/16/install-php56-on-centos7/

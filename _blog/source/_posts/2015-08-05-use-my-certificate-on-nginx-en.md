@@ -2,6 +2,7 @@
 layout: post
 title: Installing a Self-Signed SSL Certificate on Nginx
 date: 2015-08-05
+category: Infrastructure
 lang: en
 translation_id: use-my-certificate-on-nginx
 permalink: en/2015/08/05/use-my-certificate-on-nginx/

@@ -2,6 +2,7 @@
 layout: post
 title: ターミナルからファイル指定しSublime Text 2で開く
 date: 2015-04-10
+category: Infrastructure
 lang: ja
 translation_id: open-sublimetext2-via-termianl
 cover: /img/cover/2015-04-10-open-sublimetext2-via-termianl.svg

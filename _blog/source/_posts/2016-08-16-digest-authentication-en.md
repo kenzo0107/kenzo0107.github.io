@@ -2,6 +2,7 @@
 layout: post
 title: Digest Authentication Setup
 date: 2016-08-16
+category: Infrastructure
 lang: en
 translation_id: digest-authentication
 permalink: en/2016/08/16/digest-authentication/

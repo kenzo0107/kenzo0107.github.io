@@ -3,6 +3,7 @@ title: Allowing CloudFront and Other S3 Bucket Access Logs to Be Stored via the 
 tags:
   - AWS
 date: 2021-11-04
+category: AWS
 lang: en
 translation_id: cloudfront-logdelivery
 permalink: en/2021/11/04/cloudfront-logdelivery/

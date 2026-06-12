@@ -2,6 +2,7 @@
 layout: post
 title: Checking Whether Content Is gzip-Compressed
 date: 2015-11-13
+category: Infrastructure
 lang: en
 translation_id: check-gzip-compress
 permalink: en/2015/11/13/check-gzip-compress/

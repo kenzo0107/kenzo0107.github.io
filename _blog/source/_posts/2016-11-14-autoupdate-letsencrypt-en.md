@@ -2,6 +2,7 @@
 layout: post
 title: Automatically Renewing Let's Encrypt SSL Certificates
 date: 2016-11-14
+category: Infrastructure
 lang: en
 translation_id: autoupdate-letsencrypt
 permalink: en/2016/11/14/autoupdate-letsencrypt/

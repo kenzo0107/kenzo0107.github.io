@@ -2,6 +2,7 @@
 layout: post
 title: "Fixing a Kibana Error - Discover: An error occurred with your request. Reset your inputs and try again."
 date: 2015-10-07
+category: Monitoring
 lang: en
 translation_id: kibana-error-discover-an-error-occured-with-your-request
 permalink: en/2015/10/07/kibana-error-discover-an-error-occured-with-your-request/

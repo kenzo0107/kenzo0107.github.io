@@ -2,6 +2,9 @@
 layout: post
 title: Installing Redis on Sakura VPS CentOS 6.5 and Running It from PHP
 date: 2014-09-12
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: en
 translation_id: php-redis-on-centos6.5-sakura-vps
 permalink: en/2014/09/12/php-redis-on-centos6.5-sakura-vps/

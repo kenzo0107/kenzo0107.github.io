@@ -2,6 +2,9 @@
 layout: post
 title: 3-Minute Face Detection Cooking on macOS X
 date: 2018-08-01
+categories:
+  - [AI]
+  - [Infrastructure]
 lang: en
 translation_id: face-detector
 permalink: en/2018/08/01/face-detector/

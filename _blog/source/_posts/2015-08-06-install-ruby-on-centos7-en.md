@@ -2,6 +2,7 @@
 layout: post
 title: "Installing Ruby on CentOS 7"
 date: 2015-08-06
+category: Infrastructure
 lang: en
 translation_id: install-ruby-on-centos7
 permalink: en/2015/08/06/install-ruby-on-centos7/

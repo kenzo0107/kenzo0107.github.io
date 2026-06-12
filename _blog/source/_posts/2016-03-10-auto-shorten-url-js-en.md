@@ -2,6 +2,7 @@
 layout: post
 title: A JS Snippet That Automatically Shortens URLs as You Type Them into an Input Box
 date: 2016-03-10
+category: Infrastructure
 lang: en
 translation_id: auto-shorten-url-js
 permalink: en/2016/03/10/auto-shorten-url-js/

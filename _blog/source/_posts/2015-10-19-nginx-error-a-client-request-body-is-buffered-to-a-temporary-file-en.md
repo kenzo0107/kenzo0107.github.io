@@ -2,6 +2,7 @@
 layout: post
 title: 'Handling the Nginx Error: a client request body is buffered to a temporary file'
 date: 2015-10-19
+category: Infrastructure
 lang: en
 translation_id: nginx-error-a-client-request-body-is-buffered-to-a-temporary-file
 permalink: en/2015/10/19/nginx-error-a-client-request-body-is-buffered-to-a-temporary-file/

@@ -2,6 +2,7 @@
 layout: post
 title: Nginx IP 直アクセス不許可 & LB ヘルスチェック設定
 date: 2019-04-24
+category: Infrastructure
 lang: ja
 translation_id: nginx-ip-lb
 tags:

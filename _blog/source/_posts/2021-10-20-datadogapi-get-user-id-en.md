@@ -3,6 +3,7 @@ title: Getting the Datadog User ID List with curl
 tags:
   - Datadog
 date: 2021-10-20
+category: Monitoring
 lang: en
 translation_id: datadogapi-get-user-id
 permalink: en/2021/10/20/datadogapi-get-user-id/

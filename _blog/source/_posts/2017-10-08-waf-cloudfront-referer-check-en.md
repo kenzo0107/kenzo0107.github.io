@@ -2,6 +2,7 @@
 layout: post
 title: Referer Checking with WAF + CloudFront (Block Hotlinking)
 date: 2017-10-08
+category: AWS
 lang: en
 translation_id: waf-cloudfront-referer-check
 permalink: en/2017/10/08/waf-cloudfront-referer-check/

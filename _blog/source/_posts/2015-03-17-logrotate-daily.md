@@ -2,6 +2,7 @@
 layout: post
 title: logrotate ログファイル名に日毎に日付追加 保存期間 過去ファイル圧縮 設定
 date: 2015-03-17
+category: Infrastructure
 lang: ja
 translation_id: logrotate-daily
 cover: /img/cover/2015-03-17-logrotate-daily.svg

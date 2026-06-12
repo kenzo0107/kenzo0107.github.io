@@ -2,6 +2,7 @@
 layout: post
 title: Reviving a Deleted Git Branch
 date: 2015-12-09
+category: Git
 lang: en
 translation_id: revive-deleted-git-branch
 permalink: en/2015/12/09/revive-deleted-git-branch/

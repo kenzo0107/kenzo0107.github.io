@@ -2,6 +2,7 @@
 layout: post
 title: WAF+CloudFront でリファラチェック (直リンク禁止)
 date: 2017-10-08
+category: AWS
 lang: ja
 translation_id: waf-cloudfront-referer-check
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: Upgrading a Live Nginx with Zero Downtime and Adding the HTTP/2.0 Module
 date: 2015-11-17
+category: Infrastructure
 lang: en
 translation_id: versionup-nginx-without-maintenance
 permalink: en/2015/11/17/versionup-nginx-without-maintenance/

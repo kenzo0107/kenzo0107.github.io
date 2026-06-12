@@ -2,6 +2,7 @@
 layout: post
 title: PWA Tutorial with Flask + Service Worker on Heroku
 date: 2018-08-14
+category: Python
 lang: en
 translation_id: flask-service-worker-on-heroku-pwa
 permalink: en/2018/08/14/flask-service-worker-on-heroku-pwa/

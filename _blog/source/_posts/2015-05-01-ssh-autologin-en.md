@@ -2,6 +2,7 @@
 layout: post
 title: Log in to Servers with SSH Autologin -- Stop Typing the ssh Command Every Time
 date: 2015-05-01
+category: Infrastructure
 lang: en
 translation_id: ssh-autologin
 permalink: en/2015/05/01/ssh-autologin/

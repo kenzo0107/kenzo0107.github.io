@@ -3,6 +3,9 @@ title: Ansible のターゲットホストで Python3 を指定し pip install �
 tags:
   - Ansible
 date: 2021-03-07
+categories:
+  - [Python]
+  - [Infrastructure]
 lang: ja
 translation_id: use-python3-by-ansible
 cover: https://i.imgur.com/aKWcTG7.png

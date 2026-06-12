@@ -2,6 +2,7 @@
 layout: post
 title: Step-by-Step Guide to Migrating AWS EC2 from t2 to t3
 date: 2018-09-14
+category: AWS
 lang: en
 translation_id: aws-ec2-t2-t3-step-by-step
 permalink: en/2018/09/14/aws-ec2-t2-t3-step-by-step/

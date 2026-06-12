@@ -2,6 +2,7 @@
 layout: post
 title: 今更聞けない！CPU, Memory 使用率の見方
 date: 2016-08-10
+category: Infrastructure
 lang: ja
 translation_id: how-to-see-cpu-memory-utili
 tags:

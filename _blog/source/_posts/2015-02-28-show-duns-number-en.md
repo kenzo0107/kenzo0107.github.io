@@ -2,6 +2,7 @@
 layout: post
 title: How to Look Up a DUNS Number
 date: 2015-02-28
+category: Infrastructure
 lang: en
 translation_id: show-duns-number
 permalink: en/2015/02/28/show-duns-number/

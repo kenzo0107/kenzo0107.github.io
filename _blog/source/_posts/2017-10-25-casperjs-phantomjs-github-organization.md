@@ -2,6 +2,7 @@
 layout: post
 title: CasperJS+PhantomJS で Github Organization 移行
 date: 2017-10-25
+category: Git
 lang: ja
 translation_id: casperjs-phantomjs-github-organization
 tags:

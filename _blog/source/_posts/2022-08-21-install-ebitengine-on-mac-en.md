@@ -1,6 +1,7 @@
 ---
 title: Agree to the Xcode License When Installing ebitengine
 date: 2022-08-21
+category: Go
 lang: en
 translation_id: install-ebitengine-on-mac
 permalink: en/2022/08/21/install-ebitengine-on-mac/

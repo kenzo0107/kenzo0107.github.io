@@ -2,6 +2,7 @@
 layout: post
 title: DUNSナンバー確認手順
 date: 2015-02-28
+category: Infrastructure
 lang: ja
 translation_id: show-duns-number
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150228/20150228215352.png

@@ -2,6 +2,7 @@
 layout: post
 title: How to Log In to the EC-CUBE Admin Panel Without a Password
 date: 2015-03-18
+category: Infrastructure
 lang: en
 translation_id: login-without-password-to-admin
 permalink: en/2015/03/18/login-without-password-to-admin/

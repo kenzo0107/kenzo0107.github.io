@@ -2,6 +2,7 @@
 layout: post
 title: StatsBotのSlack通知 通知方法と通知時の見え方 一覧
 date: 2016-03-11
+category: Infrastructure
 lang: ja
 translation_id: statsbot-slack
 tags:

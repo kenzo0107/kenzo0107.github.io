@@ -3,6 +3,7 @@ title: You are not subscribed to this service
 tags:
 - AWS
 date: 2020-10-06
+category: AWS
 lang: ja
 translation_id: aws-startup
 cover: https://i.imgur.com/CWMs1IV.png

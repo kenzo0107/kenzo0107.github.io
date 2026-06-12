@@ -2,6 +2,7 @@
 layout: post
 title: Adding reCAPTCHA v3 to Rails for Bot Protection
 date: 2019-02-17
+category: Infrastructure
 lang: en
 translation_id: rails-recaptcha-v3-bot
 permalink: en/2019/02/17/rails-recaptcha-v3-bot/

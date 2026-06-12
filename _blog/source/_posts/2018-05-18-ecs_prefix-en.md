@@ -2,6 +2,7 @@
 layout: post
 title: Bulk Deregistering AWS ECS Tasks by Specifying a Prefix
 date: 2018-05-18
+category: AWS
 lang: en
 translation_id: ecs_prefix
 permalink: en/2018/05/18/ecs_prefix/

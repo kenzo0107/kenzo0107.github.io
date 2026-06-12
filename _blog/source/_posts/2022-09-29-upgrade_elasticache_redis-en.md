@@ -1,6 +1,9 @@
 ---
 title: Things to Watch Out for When Upgrading the AWS ElastiCache Redis Version and Changing the Node Type
 date: 2022-09-29
+categories:
+  - [AWS]
+  - [Database]
 lang: en
 translation_id: upgrade_elasticache_redis
 permalink: en/2022/09/29/upgrade_elasticache_redis/

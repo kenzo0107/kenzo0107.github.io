@@ -2,6 +2,9 @@
 layout: post
 title: Slack Notifications from Zabbix 3.x
 date: 2016-05-07
+categories:
+  - [Monitoring]
+  - [Infrastructure]
 lang: en
 translation_id: zabbix2slack
 permalink: en/2016/05/07/zabbix2slack/

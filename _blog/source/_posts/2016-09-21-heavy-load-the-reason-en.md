@@ -2,6 +2,9 @@
 layout: post
 title: Monitoring System Load and Investigating Its Causes
 date: 2016-09-21
+categories:
+  - [AWS]
+  - [Infrastructure]
 lang: en
 translation_id: heavy-load-the-reason
 permalink: en/2016/09/21/heavy-load-the-reason/

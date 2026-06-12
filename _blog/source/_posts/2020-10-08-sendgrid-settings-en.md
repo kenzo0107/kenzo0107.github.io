@@ -3,6 +3,7 @@ title: Getting SendGrid Email Delivery Working & Anti-Spoofing Measures
 tags:
   - SendGrid
 date: 2020-10-08
+category: Infrastructure
 lang: en
 translation_id: sendgrid-settings
 permalink: en/2020/10/08/sendgrid-settings/

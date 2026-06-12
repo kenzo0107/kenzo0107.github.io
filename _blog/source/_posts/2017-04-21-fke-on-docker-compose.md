@@ -2,6 +2,10 @@
 layout: post
 title: docker-compose で開発環境構築 〜Nginx アクセスログ(ltsv) を fluentd + elasticsearch + kibana で可視化〜
 date: 2017-04-21
+categories:
+  - [Monitoring]
+  - [Database]
+  - [Infrastructure]
 lang: ja
 translation_id: fke-on-docker-compose
 tags:

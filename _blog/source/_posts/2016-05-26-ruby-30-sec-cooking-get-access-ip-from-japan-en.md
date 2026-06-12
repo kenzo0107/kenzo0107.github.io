@@ -2,6 +2,7 @@
 layout: post
 title: A Ruby 30-Second Cooking Script to Fetch IPs Accessed from Within Japan
 date: 2016-05-26
+category: Infrastructure
 lang: en
 translation_id: ruby-30-sec-cooking-get-access-ip-from-japan
 permalink: en/2016/05/26/ruby-30-sec-cooking-get-access-ip-from-japan/

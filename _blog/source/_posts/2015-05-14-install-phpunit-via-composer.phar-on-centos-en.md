@@ -2,6 +2,7 @@
 layout: post
 title: Installing PHPUnit on CentOS via Composer.phar
 date: 2015-05-14
+category: Infrastructure
 lang: en
 translation_id: install-phpunit-via-composer.phar-on-centos
 permalink: en/2015/05/14/install-phpunit-via-composer.phar-on-centos/

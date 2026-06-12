@@ -2,6 +2,7 @@
 layout: post
 title: Mac OS X に wget インストール
 date: 2014-06-18
+category: Infrastructure
 lang: ja
 translation_id: install-wget-on-macosx
 cover: /img/cover/2014-06-18-install-wget-on-macosx.svg

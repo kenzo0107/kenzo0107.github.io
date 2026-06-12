@@ -2,6 +2,7 @@
 layout: post
 title: A One-Liner Every PHP Engineer Should Run
 date: 2016-08-18
+category: Infrastructure
 lang: en
 translation_id: oneliner-for-phper
 permalink: en/2016/08/18/oneliner-for-phper/

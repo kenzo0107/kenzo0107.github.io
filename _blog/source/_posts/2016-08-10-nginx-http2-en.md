@@ -2,6 +2,7 @@
 layout: post
 title: The Day the HTTP/2 and SPDY Indicator Stopped Glowing Blue on Nginx
 date: 2016-08-10
+category: Infrastructure
 lang: en
 translation_id: nginx-http2
 permalink: en/2016/08/10/nginx-http2/

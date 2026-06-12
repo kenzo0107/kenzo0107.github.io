@@ -2,6 +2,9 @@
 layout: post
 title: さくらVPS CentOS6.5にRedisを導入しphpで動かすまで
 date: 2014-09-12
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: ja
 translation_id: php-redis-on-centos6.5-sakura-vps
 cover: /img/cover/2014-09-12-php-redis-on-centos6.5-sakura-vps.svg

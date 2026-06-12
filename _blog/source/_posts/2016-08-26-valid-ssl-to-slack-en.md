@@ -2,6 +2,7 @@
 layout: post
 title: Checking SSL Certificate Expiration and Notifying the Result to Slack
 date: 2016-08-26
+category: Infrastructure
 lang: en
 translation_id: valid-ssl-to-slack
 permalink: en/2016/08/26/valid-ssl-to-slack/

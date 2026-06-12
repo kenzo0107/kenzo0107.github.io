@@ -1,6 +1,7 @@
 ---
 title: Setting Up Node.js on an Alpine Image with a Multi-Stage Build
 date: 2022-08-24
+category: Infrastructure
 lang: en
 translation_id: setup-nodejs-on-alpine
 permalink: en/2022/08/24/setup-nodejs-on-alpine/

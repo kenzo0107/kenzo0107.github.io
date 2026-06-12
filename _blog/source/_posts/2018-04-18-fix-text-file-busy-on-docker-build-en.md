@@ -2,6 +2,7 @@
 layout: post
 title: Working around "Text file busy" when a shell script fails to run during docker build
 date: 2018-04-18
+category: Infrastructure
 lang: en
 translation_id: fix-text-file-busy-on-docker-build
 permalink: en/2018/04/18/fix-text-file-busy-on-docker-build/

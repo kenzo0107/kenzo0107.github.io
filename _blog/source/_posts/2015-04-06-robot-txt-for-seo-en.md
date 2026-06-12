@@ -2,6 +2,7 @@
 layout: post
 title: Placing robots.txt to Load sitemap.xml and Improve SEO Efficiency
 date: 2015-04-06
+category: Infrastructure
 lang: en
 translation_id: robot-txt-for-seo
 permalink: en/2015/04/06/robot-txt-for-seo/

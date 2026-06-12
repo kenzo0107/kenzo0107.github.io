@@ -2,6 +2,7 @@
 layout: post
 title: Hiding "Permission denied" in find Command Results
 date: 2015-06-16
+category: Infrastructure
 lang: en
 translation_id: find-command-results-exclude-permission-denied
 permalink: en/2015/06/16/find-command-results-exclude-permission-denied/

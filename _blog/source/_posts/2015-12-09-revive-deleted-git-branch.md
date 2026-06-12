@@ -2,6 +2,7 @@
 layout: post
 title: Git で削除したブランチを復活させる
 date: 2015-12-09
+category: Git
 lang: ja
 translation_id: revive-deleted-git-branch
 cover: /img/cover/2015-12-09-revive-deleted-git-branch.svg

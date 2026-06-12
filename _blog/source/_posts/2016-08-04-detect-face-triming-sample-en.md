@@ -2,6 +2,7 @@
 layout: post
 title: Collecting Samples by Detecting Faces in Multiple Image Files and Trimming the Face Regions
 date: 2016-08-04
+category: AI
 lang: en
 translation_id: detect-face-triming-sample
 permalink: en/2016/08/04/detect-face-triming-sample/

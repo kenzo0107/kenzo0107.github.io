@@ -2,6 +2,7 @@
 layout: post
 title: PHP エンジニアであれば必ずやるべき 1 ライナー
 date: 2016-08-18
+category: Infrastructure
 lang: ja
 translation_id: oneliner-for-phper
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: Dealing with ASSERTION Errors on pod install
 date: 2015-12-31
+category: Infrastructure
 lang: en
 translation_id: pod-install-assersion
 permalink: en/2015/12/31/pod-install-assersion/

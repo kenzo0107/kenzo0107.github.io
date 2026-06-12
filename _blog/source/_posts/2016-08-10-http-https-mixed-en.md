@@ -2,6 +2,7 @@
 layout: post
 title: How to Handle the Secure Cookie Attribute on Mixed HTTP/HTTPS Sites
 date: 2016-08-10
+category: Infrastructure
 lang: en
 translation_id: http-https-mixed
 permalink: en/2016/08/10/http-https-mixed/

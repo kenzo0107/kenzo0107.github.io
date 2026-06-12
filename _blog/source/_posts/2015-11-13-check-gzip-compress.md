@@ -2,6 +2,7 @@
 layout: post
 title: コンテンツがgzip圧縮されているかチェック
 date: 2015-11-13
+category: Infrastructure
 lang: ja
 translation_id: check-gzip-compress
 tags:

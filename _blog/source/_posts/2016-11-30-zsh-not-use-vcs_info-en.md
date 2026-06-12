@@ -2,6 +2,7 @@
 layout: post
 title: Solving the zsh vcs_info Not Available Problem
 date: 2016-11-30
+category: Infrastructure
 lang: en
 translation_id: zsh-not-use-vcs_info
 permalink: en/2016/11/30/zsh-not-use-vcs_info/

@@ -2,6 +2,7 @@
 layout: post
 title: PHP+OpenSSLバージョンアップ
 date: 2016-02-23
+category: Infrastructure
 lang: ja
 translation_id: versionup-php-openssl
 tags:

@@ -1,6 +1,7 @@
 ---
 title: Nginx access_log $host が _ になる件調査
 date: 2021-09-07
+category: Infrastructure
 lang: ja
 translation_id: nginx_access_log_host_empty
 cover: /img/cover/2021-09-07-nginx_access_log_host_empty.svg

@@ -2,6 +2,7 @@
 layout: post
 title: Turning Off IPv6 on Mac OS X
 date: 2015-03-11
+category: Infrastructure
 lang: en
 translation_id: off-ipv6-macosx
 permalink: en/2015/03/11/off-ipv6-macosx/

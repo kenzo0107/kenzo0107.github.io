@@ -2,6 +2,9 @@
 layout: post
 title: ElasticSearchインストール on CentOS7
 date: 2015-08-06
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: ja
 translation_id: install-elasticsearch-on-centos7
 cover: /img/cover/2015-08-06-install-elasticsearch-on-centos7.svg

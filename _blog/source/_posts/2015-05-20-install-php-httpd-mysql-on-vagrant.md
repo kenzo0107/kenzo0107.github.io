@@ -2,6 +2,9 @@
 layout: post
 title: Vagrant+Ansibleでhttpd, MySQL, PHPをソースからインストールし起動確認するまで
 date: 2015-05-20
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: ja
 translation_id: install-php-httpd-mysql-on-vagrant
 cover: /img/cover/2015-05-20-install-php-httpd-mysql-on-vagrant.svg

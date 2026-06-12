@@ -1,6 +1,7 @@
 ---
 title: Investigating Why Nginx access_log $host Becomes _
 date: 2021-09-07
+category: Infrastructure
 lang: en
 translation_id: nginx_access_log_host_empty
 permalink: en/2021/09/07/nginx_access_log_host_empty/

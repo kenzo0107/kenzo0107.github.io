@@ -2,6 +2,10 @@
 layout: post
 title: Install td-agent2 on AWS EC2 (CentOS7) in 3 Minutes!
 date: 2015-09-19
+categories:
+  - [AWS]
+  - [Monitoring]
+  - [Infrastructure]
 lang: en
 translation_id: install-td-agent2-centos7
 permalink: en/2015/09/19/install-td-agent2-centos7/

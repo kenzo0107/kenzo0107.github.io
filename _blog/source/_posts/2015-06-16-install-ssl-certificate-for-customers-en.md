@@ -2,6 +2,7 @@
 layout: post
 title: What I Did to Install an SSL Certificate When Building a Website for a Client
 date: 2015-06-16
+category: Infrastructure
 lang: en
 translation_id: install-ssl-certificate-for-customers
 permalink: en/2015/06/16/install-ssl-certificate-for-customers/

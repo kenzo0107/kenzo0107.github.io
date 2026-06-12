@@ -2,6 +2,9 @@
 layout: post
 title: Monitoring Rails Unicorn Memory and Idle/Busy Workers with Datadog — Strange Bedfellows
 date: 2017-12-23
+categories:
+  - [Monitoring]
+  - [Infrastructure]
 lang: en
 translation_id: monitoring-rails-unicorn-by-datadog-using-mackerel
 permalink: en/2017/12/23/monitoring-rails-unicorn-by-datadog-using-mackerel/

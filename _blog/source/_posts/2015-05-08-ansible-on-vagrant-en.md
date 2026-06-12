@@ -2,6 +2,7 @@
 layout: post
 title: "Easy! Configuring Ansible with Vagrant - From Setup to ping Connectivity Check in 3 Minutes"
 date: 2015-05-08
+category: Infrastructure
 lang: en
 translation_id: ansible-on-vagrant
 permalink: en/2015/05/08/ansible-on-vagrant/

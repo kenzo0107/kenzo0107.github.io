@@ -2,6 +2,7 @@
 layout: post
 title: Enabling mod_rewrite via .htaccess
 date: 2015-06-24
+category: Infrastructure
 lang: en
 translation_id: htaccess_mod_rewrite
 permalink: en/2015/06/24/htaccess_mod_rewrite/

@@ -2,6 +2,9 @@
 layout: post
 title: boto3 の AssumeRole をしたアカウントスイッチ credentials 利用時の MFA 突破対応
 date: 2018-12-06
+categories:
+  - [AWS]
+  - [Python]
 lang: ja
 translation_id: boto3-assumerole-credentials-mfa
 tags:

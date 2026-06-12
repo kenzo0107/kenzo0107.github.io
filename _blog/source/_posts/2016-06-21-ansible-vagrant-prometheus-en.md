@@ -2,6 +2,9 @@
 layout: post
 title: Building a Simple Prometheus Monitoring Environment with Ansible + Vagrant
 date: 2016-06-21
+categories:
+  - [Monitoring]
+  - [Infrastructure]
 lang: en
 translation_id: ansible-vagrant-prometheus
 permalink: en/2016/06/21/ansible-vagrant-prometheus/

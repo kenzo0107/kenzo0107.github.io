@@ -2,6 +2,7 @@
 layout: post
 title: Zabbix Alert Notifications via LINE Notify
 date: 2016-10-11
+category: Monitoring
 lang: en
 translation_id: line-notify
 permalink: en/2016/10/11/line-notify/

@@ -4,6 +4,9 @@ categories:
 - [AWS]
 - [AI]
 date: 2026-06-11
+categories:
+  - [AWS]
+  - [AI]
 lang: ja
 translation_id: ai-system-monthly-report
 cover: /img/cover/2026-06-11-ai-system-monthly-report.svg

@@ -2,6 +2,7 @@
 layout: post
 title: How to Avoid an SSL Rating of F (as of May 2016)
 date: 2016-06-27
+category: Infrastructure
 lang: en
 translation_id: ssl-qualys-get-a-plus
 permalink: en/2016/06/27/ssl-qualys-get-a-plus/

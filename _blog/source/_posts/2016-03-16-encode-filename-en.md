@@ -2,6 +2,7 @@
 layout: post
 title: Changing the Character Encoding of a Filename Instead of Its Contents
 date: 2016-03-16
+category: Infrastructure
 lang: en
 translation_id: encode-filename
 permalink: en/2016/03/16/encode-filename/

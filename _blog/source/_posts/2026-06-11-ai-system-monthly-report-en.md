@@ -4,6 +4,9 @@ categories:
 - [AWS]
 - [AI]
 date: 2026-06-11
+categories:
+  - [AWS]
+  - [AI]
 lang: en
 translation_id: ai-system-monthly-report
 permalink: en/2026/06/11/ai-system-monthly-report/

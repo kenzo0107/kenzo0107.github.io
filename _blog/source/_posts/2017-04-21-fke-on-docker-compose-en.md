@@ -2,6 +2,10 @@
 layout: post
 title: Building a Development Environment with docker-compose — Visualizing Nginx Access Logs (LTSV) with Fluentd + Elasticsearch + Kibana
 date: 2017-04-21
+categories:
+  - [Monitoring]
+  - [Database]
+  - [Infrastructure]
 lang: en
 translation_id: fke-on-docker-compose
 permalink: en/2017/04/21/fke-on-docker-compose/

@@ -2,6 +2,7 @@
 layout: post
 title: Hubot + Slack on Amazon Linux
 date: 2016-01-13
+category: Infrastructure
 lang: en
 translation_id: hubot-slack-on-amazonlinux
 permalink: en/2016/01/13/hubot-slack-on-amazonlinux/

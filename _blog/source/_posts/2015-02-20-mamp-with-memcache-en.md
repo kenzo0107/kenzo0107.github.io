@@ -2,6 +2,9 @@
 layout: post
 title: Installing Memcache on MAMP and Running It with PHP
 date: 2015-02-20
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: en
 translation_id: mamp-with-memcache
 permalink: en/2015/02/20/mamp-with-memcache/

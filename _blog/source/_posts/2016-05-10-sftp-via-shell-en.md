@@ -2,6 +2,7 @@
 layout: post
 title: Uploading Files by Wrapping sftp in a Shell Script
 date: 2016-05-10
+category: Infrastructure
 lang: en
 translation_id: sftp-via-shell
 permalink: en/2016/05/10/sftp-via-shell/

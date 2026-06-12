@@ -2,6 +2,7 @@
 layout: post
 title: Cleaning Up Unused Docker Resources with Compose
 date: 2018-07-11
+category: Infrastructure
 lang: en
 translation_id: cleanup_docker_no_required_resource
 permalink: en/2018/07/11/cleanup_docker_no_required_resource/

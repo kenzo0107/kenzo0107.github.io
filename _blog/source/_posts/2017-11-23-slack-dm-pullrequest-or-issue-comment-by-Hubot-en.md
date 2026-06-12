@@ -2,6 +2,9 @@
 layout: post
 title: Notifying Mentioned Users via Slack DM for Git Pull Request and Issue Comments with Hubot
 date: 2017-11-23
+categories:
+  - [Git]
+  - [Infrastructure]
 lang: en
 translation_id: slack-dm-pullrequest-or-issue-comment-by-Hubot
 permalink: en/2017/11/23/slack-dm-pullrequest-or-issue-comment-by-Hubot/

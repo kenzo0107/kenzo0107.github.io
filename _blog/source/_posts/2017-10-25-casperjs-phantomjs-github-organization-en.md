@@ -2,6 +2,7 @@
 layout: post
 title: Migrating a GitHub Organization with CasperJS + PhantomJS
 date: 2017-10-25
+category: Git
 lang: en
 translation_id: casperjs-phantomjs-github-organization
 permalink: en/2017/10/25/casperjs-phantomjs-github-organization/

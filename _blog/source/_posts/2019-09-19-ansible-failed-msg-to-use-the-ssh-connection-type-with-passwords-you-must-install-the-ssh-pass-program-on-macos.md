@@ -3,6 +3,7 @@ layout: post
 title: 'Ansible FAILED! => {"msg": "to use the ''ssh'' connection type with passwords,
   you must install the ssh pass program"} on MacOS'
 date: 2019-09-19
+category: Infrastructure
 lang: ja
 translation_id: ansible-failed-msg-to-use-the-ssh-connection-type-with-passwords-you-must-install-the-ssh-pass-program-on-macos
 cover: /img/cover/2019-09-19-ansible-failed-msg-to-use-the-ssh-connection-type-with-passwords-you-must-install-the-ssh-pass-program-on-macos.svg

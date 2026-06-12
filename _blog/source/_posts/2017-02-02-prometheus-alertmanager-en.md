@@ -2,6 +2,7 @@
 layout: post
 title: Setting Up Alertmanager
 date: 2017-02-02
+category: Monitoring
 lang: en
 translation_id: prometheus-alertmanager
 permalink: en/2017/02/02/prometheus-alertmanager/

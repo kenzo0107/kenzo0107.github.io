@@ -2,6 +2,7 @@
 layout: post
 title: Nginx ssl.conf設定 特定ページのみhttpsへリダイレクトさせる設定
 date: 2015-09-14
+category: Infrastructure
 lang: ja
 translation_id: nginx-redirect-https
 cover: /img/cover/2015-09-14-nginx-redirect-https.svg

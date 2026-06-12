@@ -2,6 +2,7 @@
 layout: post
 title: Bulk-deleting Unneeded Indices with Elasticsearch curator
 date: 2015-11-13
+category: Database
 lang: en
 translation_id: elasticsearch-curator-delete-norequired-index
 permalink: en/2015/11/12/elasticsearch-curator-delete-norequired-index/

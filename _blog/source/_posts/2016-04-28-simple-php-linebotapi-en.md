@@ -2,6 +2,7 @@
 layout: post
 title: Writing a Dead-Simple LINE Bot API in PHP
 date: 2016-04-28
+category: Infrastructure
 lang: en
 translation_id: simple-php-linebotapi
 permalink: en/2016/04/28/simple-php-linebotapi/

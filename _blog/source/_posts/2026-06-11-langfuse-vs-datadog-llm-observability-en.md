@@ -1,6 +1,9 @@
 ---
 title: 'LLM Observability Tools Compared: Langfuse vs Datadog LLM Observability'
 date: 2026-06-11
+categories:
+  - [Monitoring]
+  - [AI]
 lang: en
 translation_id: langfuse-vs-datadog-llm-observability
 permalink: en/2026/06/11/langfuse-vs-datadog-llm-observability/

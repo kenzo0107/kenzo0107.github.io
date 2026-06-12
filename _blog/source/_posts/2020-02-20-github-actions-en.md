@@ -1,6 +1,7 @@
 ---
 title: GitHub Actions - Should I Run Jobs Sequentially or in Parallel?
 date: 2020-02-20
+category: Git
 lang: en
 translation_id: github-actions
 permalink: en/2020/02/20/github-actions/

@@ -2,6 +2,7 @@
 layout: post
 title: 2016年5月現在、SSL評価Fを取らない為に
 date: 2016-06-27
+category: Infrastructure
 lang: ja
 translation_id: ssl-qualys-get-a-plus
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: Learning Ruby's inject (Enumerable) Method
 date: 2019-11-26
+category: Infrastructure
 lang: en
 translation_id: ruby-inject-enumerable
 permalink: en/2019/11/26/ruby-inject-enumerable/

@@ -3,6 +3,9 @@ title: Suppress ELB Health Check Logs in Nginx
 tags:
 - AWS
 date: 2021-05-20
+categories:
+  - [AWS]
+  - [Infrastructure]
 lang: en
 translation_id: nginx-no-logging-at-elb-healthcheck
 permalink: en/2021/05/20/nginx-no-logging-at-elb-healthcheck/

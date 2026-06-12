@@ -2,6 +2,7 @@
 layout: post
 title: Nginx - Block Direct IP Access & Configure LB Health Checks
 date: 2019-04-24
+category: Infrastructure
 lang: en
 translation_id: nginx-ip-lb
 permalink: en/2019/04/24/nginx-ip-lb/

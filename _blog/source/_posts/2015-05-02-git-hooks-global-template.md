@@ -2,6 +2,7 @@
 layout: post
 title: 独自git-hooksをglobal設定
 date: 2015-05-02
+category: Git
 lang: ja
 translation_id: git-hooks-global-template
 cover: /img/cover/2015-05-02-git-hooks-global-template.svg

@@ -2,6 +2,7 @@
 layout: post
 title: Handling Jenkins Crashes
 date: 2016-08-15
+category: Infrastructure
 lang: en
 translation_id: why-jenkins-died
 permalink: en/2016/08/15/why-jenkins-died/

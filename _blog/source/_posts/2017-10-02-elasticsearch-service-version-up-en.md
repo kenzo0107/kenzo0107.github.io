@@ -2,6 +2,9 @@
 layout: post
 title: Upgrading AWS Elasticsearch Service 2.2 → 5.5
 date: 2017-10-02
+categories:
+  - [AWS]
+  - [Database]
 lang: en
 translation_id: elasticsearch-service-version-up
 permalink: en/2017/10/02/elasticsearch-service-version-up/

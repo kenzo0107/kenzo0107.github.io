@@ -1,6 +1,7 @@
 ---
 title: 'warning: reattach-to-user-namespace: unsupported new OS, trying as if it were 10.10'
 date: 2022-01-04
+category: Infrastructure
 lang: en
 translation_id: rettach-to-user-namespace-unsupported-new-os
 permalink: en/2022/01/04/rettach-to-user-namespace-unsupported-new-os/

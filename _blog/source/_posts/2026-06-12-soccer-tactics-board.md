@@ -4,6 +4,7 @@ categories:
 - [Solo dev]
 - [AI]
 date: 2026-06-12
+category: Infrastructure
 lang: ja
 translation_id: soccer-tactics-board
 cover: /img/cover/2026-06-11-soccer-tactics-board.svg

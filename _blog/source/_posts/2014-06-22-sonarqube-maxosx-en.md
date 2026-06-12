@@ -2,6 +2,7 @@
 layout: post
 title: Installing SonarQube on Mac OS X - Checking C# Coding Conventions for Unity
 date: 2014-06-22
+category: Infrastructure
 lang: en
 translation_id: sonarqube-maxosx
 permalink: en/2014/06/22/sonarqube-maxosx/

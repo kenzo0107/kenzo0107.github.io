@@ -2,6 +2,7 @@
 layout: post
 title: Jenkins - Short cycles in the day-of-month field will behave oddly near the end of a month
 date: 2016-06-01
+category: Infrastructure
 lang: ja
 translation_id: jenkins-short-cycles-in-the-day-of-month-field-will-behave-oddly-near-the-end-of-a-month
 tags:

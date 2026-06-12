@@ -2,6 +2,7 @@
 layout: post
 title: Switching DB Read/Write Endpoints with ProxySQL
 date: 2019-03-25
+category: Database
 lang: en
 translation_id: proxysql-db-read-write-endpoint
 permalink: en/2019/03/25/proxysql-db-read-write-endpoint/

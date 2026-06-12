@@ -2,6 +2,9 @@
 layout: post
 title: Checking Docker Container Status with Mackerel
 date: 2017-07-14
+categories:
+  - [Monitoring]
+  - [Infrastructure]
 lang: en
 translation_id: monitor-state-of-docker-by-mackerel
 permalink: en/2017/07/14/monitor-state-of-docker-by-mackerel/

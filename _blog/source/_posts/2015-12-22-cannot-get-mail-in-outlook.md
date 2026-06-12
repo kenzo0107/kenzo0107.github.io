@@ -2,6 +2,7 @@
 layout: post
 title: Outlook にメールが届かない件対応
 date: 2015-12-22
+category: Infrastructure
 lang: ja
 translation_id: cannot-get-mail-in-outlook
 cover: /img/cover/2015-12-22-cannot-get-mail-in-outlook.svg

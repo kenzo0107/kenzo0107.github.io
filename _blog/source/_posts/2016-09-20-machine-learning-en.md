@@ -2,6 +2,7 @@
 layout: post
 title: A Machine Learning Newbie Web Engineer Starts Face Recognition with Machine Learning
 date: 2016-09-20
+category: Data Analytics
 lang: en
 translation_id: machine-learning
 permalink: en/2016/09/20/machine-learning/

@@ -2,6 +2,7 @@
 layout: post
 title: 続　ECR にログイン(aws ecr get-login)無しでプッシュする
 date: 2018-05-10
+category: AWS
 lang: ja
 translation_id: ecr-nologin-push
 cover: /img/cover/2018-05-10-ecr-nologin-push.svg

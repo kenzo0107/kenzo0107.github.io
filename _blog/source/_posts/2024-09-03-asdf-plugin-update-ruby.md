@@ -1,6 +1,7 @@
 ---
 title: asdf で ruby の最新バージョンが見つからない時
 date: 2024-09-03
+category: Infrastructure
 lang: ja
 translation_id: asdf-plugin-update-ruby
 cover: /img/cover/2024-09-03-asdf-plugin-update-ruby.svg

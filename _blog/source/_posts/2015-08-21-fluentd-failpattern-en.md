@@ -2,6 +2,7 @@
 layout: post
 title: Common Pitfalls When Configuring Fluentd
 date: 2015-08-21
+category: Monitoring
 lang: en
 translation_id: fluentd-failpattern
 permalink: en/2015/08/21/fluentd-failpattern/

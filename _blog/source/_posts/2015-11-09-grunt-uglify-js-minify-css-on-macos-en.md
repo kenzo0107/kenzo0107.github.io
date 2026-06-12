@@ -2,6 +2,7 @@
 layout: post
 title: By grunt, uglify js & minify css on MacOSX.
 date: 2015-11-09
+category: Infrastructure
 lang: en
 translation_id: grunt-uglify-js-minify-css-on-macos
 permalink: en/2015/11/09/grunt-uglify-js-minify-css-on-macos/

@@ -2,6 +2,7 @@
 layout: post
 title: ECR にログイン(aws ecr get-login)無しでプッシュする
 date: 2018-03-07
+category: AWS
 lang: ja
 translation_id: push-to-ecr-without-login-ecr
 tags:

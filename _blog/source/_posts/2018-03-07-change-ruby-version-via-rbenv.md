@@ -2,6 +2,7 @@
 layout: post
 title: Linux に rbenv をセットアップして ruby バージョンを切り替える
 date: 2018-03-07
+category: Infrastructure
 lang: ja
 translation_id: change-ruby-version-via-rbenv
 tags:

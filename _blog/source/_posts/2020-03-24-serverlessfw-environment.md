@@ -4,6 +4,9 @@ tags:
 - AWS
 - Lambda
 date: 2020-03-24
+categories:
+  - [AWS]
+  - [Infrastructure]
 lang: ja
 translation_id: serverlessfw-environment
 cover: /img/cover/2020-03-24-serverlessfw-environment.svg

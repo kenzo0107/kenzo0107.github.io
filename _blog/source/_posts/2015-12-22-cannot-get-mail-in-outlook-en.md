@@ -2,6 +2,7 @@
 layout: post
 title: Fixing the Issue of Mail Not Being Delivered to Outlook
 date: 2015-12-22
+category: Infrastructure
 lang: en
 translation_id: cannot-get-mail-in-outlook
 permalink: en/2015/12/22/cannot-get-mail-in-outlook/

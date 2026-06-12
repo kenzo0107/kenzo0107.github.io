@@ -2,6 +2,7 @@
 layout: post
 title: Upgrading PHP + OpenSSL
 date: 2016-02-23
+category: Infrastructure
 lang: en
 translation_id: versionup-php-openssl
 permalink: en/2016/02/22/versionup-php-openssl/

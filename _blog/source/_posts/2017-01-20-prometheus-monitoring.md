@@ -2,6 +2,7 @@
 layout: post
 title: Prometheus でサーバ監視
 date: 2017-01-20
+category: Monitoring
 lang: ja
 translation_id: prometheus-monitoring
 tags:

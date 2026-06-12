@@ -2,6 +2,7 @@
 layout: post
 title: AWS ECS prefix 指定してまとめてタスク登録解除
 date: 2018-05-18
+category: AWS
 lang: ja
 translation_id: ecs_prefix
 tags:

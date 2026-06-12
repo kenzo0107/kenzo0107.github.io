@@ -2,6 +2,7 @@
 layout: post
 title: Installing Nginx on CentOS7
 date: 2015-08-20
+category: Infrastructure
 lang: en
 translation_id: install-nginx-on-centos7
 permalink: en/2015/08/20/install-nginx-on-centos7/

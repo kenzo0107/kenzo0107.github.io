@@ -2,6 +2,7 @@
 layout: post
 title: MySQL Command Cheat Sheet
 date: 2015-08-05
+category: Database
 lang: en
 translation_id: mysql-command-list
 permalink: en/2015/08/05/mysql-command-list/

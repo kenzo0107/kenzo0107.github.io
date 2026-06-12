@@ -2,6 +2,7 @@
 layout: post
 title: How to Stop Your "Registration Complete" Emails from Landing in Spam
 date: 2016-12-02
+category: Infrastructure
 lang: en
 translation_id: meiwaku-mail
 permalink: en/2016/12/02/meiwaku-mail/

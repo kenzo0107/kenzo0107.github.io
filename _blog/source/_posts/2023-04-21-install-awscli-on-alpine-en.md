@@ -1,6 +1,7 @@
 ---
 title: Installing awscli on an Alpine image
 date: 2023-04-21
+category: AWS
 lang: en
 translation_id: install-awscli-on-alpine
 permalink: en/2023/04/21/install-awscli-on-alpine/

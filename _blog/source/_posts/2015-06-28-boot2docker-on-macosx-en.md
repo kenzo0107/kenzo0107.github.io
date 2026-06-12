@@ -2,6 +2,7 @@
 layout: post
 title: Building a Development Environment on macOS with Boot2Docker
 date: 2015-06-28
+category: Infrastructure
 lang: en
 translation_id: boot2docker-on-macosx
 permalink: en/2015/06/28/boot2docker-on-macosx/

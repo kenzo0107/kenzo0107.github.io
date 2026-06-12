@@ -2,6 +2,7 @@
 layout: post
 title: Handling ElastiCache Maintenance ~Rainy Season 2018~
 date: 2018-06-24
+category: AWS
 lang: en
 translation_id: maintenance_aws_elasticache
 permalink: en/2018/06/24/maintenance_aws_elasticache/

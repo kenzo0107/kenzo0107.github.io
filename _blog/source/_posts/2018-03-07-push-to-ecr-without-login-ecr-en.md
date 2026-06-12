@@ -2,6 +2,7 @@
 layout: post
 title: Push to ECR Without Logging In (aws ecr get-login)
 date: 2018-03-07
+category: AWS
 lang: en
 translation_id: push-to-ecr-without-login-ecr
 permalink: en/2018/03/07/push-to-ecr-without-login-ecr/

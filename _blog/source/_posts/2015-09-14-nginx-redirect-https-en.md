@@ -2,6 +2,7 @@
 layout: post
 title: Nginx ssl.conf Settings - Redirecting Only Specific Pages to HTTPS
 date: 2015-09-14
+category: Infrastructure
 lang: en
 translation_id: nginx-redirect-https
 permalink: en/2015/09/14/nginx-redirect-https/

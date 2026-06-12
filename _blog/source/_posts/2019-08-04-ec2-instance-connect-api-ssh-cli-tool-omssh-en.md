@@ -2,6 +2,9 @@
 layout: post
 title: I built "omssh", an interactive CLI tool for SSH login via the EC2 Instance Connect API
 date: 2019-08-04
+categories:
+  - [AWS]
+  - [Infrastructure]
 lang: en
 translation_id: ec2-instance-connect-api-ssh-cli-tool-omssh
 permalink: en/2019/08/04/ec2-instance-connect-api-ssh-cli-tool-omssh/

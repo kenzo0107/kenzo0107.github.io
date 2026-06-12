@@ -3,6 +3,7 @@ title: Hunting for Publicly Accessible S3 Objects!
 tags:
   - AWS
 date: 2021-11-05
+category: AWS
 lang: en
 translation_id: find-public-s3-objects
 permalink: en/2021/11/05/find-public-s3-objects/

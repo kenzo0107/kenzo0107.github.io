@@ -2,6 +2,7 @@
 layout: post
 title: Installing Ruby & gem
 date: 2015-10-22
+category: Infrastructure
 lang: en
 translation_id: install-ruby-gem
 permalink: en/2015/10/22/install-ruby-gem/

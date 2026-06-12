@@ -2,6 +2,7 @@
 layout: post
 title: Managing tfstate per Environment with terraform workspace
 date: 2017-12-05
+category: Terraform
 lang: en
 translation_id: terraform-workspace-tfsate
 permalink: en/2017/12/05/terraform-workspace-tfsate/

@@ -2,6 +2,7 @@
 layout: post
 title: Docker コマンド早見表
 date: 2017-04-14
+category: Infrastructure
 lang: ja
 translation_id: teat-docker
 tags:

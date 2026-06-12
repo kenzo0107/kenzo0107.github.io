@@ -2,6 +2,7 @@
 layout: post
 title: Boot2DockerでMacOSXローカル環境に開発環境構築
 date: 2015-06-28
+category: Infrastructure
 lang: ja
 translation_id: boot2docker-on-macosx
 cover: https://i.imgur.com/vbJj8bW.png

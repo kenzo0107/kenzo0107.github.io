@@ -2,6 +2,9 @@
 layout: post
 title: Installing MySQL 5.6 on CentOS 7
 date: 2015-08-05
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: en
 translation_id: install-mysql5.6-on-centos7
 permalink: en/2015/08/05/install-mysql5.6-on-centos7/

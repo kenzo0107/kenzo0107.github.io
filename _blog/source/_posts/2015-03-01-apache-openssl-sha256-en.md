@@ -2,6 +2,7 @@
 layout: post
 title: Generating a SHA256 CSR with Apache + OpenSSL
 date: 2015-03-01
+category: Infrastructure
 lang: en
 translation_id: apache-openssl-sha256
 permalink: en/2015/03/01/apache-openssl-sha256/

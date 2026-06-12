@@ -2,6 +2,7 @@
 layout: post
 title: MySQL コマンドまとめ
 date: 2015-08-05
+category: Database
 lang: ja
 translation_id: mysql-command-list
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160119/20160119111638.png

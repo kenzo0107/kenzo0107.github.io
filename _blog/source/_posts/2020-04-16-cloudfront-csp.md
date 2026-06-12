@@ -4,6 +4,7 @@ tags:
   - AWS
   - Lambda
 date: 2020-04-16
+category: AWS
 lang: ja
 translation_id: cloudfront-csp
 cover: https://docs.aws.amazon.com/ja_jp/AmazonCloudFront/latest/DeveloperGuide/images/cloudfront-events-that-trigger-lambda-functions.png

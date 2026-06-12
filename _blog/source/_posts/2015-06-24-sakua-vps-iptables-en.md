@@ -2,6 +2,7 @@
 layout: post
 title: 'Sakura VPS iptables Configuration ~ The day a warning arrived "We have detected traffic from your server that appears to be a UDP Flood DoS directed at external hosts." ~'
 date: 2015-06-24
+category: Infrastructure
 lang: en
 translation_id: sakua-vps-iptables
 permalink: en/2015/06/24/sakua-vps-iptables/

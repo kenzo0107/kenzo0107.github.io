@@ -1,6 +1,7 @@
 ---
 title: DynamoDB Scan ではなく Query を使おう！ ~GSI の設定には気をつけようの巻~
 date: 2021-09-21
+category: AWS
 lang: ja
 translation_id: dynamodb-query-better-than-scan
 cover: https://i.imgur.com/BprHlzQ.png

@@ -2,6 +2,9 @@
 layout: post
 title: 機械学習ド素人のWebエンジニアが始める機械学習で顔認識
 date: 2016-09-20
+categories:
+  - [Data Analytics]
+  - [AI]
 lang: ja
 translation_id: machine-learning
 cover: /img/cover/2016-09-20-machine-learning.svg

@@ -2,6 +2,7 @@
 layout: post
 title: awk で CSV の特定列を整形 〜数値を文字列扱いする〜
 date: 2016-03-28
+category: Infrastructure
 lang: ja
 translation_id: awk-shapes-csv
 tags:

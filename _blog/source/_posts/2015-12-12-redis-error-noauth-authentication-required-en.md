@@ -2,6 +2,7 @@
 layout: post
 title: Redis - Dealing with (error) NOAUTH Authentication required
 date: 2015-12-12
+category: Database
 lang: en
 translation_id: redis-error-noauth-authentication-required
 permalink: en/2015/12/12/redis-error-noauth-authentication-required/

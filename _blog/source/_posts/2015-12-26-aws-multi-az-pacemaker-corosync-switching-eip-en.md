@@ -2,6 +2,7 @@
 layout: post
 title: Switching Elastic IPs with Pacemaker + Corosync in an AWS Multi-AZ Setup
 date: 2015-12-26
+category: AWS
 lang: en
 translation_id: aws-multi-az-pacemaker-corosync-switching-eip
 permalink: en/2015/12/26/aws-multi-az-pacemaker-corosync-switching-eip/

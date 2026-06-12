@@ -2,6 +2,7 @@
 layout: post
 title: NginxにオレオレSSL証明書インストール
 date: 2015-08-05
+category: Infrastructure
 lang: ja
 translation_id: use-my-certificate-on-nginx
 cover: /img/cover/2015-08-05-use-my-certificate-on-nginx.svg

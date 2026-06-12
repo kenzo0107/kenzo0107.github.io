@@ -2,6 +2,7 @@
 layout: post
 title: Released the Android App "Mamekoran!" Built with Unity
 date: 2015-06-16
+category: Infrastructure
 lang: en
 translation_id: mamekorun-android-application-by-unity
 permalink: en/2015/06/16/mamekorun-android-application-by-unity/

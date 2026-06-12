@@ -2,6 +2,7 @@
 layout: post
 title: Configuring VeriTrans on EC-CUBE
 date: 2015-03-04
+category: Infrastructure
 lang: en
 translation_id: setting-veritrans-on-eccube
 permalink: en/2015/03/04/setting-veritrans-on-eccube/

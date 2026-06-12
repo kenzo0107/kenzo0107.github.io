@@ -2,6 +2,7 @@
 layout: post
 title: Checking Table-Level Size in MySQL
 date: 2016-06-27
+category: Database
 lang: en
 translation_id: each-table-mysql
 permalink: en/2016/06/27/each-table-mysql/

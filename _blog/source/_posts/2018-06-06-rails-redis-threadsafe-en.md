@@ -2,6 +2,9 @@
 layout: post
 title: Building a Thread-Safe Access Count Ranking with Rails × Redis
 date: 2018-06-06
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: en
 translation_id: rails-redis-threadsafe
 permalink: en/2018/06/06/rails-redis-threadsafe/

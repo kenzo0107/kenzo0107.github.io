@@ -2,6 +2,7 @@
 layout: post
 title: Elasticsearch Index List, Mapping List, and Mapping Configuration
 date: 2015-10-08
+category: Database
 lang: en
 translation_id: elasticsearch-index-mapping
 permalink: en/2015/10/08/elasticsearch-index-mapping/

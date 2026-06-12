@@ -2,6 +2,7 @@
 layout: post
 title: "Things You Can't Ask About Now: How to Read CPU and Memory Utilization"
 date: 2016-08-10
+category: Infrastructure
 lang: en
 translation_id: how-to-see-cpu-memory-utili
 permalink: en/2017/08/10/how-to-see-cpu-memory-utili/

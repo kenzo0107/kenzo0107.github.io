@@ -4,6 +4,9 @@ tags:
 - AWS
 - CodeBuild
 date: 2020-03-31
+categories:
+  - [AWS]
+  - [Python]
 lang: en
 translation_id: buildspec-env
 permalink: en/2020/03/31/buildspec-env/

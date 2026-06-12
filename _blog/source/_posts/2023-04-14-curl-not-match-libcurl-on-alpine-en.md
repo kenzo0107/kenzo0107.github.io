@@ -1,6 +1,7 @@
 ---
 title: 'fix: curl: (48) An unknown option was passed in to libcurl'
 date: 2023-04-14
+category: Infrastructure
 lang: en
 translation_id: curl-not-match-libcurl-on-alpine
 permalink: en/2023/04/14/curl-not-match-libcurl-on-alpine/

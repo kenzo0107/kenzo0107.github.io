@@ -2,6 +2,9 @@
 layout: post
 title: Building a Go Runtime Environment with Vagrant + Ansible and Running Simple CRUD with the goji Framework
 date: 2015-06-15
+categories:
+  - [Go]
+  - [Infrastructure]
 lang: en
 translation_id: go-framework-goji-on-vagrant
 permalink: en/2015/06/15/go-framework-goji-on-vagrant/

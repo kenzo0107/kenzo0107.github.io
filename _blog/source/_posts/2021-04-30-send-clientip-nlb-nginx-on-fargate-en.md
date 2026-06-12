@@ -3,6 +3,9 @@ title: Delivering the Client IP to Fargate with NLB + Fargate
 tags:
   - AWS
 date: 2021-04-30
+categories:
+  - [AWS]
+  - [Infrastructure]
 lang: en
 translation_id: send-clientip-nlb-nginx-on-fargate
 permalink: en/2021/04/30/send-clientip-nlb-nginx-on-fargate/

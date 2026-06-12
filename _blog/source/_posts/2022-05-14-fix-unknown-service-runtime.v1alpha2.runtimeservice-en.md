@@ -1,6 +1,7 @@
 ---
 title: 'Fixing the "unknown service runtime.v1alpha2.RuntimeService" error on kubeadm init'
 date: 2022-05-14
+category: Infrastructure
 lang: en
 translation_id: fix-unknown-service-runtime.v1alpha2.runtimeservice
 permalink: en/2022/05/14/fix-unknown-service-runtime.v1alpha2.runtimeservice/

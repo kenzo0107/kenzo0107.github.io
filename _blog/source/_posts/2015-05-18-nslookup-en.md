@@ -2,6 +2,7 @@
 layout: post
 title: Checking Record Types with nslookup
 date: 2015-05-18
+category: Infrastructure
 lang: en
 translation_id: nslookup
 permalink: en/2015/05/18/nslookup/

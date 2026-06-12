@@ -2,6 +2,9 @@
 layout: post
 title: Datadog で Rails Unicorn の Memory, Idle|Busy Worker 監視 〜呉越同舟〜
 date: 2017-12-23
+categories:
+  - [Monitoring]
+  - [Infrastructure]
 lang: ja
 translation_id: monitoring-rails-unicorn-by-datadog-using-mackerel
 tags:

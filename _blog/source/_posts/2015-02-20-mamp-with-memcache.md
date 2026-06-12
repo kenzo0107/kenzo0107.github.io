@@ -2,6 +2,9 @@
 layout: post
 title: MAMPにMemcacheをインストールしphpで動かすまで
 date: 2015-02-20
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: ja
 translation_id: mamp-with-memcache
 cover: /img/cover/2015-02-20-mamp-with-memcache.svg

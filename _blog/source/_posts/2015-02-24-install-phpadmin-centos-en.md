@@ -2,6 +2,9 @@
 layout: post
 title: Installing and Using phpMyAdmin on CentOS
 date: 2015-02-24
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: en
 translation_id: install-phpadmin-centos
 permalink: en/2015/02/24/install-phpadmin-centos/

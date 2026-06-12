@@ -2,6 +2,7 @@
 layout: post
 title: 負荷監視とその原因調査
 date: 2016-09-21
+category: Infrastructure
 lang: ja
 translation_id: heavy-load-the-reason
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160921/20160921223252.png

@@ -2,6 +2,7 @@
 layout: post
 title: Upgrading to Datadog Agent 6.x and Trying Out the Logging Feature!
 date: 2018-01-10
+category: Monitoring
 lang: en
 translation_id: update-datadog-and-try-loggin-feature
 permalink: en/2018/01/10/update-datadog-and-try-loggin-feature/

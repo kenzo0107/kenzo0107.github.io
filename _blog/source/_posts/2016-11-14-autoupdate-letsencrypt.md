@@ -2,6 +2,7 @@
 layout: post
 title: Let's encrypt SSL 証明書自動更新
 date: 2016-11-14
+category: Infrastructure
 lang: ja
 translation_id: autoupdate-letsencrypt
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161114/20161114141731.png

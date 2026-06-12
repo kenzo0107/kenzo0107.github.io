@@ -2,6 +2,7 @@
 layout: post
 title: "Running Hubot on GKE + Kubernetes Within the Free Tier — Running from the CLI"
 date: 2017-05-10
+category: Infrastructure
 lang: en
 translation_id: gke-kubernetes-hubot-cli
 permalink: en/2017/05/10/gke-kubernetes-hubot-cli/

@@ -2,6 +2,7 @@
 layout: post
 title: PHP 検証フィルタで Email アドレス検証 を検証する
 date: 2016-09-09
+category: Infrastructure
 lang: ja
 translation_id: valid-email-by-php
 cover: /img/cover/2016-09-09-valid-email-by-php.svg

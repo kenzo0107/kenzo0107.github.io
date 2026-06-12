@@ -2,6 +2,7 @@
 layout: post
 title: Adding the GeoIP Library to an Already-Installed Nginx
 date: 2015-10-01
+category: Infrastructure
 lang: en
 translation_id: nginx-geoip-library
 permalink: en/2015/10/01/nginx-geoip-library/

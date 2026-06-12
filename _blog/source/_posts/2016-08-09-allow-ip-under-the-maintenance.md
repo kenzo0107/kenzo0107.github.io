@@ -2,6 +2,7 @@
 layout: post
 title: メンテ時に社内Wifi IPのみサイトアクセス許可する
 date: 2016-08-09
+category: Infrastructure
 lang: ja
 translation_id: allow-ip-under-the-maintenance
 tags:

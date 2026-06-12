@@ -2,6 +2,9 @@
 layout: post
 title: Exporting MySQL SQL Results to CSV Without Using INTO OUTFILE
 date: 2016-03-14
+categories:
+  - [Database]
+  - [Infrastructure]
 lang: en
 translation_id: mysql-output-csv-without-outfile
 permalink: en/2016/03/14/mysql-output-csv-without-outfile/

@@ -2,6 +2,9 @@
 layout: post
 title: エラーログをSlack通知する
 date: 2015-09-24
+categories:
+  - [Monitoring]
+  - [Infrastructure]
 lang: ja
 translation_id: errorlog-to-slack
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150924/20150924011032.png

@@ -2,6 +2,7 @@
 layout: post
 title: How to Check the Owner of a Domain
 date: 2015-03-01
+category: Infrastructure
 lang: en
 translation_id: show-domains-owner
 permalink: en/2015/03/01/show-domains-owner/

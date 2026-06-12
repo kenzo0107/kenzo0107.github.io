@@ -1,6 +1,7 @@
 ---
 title: When asdf can't find the latest Ruby version
 date: 2024-09-03
+category: Infrastructure
 lang: en
 translation_id: asdf-plugin-update-ruby
 permalink: en/2024/09/03/asdf-plugin-update-ruby/

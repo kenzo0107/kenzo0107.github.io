@@ -2,6 +2,9 @@
 layout: post
 title: Installing Go on macOS X
 date: 2015-04-12
+categories:
+  - [Go]
+  - [Infrastructure]
 lang: en
 translation_id: install-go-on-macosx
 permalink: en/2015/04/12/install-go-on-macosx/

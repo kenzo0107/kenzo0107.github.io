@@ -2,6 +2,7 @@
 layout: post
 title: "StatsBot Slack Notifications: A Catalog of Notification Methods and How They Appear"
 date: 2016-03-11
+category: Infrastructure
 lang: en
 translation_id: statsbot-slack
 permalink: en/2016/03/11/statsbot-slack/

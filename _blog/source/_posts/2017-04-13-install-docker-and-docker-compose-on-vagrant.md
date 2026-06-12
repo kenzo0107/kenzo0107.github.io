@@ -2,6 +2,7 @@
 layout: post
 title: Vagrant (Ubuntu) に Docker, Docker Compose インストール
 date: 2017-04-13
+category: Infrastructure
 lang: ja
 translation_id: install-docker-and-docker-compose-on-vagrant
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: "cat id_rsa.pub >> authorized_keys したつもりが error key_read: uudecode が出るエラー対応"
 date: 2016-07-29
+category: Infrastructure
 lang: ja
 translation_id: error-key-read-uudecode
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160729/20160729111616.png

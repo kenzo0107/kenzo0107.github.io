@@ -2,6 +2,7 @@
 layout: post
 title: Formatting Specific CSV Columns with awk — Treating Numbers as Strings
 date: 2016-03-28
+category: Infrastructure
 lang: en
 translation_id: awk-shapes-csv
 permalink: en/2016/03/28/awk-shapes-csv/

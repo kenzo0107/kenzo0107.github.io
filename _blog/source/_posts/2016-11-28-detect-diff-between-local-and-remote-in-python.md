@@ -2,6 +2,7 @@
 layout: post
 title: Python ローカルとリモートサーバ上のファイル差分抽出ツール
 date: 2016-11-30
+category: Python
 lang: ja
 translation_id: detect-diff-between-local-and-remote-in-python
 cover: /img/cover/2016-11-28-detect-diff-between-local-and-remote-in-python.svg

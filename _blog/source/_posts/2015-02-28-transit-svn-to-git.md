@@ -2,6 +2,7 @@
 layout: post
 title: SVN から Git へ過去コミットログを担保した上で移行する
 date: 2015-02-28
+category: Git
 lang: ja
 translation_id: transit-svn-to-git
 cover: /img/cover/2015-02-28-transit-svn-to-git.svg

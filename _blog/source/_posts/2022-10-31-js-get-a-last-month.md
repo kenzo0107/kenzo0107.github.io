@@ -1,6 +1,7 @@
 ---
 title: JavaScript で日付計算の妙
 date: 2022-10-31
+category: Infrastructure
 lang: ja
 translation_id: js-get-a-last-month
 cover: https://i.imgur.com/VbLapz4.png

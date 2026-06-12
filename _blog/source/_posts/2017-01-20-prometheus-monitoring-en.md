@@ -2,6 +2,7 @@
 layout: post
 title: Server Monitoring with Prometheus
 date: 2017-01-20
+category: Monitoring
 lang: en
 translation_id: prometheus-monitoring
 permalink: en/2017/01/20/prometheus-monitoring/

@@ -2,6 +2,7 @@
 layout: post
 title: Building a Server Environment with Ansible
 date: 2014-09-12
+category: Infrastructure
 lang: en
 translation_id: make-lamp-by-ansible
 permalink: en/2014/09/12/make-lamp-by-ansible/

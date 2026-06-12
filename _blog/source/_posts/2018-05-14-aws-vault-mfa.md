@@ -2,6 +2,7 @@
 layout: post
 title: AWS Vault で複数アカウントにMFA認証通過
 date: 2018-05-14
+category: AWS
 lang: ja
 translation_id: aws-vault-mfa
 tags:

@@ -2,6 +2,7 @@
 layout: post
 title: Adding Access Points to Nginx Access Logs with GeoIP
 date: 2015-10-01
+category: Infrastructure
 lang: en
 translation_id: nginx-geip
 permalink: en/2015/10/01/nginx-geip/

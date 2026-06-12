@@ -2,6 +2,7 @@
 layout: post
 title: Installing SonarQube on CentOS7 and Verifying Access
 date: 2016-05-19
+category: Infrastructure
 lang: en
 translation_id: install-sonarqube-on-centos7
 permalink: en/2016/05/19/install-sonarqube-on-centos7/

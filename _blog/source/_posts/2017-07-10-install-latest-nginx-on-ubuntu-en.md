@@ -2,6 +2,7 @@
 layout: post
 title: Install latest Nginx on Ubuntu
 date: 2017-07-10
+category: Infrastructure
 lang: en
 translation_id: install-latest-nginx-on-ubuntu
 permalink: en/2017/07/10/install-latest-nginx-on-ubuntu/

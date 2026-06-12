@@ -2,6 +2,7 @@
 layout: post
 title: 日本国内からアクセスされるIP取得スクリプト Ruby 30秒クッキング
 date: 2016-05-26
+category: Infrastructure
 lang: ja
 translation_id: ruby-30-sec-cooking-get-access-ip-from-japan
 cover: /img/cover/2016-05-26-ruby-30-sec-cooking-get-access-ip-from-japan.svg

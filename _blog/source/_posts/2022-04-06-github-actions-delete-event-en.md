@@ -1,6 +1,7 @@
 ---
 title: Running GitHub Actions When a Specific Branch Is Deleted
 date: 2022-04-06
+category: Git
 lang: en
 translation_id: github-actions-delete-event
 permalink: en/2022/04/06/github-actions-delete-event/

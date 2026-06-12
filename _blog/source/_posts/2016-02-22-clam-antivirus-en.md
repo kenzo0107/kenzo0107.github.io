@@ -2,6 +2,7 @@
 layout: post
 title: Installing Clam AntiVirus
 date: 2016-02-23
+category: Infrastructure
 lang: en
 translation_id: clam-antivirus
 permalink: en/2016/02/22/clam-antivirus/

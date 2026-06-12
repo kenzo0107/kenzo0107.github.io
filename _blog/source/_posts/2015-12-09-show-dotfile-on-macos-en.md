@@ -2,6 +2,7 @@
 layout: post
 title: Showing Dotfiles on macOS (Better Late Than Never)
 date: 2015-12-09
+category: Infrastructure
 lang: en
 translation_id: show-dotfile-on-macos
 permalink: en/2015/12/09/show-dotfile-on-macos/

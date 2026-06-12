@@ -2,6 +2,9 @@
 layout: post
 title: EC2 Instance Connect API で ssh ログインできるインタラクティブ cli tool "omssh" を作ってみました。
 date: 2019-08-04
+categories:
+  - [AWS]
+  - [Infrastructure]
 lang: ja
 translation_id: ec2-instance-connect-api-ssh-cli-tool-omssh
 tags:

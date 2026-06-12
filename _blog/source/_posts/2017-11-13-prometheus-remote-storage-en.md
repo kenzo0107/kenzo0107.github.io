@@ -2,6 +2,7 @@
 layout: post
 title: Trying Out Prometheus 2.0 Remote Storage
 date: 2017-11-13
+category: Monitoring
 lang: en
 translation_id: prometheus-remote-storage
 permalink: en/2017/11/13/prometheus-remote-storage/

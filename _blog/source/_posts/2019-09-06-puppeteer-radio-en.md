@@ -2,6 +2,7 @@
 layout: post
 title: Checking a radio button with Puppeteer
 date: 2019-09-06
+category: Infrastructure
 lang: en
 translation_id: puppeteer-radio
 permalink: en/2019/09/06/puppeteer-radio/

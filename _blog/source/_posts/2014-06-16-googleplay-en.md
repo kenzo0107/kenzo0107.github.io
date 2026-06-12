@@ -2,6 +2,7 @@
 layout: post
 title: "\"The item you requested could not be found\" on Google Play"
 date: 2014-06-16
+category: Infrastructure
 lang: en
 translation_id: googleplay
 permalink: en/2014/06/16/googleplay/
