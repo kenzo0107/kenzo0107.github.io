@@ -86,7 +86,7 @@ share:
   install_url: '//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63627f8086ef00a8'
 sidebar:
   left:
-    sticky: false
+    sticky: true
   right:
     sticky: true
 widgets:

@@ -274,6 +274,13 @@ html[data-theme='dark']
             &:not(.is-active):hover
                 background: rgba(88, 166, 255, .12)
 
+// ── PC版スティッキー目次のオーバーフロー対応 ──────────────────────────────
++desktop()
+    .column-left.is-sticky
+        #toc
+            max-height: calc(100vh - 2rem)
+            overflow-y: auto
+
 // ── SP用ナビバー内目次ボタン ──────────────────────────────
 .navbar-main .catalogue.is-toc-open
     color: $primary
