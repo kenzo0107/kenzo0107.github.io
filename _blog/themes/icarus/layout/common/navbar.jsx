@@ -79,8 +79,7 @@ class Navbar extends Component {
                 </div>
                 <div id="navbar-menu" class="navbar-menu">
                     <div class="navbar-start">
-                        {/* Categories: PC は横並び直接リンク、モバイルはハンバーガー内グループ */}
-                        {hasCategories ? categories.map(category => <a class="navbar-item is-hidden-touch" href={category.url}>{category.name}</a>) : null}
+                        {/* Categories: モバイルはハンバーガー内グループ、PC はナビバー直下のカテゴリーバーで表示 */}
                         {hasCategories ? <div class="navbar-item has-dropdown navbar-categories is-hidden-desktop">
                             <div class="navbar-dropdown">
                                 {categories.map(category => <a class="navbar-item" href={category.url}>

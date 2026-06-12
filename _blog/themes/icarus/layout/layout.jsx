@@ -2,6 +2,7 @@ const { Component } = require('inferno');
 const classname = require('hexo-component-inferno/lib/util/classname');
 const Head = require('./common/head');
 const Navbar = require('./common/navbar');
+const CategoryBar = require('./common/category_bar');
 const Widgets = require('./common/widgets');
 const Footer = require('./common/footer');
 const Scripts = require('./common/scripts');
@@ -18,6 +19,7 @@ module.exports = class extends Component {
             <Head site={site} config={config} helper={helper} page={page} />
             <body class={`is-${columnCount}-column`}>
                 <Navbar site={site} config={config} helper={helper} page={page} />
+                <CategoryBar site={site} config={config} helper={helper} page={page} />
                 <section class="section">
                     <div class="container">
                         <div class="columns">
