@@ -15,6 +15,9 @@ module.exports = class extends Component {
         const language = page.lang || page.language || config.language;
         const columnCount = Widgets.getColumnCount(config.widgets, config, page);
 
+        const hasTocWidget = Array.isArray(config.widgets) && config.widgets.find(w => w.type === 'toc');
+        const showSpTocBtn = (config.toc === true) && hasTocWidget && ['page', 'post'].includes(page.layout);
+
         return <html lang={language ? language.substr(0, 2) : ''}>
             <Head site={site} config={config} helper={helper} page={page} />
             <body class={`is-${columnCount}-column`}>
@@ -39,6 +42,9 @@ module.exports = class extends Component {
                 <Footer config={config} helper={helper} />
                 <Scripts site={site} config={config} helper={helper} page={page} />
                 <Search config={config} helper={helper} />
+                {showSpTocBtn ? <a id="sp-toc-btn" href="javascript:;" aria-label="目次">
+                    <i class="fas fa-list-ul"></i>
+                </a> : null}
             </body>
         </html>;
     }
