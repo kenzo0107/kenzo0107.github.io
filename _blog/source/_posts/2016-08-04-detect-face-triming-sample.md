@@ -2,6 +2,8 @@
 layout: post
 title: 複数画像ファイルから顔検知し顔部分をトリミングしたサンプルを集める
 date: 2016-08-04
+lang: ja
+translation_id: detect-face-triming-sample
 tags:
   - MachineLearning
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160809/20160809105400.gif

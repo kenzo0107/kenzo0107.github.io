@@ -2,6 +2,8 @@
 layout: post
 title: CentOS7用 Revel(Golang)フレームワークの起動スクリプト 書いてみた。
 date: 2016-02-03
+lang: ja
+translation_id: buildscript-for-revel-go
 category: Go
 tags:
   - Go

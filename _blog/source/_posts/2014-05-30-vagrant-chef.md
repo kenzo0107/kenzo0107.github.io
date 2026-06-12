@@ -2,6 +2,8 @@
 layout: post
 title: Vagrant + Chef ⇒ LAMP環境構築
 date: 2014-05-30
+lang: ja
+translation_id: vagrant-chef
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140530/20140530224409.png
 tags:
   - Vagrant

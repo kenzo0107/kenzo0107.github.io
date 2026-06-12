@@ -2,6 +2,8 @@
 layout: post
 title: 運用中のNginxをノーメンテでバージョンアップ&HTTP2.0モジュールを導入
 date: 2015-11-17
+lang: ja
+translation_id: versionup-nginx-without-maintenance
 tags:
   - Nginx
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160810/20160810163018.png

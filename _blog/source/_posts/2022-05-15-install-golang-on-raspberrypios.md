@@ -1,6 +1,8 @@
 ---
 title: RaspberryPI に Go をインストールする
 date: 2022-05-15
+lang: ja
+translation_id: install-golang-on-raspberrypios
 cover: /img/cover/2022-05-15-install-golang-on-raspberrypios.svg
 category: RaspberryPI
 ---

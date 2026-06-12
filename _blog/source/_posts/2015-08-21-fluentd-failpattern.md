@@ -2,6 +2,8 @@
 layout: post
 title: fluentd設定ハマった所あるある
 date: 2015-08-21
+lang: ja
+translation_id: fluentd-failpattern
 cover: /img/cover/2015-08-21-fluentd-failpattern.svg
 tags:
 - Fluentd

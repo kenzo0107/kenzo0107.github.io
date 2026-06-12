@@ -4,6 +4,8 @@ category: Go
 tags:
 - Go
 date: 2020-06-06
+lang: ja
+translation_id: backlog-api-go
 cover: /img/cover/2020-06-06-backlog-api-go.svg
 ---
 

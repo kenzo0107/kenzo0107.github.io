@@ -2,6 +2,8 @@
 layout: post
 title: Linux 32bitか64bitか確認する
 date: 2015-04-13
+lang: ja
+translation_id: show-32-or-64-bit-on-linux
 cover: /img/cover/2015-04-13-show-32-or-64-bit-on-linux.svg
 ---
 

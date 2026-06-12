@@ -1,6 +1,8 @@
 ---
 title: k8s リソースをディスプレイに表示する
 date: 2022-05-18
+lang: ja
+translation_id: k8s-monitoring-metric
 category: RaspberryPI
 cover: https://i.imgur.com/ROKM81Z.jpg
 ---

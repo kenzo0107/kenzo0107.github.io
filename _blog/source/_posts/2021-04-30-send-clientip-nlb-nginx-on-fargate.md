@@ -3,6 +3,8 @@ title: NLB+Fargate でクライアントIP を Fargate に送り届ける
 tags:
   - AWS
 date: 2021-04-30
+lang: ja
+translation_id: send-clientip-nlb-nginx-on-fargate
 cover: https://i.imgur.com/4xB6wVP.png
 ---
 

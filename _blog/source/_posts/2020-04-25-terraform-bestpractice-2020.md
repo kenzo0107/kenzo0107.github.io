@@ -5,6 +5,8 @@ tags:
   - Terraform
 toc: true
 date: 2020-04-25
+lang: ja
+translation_id: terraform-bestpractice-2020
 cover: https://i.imgur.com/PRuN9u8.png
 ---
 

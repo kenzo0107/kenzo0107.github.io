@@ -2,6 +2,8 @@
 title: データ分析観点から見た AWS ECS コンテナロギング
 category: AWS
 date: 2025-04-22
+lang: ja
+translation_id: ecs-container-logging
 cover: /img/cover/2025-04-22-ecs-container-logging.svg
 ---
 

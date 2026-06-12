@@ -2,6 +2,8 @@
 layout: post
 title: CSVエンコード問題解決
 date: 2016-09-09
+lang: ja
+translation_id: fix-problem-csv-encode
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160909/20160909105642.jpg
 tags:
   - csv

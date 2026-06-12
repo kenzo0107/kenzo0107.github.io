@@ -1,6 +1,8 @@
 ---
 title: Raspberry PI OS で vim インストール
 date: 2022-05-09
+lang: ja
+translation_id: install_vim_on_raspberrypi_os
 cover: /img/cover/2022-05-09-install_vim_on_raspberrypi_os.svg
 category: RaspberryPI
 ---

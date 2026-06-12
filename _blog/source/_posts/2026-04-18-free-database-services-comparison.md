@@ -1,6 +1,8 @@
 ---
 title: 完全無料で常時稼働可能なデータベースサービス徹底比較（2026年版）
 date: 2026-04-18
+lang: ja
+translation_id: free-database-services-comparison
 category: Database
 tags:
   - Database

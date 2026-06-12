@@ -2,6 +2,8 @@
 layout: post
 title: robots.txtを配置してsitemap.xmlを読み込ませSEO効率を上げる
 date: 2015-04-06
+lang: ja
+translation_id: robot-txt-for-seo
 cover: /img/cover/2015-04-06-robot-txt-for-seo.svg
 ---
 

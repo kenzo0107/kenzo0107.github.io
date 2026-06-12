@@ -2,6 +2,8 @@
 layout: post
 title: Jenkins 死亡時の対策
 date: 2016-08-15
+lang: ja
+translation_id: why-jenkins-died
 cover: https://i.imgur.com/qds0pDI.png
 ---
 

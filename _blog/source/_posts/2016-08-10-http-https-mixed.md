@@ -2,6 +2,8 @@
 layout: post
 title: http https 混在サイトでの Cookie Secure 属性の扱い方
 date: 2016-08-10
+lang: ja
+translation_id: http-https-mixed
 tags:
   - .htaccess
   - PHP

@@ -2,6 +2,8 @@
 layout: post
 title: 標準的な Golang インストール方法
 date: 2017-02-03
+lang: ja
+translation_id: standard-instalation-golang
 category: Go
 tags:
   - Go

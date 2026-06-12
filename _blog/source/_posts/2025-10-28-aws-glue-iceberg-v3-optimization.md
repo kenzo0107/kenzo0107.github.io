@@ -1,6 +1,8 @@
 ---
 title: AWS Glue Iceberg テーブル v3 スペックの最適化
 date: 2025-10-28
+lang: ja
+translation_id: aws-glue-iceberg-v3-optimization
 cover: https://i.imgur.com/QaRm1D7.png
 ---
 

@@ -2,6 +2,8 @@
 layout: post
 title: Kibana4 検索窓での検索 正規表現パターンマッチ等
 date: 2015-11-24
+lang: ja
+translation_id: kibana-regex-pattern-match
 tags:
   - Kibana
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151124/20151124123137.png

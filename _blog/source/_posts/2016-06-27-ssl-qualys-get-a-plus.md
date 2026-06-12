@@ -2,6 +2,8 @@
 layout: post
 title: 2016年5月現在、SSL評価Fを取らない為に
 date: 2016-06-27
+lang: ja
+translation_id: ssl-qualys-get-a-plus
 tags:
   - SSL
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627140744.png

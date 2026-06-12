@@ -1,6 +1,8 @@
 ---
 title: Python ファイル読み込み
 date: 2024-05-28
+lang: ja
+translation_id: read-file-by-python
 cover: /img/cover/2024-05-28-read-file-by-python.svg
 category: Python
 ---

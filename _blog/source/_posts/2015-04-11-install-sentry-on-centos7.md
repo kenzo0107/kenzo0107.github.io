@@ -2,6 +2,8 @@
 layout: post
 title: MacOSX+Vagrant (CentOS7)にSenrtyをインストールして動作確認するまで
 date: 2015-04-11
+lang: ja
+translation_id: install-sentry-on-centos7
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150409/20150409112616.png
 ---
 

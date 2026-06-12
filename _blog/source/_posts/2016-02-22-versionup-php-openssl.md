@@ -2,6 +2,8 @@
 layout: post
 title: PHP+OpenSSLバージョンアップ
 date: 2016-02-23
+lang: ja
+translation_id: versionup-php-openssl
 tags:
   - PHP
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160222/20160222184453.jpg

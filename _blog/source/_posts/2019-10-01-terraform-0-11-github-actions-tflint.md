@@ -2,6 +2,8 @@
 layout: post
 title: terraform 0.11 系に対応した GitHub Actions 作った &  tflint も入れてみた♪
 date: 2019-10-01
+lang: ja
+translation_id: terraform-0-11-github-actions-tflint
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190930/20190930221527.png
 category: Terraform
 tags:

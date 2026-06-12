@@ -4,6 +4,8 @@ category: AWS
 tags:
 - AWS
 date: 2021-09-29
+lang: ja
+translation_id: you-should-set-kms-key
 cover: /img/cover/2021-09-29-you-should-set-kms-key.svg
 ---
 

@@ -1,6 +1,8 @@
 ---
 title: python でファイルの内容を取得する
 date: 2023-07-21
+lang: ja
+translation_id: python-load-file
 category: Python
 cover: https://i.imgur.com/V4yCTSm.png
 ---

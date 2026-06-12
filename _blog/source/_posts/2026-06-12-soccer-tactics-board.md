@@ -26,9 +26,9 @@ tags:
 
 {% affiliate "小学生から知っておくべきフットボールのフォーマット" "https://m.media-amazon.com/images/P/4862557732.jpg" "https://www.amazon.co.jp/exec/obidos/ASIN/4862557732/kenzo0107-22/" "https://hb.afl.rakuten.co.jp/ichiba/54d10c45.2c0cfeee.54d10c46.43e102da/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbookfan%2Fbk-4862557732%2F&link_type=hybrid_url&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJoeWJyaWRfdXJsIiwic2l6ZSI6IjI0MHgyNDAiLCJuYW0iOjEsIm5hbXAiOiJyaWdodCIsImNvbSI6MSwiY29tcCI6ImRvd24iLCJwcmljZSI6MSwiYm9yIjoxLCJjb2wiOjEsImJidG4iOjEsInByb2QiOjAsImFtcCI6ZmFsc2V9" %}
 
-内容はとても良いのですが、いざ盤上で再現しようとすると、物理的な戦術ボード（マグネット式）では次の点が難しいと感じました。
+内容はとても良いのです。子供がちょっとわからないという所をいざ盤上で再現しようとすると、物理的な戦術ボード（マグネット式）では次の点が難しかったです。
 
-- **複数の選手を「同時に」動かせない**。パスの出し手と受け手、ボール、相手 DF が同時に動く局面を、マグネットを 1 個ずつずらして説明しても動きの「タイミング」が伝わらない
+- **複数の選手を「同時に」動かせない**。パスの出し手と受け手、ボール、相手 DF が同時に動く局面を、マグネットを 1 個ずつずらして説明しても動きの「タイミング」が伝えづらい
 - **同じ動きを何度も繰り返せない**。一度崩すと初期配置に戻すのが面倒で、「もう 1 回見せて」に応えづらい
 - **動きの軌跡が残らない**。どの選手がどこへ走ったのかが、止め絵では追いきれない
 
@@ -46,16 +46,11 @@ tags:
 
 ## 使い方
 
-### 起動
+### 0. プリセットでどんな動きをするか試してみる
 
-ビルドは不要です。リポジトリを取得してローカルで HTTP サーバーを立てるだけです（ES Modules を使っているため `file://` 直開きではなく HTTP 経由で開きます）。
+![](https://kenzo0107.github.io/soccer-tactics-board/)
 
-```bash
-git clone https://github.com/kenzo0107/soccer-tactics-board.git
-cd soccer-tactics-board
-python3 -m http.server 8000
-# ブラウザで http://localhost:8000/ を開く
-```
+右上のハンバーガーボタンを押すと元々設定されている 2vs1 などのアニメーションパターンがあるのでそちらをクリックしていただき選手やボールがセットされ、再生ボタンを押すとアニメーションが動きます。
 
 ### 1. 選手・ボールを配置する
 
@@ -116,6 +111,21 @@ python3 -m http.server 8000
 - レスポンシブ対応で PC・スマホ・タブレットいずれでも操作可能
 
 静的ファイルだけで完結するので、GitHub Pages や任意の静的ホスティングにそのまま載せられます。
+
+## もっとこうなったらいいのに
+
+https://github.com/kenzo0107/soccer-tactics-board/issues
+
+もしこんな機能が欲しいとかご希望があれば、大変お手数ですが、上記のリンクで課題 (issue) を作成していただけると大変助かります。
+
+## AI との親和性
+
+全て AI で作成しています。
+プリセットの 2vs1 なども AI で作成しました。
+
+「相手DFが前線からプレスに来た場合にどういった解決策がありますか？アニメーションを作成してください」としたところ、AIなりの答えを作ってくれました。
+
+サービスとして AI を載せると課金しないと難しくなってくるのと、どこまで精度が出るのか難しい所なので今回は AI を載せませんでした。
 
 ## おわりに
 

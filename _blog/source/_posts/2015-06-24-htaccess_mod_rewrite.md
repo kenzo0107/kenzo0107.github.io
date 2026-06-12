@@ -2,6 +2,8 @@
 layout: post
 title: .htaccessでmod_rewriteを利用可能にする
 date: 2015-06-24
+lang: ja
+translation_id: htaccess_mod_rewrite
 cover: /img/cover/2015-06-24-htaccess_mod_rewrite.svg
 ---
 

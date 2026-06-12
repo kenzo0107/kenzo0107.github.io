@@ -2,6 +2,8 @@
 layout: post
 title: Rails に reCAPTCHA v3 導入して bot 対策
 date: 2019-02-17
+lang: ja
+translation_id: rails-recaptcha-v3-bot
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190216/20190216210737.png
 tags:
   - Ruby

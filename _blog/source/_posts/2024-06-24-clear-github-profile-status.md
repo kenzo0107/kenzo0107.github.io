@@ -1,6 +1,8 @@
 ---
 title: GitHub Profile Status をクリアする (busy 解除)
 date: 2024-06-24
+lang: ja
+translation_id: clear-github-profile-status
 cover: /img/cover/2024-06-24-clear-github-profile-status.svg
 category: Git
 ---

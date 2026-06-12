@@ -2,6 +2,8 @@
 layout: post
 title: AWS [Retirement Notification] 対応
 date: 2017-04-18
+lang: ja
+translation_id: aws-retairement-notification
 tags:
   - AWS
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170418/20170418105821.png

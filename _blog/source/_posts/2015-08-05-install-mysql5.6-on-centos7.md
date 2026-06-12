@@ -2,6 +2,8 @@
 layout: post
 title: CentOS7 に MySQL 5.6インストール
 date: 2015-08-05
+lang: ja
+translation_id: install-mysql5.6-on-centos7
 cover: /img/cover/2015-08-05-install-mysql5.6-on-centos7.svg
 ---
 

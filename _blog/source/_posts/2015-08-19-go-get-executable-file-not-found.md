@@ -2,6 +2,8 @@
 layout: post
 title: 'go get で 「exec: "bzr": executable file not found in $PATH」エラー対策'
 date: 2015-08-19
+lang: ja
+translation_id: go-get-executable-file-not-found
 cover: /img/cover/2015-08-19-go-get-executable-file-not-found.svg
 category: Go
 ---

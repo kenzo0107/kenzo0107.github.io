@@ -2,6 +2,8 @@
 layout: post
 title: CentOSにmysqldiffインストールし実行確認
 date: 2015-06-16
+lang: ja
+translation_id: install-mysqldiff-on-centos
 cover: /img/cover/2015-06-16-install-mysqldiff-on-centos.svg
 ---
 

@@ -4,6 +4,8 @@ category: Go
 tags:
   - Go
 date: 2021-07-09
+lang: ja
+translation_id: shukujitsu-go-library
 cover: https://github.com/kenzo0107/shukujitsu/raw/main/logo.jpg
 ---
 

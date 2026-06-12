@@ -2,6 +2,8 @@
 layout: post
 title: 'Python エラー対処：error while loading shared libraries: libpython2.7.so.1.0: cannot open shared object file: No such file or directory'
 date: 2015-02-17
+lang: ja
+translation_id: python-error-about-loading-shared-libraries-libpython2.7.so.md
 cover: /img/cover/2015-02-17-python-error-about-loading-shared-libraries-libpython2.7.so.md.svg
 ---
 

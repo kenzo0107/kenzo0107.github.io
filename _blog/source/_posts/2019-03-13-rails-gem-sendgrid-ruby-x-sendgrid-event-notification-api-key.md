@@ -2,6 +2,8 @@
 layout: post
 title: Rails (gem 'sendgrid-ruby') × SendGrid の Event Notification で API Key ごとの独自メタ情報を設定する
 date: 2019-03-13
+lang: ja
+translation_id: rails-gem-sendgrid-ruby-x-sendgrid-event-notification-api-key
 tags:
   - SendGrid
   - Ruby

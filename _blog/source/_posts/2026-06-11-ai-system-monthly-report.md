@@ -2,6 +2,8 @@
 title: AI にシステム月次レポートを書かせる ─ Claude Code × MCP で運用レポートを自動生成する
 category: AWS
 date: 2026-06-11
+lang: ja
+translation_id: ai-system-monthly-report
 cover: /img/cover/2026-06-11-ai-system-monthly-report.svg
 tags:
   - Claude Code

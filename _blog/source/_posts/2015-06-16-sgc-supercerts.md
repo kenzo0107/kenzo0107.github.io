@@ -2,6 +2,8 @@
 layout: post
 title: SGC SuperCerts 購入手順
 date: 2015-06-16
+lang: ja
+translation_id: sgc-supercerts
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150226/20150226185547.png
 ---
 

@@ -1,6 +1,8 @@
 ---
 title: AWS VPC Lattice Resource Gateway と NLB+VPC Endpoint 構成の比較分析
 date: 2025-12-11
+lang: ja
+translation_id: nlb-vpc-endpoint-service-vpc-endpoint-vs-vpc-lattice-resource-gateway
 category: AWS
 cover: https://i.imgur.com/qSyZbW0.png
 ---

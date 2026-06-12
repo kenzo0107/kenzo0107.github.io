@@ -2,6 +2,8 @@
 layout: post
 title: StatsBotのSlack通知 通知方法と通知時の見え方 一覧
 date: 2016-03-11
+lang: ja
+translation_id: statsbot-slack
 tags:
   - StatsBot
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160311/20160311000758.png

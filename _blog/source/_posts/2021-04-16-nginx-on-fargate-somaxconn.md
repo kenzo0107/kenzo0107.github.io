@@ -3,6 +3,8 @@ title: Nginx on Fargate で発生した Resource temporarily unavailable エラ�
 tags:
   - AWS
 date: 2021-04-16
+lang: ja
+translation_id: nginx-on-fargate-somaxconn
 cover: https://i.imgur.com/UvdQW0r.png
 ---
 

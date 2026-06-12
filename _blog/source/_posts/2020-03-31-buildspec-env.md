@@ -4,6 +4,8 @@ tags:
 - AWS
 - CodeBuild
 date: 2020-03-31
+lang: ja
+translation_id: buildspec-env
 cover: /img/cover/2020-03-31-buildspec-env.svg
 ---
 

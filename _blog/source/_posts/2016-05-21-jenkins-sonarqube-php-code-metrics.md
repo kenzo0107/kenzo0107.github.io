@@ -2,6 +2,8 @@
 layout: post
 title: Jenkins + SonarQube で PHPコードメトリクス計測！
 date: 2016-05-21
+lang: ja
+translation_id: jenkins-sonarqube-php-code-metrics
 tags:
   - PHP
   - Jenkins

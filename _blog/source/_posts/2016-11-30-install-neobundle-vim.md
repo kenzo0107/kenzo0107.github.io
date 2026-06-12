@@ -2,6 +2,8 @@
 layout: post
 title: CentOS 5系 Neobundle 対応 vim をインストール
 date: 2016-11-30
+lang: ja
+translation_id: install-neobundle-vim
 cover: /img/cover/2016-11-30-install-neobundle-vim.svg
 tags:
 - vim

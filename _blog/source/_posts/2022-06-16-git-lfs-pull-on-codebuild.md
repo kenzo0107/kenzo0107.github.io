@@ -1,6 +1,8 @@
 ---
 title: AWS CodeBuild で git lfs pull する
 date: 2022-06-16
+lang: ja
+translation_id: git-lfs-pull-on-codebuild
 cover: /img/cover/2022-06-16-git-lfs-pull-on-codebuild.svg
 category: AWS
 ---

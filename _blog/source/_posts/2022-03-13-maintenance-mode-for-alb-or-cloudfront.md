@@ -1,6 +1,8 @@
 ---
 title: AWS ALB/CloudFront でのメンテナンス切り替え方法
 date: 2022-03-13
+lang: ja
+translation_id: maintenance-mode-for-alb-or-cloudfront
 category: AWS
 cover: https://i.imgur.com/IwHAByw.png
 ---

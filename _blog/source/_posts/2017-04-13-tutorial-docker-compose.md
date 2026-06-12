@@ -2,6 +2,8 @@
 layout: post
 title: Docker Compose チュートリアル
 date: 2017-04-13
+lang: ja
+translation_id: tutorial-docker-compose
 tags:
   - Docker
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170414/20170414222435.png

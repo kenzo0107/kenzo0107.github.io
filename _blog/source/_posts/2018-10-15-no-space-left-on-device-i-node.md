@@ -2,6 +2,8 @@
 layout: post
 title: No space left on device が発生して i-node 枯渇してた時の原因調査法
 date: 2018-10-15
+lang: ja
+translation_id: no-space-left-on-device-i-node
 tags:
   - i-node
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20181015/20181015001102.jpg

@@ -2,6 +2,8 @@
 layout: post
 title: AWS Multi-AZにおける Pacemaker + Corosync による Elastic IP の付け替え
 date: 2015-12-26
+lang: ja
+translation_id: aws-multi-az-pacemaker-corosync-switching-eip
 cover: https://i.imgur.com/QBvFhti.png
 tags:
 - AWS

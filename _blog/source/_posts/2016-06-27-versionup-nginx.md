@@ -2,6 +2,8 @@
 layout: post
 title: Nginx 1.9.6 → 1.11.1 へバージョンアップ 脆弱性対応
 date: 2016-06-27
+lang: ja
+translation_id: versionup-nginx
 tags:
   - Nginx
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160627/20160627150549.png

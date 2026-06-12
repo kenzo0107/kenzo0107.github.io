@@ -2,6 +2,8 @@
 layout: post
 title: MySQが落ちる トラブルシューティング Cannot allocate memory for the buffer pool
 date: 2016-05-20
+lang: ja
+translation_id: mysql-cannot-allocate-memory-for-the-buffer-pool
 tags:
   - MySQL
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520103201.jpg

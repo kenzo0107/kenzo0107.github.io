@@ -2,6 +2,8 @@
 layout: post
 title: 無料枠で運用！ GKE + Kubernetes で Hubot 〜CLIから実行編〜
 date: 2017-05-10
+lang: ja
+translation_id: gke-kubernetes-hubot-cli
 tags:
   - GKE
 cover: http://i.imgur.com/Vvmetu1.png

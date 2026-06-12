@@ -2,6 +2,8 @@
 layout: post
 title: 今更ながらMacでドットファイルを表示する
 date: 2015-12-09
+lang: ja
+translation_id: show-dotfile-on-macos
 tags:
   - macos
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151209/20151209101926.png

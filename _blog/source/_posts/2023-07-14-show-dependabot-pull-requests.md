@@ -1,6 +1,8 @@
 ---
 title: dependabot が pull request を作成しているか確認するスクリプト
 date: 2023-07-14
+lang: ja
+translation_id: show-dependabot-pull-requests
 category: GitHub
 cover: https://i.imgur.com/dkvqPRI.png
 ---

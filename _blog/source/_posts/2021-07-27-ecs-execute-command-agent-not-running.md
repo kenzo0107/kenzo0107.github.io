@@ -4,6 +4,8 @@ category: AWS
 tags:
   - AWS
 date: 2021-07-27
+lang: ja
+translation_id: ecs-execute-command-agent-not-running
 cover: https://i.imgur.com/yK51axc.png
 ---
 

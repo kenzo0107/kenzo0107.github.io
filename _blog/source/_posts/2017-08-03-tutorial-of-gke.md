@@ -2,6 +2,8 @@
 layout: post
 title: GKEチュートリアルでサイト構築・運用
 date: 2017-08-03
+lang: ja
+translation_id: tutorial-of-gke
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170803/20170803142949.png
 tags:
 - GKE

@@ -2,6 +2,8 @@
 layout: post
 title: AWS EC2 t2 から t3 へ移行する為の step by step
 date: 2018-09-14
+lang: ja
+translation_id: aws-ec2-t2-t3-step-by-step
 tags:
   - AWS
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180914/20180914130511.jpg

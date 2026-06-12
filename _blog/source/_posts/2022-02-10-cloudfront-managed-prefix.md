@@ -1,6 +1,8 @@
 ---
 title: terraform で CloudFront マネージドプリフィックスリストを利用したアクセス制限
 date: 2022-02-10
+lang: ja
+translation_id: cloudfront-managed-prefix
 category: AWS
 cover: https://i.imgur.com/raMMbxt.png
 ---

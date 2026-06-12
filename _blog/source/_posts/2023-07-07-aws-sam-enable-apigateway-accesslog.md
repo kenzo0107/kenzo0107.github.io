@@ -1,6 +1,8 @@
 ---
 title: SAM プロジェクトで管理する API Gateway のアクセスログを有効化する
 date: 2023-07-07
+lang: ja
+translation_id: aws-sam-enable-apigateway-accesslog
 cover: /img/cover/2023-07-07-aws-sam-enable-apigateway-accesslog.svg
 category: AWS
 ---

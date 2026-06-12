@@ -2,6 +2,8 @@
 layout: post
 title: Datadog NTP 監視でアラート鳴りまくり対応
 date: 2018-07-30
+lang: ja
+translation_id: datadog_ntp_alert
 tags:
   - Datadog
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180730/20180730133759.jpg

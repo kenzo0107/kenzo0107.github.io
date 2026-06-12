@@ -1,6 +1,8 @@
 ---
 title: S3 のパブリックアクセスブロック有効後、無効にした際の S3 Object の ACL の挙動
 date: 2023-04-05
+lang: ja
+translation_id: s3-bucket-public-access-block
 category: AWS
 cover: https://i.imgur.com/cEbTyJe.png
 ---

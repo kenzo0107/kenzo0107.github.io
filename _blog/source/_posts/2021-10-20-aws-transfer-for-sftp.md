@@ -4,6 +4,8 @@ category: AWS
 tags:
   - AWS
 date: 2021-10-20
+lang: ja
+translation_id: aws-transfer-for-sftp
 cover: https://i.imgur.com/hgb10nC.png
 ---
 

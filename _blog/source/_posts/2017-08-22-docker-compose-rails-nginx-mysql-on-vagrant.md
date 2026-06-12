@@ -2,6 +2,8 @@
 layout: post
 title: Vagrant + docker-compose で Rails 5.1.0 (Puma) + Nginx + MySQL 環境構築
 date: 2017-08-22
+lang: ja
+translation_id: docker-compose-rails-nginx-mysql-on-vagrant
 tags:
   - Docker
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170823/20170823110755.png

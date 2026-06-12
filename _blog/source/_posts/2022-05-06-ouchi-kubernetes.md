@@ -1,6 +1,8 @@
 ---
 title: おうち k8s 構築
 date: 2022-05-06
+lang: ja
+translation_id: ouchi-kubernetes
 category: RaspberryPI
 cover: https://i.imgur.com/RgpOXr3.jpg
 ---

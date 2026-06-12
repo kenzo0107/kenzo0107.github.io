@@ -4,6 +4,8 @@ category: Go
 tags:
   - Go
 date: 2020-02-25
+lang: ja
+translation_id: backlog-comment-slack-dm
 comments: true
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20200227/20200227215819.png
 ---

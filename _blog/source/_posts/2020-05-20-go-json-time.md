@@ -4,6 +4,8 @@ category: Go
 tags:
 - Go
 date: 2020-05-20
+lang: ja
+translation_id: go-json-time
 cover: /img/cover/2020-05-20-go-json-time.svg
 ---
 

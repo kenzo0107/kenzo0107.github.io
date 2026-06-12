@@ -1,6 +1,8 @@
 ---
 title: LLM 監視ツール比較 Langfuse vs Datadog LLM Observability
 date: 2026-06-11
+lang: ja
+translation_id: langfuse-vs-datadog-llm-observability
 category: Monitoring
 tags:
   - LLM

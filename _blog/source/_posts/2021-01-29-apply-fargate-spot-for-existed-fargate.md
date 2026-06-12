@@ -4,6 +4,8 @@ category: Terraform
 tags:
 - AWS
 date: 2021-01-29
+lang: ja
+translation_id: apply-fargate-spot-for-existed-fargate
 cover: https://i.imgur.com/r0W6OnK.png
 ---
 

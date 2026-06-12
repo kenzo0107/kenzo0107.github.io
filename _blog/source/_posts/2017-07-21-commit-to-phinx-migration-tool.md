@@ -2,6 +2,8 @@
 layout: post
 title: I used Phinx, DB migration Tool on Docker!
 date: 2017-07-21
+lang: ja
+translation_id: commit-to-phinx-migration-tool
 tags:
   - GKE
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170721/20170721210050.png

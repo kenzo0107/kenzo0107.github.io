@@ -1,6 +1,8 @@
 ---
 title: terraform で map 型の値を key 順にソートした上で value のリストを取得する
 date: 2022-10-26
+lang: ja
+translation_id: terraform-sort-map
 cover: https://i.imgur.com/8cuKRz1.png
 category: Terraform
 ---

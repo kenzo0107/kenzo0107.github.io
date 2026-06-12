@@ -2,6 +2,8 @@
 layout: post
 title: ProxySQL で DB の Read/Write Endpoint スイッチング
 date: 2019-03-25
+lang: ja
+translation_id: proxysql-db-read-write-endpoint
 cover: /img/cover/2019-03-25-proxysql-db-read-write-endpoint.svg
 tags:
 - ProxySQL

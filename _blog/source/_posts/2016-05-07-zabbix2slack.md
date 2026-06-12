@@ -2,6 +2,8 @@
 layout: post
 title: Zabbix3.x系からSlack通知
 date: 2016-05-07
+lang: ja
+translation_id: zabbix2slack
 tags:
   - Monitoring
   - Zabbix

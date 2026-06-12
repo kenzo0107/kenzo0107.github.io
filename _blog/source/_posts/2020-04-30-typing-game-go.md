@@ -4,6 +4,8 @@ category: Go
 tags:
   - Go
 date: 2020-04-30
+lang: ja
+translation_id: typing-game-go
 cover: https://github.com/kenzo0107/typing-game-go/raw/master/logo.png
 ---
 

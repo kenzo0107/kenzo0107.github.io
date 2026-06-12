@@ -2,6 +2,8 @@
 layout: post
 title: MacOSXにHomebrewをインストールする
 date: 2015-02-28
+lang: ja
+translation_id: install-homebrew-on-macosx
 cover: /img/cover/2015-02-28-install-homebrew-on-macosx.svg
 ---
 

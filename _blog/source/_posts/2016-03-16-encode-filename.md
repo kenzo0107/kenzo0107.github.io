@@ -2,6 +2,8 @@
 layout: post
 title: ファイルの中身でなくファイル名の文字コードを変更する
 date: 2016-03-16
+lang: ja
+translation_id: encode-filename
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160408/20160408142205.jpg
 ---
 

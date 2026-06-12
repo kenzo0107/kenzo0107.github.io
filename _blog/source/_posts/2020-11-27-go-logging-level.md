@@ -4,6 +4,8 @@ category: Go
 tags:
 - Go
 date: 2020-11-27
+lang: ja
+translation_id: go-logging-level
 cover: /img/cover/2020-11-27-go-logging-level.svg
 ---
 

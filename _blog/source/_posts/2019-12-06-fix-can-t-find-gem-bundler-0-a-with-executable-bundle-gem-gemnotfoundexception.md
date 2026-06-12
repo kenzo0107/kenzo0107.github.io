@@ -2,6 +2,8 @@
 layout: post
 title: 'Fix: can''t find gem bundler (>= 0.a) with executable bundle (Gem::GemNotFoundException)'
 date: 2019-12-06
+lang: ja
+translation_id: fix-can-t-find-gem-bundler-0-a-with-executable-bundle-gem-gemnotfoundexception
 cover: /img/cover/2019-12-06-fix-can-t-find-gem-bundler-0-a-with-executable-bundle-gem-gemnotfoundexception.svg
 tags:
 - Ruby

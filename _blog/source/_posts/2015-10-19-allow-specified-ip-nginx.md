@@ -2,6 +2,8 @@
 layout: post
 title: Nginx Basic認証設定、社内IPなど特定ipのみ許可
 date: 2015-10-19
+lang: ja
+translation_id: allow-specified-ip-nginx
 cover: /img/cover/2015-10-19-allow-specified-ip-nginx.svg
 tags:
 - Nginx

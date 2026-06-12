@@ -1,6 +1,8 @@
 ---
 title: RDS PostgreSQL バージョンアップ
 date: 2023-03-20
+lang: ja
+translation_id: versionup-rds-postgresql
 cover: https://i.imgur.com/MCMwjkj.png
 category: AWS
 ---

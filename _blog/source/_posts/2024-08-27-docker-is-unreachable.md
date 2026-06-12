@@ -1,6 +1,8 @@
 ---
 title: 'Error: Docker is unreachable. Docker needs to be running to build inside a container.'
 date: 2024-08-27
+lang: ja
+translation_id: docker-is-unreachable
 cover: /img/cover/2024-08-27-docker-is-unreachable.svg
 category: AWS
 ---

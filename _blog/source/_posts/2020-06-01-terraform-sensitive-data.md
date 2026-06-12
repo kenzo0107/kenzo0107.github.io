@@ -4,6 +4,8 @@ category: Terraform
 tags:
 - AWS
 date: 2020-06-01
+lang: ja
+translation_id: terraform-sensitive-data
 cover: /img/cover/2020-06-01-terraform-sensitive-data.svg
 ---
 

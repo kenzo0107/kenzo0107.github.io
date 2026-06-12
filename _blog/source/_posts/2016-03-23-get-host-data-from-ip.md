@@ -2,6 +2,8 @@
 layout: post
 title: IPアドレスからホスト情報取得
 date: 2016-03-23
+lang: ja
+translation_id: get-host-data-from-ip
 tags:
   - ipinfo
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160408/20160408142036.png

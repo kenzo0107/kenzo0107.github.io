@@ -2,6 +2,8 @@
 layout: post
 title: とにかくシンプルにPHPでLineBotApiを書きました
 date: 2016-04-28
+lang: ja
+translation_id: simple-php-linebotapi
 tags:
   - PHP
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160428/20160428003806.png

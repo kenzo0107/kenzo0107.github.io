@@ -2,6 +2,8 @@
 title: Python tox を利用し複数の構文チェックツール管理
 category: Python
 date: 2025-06-05
+lang: ja
+translation_id: python-tox
 cover: /img/cover/2025-06-05-python-tox.svg
 ---
 

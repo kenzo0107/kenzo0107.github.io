@@ -2,6 +2,8 @@
 layout: post
 title: Alertmanager 構築手順
 date: 2017-02-02
+lang: ja
+translation_id: prometheus-alertmanager
 tags:
   - Monitoring
   - Prometheus

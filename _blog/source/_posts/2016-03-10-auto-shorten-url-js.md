@@ -2,6 +2,8 @@
 layout: post
 title: inputボックスにURL打ち込むと自動URL短縮化されるjs
 date: 2016-03-10
+lang: ja
+translation_id: auto-shorten-url-js
 tags:
   - JavaScript
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160310/20160310115924.png

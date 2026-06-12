@@ -1,6 +1,8 @@
 ---
 title: NAT Gateway リージョナル vs ゾーナル - コストとIPアドレス管理
 date: 2025-11-26
+lang: ja
+translation_id: nat-gateway-regional-vs-zonal
 category: AWS
 cover: https://i.imgur.com/apEIwWh.png
 ---

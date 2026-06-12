@@ -2,6 +2,8 @@
 layout: post
 title: node_exporter シェルでクエリ自作
 date: 2017-02-16
+lang: ja
+translation_id: node_exporter
 tags:
   - Monitoring
   - Prometheus

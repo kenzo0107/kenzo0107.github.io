@@ -2,6 +2,8 @@
 layout: post
 title: ECS EC2 上で起動する Datadog Agent コンテナが unhealthy になる時の処方箋
 date: 2019-01-10
+lang: ja
+translation_id: ecs-ec2-datadog-agent-unhealthy
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190110/20190110112818.png
 tags:
 - AWS

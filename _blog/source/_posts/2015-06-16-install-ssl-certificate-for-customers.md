@@ -2,6 +2,8 @@
 layout: post
 title: クライアント受注のWebサイト構築時のSSL証明書インストールする為にしたこと
 date: 2015-06-16
+lang: ja
+translation_id: install-ssl-certificate-for-customers
 cover: /img/cover/2015-06-16-install-ssl-certificate-for-customers.svg
 ---
 

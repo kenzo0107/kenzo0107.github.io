@@ -3,6 +3,8 @@ title: ログ保存用 S3 Bucket の ACL で CloudFront や他 S3 Bucket のア�
 tags:
   - AWS
 date: 2021-11-04
+lang: ja
+translation_id: cloudfront-logdelivery
 cover: https://i.imgur.com/SK23gOy.png
 ---
 

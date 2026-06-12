@@ -2,6 +2,8 @@
 layout: post
 title: MySQL SQL結果をINTO OUTFILEを使用せずCSV取得
 date: 2016-03-14
+lang: ja
+translation_id: mysql-output-csv-without-outfile
 tags:
   - MySQL
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160408/20160408142308.png

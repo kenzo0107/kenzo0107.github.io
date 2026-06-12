@@ -1,6 +1,8 @@
 ---
 title: 'black「ImportError: cannot import name _unicodefun from click」 エラー対応'
 date: 2022-05-25
+lang: ja
+translation_id: black-fix-cannot-import-name-unicodefun-from-click
 cover: /img/cover/2022-05-25-black-fix-cannot-import-name-unicodefun-from-click.svg
 tags:
   - Python

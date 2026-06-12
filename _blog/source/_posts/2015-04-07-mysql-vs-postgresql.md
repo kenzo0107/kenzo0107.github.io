@@ -2,6 +2,8 @@
 layout: post
 title: MySQL vs postgreSQL コマンド対比
 date: 2015-04-07
+lang: ja
+translation_id: mysql-vs-postgresql
 cover: /img/cover/2015-04-07-mysql-vs-postgresql.svg
 ---
 

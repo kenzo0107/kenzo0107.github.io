@@ -2,6 +2,8 @@
 layout: post
 title: Terraform 運用ベストプラクティス 2019 ~workspace をやめてみた等諸々~
 date: 2019-04-17
+lang: ja
+translation_id: terraform-2019-workspace
 category: Terraform
 tags:
   - Terraform

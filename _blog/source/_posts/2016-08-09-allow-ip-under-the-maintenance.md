@@ -2,6 +2,8 @@
 layout: post
 title: メンテ時に社内Wifi IPのみサイトアクセス許可する
 date: 2016-08-09
+lang: ja
+translation_id: allow-ip-under-the-maintenance
 tags:
   - .htaccess
   - Apache

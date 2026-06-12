@@ -3,6 +3,8 @@ title: SendGrid メール送信できるまで & なりすまし対策
 tags:
   - SendGrid
 date: 2020-10-08
+lang: ja
+translation_id: sendgrid-settings
 cover: https://i.imgur.com/4NdER1F.png
 ---
 

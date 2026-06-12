@@ -2,6 +2,8 @@
 layout: post
 title: 5分でできる♪ AWS Lambda で EC2 Event を Slack 通知
 date: 2017-07-18
+lang: ja
+translation_id: notify-to-slack-about-ec2-events-by-lambda
 cover: https://i.imgur.com/6RCTdfi.png
 category: AWS
 ---

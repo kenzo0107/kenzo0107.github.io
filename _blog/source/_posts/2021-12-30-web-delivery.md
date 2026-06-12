@@ -1,6 +1,8 @@
 ---
 title: no-cache, no-store の違い
 date: 2021-12-30
+lang: ja
+translation_id: web-delivery
 cover: https://i.imgur.com/c3MFmbk.png
 ---
 

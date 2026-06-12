@@ -2,6 +2,8 @@
 layout: post
 title: du でデバイスの使用率が残り少ない、何か消さなきゃいけないというときに
 date: 2016-08-15
+lang: ja
+translation_id: reduce-disk-usage
 cover: /img/cover/2016-08-15-reduce-disk-usage.svg
 ---
 

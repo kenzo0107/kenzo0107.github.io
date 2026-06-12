@@ -1,6 +1,8 @@
 ---
 title: RDS Performance Insights が 2026年6月に EOL、 Database Insights への移行を考える
 date: 2025-12-05
+lang: ja
+translation_id: migrate-from-performance-insights-to-database-insights
 category: AWS
 cover: https://i.imgur.com/wzeyuhw.png
 ---

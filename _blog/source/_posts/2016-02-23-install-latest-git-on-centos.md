@@ -2,6 +2,8 @@
 layout: post
 title: Install latest Git on CentOS.
 date: 2016-02-23
+lang: ja
+translation_id: install-latest-git-on-centos
 tags:
   - git
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160223/20160223122153.png

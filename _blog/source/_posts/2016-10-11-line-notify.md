@@ -2,6 +2,8 @@
 layout: post
 title: LINE Notify で Zabbix Alert 通知
 date: 2016-10-11
+lang: ja
+translation_id: line-notify
 tags:
   - Monitoring
   - LINE Notify

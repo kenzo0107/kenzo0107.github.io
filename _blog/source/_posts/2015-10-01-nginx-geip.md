@@ -2,6 +2,8 @@
 layout: post
 title: NginxでGeoIP設定しアクセスログにアクセスポイントを追加する
 date: 2015-10-01
+lang: ja
+translation_id: nginx-geip
 cover: /img/cover/2015-10-01-nginx-geip.svg
 tags:
 - Nginx

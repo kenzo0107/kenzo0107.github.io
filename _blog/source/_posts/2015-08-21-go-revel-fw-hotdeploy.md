@@ -2,6 +2,8 @@
 layout: post
 title: Golang Revelフレームワーク ホットデプロイ方法
 date: 2015-08-12
+lang: ja
+translation_id: go-revel-fw-hotdeploy
 cover: /img/cover/2015-08-21-go-revel-fw-hotdeploy.svg
 category: Go
 tags:

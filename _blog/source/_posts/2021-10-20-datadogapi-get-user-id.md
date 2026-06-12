@@ -3,6 +3,8 @@ title: curl で Datadog ユーザ ID リスト取得
 tags:
   - Datadog
 date: 2021-10-20
+lang: ja
+translation_id: datadogapi-get-user-id
 cover: https://imgix.datadoghq.com/img/about/presskit/usage/logousage_white.png?auto=format&fit=max&w=847
 ---
 

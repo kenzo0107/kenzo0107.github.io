@@ -2,6 +2,8 @@
 layout: post
 title: 顔検出 3分クッキング on MacOSX
 date: 2018-08-01
+lang: ja
+translation_id: face-detector
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160801/20160801143015.png
 tags:
 - MachineLearning

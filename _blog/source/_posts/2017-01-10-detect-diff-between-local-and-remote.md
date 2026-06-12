@@ -2,6 +2,8 @@
 layout: post
 title: リモートサーバとローカルサーバとの差分のあるファイル情報を取得するツール作ってみた
 date: 2017-01-10
+lang: ja
+translation_id: detect-diff-between-local-and-remote
 category: Go
 tags:
   - Go

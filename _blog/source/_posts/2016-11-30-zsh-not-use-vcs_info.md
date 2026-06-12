@@ -2,6 +2,8 @@
 layout: post
 title: zsh vcs_info が使えない問題解決
 date: 2016-11-30
+lang: ja
+translation_id: zsh-not-use-vcs_info
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161130/20161130152308.png
 tags:
   - zsh

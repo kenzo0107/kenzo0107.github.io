@@ -2,6 +2,8 @@
 layout: post
 title: MacOSX ipv6 OFF
 date: 2015-03-11
+lang: ja
+translation_id: off-ipv6-macosx
 cover: /img/cover/2015-03-11-off-ipv6-macosx.svg
 ---
 

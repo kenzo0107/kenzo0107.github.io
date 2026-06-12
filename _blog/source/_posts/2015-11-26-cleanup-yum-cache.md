@@ -2,6 +2,8 @@
 layout: post
 title: 意外と容量食ってた yum cache
 date: 2015-11-26
+lang: ja
+translation_id: cleanup-yum-cache
 cover: /img/cover/2015-11-26-cleanup-yum-cache.svg
 tags:
 - yum

@@ -2,6 +2,8 @@
 layout: post
 title: ElastiCache メンテナンス対応 ~2018年梅雨~
 date: 2018-06-24
+lang: ja
+translation_id: maintenance_aws_elasticache
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180624/20180624213819.png
 tags:
 - AWS

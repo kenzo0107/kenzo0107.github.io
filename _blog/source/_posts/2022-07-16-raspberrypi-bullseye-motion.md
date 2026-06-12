@@ -1,6 +1,8 @@
 ---
 title: Raspberry PI bullseye で motion を起動しブラウザで表示する
 date: 2022-07-16
+lang: ja
+translation_id: raspberrypi-bullseye-motion
 cover: /img/cover/2022-07-16-raspberrypi-bullseye-motion.svg
 category: RaspberryPI
 ---

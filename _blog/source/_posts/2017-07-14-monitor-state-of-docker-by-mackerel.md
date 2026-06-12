@@ -2,6 +2,8 @@
 layout: post
 title: Mackerel で Docker の起動状態確認
 date: 2017-07-14
+lang: ja
+translation_id: monitor-state-of-docker-by-mackerel
 tags:
   - Docker
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170714/20170714223239.png

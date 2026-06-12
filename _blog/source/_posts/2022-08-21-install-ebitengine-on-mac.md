@@ -1,6 +1,8 @@
 ---
 title: ebitengine インストール時に Xcode ライセンスに同意しておきましょう
 date: 2022-08-21
+lang: ja
+translation_id: install-ebitengine-on-mac
 cover: https://i.imgur.com/4It5iQF.png
 ---
 

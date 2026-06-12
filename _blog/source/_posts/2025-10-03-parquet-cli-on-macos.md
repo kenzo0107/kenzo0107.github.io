@@ -1,6 +1,8 @@
 ---
 title: parquet 解析ツール on macOS
 date: 2025-10-03
+lang: ja
+translation_id: parquet-cli-on-macos
 cover: /img/cover/2025-10-03-parquet-cli-on-macos.svg
 ---
 

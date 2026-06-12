@@ -1,6 +1,8 @@
 ---
 title: AWS CloudWatch Application Signals の料金体系
 date: 2025-12-19
+lang: ja
+translation_id: application-signals-price
 category: AWS
 cover: https://i.imgur.com/Ozk9mO9.png
 ---

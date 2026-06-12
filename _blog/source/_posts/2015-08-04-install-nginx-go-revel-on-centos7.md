@@ -2,6 +2,8 @@
 layout: post
 title: CentOS7 に Nginx + Go + Revel インストール・動作確認
 date: 2015-08-04
+lang: ja
+translation_id: install-nginx-go-revel-on-centos7
 cover: https://i.imgur.com/GSsmnDt.png
 ---
 

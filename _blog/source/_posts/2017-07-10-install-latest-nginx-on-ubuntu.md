@@ -2,6 +2,8 @@
 layout: post
 title: Install latest Nginx on Ubuntu
 date: 2017-07-10
+lang: ja
+translation_id: install-latest-nginx-on-ubuntu
 tags:
   - Nginx
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170710/20170710213742.png

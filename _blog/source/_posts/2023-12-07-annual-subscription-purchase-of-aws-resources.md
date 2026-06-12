@@ -1,6 +1,8 @@
 ---
 title: AWS リソースの年間予約購入
 date: 2023-12-07
+lang: ja
+translation_id: annual-subscription-purchase-of-aws-resources
 cover: https://i.imgur.com/Kq3llTo.png
 category: AWS
 ---

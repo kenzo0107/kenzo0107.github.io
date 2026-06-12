@@ -2,6 +2,8 @@
 layout: post
 title: Zabbix + Reactio 連携
 date: 2016-07-14
+lang: ja
+translation_id: zabbix-reactio
 tags:
   - Monitoring
   - Zabbix

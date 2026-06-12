@@ -2,6 +2,8 @@
 layout: post
 title: jenkins が停止していますが PID ファイルが残っています
 date: 2016-08-15
+lang: ja
+translation_id: jenkins-stopped-due-to-pid-file
 cover: https://i.imgur.com/fHQQwXo.png
 ---
 

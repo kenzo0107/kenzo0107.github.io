@@ -2,6 +2,8 @@
 layout: post
 title: Ruby & gem インストール
 date: 2015-10-22
+lang: ja
+translation_id: install-ruby-gem
 cover: /img/cover/2015-10-22-install-ruby-gem.svg
 tags:
 - Ruby

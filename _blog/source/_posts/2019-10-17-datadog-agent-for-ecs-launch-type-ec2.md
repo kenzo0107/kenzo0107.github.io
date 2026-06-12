@@ -2,6 +2,8 @@
 layout: post
 title: Datadog Agent for ECS Launch Type=EC2
 date: 2019-10-17
+lang: ja
+translation_id: datadog-agent-for-ecs-launch-type-ec2
 tags:
   - Datadog
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20191017/20191017124709.png

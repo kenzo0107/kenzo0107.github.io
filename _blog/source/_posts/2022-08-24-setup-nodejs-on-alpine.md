@@ -1,6 +1,8 @@
 ---
 title: マルチステージビルドで alpine イメージに nodejs をセットアップする
 date: 2022-08-24
+lang: ja
+translation_id: setup-nodejs-on-alpine
 cover: /img/cover/2022-08-24-setup-nodejs-on-alpine.svg
 ---
 

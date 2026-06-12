@@ -1,6 +1,8 @@
 ---
 title: Raspberry PI zero で CO2 濃度測定 & アラートを LINE 通知
 date: 2022-01-06
+lang: ja
+translation_id: raspberrypi-co2-monitoring
 category: RaspberryPI
 cover: https://i.imgur.com/C3bQR5g.jpeg
 ---

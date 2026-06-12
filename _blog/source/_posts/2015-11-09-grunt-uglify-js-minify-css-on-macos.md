@@ -2,6 +2,8 @@
 layout: post
 title: By grunt, uglify js & minify css on MacOSX.
 date: 2015-11-09
+lang: ja
+translation_id: grunt-uglify-js-minify-css-on-macos
 tags:
   - JavaScript
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20151109/20151109114223.jpg

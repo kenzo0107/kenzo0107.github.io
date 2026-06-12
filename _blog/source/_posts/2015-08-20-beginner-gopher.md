@@ -2,6 +2,8 @@
 layout: post
 title: Go初心者におすすめ本
 date: 2015-08-20
+lang: ja
+translation_id: beginner-gopher
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150820/20150820002200.png
 category: Go
 tags:

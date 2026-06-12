@@ -1,6 +1,8 @@
 ---
 title: ECR 用 VPC Interface Endpoint の損益分岐点分析
 date: 2026-04-20
+lang: ja
+translation_id: ecr-vpc-endpoint-break-even-analysis
 category: AWS
 cover: https://i.imgur.com/MTaxrM0.png
 ---

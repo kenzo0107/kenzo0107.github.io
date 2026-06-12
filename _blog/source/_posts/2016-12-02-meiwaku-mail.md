@@ -2,6 +2,8 @@
 layout: post
 title: 「会員登録完了メールが迷惑メールに入っちゃいます」対策
 date: 2016-12-02
+lang: ja
+translation_id: meiwaku-mail
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20161202/20161202122453.png
 tags:
   - spam

@@ -1,6 +1,8 @@
 ---
 title: AWS Bot 対策
 date: 2022-11-29
+lang: ja
+translation_id: aws-block-bot
 cover: https://i.imgur.com/I66XH5J.png
 category: AWS
 ---

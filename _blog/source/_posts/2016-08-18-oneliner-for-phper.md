@@ -2,6 +2,8 @@
 layout: post
 title: PHP エンジニアであれば必ずやるべき 1 ライナー
 date: 2016-08-18
+lang: ja
+translation_id: oneliner-for-phper
 tags:
   - PHP
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160818/20160818224146.jpg

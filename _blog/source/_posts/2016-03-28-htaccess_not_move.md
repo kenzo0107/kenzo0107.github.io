@@ -2,6 +2,8 @@
 layout: post
 title: .htaccessが効かない、動かないときの対処
 date: 2016-03-28
+lang: ja
+translation_id: htaccess_not_move
 tags:
   - .htaccess
   - Apache

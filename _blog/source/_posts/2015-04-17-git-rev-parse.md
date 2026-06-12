@@ -2,6 +2,8 @@
 layout: post
 title: git rev-parse でできること
 date: 2015-04-17
+lang: ja
+translation_id: git-rev-parse
 cover: /img/cover/2015-04-17-git-rev-parse.svg
 ---
 

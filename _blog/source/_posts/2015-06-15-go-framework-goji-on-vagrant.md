@@ -2,6 +2,8 @@
 layout: post
 title: Vagrant + Ansible で go実行環境構築し、フレームワーク(goji)で簡易的なCRUD処理実行
 date: 2015-06-15
+lang: ja
+translation_id: go-framework-goji-on-vagrant
 cover: /img/cover/2015-06-15-go-framework-goji-on-vagrant.svg
 ---
 

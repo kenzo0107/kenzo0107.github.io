@@ -2,6 +2,8 @@
 layout: post
 title: CasperJS+PhantomJS で Github Organization 移行
 date: 2017-10-25
+lang: ja
+translation_id: casperjs-phantomjs-github-organization
 tags:
   - casperjs
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20171025/20171025214738.png

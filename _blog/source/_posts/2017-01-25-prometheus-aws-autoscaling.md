@@ -2,6 +2,8 @@
 layout: post
 title: Node Exporter 構築手順 + Prometheus からAWSオートスケール監視
 date: 2017-01-25
+lang: ja
+translation_id: prometheus-aws-autoscaling
 tags:
   - Monitoring
   - Prometheus

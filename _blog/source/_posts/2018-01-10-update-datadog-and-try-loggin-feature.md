@@ -2,6 +2,8 @@
 layout: post
 title: Datadog Agent 6系にアップデートして Logging 機能を試す！
 date: 2018-01-10
+lang: ja
+translation_id: update-datadog-and-try-loggin-feature
 tags:
   - Datadog
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180110/20180110145104.png

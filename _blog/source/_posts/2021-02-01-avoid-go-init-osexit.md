@@ -4,6 +4,8 @@ category: Go
 tags:
   - Go
 date: 2021-02-01
+lang: ja
+translation_id: avoid-go-init-osexit
 cover: https://i.imgur.com/YWgqCWD.png
 ---
 

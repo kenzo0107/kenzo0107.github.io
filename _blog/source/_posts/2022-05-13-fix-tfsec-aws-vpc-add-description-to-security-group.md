@@ -1,6 +1,8 @@
 ---
 title: tfsec aws-vpc-add-description-to-security-group 対応
 date: 2022-05-13
+lang: ja
+translation_id: fix-tfsec-aws-vpc-add-description-to-security-group
 category:
   - Terraform
 cover: https://i.imgur.com/vaHrTti.png

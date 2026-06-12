@@ -2,6 +2,8 @@
 layout: post
 title: puppeteer で radio ボタンチェック
 date: 2019-09-06
+lang: ja
+translation_id: puppeteer-radio
 tags:
   - Puppeteer
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190906/20190906230848.png

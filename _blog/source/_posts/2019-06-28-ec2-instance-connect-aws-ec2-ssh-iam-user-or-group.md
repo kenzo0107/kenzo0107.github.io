@@ -2,6 +2,8 @@
 layout: post
 title: EC2 Instance Connect で AWS EC2 への ssh 管理を IAM User or Group で簡単に♪
 date: 2019-06-28
+lang: ja
+translation_id: ec2-instance-connect-aws-ec2-ssh-iam-user-or-group
 tags:
   - AWS
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190628/20190628154100.png

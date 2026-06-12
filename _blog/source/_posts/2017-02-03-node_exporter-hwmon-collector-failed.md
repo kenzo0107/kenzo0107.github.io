@@ -2,6 +2,8 @@
 layout: post
 title: node_expoter error occured ! hwmon collector failed
 date: 2017-02-03
+lang: ja
+translation_id: node_exporter-hwmon-collector-failed
 tags:
   - Monitoring
   - Prometheus

@@ -1,6 +1,8 @@
 ---
 title: Lake Formation で生成される Python スクリプトが動作しないので修正した
 date: 2022-08-05
+lang: ja
+translation_id: lake-formation-incremental-database-issue
 cover: /img/cover/2022-08-05-lake-formation-incremental-database-issue.svg
 category: AWS
 ---

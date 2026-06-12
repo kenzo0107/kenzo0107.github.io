@@ -4,6 +4,8 @@ category: Terraform
 tags:
   - AWS
 date: 2020-12-14
+lang: ja
+translation_id: terraform-elasticache-redis-6.x
 cover: https://i.imgur.com/aCEdhs4.png
 ---
 

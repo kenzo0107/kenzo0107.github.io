@@ -1,6 +1,8 @@
 ---
 title: CodeBuild Docker キャッシュの損益分岐点：S3 vs ローカル
 date: 2026-04-20
+lang: ja
+translation_id: codebuild-docker-cache-break-even-analysis
 category: AWS
 tags:
   - AWS

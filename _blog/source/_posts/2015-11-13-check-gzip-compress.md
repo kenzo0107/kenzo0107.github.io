@@ -2,6 +2,8 @@
 layout: post
 title: コンテンツがgzip圧縮されているかチェック
 date: 2015-11-13
+lang: ja
+translation_id: check-gzip-compress
 tags:
   - Nginx
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160810/20160810163018.png

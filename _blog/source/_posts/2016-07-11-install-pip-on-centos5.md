@@ -2,6 +2,8 @@
 layout: post
 title: CentOS5 系 に pip インストール
 date: 2016-07-11
+lang: ja
+translation_id: install-pip-on-centos5
 tags:
   - Python
   - pip

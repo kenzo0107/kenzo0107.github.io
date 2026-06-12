@@ -2,6 +2,8 @@
 layout: post
 title: Mac - caps lock を Control に
 date: 2015-04-27
+lang: ja
+translation_id: capslock-to-control-on-macosx
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150427/20150427104216.png
 ---
 

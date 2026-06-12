@@ -2,6 +2,8 @@
 layout: post
 title: CentOS7 に Nginx インストール
 date: 2015-08-20
+lang: ja
+translation_id: install-nginx-on-centos7
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150820/20150820232103.png
 tags:
 - Nginx

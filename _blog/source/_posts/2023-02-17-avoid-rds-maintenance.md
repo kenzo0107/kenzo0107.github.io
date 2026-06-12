@@ -1,6 +1,8 @@
 ---
 title: RDS DB メンテ回避方法
 date: 2023-02-17
+lang: ja
+translation_id: avoid-rds-maintenance
 category: AWS
 cover: https://i.imgur.com/7h0nRNw.png
 ---

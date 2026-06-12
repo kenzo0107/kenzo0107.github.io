@@ -2,6 +2,8 @@
 layout: post
 title: 無料枠で運用！ GKE + Kubernetes で Hubot 〜独自ネットワーク作成、設定ファイルから起動編〜
 date: 2017-05-16
+lang: ja
+translation_id: gke-kubernetes-hubot
 tags:
   - GKE
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170604/20170604224801.png

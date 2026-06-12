@@ -2,6 +2,8 @@
 layout: post
 title: Install PHP7, PECL, PEAR on MacOS
 date: 2017-06-13
+lang: ja
+translation_id: install-php7-pecl-pear-on-macos
 tags:
   - PHP
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20170604/20170604224801.png

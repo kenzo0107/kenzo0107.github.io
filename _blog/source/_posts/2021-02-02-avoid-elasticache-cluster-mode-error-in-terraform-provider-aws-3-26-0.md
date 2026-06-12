@@ -4,6 +4,8 @@ category: Terraform
 tags:
   - AWS
 date: 2021-02-02
+lang: ja
+translation_id: avoid-elasticache-cluster-mode-error-in-terraform-provider-aws-3-26-0
 cover: https://i.imgur.com/xeRZLru.png
 ---
 

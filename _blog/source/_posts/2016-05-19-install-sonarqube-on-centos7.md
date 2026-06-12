@@ -2,6 +2,8 @@
 layout: post
 title: CentOS7にSonarQubeをインストールしアクセス確認まで
 date: 2016-05-19
+lang: ja
+translation_id: install-sonarqube-on-centos7
 tags:
   - SonarQube
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160520/20160520164314.png

@@ -2,6 +2,8 @@
 layout: post
 title: AWS ApplicationLoadBalancerリスナールールで特定 IP 以外をメンテナンスページ表示
 date: 2019-09-30
+lang: ja
+translation_id: aws-applicationloadbalancer-ip
 tags:
   - AWS
   - ALB

@@ -1,6 +1,8 @@
 ---
 title: AWS コンソール上で CodeDeploy でデプロイ管理されている ECS Service をアップデートすると capacity provider が FARGATE になってしまう件
 date: 2022-05-27
+lang: ja
+translation_id: update-ecs-service-on-aws-console
 cover: https://i.imgur.com/rqRuh2G.png
 category: AWS
 ---

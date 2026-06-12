@@ -2,6 +2,8 @@
 layout: post
 title: CentOS7にredisインストール
 date: 2015-04-08
+lang: ja
+translation_id: install-redis-centos7
 cover: /img/cover/2015-04-08-install-redis-centos7.svg
 ---
 

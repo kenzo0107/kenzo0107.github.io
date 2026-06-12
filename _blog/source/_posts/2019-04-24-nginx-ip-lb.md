@@ -2,6 +2,8 @@
 layout: post
 title: Nginx IP 直アクセス不許可 & LB ヘルスチェック設定
 date: 2019-04-24
+lang: ja
+translation_id: nginx-ip-lb
 tags:
   - Nginx
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20190424/20190424103347.png

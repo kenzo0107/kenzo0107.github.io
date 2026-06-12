@@ -2,6 +2,8 @@
 layout: post
 title: パスワードなし！公開鍵認証でSSHログイン
 date: 2016-04-05
+lang: ja
+translation_id: ssh-login-without-password
 tags:
   - ssh
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160405/20160405163215.jpg

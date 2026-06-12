@@ -2,6 +2,8 @@
 layout: post
 title: Docker 不要リソースお掃除 compose
 date: 2018-07-11
+lang: ja
+translation_id: cleanup_docker_no_required_resource
 tags:
   - Docker
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20180711/20180711135636.png

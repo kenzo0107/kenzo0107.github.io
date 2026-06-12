@@ -2,6 +2,8 @@
 layout: post
 title: SSL証明書有効期限をチェックして結果をSlackに通知
 date: 2016-08-26
+lang: ja
+translation_id: valid-ssl-to-slack
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160826/20160826150248.png
 tags:
   - SSL

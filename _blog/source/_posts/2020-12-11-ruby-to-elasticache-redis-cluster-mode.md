@@ -4,6 +4,8 @@ tags:
 - AWS
 - Ruby
 date: 2020-12-11
+lang: ja
+translation_id: ruby-to-elasticache-redis-cluster-mode
 cover: https://i.imgur.com/mESrwk7.png
 ---
 

@@ -2,6 +2,8 @@
 layout: post
 title: Rails × Redis でスレッドセーフなアクセス数ランキング実装
 date: 2018-06-06
+lang: ja
+translation_id: rails-redis-threadsafe
 tags:
   - Ruby
   - Rails
