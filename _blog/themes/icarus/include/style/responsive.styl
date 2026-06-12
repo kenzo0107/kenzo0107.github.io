@@ -1,10 +1,23 @@
 /* ---------------------------------
  *         Responsive Layout
  * --------------------------------- */
+
+// widescreen 以上では 2 列コンテナを拡張して記事と目次に十分な幅を確保する
 +widescreen()
-    .is-1-column .container, .is-2-column .container
+    .is-1-column .container
         max-width: $desktop - 2 * $gap
         width: $desktop - 2 * $gap
+    .is-2-column .container
+        max-width: $widescreen - 2 * $gap
+        width: $widescreen - 2 * $gap
+
+// desktop-only (1024-1215px): 目次列を非表示にして記事幅を確保する
++desktop-only()
+    .is-2-column .column-left
+        display: none
+    .is-2-column .column-main
+        flex: none
+        width: 100%
 
 +fullhd()
     .is-2-column .container
