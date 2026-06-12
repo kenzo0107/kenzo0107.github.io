@@ -63,43 +63,34 @@ $navbar-item-margin-h ?= 0
                 right: 0
                 z-index: 30
 
-// Categories ドロップダウン
+// Categories: モバイルのみドロップダウン表示
 .navbar-categories
-    // PC: ホバー不要でデフォルト表示 (!important で Bulma の display:none を上書き)
-    +from($navbar-breakpoint)
-        .navbar-dropdown
-            display: block !important
-
-    // スマホ: 「カテゴリ」ラベルを非表示にしてカテゴリ一覧を直接表示
     +until($navbar-breakpoint)
-        .navbar-link
-            display: none
         .navbar-dropdown
             display: block
             position: static
             box-shadow: none
             padding: 0
             border-top: none
-            // .navbar-start .navbar-item:not(.navbar-categories) で非表示になる子 .navbar-item を再表示
             .navbar-item
                 display: flex !important
 
-    .navbar-dropdown
-        .navbar-item
-            display: flex
-            justify-content: space-between
-            align-items: center
+        .navbar-dropdown
+            .navbar-item
+                display: flex
+                justify-content: space-between
+                align-items: center
 
-        .navbar-category-count
-            margin-left: 1.5em
-            min-width: 1.6em
-            padding: .05em .5em
-            border-radius: 10px
-            background: $primary
-            color: #fff
-            font-size: .72rem
-            font-weight: 600
-            text-align: center
+            .navbar-category-count
+                margin-left: 1.5em
+                min-width: 1.6em
+                padding: .05em .5em
+                border-radius: 10px
+                background: $primary
+                color: #fff
+                font-size: .72rem
+                font-weight: 600
+                text-align: center
 
 // 言語ピルトグル
 .lang-toggle
