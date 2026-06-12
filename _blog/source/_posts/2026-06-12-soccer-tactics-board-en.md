@@ -45,16 +45,12 @@ Unlike a still magnet board, **all players and the ball move simultaneously**, a
 
 ## How to use it
 
-### Launch
+### 0. Try out how it moves with presets
 
-No build required. Just clone the repo and start a local HTTP server (it uses ES Modules, so open it over HTTP rather than via a `file://` direct open).
+![](https://i.imgur.com/y7AeW4i.png)
 
-```bash
-git clone https://github.com/kenzo0107/soccer-tactics-board.git
-cd soccer-tactics-board
-python3 -m http.server 8000
-# Open http://localhost:8000/ in your browser
-```
+Click the hamburger button in the top-right corner to access the pre-configured animation patterns like 2vs1, then select one. The player and ball will be positioned, and clicking the play button will activate the animation.
+
 
 ### 1. Place players and the ball
 
