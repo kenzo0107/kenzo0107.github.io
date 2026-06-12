@@ -2,6 +2,7 @@ const { Component } = require('inferno');
 const classname = require('hexo-component-inferno/lib/util/classname');
 const Head = require('./common/head');
 const Navbar = require('./common/navbar');
+const CategoryBar = require('./common/category_bar');
 const Widgets = require('./common/widgets');
 const Footer = require('./common/footer');
 const Scripts = require('./common/scripts');
@@ -23,6 +24,7 @@ module.exports = class extends Component {
             <Head site={site} config={config} helper={helper} page={page} />
             <body class={`is-${columnCount}-column page-${page.layout || 'unknown'}`}>
                 <Navbar site={site} config={config} helper={helper} page={page} />
+                <CategoryBar site={site} config={config} helper={helper} page={page} />
                 {/* SP専用目次バー（スクロール時にナビバー直下に固定） */}
                 {showSpTocBar ? <div class="sp-toc-bar is-hidden-tablet">
                     <div class="container">

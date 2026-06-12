@@ -60,10 +60,12 @@ $navbar-item-margin-h ?= 0
     margin-left: auto  // SP で右寄せ
 
 // ---------------------------------
-// カテゴリーハンバーガーボタン（PC・SP共通、ロゴ左）
+// カテゴリーハンバーガーボタン（SP のみ、ロゴ左）
 // ---------------------------------
 .navbar-cat-burger
     display: flex
+    +from($navbar-breakpoint)
+        display: none !important
     flex-direction: column
     align-items: center
     justify-content: center
@@ -209,6 +211,40 @@ html[data-theme='dark']
 @media screen and (min-width: $desktop)
     .navbar > .container .navbar-menu, .container > .navbar .navbar-menu
         margin-right: 0rem
+
+// ---------------------------------
+// PC版カテゴリーバー（ナビバー直下・デスクトップのみ表示）
+// ---------------------------------
+.category-bar
+    border-bottom: 1px solid $border
+    background-color: $scheme-main
+    +from($navbar-breakpoint)
+        position: sticky
+        top: var(--navbar-h, $navbar-height)
+        z-index: 29
+
+.category-bar-inner
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    padding: 0 .5rem
+
+.category-bar-item
+    padding: .45rem .75rem
+    font-size: .875rem
+    color: $text
+    text-decoration: none
+    white-space: nowrap
+    transition: color .18s
+
+    &:hover
+        color: $primary
+
+// 記事詳細ページ: カテゴリーバーのスティッキーを解除
+body.page-post
+    +from($navbar-breakpoint)
+        .category-bar
+            position: static
 
 // ---------------------------------
 // SP専用目次バー（スクロール時にナビバー直下に固定）
