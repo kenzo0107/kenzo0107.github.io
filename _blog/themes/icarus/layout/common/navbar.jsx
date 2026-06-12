@@ -15,8 +15,8 @@ function isSameLink(a, b) {
 
 // 言語コード → 表示ラベル
 const LANGUAGE_LABELS = {
-    ja: { icon: 'fas fa-language', text: 'JA' },
-    en: { icon: 'fas fa-language', text: 'EN' }
+    ja: { text: 'JA' },
+    en: { text: 'EN' }
 };
 
 class Navbar extends Component {
@@ -59,7 +59,7 @@ class Navbar extends Component {
                     {/* 言語ピルトグル（スマホ: ハンバーガーの外に常時表示） */}
                     <div class="navbar-item lang-toggle is-hidden-desktop">
                         <div class="lang-toggle-pill">
-                            {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}><i class={t.icon}></i>{' '}{t.text}</a>)}
+                            {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.text}</a>)}
                         </div>
                     </div>
                     {/* スマホ常時表示: ダーク/ライト切り替え + 検索 */}
@@ -109,7 +109,7 @@ class Navbar extends Component {
                         {/* 言語ピルトグル（デスクトップのみ; スマホは navbar-brand に表示） */}
                         {Array.isArray(translations) && translations.length > 1 ? <div class="navbar-item lang-toggle is-hidden-touch">
                             <div class="lang-toggle-pill">
-                                {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}><i class={t.icon}></i>{' '}{t.text}</a>)}
+                                {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.text}</a>)}
                             </div>
                         </div> : null}
                         {/* ダーク / ライト切り替えトグル（デスクトップ; スマホは navbar-brand に表示） */}
@@ -189,11 +189,10 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
                 collection.forEach(item => {
                     if (item.translation_id === page.translation_id && item.path) {
                         const lang = item.lang || item.language || 'ja';
-                        const labelDef = LANGUAGE_LABELS[lang] || { icon: 'fas fa-language', text: lang.toUpperCase() };
+                        const labelDef = LANGUAGE_LABELS[lang] || { text: lang.toUpperCase() };
                         translations.push({
                             lang,
                             url: url_for(item.path),
-                            icon: labelDef.icon,
                             text: labelDef.text,
                             active: url_for(item.path) === pageUrl
                         });
@@ -208,15 +207,15 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         translations.sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang));
     } else if (page.listLang) {
         // 記事一覧ページ（/ と /en/）のピルトグル
-        translations.push({ lang: 'ja', url: url_for('/'), icon: LANGUAGE_LABELS.ja.icon, text: LANGUAGE_LABELS.ja.text, active: page.listLang === 'ja' });
-        translations.push({ lang: 'en', url: url_for('/en/'), icon: LANGUAGE_LABELS.en.icon, text: LANGUAGE_LABELS.en.text, active: page.listLang === 'en' });
+        translations.push({ lang: 'ja', url: url_for('/'), text: LANGUAGE_LABELS.ja.text, active: page.listLang === 'ja' });
+        translations.push({ lang: 'en', url: url_for('/en/'), text: LANGUAGE_LABELS.en.text, active: page.listLang === 'en' });
     }
 
     // 翻訳が存在しないページでも常にトグルを表示（/ と /en/ へのリンク）
     if (translations.length === 0) {
         const pageLang = page.lang || 'ja';
-        translations.push({ lang: 'ja', url: url_for('/'), icon: LANGUAGE_LABELS.ja.icon, text: LANGUAGE_LABELS.ja.text, active: pageLang !== 'en' });
-        translations.push({ lang: 'en', url: url_for('/en/'), icon: LANGUAGE_LABELS.en.icon, text: LANGUAGE_LABELS.en.text, active: pageLang === 'en' });
+        translations.push({ lang: 'ja', url: url_for('/'), text: LANGUAGE_LABELS.ja.text, active: pageLang !== 'en' });
+        translations.push({ lang: 'en', url: url_for('/en/'), text: LANGUAGE_LABELS.en.text, active: pageLang === 'en' });
     }
 
     return {
