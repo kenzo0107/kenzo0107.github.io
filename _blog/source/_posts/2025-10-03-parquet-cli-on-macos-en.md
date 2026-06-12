@@ -5,6 +5,7 @@ lang: en
 translation_id: parquet-cli-on-macos
 permalink: en/2025/10/03/parquet-cli-on-macos/
 cover: /img/cover/2025-10-03-parquet-cli-on-macos.svg
+category: Data Analytics
 ---
 
 For Iceberg table compression you can choose formats such as snappy or gzip,

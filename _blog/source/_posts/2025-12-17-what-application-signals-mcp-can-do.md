@@ -3,7 +3,9 @@ title: Application Signals MCP に問い合わせしてできること
 date: 2025-12-17
 lang: ja
 translation_id: what-application-signals-mcp-can-do
-category: AWS
+category: 
+- AWS
+- AI
 cover: https://i.imgur.com/XccV9Ug.png
 ---
 

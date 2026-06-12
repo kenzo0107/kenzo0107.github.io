@@ -4,6 +4,7 @@ date: 2025-10-28
 lang: ja
 translation_id: aws-glue-iceberg-v3-optimization
 cover: https://i.imgur.com/QaRm1D7.png
+category: Data Analytics
 ---
 
 AWS Glue Iceberg テーブルは 2025.10.28 時点で format-version=2 までサポートしていますが、format-version=3 はサポートしていません。

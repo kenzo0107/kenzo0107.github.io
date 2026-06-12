@@ -1,6 +1,6 @@
 ---
 title: I built a soccer tactics board that runs in the browser — to explain tactics to my kid
-category: Claude Code
+category: AI
 date: 2026-06-12
 lang: en
 translation_id: soccer-tactics-board

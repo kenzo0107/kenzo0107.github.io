@@ -1,6 +1,8 @@
 ---
 title: Pitfalls when talking about AWS cost "month-over-month"
-category: AWS
+category: 
+- AWS
+- AI
 date: 2026-06-11
 lang: en
 translation_id: aws-cost-comparison-pitfalls

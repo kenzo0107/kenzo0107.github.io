@@ -5,6 +5,9 @@ lang: en
 translation_id: claude-code-aws-mcp
 permalink: en/2025/11/17/claude-code-aws-mcp/
 cover: https://i.imgur.com/we5WNEm.png
+category: 
+- AWS
+- AI
 ---
 
 This is a story about how Claude Code + MCP made it possible to give investigation instructions in natural language.

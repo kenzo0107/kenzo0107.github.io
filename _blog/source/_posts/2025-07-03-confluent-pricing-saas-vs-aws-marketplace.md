@@ -1,6 +1,8 @@
 ---
 title: Confluent Cloud の料金比較：SaaS版 vs AWS Marketplace版
-category: AWS
+category: 
+- AWS
+- Data Analytics
 date: 2025-07-03
 lang: ja
 translation_id: confluent-pricing-saas-vs-aws-marketplace

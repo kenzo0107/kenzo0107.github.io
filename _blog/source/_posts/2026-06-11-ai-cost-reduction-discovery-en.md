@@ -1,6 +1,8 @@
 ---
 title: Cutting Costs with Claude Code — AI's Real Battlefield Was "Problem Discovery," Not "Implementation"
-category: AWS
+category: 
+- AWS
+- AI
 date: 2026-06-11
 lang: en
 translation_id: ai-cost-reduction-discovery

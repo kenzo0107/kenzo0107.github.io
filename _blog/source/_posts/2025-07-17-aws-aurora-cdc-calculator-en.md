@@ -7,6 +7,7 @@ translation_id: aws-aurora-cdc-calculator
 permalink: en/2025/07/17/aws-aurora-cdc-calculator/
 cover: /img/cover/2025-07-17-aws-aurora-cdc-calculator.svg
 tags: [AWS, Aurora, CDC, CloudWatch, MySQL, PostgreSQL]
+category: Data Analytics
 ---
 
 I built an analytics platform that streams CDC from AWS RDS into Kafka and delivers it to Iceberg tables.

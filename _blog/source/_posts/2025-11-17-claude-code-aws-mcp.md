@@ -4,6 +4,9 @@ date: 2025-11-17
 lang: ja
 translation_id: claude-code-aws-mcp
 cover: https://i.imgur.com/we5WNEm.png
+category: 
+- AWS
+- AI
 ---
 
 Claude Code + MCP で自然言語で調査指示できる様になった話です。

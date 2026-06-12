@@ -4,6 +4,7 @@ date: 2025-10-03
 lang: ja
 translation_id: parquet-cli-on-macos
 cover: /img/cover/2025-10-03-parquet-cli-on-macos.svg
+category: Data Analytics
 ---
 
 iceberg テーブルの圧縮形式は snappy や gzip 等が選択できますが、

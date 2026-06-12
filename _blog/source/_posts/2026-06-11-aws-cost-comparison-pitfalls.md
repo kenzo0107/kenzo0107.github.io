@@ -1,6 +1,8 @@
 ---
 title: AWS コストを「前月比」で語るときにハマる罠
-category: AWS
+category: 
+- AWS
+- AI
 date: 2026-06-11
 lang: ja
 translation_id: aws-cost-comparison-pitfalls
