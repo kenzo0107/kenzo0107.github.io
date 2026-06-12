@@ -72,11 +72,12 @@ $navbar-item-margin-h ?= 0
     height: $navbar-height
     color: $text
     text-decoration: none
-    transition: color .18s
+    transition: color .18s, background-color .18s
+    border-radius: 4px
 
     span
         display: block
-        width: 18px
+        width: 20px
         height: 2px
         background-color: currentColor
         margin: 3px 0
@@ -86,6 +87,7 @@ $navbar-item-margin-h ?= 0
     &:hover,
     &.is-active
         color: $primary
+        background-color: rgba($primary, .08)
 
 // ---------------------------------
 // カテゴリーパネル（絶対位置・左寄せ・固定幅でオーバーレイ）
@@ -186,8 +188,23 @@ html[data-theme='dark']
             display: inline-block
 
 .navbar-logo
+    text-decoration: none
+    align-items: center
+    gap: .5rem
+
     img
         max-height: $logo-height
+
+    &:hover
+        text-decoration: none
+
+    .navbar-site-label
+        font-size: 1rem
+        font-weight: 700
+        letter-spacing: .04em
+        color: $text
+        text-decoration: none
+        white-space: nowrap
 
 @media screen and (min-width: $desktop)
     .navbar > .container .navbar-menu, .container > .navbar .navbar-menu

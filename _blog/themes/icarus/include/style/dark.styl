@@ -60,11 +60,21 @@ html[data-theme='dark']
         .navbar-link::after
             border-color: $dark-link
 
-        .navbar-logo img
-            filter: brightness(0) invert(1)
-            border: 1.5px solid rgba(255, 255, 255, 0.3)
-            border-radius: 4px
-            padding: 2px
+        .navbar-logo
+            img
+                filter: brightness(0) invert(1)
+                border: 2px solid #ffffff
+                border-radius: 50%
+                padding: 3px
+
+            .navbar-site-label
+                color: $dark-text-strong
+
+        .navbar-cat-burger
+            &:hover,
+            &.is-active
+                color: $dark-link
+                background-color: rgba(88, 166, 255, .1)
 
     +until($navbar-breakpoint)
         .navbar-main .navbar-menu

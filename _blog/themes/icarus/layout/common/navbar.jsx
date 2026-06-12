@@ -57,6 +57,7 @@ class Navbar extends Component {
                     {/* ロゴ */}
                     <a class="navbar-item navbar-logo" href={siteUrl}>
                         {navbarLogo}
+                        <span class="navbar-site-label">TECH Blog</span>
                     </a>
                     {/* SP用右側アイコン群 */}
                     <div class="navbar-brand-right">
