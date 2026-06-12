@@ -43,6 +43,15 @@
     adjustNavbar();
     $(window).resize(adjustNavbar);
 
+    function syncNavbarHeight() {
+        const navbar = document.querySelector('.navbar-main');
+        if (navbar) {
+            document.documentElement.style.setProperty('--navbar-h', navbar.offsetHeight + 'px');
+        }
+    }
+    syncNavbarHeight();
+    $(window).resize(syncNavbarHeight);
+
     function toggleFold(codeBlock, isFolded) {
         const $toggle = $(codeBlock).find('.fold i');
         !isFolded ? $(codeBlock).removeClass('folded') : $(codeBlock).addClass('folded');

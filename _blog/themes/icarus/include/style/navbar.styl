@@ -169,7 +169,7 @@ html[data-theme='dark']
     border-bottom: 1px solid $border
     +from($navbar-breakpoint)
         position: sticky
-        top: $navbar-height
+        top: var(--navbar-h, $navbar-height)
         z-index: 29
         background-color: $scheme-main
 
