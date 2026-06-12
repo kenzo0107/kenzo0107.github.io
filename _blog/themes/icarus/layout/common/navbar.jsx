@@ -82,7 +82,7 @@ class Navbar extends Component {
                         {/* Categories: モバイルはハンバーガー内グループ、PC はナビバー直下のカテゴリーバーで表示 */}
                         {hasCategories ? <div class="navbar-item has-dropdown navbar-categories is-hidden-desktop">
                             <div class="navbar-dropdown">
-                                {categories.map(category => <a class="navbar-item" href={category.url}>
+                                {categories.slice(0, 5).map(category => <a class="navbar-item" href={category.url}>
                                     <span>{category.name}</span>
                                     <span class="navbar-category-count">{category.count}</span>
                                 </a>)}
