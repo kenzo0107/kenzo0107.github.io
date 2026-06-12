@@ -56,6 +56,25 @@ $navbar-item-margin-h ?= 0
 
 // Categories ドロップダウン
 .navbar-categories
+    // PC: ホバー不要でデフォルト表示 (!important で Bulma の display:none を上書き)
+    +from($navbar-breakpoint)
+        .navbar-dropdown
+            display: block !important
+
+    // スマホ: 「カテゴリ」ラベルを非表示にしてカテゴリ一覧を直接表示
+    +until($navbar-breakpoint)
+        .navbar-link
+            display: none
+        .navbar-dropdown
+            display: block
+            position: static
+            box-shadow: none
+            padding: 0
+            border-top: none
+            // .navbar-start .navbar-item:not(.navbar-categories) で非表示になる子 .navbar-item を再表示
+            .navbar-item
+                display: flex !important
+
     .navbar-dropdown
         .navbar-item
             display: flex
