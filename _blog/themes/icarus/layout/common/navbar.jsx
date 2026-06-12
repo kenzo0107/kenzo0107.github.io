@@ -70,6 +70,10 @@ class Navbar extends Component {
                     {showSearch ? <a class="navbar-item search is-hidden-desktop" title={searchTitle} href="javascript:;">
                         <i class="fas fa-search"></i>
                     </a> : null}
+                    {/* SP用目次ボタン（タブレット以上は非表示） */}
+                    {showToc ? <a class="navbar-item catalogue is-hidden-tablet" title={tocTitle} href="javascript:;" aria-label={tocTitle}>
+                        <i class="fas fa-list-ul"></i>
+                    </a> : null}
                     {/* スマホ用ハンバーガーボタン */}
                     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
                         <span aria-hidden="true"></span>

@@ -139,13 +139,12 @@
         function toggleToc() { // eslint-disable-line no-inner-declarations
             $toc.toggleClass('is-active');
             $mask.toggleClass('is-active');
-            $('#sp-toc-btn').toggleClass('is-toc-open');
+            $('.navbar-main .catalogue').toggleClass('is-toc-open');
         }
 
         $toc.on('click', toggleToc);
         $mask.on('click', toggleToc);
         $('.navbar-main .catalogue').on('click', toggleToc);
-        $('#sp-toc-btn').on('click', toggleToc);
     }
 
     // ハンバーガーメニュー（スマホ）の開閉
