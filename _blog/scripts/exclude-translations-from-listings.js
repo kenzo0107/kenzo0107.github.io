@@ -35,9 +35,30 @@ function withFilteredPosts(locals) {
 }
 
 hexo.extend.filter.register('before_generate', function () {
-    // --- トップ記事一覧 ---
+    // --- トップ記事一覧 (日本語) ---
     hexo.extend.generator.register('index', function (locals) {
-        return indexGenerator.call(this, withFilteredPosts(locals));
+        const pages = indexGenerator.call(this, withFilteredPosts(locals));
+        return pages.map(page => Object.assign({}, page, {
+            data: Object.assign({}, page.data, { listLang: 'ja' })
+        }));
+    });
+
+    // --- 英語記事一覧 (/en/) ---
+    hexo.extend.generator.register('en-index', function (locals) {
+        const config = this.config;
+        const perPage = config.index_generator != null && config.index_generator.per_page != null
+            ? config.index_generator.per_page
+            : config.per_page;
+        const orderBy = (config.index_generator && config.index_generator.order_by) || '-date';
+        const paginationDir = config.pagination_dir || 'page';
+        const enPosts = locals.posts.filter(post => post.lang === 'en').sort(orderBy);
+        if (!enPosts.length) return [];
+        return pagination('en', enPosts, {
+            perPage,
+            layout: ['index', 'archive'],
+            format: paginationDir + '/%d/',
+            data: { listLang: 'en' }
+        });
     });
 
     // --- Atom / RSS フィード ---

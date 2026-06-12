@@ -5,8 +5,17 @@ module.exports = class extends Component {
     render() {
         const { config, page, helper } = this.props;
         const { __, url_for, date, date_xml } = helper;
+        const listLang = page.listLang;
 
         return <Fragment>
+            {listLang ? <div class="buttons lang-switch mb-5">
+                <a href={url_for('/')} class={'button is-small' + (listLang === 'ja' ? ' is-primary' : ' is-light')}>
+                    日本語
+                </a>
+                <a href={url_for('/en/')} class={'button is-small' + (listLang === 'en' ? ' is-primary' : ' is-light')}>
+                    English
+                </a>
+            </div> : null}
             <div class="columns is-multiline article-cards">
                 {page.posts.map(post => {
                     const cover = post.cover || post.thumbnail;
