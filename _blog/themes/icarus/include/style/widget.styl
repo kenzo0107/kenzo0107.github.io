@@ -36,19 +36,25 @@
     .widget.card#toc
         display: none
         position: fixed
-        margin: 1rem
-        left: 0
-        right: 0
-        bottom: 0
+        top: calc(var(--navbar-h, 3.25rem) + 3.25rem)
+        right: 0.5rem
+        left: auto
+        bottom: auto
+        width: 78vw
+        max-width: 22rem
+        max-height: 55vh
+        margin: 0
         z-index: 100
+        overflow: hidden
 
         .card-content
             padding: 0
 
         .menu
-            padding: 1.5rem
-            max-height: calc(100vh - 2rem)
+            padding: 1rem
+            max-height: calc(55vh - 2.5rem)
             overflow-y: auto
+            font-size: 0.85rem
 
     #toc-mask
         display: none
