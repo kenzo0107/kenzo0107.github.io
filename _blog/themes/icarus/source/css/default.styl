@@ -13,7 +13,7 @@ $article-font-size = 1.05rem
 
 /* ---------------------------------
  *   Dark mode + navbar(categories/hamburger/theme toggle/lang switcher)
- *   は style.styl 経由で取り込まれる（このコメントは再生成トリガー用 r2）
+ *   は style.styl 経由で取り込まれる（このコメントは再生成トリガー用 r3）
  * --------------------------------- */
 
 /* ---------------------------------
@@ -232,3 +232,46 @@ figure.highlight
             flex-basis: auto
             max-width: 100%
             max-height: 180px
+
+// ── 言語ピルトグル（navbar 右端） ──────────────────────────────
+.lang-toggle
+    padding-left: .5rem
+    padding-right: .5rem
+
+    .lang-toggle-pill
+        display: inline-flex
+        border-radius: 1em
+        border: 1.5px solid $primary
+        overflow: hidden
+        font-size: .72rem
+        font-weight: 700
+        letter-spacing: .04em
+
+    .lang-toggle-option
+        padding: .28em .75em
+        color: $primary
+        transition: background .18s, color .18s
+        white-space: nowrap
+        line-height: 1.4
+
+        &.is-active
+            background: $primary
+            color: #fff
+
+        &:not(.is-active):hover
+            background: rgba($primary, .08)
+
+html[data-theme='dark']
+    .lang-toggle
+        .lang-toggle-pill
+            border-color: #58a6ff
+
+        .lang-toggle-option
+            color: #58a6ff
+
+            &.is-active
+                background: #58a6ff
+                color: #14181d
+
+            &:not(.is-active):hover
+                background: rgba(88, 166, 255, .12)

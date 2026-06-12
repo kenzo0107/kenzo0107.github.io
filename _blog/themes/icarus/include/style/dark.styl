@@ -64,12 +64,19 @@ html[data-theme='dark']
         .navbar-main .navbar-menu
             background-color: $dark-surface
 
-    .navbar-langs
-        .navbar-lang
-            color: $dark-text-muted
+    .lang-toggle
+        .lang-toggle-pill
+            border-color: $dark-link
+
+        .lang-toggle-option
+            color: $dark-link
 
             &.is-active
-                color: $dark-link
+                background: $dark-link
+                color: #fff
+
+            &:not(.is-active):hover
+                background: rgba($dark-link, .12)
 
     // --- Cards (記事一覧 / サイドバーウィジェット) ---
     .card

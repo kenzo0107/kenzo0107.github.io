@@ -65,18 +65,33 @@ $navbar-item-margin-h ?= 0
             font-weight: 600
             text-align: center
 
-// 言語スイッチャー
-.navbar-langs
-    .navbar-lang
-        padding: 0 .3em
-        color: $grey
+// 言語ピルトグル
+.lang-toggle
+    padding-left: .5rem
+    padding-right: .5rem
+
+    .lang-toggle-pill
+        display: inline-flex
+        border-radius: 1em
+        border: 1.5px solid $primary
+        overflow: hidden
+        font-size: .72rem
+        font-weight: 700
+        letter-spacing: .04em
+
+    .lang-toggle-option
+        padding: .28em .75em
+        color: $primary
+        transition: background .18s, color .18s
+        white-space: nowrap
+        line-height: 1.4
 
         &.is-active
-            color: $primary
-            font-weight: 600
+            background: $primary
+            color: #fff
 
-    .navbar-lang-sep
-        color: $grey-lighter
+        &:not(.is-active):hover
+            background: rgba($primary, .08)
 
 // ダーク / ライト トグル
 .theme-toggle

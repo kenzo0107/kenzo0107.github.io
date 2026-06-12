@@ -15,7 +15,7 @@ function isSameLink(a, b) {
 
 // 言語コード → 表示ラベル
 const LANGUAGE_LABELS = {
-    ja: '日本語',
+    ja: 'Original',
     en: 'English'
 };
 
@@ -89,12 +89,11 @@ class Navbar extends Component {
                                 </a>;
                             })}
                         </Fragment> : null}
-                        {/* 言語スイッチャー（翻訳が存在する記事のみ表示） */}
-                        {Array.isArray(translations) && translations.length > 1 ? <div class="navbar-item navbar-langs">
-                            {translations.map((t, i) => <Fragment>
-                                {i > 0 ? <span class="navbar-lang-sep">/</span> : null}
-                                <a class={classname({ 'navbar-lang': true, 'is-active': t.active })} href={t.url}>{t.label}</a>
-                            </Fragment>)}
+                        {/* 言語ピルトグル（翻訳が存在する記事、または言語別一覧ページ） */}
+                        {Array.isArray(translations) && translations.length > 1 ? <div class="navbar-item lang-toggle">
+                            <div class="lang-toggle-pill">
+                                {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.label}</a>)}
+                            </div>
                         </div> : null}
                         {/* ダーク / ライト切り替えトグル */}
                         <a class="navbar-item theme-toggle" title="Toggle dark mode" href="javascript:;" aria-label="Toggle dark mode">
@@ -182,6 +181,10 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         // 言語順を固定（ja → en の順）
         const order = Object.keys(LANGUAGE_LABELS);
         translations.sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang));
+    } else if (page.listLang) {
+        // 記事一覧ページ（/ と /en/）のピルトグル
+        translations.push({ lang: 'ja', url: url_for('/'), label: LANGUAGE_LABELS.ja, active: page.listLang === 'ja' });
+        translations.push({ lang: 'en', url: url_for('/en/'), label: LANGUAGE_LABELS.en, active: page.listLang === 'en' });
     }
 
     return {
