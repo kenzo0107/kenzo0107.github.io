@@ -8,6 +8,10 @@ $navbar-item-margin-h ?= 0
 
 .navbar-main
     box-shadow: $shadow
+    +from($navbar-breakpoint)
+        position: sticky
+        top: 0
+        z-index: 30
 
     .navbar-item
         display: flex
@@ -163,6 +167,11 @@ html[data-theme='dark']
 // カテゴリーバー（PC 専用、ナビバー直下の横並びリンク）
 .category-bar
     border-bottom: 1px solid $border
+    +from($navbar-breakpoint)
+        position: sticky
+        top: $navbar-height
+        z-index: 29
+        background-color: $scheme-main
 
     .category-bar-inner
         display: flex
