@@ -48,17 +48,10 @@ jobs:
         env:
           TZ: UTC
 
-      - name: Debug output directory
-        run: |
-          echo "=== ../ ===" && ls -la ../
-          echo "=== public/ ===" && ls -la public/ 2>/dev/null || echo "no public dir"
-          echo "=== Hexo public_dir ===" && grep public_dir _config.yml
-        working-directory: _blog
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
-          path: .
+          path: _blog/public
           name: github-pages
           retention-days: 1
 

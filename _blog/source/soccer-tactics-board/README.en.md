@@ -50,7 +50,7 @@ A vertical-field soccer tactics board web application. You can freely place play
 
 ### Adding Presets
 
-1. From the menu, select “Export Data” and save the current tactic as a JSON file
+1. From the menu, select "Export Data" and save the current tactic as a JSON file
 2. Place the saved JSON file into the `presets/` directory
 3. Add the file name to the `presetFiles` array in `js/presets.js`
 
