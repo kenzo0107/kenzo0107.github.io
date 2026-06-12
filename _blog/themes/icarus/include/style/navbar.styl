@@ -40,6 +40,13 @@ $navbar-item-margin-h ?= 0
 
     // --- スマホ / タブレット幅: ハンバーガーメニューで開閉 ---
     +until($navbar-breakpoint)
+        // ロゴ左固定・他アイテム右寄せ・縦位置揃え
+        .navbar-brand
+            align-items: center
+
+        .navbar-brand .navbar-logo
+            margin-right: auto
+
         .navbar-menu
             box-shadow: 0 8px 16px rgba(10, 10, 10, .1)
             background-color: #fff

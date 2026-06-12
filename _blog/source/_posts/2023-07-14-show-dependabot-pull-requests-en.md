@@ -4,7 +4,7 @@ date: 2023-07-14
 lang: en
 translation_id: show-dependabot-pull-requests
 permalink: en/2023/07/14/show-dependabot-pull-requests/
-category: GitHub
+category: Git
 cover: https://i.imgur.com/dkvqPRI.png
 ---
 
