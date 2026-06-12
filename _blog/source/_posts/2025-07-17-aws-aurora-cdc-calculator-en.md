@@ -1,6 +1,5 @@
 ---
 title: Estimating Throughput Ingested into Kafka
-category: AWS
 date: 2025-07-17
 lang: en
 translation_id: aws-aurora-cdc-calculator

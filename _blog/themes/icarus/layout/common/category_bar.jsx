@@ -26,6 +26,7 @@ module.exports = cacheComponent(CategoryBar, 'common.category_bar', props => {
 
     const categories = [];
     if (site && site.categories && site.categories.length) {
+        const seen = new Set();
         site.categories.toArray()
             .map(category => ({
                 name: category.name,
@@ -34,6 +35,11 @@ module.exports = cacheComponent(CategoryBar, 'common.category_bar', props => {
             }))
             .filter(category => category.count > 0)
             .sort((a, b) => b.count - a.count)
+            .filter(category => {
+                if (seen.has(category.name)) return false;
+                seen.add(category.name);
+                return true;
+            })
             .forEach(category => categories.push(category));
     }
 
