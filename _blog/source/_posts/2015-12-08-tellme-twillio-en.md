@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Phone Notifications with Twilio
+category: Monitoring
 date: 2015-12-08
 lang: en
 translation_id: tellme-twillio

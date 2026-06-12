@@ -1,6 +1,8 @@
 ---
 title: ブラウザで動くサッカー作戦盤を作った ── 子供に戦術を説明したくて
-category: Claude Code
+categories:
+- [Solo dev]
+- [AI]
 date: 2026-06-12
 lang: ja
 translation_id: soccer-tactics-board

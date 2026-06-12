@@ -4,6 +4,7 @@ title: Twilio で電話通知
 date: 2015-12-08
 lang: ja
 translation_id: tellme-twillio
+category: Monitoring
 tags:
   - Monitoring
   - Twilio

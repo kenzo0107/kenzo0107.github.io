@@ -1,6 +1,6 @@
 ---
 title: Datadog 子組織の削除方法
-category: Datadog
+category: Monitoring
 date: 2025-01-15
 lang: ja
 translation_id: how-to-delete-datadog-child-org

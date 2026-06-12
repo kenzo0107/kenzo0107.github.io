@@ -1,6 +1,6 @@
 ---
 title: How to Delete a Datadog Child Organization
-category: Datadog
+category: Monitoring
 date: 2025-01-15
 lang: en
 translation_id: how-to-delete-datadog-child-org
