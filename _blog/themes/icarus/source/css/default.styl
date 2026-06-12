@@ -232,49 +232,6 @@ figure.highlight
             max-width: 100%
             max-height: 180px
 
-// ── 言語ピルトグル（navbar 右端） ──────────────────────────────
-.lang-toggle
-    padding-left: .5rem
-    padding-right: .5rem
-
-    .lang-toggle-pill
-        display: inline-flex
-        border-radius: 1em
-        border: 1.5px solid $border
-        overflow: hidden
-        font-size: .72rem
-        font-weight: 700
-        letter-spacing: .04em
-
-    .lang-toggle-option
-        padding: .28em .75em
-        color: $text
-        transition: background .18s, color .18s
-        white-space: nowrap
-        line-height: 1.4
-
-        &.is-active
-            background: $text
-            color: #fff
-
-        &:not(.is-active):hover
-            background: rgba($text, .08)
-
-html[data-theme='dark']
-    .lang-toggle
-        .lang-toggle-pill
-            border-color: rgba(255, 255, 255, .35)
-
-        .lang-toggle-option
-            color: rgba(255, 255, 255, .7)
-
-            &.is-active
-                background: rgba(255, 255, 255, .7)
-                color: #14181d
-
-            &:not(.is-active):hover
-                background: rgba(255, 255, 255, .08)
-
 // ── PC版スティッキー目次のオーバーフロー対応 ──────────────────────────────
 +desktop()
     .column-left.is-sticky

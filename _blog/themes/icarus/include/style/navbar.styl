@@ -115,7 +115,7 @@ $navbar-item-margin-h ?= 0
     .lang-toggle-pill
         display: inline-flex
         border-radius: 1em
-        border: 1.5px solid $primary
+        border: 1.5px solid $border
         overflow: hidden
         font-size: .72rem
         font-weight: 700
@@ -123,7 +123,7 @@ $navbar-item-margin-h ?= 0
 
     .lang-toggle-option
         padding: .28em .75em
-        color: #aaa
+        color: $text
         text-decoration: none
         transition: background .18s, color .18s
         white-space: nowrap
@@ -131,14 +131,13 @@ $navbar-item-margin-h ?= 0
         cursor: pointer
 
         &.is-active
-            background: $primary
+            background: $text
             color: #fff
             cursor: default
             pointer-events: none
 
         &:not(.is-active):hover
-            background: rgba($primary, .08)
-            color: $primary
+            background: rgba($text, .08)
 
 // ダーク / ライト トグル
 .theme-toggle
@@ -172,6 +171,23 @@ html[data-theme='dark']
         z-index: 29
         background-color: $scheme-main
 
+.category-bar-inner
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    padding: 0 .5rem
+
+.category-bar-item
+    padding: .45rem .75rem
+    font-size: .875rem
+    color: $text
+    text-decoration: none
+    white-space: nowrap
+    transition: color .18s
+
+    &:hover
+        color: $primary
+
 // 記事詳細ページ: ナビバーのスティッキーを解除（PC・SP共通）
 body.page-post
     .navbar-main
@@ -179,20 +195,3 @@ body.page-post
     +from($navbar-breakpoint)
         .category-bar
             position: static
-
-    .category-bar-inner
-        display: flex
-        flex-wrap: wrap
-        align-items: center
-        padding: 0 .5rem
-
-    .category-bar-item
-        padding: .45rem .75rem
-        font-size: .875rem
-        color: $text
-        text-decoration: none
-        white-space: nowrap
-        transition: color .18s
-
-        &:hover
-            color: $primary

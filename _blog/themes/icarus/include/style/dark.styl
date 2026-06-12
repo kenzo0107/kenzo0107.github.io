@@ -72,20 +72,19 @@ html[data-theme='dark']
 
     .lang-toggle
         .lang-toggle-pill
-            border-color: $dark-link
+            border-color: rgba(255, 255, 255, .3)
 
         .lang-toggle-option
-            color: #666
+            color: $dark-text-muted
 
             &.is-active
-                background: $dark-link
-                color: #fff
+                background: $dark-text
+                color: $dark-bg
                 cursor: default
                 pointer-events: none
 
             &:not(.is-active):hover
-                background: rgba($dark-link, .12)
-                color: $dark-link
+                background: rgba(255, 255, 255, .08)
 
     // --- Cards (記事一覧 / サイドバーウィジェット) ---
     .card
