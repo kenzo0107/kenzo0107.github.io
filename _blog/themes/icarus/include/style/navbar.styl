@@ -172,11 +172,11 @@ html[data-theme='dark']
         z-index: 29
         background-color: $scheme-main
 
-// PC版記事詳細ページ: ナビバー・カテゴリーバーのスティッキーを解除
+// 記事詳細ページ: ナビバーのスティッキーを解除（PC・SP共通）
 body.page-post
+    .navbar-main
+        position: static
     +from($navbar-breakpoint)
-        .navbar-main
-            position: static
         .category-bar
             position: static
 
