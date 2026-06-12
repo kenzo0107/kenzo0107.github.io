@@ -1,1 +1,24 @@
 .claude/settings.local.json
+
+# public_dir: ../ 時代の Hexo 生成物（現在は _blog/public/ へ出力）
+[0-9][0-9][0-9][0-9]/
+archives/
+categories/
+tags/
+amp-dist/
+en/
+img/
+css/
+js/
+page/
+privacy_policy/
+content.json
+atom.xml
+manifest.json
+index.html
+
+# _blog/source/ へ移動済みの静的ファイル
+.nojekyll
+ads.txt
+soccer-tactics-board/
+visual-training.html
