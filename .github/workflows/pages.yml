@@ -48,6 +48,10 @@ jobs:
         env:
           TZ: UTC
 
+      - name: Debug output directory
+        run: ls -la ../ | head -30
+        working-directory: _blog
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
