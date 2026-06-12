@@ -232,11 +232,15 @@ figure.highlight
             max-width: 100%
             max-height: 180px
 
-// ── PC版スティッキー目次のオーバーフロー対応 ──────────────────────────────
+// ── スティッキー目次: navbar(3.25rem) の直下に固定 ──────────────────────────────
++tablet()
+    .column-left.is-sticky, .column-right.is-sticky
+        top: calc(3.25rem + 0.5rem)
+
 +desktop()
     .column-left.is-sticky
         #toc
-            max-height: calc(100vh - 2rem)
+            max-height: calc(100vh - 3.75rem)
             overflow-y: auto
 
 // ── SP用ナビバー内目次ボタン ──────────────────────────────
