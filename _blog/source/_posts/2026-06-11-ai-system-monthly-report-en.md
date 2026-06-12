@@ -1,8 +1,8 @@
 ---
 title: Let AI Write Your System Monthly Reports ─ Automating Ops Reports with Claude Code × MCP
-category: 
-- AWS
-- AI
+categories:
+- [AWS]
+- [AI]
 date: 2026-06-11
 lang: en
 translation_id: ai-system-monthly-report

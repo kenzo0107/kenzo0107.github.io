@@ -4,9 +4,9 @@ date: 2026-06-11
 lang: en
 translation_id: langfuse-vs-datadog-llm-observability
 permalink: en/2026/06/11/langfuse-vs-datadog-llm-observability/
-category: 
-- Monitoring
-- AI
+categories:
+- [Monitoring]
+- [AI]
 tags:
   - LLM
   - Langfuse

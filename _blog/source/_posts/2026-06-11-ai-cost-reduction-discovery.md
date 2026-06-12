@@ -1,8 +1,8 @@
 ---
 title: Claude Code でコスト削減 ── AI の主戦場は「実装」より「課題発見」だった
-category: 
-- AWS
-- AI
+categories:
+- [AWS]
+- [AI]
 date: 2026-06-11
 lang: ja
 translation_id: ai-cost-reduction-discovery

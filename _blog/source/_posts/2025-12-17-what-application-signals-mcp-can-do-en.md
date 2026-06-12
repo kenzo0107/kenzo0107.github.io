@@ -4,9 +4,9 @@ date: 2025-12-17
 lang: en
 translation_id: what-application-signals-mcp-can-do
 permalink: en/2025/12/17/what-application-signals-mcp-can-do/
-category: 
-- AWS
-- AI
+categories:
+- [AWS]
+- [AI]
 cover: https://i.imgur.com/XccV9Ug.png
 ---
 

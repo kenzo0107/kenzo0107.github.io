@@ -3,9 +3,9 @@ title: Application Signals MCP に問い合わせしてできること
 date: 2025-12-17
 lang: ja
 translation_id: what-application-signals-mcp-can-do
-category: 
-- AWS
-- AI
+categories:
+- [AWS]
+- [AI]
 cover: https://i.imgur.com/XccV9Ug.png
 ---
 
@@ -84,7 +84,8 @@ Application Signals MCP でどんなことができるのか [AWS ドキュメ�
 
 ### カナリア監視
 
-- [カナリア名]のカナリア障害を分析してください
+- [カナリア名]
+のカナリア障害を分析してください
 - カナリアの失敗パターンを調査してください
 
 ## 実際の質問例
