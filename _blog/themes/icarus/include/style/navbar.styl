@@ -62,6 +62,8 @@ $navbar-item-margin-h ?= 0
                 left: 0
                 right: 0
                 z-index: 30
+                max-height: "calc(100vh - %s)" % $navbar-height
+                overflow-y: auto
 
 // Categories: モバイルのみドロップダウン表示
 .navbar-categories
