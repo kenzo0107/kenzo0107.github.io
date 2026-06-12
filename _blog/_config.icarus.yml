@@ -107,7 +107,7 @@ widgets:
   #     RSS:
   #       icon: fas fa-rss
   #       url: /atom.xml
-  - position: right
+  - position: left
     type: toc
     index: true
     collapsed: false
