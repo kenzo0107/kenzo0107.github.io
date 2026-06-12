@@ -6,7 +6,7 @@
 BLOG_DIR := _blog
 HEXO     := ./node_modules/.bin/hexo
 
-.PHONY: help install server build new push
+.PHONY: help install server build new deploy push
 
 # --------------------------------------------------------------------------
 # デフォルト: ヘルプ表示
@@ -19,6 +19,7 @@ help:
 	@printf '  \033[32mmake server\033[0m               ローカルプレビューサーバー起動 (http://localhost:4000)\n'
 	@printf '  \033[32mmake build\033[0m                静的ファイルを生成 (_blog/public/)\n'
 	@printf '  \033[32mmake new TITLE=xxx\033[0m        新しい記事ファイルを作成\n'
+	@printf '  \033[32mmake deploy MSG=xxx\033[0m       build + commit + push を一括実行\n'
 	@printf '  \033[32mmake push\033[0m                 main へ push → GitHub Pages へ自動デプロイ\n'
 	@printf '\n'
 	@printf '\033[1m--- 新記事の投稿フロー ---\033[0m\n'
@@ -67,6 +68,19 @@ new:
 	cd $(BLOG_DIR) && TZ=UTC $(HEXO) new "$(TITLE)"
 	@printf '\n作成: $(BLOG_DIR)/source/_posts/$(TITLE).md\n'
 	@printf '次: make server でプレビューしながら記事を編集してください\n'
+
+deploy:
+	@test -n "$(MSG)" || { \
+		printf '\033[31mエラー:\033[0m MSG を指定してください\n'; \
+		printf '例: make deploy MSG="記事タイトル or 変更内容"\n'; \
+		exit 1; \
+	}
+	cd $(BLOG_DIR) && TZ=UTC npm run build
+	git add _blog/
+	git diff --cached --quiet \
+		&& printf '変更なし。push のみ実行します。\n' \
+		|| git commit -m "$(MSG)"
+	git push origin main
 
 push:
 	git push origin main
