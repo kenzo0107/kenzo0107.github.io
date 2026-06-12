@@ -60,6 +60,9 @@ html[data-theme='dark']
         .navbar-link::after
             border-color: $dark-link
 
+        .navbar-logo img
+            filter: invert(1)
+
     +until($navbar-breakpoint)
         .navbar-main .navbar-menu
             background-color: $dark-surface
