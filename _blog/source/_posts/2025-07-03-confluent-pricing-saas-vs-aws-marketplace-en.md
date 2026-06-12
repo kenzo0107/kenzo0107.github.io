@@ -4,9 +4,6 @@ categories:
 - [AWS]
 - [Data Analytics]
 date: 2025-07-03
-categories:
-  - [AWS]
-  - [Data Analytics]
 lang: en
 translation_id: confluent-pricing-saas-vs-aws-marketplace
 permalink: en/2025/07/03/confluent-pricing-saas-vs-aws-marketplace/

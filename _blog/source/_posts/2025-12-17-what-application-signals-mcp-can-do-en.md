@@ -1,7 +1,6 @@
 ---
 title: What You Can Do by Querying the Application Signals MCP
 date: 2025-12-17
-category: AWS
 lang: en
 translation_id: what-application-signals-mcp-can-do
 permalink: en/2025/12/17/what-application-signals-mcp-can-do/

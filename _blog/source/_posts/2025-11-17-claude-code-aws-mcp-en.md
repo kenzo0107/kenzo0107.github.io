@@ -1,9 +1,6 @@
 ---
 title: Streamlining Investigations with Claude Code + AWS-related MCP
 date: 2025-11-17
-categories:
-  - [AWS]
-  - [AI]
 lang: en
 translation_id: claude-code-aws-mcp
 permalink: en/2025/11/17/claude-code-aws-mcp/

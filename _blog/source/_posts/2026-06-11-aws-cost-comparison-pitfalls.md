@@ -4,7 +4,6 @@ categories:
 - [AWS]
 - [AI]
 date: 2026-06-11
-category: AWS
 lang: ja
 translation_id: aws-cost-comparison-pitfalls
 cover: /img/cover/2026-06-11-aws-cost-comparison-pitfalls.svg
