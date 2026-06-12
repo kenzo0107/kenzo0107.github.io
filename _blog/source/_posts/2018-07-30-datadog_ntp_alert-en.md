@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Dealing with a Flood of Alerts from Datadog NTP Monitoring
+category: Monitoring
 date: 2018-07-30
 lang: en
 translation_id: datadog_ntp_alert

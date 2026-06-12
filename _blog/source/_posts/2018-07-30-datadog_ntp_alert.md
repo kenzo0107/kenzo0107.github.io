@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Datadog NTP 監視でアラート鳴りまくり対応
+category: Monitoring
 date: 2018-07-30
 lang: ja
 translation_id: datadog_ntp_alert

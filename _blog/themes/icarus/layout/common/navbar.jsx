@@ -29,7 +29,6 @@ class Navbar extends Component {
             menu,
             links,
             categories,
-            categoriesUrl,
             categoriesTitle,
             translations,
             showToc,
@@ -68,7 +67,7 @@ class Navbar extends Component {
                     <div class="navbar-start">
                         {/* Categories ドロップダウン（PC: ホバー表示 / スマホ: ハンバーガー内で展開） */}
                         {hasCategories ? <div class="navbar-item has-dropdown is-hoverable navbar-categories">
-                            <a class="navbar-link" href={categoriesUrl}>{categoriesTitle}</a>
+                            <a class="navbar-link" href="javascript:;">{categoriesTitle}</a>
                             <div class="navbar-dropdown">
                                 {categories.map(category => <a class="navbar-item" href={category.url}>
                                     <span>{category.name}</span>
@@ -193,7 +192,6 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         menu,
         links,
         categories,
-        categoriesUrl: url_for('/categories/'),
         categoriesTitle: _p('common.category', Infinity),
         translations,
         showToc,
