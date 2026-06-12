@@ -58,6 +58,10 @@ index_generator:
   per_page: 36
   order_by: -date
 
+# アーカイブ(/archives)ページは使用しないため生成停止（ヘッダーからも除外済み）
+archive_generator:
+  enabled: false
+
 # Category & Tag
 default_category: uncategorized
 category_map:

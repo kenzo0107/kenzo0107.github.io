@@ -1,0 +1,217 @@
+/* ---------------------------------
+ *   Dark mode
+ *   html[data-theme='dark'] が付いたときの配色上書き。
+ *   ライトモード時は素の Bulma + default.styl の配色が使われる。
+ * --------------------------------- */
+$dark-bg = #14181d
+$dark-surface = #1c2128
+$dark-surface-2 = #22272e
+$dark-border = #30363d
+$dark-text = #c9d1d9
+$dark-text-strong = #e6edf3
+$dark-text-muted = #8b949e
+$dark-link = #58a6ff
+
+html[data-theme='dark']
+    background-color: $dark-bg
+
+    body
+        background-color: $dark-bg
+        color: $dark-text
+
+    // 見出し・本文の文字色
+    .title,
+    .subtitle,
+    h1, h2, h3, h4, h5, h6,
+    strong,
+    label
+        color: $dark-text-strong
+
+    .content
+        color: $dark-text
+
+    a
+        color: $dark-link
+
+    // --- Navbar ---
+    .navbar-main
+        background-color: $dark-surface
+
+        .navbar-item,
+        .navbar-link
+            color: $dark-text
+
+            &:hover,
+            &.is-active
+                background-color: $dark-surface-2
+                color: $dark-text-strong
+
+        .navbar-dropdown
+            background-color: $dark-surface
+            border-color: $dark-border
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .5)
+
+            .navbar-item
+                color: $dark-text
+
+                &:hover
+                    background-color: $dark-surface-2
+
+        .navbar-link::after
+            border-color: $dark-link
+
+    +until($navbar-breakpoint)
+        .navbar-main .navbar-menu
+            background-color: $dark-surface
+
+    .navbar-langs
+        .navbar-lang
+            color: $dark-text-muted
+
+            &.is-active
+                color: $dark-link
+
+    // --- Cards (記事一覧 / サイドバーウィジェット) ---
+    .card
+        background-color: $dark-surface
+        border: 1px solid $dark-border
+        color: $dark-text
+
+        .card-content
+            color: $dark-text
+
+        .title,
+        .subtitle
+            color: $dark-text-strong
+
+        &:hover
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .5)
+
+    // カバー画像が無いカテゴリプレースホルダなど
+    .card-image
+        background-color: $dark-surface-2
+
+    // --- Article 本文 ---
+    article.article
+        .content
+            h2
+                background: $dark-surface-2
+                border-left-color: $dark-link
+
+            h3
+                border-bottom-color: $dark-border
+
+            p, li, td, th, h1, h2, h3, h4, blockquote, dd
+                code
+                    background: #2d333b
+                    color: #ff7b9c
+
+            blockquote:not(.pullquote)
+                background: $dark-surface-2
+                border-left-color: $dark-link
+                color: $dark-text
+
+            table
+                color: $dark-text
+
+                thead th
+                    background: $dark-surface-2
+                    color: $dark-text-strong
+
+                tbody tr:nth-child(even)
+                    background-color: $dark-surface
+
+                td, th
+                    border-color: $dark-border
+
+            a:not(.article-more)
+                text-decoration-color: rgba(88, 166, 255, .4)
+
+    // --- リンクプレビューカード ---
+    .link-preview
+        background: $dark-surface
+        border-color: $dark-border
+        color: $dark-text
+
+        &:hover
+            border-color: rgba(88, 166, 255, .5)
+            box-shadow: 0 6px 16px rgba(0, 0, 0, .5)
+
+        .og-image
+            background: $dark-surface-2
+
+        .og-title
+            color: $dark-link
+
+        .og-description
+            color: $dark-text-muted
+
+    // --- サイドバー / ウィジェット ---
+    .menu-list a
+        color: $dark-text
+
+        &:hover
+            background-color: $dark-surface-2
+            color: $dark-text-strong
+
+    // --- Tags ---
+    .tag:not(.is-primary):not(.is-link):not(.is-info):not(.is-success):not(.is-warning):not(.is-danger)
+        background-color: $dark-surface-2
+        color: $dark-text
+
+    // --- Footer ---
+    .footer
+        background-color: $dark-surface
+        color: $dark-text-muted
+
+        a
+            color: $dark-link
+
+    // --- Pagination ---
+    .pagination-previous,
+    .pagination-next,
+    .pagination-link
+        background-color: $dark-surface
+        border-color: $dark-border
+        color: $dark-text
+
+        &:hover
+            border-color: $dark-link
+
+    // --- 検索モーダル ---
+    .searchbox,
+    .modal-card-head,
+    .modal-card-body,
+    .modal-card-foot
+        background-color: $dark-surface
+        color: $dark-text
+
+    .searchbox .searchbox-result-item
+        color: $dark-text
+
+        &:hover
+            background-color: $dark-surface-2
+
+    // --- 目次 (TOC) ---
+    #toc
+        background-color: $dark-surface
+
+        .toc-link
+            color: $dark-text
+
+            &:hover
+                color: $dark-link
+
+    // --- 入力欄 ---
+    .input,
+    .textarea
+        background-color: $dark-surface-2
+        border-color: $dark-border
+        color: $dark-text
+
+        &::placeholder
+            color: $dark-text-muted
+
+    // --- 区切り線 ---
+    hr
+        background-color: $dark-border

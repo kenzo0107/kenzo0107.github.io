@@ -40,10 +40,9 @@ head:
     - ''
   rss:
 navbar:
+  # Categories は site.categories から自動生成のドロップダウンで表示するため menu には置かない
   menu:
     About: /2013/12/31/about/
-    Posts: /archives
-    Categories: /categories/
   links:
     GitHub:
       icon: fab fa-github
