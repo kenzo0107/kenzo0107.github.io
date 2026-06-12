@@ -2,9 +2,7 @@
 layout: post
 title: Installing Kibana 4 on CentOS 7
 date: 2015-08-20
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: en
 translation_id: install-kibana-on-centos7
 permalink: en/2015/08/20/install-kibana-on-centos7/

@@ -2,9 +2,7 @@
 layout: post
 title: Sakura VPS fluentd + elasticsearch + kibana3
 date: 2015-03-01
-categories:
-  - [Monitoring]
-  - [Database]
+category: Monitoring
 lang: en
 translation_id: fluentd-elasticsearch-kibana-sakura-vps
 permalink: en/2015/03/01/fluentd-elasticsearch-kibana-sakura-vps/

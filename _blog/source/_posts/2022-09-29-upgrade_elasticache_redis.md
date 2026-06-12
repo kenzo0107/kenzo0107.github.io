@@ -1,9 +1,7 @@
 ---
 title: AWS ElastiCache Redis バージョンアップ&ノードタイプ変更時の注意点
 date: 2022-09-29
-categories:
-  - [AWS]
-  - [Database]
+category: AWS
 lang: ja
 translation_id: upgrade_elasticache_redis
 cover: https://i.imgur.com/6PU8EYE.png

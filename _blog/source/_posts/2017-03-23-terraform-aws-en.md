@@ -2,9 +2,7 @@
 layout: post
 title: Building AWS Infrastructure with Terraform!
 date: 2017-03-23
-categories:
-  - [AWS]
-  - [Terraform]
+category: AWS
 lang: en
 translation_id: terraform-aws
 permalink: en/2017/03/23/terraform-aws/

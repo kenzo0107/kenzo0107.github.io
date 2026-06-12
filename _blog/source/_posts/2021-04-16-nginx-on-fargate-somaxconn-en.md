@@ -3,9 +3,7 @@ title: Investigating the "Resource temporarily unavailable" Error on Nginx on Fa
 tags:
   - AWS
 date: 2021-04-16
-categories:
-  - [AWS]
-  - [Infrastructure]
+category: AWS
 lang: en
 translation_id: nginx-on-fargate-somaxconn
 permalink: en/2021/04/16/nginx-on-fargate-somaxconn/

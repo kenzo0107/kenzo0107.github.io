@@ -1,9 +1,7 @@
 ---
 title: tfsec で terraform 管理リソースのセキュリティ強化
 date: 2022-09-13
-categories:
-  - [Terraform]
-  - [Git]
+category: Terraform
 lang: ja
 translation_id: setup-tfsec
 cover: https://aquasecurity.github.io/tfsec/v0.63.1/imgs/homelogo.png

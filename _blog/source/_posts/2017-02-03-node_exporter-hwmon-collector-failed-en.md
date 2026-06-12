@@ -2,9 +2,7 @@
 layout: post
 title: node_exporter error occurred! hwmon collector failed
 date: 2017-02-03
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: en
 translation_id: node_exporter-hwmon-collector-failed
 permalink: en/2017/02/03/node_exporter-hwmon-collector-failed/

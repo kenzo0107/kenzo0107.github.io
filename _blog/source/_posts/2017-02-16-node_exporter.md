@@ -2,9 +2,7 @@
 layout: post
 title: node_exporter シェルでクエリ自作
 date: 2017-02-16
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: ja
 translation_id: node_exporter
 tags:

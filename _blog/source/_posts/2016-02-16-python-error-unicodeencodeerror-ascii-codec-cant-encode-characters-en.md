@@ -2,9 +2,7 @@
 layout: post
 title: "Fixing a Python Error: UnicodeEncodeError: 'ascii' codec can't encode characters"
 date: 2016-02-16
-categories:
-  - [Python]
-  - [Infrastructure]
+category: Python
 lang: en
 translation_id: python-error-unicodeencodeerror-ascii-codec-cant-encode-characters
 permalink: en/2016/02/16/python-error-unicodeencodeerror-ascii-codec-cant-encode-characters/

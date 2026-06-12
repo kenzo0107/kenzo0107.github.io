@@ -2,9 +2,7 @@
 layout: post
 title: Installing httpd, MySQL, and PHP from source with Vagrant + Ansible and verifying startup
 date: 2015-05-20
-categories:
-  - [Database]
-  - [Infrastructure]
+category: Database
 lang: en
 translation_id: install-php-httpd-mysql-on-vagrant
 permalink: en/2015/05/20/install-php-httpd-mysql-on-vagrant/

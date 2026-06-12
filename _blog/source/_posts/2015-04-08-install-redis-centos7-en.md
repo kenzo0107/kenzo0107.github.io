@@ -2,9 +2,7 @@
 layout: post
 title: Installing Redis on CentOS 7
 date: 2015-04-08
-categories:
-  - [Database]
-  - [Infrastructure]
+category: Database
 lang: en
 translation_id: install-redis-centos7
 permalink: en/2015/04/08/install-redis-centos7/

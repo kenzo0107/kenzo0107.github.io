@@ -2,9 +2,7 @@
 layout: post
 title: Building Rails 5 (Puma) + Nginx + MySQL with docker-compose on Vagrant (Ubuntu)
 date: 2017-09-13
-categories:
-  - [Database]
-  - [Infrastructure]
+category: Database
 lang: en
 translation_id: docker-compose-rails5-nginx-mysql-on-vagrant
 permalink: en/2017/09/13/docker-compose-rails5-nginx-mysql-on-vagrant/

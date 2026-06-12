@@ -1,9 +1,7 @@
 ---
 title: Strengthening the Security of Terraform-Managed Resources with tfsec
 date: 2022-09-13
-categories:
-  - [Terraform]
-  - [Git]
+category: Terraform
 lang: en
 translation_id: setup-tfsec
 permalink: en/2022/09/13/setup-tfsec/

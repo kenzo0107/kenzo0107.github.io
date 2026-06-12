@@ -2,9 +2,7 @@
 layout: post
 title: Handling Dynamic IP Updates for AWS Instances with no-ip ~ Always Access via the Same Domain Name ~
 date: 2016-02-04
-categories:
-  - [AWS]
-  - [Infrastructure]
+category: AWS
 lang: en
 translation_id: no-ip-aws-instance-dynamic-ip
 permalink: en/2016/02/04/no-ip-aws-instance-dynamic-ip/

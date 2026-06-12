@@ -2,9 +2,7 @@
 layout: post
 title: Terraform で AWS インフラストラクチャ！
 date: 2017-03-23
-categories:
-  - [AWS]
-  - [Terraform]
+category: AWS
 lang: ja
 translation_id: terraform-aws
 tags:

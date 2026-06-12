@@ -2,9 +2,7 @@
 layout: post
 title: MacOSX python 3.4.3 インストール
 date: 2016-02-19
-categories:
-  - [Python]
-  - [Infrastructure]
+category: Python
 lang: ja
 translation_id: install-python343-on-macos
 cover: /img/cover/2016-02-19-install-python343-on-macos.svg

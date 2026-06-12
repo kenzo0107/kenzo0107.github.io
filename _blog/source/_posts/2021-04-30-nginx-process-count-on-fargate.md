@@ -3,9 +3,7 @@ title: Fargate のタスクサイズ による Nginx の起動プロセス数
 tags:
 - AWS
 date: 2021-04-30
-categories:
-  - [AWS]
-  - [Infrastructure]
+category: AWS
 lang: ja
 translation_id: nginx-process-count-on-fargate
 cover: /img/cover/2021-04-30-nginx-process-count-on-fargate.svg

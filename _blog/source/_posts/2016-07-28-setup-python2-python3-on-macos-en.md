@@ -2,9 +2,7 @@
 layout: post
 title: Building Python 2 and Python 3 Virtual Environments on Mac OS X
 date: 2016-07-28
-categories:
-  - [Python]
-  - [Infrastructure]
+category: Python
 lang: en
 translation_id: setup-python2-python3-on-macos
 permalink: en/2016/07/28/setup-python2-python3-on-macos/

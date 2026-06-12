@@ -2,9 +2,7 @@
 layout: post
 title: Setting Up a Go Development Environment on Mac OS X
 date: 2015-08-02
-categories:
-  - [Go]
-  - [Infrastructure]
+category: Go
 lang: en
 translation_id: golang-development-on-macosx
 permalink: en/2015/08/02/golang-development-on-macosx/

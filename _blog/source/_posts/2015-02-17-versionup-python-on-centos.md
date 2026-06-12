@@ -2,9 +2,7 @@
 layout: post
 title: CentOS で Python バージョンアップ
 date: 2015-02-17
-categories:
-  - [Python]
-  - [Infrastructure]
+category: Python
 lang: ja
 translation_id: versionup-python-on-centos
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20160223/20160223123929.jpg

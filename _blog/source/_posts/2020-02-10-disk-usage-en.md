@@ -3,9 +3,7 @@ title: How to Investigate When Disk Usage Increases
 tags:
 - Linux
 date: 2020-02-10
-categories:
-  - [AWS]
-  - [Infrastructure]
+category: AWS
 lang: en
 translation_id: disk-usage
 permalink: en/2020/02/10/disk-usage/

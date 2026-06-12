@@ -3,9 +3,7 @@ title: Number of Nginx Worker Processes by Fargate Task Size
 tags:
 - AWS
 date: 2021-04-30
-categories:
-  - [AWS]
-  - [Infrastructure]
+category: AWS
 lang: en
 translation_id: nginx-process-count-on-fargate
 permalink: en/2021/04/30/nginx-process-count-on-fargate/

@@ -2,9 +2,7 @@
 layout: post
 title: Upgrading Python on CentOS
 date: 2015-02-17
-categories:
-  - [Python]
-  - [Infrastructure]
+category: Python
 lang: en
 translation_id: versionup-python-on-centos
 permalink: en/2015/02/17/versionup-python-on-centos/

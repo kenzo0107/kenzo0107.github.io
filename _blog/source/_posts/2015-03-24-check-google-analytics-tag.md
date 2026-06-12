@@ -2,9 +2,7 @@
 layout: post
 title: Google Analytics Tagの設定をチェックする
 date: 2015-03-24
-categories:
-  - [Data Analytics]
-  - [Infrastructure]
+category: Data Analytics
 lang: ja
 translation_id: check-google-analytics-tag
 cover: https://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20150324/20150324104431.png

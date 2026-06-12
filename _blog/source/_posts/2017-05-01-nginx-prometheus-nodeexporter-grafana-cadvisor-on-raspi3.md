@@ -2,10 +2,7 @@
 layout: post
 title: Raspberry PI3 Model B に docker-compose で Nginx で認証かけて Prometheus + Node Exporter + Grafana + cAdvisor構築
 date: 2017-05-01
-categories:
-  - [RaspberryPI]
-  - [Monitoring]
-  - [Infrastructure]
+category: RaspberryPI
 lang: ja
 translation_id: nginx-prometheus-nodeexporter-grafana-cadvisor-on-raspi3
 tags:

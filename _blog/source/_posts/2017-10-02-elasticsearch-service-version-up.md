@@ -2,9 +2,7 @@
 layout: post
 title: AWS Elasticsearch Service バージョンアップ 2.2 → 5.5
 date: 2017-10-02
-categories:
-  - [AWS]
-  - [Database]
+category: AWS
 lang: ja
 translation_id: elasticsearch-service-version-up
 tags:

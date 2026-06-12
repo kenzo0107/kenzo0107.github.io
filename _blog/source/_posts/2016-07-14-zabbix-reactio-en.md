@@ -2,9 +2,7 @@
 layout: post
 title: Zabbix + Reactio Integration
 date: 2016-07-14
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: en
 translation_id: zabbix-reactio
 permalink: en/2016/07/14/zabbix-reactio/

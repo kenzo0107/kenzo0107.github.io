@@ -4,10 +4,7 @@ tags:
 - AWS
 - Ruby
 date: 2020-12-11
-categories:
-  - [AWS]
-  - [Database]
-  - [Infrastructure]
+category: AWS
 lang: en
 translation_id: ruby-to-elasticache-redis-cluster-mode
 permalink: en/2020/12/11/ruby-to-elasticache-redis-cluster-mode/

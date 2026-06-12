@@ -2,9 +2,7 @@
 layout: post
 title: Mackerel で Docker の起動状態確認
 date: 2017-07-14
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: ja
 translation_id: monitor-state-of-docker-by-mackerel
 tags:

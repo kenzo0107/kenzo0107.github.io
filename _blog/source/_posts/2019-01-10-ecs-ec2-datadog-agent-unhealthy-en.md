@@ -2,9 +2,7 @@
 layout: post
 title: A Prescription for When the Datadog Agent Container Running on ECS EC2 Becomes Unhealthy
 date: 2019-01-10
-categories:
-  - [AWS]
-  - [Monitoring]
+category: AWS
 lang: en
 translation_id: ecs-ec2-datadog-agent-unhealthy
 permalink: en/2019/01/10/ecs-ec2-datadog-agent-unhealthy/

@@ -2,10 +2,7 @@
 layout: post
 title: Installing and Verifying Nginx + Go + Revel on CentOS 7
 date: 2015-08-04
-categories:
-  - [AWS]
-  - [Go]
-  - [Infrastructure]
+category: AWS
 lang: en
 translation_id: install-nginx-go-revel-on-centos7
 permalink: en/2015/08/04/install-nginx-go-revel-on-centos7/

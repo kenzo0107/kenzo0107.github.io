@@ -2,9 +2,7 @@
 layout: post
 title: Validating Email Addresses with PHP's Validation Filter
 date: 2016-09-09
-categories:
-  - [AWS]
-  - [Infrastructure]
+category: AWS
 lang: en
 translation_id: valid-email-by-php
 permalink: en/2016/09/09/valid-email-by-php/

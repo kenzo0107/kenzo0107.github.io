@@ -2,9 +2,7 @@
 layout: post
 title: Go言語 開発整備 on MacOSX
 date: 2015-08-02
-categories:
-  - [Go]
-  - [Infrastructure]
+category: Go
 lang: ja
 translation_id: golang-development-on-macosx
 cover: https://i.imgur.com/EZZA6Kl.png

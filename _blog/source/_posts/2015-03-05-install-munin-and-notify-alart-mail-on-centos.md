@@ -2,9 +2,7 @@
 layout: post
 title: CentOS にmuninインストール 監視しアラートメール受信
 date: 2015-03-05
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: ja
 translation_id: install-munin-and-notify-alart-mail-on-centos
 cover: /img/cover/2015-03-05-install-munin-and-notify-alart-mail-on-centos.svg

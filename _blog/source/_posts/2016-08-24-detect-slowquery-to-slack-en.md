@@ -2,9 +2,7 @@
 layout: post
 title: Detecting Slow Queries, Analyzing Them with EXPLAIN, and Notifying Slack
 date: 2016-08-24
-categories:
-  - [Database]
-  - [Infrastructure]
+category: Database
 lang: en
 translation_id: detect-slowquery-to-slack
 permalink: en/2016/08/24/detect-slowquery-to-slack/

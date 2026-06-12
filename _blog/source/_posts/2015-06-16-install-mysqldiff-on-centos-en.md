@@ -2,9 +2,7 @@
 layout: post
 title: Installing and Running mysqldiff on CentOS
 date: 2015-06-16
-categories:
-  - [Database]
-  - [Infrastructure]
+category: Database
 lang: en
 translation_id: install-mysqldiff-on-centos
 permalink: en/2015/06/16/install-mysqldiff-on-centos/

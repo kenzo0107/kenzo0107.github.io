@@ -2,9 +2,7 @@
 layout: post
 title: MacOSX に Python2, Python3 仮想環境構築
 date: 2016-07-28
-categories:
-  - [Python]
-  - [Infrastructure]
+category: Python
 lang: ja
 translation_id: setup-python2-python3-on-macos
 tags:

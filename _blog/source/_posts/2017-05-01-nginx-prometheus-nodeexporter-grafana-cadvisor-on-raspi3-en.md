@@ -2,10 +2,7 @@
 layout: post
 title: Building Prometheus + Node Exporter + Grafana + cAdvisor on a Raspberry Pi 3 Model B with docker-compose, secured by Nginx authentication
 date: 2017-05-01
-categories:
-  - [RaspberryPI]
-  - [Monitoring]
-  - [Infrastructure]
+category: RaspberryPI
 lang: en
 translation_id: nginx-prometheus-nodeexporter-grafana-cadvisor-on-raspi3
 permalink: en/2017/05/01/nginx-prometheus-nodeexporter-grafana-cadvisor-on-raspi3/

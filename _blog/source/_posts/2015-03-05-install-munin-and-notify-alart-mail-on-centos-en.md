@@ -2,9 +2,7 @@
 layout: post
 title: Installing Munin on CentOS for Monitoring and Alert Email Notifications
 date: 2015-03-05
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: en
 translation_id: install-munin-and-notify-alart-mail-on-centos
 permalink: en/2015/03/05/install-munin-and-notify-alart-mail-on-centos/

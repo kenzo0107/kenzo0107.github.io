@@ -2,9 +2,7 @@
 layout: post
 title: "MySQLトラブルシューティング - ERROR 2006 (HY000) at line ***: MySQL server has gone away"
 date: 2015-12-17
-categories:
-  - [Database]
-  - [Infrastructure]
+category: Database
 lang: ja
 translation_id: mysql-error-2006-hy000-mysql-server-has-gone-away
 cover: /img/cover/2015-12-17-mysql-error-2006-hy000-mysql-server-has-gone-away.svg

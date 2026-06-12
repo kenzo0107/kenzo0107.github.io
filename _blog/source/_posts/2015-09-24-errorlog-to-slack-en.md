@@ -2,9 +2,7 @@
 layout: post
 title: Sending Error Logs to Slack
 date: 2015-09-24
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: en
 translation_id: errorlog-to-slack
 permalink: en/2015/09/24/errorlog-to-slack/

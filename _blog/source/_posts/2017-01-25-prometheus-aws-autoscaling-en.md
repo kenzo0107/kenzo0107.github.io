@@ -2,9 +2,7 @@
 layout: post
 title: Node Exporter Setup Guide + Monitoring AWS Auto Scaling from Prometheus
 date: 2017-01-25
-categories:
-  - [AWS]
-  - [Monitoring]
+category: AWS
 lang: en
 translation_id: prometheus-aws-autoscaling
 permalink: en/2017/01/25/prometheus-aws-autoscaling/

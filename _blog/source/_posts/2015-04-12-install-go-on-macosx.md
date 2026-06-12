@@ -2,9 +2,7 @@
 layout: post
 title: MacOSXにgoをインストール
 date: 2015-04-12
-categories:
-  - [Go]
-  - [Infrastructure]
+category: Go
 lang: ja
 translation_id: install-go-on-macosx
 cover: /img/cover/2015-04-12-install-go-on-macosx.svg

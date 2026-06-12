@@ -2,9 +2,7 @@
 layout: post
 title: CentOSに phpMyAdminインストール利用するまで
 date: 2015-02-24
-categories:
-  - [Database]
-  - [Infrastructure]
+category: Database
 lang: ja
 translation_id: install-phpadmin-centos
 cover: /img/cover/2015-02-24-install-phpadmin-centos.svg

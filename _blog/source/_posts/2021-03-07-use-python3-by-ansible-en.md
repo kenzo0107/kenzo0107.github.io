@@ -3,9 +3,7 @@ title: Specifying Python3 on Ansible Target Hosts to Run pip install
 tags:
   - Ansible
 date: 2021-03-07
-categories:
-  - [Python]
-  - [Infrastructure]
+category: Python
 lang: en
 translation_id: use-python3-by-ansible
 permalink: en/2021/03/07/use-python3-by-ansible/

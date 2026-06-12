@@ -2,9 +2,7 @@
 layout: post
 title: AnsibleでSentry導入！起動確認まで10分以内♪
 date: 2015-05-10
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: ja
 translation_id: install-sentry-by-ansible
 cover: /img/cover/2015-05-10-install-sentry-by-ansible.svg

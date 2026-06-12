@@ -2,9 +2,7 @@
 layout: post
 title: Install latest Git on CentOS.
 date: 2016-02-23
-categories:
-  - [Git]
-  - [Infrastructure]
+category: Git
 lang: en
 translation_id: install-latest-git-on-centos
 permalink: en/2016/02/23/install-latest-git-on-centos/

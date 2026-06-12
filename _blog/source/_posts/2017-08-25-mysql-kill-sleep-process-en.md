@@ -2,9 +2,7 @@
 layout: post
 title: "MySQL: Bulk-Kill Processes Sleeping for More Than a Given Number of Seconds"
 date: 2017-08-25
-categories:
-  - [AWS]
-  - [Database]
+category: AWS
 lang: en
 translation_id: mysql-kill-sleep-process
 permalink: en/2017/08/25/mysql-kill-sleep-process/

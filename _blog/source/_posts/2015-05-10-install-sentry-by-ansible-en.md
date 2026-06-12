@@ -2,9 +2,7 @@
 layout: post
 title: Install Sentry with Ansible! Up and Running in Under 10 Minutes
 date: 2015-05-10
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: en
 translation_id: install-sentry-by-ansible
 permalink: en/2015/05/10/install-sentry-by-ansible/

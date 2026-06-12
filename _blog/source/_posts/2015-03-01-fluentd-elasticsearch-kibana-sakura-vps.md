@@ -2,9 +2,7 @@
 layout: post
 title: さくらVPS fluentd + elasticsearch + kibana3
 date: 2015-03-01
-categories:
-  - [Monitoring]
-  - [Database]
+category: Monitoring
 lang: ja
 translation_id: fluentd-elasticsearch-kibana-sakura-vps
 cover: http://cdn-ak.f.st-hatena.com/images/fotolife/k/kenzo0107/20140927/20140927215057.png

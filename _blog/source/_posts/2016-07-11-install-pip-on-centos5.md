@@ -2,9 +2,7 @@
 layout: post
 title: CentOS5 系 に pip インストール
 date: 2016-07-11
-categories:
-  - [Python]
-  - [Infrastructure]
+category: Python
 lang: ja
 translation_id: install-pip-on-centos5
 tags:

@@ -2,9 +2,7 @@
 layout: post
 title: AWS EC2 (CentOS) SSH Login Setup ToDo
 date: 2015-05-15
-categories:
-  - [AWS]
-  - [Infrastructure]
+category: AWS
 lang: en
 translation_id: ssh-login-to-ec2
 permalink: en/2015/05/15/ssh-login-to-ec2/

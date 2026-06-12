@@ -2,9 +2,7 @@
 layout: post
 title: Writing Custom Queries for node_exporter with Shell Scripts
 date: 2017-02-16
-categories:
-  - [Monitoring]
-  - [Infrastructure]
+category: Monitoring
 lang: en
 translation_id: node_exporter
 permalink: en/2017/02/16/node_exporter/
