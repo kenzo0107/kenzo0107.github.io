@@ -56,6 +56,12 @@ class Navbar extends Component {
                     <a class="navbar-item navbar-logo" href={siteUrl}>
                         {navbarLogo}
                     </a>
+                    {/* 言語ピルトグル（スマホ: ハンバーガーの外に常時表示） */}
+                    <div class="navbar-item lang-toggle is-hidden-desktop">
+                        <div class="lang-toggle-pill">
+                            {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.label}</a>)}
+                        </div>
+                    </div>
                     {/* スマホ用ハンバーガーボタン */}
                     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
                         <span aria-hidden="true"></span>
@@ -89,8 +95,8 @@ class Navbar extends Component {
                                 </a>;
                             })}
                         </Fragment> : null}
-                        {/* 言語ピルトグル（翻訳が存在する記事、または言語別一覧ページ） */}
-                        {Array.isArray(translations) && translations.length > 1 ? <div class="navbar-item lang-toggle">
+                        {/* 言語ピルトグル（デスクトップのみ; スマホは navbar-brand に表示） */}
+                        {Array.isArray(translations) && translations.length > 1 ? <div class="navbar-item lang-toggle is-hidden-touch">
                             <div class="lang-toggle-pill">
                                 {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.label}</a>)}
                             </div>
@@ -185,6 +191,13 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         // 記事一覧ページ（/ と /en/）のピルトグル
         translations.push({ lang: 'ja', url: url_for('/'), label: LANGUAGE_LABELS.ja, active: page.listLang === 'ja' });
         translations.push({ lang: 'en', url: url_for('/en/'), label: LANGUAGE_LABELS.en, active: page.listLang === 'en' });
+    }
+
+    // 翻訳が存在しないページでも常にトグルを表示（/ と /en/ へのリンク）
+    if (translations.length === 0) {
+        const pageLang = page.lang || 'ja';
+        translations.push({ lang: 'ja', url: url_for('/'), label: LANGUAGE_LABELS.ja, active: pageLang !== 'en' });
+        translations.push({ lang: 'en', url: url_for('/en/'), label: LANGUAGE_LABELS.en, active: pageLang === 'en' });
     }
 
     return {

@@ -46,6 +46,14 @@ $navbar-item-margin-h ?= 0
             .navbar-item
                 padding: .75rem 1rem
 
+            // ハンバーガー内はカテゴリーのみ表示
+            .navbar-start
+                .navbar-item:not(.navbar-categories)
+                    display: none
+
+            .navbar-end
+                display: none
+
 // Categories ドロップダウン
 .navbar-categories
     .navbar-dropdown
