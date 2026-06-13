@@ -92,22 +92,22 @@ $navbar-item-margin-h ?= 0
         background-color: rgba($primary, .08)
 
 // ---------------------------------
-// カテゴリーパネル（絶対位置・左寄せ・固定幅でオーバーレイ）
+// カテゴリーパネル（fixed でナビバー stacking context から独立させ TOC より前面に表示）
 // ---------------------------------
 .navbar-cat-panel
     display: none
-    position: absolute
-    top: 100%
+    position: fixed
+    top: var(--navbar-h, $navbar-height)
     left: 0
     min-width: 240px
     max-width: 320px
     background-color: $scheme-main
     box-shadow: 0 8px 24px rgba(10, 10, 10, .12), 0 0 0 1px rgba(10, 10, 10, .05)
     border-radius: 0 0 6px 0
-    z-index: 35
+    z-index: 102
     padding: .5rem 0
     overflow-y: auto
-    max-height: "calc(100vh - %s)" % $navbar-height
+    max-height: "calc(100vh - var(--navbar-h, %s))" % $navbar-height
 
     &.is-active
         display: block
