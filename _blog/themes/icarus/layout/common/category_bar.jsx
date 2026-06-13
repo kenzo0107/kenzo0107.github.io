@@ -10,7 +10,7 @@ class CategoryBar extends Component {
             <div class="container">
                 <div class="category-bar-inner">
                     {categories.map(category => (
-                        <a class="category-bar-item" href={category.url}>
+                        <a class="category-bar-item" href={category.url} data-en-url={category.enUrl}>
                             {category.name}
                         </a>
                     ))}
@@ -31,7 +31,8 @@ module.exports = cacheComponent(CategoryBar, 'common.category_bar', props => {
             .map(category => ({
                 name: category.name,
                 url: url_for(category.path),
-                count: category.posts.filter(post => post.lang !== 'en').length
+                count: category.posts.filter(post => post.lang !== 'en').length,
+                enUrl: category.posts.some(post => post.lang === 'en') ? url_for('en/' + category.path) : null
             }))
             .filter(category => category.count > 0)
             .sort((a, b) => b.count - a.count)

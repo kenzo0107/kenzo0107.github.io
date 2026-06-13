@@ -79,7 +79,7 @@ class Navbar extends Component {
                 {/* カテゴリーパネル（絶対位置・左寄せ・固定幅） */}
                 {hasCategories ? <div class="navbar-cat-panel" id="cat-panel">
                     {categories.map(category => (
-                        <a class="navbar-cat-panel-item" href={category.url}>
+                        <a class="navbar-cat-panel-item" href={category.url} data-en-url={category.enUrl}>
                             <span>{category.name}</span>
                             <span class="navbar-category-count">{category.count}</span>
                         </a>
@@ -156,7 +156,8 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
             .map(category => ({
                 name: category.name,
                 url: url_for(category.path),
-                count: category.posts.filter(post => post.lang !== 'en').length
+                count: category.posts.filter(post => post.lang !== 'en').length,
+                enUrl: category.posts.some(post => post.lang === 'en') ? url_for('en/' + category.path) : null
             }))
             .filter(category => category.count > 0)
             .sort((a, b) => b.count - a.count)

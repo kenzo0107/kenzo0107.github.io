@@ -184,9 +184,24 @@
     var savedLang;
     try { savedLang = localStorage.getItem('preferred-lang'); } catch (e) { /* ignore */ }
 
+    // カテゴリーリンクを現在の言語に合わせて更新する
+    function updateCategoryLinks(lang) {
+        $('#cat-panel .navbar-cat-panel-item, .category-bar-item').each(function() {
+            var $el = $(this);
+            // 初回実行時に JA URL を保存
+            if (!$el.attr('data-ja-url')) {
+                $el.attr('data-ja-url', $el.attr('href'));
+            }
+            var jaUrl = $el.attr('data-ja-url');
+            var enUrl = $el.attr('data-en-url');
+            $el.attr('href', lang === 'en' && enUrl ? enUrl : jaUrl);
+        });
+    }
+
     $(document).on('click', '.lang-toggle-option', function() {
         var lang = $(this).attr('data-lang') || $(this).text().trim().toLowerCase();
         try { localStorage.setItem('preferred-lang', lang); } catch (e) { /* ignore */ }
+        updateCategoryLinks(lang);
     });
 
     if (savedLang) {
@@ -197,5 +212,6 @@
                 $(this).toggleClass('is-active', lang === savedLang);
             });
         }
+        updateCategoryLinks(savedLang);
     }
 }(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings));
