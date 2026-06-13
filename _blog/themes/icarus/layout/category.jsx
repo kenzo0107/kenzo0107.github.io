@@ -7,7 +7,7 @@ module.exports = class extends Component {
         const { url_for, _p } = helper;
 
         return <Fragment>
-            <div class="card">
+            <div class="card breadcrumb-card">
                 <div class="card-content">
                     <nav class="breadcrumb" aria-label="breadcrumbs">
                         <ul>
