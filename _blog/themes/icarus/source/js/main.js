@@ -156,6 +156,8 @@
         $burger.toggleClass('is-active');
         $panel.toggleClass('is-active');
         $burger.attr('aria-expanded', $burger.hasClass('is-active'));
+        // パネル開閉に合わせて navbar の z-index を上げ、sticky サイドバーより前面に出す
+        $('.navbar-main').toggleClass('cat-panel-open', $panel.hasClass('is-active'));
     });
 
     // パネル外クリックで閉じる
@@ -164,6 +166,7 @@
             $('#cat-burger').removeClass('is-active');
             $('#cat-panel').removeClass('is-active');
             $('#cat-burger').attr('aria-expanded', 'false');
+            $('.navbar-main').removeClass('cat-panel-open');
         }
     });
 

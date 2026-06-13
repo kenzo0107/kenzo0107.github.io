@@ -12,6 +12,10 @@ $navbar-item-margin-h ?= 0
     top: 0
     z-index: 30
 
+    // カテゴリーパネルが開いているとき、sticky サイドバー（z-index:99）より前面に出る
+    &.cat-panel-open
+        z-index: 102
+
     .navbar-item
         display: flex
         align-items: center
