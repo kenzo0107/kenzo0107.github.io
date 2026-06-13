@@ -120,10 +120,23 @@ module.exports = class extends Component {
         // 描画前にテーマを適用してダークモードのちらつき(FOUC)を防ぐ
         const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
 
+        let clipboard = true;
+        let fold = 'unfolded';
+        if (article && article.highlight) {
+            if (typeof article.highlight.clipboard !== 'undefined') {
+                clipboard = !!article.highlight.clipboard;
+            }
+            if (typeof article.highlight.fold === 'string') {
+                fold = article.highlight.fold;
+            }
+        }
+        const icarusConfigScript = `var IcarusThemeSettings={article:{highlight:{clipboard:${clipboard},fold:'${fold}'}}};`;
+
         return <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
             <script dangerouslySetInnerHTML={{ __html: themeInitScript }}></script>
+            <script dangerouslySetInnerHTML={{ __html: icarusConfigScript }}></script>
             {noIndex ? <meta name="robots" content="noindex" /> : null}
             {meta && meta.length ? <MetaTags meta={meta} /> : null}
 

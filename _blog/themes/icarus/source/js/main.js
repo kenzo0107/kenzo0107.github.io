@@ -1,5 +1,9 @@
 /* eslint-disable node/no-unsupported-features/node-builtins */
 (function($, moment, ClipboardJS, config) {
+    if (typeof moment === 'function' && document.documentElement.lang) {
+        moment.locale(document.documentElement.lang);
+    }
+
     $('.article img:not(".not-gallery-item")').each(function() {
         if (!$(this).attr('loading')) {
             $(this).attr('loading', 'lazy');
