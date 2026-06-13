@@ -42,14 +42,7 @@ head:
 navbar:
   # Categories は site.categories から自動生成のドロップダウンで表示するため menu には置かない
   menu:
-    About: /2013/12/31/about/
   links:
-    GitHub:
-      icon: fab fa-github
-      url: 'https://github.com/kenzo0107'
-    X:
-      icon: fab fa-x-twitter
-      url: https://x.com/kenzo0107
     RSS:
       icon: fas fa-rss
       url: /atom.xml
