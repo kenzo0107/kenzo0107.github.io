@@ -89,7 +89,7 @@ hexo.extend.filter.register('before_generate', function () {
                 perPage,
                 layout: ['category', 'archive', 'index'],
                 format: paginationDir + '/%d/',
-                data: { category: category.name, parents: [] }
+                data: { category: category.name, parents: [], listLang: 'ja' }
             }));
         }, []);
     });
@@ -108,7 +108,7 @@ hexo.extend.filter.register('before_generate', function () {
                 perPage,
                 layout: ['tag', 'archive', 'index'],
                 format: paginationDir + '/%d/',
-                data: { tag: tag.name }
+                data: { tag: tag.name, listLang: 'ja' }
             }));
         }, []);
     });

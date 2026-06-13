@@ -29,7 +29,8 @@ class Navbar extends Component {
             menu,
             links,
             categories,
-            translations
+            translations,
+            langIsInferred
         } = this.props;
 
         let navbarLogo = '';
@@ -63,8 +64,8 @@ class Navbar extends Component {
                     <div class="navbar-brand-right">
                         {/* 言語ピルトグル（スマホ常時表示） */}
                         <div class="navbar-item lang-toggle is-hidden-desktop">
-                            <div class="lang-toggle-pill">
-                                {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.text}</a>)}
+                            <div class="lang-toggle-pill" data-lang-inferred={langIsInferred ? 'true' : null}>
+                                {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url} data-lang={t.lang}>{t.text}</a>)}
                             </div>
                         </div>
                         {/* ダーク/ライト切り替え（スマホ常時表示） */}
@@ -104,8 +105,8 @@ class Navbar extends Component {
                         </Fragment> : null}
                         {/* 言語ピルトグル（デスクトップのみ） */}
                         {Array.isArray(translations) && translations.length > 1 ? <div class="navbar-item lang-toggle is-hidden-touch">
-                            <div class="lang-toggle-pill">
-                                {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url}>{t.text}</a>)}
+                            <div class="lang-toggle-pill" data-lang-inferred={langIsInferred ? 'true' : null}>
+                                {translations.map(t => <a class={classname({ 'lang-toggle-option': true, 'is-active': t.active })} href={t.url} data-lang={t.lang}>{t.text}</a>)}
                             </div>
                         </div> : null}
                         {/* ダーク/ライト切り替え（デスクトップのみ） */}
@@ -210,6 +211,7 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         links,
         categories,
         categoriesTitle: _p('common.category', Infinity),
-        translations
+        translations,
+        langIsInferred: !(page.translation_id && site)
     };
 });

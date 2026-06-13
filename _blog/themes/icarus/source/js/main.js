@@ -176,4 +176,23 @@
             localStorage.setItem('theme', next);
         } catch (e) { /* localStorage 不可の環境は無視 */ }
     });
+
+    // 言語選択を localStorage に保存し、言語が推論されるページ（カテゴリー等）で復元する
+    var savedLang;
+    try { savedLang = localStorage.getItem('preferred-lang'); } catch (e) { /* ignore */ }
+
+    $(document).on('click', '.lang-toggle-option', function() {
+        var lang = $(this).attr('data-lang') || $(this).text().trim().toLowerCase();
+        try { localStorage.setItem('preferred-lang', lang); } catch (e) { /* ignore */ }
+    });
+
+    if (savedLang) {
+        var $inferredPills = $('.lang-toggle-pill[data-lang-inferred]');
+        if ($inferredPills.length) {
+            $inferredPills.find('.lang-toggle-option').each(function() {
+                var lang = $(this).attr('data-lang') || $(this).text().trim().toLowerCase();
+                $(this).toggleClass('is-active', lang === savedLang);
+            });
+        }
+    }
 }(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings));
