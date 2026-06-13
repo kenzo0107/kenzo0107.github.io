@@ -1,6 +1,12 @@
 /* eslint-disable node/no-unsupported-features/node-builtins */
 (function($, moment, ClipboardJS, config) {
     $('.article img:not(".not-gallery-item")').each(function() {
+        if (!$(this).attr('loading')) {
+            $(this).attr('loading', 'lazy');
+        }
+        if (!$(this).attr('decoding')) {
+            $(this).attr('decoding', 'async');
+        }
         // wrap images with link and add caption if possible
         if ($(this).parent('a').length === 0) {
             $(this).wrap('<a class="gallery-item" href="' + $(this).attr('src') + '"></a>');

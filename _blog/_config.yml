@@ -130,3 +130,25 @@ mermaid: ## mermaid url https://github.com/knsv/mermaid
   enable: true # default true
   version: '8.11.0' # default v7.1.2
   theme: default
+
+# hexo-minify: HTML/CSS/JS 圧縮（画像・フォントは無効化）
+minify:
+  exclude: ['*.min.*']
+  js:
+    enable: true
+    options: {}
+  css:
+    enable: true
+    options: {}
+  html:
+    enable: true
+    options:
+      minifyJS: false
+      minifyCSS: false
+      removeComments: true
+      collapseWhitespace: true
+      removeAttributeQuotes: false
+  image:
+    enable: false
+  font:
+    enable: false

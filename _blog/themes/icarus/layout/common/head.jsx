@@ -53,8 +53,8 @@ module.exports = class extends Component {
 
         const language = page.lang || page.language || config.language;
         const fontCssUrl = {
-            default: fontcdn('Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600', 'css2'),
-            cyberpunk: fontcdn('Oxanium:wght@300;400;600&family=Roboto+Mono', 'css2')
+            default: fontcdn('Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap', 'css2'),
+            cyberpunk: fontcdn('Oxanium:wght@300;400;600&family=Roboto+Mono&display=swap', 'css2')
         };
 
         let hlTheme, images;
@@ -169,10 +169,16 @@ module.exports = class extends Component {
             {canonical_url ? <link rel="canonical" href={canonical_url} /> : null}
             {rss ? <link rel="alternate" href={url_for(rss)} title={config.title} type="application/atom+xml" /> : null}
             {favicon ? <link rel="icon" href={url_for(favicon)} /> : null}
-            <link rel="stylesheet" href={iconcdn()} />
-            {hlTheme ? <link data-pjax rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+            <link rel="preconnect" href="https://use.fontawesome.com" />
+            <link rel="dns-prefetch" href="https://use.fontawesome.com" />
+            <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+            <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" />
             <link rel="stylesheet" href={fontCssUrl[variant]} />
+            <link rel="stylesheet" href={iconcdn()} />
             <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
+            {hlTheme ? <link data-pjax rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
             <Plugins site={site} config={config} helper={helper} page={page} head={true} />
 
             {adsenseClientId ? <script data-ad-client={adsenseClientId}
