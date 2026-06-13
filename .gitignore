@@ -15,7 +15,7 @@ privacy_policy/
 content.json
 atom.xml
 manifest.json
-index.html
+/index.html
 
 # _blog/source/ へ移動済みの静的ファイル
 .nojekyll

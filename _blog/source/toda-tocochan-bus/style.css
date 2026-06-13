@@ -1,0 +1,194 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green: #16a34a;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-600: #4b5563;
+  --gray-800: #1f2937;
+  --radius: 12px;
+  --shadow: 0 2px 8px rgba(0,0,0,.10);
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN',
+    'Noto Sans JP', sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-800);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────────────── */
+header {
+  background: var(--green);
+  color: #fff;
+  padding: 0 16px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: var(--shadow);
+}
+
+header img { height: 28px; }
+header h1 { font-size: 1rem; font-weight: 700; letter-spacing: .02em; }
+
+/* ── Main ────────────────────────────────────── */
+main { flex: 1; padding: 16px; max-width: 600px; width: 100%; margin: 0 auto; }
+
+/* ── Back button ─────────────────────────────── */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--green);
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+  margin-bottom: 12px;
+}
+.btn-back::before { content: '←'; }
+
+/* ── View: Circuit ───────────────────────────── */
+#view-circuit h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--gray-600);
+}
+
+#circuit-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.circuit-btn {
+  background: var(--c-bg, #f3f4f6);
+  color: var(--c-color, #1f2937);
+  border: 2px solid var(--c-color, #e5e7eb);
+  border-radius: var(--radius);
+  padding: 24px 12px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.circuit-btn:active { transform: scale(.97); box-shadow: none; }
+
+/* ── View: Station ───────────────────────────── */
+#station-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+#station-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.station-btn {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background .1s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+.station-btn:active { background: var(--gray-100); }
+
+/* ── View: Timetable ─────────────────────────── */
+#tt-header { margin-bottom: 16px; }
+#tt-circuit { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+#tt-station { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+#tt-note { font-size: .78rem; color: var(--gray-600); }
+
+#tt-buses { display: flex; flex-direction: column; gap: 10px; }
+
+.bus-card {
+  background: var(--c-bg, #f3f4f6);
+  border: 1.5px solid var(--c-color, #e5e7eb);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+.bus-card--next {
+  border-width: 2.5px;
+  padding: 18px 20px;
+}
+
+.bus-time {
+  font-size: 2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--c-color, #1f2937);
+  letter-spacing: .04em;
+}
+.bus-card--next .bus-time { font-size: 2.6rem; }
+
+.bus-countdown {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.bus-card--next .bus-countdown { font-size: 1.1rem; }
+
+.no-bus {
+  text-align: center;
+  color: var(--gray-600);
+  font-size: 1.1rem;
+  padding: 32px 0;
+}
+
+/* ── Timetable actions ───────────────────────── */
+.tt-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-primary {
+  flex: 1;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-primary:active { opacity: .85; }
+
+/* ── Footer ──────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 14px 16px;
+  font-size: .72rem;
+  color: var(--gray-600);
+  border-top: 1px solid var(--gray-200);
+  background: #fff;
+}

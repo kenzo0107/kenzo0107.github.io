@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="戸田市コミュニティバス tocoちゃんバスの時刻表アプリ。次のバスまでのカウントダウン表示。">
+  <meta name="keywords" content="戸田公園,コミュニティバス,toco,tocoちゃんバス,戸田市,時刻表">
+  <title>tocoちゃんバス 時刻表</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="toco ロゴ">
+    <h1>tocoちゃんバス 時刻表</h1>
+  </header>
+
+  <main>
+    <!-- View: Circuit Selection -->
+    <div id="view-circuit">
+      <h2>循環を選択してください</h2>
+      <div id="circuit-list"></div>
+    </div>
+
+    <!-- View: Station Selection -->
+    <div id="view-station" hidden>
+      <button class="btn-back" id="btn-back-station">循環選択に戻る</button>
+      <div id="station-title"></div>
+      <div id="station-list"></div>
+    </div>
+
+    <!-- View: Timetable -->
+    <div id="view-timetable" hidden>
+      <button class="btn-back" id="btn-back-timetable">停留所選択に戻る</button>
+      <div id="tt-header">
+        <div id="tt-circuit"></div>
+        <div id="tt-station"></div>
+        <div id="tt-note"></div>
+      </div>
+      <div id="tt-buses"></div>
+      <div class="tt-actions">
+        <button class="btn-primary" id="btn-refresh">更新</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>[戸田市非公式] バス事業者公式アプリではありません。事業者様へのお問い合わせはご遠慮ください。</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+</body>
+</html>
