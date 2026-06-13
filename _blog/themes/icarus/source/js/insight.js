@@ -211,15 +211,17 @@ function loadInsight(config, translation) {
 
   function ensureLoaded(callback) {
     if (jsonCache) {
-      callback();
+      if (callback) callback();
       return;
     }
     if (!jsonLoading) {
       jsonLoading = true;
-      $.getJSON(config.contentUrl, (json) => {
-        setupSearch(json);
-        if (callback) callback();
-      });
+      fetch(config.contentUrl)
+        .then(r => r.json())
+        .then(json => {
+          setupSearch(json);
+          if (callback) callback();
+        });
     }
   }
 
