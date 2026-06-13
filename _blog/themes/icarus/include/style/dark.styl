@@ -230,6 +230,10 @@ html[data-theme='dark']
             &:hover
                 color: $dark-link
 
+            &.is-active
+                background-color: $dark-surface-2
+                color: $dark-link
+
     // --- 入力欄 ---
     .input,
     .textarea
@@ -278,3 +282,19 @@ html[data-theme='dark']
     // --- 区切り線 ---
     hr
         background-color: $dark-border
+
+    // --- 著者カード ---
+    .author-card
+        border-top-color: $dark-border
+
+        .author-card-name
+            color: $dark-text-strong
+
+        .author-card-btn
+            background-color: $dark-surface-2
+            border-color: $dark-border
+            color: $dark-text
+
+            &:hover
+                border-color: $dark-link
+                color: $dark-link
