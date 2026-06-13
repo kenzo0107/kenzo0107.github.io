@@ -29,6 +29,9 @@ module.exports = class extends Component {
             }
         };`;
 
+        const hasMermaid = config.mermaid && config.mermaid.enable
+            && page && page.content && page.content.includes('class="mermaid"');
+
         return <Fragment>
             <script src={cdn('jquery', '3.3.1', 'dist/jquery.min.js')}></script>
             <script src={cdn('moment', '2.22.2', 'min/moment-with-locales.min.js')}></script>
@@ -38,7 +41,7 @@ module.exports = class extends Component {
             <script data-pjax src={url_for('/js/column.js')}></script>
             <Plugins site={site} config={config} page={page} helper={helper} head={false} />
             <script data-pjax src={url_for('/js/main.js')} defer></script>
-            <script src={`https://cdn.jsdelivr.net/npm/mermaid@${config.mermaid.version}/dist/mermaid.min.js`} defer></script>
+            {hasMermaid ? <script src={`https://cdn.jsdelivr.net/npm/mermaid@${config.mermaid.version}/dist/mermaid.min.js`} defer></script> : null}
         </Fragment>;
     }
 };
