@@ -172,8 +172,10 @@ module.exports = class extends Component {
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link rel="preconnect" href="https://use.fontawesome.com" />
+            <link rel="preconnect" href="https://www.googletagmanager.com" />
             <link rel="dns-prefetch" href="https://use.fontawesome.com" />
             <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+            <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
             <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" />
             <link rel="stylesheet" href={fontCssUrl[variant]} />
             <link rel="stylesheet" href={iconcdn()} />
