@@ -83,13 +83,46 @@ hexo.extend.filter.register('before_generate', function () {
         const orderBy = config.category_generator.order_by || '-date';
 
         return locals.categories.reduce((result, category) => {
-            const posts = category.posts.filter(post => !isTranslation(post)).sort(orderBy);
-            if (!posts.length) return result;
-            return result.concat(pagination(category.path, posts, {
+            const jaPosts = category.posts.filter(post => !isTranslation(post)).sort(orderBy);
+            if (!jaPosts.length) return result;
+            const hasEnPosts = category.posts.some(post => isTranslation(post));
+            const data = {
+                category: category.name,
+                parents: [],
+                listLang: 'ja',
+                jaListUrl: category.path,
+                enListUrl: hasEnPosts ? 'en/' + category.path : null
+            };
+            return result.concat(pagination(category.path, jaPosts, {
                 perPage,
                 layout: ['category', 'archive', 'index'],
                 format: paginationDir + '/%d/',
-                data: { category: category.name, parents: [], listLang: 'ja' }
+                data
+            }));
+        }, []);
+    });
+
+    // --- 英語カテゴリページ (/en/categories/xxx/) ---
+    hexo.extend.generator.register('en-category', function (locals) {
+        const config = this.config;
+        const perPage = config.category_generator.per_page;
+        const paginationDir = config.pagination_dir || 'page';
+        const orderBy = config.category_generator.order_by || '-date';
+
+        return locals.categories.reduce((result, category) => {
+            const enPosts = category.posts.filter(post => isTranslation(post)).sort(orderBy);
+            if (!enPosts.length) return result;
+            return result.concat(pagination('en/' + category.path, enPosts, {
+                perPage,
+                layout: ['category', 'archive', 'index'],
+                format: paginationDir + '/%d/',
+                data: {
+                    category: category.name,
+                    parents: [],
+                    listLang: 'en',
+                    jaListUrl: category.path,
+                    enListUrl: 'en/' + category.path
+                }
             }));
         }, []);
     });
@@ -102,13 +135,44 @@ hexo.extend.filter.register('before_generate', function () {
         const orderBy = config.tag_generator.order_by || '-date';
 
         return locals.tags.reduce((result, tag) => {
-            const posts = tag.posts.filter(post => !isTranslation(post)).sort(orderBy);
-            if (!posts.length) return result;
-            return result.concat(pagination(tag.path, posts, {
+            const jaPosts = tag.posts.filter(post => !isTranslation(post)).sort(orderBy);
+            if (!jaPosts.length) return result;
+            const hasEnPosts = tag.posts.some(post => isTranslation(post));
+            const data = {
+                tag: tag.name,
+                listLang: 'ja',
+                jaListUrl: tag.path,
+                enListUrl: hasEnPosts ? 'en/' + tag.path : null
+            };
+            return result.concat(pagination(tag.path, jaPosts, {
                 perPage,
                 layout: ['tag', 'archive', 'index'],
                 format: paginationDir + '/%d/',
-                data: { tag: tag.name, listLang: 'ja' }
+                data
+            }));
+        }, []);
+    });
+
+    // --- 英語タグページ (/en/tags/xxx/) ---
+    hexo.extend.generator.register('en-tag', function (locals) {
+        const config = this.config;
+        const perPage = config.tag_generator.per_page;
+        const paginationDir = config.pagination_dir || 'page';
+        const orderBy = config.tag_generator.order_by || '-date';
+
+        return locals.tags.reduce((result, tag) => {
+            const enPosts = tag.posts.filter(post => isTranslation(post)).sort(orderBy);
+            if (!enPosts.length) return result;
+            return result.concat(pagination('en/' + tag.path, enPosts, {
+                perPage,
+                layout: ['tag', 'archive', 'index'],
+                format: paginationDir + '/%d/',
+                data: {
+                    tag: tag.name,
+                    listLang: 'en',
+                    jaListUrl: tag.path,
+                    enListUrl: 'en/' + tag.path
+                }
             }));
         }, []);
     });

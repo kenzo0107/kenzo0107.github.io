@@ -6,6 +6,7 @@ module.exports = class extends Component {
         const { config, page, helper } = this.props;
         const { __, url_for, date, date_xml } = helper;
 
+        const langPrefix = page.listLang === 'en' ? 'en/' : '';
         return <Fragment>
             <div class="columns is-multiline article-cards">
                 {page.posts.map(post => {
@@ -35,7 +36,7 @@ module.exports = class extends Component {
                                 <div class="article-card-meta is-size-7 is-uppercase">
                                     {post.date ? <time class="article-card-date" dateTime={date_xml(post.date)}>{date(post.date)}</time> : null}
                                     {post.categories && post.categories.length ? <span class="article-card-category">
-                                        {post.categories.map(c => <a class="link-muted" href={url_for(c.path)}>{c.name}</a>)}
+                                        {post.categories.map(c => <a class="link-muted" href={url_for(langPrefix + c.path)}>{c.name}</a>)}
                                     </span> : null}
                                 </div>
                                 <p class="article-card-title">

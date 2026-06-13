@@ -192,8 +192,10 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         const order = Object.keys(LANGUAGE_LABELS);
         translations.sort((a, b) => order.indexOf(a.lang) - order.indexOf(b.lang));
     } else if (page.listLang) {
-        translations.push({ lang: 'ja', url: url_for('/'), text: LANGUAGE_LABELS.ja.text, active: page.listLang === 'ja' });
-        translations.push({ lang: 'en', url: url_for('/en/'), text: LANGUAGE_LABELS.en.text, active: page.listLang === 'en' });
+        const jaUrl = page.jaListUrl ? url_for(page.jaListUrl) : url_for('/');
+        const enUrl = page.enListUrl ? url_for(page.enListUrl) : url_for('/en/');
+        translations.push({ lang: 'ja', url: jaUrl, text: LANGUAGE_LABELS.ja.text, active: page.listLang === 'ja' });
+        translations.push({ lang: 'en', url: enUrl, text: LANGUAGE_LABELS.en.text, active: page.listLang === 'en' });
     }
 
     if (translations.length === 0) {
