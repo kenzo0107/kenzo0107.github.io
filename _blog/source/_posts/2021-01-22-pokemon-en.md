@@ -1,6 +1,8 @@
 ---
 title: Toys I Built with a Raspberry Pi in 2020
-category: RaspberryPI
+categories:
+- [RaspberryPI]
+- [DIY]
 date: 2021-01-22
 lang: en
 translation_id: pokemon

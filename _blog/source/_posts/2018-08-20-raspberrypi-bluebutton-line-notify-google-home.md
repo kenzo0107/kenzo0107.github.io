@@ -2,7 +2,9 @@
 layout: post
 title: 食洗機かけ終わったかわからなくなる問題を RaspberryPI + BlueButton + LINE Notify + Google Home で解決した話
 date: 2018-08-20
-category: RaspberryPI
+categories:
+- [RaspberryPI]
+- [DIY]
 lang: ja
 translation_id: raspberrypi-bluebutton-line-notify-google-home
 tags:

@@ -4,7 +4,9 @@ date: 2022-01-06
 lang: en
 translation_id: raspberrypi-co2-monitoring
 permalink: en/2022/01/06/raspberrypi-co2-monitoring/
-category: RaspberryPI
+categories:
+- [RaspberryPI]
+- [DIY]
 cover: https://i.imgur.com/C3bQR5g.jpeg
 ---
 

@@ -2,7 +2,9 @@
 layout: post
 title: Hearing My Child's Smiles and Laughter with ffmpeg + Nginx + RTMP on RaspberryPI
 date: 2018-08-15
-category: RaspberryPI
+categories:
+- [RaspberryPI]
+- [DIY]
 lang: en
 translation_id: ffmpeg-nginx-rtmp-on-raspberrypi
 permalink: en/2018/08/15/ffmpeg-nginx-rtmp-on-raspberrypi/

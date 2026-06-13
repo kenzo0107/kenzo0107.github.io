@@ -2,7 +2,7 @@
 layout: post
 title: toda-tocochan-bus flask on IBM Bluemix へ引っ越し
 date: 2017-10-29
-category: Python
+category: DIY
 lang: ja
 translation_id: toda-tocochan-bus-flask-on-ibm-bluemix
 tags:

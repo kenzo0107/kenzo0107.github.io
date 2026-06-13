@@ -1,7 +1,7 @@
 ---
 title: ブラウザで動くサッカー作戦盤を作った ── 子供に戦術を説明したくて
 categories:
-- [Solo dev]
+- [DIY]
 - [AI]
 date: 2026-06-12
 lang: ja

@@ -2,7 +2,7 @@
 layout: post
 title: Migrating the toda-tocochan-bus Flask app to IBM Bluemix
 date: 2017-10-29
-category: Python
+category: DIY
 lang: en
 translation_id: toda-tocochan-bus-flask-on-ibm-bluemix
 permalink: en/2017/10/29/toda-tocochan-bus-flask-on-ibm-bluemix/
