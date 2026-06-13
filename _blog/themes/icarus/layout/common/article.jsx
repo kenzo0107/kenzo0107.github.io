@@ -124,8 +124,8 @@ module.exports = class extends Component {
                     {index && page.excerpt ? <a class="article-more button is-small is-size-7" href={`${url_for(page.link || page.path)}#more`}>{__('article.more')}</a> : null}
                     {/* Share button */}
                     {!index ? <Share config={config} page={page} helper={helper} /> : null}
-                    {/* Author card */}
-                    {!index ? <div class="author-card mt-5">
+                    {/* Author card - About ページでは著者カードは about.md 本文と重複するため非表示 */}
+                    {!index && page.slug !== 'about' ? <div class="author-card mt-5">
                         <div class="media">
                             <div class="media-left">
                                 <figure class="image is-48x48">
