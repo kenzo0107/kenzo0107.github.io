@@ -32,9 +32,12 @@ module.exports = class extends Component {
         const hasMermaid = config.mermaid && config.mermaid.enable
             && page && page.content && page.content.includes('class="mermaid"');
 
+        const needsLocale = language !== 'en';
+
         return <Fragment>
             <script src={cdn('jquery', '3.3.1', 'dist/jquery.slim.min.js')}></script>
-            <script src={cdn('moment', '2.22.2', 'min/moment-with-locales.min.js')}></script>
+            <script src={cdn('moment', '2.22.2', 'min/moment.min.js')}></script>
+            {needsLocale && <script src={`https://cdn.jsdelivr.net/npm/moment@2.22.2/locale/${language}.js`}></script>}
             {clipboard && <script src={cdn('clipboard', '2.0.4', 'dist/clipboard.min.js')} defer></script>}
             <script dangerouslySetInnerHTML={{ __html: `moment.locale("${language}");` }}></script>
             <script dangerouslySetInnerHTML={{ __html: embeddedConfig }}></script>
