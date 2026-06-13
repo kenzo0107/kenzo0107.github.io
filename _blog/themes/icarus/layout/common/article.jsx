@@ -125,36 +125,27 @@ module.exports = class extends Component {
                     {/* Share button */}
                     {!index ? <Share config={config} page={page} helper={helper} /> : null}
                     {/* Author card */}
-                    {!index ? (() => {
-                        const authorName = config.author || 'Author';
-                        const navLinks = config.navbar && config.navbar.links ? config.navbar.links : {};
-                        const githubEntry = navLinks.GitHub;
-                        const avatarSrc = githubEntry ? githubEntry.url + '.png?size=64' : null;
-                        const aboutUrl = config.navbar && config.navbar.menu && config.navbar.menu.About
-                            ? url_for(config.navbar.menu.About) : null;
-                        const socialNames = Object.keys(navLinks).filter(n => n !== 'RSS');
-                        return <div class="author-card mt-5">
-                            <div class="media">
-                                {avatarSrc ? <div class="media-left">
-                                    <figure class="image is-48x48">
-                                        <img class="is-rounded not-gallery-item" src={avatarSrc} alt="kenzo0107" />
-                                    </figure>
-                                </div> : null}
-                                <div class="media-content">
-                                    <p class="author-card-name">kenzo0107</p>
-                                    <div class="buttons are-small mt-1">
-                                        {socialNames.map(name => {
-                                            const link = navLinks[name];
-                                            return <a class="button is-light author-card-btn" href={link.url} target="_blank" rel="noopener noreferrer">
-                                                {link.icon ? <span class="icon is-small"><i class={link.icon}></i></span> : <span>{name}</span>}
-                                            </a>;
-                                        })}
-                                        {aboutUrl ? <a class="button is-primary is-light author-card-btn" href={aboutUrl}>About me</a> : null}
-                                    </div>
+                    {!index ? <div class="author-card mt-5">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img class="is-rounded not-gallery-item" src="https://github.com/kenzo0107.png?size=64" alt="kenzo0107" />
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="author-card-name">kenzo0107</p>
+                                <div class="buttons are-small mt-1">
+                                    <a class="button is-light author-card-btn" href="https://github.com/kenzo0107" target="_blank" rel="noopener noreferrer">
+                                        <span class="icon is-small"><i class="fab fa-github"></i></span>
+                                    </a>
+                                    <a class="button is-light author-card-btn" href="https://x.com/kenzo0107" target="_blank" rel="noopener noreferrer">
+                                        <span class="icon is-small"><i class="fab fa-x-twitter"></i></span>
+                                    </a>
+                                    <a class="button is-primary is-light author-card-btn" href="/2013/12/31/about/">About me</a>
                                 </div>
                             </div>
-                        </div>;
-                    })() : null}
+                        </div>
+                    </div> : null}
                 </article>
             </div>
             {/* Donate button */}
