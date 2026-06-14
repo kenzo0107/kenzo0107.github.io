@@ -152,8 +152,10 @@ minify:
       removeComments: true
       collapseWhitespace: true
       removeAttributeQuotes: true
+      removeRedundantAttributes: true
       sortAttributes: true
       sortClassName: true
+      collapseBooleanAttributes: true
   image:
     enable: false
   font:
