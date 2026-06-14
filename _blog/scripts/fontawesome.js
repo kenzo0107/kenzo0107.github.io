@@ -1,45 +1,51 @@
 'use strict';
-const fs = require('fs');
-const path = require('path');
 
-// Self-host FontAwesome Free with aggressive CSS tree-shaking.
-// - Strip all icon class definitions except the ~15 actually used in templates.
-// - Strip TTF fallback src lines; keep only woff2.
-// - Strip unused @font-face blocks (regular, legacy FA5, v4compat).
-// woff2 font files are pre-subsetted (solid: 11 icons, brands: 4 icons) and live in
-// themes/icarus/source/webfonts/ — Hexo copies them to public/ automatically.
+// Minimal self-hosted FontAwesome CSS — contains ONLY what the templates actually use.
+// - Base rendering rules (.fa, .fas, .fab, ::before content var)
+// - @font-face for solid (woff2 only, font-display:swap)
+// - @font-face for brands (woff2 only, font-display:swap)
+// - 15 icon-specific --fa custom-property definitions
+// All utility classes (size modifiers, pull, border, stack, animations, etc.) are omitted.
 
-const ICONS_NEEDED = new Set([
-    'fa-angle-down', 'fa-angle-right', 'fa-chevron-left', 'fa-chevron-right', 'fa-chevron-up',
-    'fa-copy', 'fa-list-ul', 'fa-map-marker-alt', 'fa-moon', 'fa-sun', 'fa-rss',
-    'fa-github', 'fa-x-twitter', 'fa-twitter', 'fa-patreon',
-]);
+const BASE_RULES =
+    '.fa{font-family:var(--fa-style-family,"Font Awesome 6 Free");font-weight:var(--fa-style,900)}' +
+    '.fa,.fa-brands,.fa-regular,.fa-solid,.fab,.far,.fas{' +
+        '-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;' +
+        'display:inline-block;font-style:normal;font-variant:normal;line-height:1;text-rendering:auto}' +
+    '.fa-brands:before,.fa-regular:before,.fa-solid:before,.fa:before,.fab:before,.far:before,.fas:before{content:var(--fa)}' +
+    '.fa-classic,.fa-regular,.fa-solid,.far,.fas{font-family:"Font Awesome 6 Free"}' +
+    '.fa-brands,.fab{font-family:"Font Awesome 6 Brands"}';
 
-function stripIconClasses(css) {
-    // Match single and multi-selector icon rules: .fa-xxx{--fa:"..."}
-    return css.replace(/((?:\.fa-[a-z0-9-]+,)*\.fa-[a-z0-9-]+)\{--fa:"[^"]*"\}/g, (match, selectors) => {
-        const parts = selectors.split(',');
-        const needed = parts.filter(s => ICONS_NEEDED.has(s.slice(1)));
-        if (!needed.length) return '';
-        const body = match.slice(selectors.length);
-        return needed.join(',') + body;
-    });
-}
+const FONT_FACES =
+    '@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;' +
+    'font-display:swap;src:url("/webfonts/fa-solid-900.woff2") format("woff2")}' +
+    '@font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;' +
+    'font-display:swap;src:url("/webfonts/fa-brands-400.woff2") format("woff2")}';
+
+// Only the icons actually used in templates and JS files.
+// Unicode codepoints from FontAwesome 6.7.2.
+const ICON_DEFS = [
+    ['.fa-angle-down',    '\\f107'],
+    ['.fa-angle-right',   '\\f105'],
+    ['.fa-chevron-left',  '\\f053'],
+    ['.fa-chevron-right', '\\f054'],
+    ['.fa-chevron-up',    '\\f077'],
+    ['.fa-copy',          '\\f0c5'],
+    ['.fa-list-ul',       '\\f0ca'],
+    ['.fa-map-marker-alt','\\f3c5'],
+    ['.fa-moon',          '\\f186'],
+    ['.fa-sun',           '\\f185'],
+    ['.fa-rss',           '\\f09e'],
+    ['.fa-github',        '\\f09b'],
+    ['.fa-x-twitter',     '\\e61b'],
+    ['.fa-twitter',       '\\f099'],
+    ['.fa-patreon',       '\\f3d9'],
+].map(([cls, cp]) => `${cls}:before{--fa:"${cp}"}`).join('');
 
 function buildFaCss() {
-    const base = path.join(__dirname, '../node_modules/@fortawesome/fontawesome-free');
-    let css = fs.readFileSync(path.join(base, 'css/all.min.css'), 'utf8');
-    css = stripIconClasses(css);
-    css = css.replace(/,url\([^)]+\.ttf\) format\("truetype"\)/g, '');
-    css = css.replace(/@font-face\{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400[^}]*\}/g, '');
-    css = css.replace(/@font-face\{font-family:"Font Awesome 5[^}]*\}/g, '');
-    css = css.replace(/@font-face\{font-family:"FontAwesome"[^}]*\}/g, '');
-    css = css.replace(/@font-face\{font-family:"Font Awesome 6 Free";font-style:italic[^}]*\}/g, '');
-    css = css.replace(/font-display:block/g, 'font-display:swap');
-    return css;
+    return BASE_RULES + FONT_FACES + ICON_DEFS;
 }
 
-// Build once and cache; the result is stable across the build run.
 let _faCssCache = null;
 function getFaCss() {
     if (!_faCssCache) _faCssCache = buildFaCss();
