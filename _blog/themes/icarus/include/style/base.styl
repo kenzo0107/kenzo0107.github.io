@@ -72,7 +72,16 @@ $colors = merge($colors, $custom-colors)
 @import bulma-stylus-root + '/components/navbar'
 @import bulma-stylus-root + '/components/pagination'
 // Selective element imports — exclude unused: box, notification, progress
+// Limit $colors to only the variants used in templates+posts before importing button.styl
+// (navbar/pagination above already consumed the full $colors; nothing below needs it restored)
+$colors-save = $colors
+$colors = {
+    primary: $colors['primary']
+    link: $colors['link']
+    light: $colors['light']
+}
 @import bulma-stylus-root + '/elements/button'
+$colors = $colors-save
 @import bulma-stylus-root + '/elements/container'
 @import bulma-stylus-root + '/elements/content'
 @import bulma-stylus-root + '/elements/icon'
