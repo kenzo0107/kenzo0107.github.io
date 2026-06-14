@@ -42,8 +42,8 @@ Gallery.Cacheable = cacheComponent(Gallery, 'plugin.gallery.async', props => {
         head,
         hasImages,
         lightGallery: {
-            jsUrl: helper.cdn('lightgallery', '2.7.2', 'lightgallery.min.js'),
-            cssUrl: helper.cdn('lightgallery', '2.7.2', 'css/lightgallery-bundle.min.css')
+            jsUrl: helper.url_for('/js/lightgallery.min.js'),
+            cssUrl: helper.url_for('/css/lightgallery-bundle.min.css')
         },
         justifiedGallery: hasJustifiedGallery ? {
             jsUrl: helper.cdn('justifiedGallery', '3.8.1', 'dist/js/jquery.justifiedGallery.min.js'),

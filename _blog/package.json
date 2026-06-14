@@ -40,6 +40,7 @@
     "inferno-create-element": "^8.2.3"
   },
   "devDependencies": {
+    "lightgallery": "^2.7.2",
     "minimatch": "^3.0.4",
     "pace-js": "^1.2.4"
   },

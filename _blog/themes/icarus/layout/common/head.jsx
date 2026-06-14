@@ -158,7 +158,6 @@ module.exports = class extends Component {
             <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
             {/* dns-prefetch for non-critical / async origins */}
             <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-            <link rel="dns-prefetch" href="https://cdn-ak.f.st-hatena.com" />
             <link rel="dns-prefetch" href="https://i.imgur.com" />
             <link rel="dns-prefetch" href="https://s7.addthis.com" />
             <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
