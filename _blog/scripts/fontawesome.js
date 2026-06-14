@@ -42,5 +42,9 @@ hexo.extend.generator.register('fontawesome', function() {
     css = css.replace(/@font-face\{font-family:"FontAwesome"[^}]*\}/g, '');
     css = css.replace(/@font-face\{font-family:"Font Awesome 6 Free";font-style:italic[^}]*\}/g, '');
 
+    // Change font-display from block (up to 3s invisible) to swap for the subset
+    // fonts which are tiny (1-2KB) and load nearly instantly even without SW cache.
+    css = css.replace(/font-display:block/g, 'font-display:swap');
+
     return { path: 'css/fontawesome-free.min.css', data: css };
 });
