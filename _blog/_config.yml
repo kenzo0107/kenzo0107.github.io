@@ -143,11 +143,13 @@ minify:
   html:
     enable: true
     options:
-      minifyJS: false
-      minifyCSS: false
+      minifyJS: true
+      minifyCSS: true
       removeComments: true
       collapseWhitespace: true
-      removeAttributeQuotes: false
+      removeAttributeQuotes: true
+      sortAttributes: true
+      sortClassName: true
   image:
     enable: false
   font:
