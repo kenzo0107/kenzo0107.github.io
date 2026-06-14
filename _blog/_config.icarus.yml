@@ -4,16 +4,16 @@ logo: /img/logo.svg
 head:
   favicon: /img/favicon.svg
   manifest:
-    name:
-    short_name:
-    start_url:
-    theme_color:
-    background_color:
+    name: 長生村本郷Engineers'Blog
+    short_name: KenzosBlog
+    start_url: /
+    theme_color: '#3273dc'
+    background_color: '#ffffff'
     display: standalone
     icons:
-      - src: ''
-        sizes: ''
-        type:
+      - src: /img/favicon.svg
+        sizes: any
+        type: image/svg+xml
   open_graph:
     title:
     type: blog
