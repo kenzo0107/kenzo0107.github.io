@@ -200,9 +200,8 @@ module.exports = class extends Component {
             {nextPath ? <link rel="prefetch" href={nextPath} /> : null}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://use.fontawesome.com" />
+            <link rel="preconnect" href="https://use.fontawesome.com" crossOrigin="anonymous" />
             <link rel="preconnect" href="https://www.googletagmanager.com" />
-            <link rel="dns-prefetch" href="https://use.fontawesome.com" />
             <link rel="preconnect" href="https://cdn-ak.f.st-hatena.com" />
             <link rel="preconnect" href="https://i.imgur.com" />
             <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
