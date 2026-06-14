@@ -31,12 +31,13 @@ function getPageTitle(page, siteTitle, helper) {
 module.exports = class extends Component {
     render() {
         const { site, config, helper, page } = this.props;
-        const { url_for, cdn, fontcdn, iconcdn, is_post } = helper;
+        const { url_for, cdn, fontcdn, is_post, fontawesome_css, highlight_dark_css } = helper;
         const {
             url,
             head = {},
             article,
             highlight,
+            search,
             variant = 'default'
         } = config;
         const {
@@ -52,10 +53,20 @@ module.exports = class extends Component {
         const noIndex = helper.is_archive() || helper.is_category() || helper.is_tag();
 
         const language = page.lang || page.language || config.language;
+        // JetBrains Mono is self-hosted; Google Fonts only serves Noto Sans JP.
         const fontCssUrl = {
-            default: fontcdn('Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600', 'css2'),
-            cyberpunk: fontcdn('Oxanium:wght@300;400;600&family=Roboto+Mono', 'css2')
+            default: fontcdn('Noto+Sans+JP:wght@400;700&display=optional', 'css2'),
+            cyberpunk: fontcdn('Oxanium:wght@300;400;600&family=Roboto+Mono&display=swap', 'css2')
         };
+        // Inline @font-face for JetBrains Mono — declared early so the browser can
+        // schedule the font download as soon as it encounters a code block.
+        const jbMonoFontFace = [400, 600].map(w =>
+            `@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:${w};` +
+            `font-display:optional;` +
+            `src:url('/fonts/jetbrains-mono-${w}.woff2') format('woff2');` +
+            `unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,` +
+            `U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}`
+        ).join('');
 
         let hlTheme, images;
         if (highlight && highlight.enable === false) {
@@ -85,14 +96,6 @@ module.exports = class extends Component {
             images = [url_for('/img/og_image.png')];
         }
 
-        let adsenseClientId = null;
-        if (Array.isArray(config.widgets)) {
-            const widget = config.widgets.find(widget => widget.type === 'adsense');
-            if (widget) {
-                adsenseClientId = widget.client_id;
-            }
-        }
-
         let openGraphImages = images;
         if ((typeof open_graph === 'object' && open_graph !== null)
             && ((Array.isArray(open_graph.image) && open_graph.image.length > 0) || typeof open_graph.image === 'string')) {
@@ -120,10 +123,89 @@ module.exports = class extends Component {
         // 描画前にテーマを適用してダークモードのちらつき(FOUC)を防ぐ
         const themeInitScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
 
+        let clipboard = true;
+        let fold = 'unfolded';
+        if (article && article.highlight) {
+            if (typeof article.highlight.clipboard !== 'undefined') {
+                clipboard = !!article.highlight.clipboard;
+            }
+            if (typeof article.highlight.fold === 'string') {
+                fold = article.highlight.fold;
+            }
+        }
+        const icarusConfigScript = `var IcarusThemeSettings={article:{highlight:{clipboard:${clipboard},fold:'${fold}'}}};`;
+
+        const hasCodeBlocks = !!(page.content && page.content.includes('<figure class="highlight'));
+        // Inline script adds onload handlers for async-loaded font CSS only
+        // (FA CSS and highlight CSS are now inlined via <style>)
+        const asyncExtCssScript = `(function(){var l=document.getElementById('font-css');if(l)l.onload=function(){this.rel='stylesheet';};})();`;
+        // FA CSS and highlight CSS inlined per page to eliminate separate HTTP requests
+        const faCss = fontawesome_css ? fontawesome_css() : '';
+        const hlCss = (hlTheme === 'github-dark' && hasCodeBlocks && highlight_dark_css) ? highlight_dark_css() : '';
+
+        // LCP preload: preload the cover/thumbnail image for article pages,
+        // or the first post's cover on listing pages (homepage, category, tag, archive).
+        const firstPost = page.posts && typeof page.posts.first === 'function' ? page.posts.first() : null;
+        const lcpImage = typeof page.cover === 'string' ? url_for(page.cover)
+            : typeof page.thumbnail === 'string' ? url_for(page.thumbnail)
+            : (firstPost && typeof firstPost.cover === 'string') ? url_for(firstPost.cover)
+            : (firstPost && typeof firstPost.thumbnail === 'string') ? url_for(firstPost.thumbnail)
+            : null;
+
+        const swScript = `if('serviceWorker'in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}`;
+
+        // Speculation Rules: prerender same-origin pages on hover for near-instant navigation.
+        // Supported in Chromium 109+ only; other browsers safely ignore the script type.
+        const speculationRules = JSON.stringify({
+            prerender: [{ where: { href_matches: '/*' }, eagerness: 'moderate' }]
+        });
+
+        const prevPath = page.prev ? url_for(page.prev.path) : null;
+        const nextPath = page.next ? url_for(page.next.path) : null;
+
         return <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+            {/* Anti-FOUC scripts must come first */}
             <script dangerouslySetInnerHTML={{ __html: themeInitScript }}></script>
+            <script dangerouslySetInnerHTML={{ __html: icarusConfigScript }}></script>
+
+            {/* Resource hints: placed early so preload scanner starts ASAP */}
+            {/* preconnect only for origins on the critical render path */}
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+            {/* dns-prefetch for non-critical / async origins */}
+            <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+            <link rel="dns-prefetch" href="https://i.imgur.com" />
+            <link rel="dns-prefetch" href="https://s7.addthis.com" />
+            <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+            {search && search.type === 'insight' ? <link rel="prefetch" href={url_for('/content.json')} as="fetch" crossOrigin="anonymous" /> : null}
+            {/* insight.js is loaded via <script defer> in body; preload would compete with critical CSS/fonts */}
+            {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}
+            <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
+            <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
+            <link rel="preload" href={url_for('/webfonts/fa-solid-900.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" />
+            <link rel="preload" href={url_for('/webfonts/fa-brands-400.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" />
+            {hasCodeBlocks ? <link rel="preload" href={url_for('/fonts/jetbrains-mono-400.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" /> : null}
+            {hasCodeBlocks ? <link rel="preload" href={url_for('/fonts/jetbrains-mono-600.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" /> : null}
+            {/* Preload main.js only — smaller deferred scripts are SW pre-cached and tiny enough to skip */}
+            <link rel="preload" href={url_for('/js/main.js')} as="script" />
+            {(page.layout === 'post' || page.layout === 'page') ? <link rel="preload" href={url_for('/js/toc.js')} as="script" /> : null}
+            {/* For non-github-dark themes, still async-load from CDN */}
+            {hlTheme && hasCodeBlocks && hlTheme !== 'github-dark' ? <link rel="preload" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} as="style" id="hl-css" /> : null}
+            <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
+            <noscript>
+                <link rel="stylesheet" href={fontCssUrl[variant]} />
+                {hlTheme && hasCodeBlocks && hlTheme !== 'github-dark' ? <link rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
+            </noscript>
+            <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
+            {/* FA CSS inlined to eliminate separate HTTP request — icons render on first paint */}
+            {faCss ? <style dangerouslySetInnerHTML={{ __html: faCss }}></style> : null}
+            {/* Highlight CSS inlined on pages with code blocks to avoid FOUC in code blocks */}
+            {hlCss ? <style dangerouslySetInnerHTML={{ __html: hlCss }}></style> : null}
+            {variant === 'default' ? <style dangerouslySetInnerHTML={{ __html: jbMonoFontFace }}></style> : null}
+
+            {/* Metadata (does not affect resource loading) */}
             {noIndex ? <meta name="robots" content="noindex" /> : null}
             {meta && meta.length ? <MetaTags meta={meta} /> : null}
 
@@ -169,16 +251,14 @@ module.exports = class extends Component {
             {canonical_url ? <link rel="canonical" href={canonical_url} /> : null}
             {rss ? <link rel="alternate" href={url_for(rss)} title={config.title} type="application/atom+xml" /> : null}
             {favicon ? <link rel="icon" href={url_for(favicon)} /> : null}
-            <link rel="stylesheet" href={iconcdn()} />
-            {hlTheme ? <link data-pjax rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
-            <link rel="stylesheet" href={fontCssUrl[variant]} />
-            <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
+            {prevPath ? <link rel="prefetch" href={prevPath} /> : null}
+            {nextPath ? <link rel="prefetch" href={nextPath} /> : null}
+
             <Plugins site={site} config={config} helper={helper} page={page} head={true} />
 
-            {adsenseClientId ? <script data-ad-client={adsenseClientId}
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script> : null}
-
             {followItVerificationCode ? <meta name="follow.it-verification-code" content={followItVerificationCode} /> : null}
+            <script dangerouslySetInnerHTML={{ __html: swScript }}></script>
+            <script type="speculationrules" dangerouslySetInnerHTML={{ __html: speculationRules }}></script>
         </head>;
     }
 };

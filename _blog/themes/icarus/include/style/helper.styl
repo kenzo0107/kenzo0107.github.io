@@ -1,124 +1,51 @@
 /* ---------------------------------
- *          Spacing helpers
+ *   Spacing helpers (used classes only)
  * --------------------------------- */
 $spacer ?= 1rem
-$spacers ?= 0, $spacer * .25, $spacer * .5, $spacer, $spacer * 1.5, $spacer * 3
 
-for n in (0 .. 5)
-    .ml-{n}
-        margin-left: $spacers[n] !important
-
-    .mr-{n}
-        margin-right: $spacers[n] !important
-
-    .mx-{n}
-        @extend .ml-{n}, .mr-{n}
-
-    .ml-n{n}
-        margin-left: - $spacers[n] !important
-
-    .mr-n{n}
-        margin-right: - $spacers[n] !important
-
-    .mx-n{n}
-        @extend .ml-n{n}, .mr-n{n}
-
-    .mt-{n}
-        margin-top: $spacers[n] !important
-
-    .mb-{n}
-        margin-bottom: $spacers[n] !important
-
-    .my-{n}
-        @extend .mt-{n}, .mb-{n}
-
-    .mt-n{n}
-        margin-top: - $spacers[n] !important
-
-    .mb-n{n}
-        margin-bottom: - $spacers[n] !important
-
-    .my-n{n}
-        @extend .mt-n{n}, .mb-n{n}
-
-    .pl-{n}
-        padding-left: $spacers[n] !important
-
-    .pr-{n}
-        padding-right: $spacers[n] !important
-
-    .px-{n}
-        @extend .pl-{n}, .pr-{n}
-
-    .pl-n{n}
-        padding-left: - $spacers[n] !important
-
-    .pr-n{n}
-        padding-right: - $spacers[n] !important
-
-    .px-n{n}
-        @extend .pl-n{n}, .pr-n{n}
-
-    .pt-{n}
-        padding-top: $spacers[n] !important
-
-    .pb-{n}
-        padding-bottom: $spacers[n] !important
-
-    .py-{n}
-        @extend .pt-{n}, .pb-{n}
-
-    .pt-n{n}
-        padding-top: - $spacers[n] !important
-
-    .pb-n{n}
-        padding-bottom: - $spacers[n] !important
-
-    .py-n{n}
-        @extend .pt-n{n}, .pb-n{n}
-
+// margins used in theme layouts and @extend in stylus files
+.ml-1
+    margin-left: $spacer * .25 !important
+.mr-1
+    margin-right: $spacer * .25 !important
+.mr-2
+    margin-right: $spacer * .5 !important
+.mr-4
+    margin-right: $spacer * 1.5 !important
+.mt-1
+    margin-top: $spacer * .25 !important
+.mt-4
+    margin-top: $spacer !important
+.mt-5
+    margin-top: $spacer * 1.5 !important
+.mb-1
+    margin-bottom: $spacer * .25 !important
+.mb-2
+    margin-bottom: $spacer * .5 !important
+.mb-3
+    margin-bottom: $spacer !important
+.mb-4
+    margin-bottom: $spacer !important
+// padding used in posts
+.pt-1
+    padding-top: $spacer * .25 !important
+// auto centering used in about.md and layouts
 .ml-auto
     margin-left: auto !important
-
 .mr-auto
     margin-right: auto !important
-
 .mx-auto
     @extend .ml-auto, .mr-auto
-
-.mt-auto
-    margin-top: auto !important
-
-.mb-auto
-    margin-bottom: auto !important
-
-.my-auto
-    @extend .mt-auto, .mb-auto
-
-.pl-auto
-    margin-left: auto !important
-
-.pr-auto
-    margin-right: auto !important
-
-.px-auto
-    @extend .pl-auto, .pr-auto
-
-.pt-auto
-    margin-top: auto !important
-
-.pb-auto
-    margin-bottom: auto !important
-
-.py-auto
-    @extend .pt-auto, .pb-auto
 
 /* ---------------------------------
  *           Flex helpers
  * --------------------------------- */
-for n in (0 .. 5)
-    .order-{n}
-        order: n !important
+.order-1
+    order: 1 !important
+.order-2
+    order: 2 !important
+.order-3
+    order: 3 !important
 
 .justify-content-start
     justify-content: start !important

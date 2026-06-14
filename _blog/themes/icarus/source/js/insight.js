@@ -1,0 +1,303 @@
+/**
+ * Insight search plugin – vanilla JS (no jQuery dependency)
+ * content.json is fetched only when the search box is first opened.
+ * Based on hexo-component-inferno's original insight.js.
+ */
+// eslint-disable-next-line no-unused-vars
+function loadInsight(config, translation) {
+  const main = document.querySelector('.searchbox');
+  const input = main.querySelector('.searchbox-input');
+  const container = main.querySelector('.searchbox-body');
+
+  function merge(ranges) {
+    let last;
+    const result = [];
+    ranges.forEach((r) => {
+      if (!last || r[0] > last[1]) {
+        result.push((last = r));
+      } else if (r[1] > last[1]) {
+        last[1] = r[1];
+      }
+    });
+    return result;
+  }
+
+  function findAndHighlight(text, matches, maxlen) {
+    if (!Array.isArray(matches) || !matches.length || !text) {
+      return maxlen ? text.slice(0, maxlen) : text;
+    }
+    const testText = text.toLowerCase();
+    const indices = matches
+      .map((match) => {
+        const index = testText.indexOf(match.toLowerCase());
+        if (!match || index === -1) return null;
+        return [index, index + match.length];
+      })
+      .filter((match) => match !== null)
+      .sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+
+    if (!indices.length) return text;
+
+    let result = '';
+    let last = 0;
+    const ranges = merge(indices);
+    const sumRange = [ranges[0][0], ranges[ranges.length - 1][1]];
+    if (maxlen && maxlen < sumRange[1]) last = sumRange[0];
+
+    for (let i = 0; i < ranges.length; i++) {
+      const range = ranges[i];
+      result += text.slice(last, Math.min(range[0], sumRange[0] + maxlen));
+      if (maxlen && range[0] >= sumRange[0] + maxlen) break;
+      result += '<em>' + text.slice(range[0], range[1]) + '</em>';
+      last = range[1];
+      if (i === ranges.length - 1) {
+        result += maxlen
+          ? text.slice(range[1], Math.min(text.length, sumRange[0] + maxlen + 1))
+          : text.slice(range[1]);
+      }
+    }
+    return result;
+  }
+
+  function searchItem(icon, title, slug, preview, url) {
+    if (title == null || title === '') title = translation.untitled;
+    const subtitle = slug
+      ? '<span class="searchbox-result-title-secondary">(' + slug + ')</span>'
+      : '';
+    return '<a class="searchbox-result-item" href="' + url + '">'
+      + '<span class="searchbox-result-icon"><i class="fa fa-' + icon + '"></i></span>'
+      + '<span class="searchbox-result-content">'
+      + '<span class="searchbox-result-title">' + title + subtitle + '</span>'
+      + (preview ? '<span class="searchbox-result-preview">' + preview + '</span>' : '')
+      + '</span></a>';
+  }
+
+  function sectionFactory(keywords, type, array) {
+    if (array.length === 0) return null;
+    const sectionTitle = translation[type.toLowerCase()];
+    let items;
+    switch (type) {
+      case 'POSTS':
+      case 'PAGES':
+        items = array.map((item) =>
+          searchItem('file', findAndHighlight(item.title, keywords), null,
+            findAndHighlight(item.text, keywords, 100), item.link)
+        );
+        break;
+      case 'CATEGORIES':
+      case 'TAGS':
+        items = array.map((item) =>
+          searchItem(type === 'CATEGORIES' ? 'folder' : 'tag',
+            findAndHighlight(item.name, keywords), findAndHighlight(item.slug, keywords),
+            null, item.link)
+        );
+        break;
+      default:
+        return null;
+    }
+    return '<section class="searchbox-result-section"><header>' + sectionTitle + '</header>'
+      + items.join('') + '</section>';
+  }
+
+  function parseKeywords(keywords) {
+    return keywords.split(' ').filter((k) => !!k).map((k) => k.toLowerCase());
+  }
+
+  function filter(keywords, obj, fields) {
+    const keywordArray = parseKeywords(keywords);
+    const containKeywords = keywordArray.filter((keyword) =>
+      fields.some((field) =>
+        Object.prototype.hasOwnProperty.call(obj, field)
+        && obj[field].toLowerCase().indexOf(keyword) > -1
+      )
+    );
+    return containKeywords.length === keywordArray.length;
+  }
+
+  function filterFactory(keywords) {
+    return {
+      post: (obj) => filter(keywords, obj, ['title', 'text']),
+      page: (obj) => filter(keywords, obj, ['title', 'text']),
+      category: (obj) => filter(keywords, obj, ['name', 'slug']),
+      tag: (obj) => filter(keywords, obj, ['name', 'slug']),
+    };
+  }
+
+  function weight(keywords, obj, fields, weights) {
+    let value = 0;
+    parseKeywords(keywords).forEach((keyword) => {
+      const pattern = new RegExp(keyword, 'img');
+      fields.forEach((field, index) => {
+        if (Object.prototype.hasOwnProperty.call(obj, field)) {
+          const matches = obj[field].match(pattern);
+          value += matches ? matches.length * weights[index] : 0;
+        }
+      });
+    });
+    return value;
+  }
+
+  function weightFactory(keywords) {
+    return {
+      post: (obj) => weight(keywords, obj, ['title', 'text'], [3, 1]),
+      page: (obj) => weight(keywords, obj, ['title', 'text'], [3, 1]),
+      category: (obj) => weight(keywords, obj, ['name', 'slug'], [1, 1]),
+      tag: (obj) => weight(keywords, obj, ['name', 'slug'], [1, 1]),
+    };
+  }
+
+  function search(json, keywords) {
+    const weights = weightFactory(keywords);
+    const filters = filterFactory(keywords);
+    return {
+      posts: json.posts.filter(filters.post).sort((a, b) => weights.post(b) - weights.post(a)).slice(0, 5),
+      pages: json.pages.filter(filters.page).sort((a, b) => weights.page(b) - weights.page(a)).slice(0, 5),
+      categories: json.categories.filter(filters.category).sort((a, b) => weights.category(b) - weights.category(a)).slice(0, 5),
+      tags: json.tags.filter(filters.tag).sort((a, b) => weights.tag(b) - weights.tag(a)).slice(0, 5),
+    };
+  }
+
+  function searchResultToDOM(keywords, searchResult) {
+    container.innerHTML = '';
+    for (const key in searchResult) {
+      const html = sectionFactory(parseKeywords(keywords), key.toUpperCase(), searchResult[key]);
+      if (html) container.insertAdjacentHTML('beforeend', html);
+    }
+  }
+
+  function scrollTo(item) {
+    if (!item) return;
+    const containerRect = container.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+    const itemRelTop = itemRect.top - containerRect.top;
+    const itemRelBottom = itemRect.bottom - containerRect.top;
+    if (itemRelBottom > container.clientHeight) {
+      container.scrollTop += itemRelBottom - container.clientHeight;
+    }
+    if (itemRelTop < 0) {
+      container.scrollTop += itemRelTop;
+    }
+  }
+
+  function selectItemByDiff(value) {
+    const items = Array.from(container.querySelectorAll('.searchbox-result-item'));
+    let prevPosition = -1;
+    items.forEach((item, index) => {
+      if (item.classList.contains('active')) prevPosition = index;
+    });
+    const nextPosition = (items.length + prevPosition + value) % items.length;
+    if (items[prevPosition]) items[prevPosition].classList.remove('active');
+    if (items[nextPosition]) {
+      items[nextPosition].classList.add('active');
+      scrollTo(items[nextPosition]);
+    }
+  }
+
+  function gotoLink(item) {
+    if (item) location.href = item.href;
+  }
+
+  // Lazy load content.json only when search is first opened
+  let jsonCache = null;
+  let jsonLoading = false;
+  let pendingKeyword = null;
+
+  function setupSearch(json) {
+    jsonCache = json;
+    if (pendingKeyword !== null) {
+      searchResultToDOM(pendingKeyword, search(json, pendingKeyword));
+      pendingKeyword = null;
+    }
+    input.addEventListener('input', function() {
+      searchResultToDOM(this.value, search(jsonCache, this.value));
+    });
+    input.dispatchEvent(new Event('input'));
+  }
+
+  function ensureLoaded(callback) {
+    if (jsonCache) {
+      if (callback) callback();
+      return;
+    }
+    if (!jsonLoading) {
+      jsonLoading = true;
+      fetch(config.contentUrl)
+        .then((r) => r.json())
+        .then((json) => {
+          setupSearch(json);
+          if (callback) callback();
+        });
+    }
+  }
+
+  if (location.hash.trim() === '#insight-search') {
+    main.classList.add('show');
+    ensureLoaded(null);
+  }
+
+  let touch = false;
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.navbar-main .search')) {
+      main.classList.add('show');
+      main.querySelector('.searchbox-input').focus();
+      ensureLoaded(null);
+    } else if (e.target.closest('.searchbox-result-item')) {
+      gotoLink(e.target.closest('.searchbox-result-item'));
+      touch = false;
+    } else if (e.target.closest('.searchbox-close')) {
+      const navbar = document.querySelector('.navbar-main');
+      if (navbar) {
+        navbar.style.pointerEvents = 'none';
+        setTimeout(() => { navbar.style.pointerEvents = ''; }, 400);
+      }
+      main.classList.remove('show');
+      touch = false;
+    }
+  });
+
+  // focusin bubbles (unlike focus), enabling delegation on document
+  document.addEventListener('focusin', function(e) {
+    if (e.target.closest('.navbar-main .search')) {
+      main.classList.add('show');
+      main.querySelector('.searchbox-input').focus();
+      ensureLoaded(null);
+    }
+  });
+
+  document.addEventListener('touchend', function(e) {
+    if (!touch) return;
+    if (e.target.closest('.searchbox-result-item')) {
+      gotoLink(e.target.closest('.searchbox-result-item'));
+      touch = false;
+    } else if (e.target.closest('.searchbox-close')) {
+      const navbar = document.querySelector('.navbar-main');
+      if (navbar) {
+        navbar.style.pointerEvents = 'none';
+        setTimeout(() => { navbar.style.pointerEvents = ''; }, 400);
+      }
+      main.classList.remove('show');
+      touch = false;
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (!main.classList.contains('show')) return;
+    switch (e.keyCode) {
+      case 27: main.classList.remove('show'); break;
+      case 38: selectItemByDiff(-1); break;
+      case 40: selectItemByDiff(1); break;
+      case 13: gotoLink(container.querySelector('.searchbox-result-item.active')); break;
+    }
+  });
+
+  document.addEventListener('touchstart', () => { touch = true; });
+  document.addEventListener('touchmove', () => { touch = false; });
+
+  input.addEventListener('input', function() {
+    if (!jsonCache) {
+      pendingKeyword = this.value;
+      ensureLoaded(null);
+    }
+  });
+}

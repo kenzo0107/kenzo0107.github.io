@@ -53,17 +53,56 @@ $logo-height ?= 2.25rem
 @import bulma-stylus-root + '/utilities/functions'
 @import bulma-stylus-root + '/utilities/derived-variables'
 
+// Provide defaults for variables normally defined by removed Bulma components,
+// so downstream Icarus styles (e.g. search.styl) don't get undefined references.
+$modal-background-background-color ?= rgba($scheme-invert, 0.86)
+
 $colors = merge($colors, $custom-colors)
 
 @import bulma-stylus-root + '/utilities/animations'
 @import bulma-stylus-root + '/utilities/mixins'
 @import bulma-stylus-root + '/utilities/controls'
+// Suppress $colors loop in base/helpers.styl — has-text-COLOR/has-background-COLOR are unused
+// $shades loop still runs → has-text-grey etc. are preserved
+$colors-base = $colors
+$colors = {}
 @import bulma-stylus-root + '/base/_all'
-@import bulma-stylus-root + '/components/_all'
-@import bulma-stylus-root + '/elements/_all'
-@import bulma-stylus-root + '/form/_all'
-@import bulma-stylus-root + '/grid/_all'
-@import bulma-stylus-root + '/layout/_all'
+$colors = $colors-base
+// Selective Bulma component imports — exclude unused: breadcrumb, dropdown, modal, list, panel, tabs
+@import bulma-stylus-root + '/components/card'
+@import bulma-stylus-root + '/components/level'
+@import bulma-stylus-root + '/components/media'
+@import bulma-stylus-root + '/components/menu'
+@import bulma-stylus-root + '/components/message'
+@import bulma-stylus-root + '/components/navbar'
+@import bulma-stylus-root + '/components/pagination'
+// Selective element imports — exclude unused: box, notification, progress
+// Limit $colors to only the variants used in templates+posts before importing button.styl
+// (navbar/pagination above already consumed the full $colors; nothing below needs it restored)
+$colors-save = $colors
+$colors = {
+    primary: $colors['primary']
+    link: $colors['link']
+    light: $colors['light']
+}
+@import bulma-stylus-root + '/elements/button'
+$colors = $colors-save
+@import bulma-stylus-root + '/elements/container'
+@import bulma-stylus-root + '/elements/content'
+@import bulma-stylus-root + '/elements/icon'
+@import bulma-stylus-root + '/elements/image'
+@import bulma-stylus-root + '/elements/other'
+@import bulma-stylus-root + '/elements/table'
+@import bulma-stylus-root + '/elements/tag'
+@import bulma-stylus-root + '/elements/title'
+// Selective form imports — exclude unused: checkbox-radio, select, file, input-textarea
+@import bulma-stylus-root + '/form/shared'
+@import bulma-stylus-root + '/form/tools'
+// Selective grid imports — exclude tiles
+@import bulma-stylus-root + '/grid/columns'
+// Selective layout imports — exclude hero
+@import bulma-stylus-root + '/layout/section'
+@import bulma-stylus-root + '/layout/footer'
 
 html
     height: 100%

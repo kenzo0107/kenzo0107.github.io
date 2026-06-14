@@ -9,7 +9,9 @@
     });
     document.querySelector('body > .navbar').style.transform = 'translateY(-100px)';
     [
-        '.column-main > .card, .column-main > .pagination, .column-main > .post-navigation',
+        // Skip .card:first-child in column-main — it contains the cover image (LCP element).
+        // It fades in with the section instead of being staggered, reducing LCP delay by ~400ms.
+        '.column-main > .card:not(:first-child), .column-main > .pagination, .column-main > .post-navigation',
         '.column-left > .card, .column-right-shadow > .card',
         '.column-right > .card'
     ].forEach(selector => {
@@ -40,7 +42,7 @@
 
         let i = 1;
         [
-            '.column-main > .card, .column-main > .pagination, .column-main > .post-navigation',
+            '.column-main > .card:not(:first-child), .column-main > .pagination, .column-main > .post-navigation',
             '.column-left > .card, .column-right-shadow > .card',
             '.column-right > .card'
         ].forEach(selector => {

@@ -1,47 +1,82 @@
 /* eslint-disable node/no-unsupported-features/node-builtins */
-(function($, moment, ClipboardJS, config) {
-    $('.article img:not(".not-gallery-item")').each(function() {
-        // wrap images with link and add caption if possible
-        if ($(this).parent('a').length === 0) {
-            $(this).wrap('<a class="gallery-item" href="' + $(this).attr('src') + '"></a>');
-            if (this.alt) {
-                $(this).after('<p class="has-text-centered is-size-6 caption">' + this.alt + '</p>');
+(function(config) {
+    function timeAgo(dateStr) {
+        const diff = (Date.now() - new Date(dateStr)) / 1000;
+        const locale = document.documentElement.lang || 'en';
+        const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+        if (diff < 60) return rtf.format(-Math.round(diff), 'second');
+        if (diff < 3600) return rtf.format(-Math.round(diff / 60), 'minute');
+        if (diff < 86400) return rtf.format(-Math.round(diff / 3600), 'hour');
+        if (diff < 2592000) return rtf.format(-Math.round(diff / 86400), 'day');
+        if (diff < 31536000) return rtf.format(-Math.round(diff / 2592000), 'month');
+        return rtf.format(-Math.round(diff / 31536000), 'year');
+    }
+
+    document.querySelectorAll('.article img:not(.not-gallery-item)').forEach(img => {
+        if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        if (!img.getAttribute('decoding')) img.setAttribute('decoding', 'async');
+        if (!img.closest('a')) {
+            const a = document.createElement('a');
+            a.className = 'gallery-item';
+            a.href = img.src;
+            img.parentNode.insertBefore(a, img);
+            a.appendChild(img);
+            if (img.alt) {
+                const caption = document.createElement('p');
+                caption.className = 'has-text-centered is-size-6 caption';
+                caption.textContent = img.alt;
+                a.insertAdjacentElement('afterend', caption);
             }
         }
     });
 
-    if (typeof $.fn.lightGallery === 'function') {
-        $('.article').lightGallery({ selector: '.gallery-item' });
-    }
-    if (typeof $.fn.justifiedGallery === 'function') {
-        if ($('.justified-gallery > p > .gallery-item').length) {
-            $('.justified-gallery > p > .gallery-item').unwrap();
-        }
-        $('.justified-gallery').justifiedGallery();
-    }
-
-    if (typeof moment === 'function') {
-        $('.article-meta time').each(function() {
-            $(this).text(moment($(this).attr('datetime')).fromNow());
+    // Lazy-load lightGallery JS on first image click to avoid downloading ~47KB on every page load
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    if (galleryItems.length && window._lgCfg) {
+        let lgInit = false;
+        const loadAndOpen = (target) => {
+            if (lgInit) return;
+            lgInit = true;
+            const s = document.createElement('script');
+            s.src = window._lgCfg.jsUrl;
+            s.onload = () => {
+                document.querySelectorAll('.article').forEach(el => lightGallery(el, { selector: '.gallery-item' }));
+                target.click();
+            };
+            document.head.appendChild(s);
+        };
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (typeof lightGallery !== 'function') {
+                    e.preventDefault();
+                    loadAndOpen(this);
+                }
+            });
         });
     }
 
-    $('.article > .content > table').each(function() {
-        if ($(this).width() > $(this).parent().width()) {
-            $(this).wrap('<div class="table-overflow"></div>');
+    document.querySelectorAll('.article-meta time').forEach(el => {
+        el.textContent = timeAgo(el.getAttribute('datetime'));
+    });
+
+    document.querySelectorAll('.article > .content > table').forEach(table => {
+        if (table.scrollWidth > table.parentElement.clientWidth) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'table-overflow';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
         }
     });
 
     function adjustNavbar() {
-        const navbarWidth = $('.navbar-main .navbar-start').outerWidth() + $('.navbar-main .navbar-end').outerWidth();
-        if ($(document).outerWidth() < navbarWidth) {
-            $('.navbar-main .navbar-menu').addClass('justify-content-start');
-        } else {
-            $('.navbar-main .navbar-menu').removeClass('justify-content-start');
-        }
+        const start = document.querySelector('.navbar-main .navbar-start');
+        const end = document.querySelector('.navbar-main .navbar-end');
+        const menu = document.querySelector('.navbar-main .navbar-menu');
+        if (!start || !end || !menu) return;
+        menu.classList.toggle('justify-content-start', document.documentElement.offsetWidth < start.offsetWidth + end.offsetWidth);
     }
     adjustNavbar();
-    $(window).resize(adjustNavbar);
+    window.addEventListener('resize', adjustNavbar);
 
     function syncNavbarHeight() {
         const navbar = document.querySelector('.navbar-main');
@@ -50,168 +85,171 @@
         }
     }
     syncNavbarHeight();
-    $(window).resize(syncNavbarHeight);
+    window.addEventListener('resize', syncNavbarHeight);
 
     function toggleFold(codeBlock, isFolded) {
-        const $toggle = $(codeBlock).find('.fold i');
-        !isFolded ? $(codeBlock).removeClass('folded') : $(codeBlock).addClass('folded');
-        !isFolded ? $toggle.removeClass('fa-angle-right') : $toggle.removeClass('fa-angle-down');
-        !isFolded ? $toggle.addClass('fa-angle-down') : $toggle.addClass('fa-angle-right');
+        const toggle = codeBlock.querySelector('.fold i');
+        codeBlock.classList.toggle('folded', isFolded);
+        if (toggle) {
+            toggle.classList.toggle('fa-angle-right', isFolded);
+            toggle.classList.toggle('fa-angle-down', !isFolded);
+        }
     }
 
     function createFoldButton(fold) {
         return '<span class="fold">' + (fold === 'unfolded' ? '<i class="fas fa-angle-down"></i>' : '<i class="fas fa-angle-right"></i>') + '</span>';
     }
 
-    $('figure.highlight table').wrap('<div class="highlight-body">');
-    if (typeof config !== 'undefined'
-        && typeof config.article !== 'undefined'
-        && typeof config.article.highlight !== 'undefined') {
+    document.querySelectorAll('figure.highlight table').forEach(table => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'highlight-body';
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+    });
 
-        $('figure.highlight').addClass('hljs');
-        $('figure.highlight .code .line span').each(function() {
-            const classes = $(this).attr('class').split(/\s+/);
-            for (const cls of classes) {
-                $(this).addClass('hljs-' + cls);
-                $(this).removeClass(cls);
-            }
-        });
-
-
+    if (typeof config !== 'undefined' && config.article && config.article.highlight) {
         const clipboard = config.article.highlight.clipboard;
         const fold = config.article.highlight.fold.trim();
 
-        $('figure.highlight').each(function() {
-            if ($(this).find('figcaption').length) {
-                $(this).find('figcaption').addClass('level is-mobile');
-                $(this).find('figcaption').append('<div class="level-left">');
-                $(this).find('figcaption').append('<div class="level-right">');
-                $(this).find('figcaption div.level-left').append($(this).find('figcaption').find('span'));
-                $(this).find('figcaption div.level-right').append($(this).find('figcaption').find('a'));
-            } else {
-                if (clipboard || fold) {
-                    $(this).prepend('<figcaption class="level is-mobile"><div class="level-left"></div><div class="level-right"></div></figcaption>');
-                }
+        document.querySelectorAll('figure.highlight').forEach(figure => figure.classList.add('hljs'));
+        document.querySelectorAll('figure.highlight .code .line span').forEach(span => {
+            Array.from(span.classList).forEach(cls => {
+                span.classList.add('hljs-' + cls);
+                span.classList.remove(cls);
+            });
+        });
+
+        document.querySelectorAll('figure.highlight').forEach(figure => {
+            const figcaption = figure.querySelector('figcaption');
+            if (figcaption) {
+                figcaption.classList.add('level', 'is-mobile');
+                figcaption.insertAdjacentHTML('beforeend', '<div class="level-left"></div><div class="level-right"></div>');
+                const levelLeft = figcaption.querySelector('.level-left');
+                const levelRight = figcaption.querySelector('.level-right');
+                const span = figcaption.querySelector('span');
+                const a = figcaption.querySelector('a');
+                if (span && levelLeft) levelLeft.appendChild(span);
+                if (a && levelRight) levelRight.appendChild(a);
+            } else if (clipboard || fold) {
+                figure.insertAdjacentHTML('afterbegin', '<figcaption class="level is-mobile"><div class="level-left"></div><div class="level-right"></div></figcaption>');
             }
         });
 
-        if (typeof ClipboardJS !== 'undefined' && clipboard) {
-            $('figure.highlight').each(function() {
-                const id = 'code-' + Date.now() + (Math.random() * 1000 | 0);
-                const button = '<a href="javascript:;" class="copy" title="Copy" data-clipboard-target="#' + id + ' .code"><i class="fas fa-copy"></i></a>';
-                $(this).attr('id', id);
-                $(this).find('figcaption div.level-right').append(button);
+        if (clipboard && navigator.clipboard) {
+            document.querySelectorAll('figure.highlight').forEach(figure => {
+                const levelRight = figure.querySelector('figcaption .level-right');
+                if (!levelRight) return;
+                const btn = document.createElement('a');
+                btn.href = 'javascript:;';
+                btn.className = 'copy';
+                btn.title = 'Copy';
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-copy';
+                btn.appendChild(icon);
+                btn.addEventListener('click', function() {
+                    const code = figure.querySelector('.code');
+                    if (code) navigator.clipboard.writeText(code.innerText).catch(function() {});
+                });
+                levelRight.appendChild(btn);
             });
-            new ClipboardJS('.highlight .copy'); // eslint-disable-line no-new
         }
 
         if (fold) {
-            $('figure.highlight').each(function() {
-                $(this).addClass('foldable'); // add 'foldable' class as long as fold is enabled
-
-                if ($(this).find('figcaption').find('span').length > 0) {
-                    const span = $(this).find('figcaption').find('span');
-                    if (span[0].innerText.indexOf('>folded') > -1) {
-                        span[0].innerText = span[0].innerText.replace('>folded', '');
-                        $(this).find('figcaption div.level-left').prepend(createFoldButton('folded'));
-                        toggleFold(this, true);
-                        return;
-                    }
+            document.querySelectorAll('figure.highlight').forEach(figure => {
+                figure.classList.add('foldable');
+                const figcaption = figure.querySelector('figcaption');
+                const span = figcaption && figcaption.querySelector('span');
+                if (span && span.innerText.indexOf('>folded') > -1) {
+                    span.innerText = span.innerText.replace('>folded', '');
+                    const levelLeft = figcaption.querySelector('.level-left');
+                    if (levelLeft) levelLeft.insertAdjacentHTML('afterbegin', createFoldButton('folded'));
+                    toggleFold(figure, true);
+                    return;
                 }
-                $(this).find('figcaption div.level-left').prepend(createFoldButton(fold));
-                toggleFold(this, fold === 'folded');
+                const levelLeft = figure.querySelector('figcaption .level-left');
+                if (levelLeft) levelLeft.insertAdjacentHTML('afterbegin', createFoldButton(fold));
+                toggleFold(figure, fold === 'folded');
             });
 
-            $('figure.highlight figcaption .level-left').click(function() {
-                const $code = $(this).closest('figure.highlight');
-                toggleFold($code.eq(0), !$code.hasClass('folded'));
+            document.querySelectorAll('figure.highlight figcaption .level-left').forEach(el => {
+                el.addEventListener('click', function() {
+                    const figure = this.closest('figure.highlight');
+                    if (figure) toggleFold(figure, !figure.classList.contains('folded'));
+                });
             });
         }
     }
 
-    const $toc = $('#toc');
-    if ($toc.length > 0) {
-        const $mask = $('<div>');
-        $mask.attr('id', 'toc-mask');
-
-        $('body').append($mask);
-
-        function toggleToc() { // eslint-disable-line no-inner-declarations
-            $toc.toggleClass('is-active');
-            $mask.toggleClass('is-active');
-            $('.catalogue').toggleClass('is-toc-open');
+    const toc = document.getElementById('toc');
+    if (toc) {
+        const mask = document.createElement('div');
+        mask.id = 'toc-mask';
+        document.body.appendChild(mask);
+        function toggleToc() {
+            toc.classList.toggle('is-active');
+            mask.classList.toggle('is-active');
+            document.querySelectorAll('.catalogue').forEach(el => el.classList.toggle('is-toc-open'));
         }
-
-        $toc.on('click', toggleToc);
-        $mask.on('click', toggleToc);
-        // SP目次バーのトリガー + PC ナビの catalogue ボタン
-        $('.catalogue').on('click', toggleToc);
+        toc.addEventListener('click', toggleToc);
+        mask.addEventListener('click', toggleToc);
+        document.querySelectorAll('.catalogue').forEach(el => el.addEventListener('click', toggleToc));
     }
 
-    // カテゴリーハンバーガーパネルの開閉
-    $('#cat-burger').on('click', function(e) {
-        e.stopPropagation();
-        const $burger = $(this);
-        const $panel = $('#cat-panel');
-        $burger.toggleClass('is-active');
-        $panel.toggleClass('is-active');
-        $burger.attr('aria-expanded', $burger.hasClass('is-active'));
-        // パネル開閉に合わせて navbar の z-index を上げ、sticky サイドバーより前面に出す
-        $('.navbar-main').toggleClass('cat-panel-open', $panel.hasClass('is-active'));
-    });
-
-    // パネル外クリックで閉じる
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('#cat-burger, #cat-panel').length) {
-            $('#cat-burger').removeClass('is-active');
-            $('#cat-panel').removeClass('is-active');
-            $('#cat-burger').attr('aria-expanded', 'false');
-            $('.navbar-main').removeClass('cat-panel-open');
-        }
-    });
-
-    // ダーク / ライトモードの切り替え（描画前の適用は head.jsx のインラインスクリプトで実施）
-    $('.theme-toggle').on('click', function() {
-        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-        const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try {
-            localStorage.setItem('theme', next);
-        } catch (e) { /* localStorage 不可の環境は無視 */ }
-    });
-
-    // 言語選択を localStorage に保存し、言語が推論されるページ（カテゴリー等）で復元する
-    var savedLang;
-    try { savedLang = localStorage.getItem('preferred-lang'); } catch (e) { /* ignore */ }
-
-    // カテゴリーリンクを現在の言語に合わせて更新する
-    function updateCategoryLinks(lang) {
-        $('#cat-panel .navbar-cat-panel-item, .category-bar-item').each(function() {
-            var $el = $(this);
-            // 初回実行時に JA URL を保存
-            if (!$el.attr('data-ja-url')) {
-                $el.attr('data-ja-url', $el.attr('href'));
+    const catBurger = document.getElementById('cat-burger');
+    const catPanel = document.getElementById('cat-panel');
+    if (catBurger && catPanel) {
+        catBurger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            catBurger.classList.toggle('is-active');
+            catPanel.classList.toggle('is-active');
+            catBurger.setAttribute('aria-expanded', catBurger.classList.contains('is-active'));
+            document.querySelectorAll('.navbar-main').forEach(el =>
+                el.classList.toggle('cat-panel-open', catPanel.classList.contains('is-active')));
+        });
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#cat-burger, #cat-panel')) {
+                catBurger.classList.remove('is-active');
+                catPanel.classList.remove('is-active');
+                catBurger.setAttribute('aria-expanded', 'false');
+                document.querySelectorAll('.navbar-main').forEach(el => el.classList.remove('cat-panel-open'));
             }
-            var jaUrl = $el.attr('data-ja-url');
-            var enUrl = $el.attr('data-en-url');
-            $el.attr('href', lang === 'en' && enUrl ? enUrl : jaUrl);
         });
     }
 
-    $(document).on('click', '.lang-toggle-option', function() {
-        var lang = $(this).attr('data-lang') || $(this).text().trim().toLowerCase();
+    document.querySelectorAll('.theme-toggle').forEach(el => el.addEventListener('click', function() {
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) { /* ignore */ }
+    }));
+
+    var savedLang;
+    try { savedLang = localStorage.getItem('preferred-lang'); } catch (e) { /* ignore */ }
+
+    function updateCategoryLinks(lang) {
+        document.querySelectorAll('#cat-panel .navbar-cat-panel-item, .category-bar-item').forEach(el => {
+            if (!el.getAttribute('data-ja-url')) {
+                el.setAttribute('data-ja-url', el.getAttribute('href'));
+            }
+            const jaUrl = el.getAttribute('data-ja-url');
+            const enUrl = el.getAttribute('data-en-url');
+            el.setAttribute('href', lang === 'en' && enUrl ? enUrl : jaUrl);
+        });
+    }
+
+    document.addEventListener('click', function(e) {
+        const option = e.target.closest('.lang-toggle-option');
+        if (!option) return;
+        const lang = option.getAttribute('data-lang') || option.textContent.trim().toLowerCase();
         try { localStorage.setItem('preferred-lang', lang); } catch (e) { /* ignore */ }
         updateCategoryLinks(lang);
     });
 
     if (savedLang) {
-        var $inferredPills = $('.lang-toggle-pill[data-lang-inferred]');
-        if ($inferredPills.length) {
-            $inferredPills.find('.lang-toggle-option').each(function() {
-                var lang = $(this).attr('data-lang') || $(this).text().trim().toLowerCase();
-                $(this).toggleClass('is-active', lang === savedLang);
-            });
-        }
+        document.querySelectorAll('.lang-toggle-pill[data-lang-inferred] .lang-toggle-option').forEach(option => {
+            const lang = option.getAttribute('data-lang') || option.textContent.trim().toLowerCase();
+            option.classList.toggle('is-active', lang === savedLang);
+        });
         updateCategoryLinks(savedLang);
     }
-}(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings));
+}(window.IcarusThemeSettings));

@@ -41,7 +41,7 @@ module.exports = class extends Component {
                     {index ? <a href={url_for(page.link || page.path)} class="image is-7by3">
                         <img class="thumbnail" src={cover} alt={page.title || cover} />
                     </a> : <span class="image is-7by3">
-                        <img class="thumbnail" src={cover} alt={page.title || cover} />
+                        <img class="thumbnail" src={cover} alt={page.title || cover} fetchpriority="high" loading="eager" />
                     </span>}
                 </div> : null}
                 <article class={`card-content article${'direction' in page ? ' ' + page.direction : ''}`} role="article">
@@ -129,7 +129,7 @@ module.exports = class extends Component {
                         <div class="media">
                             <div class="media-left">
                                 <figure class="image is-48x48">
-                                    <img class="is-rounded not-gallery-item" src="https://github.com/kenzo0107.png?size=64" alt="kenzo0107" />
+                                    <img class="is-rounded not-gallery-item" src="/img/avatar.webp" alt="kenzo0107" width="48" height="48" />
                                 </figure>
                             </div>
                             <div class="media-content">
