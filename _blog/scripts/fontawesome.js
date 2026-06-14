@@ -26,25 +26,33 @@ function stripIconClasses(css) {
     });
 }
 
-hexo.extend.generator.register('fontawesome', function() {
+function buildFaCss() {
     const base = path.join(__dirname, '../node_modules/@fortawesome/fontawesome-free');
     let css = fs.readFileSync(path.join(base, 'css/all.min.css'), 'utf8');
-
-    // Remove unused icon classes (1900+ definitions → 15)
     css = stripIconClasses(css);
-
-    // Remove TTF fallback lines; keep only woff2
     css = css.replace(/,url\([^)]+\.ttf\) format\("truetype"\)/g, '');
-
-    // Remove unused @font-face blocks
     css = css.replace(/@font-face\{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400[^}]*\}/g, '');
     css = css.replace(/@font-face\{font-family:"Font Awesome 5[^}]*\}/g, '');
     css = css.replace(/@font-face\{font-family:"FontAwesome"[^}]*\}/g, '');
     css = css.replace(/@font-face\{font-family:"Font Awesome 6 Free";font-style:italic[^}]*\}/g, '');
-
-    // Change font-display from block (up to 3s invisible) to swap for the subset
-    // fonts which are tiny (1-2KB) and load nearly instantly even without SW cache.
     css = css.replace(/font-display:block/g, 'font-display:swap');
+    return css;
+}
 
-    return { path: 'css/fontawesome-free.min.css', data: css };
+// Build once and cache; the result is stable across the build run.
+let _faCssCache = null;
+function getFaCss() {
+    if (!_faCssCache) _faCssCache = buildFaCss();
+    return _faCssCache;
+}
+
+// Generator: keep the standalone file for SW pre-cache and direct URL access.
+hexo.extend.generator.register('fontawesome', function() {
+    return { path: 'css/fontawesome-free.min.css', data: getFaCss() };
+});
+
+// Helper: used by head.jsx to inline FA CSS directly in <style>, eliminating
+// a separate HTTP request and ensuring icons render on first paint.
+hexo.extend.helper.register('fontawesome_css', function() {
+    return getFaCss();
 });
