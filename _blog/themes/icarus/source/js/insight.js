@@ -1,17 +1,13 @@
 /**
- * Insight search plugin (lazy content.json loading)
+ * Insight search plugin – vanilla JS (no jQuery dependency)
  * content.json is fetched only when the search box is first opened.
  * Based on hexo-component-inferno's original insight.js.
  */
 // eslint-disable-next-line no-unused-vars
 function loadInsight(config, translation) {
-  const $main = $('.searchbox');
-  const $input = $main.find('.searchbox-input');
-  const $container = $main.find('.searchbox-body');
-
-  function section(title) {
-    return $('<section>').addClass('searchbox-result-section').append($('<header>').text(title));
-  }
+  const main = document.querySelector('.searchbox');
+  const input = main.querySelector('.searchbox-input');
+  const container = main.querySelector('.searchbox-body');
 
   function merge(ranges) {
     let last;
@@ -64,40 +60,43 @@ function loadInsight(config, translation) {
   }
 
   function searchItem(icon, title, slug, preview, url) {
-    title = title != null && title !== '' ? title : translation.untitled;
+    if (title == null || title === '') title = translation.untitled;
     const subtitle = slug
       ? '<span class="searchbox-result-title-secondary">(' + slug + ')</span>'
       : '';
-    return `<a class="searchbox-result-item" href="${url}">
-            <span class="searchbox-result-icon"><i class="fa fa-${icon}" /></span>
-            <span class="searchbox-result-content">
-                <span class="searchbox-result-title">${title}${subtitle}</span>
-                ${preview ? '<span class="searchbox-result-preview">' + preview + '</span>' : ''}
-            </span>
-        </a>`;
+    return '<a class="searchbox-result-item" href="' + url + '">'
+      + '<span class="searchbox-result-icon"><i class="fa fa-' + icon + '"></i></span>'
+      + '<span class="searchbox-result-content">'
+      + '<span class="searchbox-result-title">' + title + subtitle + '</span>'
+      + (preview ? '<span class="searchbox-result-preview">' + preview + '</span>' : '')
+      + '</span></a>';
   }
 
   function sectionFactory(keywords, type, array) {
     if (array.length === 0) return null;
     const sectionTitle = translation[type.toLowerCase()];
-    let $searchItems;
+    let items;
     switch (type) {
       case 'POSTS':
       case 'PAGES':
-        $searchItems = array.map((item) =>
-          searchItem('file', findAndHighlight(item.title, keywords), null, findAndHighlight(item.text, keywords, 100), item.link)
+        items = array.map((item) =>
+          searchItem('file', findAndHighlight(item.title, keywords), null,
+            findAndHighlight(item.text, keywords, 100), item.link)
         );
         break;
       case 'CATEGORIES':
       case 'TAGS':
-        $searchItems = array.map((item) =>
-          searchItem(type === 'CATEGORIES' ? 'folder' : 'tag', findAndHighlight(item.name, keywords), findAndHighlight(item.slug, keywords), null, item.link)
+        items = array.map((item) =>
+          searchItem(type === 'CATEGORIES' ? 'folder' : 'tag',
+            findAndHighlight(item.name, keywords), findAndHighlight(item.slug, keywords),
+            null, item.link)
         );
         break;
       default:
         return null;
     }
-    return section(sectionTitle).append($searchItems);
+    return '<section class="searchbox-result-section"><header>' + sectionTitle + '</header>'
+      + items.join('') + '</section>';
   }
 
   function parseKeywords(keywords) {
@@ -107,7 +106,10 @@ function loadInsight(config, translation) {
   function filter(keywords, obj, fields) {
     const keywordArray = parseKeywords(keywords);
     const containKeywords = keywordArray.filter((keyword) =>
-      fields.some((field) => Object.prototype.hasOwnProperty.call(obj, field) && obj[field].toLowerCase().indexOf(keyword) > -1)
+      fields.some((field) =>
+        Object.prototype.hasOwnProperty.call(obj, field)
+        && obj[field].toLowerCase().indexOf(keyword) > -1
+      )
     );
     return containKeywords.length === keywordArray.length;
   }
@@ -156,42 +158,46 @@ function loadInsight(config, translation) {
   }
 
   function searchResultToDOM(keywords, searchResult) {
-    $container.empty();
+    container.innerHTML = '';
     for (const key in searchResult) {
-      $container.append(sectionFactory(parseKeywords(keywords), key.toUpperCase(), searchResult[key]));
+      const html = sectionFactory(parseKeywords(keywords), key.toUpperCase(), searchResult[key]);
+      if (html) container.insertAdjacentHTML('beforeend', html);
     }
   }
 
-  function scrollTo($item) {
-    if ($item.length === 0) return;
-    const wrapperHeight = $container[0].clientHeight;
-    const itemTop = $item.position().top - $container.scrollTop();
-    const itemBottom = $item[0].clientHeight + $item.position().top;
-    if (itemBottom > wrapperHeight + $container.scrollTop()) {
-      $container.scrollTop(itemBottom - $container[0].clientHeight);
+  function scrollTo(item) {
+    if (!item) return;
+    const containerRect = container.getBoundingClientRect();
+    const itemRect = item.getBoundingClientRect();
+    const itemRelTop = itemRect.top - containerRect.top;
+    const itemRelBottom = itemRect.bottom - containerRect.top;
+    if (itemRelBottom > container.clientHeight) {
+      container.scrollTop += itemRelBottom - container.clientHeight;
     }
-    if (itemTop < 0) {
-      $container.scrollTop($item.position().top);
+    if (itemRelTop < 0) {
+      container.scrollTop += itemRelTop;
     }
   }
 
   function selectItemByDiff(value) {
-    const $items = $.makeArray($container.find('.searchbox-result-item'));
+    const items = Array.from(container.querySelectorAll('.searchbox-result-item'));
     let prevPosition = -1;
-    $items.forEach((item, index) => {
-      if ($(item).hasClass('active')) prevPosition = index;
+    items.forEach((item, index) => {
+      if (item.classList.contains('active')) prevPosition = index;
     });
-    const nextPosition = ($items.length + prevPosition + value) % $items.length;
-    $($items[prevPosition]).removeClass('active');
-    $($items[nextPosition]).addClass('active');
-    scrollTo($($items[nextPosition]));
+    const nextPosition = (items.length + prevPosition + value) % items.length;
+    if (items[prevPosition]) items[prevPosition].classList.remove('active');
+    if (items[nextPosition]) {
+      items[nextPosition].classList.add('active');
+      scrollTo(items[nextPosition]);
+    }
   }
 
-  function gotoLink($item) {
-    if ($item && $item.length) location.href = $item.attr('href');
+  function gotoLink(item) {
+    if (item) location.href = item.href;
   }
 
-  // content.json を初回検索オープン時のみ取得する
+  // Lazy load content.json only when search is first opened
   let jsonCache = null;
   let jsonLoading = false;
   let pendingKeyword = null;
@@ -202,11 +208,10 @@ function loadInsight(config, translation) {
       searchResultToDOM(pendingKeyword, search(json, pendingKeyword));
       pendingKeyword = null;
     }
-    $input.on('input', function() {
-      const keywords = $(this).val();
-      searchResultToDOM(keywords, search(jsonCache, keywords));
+    input.addEventListener('input', function() {
+      searchResultToDOM(this.value, search(jsonCache, this.value));
     });
-    $input.trigger('input');
+    input.dispatchEvent(new Event('input'));
   }
 
   function ensureLoaded(callback) {
@@ -217,8 +222,8 @@ function loadInsight(config, translation) {
     if (!jsonLoading) {
       jsonLoading = true;
       fetch(config.contentUrl)
-        .then(r => r.json())
-        .then(json => {
+        .then((r) => r.json())
+        .then((json) => {
           setupSearch(json);
           if (callback) callback();
         });
@@ -226,54 +231,72 @@ function loadInsight(config, translation) {
   }
 
   if (location.hash.trim() === '#insight-search') {
-    $main.addClass('show');
+    main.classList.add('show');
     ensureLoaded(null);
   }
 
   let touch = false;
-  $(document)
-    .on('click focus', '.navbar-main .search', () => {
-      $main.addClass('show');
-      $main.find('.searchbox-input').focus();
-      ensureLoaded(null);
-    })
-    .on('click touchend', '.searchbox-result-item', function(e) {
-      if (e.type !== 'click' && !touch) return;
-      gotoLink($(this));
-      touch = false;
-    })
-    .on('click touchend', '.searchbox-close', (e) => {
-      if (e.type !== 'click' && !touch) return;
-      $('.navbar-main').css('pointer-events', 'none');
-      setTimeout(() => {
-        $('.navbar-main').css('pointer-events', 'auto');
-      }, 400);
-      $main.removeClass('show');
-      touch = false;
-    })
-    .on('keydown', (e) => {
-      if (!$main.hasClass('show')) return;
-      switch (e.keyCode) {
-        case 27:
-          $main.removeClass('show');
-          break;
-        case 38:
-          selectItemByDiff(-1);
-          break;
-        case 40:
-          selectItemByDiff(1);
-          break;
-        case 13:
-          gotoLink($container.find('.searchbox-result-item.active').eq(0));
-          break;
-      }
-    })
-    .on('touchstart', () => { touch = true; })
-    .on('touchmove', () => { touch = false; });
 
-  $input.on('input', function() {
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.navbar-main .search')) {
+      main.classList.add('show');
+      main.querySelector('.searchbox-input').focus();
+      ensureLoaded(null);
+    } else if (e.target.closest('.searchbox-result-item')) {
+      gotoLink(e.target.closest('.searchbox-result-item'));
+      touch = false;
+    } else if (e.target.closest('.searchbox-close')) {
+      const navbar = document.querySelector('.navbar-main');
+      if (navbar) {
+        navbar.style.pointerEvents = 'none';
+        setTimeout(() => { navbar.style.pointerEvents = ''; }, 400);
+      }
+      main.classList.remove('show');
+      touch = false;
+    }
+  });
+
+  // focusin bubbles (unlike focus), enabling delegation on document
+  document.addEventListener('focusin', function(e) {
+    if (e.target.closest('.navbar-main .search')) {
+      main.classList.add('show');
+      main.querySelector('.searchbox-input').focus();
+      ensureLoaded(null);
+    }
+  });
+
+  document.addEventListener('touchend', function(e) {
+    if (!touch) return;
+    if (e.target.closest('.searchbox-result-item')) {
+      gotoLink(e.target.closest('.searchbox-result-item'));
+      touch = false;
+    } else if (e.target.closest('.searchbox-close')) {
+      const navbar = document.querySelector('.navbar-main');
+      if (navbar) {
+        navbar.style.pointerEvents = 'none';
+        setTimeout(() => { navbar.style.pointerEvents = ''; }, 400);
+      }
+      main.classList.remove('show');
+      touch = false;
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (!main.classList.contains('show')) return;
+    switch (e.keyCode) {
+      case 27: main.classList.remove('show'); break;
+      case 38: selectItemByDiff(-1); break;
+      case 40: selectItemByDiff(1); break;
+      case 13: gotoLink(container.querySelector('.searchbox-result-item.active')); break;
+    }
+  });
+
+  document.addEventListener('touchstart', () => { touch = true; });
+  document.addEventListener('touchmove', () => { touch = false; });
+
+  input.addEventListener('input', function() {
     if (!jsonCache) {
-      pendingKeyword = $(this).val();
+      pendingKeyword = this.value;
       ensureLoaded(null);
     }
   });

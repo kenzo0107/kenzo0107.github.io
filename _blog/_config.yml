@@ -161,6 +161,8 @@ minify:
       sortAttributes: true
       sortClassName: true
       collapseBooleanAttributes: true
+      removeScriptTypeAttributes: true
+      removeStyleLinkTypeAttributes: true
   image:
     enable: false
   font:
