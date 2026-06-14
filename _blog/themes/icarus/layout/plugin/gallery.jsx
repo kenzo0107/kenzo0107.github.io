@@ -10,15 +10,15 @@ class Gallery extends Component {
         }
 
         if (head) {
-            // Async CSS loading: preload + inline script sets onload to switch rel to stylesheet
-            const onloadScript = `(function(){['lg-css','jg-css'].forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
+            const onloadIds = justifiedGallery ? `['lg-css','jg-css']` : `['lg-css']`;
+            const onloadScript = `(function(){${onloadIds}.forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
             return <Fragment>
                 <link rel="preload" href={lightGallery.cssUrl} as="style" id="lg-css" />
-                <link rel="preload" href={justifiedGallery.cssUrl} as="style" id="jg-css" />
+                {justifiedGallery ? <link rel="preload" href={justifiedGallery.cssUrl} as="style" id="jg-css" /> : null}
                 <script dangerouslySetInnerHTML={{ __html: onloadScript }}></script>
                 <noscript>
                     <link rel="stylesheet" href={lightGallery.cssUrl} />
-                    <link rel="stylesheet" href={justifiedGallery.cssUrl} />
+                    {justifiedGallery ? <link rel="stylesheet" href={justifiedGallery.cssUrl} /> : null}
                 </noscript>
             </Fragment>;
         }
@@ -26,14 +26,16 @@ class Gallery extends Component {
         // main.js already initializes lightGallery and justifiedGallery — only emit JS files
         return <Fragment>
             <script src={lightGallery.jsUrl} defer></script>
-            <script src={justifiedGallery.jsUrl} defer></script>
+            {justifiedGallery ? <script src={justifiedGallery.jsUrl} defer></script> : null}
         </Fragment>;
     }
 }
 
 Gallery.Cacheable = cacheComponent(Gallery, 'plugin.gallery.async', props => {
     const { head, helper, page } = props;
-    const hasImages = !!(page && page.content && page.content.includes('<img'));
+    const content = (page && page.content) || '';
+    const hasImages = content.includes('<img');
+    const hasJustifiedGallery = content.includes('justified-gallery');
     return {
         head,
         hasImages,
@@ -41,10 +43,10 @@ Gallery.Cacheable = cacheComponent(Gallery, 'plugin.gallery.async', props => {
             jsUrl: helper.cdn('lightgallery', '1.10.0', 'dist/js/lightgallery.min.js'),
             cssUrl: helper.cdn('lightgallery', '1.10.0', 'dist/css/lightgallery.min.css')
         },
-        justifiedGallery: {
+        justifiedGallery: hasJustifiedGallery ? {
             jsUrl: helper.cdn('justifiedGallery', '3.8.1', 'dist/js/jquery.justifiedGallery.min.js'),
             cssUrl: helper.cdn('justifiedGallery', '3.8.1', 'dist/css/justifiedGallery.min.css')
-        }
+        } : null
     };
 });
 
