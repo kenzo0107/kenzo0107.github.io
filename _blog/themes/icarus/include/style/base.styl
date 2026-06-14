@@ -53,6 +53,10 @@ $logo-height ?= 2.25rem
 @import bulma-stylus-root + '/utilities/functions'
 @import bulma-stylus-root + '/utilities/derived-variables'
 
+// Provide defaults for variables normally defined by removed Bulma components,
+// so downstream Icarus styles (e.g. search.styl) don't get undefined references.
+$modal-background-background-color ?= rgba($scheme-invert, 0.86)
+
 $colors = merge($colors, $custom-colors)
 
 @import bulma-stylus-root + '/utilities/animations'
