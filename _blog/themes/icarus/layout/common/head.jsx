@@ -53,10 +53,20 @@ module.exports = class extends Component {
         const noIndex = helper.is_archive() || helper.is_category() || helper.is_tag();
 
         const language = page.lang || page.language || config.language;
+        // JetBrains Mono is self-hosted; Google Fonts only serves Noto Sans JP.
         const fontCssUrl = {
-            default: fontcdn('Noto+Sans+JP:wght@400;700&family=JetBrains+Mono:wght@400;600&display=optional', 'css2'),
+            default: fontcdn('Noto+Sans+JP:wght@400;700&display=optional', 'css2'),
             cyberpunk: fontcdn('Oxanium:wght@300;400;600&family=Roboto+Mono&display=swap', 'css2')
         };
+        // Inline @font-face for JetBrains Mono — declared early so the browser can
+        // schedule the font download as soon as it encounters a code block.
+        const jbMonoFontFace = [400, 600].map(w =>
+            `@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:${w};` +
+            `font-display:optional;` +
+            `src:url('/fonts/jetbrains-mono-${w}.woff2') format('woff2');` +
+            `unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,` +
+            `U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}`
+        ).join('');
 
         let hlTheme, images;
         if (highlight && highlight.enable === false) {
@@ -173,6 +183,8 @@ module.exports = class extends Component {
             <link rel="preload" href={url_for('/css/fontawesome-free.min.css')} as="style" id="icon-css" />
             <link rel="preload" href={url_for('/webfonts/fa-solid-900.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" />
             <link rel="preload" href={url_for('/webfonts/fa-brands-400.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" />
+            {hasCodeBlocks ? <link rel="preload" href={url_for('/fonts/jetbrains-mono-400.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" /> : null}
+            {hasCodeBlocks ? <link rel="preload" href={url_for('/fonts/jetbrains-mono-600.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" /> : null}
             {/* Preload body scripts early so the browser doesn't wait until it parses all article HTML */}
             <link rel="preload" href={url_for('/js/main.js')} as="script" />
             <link rel="preload" href={url_for('/js/animation.js')} as="script" />
@@ -187,6 +199,7 @@ module.exports = class extends Component {
                 {hlTheme && hasCodeBlocks ? <link rel="stylesheet" href={hlTheme === 'github-dark' ? url_for('/css/highlight-dark.min.css') : cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
             </noscript>
             <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
+            {variant === 'default' ? <style dangerouslySetInnerHTML={{ __html: jbMonoFontFace }}></style> : null}
 
             {/* Metadata (does not affect resource loading) */}
             {noIndex ? <meta name="robots" content="noindex" /> : null}
