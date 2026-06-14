@@ -13,8 +13,13 @@ const STATIC = [
   '/js/main.js',
   '/js/insight.js',
   '/js/animation.js',
+  '/js/pjax.js',
+  '/js/column.js',
+  '/js/back_to_top.js',
+  '/js/toc.js',
   '/img/logo.svg',
   '/img/favicon.svg',
+  '/img/avatar.webp',
 ];
 
 self.addEventListener('install', e => {
