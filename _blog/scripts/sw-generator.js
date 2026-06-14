@@ -1,6 +1,6 @@
 /**
  * Generates sw.js with the current build timestamp embedded as the cache version.
- * Cache-first for static assets, network-first for HTML.
+ * Cache-first for static assets, stale-while-revalidate for HTML.
  */
 hexo.extend.generator.register('service-worker', function() {
     const buildDate = new Date().toISOString().slice(0, 10).replace(/-/g, '');
@@ -51,6 +51,23 @@ self.addEventListener('fetch', e => {
         });
         return cached || net;
       })
+    );
+    return;
+  }
+  // Stale-while-revalidate for HTML: serve cached version immediately,
+  // then update cache in background. Safe because the daily cache name change
+  // (embedded at build time) forces full re-fetch after each new deployment.
+  if (e.request.headers.get('accept') && e.request.headers.get('accept').includes('text/html')) {
+    e.respondWith(
+      caches.open(CACHE).then(cache =>
+        cache.match(e.request).then(cached => {
+          const net = fetch(e.request).then(res => {
+            if (res.ok) cache.put(e.request, res.clone());
+            return res;
+          }).catch(() => cached);
+          return cached || net;
+        })
+      )
     );
     return;
   }

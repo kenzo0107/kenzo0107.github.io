@@ -9,7 +9,7 @@ module.exports = class extends Component {
         const langPrefix = page.listLang === 'en' ? 'en/' : '';
         return <Fragment>
             <div class="columns is-multiline article-cards">
-                {page.posts.map(post => {
+                {page.posts.map((post, postIndex) => {
                     const cover = post.cover || post.thumbnail;
                     const coverUrl = cover ? url_for(cover) : null;
                     const link = url_for(post.link || post.path);
@@ -25,7 +25,8 @@ module.exports = class extends Component {
                                 <div class="card-image">
                                     {coverUrl
                                         ? <figure class="image article-card-cover">
-                                            <img class="fill" src={coverUrl} alt={post.title || coverUrl} />
+                                            <img class="fill" src={coverUrl} alt={post.title || coverUrl}
+                                            fetchpriority={postIndex === 0 ? 'high' : undefined} />
                                         </figure>
                                         : <figure class="image article-card-cover article-card-noimage">
                                             <span class="article-card-noimage-text has-ratio">{coverLabel}</span>

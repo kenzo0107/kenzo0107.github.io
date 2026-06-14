@@ -129,9 +129,13 @@ module.exports = class extends Component {
         // Inline script adds onload handlers for async-loaded font/icon/highlight CSS
         const asyncExtCssScript = `(function(){['font-css','icon-css','hl-css'].forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
 
-        // LCP preload: preload the cover/thumbnail image for article pages
+        // LCP preload: preload the cover/thumbnail image for article pages,
+        // or the first post's cover on listing pages (homepage, category, tag, archive).
+        const firstPost = page.posts && typeof page.posts.first === 'function' ? page.posts.first() : null;
         const lcpImage = typeof page.cover === 'string' ? url_for(page.cover)
             : typeof page.thumbnail === 'string' ? url_for(page.thumbnail)
+            : (firstPost && typeof firstPost.cover === 'string') ? url_for(firstPost.cover)
+            : (firstPost && typeof firstPost.thumbnail === 'string') ? url_for(firstPost.thumbnail)
             : null;
 
         const swScript = `if('serviceWorker'in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}`;
@@ -158,7 +162,6 @@ module.exports = class extends Component {
             <link rel="dns-prefetch" href="https://i.imgur.com" />
             <link rel="dns-prefetch" href="https://s7.addthis.com" />
             <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-            <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
             {search && search.type === 'insight' ? <link rel="prefetch" href={url_for('/content.json')} as="fetch" crossOrigin="anonymous" /> : null}
             {search && search.type === 'insight' ? <link rel="preload" href={url_for('/js/insight.js')} as="script" /> : null}
             {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}

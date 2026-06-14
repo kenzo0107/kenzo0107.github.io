@@ -129,7 +129,7 @@ module.exports = class extends Component {
                         <div class="media">
                             <div class="media-left">
                                 <figure class="image is-48x48">
-                                    <img class="is-rounded not-gallery-item" src="https://github.com/kenzo0107.png?size=64" alt="kenzo0107" />
+                                    <img class="is-rounded not-gallery-item" src="/img/avatar.webp" alt="kenzo0107" width="48" height="48" />
                                 </figure>
                             </div>
                             <div class="media-content">
