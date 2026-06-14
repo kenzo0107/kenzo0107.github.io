@@ -56,10 +56,10 @@ self.addEventListener('fetch', e => {
     );
     return;
   }
-  // Stale-while-revalidate for HTML: serve cached version immediately,
-  // then update cache in background. Safe because the daily cache name change
-  // (embedded at build time) forces full re-fetch after each new deployment.
-  if (e.request.headers.get('accept') && e.request.headers.get('accept').includes('text/html')) {
+  // Stale-while-revalidate for HTML navigation requests: serve cached version
+  // immediately, then update cache in background. Safe because the daily cache
+  // name change (embedded at build time) forces full re-fetch after each new deployment.
+  if (e.request.mode === 'navigate') {
     e.respondWith(
       caches.open(CACHE).then(cache =>
         cache.match(e.request).then(cached => {
