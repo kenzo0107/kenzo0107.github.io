@@ -168,6 +168,10 @@ module.exports = class extends Component {
             <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
             <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
             <link rel="preload" href={iconcdn()} as="style" id="icon-css" />
+            {/* Preload body scripts early so the browser doesn't wait until it parses all article HTML */}
+            <link rel="preload" href={url_for('/js/main.js')} as="script" />
+            <link rel="preload" href={url_for('/js/animation.js')} as="script" />
+            {(page.layout === 'post' || page.layout === 'page') ? <link rel="preload" href={url_for('/js/toc.js')} as="script" /> : null}
             <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
             <noscript>
                 <link rel="stylesheet" href={fontCssUrl[variant]} />

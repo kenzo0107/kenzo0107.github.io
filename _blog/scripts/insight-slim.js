@@ -8,7 +8,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const TEXT_LIMIT = 200;
+// insight.js renders snippets at maxlen=100, so 100 chars is sufficient for both matching and display
+const TEXT_LIMIT = 100;
 
 hexo.extend.filter.register('before_exit', function() {
     const isGenerate = ['g', 'generate'].includes(hexo.env.cmd);
