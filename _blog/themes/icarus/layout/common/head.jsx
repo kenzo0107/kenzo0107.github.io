@@ -185,11 +185,8 @@ module.exports = class extends Component {
             <link rel="preload" href={url_for('/webfonts/fa-brands-400.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" />
             {hasCodeBlocks ? <link rel="preload" href={url_for('/fonts/jetbrains-mono-400.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" /> : null}
             {hasCodeBlocks ? <link rel="preload" href={url_for('/fonts/jetbrains-mono-600.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" /> : null}
-            {/* Preload body scripts early so the browser doesn't wait until it parses all article HTML */}
+            {/* Preload main.js only — smaller deferred scripts are SW pre-cached and tiny enough to skip */}
             <link rel="preload" href={url_for('/js/main.js')} as="script" />
-            <link rel="preload" href={url_for('/js/animation.js')} as="script" />
-            <link rel="preload" href={url_for('/js/back_to_top.js')} as="script" />
-            <link rel="preload" href={url_for('/js/column.js')} as="script" />
             {(page.layout === 'post' || page.layout === 'page') ? <link rel="preload" href={url_for('/js/toc.js')} as="script" /> : null}
             {hlTheme && hasCodeBlocks ? <link rel="preload" href={hlTheme === 'github-dark' ? url_for('/css/highlight-dark.min.css') : cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} as="style" id="hl-css" /> : null}
             <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
