@@ -1,11 +1,31 @@
 'use strict';
-const fs = require('fs');
-const path = require('path');
 
-// Copy pace.min.js from node_modules to public/js/.
-// Self-hosting eliminates the jsdelivr CDN request and allows SW caching.
+// Minimal progress-bar replacement for pace.js (~350B vs 13KB).
+// Creates .pace / .pace-progress elements matching the CSS already inlined by
+// progressbar.jsx, then slides the bar from 0→100% via translate3d.
+const PACE_JS =
+    '(function(){' +
+    'var p=document.createElement("div");' +
+    'p.className="pace";' +
+    'var b=document.createElement("div");' +
+    'b.className="pace-progress";' +
+    'b.style.transition="transform .15s linear";' +
+    'p.appendChild(b);' +
+    'document.documentElement.appendChild(p);' +
+    'var pct=0;' +
+    'function go(n){b.style.transform="translate3d("+n+"%,0,0)";}' +
+    'var t=setInterval(function(){' +
+        'pct+=Math.max(1,(90-pct)*.15);' +
+        'if(pct>90)pct=90;' +
+        'go(pct);' +
+    '},100);' +
+    'window.addEventListener("load",function(){' +
+        'clearInterval(t);' +
+        'go(100);' +
+        'setTimeout(function(){p.className="pace pace-inactive";},200);' +
+    '});' +
+    '})();';
+
 hexo.extend.generator.register('pace-js', function() {
-    const src = path.join(__dirname, '../node_modules/pace-js/pace.min.js');
-    const js = fs.readFileSync(src, 'utf8');
-    return { path: 'js/pace.min.js', data: js };
+    return { path: 'js/pace.min.js', data: PACE_JS };
 });
