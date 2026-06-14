@@ -180,7 +180,7 @@ module.exports = class extends Component {
             <link rel="dns-prefetch" href="https://s7.addthis.com" />
             <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
             {search && search.type === 'insight' ? <link rel="prefetch" href={url_for('/content.json')} as="fetch" crossOrigin="anonymous" /> : null}
-            {search && search.type === 'insight' ? <link rel="preload" href={url_for('/js/insight.js')} as="script" /> : null}
+            {/* insight.js is loaded via <script defer> in body; preload would compete with critical CSS/fonts */}
             {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}
             <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
             <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
