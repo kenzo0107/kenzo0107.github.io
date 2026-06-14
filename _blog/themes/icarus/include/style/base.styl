@@ -59,11 +59,24 @@ $colors = merge($colors, $custom-colors)
 @import bulma-stylus-root + '/utilities/mixins'
 @import bulma-stylus-root + '/utilities/controls'
 @import bulma-stylus-root + '/base/_all'
-@import bulma-stylus-root + '/components/_all'
+// Selective Bulma component imports — exclude unused: breadcrumb, dropdown, modal
+@import bulma-stylus-root + '/components/card'
+@import bulma-stylus-root + '/components/level'
+@import bulma-stylus-root + '/components/list'
+@import bulma-stylus-root + '/components/media'
+@import bulma-stylus-root + '/components/menu'
+@import bulma-stylus-root + '/components/message'
+@import bulma-stylus-root + '/components/navbar'
+@import bulma-stylus-root + '/components/pagination'
+@import bulma-stylus-root + '/components/panel'
+@import bulma-stylus-root + '/components/tabs'
 @import bulma-stylus-root + '/elements/_all'
 @import bulma-stylus-root + '/form/_all'
-@import bulma-stylus-root + '/grid/_all'
-@import bulma-stylus-root + '/layout/_all'
+// Selective grid imports — exclude tiles
+@import bulma-stylus-root + '/grid/columns'
+// Selective layout imports — exclude hero
+@import bulma-stylus-root + '/layout/section'
+@import bulma-stylus-root + '/layout/footer'
 
 html
     height: 100%
