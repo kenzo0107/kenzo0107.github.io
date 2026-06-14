@@ -132,6 +132,10 @@ module.exports = class extends Component {
         }
         const icarusConfigScript = `var IcarusThemeSettings={article:{highlight:{clipboard:${clipboard},fold:'${fold}'}}};`;
 
+        const hasCodeBlocks = !!(page.content && page.content.includes('<figure class="highlight'));
+        // Inline script adds onload handlers for async-loaded font/icon CSS
+        const asyncExtCssScript = `(function(){['font-css','icon-css'].forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
+
         return <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -190,10 +194,15 @@ module.exports = class extends Component {
             <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
             <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
             <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" />
-            <link rel="stylesheet" href={fontCssUrl[variant]} />
-            <link rel="stylesheet" href={iconcdn()} />
+            <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
+            <link rel="preload" href={iconcdn()} as="style" id="icon-css" />
+            <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
+            <noscript>
+                <link rel="stylesheet" href={fontCssUrl[variant]} />
+                <link rel="stylesheet" href={iconcdn()} />
+            </noscript>
             <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
-            {hlTheme ? <link data-pjax rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
+            {hlTheme && hasCodeBlocks ? <link data-pjax rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
             <Plugins site={site} config={config} helper={helper} page={page} head={true} />
 
             {adsenseClientId ? <script data-ad-client={adsenseClientId}
