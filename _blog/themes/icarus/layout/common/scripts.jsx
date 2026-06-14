@@ -17,7 +17,6 @@ module.exports = class extends Component {
         const hasCodeBlocks = !!(page.content && page.content.includes('<figure class="highlight'));
 
         return <Fragment>
-            <script src={cdn('jquery', '3.3.1', 'dist/jquery.slim.min.js')} defer></script>
             {clipboard && hasCodeBlocks && <script src={cdn('clipboard', '2.0.4', 'dist/clipboard.min.js')} defer></script>}
             <script data-pjax src={url_for('/js/column.js')} defer></script>
             <Plugins site={site} config={config} page={page} helper={helper} head={false} />

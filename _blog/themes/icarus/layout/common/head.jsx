@@ -149,8 +149,34 @@ module.exports = class extends Component {
         return <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+            {/* Anti-FOUC scripts must come first */}
             <script dangerouslySetInnerHTML={{ __html: themeInitScript }}></script>
             <script dangerouslySetInnerHTML={{ __html: icarusConfigScript }}></script>
+
+            {/* Resource hints: placed early so preload scanner starts ASAP */}
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+            <link rel="preconnect" href="https://use.fontawesome.com" crossOrigin="anonymous" />
+            <link rel="preconnect" href="https://www.googletagmanager.com" />
+            <link rel="preconnect" href="https://cdn-ak.f.st-hatena.com" />
+            <link rel="preconnect" href="https://i.imgur.com" />
+            <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+            <link rel="dns-prefetch" href="https://s7.addthis.com" />
+            <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+            <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
+            {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}
+            <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
+            <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
+            <link rel="preload" href={iconcdn()} as="style" id="icon-css" />
+            <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
+            <noscript>
+                <link rel="stylesheet" href={fontCssUrl[variant]} />
+                <link rel="stylesheet" href={iconcdn()} />
+            </noscript>
+            <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
+            {hlTheme && hasCodeBlocks ? <link data-pjax rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
+
+            {/* Metadata (does not affect resource loading) */}
             {noIndex ? <meta name="robots" content="noindex" /> : null}
             {meta && meta.length ? <MetaTags meta={meta} /> : null}
 
@@ -198,27 +224,7 @@ module.exports = class extends Component {
             {favicon ? <link rel="icon" href={url_for(favicon)} /> : null}
             {prevPath ? <link rel="prefetch" href={prevPath} /> : null}
             {nextPath ? <link rel="prefetch" href={nextPath} /> : null}
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://use.fontawesome.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://www.googletagmanager.com" />
-            <link rel="preconnect" href="https://cdn-ak.f.st-hatena.com" />
-            <link rel="preconnect" href="https://i.imgur.com" />
-            <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
-            <link rel="dns-prefetch" href="https://s7.addthis.com" />
-            <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-            <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
-            {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}
-            <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
-            <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
-            <link rel="preload" href={iconcdn()} as="style" id="icon-css" />
-            <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
-            <noscript>
-                <link rel="stylesheet" href={fontCssUrl[variant]} />
-                <link rel="stylesheet" href={iconcdn()} />
-            </noscript>
-            <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
-            {hlTheme && hasCodeBlocks ? <link data-pjax rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
+
             <Plugins site={site} config={config} helper={helper} page={page} head={true} />
 
             {adsenseClientId ? <script data-ad-client={adsenseClientId}
