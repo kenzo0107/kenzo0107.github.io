@@ -23,7 +23,11 @@ const STATIC = [
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(STATIC)));
+  e.waitUntil(
+    caches.open(CACHE).then(c =>
+      Promise.allSettled(STATIC.map(url => c.add(url)))
+    )
+  );
   self.skipWaiting();
 });
 
@@ -39,11 +43,11 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (url.origin !== location.origin) return;
-  if (/\\.(css|js|svg|png|jpg|jpeg|gif|webp|ico|woff2?)$/.test(url.pathname)) {
+  if (/\\.(css|js|json|svg|png|jpg|jpeg|gif|webp|ico|woff2?)$/.test(url.pathname)) {
     e.respondWith(
       caches.match(e.request).then(cached => {
         const net = fetch(e.request).then(res => {
-          caches.open(CACHE).then(c => c.put(e.request, res.clone()));
+          if (res.ok) caches.open(CACHE).then(c => c.put(e.request, res.clone()));
           return res;
         });
         return cached || net;
