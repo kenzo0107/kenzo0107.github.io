@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const TEXT_LIMIT = 500;
+const TEXT_LIMIT = 200;
 
 hexo.extend.filter.register('before_exit', function() {
     const isGenerate = ['g', 'generate'].includes(hexo.env.cmd);
