@@ -10,12 +10,14 @@ hexo.extend.generator.register('service-worker', function() {
 const CACHE = 'blog-${cacheVersion}';
 const STATIC = [
   '/css/default.css',
+  '/css/highlight-dark.min.css',
   '/js/main.js',
   '/js/insight.js',
   '/js/animation.js',
   '/js/column.js',
   '/js/back_to_top.js',
   '/js/toc.js',
+  '/manifest.json',
   '/img/logo.svg',
   '/img/favicon.svg',
   '/img/avatar.webp',

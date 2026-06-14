@@ -54,7 +54,7 @@ module.exports = class extends Component {
 
         const language = page.lang || page.language || config.language;
         const fontCssUrl = {
-            default: fontcdn('Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap', 'css2'),
+            default: fontcdn('Noto+Sans+JP:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap', 'css2'),
             cyberpunk: fontcdn('Oxanium:wght@300;400;600&family=Roboto+Mono&display=swap', 'css2')
         };
 
@@ -175,12 +175,12 @@ module.exports = class extends Component {
             <link rel="preload" href={url_for('/js/column.js')} as="script" />
             {(page.layout === 'post' || page.layout === 'page') ? <link rel="preload" href={url_for('/js/toc.js')} as="script" /> : null}
             {clipboard && hasCodeBlocks ? <link rel="preload" href={cdn('clipboard', '2.0.4', 'dist/clipboard.min.js')} as="script" /> : null}
-            {hlTheme && hasCodeBlocks ? <link rel="preload" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} as="style" id="hl-css" /> : null}
+            {hlTheme && hasCodeBlocks ? <link rel="preload" href={hlTheme === 'github-dark' ? url_for('/css/highlight-dark.min.css') : cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} as="style" id="hl-css" /> : null}
             <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
             <noscript>
                 <link rel="stylesheet" href={fontCssUrl[variant]} />
                 <link rel="stylesheet" href={iconcdn()} />
-                {hlTheme && hasCodeBlocks ? <link rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
+                {hlTheme && hasCodeBlocks ? <link rel="stylesheet" href={hlTheme === 'github-dark' ? url_for('/css/highlight-dark.min.css') : cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
             </noscript>
             <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
 
