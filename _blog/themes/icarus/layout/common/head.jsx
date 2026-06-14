@@ -136,6 +136,11 @@ module.exports = class extends Component {
         // Inline script adds onload handlers for async-loaded font/icon CSS
         const asyncExtCssScript = `(function(){['font-css','icon-css'].forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
 
+        // LCP preload: preload the cover/thumbnail image for article pages
+        const lcpImage = typeof page.cover === 'string' ? page.cover
+            : typeof page.thumbnail === 'string' ? url_for(page.thumbnail)
+            : null;
+
         return <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -193,7 +198,9 @@ module.exports = class extends Component {
             <link rel="dns-prefetch" href="https://use.fontawesome.com" />
             <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
             <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-            <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" />
+            <link rel="dns-prefetch" href="https://cdn-ak.f.st-hatena.com" />
+            {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}
+            <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
             <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
             <link rel="preload" href={iconcdn()} as="style" id="icon-css" />
             <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
