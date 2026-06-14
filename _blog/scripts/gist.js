@@ -6,5 +6,5 @@
 hexo.extend.tag.register('gist', (args) => {
   const [id, file] = args;
   const src = `//gist.github.com/${id}.js${file ? `?file=${file}` : ''}`;
-  return `<script src="${src}"></script>`;
+  return `<script src="${src}" async></script>`;
 });
