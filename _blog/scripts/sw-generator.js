@@ -10,6 +10,7 @@ hexo.extend.generator.register('service-worker', function() {
 const CACHE = 'blog-${cacheVersion}';
 const STATIC = [
   '/css/default.css',
+  '/css/fontawesome-free.min.css',
   '/css/highlight-dark.min.css',
   '/js/main.js',
   '/js/insight.js',

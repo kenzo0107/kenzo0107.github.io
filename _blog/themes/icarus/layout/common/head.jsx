@@ -165,6 +165,8 @@ module.exports = class extends Component {
             <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
             <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
             <link rel="preload" href={url_for('/css/fontawesome-free.min.css')} as="style" id="icon-css" />
+            <link rel="preload" href={url_for('/webfonts/fa-solid-900.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" />
+            <link rel="preload" href={url_for('/webfonts/fa-brands-400.woff2')} as="font" type="font/woff2" crossOrigin="anonymous" />
             {/* Preload body scripts early so the browser doesn't wait until it parses all article HTML */}
             <link rel="preload" href={url_for('/js/main.js')} as="script" />
             <link rel="preload" href={url_for('/js/animation.js')} as="script" />
