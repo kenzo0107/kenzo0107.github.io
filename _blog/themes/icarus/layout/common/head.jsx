@@ -140,6 +140,12 @@ module.exports = class extends Component {
 
         const swScript = `if('serviceWorker'in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}`;
 
+        // Speculation Rules: prerender same-origin pages on hover for near-instant navigation.
+        // Supported in Chromium 109+ only; other browsers safely ignore the script type.
+        const speculationRules = JSON.stringify({
+            prerender: [{ where: { href_matches: '/*' }, eagerness: 'moderate' }]
+        });
+
         const prevPath = page.prev ? url_for(page.prev.path) : null;
         const nextPath = page.next ? url_for(page.next.path) : null;
 
@@ -235,6 +241,7 @@ module.exports = class extends Component {
 
             {followItVerificationCode ? <meta name="follow.it-verification-code" content={followItVerificationCode} /> : null}
             <script dangerouslySetInnerHTML={{ __html: swScript }}></script>
+            <script type="speculationrules" dangerouslySetInnerHTML={{ __html: speculationRules }}></script>
         </head>;
     }
 };

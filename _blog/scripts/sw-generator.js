@@ -36,9 +36,12 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
+    Promise.all([
+      caches.keys().then(keys =>
+        Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+      ),
+      self.registration.navigationPreload && self.registration.navigationPreload.enable(),
+    ])
   );
   self.clients.claim();
 });
@@ -61,14 +64,17 @@ self.addEventListener('fetch', e => {
   // Stale-while-revalidate for HTML navigation requests: serve cached version
   // immediately, then update cache in background. Safe because the daily cache
   // name change (embedded at build time) forces full re-fetch after each new deployment.
+  // Use Navigation Preload response (if available) to avoid waiting for SW startup.
   if (e.request.mode === 'navigate') {
     e.respondWith(
       caches.open(CACHE).then(cache =>
         cache.match(e.request).then(cached => {
-          const net = fetch(e.request).then(res => {
-            if (res.ok) cache.put(e.request, res.clone());
-            return res;
-          }).catch(() => cached);
+          const net = (e.preloadResponse || Promise.resolve(null)).then(preloaded =>
+            (preloaded || fetch(e.request)).then(res => {
+              if (res && res.ok) cache.put(e.request, res.clone());
+              return res;
+            })
+          ).catch(() => cached);
           return cached || net;
         })
       )
