@@ -23,6 +23,8 @@ const STATIC = [
   '/js/back_to_top.js',
   '/js/toc.js',
   '/js/pace.min.js',
+  '/js/lightgallery.min.js',
+  '/css/lightgallery-bundle.min.css',
   '/manifest.json',
   '/img/logo.svg',
   '/img/favicon.svg',
