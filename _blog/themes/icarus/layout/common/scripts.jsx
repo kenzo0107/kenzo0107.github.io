@@ -20,7 +20,7 @@ module.exports = class extends Component {
             <script data-pjax src={url_for('/js/column.js')} defer></script>
             <Plugins site={site} config={config} page={page} helper={helper} head={false} />
             <script data-pjax src={url_for('/js/main.js')} defer></script>
-            {hasMermaid ? <script src={`https://cdn.jsdelivr.net/npm/mermaid@${config.mermaid.version}/dist/mermaid.min.js`} defer></script> : null}
+            {hasMermaid ? <script src={url_for('/js/mermaid.min.js')} defer></script> : null}
         </Fragment>;
     }
 };

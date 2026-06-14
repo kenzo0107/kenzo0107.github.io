@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "lightgallery": "^2.7.2",
+    "mermaid": "^8.11.0",
     "minimatch": "^3.0.4",
     "pace-js": "^1.2.4"
   },

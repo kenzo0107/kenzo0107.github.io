@@ -155,7 +155,6 @@ module.exports = class extends Component {
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link rel="preconnect" href="https://use.fontawesome.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
             {/* dns-prefetch for non-critical / async origins */}
             <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
             <link rel="dns-prefetch" href="https://i.imgur.com" />
