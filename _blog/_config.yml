@@ -132,6 +132,10 @@ mermaid: ## mermaid url https://github.com/knsv/mermaid
   theme: default
 
 # hexo-minify: HTML/CSS/JS 圧縮（画像・フォントは無効化）
+# hexo-renderer-marked: add loading="lazy" to article images at generation time
+marked:
+  lazyload: true
+
 minify:
   exclude: ['*.min.*']
   js:

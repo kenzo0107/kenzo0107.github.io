@@ -204,7 +204,8 @@ module.exports = class extends Component {
             <link rel="preconnect" href="https://www.googletagmanager.com" />
             <link rel="preconnect" href="https://cdn-ak.f.st-hatena.com" />
             <link rel="preconnect" href="https://i.imgur.com" />
-            <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+            <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+            <link rel="dns-prefetch" href="https://s7.addthis.com" />
             <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
             {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}
             <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
