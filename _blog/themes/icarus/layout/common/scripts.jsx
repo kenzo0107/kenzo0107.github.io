@@ -4,7 +4,7 @@ const Plugins = require('./plugins');
 module.exports = class extends Component {
     render() {
         const { site, config, helper, page } = this.props;
-        const { url_for, cdn } = helper;
+        const { url_for } = helper;
         const { article } = config;
 
         let clipboard = true;
@@ -17,7 +17,6 @@ module.exports = class extends Component {
         const hasCodeBlocks = !!(page.content && page.content.includes('<figure class="highlight'));
 
         return <Fragment>
-            {clipboard && hasCodeBlocks && <script src={cdn('clipboard', '2.0.4', 'dist/clipboard.min.js')} defer></script>}
             <script data-pjax src={url_for('/js/column.js')} defer></script>
             <Plugins site={site} config={config} page={page} helper={helper} head={false} />
             <script data-pjax src={url_for('/js/main.js')} defer></script>

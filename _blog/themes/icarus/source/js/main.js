@@ -1,5 +1,5 @@
 /* eslint-disable node/no-unsupported-features/node-builtins */
-(function(ClipboardJS, config) {
+(function(config) {
     function timeAgo(dateStr) {
         const diff = (Date.now() - new Date(dateStr)) / 1000;
         const locale = document.documentElement.lang || 'en';
@@ -114,17 +114,23 @@
             }
         });
 
-        if (typeof ClipboardJS !== 'undefined' && clipboard) {
+        if (clipboard && navigator.clipboard) {
             document.querySelectorAll('figure.highlight').forEach(figure => {
-                const id = 'code-' + Date.now() + (Math.random() * 1000 | 0);
-                figure.id = id;
                 const levelRight = figure.querySelector('figcaption .level-right');
-                if (levelRight) {
-                    levelRight.insertAdjacentHTML('beforeend',
-                        '<a href="javascript:;" class="copy" title="Copy" data-clipboard-target="#' + id + ' .code"><i class="fas fa-copy"></i></a>');
-                }
+                if (!levelRight) return;
+                const btn = document.createElement('a');
+                btn.href = 'javascript:;';
+                btn.className = 'copy';
+                btn.title = 'Copy';
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-copy';
+                btn.appendChild(icon);
+                btn.addEventListener('click', function() {
+                    const code = figure.querySelector('.code');
+                    if (code) navigator.clipboard.writeText(code.innerText).catch(function() {});
+                });
+                levelRight.appendChild(btn);
             });
-            new ClipboardJS('.highlight .copy'); // eslint-disable-line no-new
         }
 
         if (fold) {
@@ -225,4 +231,4 @@
         });
         updateCategoryLinks(savedLang);
     }
-}(window.ClipboardJS, window.IcarusThemeSettings));
+}(window.IcarusThemeSettings));
