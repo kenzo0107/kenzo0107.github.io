@@ -143,6 +143,8 @@ module.exports = class extends Component {
 
         const swScript = `if('serviceWorker'in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js');});}`;
 
+        const prevPath = page.prev ? url_for(page.prev.path) : null;
+        const nextPath = page.next ? url_for(page.next.path) : null;
 
         return <head>
             <meta charset="utf-8" />
@@ -194,6 +196,8 @@ module.exports = class extends Component {
             {canonical_url ? <link rel="canonical" href={canonical_url} /> : null}
             {rss ? <link rel="alternate" href={url_for(rss)} title={config.title} type="application/atom+xml" /> : null}
             {favicon ? <link rel="icon" href={url_for(favicon)} /> : null}
+            {prevPath ? <link rel="prefetch" href={prevPath} /> : null}
+            {nextPath ? <link rel="prefetch" href={nextPath} /> : null}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link rel="preconnect" href="https://use.fontawesome.com" />
