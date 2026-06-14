@@ -12,6 +12,8 @@ const STATIC = [
   '/css/default.css',
   '/css/fontawesome-free.min.css',
   '/css/highlight-dark.min.css',
+  '/webfonts/fa-solid-900.woff2',
+  '/webfonts/fa-brands-400.woff2',
   '/js/main.js',
   '/js/insight.js',
   '/js/animation.js',
