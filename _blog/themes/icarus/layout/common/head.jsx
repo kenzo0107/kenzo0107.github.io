@@ -147,17 +147,20 @@ module.exports = class extends Component {
             <script dangerouslySetInnerHTML={{ __html: icarusConfigScript }}></script>
 
             {/* Resource hints: placed early so preload scanner starts ASAP */}
+            {/* preconnect only for origins on the critical render path */}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <link rel="preconnect" href="https://use.fontawesome.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://www.googletagmanager.com" />
-            <link rel="dns-prefetch" href="https://cdn-ak.f.st-hatena.com" />
-            <link rel="preconnect" href="https://i.imgur.com" />
             <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+            {/* dns-prefetch for non-critical / async origins */}
+            <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+            <link rel="dns-prefetch" href="https://cdn-ak.f.st-hatena.com" />
+            <link rel="dns-prefetch" href="https://i.imgur.com" />
             <link rel="dns-prefetch" href="https://s7.addthis.com" />
             <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
             <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
             {search && search.type === 'insight' ? <link rel="prefetch" href={url_for('/content.json')} as="fetch" crossOrigin="anonymous" /> : null}
+            {search && search.type === 'insight' ? <link rel="preload" href={url_for('/js/insight.js')} as="script" /> : null}
             {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}
             <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
             <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
