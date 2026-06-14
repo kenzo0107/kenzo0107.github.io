@@ -31,7 +31,7 @@ function getPageTitle(page, siteTitle, helper) {
 module.exports = class extends Component {
     render() {
         const { site, config, helper, page } = this.props;
-        const { url_for, cdn, fontcdn, is_post, fontawesome_css } = helper;
+        const { url_for, cdn, fontcdn, is_post, fontawesome_css, highlight_dark_css } = helper;
         const {
             url,
             head = {},
@@ -136,11 +136,12 @@ module.exports = class extends Component {
         const icarusConfigScript = `var IcarusThemeSettings={article:{highlight:{clipboard:${clipboard},fold:'${fold}'}}};`;
 
         const hasCodeBlocks = !!(page.content && page.content.includes('<figure class="highlight'));
-        // Inline script adds onload handlers for async-loaded font/highlight CSS
-        // (FA CSS is now inlined via <style>, so icon-css is no longer async-loaded)
-        const asyncExtCssScript = `(function(){['font-css','hl-css'].forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
-        // FA CSS inlined per page to eliminate a separate HTTP request for icons
+        // Inline script adds onload handlers for async-loaded font CSS only
+        // (FA CSS and highlight CSS are now inlined via <style>)
+        const asyncExtCssScript = `(function(){var l=document.getElementById('font-css');if(l)l.onload=function(){this.rel='stylesheet';};})();`;
+        // FA CSS and highlight CSS inlined per page to eliminate separate HTTP requests
         const faCss = fontawesome_css ? fontawesome_css() : '';
+        const hlCss = (hlTheme === 'github-dark' && hasCodeBlocks && highlight_dark_css) ? highlight_dark_css() : '';
 
         // LCP preload: preload the cover/thumbnail image for article pages,
         // or the first post's cover on listing pages (homepage, category, tag, archive).
@@ -190,15 +191,18 @@ module.exports = class extends Component {
             {/* Preload main.js only — smaller deferred scripts are SW pre-cached and tiny enough to skip */}
             <link rel="preload" href={url_for('/js/main.js')} as="script" />
             {(page.layout === 'post' || page.layout === 'page') ? <link rel="preload" href={url_for('/js/toc.js')} as="script" /> : null}
-            {hlTheme && hasCodeBlocks ? <link rel="preload" href={hlTheme === 'github-dark' ? url_for('/css/highlight-dark.min.css') : cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} as="style" id="hl-css" /> : null}
+            {/* For non-github-dark themes, still async-load from CDN */}
+            {hlTheme && hasCodeBlocks && hlTheme !== 'github-dark' ? <link rel="preload" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} as="style" id="hl-css" /> : null}
             <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
             <noscript>
                 <link rel="stylesheet" href={fontCssUrl[variant]} />
-                {hlTheme && hasCodeBlocks ? <link rel="stylesheet" href={hlTheme === 'github-dark' ? url_for('/css/highlight-dark.min.css') : cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
+                {hlTheme && hasCodeBlocks && hlTheme !== 'github-dark' ? <link rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
             </noscript>
             <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
             {/* FA CSS inlined to eliminate separate HTTP request — icons render on first paint */}
             {faCss ? <style dangerouslySetInnerHTML={{ __html: faCss }}></style> : null}
+            {/* Highlight CSS inlined on pages with code blocks to avoid FOUC in code blocks */}
+            {hlCss ? <style dangerouslySetInnerHTML={{ __html: hlCss }}></style> : null}
             {variant === 'default' ? <style dangerouslySetInnerHTML={{ __html: jbMonoFontFace }}></style> : null}
 
             {/* Metadata (does not affect resource loading) */}
