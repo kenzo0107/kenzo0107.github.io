@@ -4,7 +4,10 @@ date: 2014-01-01 05:47:40
 ---
 
 <figure class="image is-128x128 mx-auto mb-6">
-    <img class='avatar is-rounded' src="/img/avatar.png" alt="kenzo0107" />
+    <picture>
+        <source srcset="/img/avatar.webp" type="image/webp">
+        <img class='avatar is-rounded' src="/img/avatar.png" alt="kenzo0107" />
+    </picture>
 </figure>
 
 <a href="https://github.com/kenzo0107/"><img src="https://img.shields.io/badge/GitHub-white?logo=github&amp;logoColor=black" alt="GitHub Badge"></a> <a href="https://x.com/kenzo0107"><img src="https://img.shields.io/badge/X.com-black?logo=x&amp;logoColor=white" alt="X Badge"></a>
