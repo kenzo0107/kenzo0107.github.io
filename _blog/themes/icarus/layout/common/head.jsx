@@ -168,6 +168,8 @@ module.exports = class extends Component {
             {/* Preload body scripts early so the browser doesn't wait until it parses all article HTML */}
             <link rel="preload" href={url_for('/js/main.js')} as="script" />
             <link rel="preload" href={url_for('/js/animation.js')} as="script" />
+            <link rel="preload" href={url_for('/js/back_to_top.js')} as="script" />
+            <link rel="preload" href={url_for('/js/column.js')} as="script" />
             {(page.layout === 'post' || page.layout === 'page') ? <link rel="preload" href={url_for('/js/toc.js')} as="script" /> : null}
             {clipboard && hasCodeBlocks ? <link rel="preload" href={cdn('clipboard', '2.0.4', 'dist/clipboard.min.js')} as="script" /> : null}
             {hlTheme && hasCodeBlocks ? <link rel="preload" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} as="style" id="hl-css" /> : null}
