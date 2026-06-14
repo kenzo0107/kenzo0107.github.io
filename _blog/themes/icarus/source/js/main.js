@@ -1,7 +1,15 @@
 /* eslint-disable node/no-unsupported-features/node-builtins */
-(function($, moment, ClipboardJS, config) {
-    if (typeof moment === 'function' && document.documentElement.lang) {
-        moment.locale(document.documentElement.lang);
+(function($, ClipboardJS, config) {
+    function timeAgo(dateStr) {
+        const diff = (Date.now() - new Date(dateStr)) / 1000;
+        const locale = document.documentElement.lang || 'en';
+        const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+        if (diff < 60) return rtf.format(-Math.round(diff), 'second');
+        if (diff < 3600) return rtf.format(-Math.round(diff / 60), 'minute');
+        if (diff < 86400) return rtf.format(-Math.round(diff / 3600), 'hour');
+        if (diff < 2592000) return rtf.format(-Math.round(diff / 86400), 'day');
+        if (diff < 31536000) return rtf.format(-Math.round(diff / 2592000), 'month');
+        return rtf.format(-Math.round(diff / 31536000), 'year');
     }
 
     $('.article img:not(".not-gallery-item")').each(function() {
@@ -30,11 +38,9 @@
         $('.justified-gallery').justifiedGallery();
     }
 
-    if (typeof moment === 'function') {
-        $('.article-meta time').each(function() {
-            $(this).text(moment($(this).attr('datetime')).fromNow());
-        });
-    }
+    $('.article-meta time').each(function() {
+        $(this).text(timeAgo($(this).attr('datetime')));
+    });
 
     $('.article > .content > table').each(function() {
         if ($(this).width() > $(this).parent().width()) {
@@ -224,4 +230,4 @@
         }
         updateCategoryLinks(savedLang);
     }
-}(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings));
+}(jQuery, window.ClipboardJS, window.IcarusThemeSettings));
