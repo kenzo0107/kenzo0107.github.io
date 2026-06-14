@@ -30,8 +30,29 @@
         }
     });
 
-    if (typeof lightGallery === 'function') {
-        document.querySelectorAll('.article').forEach(el => lightGallery(el, { selector: '.gallery-item' }));
+    // Lazy-load lightGallery JS on first image click to avoid downloading ~47KB on every page load
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    if (galleryItems.length && window._lgCfg) {
+        let lgInit = false;
+        const loadAndOpen = (target) => {
+            if (lgInit) return;
+            lgInit = true;
+            const s = document.createElement('script');
+            s.src = window._lgCfg.jsUrl;
+            s.onload = () => {
+                document.querySelectorAll('.article').forEach(el => lightGallery(el, { selector: '.gallery-item' }));
+                target.click();
+            };
+            document.head.appendChild(s);
+        };
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (typeof lightGallery !== 'function') {
+                    e.preventDefault();
+                    loadAndOpen(this);
+                }
+            });
+        });
     }
 
     document.querySelectorAll('.article-meta time').forEach(el => {

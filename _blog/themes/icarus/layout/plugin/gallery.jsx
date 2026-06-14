@@ -12,12 +12,14 @@ class Gallery extends Component {
         if (head) {
             const onloadIds = justifiedGallery ? `['lg-css','jg-css']` : `['lg-css']`;
             const onloadScript = `(function(){${onloadIds}.forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
+            // Expose JS URL for lazy loading in main.js; CSS is preloaded in background (non-blocking)
+            const lgCfgScript = `window._lgCfg={jsUrl:${JSON.stringify(lightGallery.jsUrl)}};`;
             return <Fragment>
                 <link rel="preload" href={lightGallery.cssUrl} as="style" id="lg-css" />
-                <link rel="preload" href={lightGallery.jsUrl} as="script" />
                 {justifiedGallery ? <link rel="preload" href={justifiedGallery.cssUrl} as="style" id="jg-css" /> : null}
                 {justifiedGallery ? <link rel="preload" href={justifiedGallery.jsUrl} as="script" /> : null}
                 <script dangerouslySetInnerHTML={{ __html: onloadScript }}></script>
+                <script dangerouslySetInnerHTML={{ __html: lgCfgScript }}></script>
                 <noscript>
                     <link rel="stylesheet" href={lightGallery.cssUrl} />
                     {justifiedGallery ? <link rel="stylesheet" href={justifiedGallery.cssUrl} /> : null}
@@ -25,9 +27,8 @@ class Gallery extends Component {
             </Fragment>;
         }
 
-        // main.js already initializes lightGallery and justifiedGallery — only emit JS files
+        // lightGallery JS is loaded lazily on first image click (see main.js); only emit justifiedGallery JS if needed
         return <Fragment>
-            <script src={lightGallery.jsUrl} defer></script>
             {justifiedGallery ? <script src={justifiedGallery.jsUrl} defer></script> : null}
         </Fragment>;
     }
