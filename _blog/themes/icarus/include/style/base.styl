@@ -74,8 +74,19 @@ $colors = merge($colors, $custom-colors)
 @import bulma-stylus-root + '/components/pagination'
 @import bulma-stylus-root + '/components/panel'
 @import bulma-stylus-root + '/components/tabs'
-@import bulma-stylus-root + '/elements/_all'
-@import bulma-stylus-root + '/form/_all'
+// Selective element imports — exclude unused: box, notification, progress
+@import bulma-stylus-root + '/elements/button'
+@import bulma-stylus-root + '/elements/container'
+@import bulma-stylus-root + '/elements/content'
+@import bulma-stylus-root + '/elements/icon'
+@import bulma-stylus-root + '/elements/image'
+@import bulma-stylus-root + '/elements/other'
+@import bulma-stylus-root + '/elements/table'
+@import bulma-stylus-root + '/elements/tag'
+@import bulma-stylus-root + '/elements/title'
+// Selective form imports — exclude unused: checkbox-radio, select, file, input-textarea
+@import bulma-stylus-root + '/form/shared'
+@import bulma-stylus-root + '/form/tools'
 // Selective grid imports — exclude tiles
 @import bulma-stylus-root + '/grid/columns'
 // Selective layout imports — exclude hero
