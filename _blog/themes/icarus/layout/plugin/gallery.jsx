@@ -14,7 +14,9 @@ class Gallery extends Component {
             const onloadScript = `(function(){${onloadIds}.forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
             return <Fragment>
                 <link rel="preload" href={lightGallery.cssUrl} as="style" id="lg-css" />
+                <link rel="preload" href={lightGallery.jsUrl} as="script" />
                 {justifiedGallery ? <link rel="preload" href={justifiedGallery.cssUrl} as="style" id="jg-css" /> : null}
+                {justifiedGallery ? <link rel="preload" href={justifiedGallery.jsUrl} as="script" /> : null}
                 <script dangerouslySetInnerHTML={{ __html: onloadScript }}></script>
                 <noscript>
                     <link rel="stylesheet" href={lightGallery.cssUrl} />

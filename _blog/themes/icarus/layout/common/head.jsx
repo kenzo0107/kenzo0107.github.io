@@ -126,11 +126,11 @@ module.exports = class extends Component {
         const icarusConfigScript = `var IcarusThemeSettings={article:{highlight:{clipboard:${clipboard},fold:'${fold}'}}};`;
 
         const hasCodeBlocks = !!(page.content && page.content.includes('<figure class="highlight'));
-        // Inline script adds onload handlers for async-loaded font/icon CSS
-        const asyncExtCssScript = `(function(){['font-css','icon-css'].forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
+        // Inline script adds onload handlers for async-loaded font/icon/highlight CSS
+        const asyncExtCssScript = `(function(){['font-css','icon-css','hl-css'].forEach(function(id){var l=document.getElementById(id);if(l)l.onload=function(){this.rel='stylesheet';};});})();`;
 
         // LCP preload: preload the cover/thumbnail image for article pages
-        const lcpImage = typeof page.cover === 'string' ? page.cover
+        const lcpImage = typeof page.cover === 'string' ? url_for(page.cover)
             : typeof page.thumbnail === 'string' ? url_for(page.thumbnail)
             : null;
 
@@ -166,13 +166,15 @@ module.exports = class extends Component {
             <link rel="preload" href={url_for('/js/main.js')} as="script" />
             <link rel="preload" href={url_for('/js/animation.js')} as="script" />
             {(page.layout === 'post' || page.layout === 'page') ? <link rel="preload" href={url_for('/js/toc.js')} as="script" /> : null}
+            {clipboard && hasCodeBlocks ? <link rel="preload" href={cdn('clipboard', '2.0.4', 'dist/clipboard.min.js')} as="script" /> : null}
+            {hlTheme && hasCodeBlocks ? <link rel="preload" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} as="style" id="hl-css" /> : null}
             <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
             <noscript>
                 <link rel="stylesheet" href={fontCssUrl[variant]} />
                 <link rel="stylesheet" href={iconcdn()} />
+                {hlTheme && hasCodeBlocks ? <link rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
             </noscript>
             <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
-            {hlTheme && hasCodeBlocks ? <link data-pjax rel="stylesheet" href={cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
 
             {/* Metadata (does not affect resource loading) */}
             {noIndex ? <meta name="robots" content="noindex" /> : null}
