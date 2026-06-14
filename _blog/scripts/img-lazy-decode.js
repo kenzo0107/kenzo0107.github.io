@@ -6,8 +6,10 @@
  */
 hexo.extend.filter.register('after_render:html', function(str) {
     return str.replace(/<img\b([^>]*?)(\s*\/)?>/gi, (match, attrs) => {
-        // Skip LCP candidate images: cover thumbnails and explicitly high-priority images
-        if (/\bthumbnail\b/.test(attrs) || /\bfetchpriority=/.test(attrs)) return match;
+        // Skip only explicitly high-priority images (post page LCP cover).
+        // Index page thumbnails have no fetchpriority and will get loading="lazy"
+        // so the browser only downloads the first visible covers instead of all 36.
+        if (/\bfetchpriority=/.test(attrs)) return match;
         const addLoading = !/\bloading=/.test(attrs) ? ' loading="lazy"' : '';
         const addDecoding = !/\bdecoding=/.test(attrs) ? ' decoding="async"' : '';
         if (!addLoading && !addDecoding) return match;
