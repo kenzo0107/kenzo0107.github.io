@@ -59,9 +59,9 @@ self.addEventListener('fetch', e => {
         const net = fetch(e.request).then(res => {
           if (res.ok) caches.open(CACHE).then(c => c.put(e.request, res.clone()));
           return res;
-        });
+        }).catch(() => cached || Response.error());
         return cached || net;
-      })
+      }).catch(() => Response.error())
     );
     return;
   }
@@ -78,14 +78,18 @@ self.addEventListener('fetch', e => {
               if (res && res.ok) cache.put(e.request, res.clone());
               return res;
             })
-          ).catch(() => cached);
+          ).catch(() => cached || fetch(e.request).catch(() => Response.error()));
           return cached || net;
         })
-      )
+      ).catch(() => fetch(e.request).catch(() => Response.error()))
     );
     return;
   }
-  e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+  e.respondWith(
+    fetch(e.request).catch(() =>
+      caches.match(e.request).then(r => r || Response.error())
+    )
+  );
 });
 `;
 
