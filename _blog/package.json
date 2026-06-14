@@ -40,6 +40,7 @@
     "inferno-create-element": "^8.2.3"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "lightgallery": "^2.7.2",
     "mermaid": "^8.11.0",
     "minimatch": "^3.0.4",

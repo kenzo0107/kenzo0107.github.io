@@ -31,7 +31,7 @@ function getPageTitle(page, siteTitle, helper) {
 module.exports = class extends Component {
     render() {
         const { site, config, helper, page } = this.props;
-        const { url_for, cdn, fontcdn, iconcdn, is_post } = helper;
+        const { url_for, cdn, fontcdn, is_post } = helper;
         const {
             url,
             head = {},
@@ -154,7 +154,6 @@ module.exports = class extends Component {
             {/* preconnect only for origins on the critical render path */}
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://use.fontawesome.com" crossOrigin="anonymous" />
             {/* dns-prefetch for non-critical / async origins */}
             <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
             <link rel="dns-prefetch" href="https://i.imgur.com" />
@@ -165,7 +164,7 @@ module.exports = class extends Component {
             {lcpImage ? <link rel="preload" href={lcpImage} as="image" fetchpriority="high" /> : null}
             <link rel="preload" href={url_for('/css/' + variant + '.css')} as="style" fetchpriority="high" />
             <link rel="preload" href={fontCssUrl[variant]} as="style" id="font-css" />
-            <link rel="preload" href={iconcdn()} as="style" id="icon-css" />
+            <link rel="preload" href={url_for('/css/fontawesome-free.min.css')} as="style" id="icon-css" />
             {/* Preload body scripts early so the browser doesn't wait until it parses all article HTML */}
             <link rel="preload" href={url_for('/js/main.js')} as="script" />
             <link rel="preload" href={url_for('/js/animation.js')} as="script" />
@@ -176,7 +175,7 @@ module.exports = class extends Component {
             <script dangerouslySetInnerHTML={{ __html: asyncExtCssScript }}></script>
             <noscript>
                 <link rel="stylesheet" href={fontCssUrl[variant]} />
-                <link rel="stylesheet" href={iconcdn()} />
+                <link rel="stylesheet" href={url_for('/css/fontawesome-free.min.css')} />
                 {hlTheme && hasCodeBlocks ? <link rel="stylesheet" href={hlTheme === 'github-dark' ? url_for('/css/highlight-dark.min.css') : cdn('highlight.js', '11.7.0', 'styles/' + hlTheme + '.css')} /> : null}
             </noscript>
             <link data-pjax rel="stylesheet" href={url_for('/css/' + variant + '.css')} />
