@@ -17,6 +17,7 @@ const STATIC = [
   '/js/column.js',
   '/js/back_to_top.js',
   '/js/toc.js',
+  '/js/pace.min.js',
   '/manifest.json',
   '/img/logo.svg',
   '/img/favicon.svg',

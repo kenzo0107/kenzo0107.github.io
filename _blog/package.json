@@ -40,7 +40,8 @@
     "inferno-create-element": "^8.2.3"
   },
   "devDependencies": {
-    "minimatch": "^3.0.4"
+    "minimatch": "^3.0.4",
+    "pace-js": "^1.2.4"
   },
   "overrides": {
     "hexo-toc": {

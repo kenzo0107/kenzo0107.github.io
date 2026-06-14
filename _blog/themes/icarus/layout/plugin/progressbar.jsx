@@ -22,7 +22,7 @@ ProgressBar.Cacheable = cacheComponent(ProgressBar, 'plugin.progressbar', props 
     }
     return {
         head,
-        jsUrl: helper.cdn('pace-js', '1.2.4', 'pace.min.js')
+        jsUrl: helper.url_for('/js/pace.min.js')
     };
 });
 
