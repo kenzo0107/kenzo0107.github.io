@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>時刻表 — tocoちゃんバス</title>
+  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header class="site-header">
+    <img src="../logo.png" alt="toco ロゴ">
+    <h1>tocoちゃんバス</h1>
+  </header>
+
+  <div class="page-header">
+    <a href="../" class="btn-back">← 循環選択</a>
+    <span class="page-title" id="circuit-label"></span>
+    <div class="page-actions">
+      <a href="" id="map-link" class="btn-link">🗺️ マップ</a>
+    </div>
+  </div>
+
+  <main>
+    <div id="view-stations">
+      <div id="station-list"></div>
+    </div>
+
+    <div id="view-timetable" style="display:none">
+      <button class="btn-back" id="btn-back-tt" style="margin-bottom:12px">← 停留所選択</button>
+      <div class="tt-header">
+        <div class="tt-label" id="tt-circuit-label"></div>
+        <div class="tt-station" id="tt-station-name"></div>
+        <div class="tt-note" id="tt-note"></div>
+      </div>
+      <div id="bus-list"></div>
+      <button class="btn-primary" id="btn-refresh">更新</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>[戸田市非公式] バス事業者公式アプリではありません。事業者様へのお問い合わせはご遠慮ください。</p>
+  </footer>
+
+  <script src="../data.js"></script>
+  <script>
+    let countdownTimer = null;
+    let currentCircuit = null;
+    let currentStation = null;
+
+    function toMinutes(hhmm) {
+      const [h, m] = hhmm.split(':').map(Number);
+      return h * 60 + m;
+    }
+
+    function minutesToHHMM(min) {
+      const h = Math.floor(min / 60) % 24;
+      const m = min % 60;
+      return h + ':' + String(m).padStart(2, '0');
+    }
+
+    function getUpcomingBuses(circuit, station) {
+      const now = new Date();
+      const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+      const results = [];
+      for (const dep of circuit.departures) {
+        const arrMin = toMinutes(dep) + station.offset;
+        if (arrMin > nowMin - 0.5) {
+          results.push({
+            time: minutesToHHMM(arrMin),
+            date: new Date(now.getFullYear(), now.getMonth(), now.getDate(),
+              Math.floor(arrMin / 60), arrMin % 60, 0),
+          });
+        }
+        if (results.length >= 5) break;
+      }
+      return results;
+    }
+
+    function formatCountdown(targetDate) {
+      const diff = targetDate - Date.now();
+      if (diff < 0) return '発車済み';
+      const s = Math.floor(diff / 1000);
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const sec = s % 60;
+      if (h > 0) return h + '時間 ' + m + '分 ' + sec + '秒';
+      if (m > 0) return m + '分 ' + sec + '秒';
+      return sec + '秒';
+    }
+
+    function getParams() {
+      const p = new URLSearchParams(location.search);
+      return {
+        c: p.has('c') ? Number(p.get('c')) : null,
+        s: p.has('s') ? Number(p.get('s')) : null,
+      };
+    }
+
+    function render() {
+      const { c, s } = getParams();
+      if (c === null) { location.href = '../'; return; }
+      const circuit = CIRCUITS.find(x => x.id === c);
+      if (!circuit) { location.href = '../'; return; }
+
+      currentCircuit = circuit;
+      document.body.style.setProperty('--c-color', circuit.color);
+      document.body.style.setProperty('--c-bg', circuit.bg);
+
+      const label = document.getElementById('circuit-label');
+      label.textContent = circuit.name + '循環';
+      label.style.color = circuit.color;
+
+      const mapLink = document.getElementById('map-link');
+      mapLink.href = '../map/?c=' + circuit.id;
+
+      if (s !== null) {
+        const station = circuit.stations.find(x => x.id === s);
+        if (!station) {
+          showStationView(circuit);
+        } else {
+          currentStation = station;
+          showTimetableView(circuit, station);
+        }
+      } else {
+        showStationView(circuit);
+      }
+    }
+
+    function showStationView(circuit) {
+      document.getElementById('view-stations').style.display = '';
+      document.getElementById('view-timetable').style.display = 'none';
+      if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+
+      const list = document.getElementById('station-list');
+      list.textContent = '';
+      circuit.stations.forEach((st, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'station-item';
+
+        const num = document.createElement('span');
+        num.className = 'station-num';
+        num.textContent = i + 1;
+
+        const nm = document.createElement('span');
+        nm.textContent = st.name;
+
+        btn.appendChild(num);
+        btn.appendChild(nm);
+        btn.addEventListener('click', () => selectStation(st));
+        list.appendChild(btn);
+      });
+    }
+
+    function selectStation(station) {
+      const { c } = getParams();
+      history.pushState({}, '', '?c=' + c + '&s=' + station.id);
+      currentStation = station;
+      showTimetableView(currentCircuit, station);
+    }
+
+    function showTimetableView(circuit, station) {
+      document.getElementById('view-stations').style.display = 'none';
+      document.getElementById('view-timetable').style.display = '';
+
+      document.getElementById('tt-circuit-label').textContent = circuit.name + '循環';
+      document.getElementById('tt-station-name').textContent = station.name;
+      document.getElementById('tt-note').textContent = circuit.note;
+
+      renderBuses();
+      startCountdown();
+    }
+
+    function renderBuses() {
+      if (!currentCircuit || !currentStation) return;
+      const buses = getUpcomingBuses(currentCircuit, currentStation);
+      const list = document.getElementById('bus-list');
+      list.textContent = '';
+
+      if (buses.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'no-bus';
+        p.textContent = '本日のバスは終了しました。';
+        list.appendChild(p);
+        return;
+      }
+
+      buses.forEach((bus, i) => {
+        const card = document.createElement('div');
+        card.className = i === 0 ? 'bus-card bus-card--next' : 'bus-card';
+
+        const timeEl = document.createElement('div');
+        timeEl.className = 'bus-time';
+        timeEl.textContent = bus.time;
+
+        const cdEl = document.createElement('div');
+        cdEl.className = 'bus-countdown';
+        cdEl.dataset.target = bus.date.getTime();
+        cdEl.textContent = formatCountdown(bus.date);
+
+        card.appendChild(timeEl);
+        card.appendChild(cdEl);
+        list.appendChild(card);
+      });
+    }
+
+    function startCountdown() {
+      if (countdownTimer) clearInterval(countdownTimer);
+      countdownTimer = setInterval(() => {
+        let needsRefresh = false;
+        document.querySelectorAll('.bus-countdown').forEach(el => {
+          const t = new Date(Number(el.dataset.target));
+          const text = formatCountdown(t);
+          el.textContent = text;
+          if (text === '発車済み') needsRefresh = true;
+        });
+        if (needsRefresh) renderBuses();
+      }, 1000);
+    }
+
+    document.getElementById('btn-back-tt').addEventListener('click', () => {
+      const { c } = getParams();
+      history.pushState({}, '', '?c=' + c);
+      showStationView(currentCircuit);
+    });
+
+    document.getElementById('btn-refresh').addEventListener('click', renderBuses);
+
+    window.addEventListener('popstate', render);
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>マップ — tocoちゃんバス</title>
+  <link rel="icon" href="../favicon.ico">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body class="map-page">
+  <header class="site-header">
+    <img src="../logo.png" alt="toco ロゴ">
+    <h1>tocoちゃんバス</h1>
+  </header>
+
+  <div class="page-header">
+    <a href="../" class="btn-back">← 循環選択</a>
+    <span class="page-title" id="circuit-label"></span>
+    <div class="page-actions">
+      <a href="" id="timetable-link" class="btn-link">🕐 時刻表</a>
+    </div>
+  </div>
+
+  <main>
+    <div id="map-container"></div>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+  <script src="../data.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const circuitId = params.has('c') ? Number(params.get('c')) : null;
+    const circuit = circuitId !== null ? CIRCUITS.find(c => c.id === circuitId) : null;
+
+    if (!circuit) { location.href = '../'; }
+
+    document.body.style.setProperty('--c-color', circuit.color);
+    document.body.style.setProperty('--c-bg', circuit.bg);
+
+    const label = document.getElementById('circuit-label');
+    label.textContent = circuit.name + '循環';
+    label.style.color = circuit.color;
+
+    const ttLink = document.getElementById('timetable-link');
+    ttLink.href = '../timetable/?c=' + circuit.id;
+
+    function toMinutes(hhmm) {
+      const [h, m] = hhmm.split(':').map(Number);
+      return h * 60 + m;
+    }
+
+    function getNextTime(station) {
+      const now = new Date();
+      const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+      for (const dep of circuit.departures) {
+        const arr = toMinutes(dep) + station.offset;
+        if (arr > nowMin - 0.5) {
+          const h = Math.floor(arr / 60) % 24;
+          const m = arr % 60;
+          return '次: ' + h + ':' + String(m).padStart(2, '0');
+        }
+      }
+      return '本日終了';
+    }
+
+    // Map init
+    const lats = circuit.stations.map(s => s.lat);
+    const lngs = circuit.stations.map(s => s.lng);
+
+    const map = L.map('map-container');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    // Route polyline
+    const routeCoords = circuit.stations.map(s => [s.lat, s.lng]);
+    L.polyline(routeCoords, {
+      color: circuit.color,
+      weight: 3,
+      opacity: 0.65,
+      dashArray: '6, 4',
+    }).addTo(map);
+
+    // Stop markers
+    const stopIcon = color => L.divIcon({
+      className: '',
+      html: '<div style="width:10px;height:10px;border-radius:50%;background:' + color + ';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
+      iconSize: [10, 10],
+      iconAnchor: [5, 5],
+    });
+
+    circuit.stations.forEach(station => {
+      const marker = L.marker([station.lat, station.lng], { icon: stopIcon(circuit.color) }).addTo(map);
+      const nextTime = getNextTime(station);
+
+      const popupDiv = document.createElement('div');
+      const titleEl = document.createElement('div');
+      titleEl.className = 'popup-title';
+      titleEl.textContent = station.name;
+      const nextEl = document.createElement('div');
+      nextEl.className = 'popup-next';
+      nextEl.textContent = nextTime;
+      const linkEl = document.createElement('a');
+      linkEl.className = 'popup-link';
+      linkEl.href = '../timetable/?c=' + circuit.id + '&s=' + station.id;
+      linkEl.textContent = '時刻表を見る →';
+      linkEl.style.color = circuit.color;
+      popupDiv.appendChild(titleEl);
+      popupDiv.appendChild(nextEl);
+      popupDiv.appendChild(linkEl);
+
+      marker.bindPopup(popupDiv);
+    });
+
+    // Bus position markers (updated periodically)
+    const busLayer = L.layerGroup().addTo(map);
+
+    function drawBusMarkers() {
+      busLayer.clearLayers();
+      const now = new Date();
+      const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+
+      circuit.departures.forEach(dep => {
+        const depMin = toMinutes(dep);
+        const lastOffset = circuit.stations[circuit.stations.length - 1].offset;
+        if (nowMin < depMin || nowMin > depMin + lastOffset + 3) return;
+
+        const elapsed = nowMin - depMin;
+        const stations = circuit.stations;
+        let prevSt = stations[0];
+        let nextSt = stations[0];
+        for (let i = 0; i < stations.length - 1; i++) {
+          if (elapsed >= stations[i].offset && elapsed <= stations[i + 1].offset) {
+            prevSt = stations[i];
+            nextSt = stations[i + 1];
+            break;
+          }
+        }
+        const segDur = nextSt.offset - prevSt.offset || 1;
+        const progress = Math.min((elapsed - prevSt.offset) / segDur, 1);
+        const lat = prevSt.lat + (nextSt.lat - prevSt.lat) * progress;
+        const lng = prevSt.lng + (nextSt.lng - prevSt.lng) * progress;
+
+        const busIcon = L.divIcon({
+          className: '',
+          html: '<div style="background:' + circuit.color + ';color:#fff;border-radius:20px;padding:3px 8px;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.3)">🚌 ' + circuit.name + '</div>',
+          iconAnchor: [24, 12],
+        });
+        const m = L.marker([lat, lng], { icon: busIcon, zIndexOffset: 1000 });
+
+        const popupDiv = document.createElement('div');
+        const titleEl = document.createElement('div');
+        titleEl.className = 'popup-title';
+        titleEl.textContent = circuit.name + '循環';
+        const noteEl = document.createElement('div');
+        noteEl.className = 'popup-next';
+        noteEl.textContent = '推定位置 (' + dep + ' 発)';
+        popupDiv.appendChild(titleEl);
+        popupDiv.appendChild(noteEl);
+
+        m.bindPopup(popupDiv);
+        busLayer.addLayer(m);
+      });
+    }
+
+    drawBusMarkers();
+    setInterval(drawBusMarkers, 30000);
+
+    // Fit map to route
+    map.fitBounds(routeCoords, { padding: [20, 20] });
+  </script>
+</body>
+</html>
