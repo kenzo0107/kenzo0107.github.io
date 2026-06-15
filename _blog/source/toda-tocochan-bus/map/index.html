@@ -8,15 +8,24 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    .leaflet-control-attribution { font-size: .65rem; }
+    .leaflet-control-zoom a {
+      border-radius: 8px !important;
+      font-size: 1.1rem !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15) !important;
+    }
+  </style>
 </head>
 <body class="map-page">
   <header class="site-header">
-    <img src="../logo.png" alt="toco ロゴ">
+    <img src="../logo.png" alt="tocoちゃんバス">
     <h1>tocoちゃんバス</h1>
+    <span class="header-badge">マップ</span>
   </header>
 
   <div class="page-header">
-    <button class="btn-back" id="btn-back-top">← 循環選択</button>
+    <button class="btn-back" id="btn-back-top">← 路線選択</button>
     <span class="page-title" id="circuit-label"></span>
     <div class="page-actions">
       <button class="btn-link" id="timetable-link">🕐 時刻表</button>
@@ -44,7 +53,6 @@
     label.textContent = circuit.name + '循環';
     label.style.color = circuit.color;
 
-    // ナビゲーション: <button> + window.location.href で pjax をバイパス
     document.getElementById('btn-back-top').addEventListener('click', () => {
       window.location.href = '/toda-tocochan-bus/';
     });
@@ -72,28 +80,26 @@
       return '本日終了';
     }
 
-    // Map init
-    const map = L.map('map-container');
+    const map = L.map('map-container', { zoomControl: true });
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 18,
     }).addTo(map);
 
-    // Route polyline
     const routeCoords = circuit.stations.map(s => [s.lat, s.lng]);
     L.polyline(routeCoords, {
       color: circuit.color,
-      weight: 3,
-      opacity: 0.65,
-      dashArray: '6, 4',
+      weight: 4,
+      opacity: 0.7,
+      dashArray: '8, 5',
+      lineJoin: 'round',
     }).addTo(map);
 
-    // Stop markers
     const stopIcon = color => L.divIcon({
       className: '',
-      html: '<div style="width:10px;height:10px;border-radius:50%;background:' + color + ';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>',
-      iconSize: [10, 10],
-      iconAnchor: [5, 5],
+      html: '<div style="width:12px;height:12px;border-radius:50%;background:' + color + ';border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)"></div>',
+      iconSize: [12, 12],
+      iconAnchor: [6, 6],
     });
 
     circuit.stations.forEach(station => {
@@ -108,25 +114,17 @@
       const nextEl = document.createElement('div');
       nextEl.className = 'popup-next';
       nextEl.textContent = nextTime;
-      // ボタンで時刻表へ遷移 (pjax バイパス)
       const linkBtn = document.createElement('button');
       linkBtn.className = 'popup-link';
       linkBtn.textContent = '時刻表を見る →';
       linkBtn.style.color = circuit.color;
-      linkBtn.style.background = 'none';
-      linkBtn.style.border = 'none';
-      linkBtn.style.cursor = 'pointer';
-      linkBtn.style.fontFamily = 'inherit';
-      linkBtn.style.padding = '0';
       linkBtn.addEventListener('click', () => { window.location.href = ttUrl; });
       popupDiv.appendChild(titleEl);
       popupDiv.appendChild(nextEl);
       popupDiv.appendChild(linkBtn);
-
-      marker.bindPopup(popupDiv);
+      marker.bindPopup(popupDiv, { maxWidth: 220 });
     });
 
-    // Bus position markers (updated periodically)
     const busLayer = L.layerGroup().addTo(map);
 
     function drawBusMarkers() {
@@ -157,22 +155,22 @@
 
         const busIcon = L.divIcon({
           className: '',
-          html: '<div style="background:' + circuit.color + ';color:#fff;border-radius:20px;padding:3px 8px;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.3)">🚌 ' + circuit.name + '</div>',
-          iconAnchor: [24, 12],
+          html: '<div style="background:' + circuit.color + ';color:#fff;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:800;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.3);letter-spacing:.02em">🚌 ' + circuit.name + '</div>',
+          iconAnchor: [28, 14],
         });
         const m = L.marker([lat, lng], { icon: busIcon, zIndexOffset: 1000 });
 
         const popupDiv = document.createElement('div');
         const titleEl = document.createElement('div');
         titleEl.className = 'popup-title';
-        titleEl.textContent = circuit.name + '循環';
+        titleEl.textContent = circuit.name + '循環 🚌';
         const noteEl = document.createElement('div');
         noteEl.className = 'popup-next';
         noteEl.textContent = '推定位置 (' + dep + ' 発)';
         popupDiv.appendChild(titleEl);
         popupDiv.appendChild(noteEl);
 
-        m.bindPopup(popupDiv);
+        m.bindPopup(popupDiv, { maxWidth: 200 });
         busLayer.addLayer(m);
       });
     }
@@ -180,7 +178,7 @@
     drawBusMarkers();
     setInterval(drawBusMarkers, 30000);
 
-    map.fitBounds(routeCoords, { padding: [20, 20] });
+    map.fitBounds(routeCoords, { padding: [24, 24] });
   </script>
 </body>
 </html>

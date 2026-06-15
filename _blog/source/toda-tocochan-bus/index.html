@@ -11,30 +11,31 @@
 </head>
 <body>
   <header class="site-header">
-    <img src="logo.png" alt="toco ロゴ">
+    <img src="logo.png" alt="tocoちゃんバス">
     <h1>tocoちゃんバス</h1>
+    <span class="header-badge">戸田市</span>
   </header>
 
   <main>
-    <p class="section-title">循環を選択</p>
+    <p class="section-title">路線を選択</p>
     <div id="circuit-list"></div>
   </main>
 
-  <footer>
-    <p>[戸田市非公式] バス事業者公式アプリではありません。事業者様へのお問い合わせはご遠慮ください。</p>
-  </footer>
+  <footer>戸田市コミュニティバス tocoちゃんバス</footer>
 
   <script src="data.js"></script>
   <script>
     const list = document.getElementById('circuit-list');
-    CIRCUITS.forEach(c => {
+    CIRCUITS.forEach((c, idx) => {
       const card = document.createElement('div');
       card.className = 'circuit-card';
       card.style.setProperty('--c-color', c.color);
       card.style.setProperty('--c-bg', c.bg);
+      card.style.animationDelay = (idx * 55) + 'ms';
 
       const dot = document.createElement('div');
       dot.className = 'circuit-dot';
+      dot.textContent = '🚌';
 
       const info = document.createElement('div');
       info.className = 'circuit-info';

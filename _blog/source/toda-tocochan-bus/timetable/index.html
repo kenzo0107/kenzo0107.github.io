@@ -9,12 +9,13 @@
 </head>
 <body>
   <header class="site-header">
-    <img src="../logo.png" alt="toco ロゴ">
+    <img src="../logo.png" alt="tocoちゃんバス">
     <h1>tocoちゃんバス</h1>
+    <span class="header-badge">時刻表</span>
   </header>
 
   <div class="page-header">
-    <button class="btn-back" id="btn-back-top">← 循環選択</button>
+    <button class="btn-back" id="btn-back-top">← 路線選択</button>
     <span class="page-title" id="circuit-label"></span>
     <div class="page-actions">
       <button class="btn-link" id="map-link">🗺️ マップ</button>
@@ -27,20 +28,16 @@
     </div>
 
     <div id="view-timetable" style="display:none">
-      <button class="btn-back" id="btn-back-tt" style="margin-bottom:12px">← 停留所選択</button>
+      <button class="btn-back" id="btn-back-tt" style="margin-bottom:16px">← 停留所選択</button>
       <div class="tt-header">
         <div class="tt-label" id="tt-circuit-label"></div>
         <div class="tt-station" id="tt-station-name"></div>
         <div class="tt-note" id="tt-note"></div>
       </div>
       <div id="bus-list"></div>
-      <button class="btn-primary" id="btn-refresh">更新</button>
+      <button class="btn-primary" id="btn-refresh">🔄 更新</button>
     </div>
   </main>
-
-  <footer>
-    <p>[戸田市非公式] バス事業者公式アプリではありません。事業者様へのお問い合わせはご遠慮ください。</p>
-  </footer>
 
   <script src="../data.js"></script>
   <script>
@@ -134,6 +131,7 @@
       circuit.stations.forEach((st, i) => {
         const btn = document.createElement('button');
         btn.className = 'station-item';
+        btn.style.animationDelay = Math.min(i * 30, 400) + 'ms';
 
         const num = document.createElement('span');
         num.className = 'station-num';
@@ -142,8 +140,13 @@
         const nm = document.createElement('span');
         nm.textContent = st.name;
 
+        const arrow = document.createElement('span');
+        arrow.textContent = '›';
+        arrow.style.cssText = 'margin-left:auto; color:var(--gray-400); font-size:1.2rem; font-weight:700;';
+
         btn.appendChild(num);
         btn.appendChild(nm);
+        btn.appendChild(arrow);
         btn.addEventListener('click', () => selectStation(st));
         list.appendChild(btn);
       });
@@ -183,20 +186,36 @@
       }
 
       buses.forEach((bus, i) => {
+        const isNext = i === 0;
         const card = document.createElement('div');
-        card.className = i === 0 ? 'bus-card bus-card--next' : 'bus-card';
+        card.className = isNext ? 'bus-card bus-card--next' : 'bus-card';
+
+        const left = document.createElement('div');
+        left.className = 'bus-left';
+
+        const labelEl = document.createElement('div');
+        labelEl.className = 'bus-label';
+        labelEl.textContent = isNext ? '次のバス' : i + 1 + '本目';
 
         const timeEl = document.createElement('div');
         timeEl.className = 'bus-time';
         timeEl.textContent = bus.time;
+
+        left.appendChild(labelEl);
+        left.appendChild(timeEl);
+
+        const right = document.createElement('div');
+        right.className = 'bus-right';
 
         const cdEl = document.createElement('div');
         cdEl.className = 'bus-countdown';
         cdEl.dataset.target = bus.date.getTime();
         cdEl.textContent = formatCountdown(bus.date);
 
-        card.appendChild(timeEl);
-        card.appendChild(cdEl);
+        right.appendChild(cdEl);
+
+        card.appendChild(left);
+        card.appendChild(right);
         list.appendChild(card);
       });
     }
@@ -215,7 +234,6 @@
       }, 1000);
     }
 
-    // ナビゲーション: <button> + window.location.href で pjax をバイパス
     document.getElementById('btn-back-top').addEventListener('click', () => {
       window.location.href = '/toda-tocochan-bus/';
     });
