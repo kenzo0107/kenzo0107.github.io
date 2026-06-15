@@ -510,14 +510,8 @@
   });
 
   // ── Init ──────────────────────────────────────────────────
-  const { circuitId, stationId } = parseHash();
-  if (circuitId != null) {
-    // URL に状態がある場合は復元（ブラウザ更新・直リンク）
-    renderFromHash();
-  } else {
-    // 初回アクセスは循環選択を表示。replaceState で URL を整える
-    history.replaceState(null, '', location.pathname + '#/');
-    renderCircuitView();
-  }
+  // アクセス時は常に循環選択を表示
+  history.replaceState(null, '', location.pathname + '#/');
+  renderCircuitView();
   startCountdown();
 })();
