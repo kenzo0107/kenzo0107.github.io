@@ -52,7 +52,6 @@
     return `${s}秒`;
   }
 
-  // 地球上の2点間の距離 (km, Haversine)
   function calcDistance(lat1, lng1, lat2, lng2) {
     const R  = 6371;
     const dL = (lat2 - lat1) * Math.PI / 180;
@@ -63,32 +62,35 @@
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
-  // ── URL hash routing ──────────────────────────────────────
+  // ── Hash routing ──────────────────────────────────────────
+  // 書式: #/  #/c/1  #/c/1/s/0
+  // hashchange で反応。pushState/popstate は一切使わない (pjax との衝突回避)
+
   function parseHash() {
-    const params = new URLSearchParams(location.hash.slice(1));
+    const path = (location.hash.slice(1) || '/').replace(/^\//, '');
+    // '' → circuit list
+    // 'c/1' → station list  circuit=1
+    // 'c/1/s/0' → timetable circuit=1 station=0
+    const m = path.match(/^c\/(\d+)(?:\/s\/(\d+))?$/);
+    if (!m) return { circuitId: null, stationId: null };
     return {
-      circuitId: params.has('c') ? Number(params.get('c')) : null,
-      stationId: params.has('s') ? Number(params.get('s')) : null,
+      circuitId: Number(m[1]),
+      stationId: m[2] != null ? Number(m[2]) : null,
     };
   }
 
-  function pushHash(c, s) {
-    const p = new URLSearchParams();
-    if (c != null) p.set('c', c);
-    if (s != null) p.set('s', s);
-    // 常に # を残してハッシュ遷移にする（pjax によるページリロードを防ぐ）
-    history.pushState({ c, s }, '', '#' + p.toString());
+  function navigateTo(path) {
+    // hashchange を発火させてビューを切り替える
+    // 同じハッシュへの代入は hashchange が発火しないので location.replace を使う
+    const newHash = '#/' + path;
+    if (location.hash === newHash) {
+      renderFromHash(); // 同じハッシュなら手動で描画
+    } else {
+      location.hash = '/' + path;
+    }
   }
 
-  function replaceHash(c, s) {
-    const p = new URLSearchParams();
-    if (c != null) p.set('c', c);
-    if (s != null) p.set('s', s);
-    history.replaceState({ c, s }, '', '#' + p.toString());
-  }
-
-  // ハッシュの状態に応じてビューを描画
-  function navigateFromHash() {
+  function renderFromHash() {
     const { circuitId, stationId } = parseHash();
 
     if (circuitId == null) {
@@ -97,25 +99,23 @@
       renderCircuitView();
       return;
     }
-    selectedCircuit = CIRCUITS.find(c => c.id === circuitId) || null;
-    if (!selectedCircuit) { renderCircuitView(); return; }
+    const circuit = CIRCUITS.find(c => c.id === circuitId);
+    if (!circuit) { renderCircuitView(); return; }
+    selectedCircuit = circuit;
 
     if (stationId == null) {
       renderStationView();
       showTimetableView('station');
       return;
     }
-    selectedStation = selectedCircuit.stations.find(s => s.id === stationId) || null;
-    if (!selectedStation) {
-      renderStationView();
-      showTimetableView('station');
-      return;
-    }
+    const station = circuit.stations.find(s => s.id === stationId);
+    if (!station) { renderStationView(); showTimetableView('station'); return; }
+    selectedStation = station;
     renderTimetableView();
     showTimetableView('timetable');
   }
 
-  window.addEventListener('popstate', navigateFromHash);
+  window.addEventListener('hashchange', renderFromHash);
 
   // ── Favorites CRUD ────────────────────────────────────────
   function loadFavorites() {
@@ -175,10 +175,7 @@
       btn.style.setProperty('--c-bg', c.bg);
       btn.textContent = c.name + '循環';
       btn.addEventListener('click', () => {
-        selectedCircuit = c;
-        pushHash(c.id, null);
-        renderStationView();
-        showTimetableView('station');
+        navigateTo('c/' + c.id);
       });
       container.appendChild(btn);
     });
@@ -204,10 +201,7 @@
       btn.className = 'station-btn';
       btn.textContent = s.name;
       btn.addEventListener('click', () => {
-        selectedStation = s;
-        pushHash(selectedCircuit.id, s.id);
-        renderTimetableView();
-        showTimetableView('timetable');
+        navigateTo('c/' + selectedCircuit.id + '/s/' + s.id);
       });
       list.appendChild(btn);
     });
@@ -306,12 +300,8 @@
         `<div class="fav-station">${f.stationName}</div>
          <div class="fav-circuit">${f.circuitName}循環</div>`;
       info.addEventListener('click', () => {
-        selectedCircuit = circuit;
-        selectedStation = station;
-        pushHash(circuit.id, station.id);
-        renderTimetableView();
-        showTimetableView('timetable');
         document.querySelector('[data-tab="timetable"]').click();
+        navigateTo('c/' + circuit.id + '/s/' + station.id);
       });
 
       const del = document.createElement('button');
@@ -391,12 +381,8 @@
          </div>
          <div class="near-dist">${distText}</div>`;
       item.addEventListener('click', () => {
-        selectedCircuit = circuit;
-        selectedStation = station;
-        pushHash(circuit.id, station.id);
-        renderTimetableView();
-        showTimetableView('timetable');
         document.querySelector('[data-tab="timetable"]').click();
+        navigateTo('c/' + circuit.id + '/s/' + station.id);
       });
       list.appendChild(item);
     });
@@ -404,10 +390,7 @@
 
   // ── Map Tab ───────────────────────────────────────────────
   function initMap() {
-    if (leafletMap) {
-      updateMapMarkers();
-      return;
-    }
+    if (leafletMap) { updateMapMarkers(); return; }
 
     leafletMap = L.map('map-container').setView([35.827, 139.673], 14);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -468,7 +451,6 @@
       });
 
       const marker = L.marker([lat, lng], { icon }).addTo(leafletMap);
-
       const circuitLabels = entries.map(e =>
         `<span style="color:${e.circuit.color};font-weight:700">${e.circuit.name}循環</span>`
       ).join('・');
@@ -480,14 +462,9 @@
          <div class="popup-circuit">${circuitLabels}</div>
          <div class="popup-next">${nextText}</div>`
       );
-
       marker.on('click', () => {
-        selectedCircuit = primary.circuit;
-        selectedStation = primary.station;
-        pushHash(primary.circuit.id, primary.station.id);
-        renderTimetableView();
-        showTimetableView('timetable');
         document.querySelector('[data-tab="timetable"]').click();
+        navigateTo('c/' + primary.circuit.id + '/s/' + primary.station.id);
       });
 
       stopMarkers.push(marker);
@@ -539,25 +516,25 @@
   }
 
   // ── Event Bindings ────────────────────────────────────────
-  document.getElementById('btn-back-station').addEventListener('click', () => history.back());
-  document.getElementById('btn-back-timetable').addEventListener('click', () => history.back());
+  document.getElementById('btn-back-station').addEventListener('click', () => {
+    navigateTo('');
+  });
+
+  document.getElementById('btn-back-timetable').addEventListener('click', () => {
+    if (selectedCircuit) navigateTo('c/' + selectedCircuit.id);
+  });
+
   document.getElementById('btn-refresh').addEventListener('click', updateTimetable);
+
   document.getElementById('btn-fav-toggle').addEventListener('click', () => {
     if (selectedCircuit && selectedStation) toggleFavorite(selectedCircuit, selectedStation);
   });
 
   // ── Init ──────────────────────────────────────────────────
-  const { circuitId, stationId } = parseHash();
-
-  if (circuitId != null) {
-    // URL にルーティング情報あり → そのまま復元
-    history.replaceState({ c: circuitId, s: stationId }, '', location.hash);
-    navigateFromHash();
-  } else {
-    // URL なし → 循環選択画面を # 付きで登録（pjax のページリロードを防ぐ）
-    history.replaceState({ c: null, s: null }, '', location.pathname + '#');
-    renderCircuitView();
+  // ハッシュがなければ #/ に揃える（常にハッシュ遷移にする）
+  if (!location.hash || location.hash === '#') {
+    history.replaceState(null, '', location.pathname + '#/');
   }
-
+  renderFromHash();
   startCountdown();
 })();
