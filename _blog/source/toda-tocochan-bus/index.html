@@ -114,6 +114,13 @@
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js');
+      // SW が切り替わったら自動リロードして新しいキャッシュを反映
+      let _swRefreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (_swRefreshing) return;
+        _swRefreshing = true;
+        location.reload();
+      });
     }
   </script>
 </body>
