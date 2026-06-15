@@ -1,23 +1,17 @@
 (() => {
-  const LS_CIRCUIT = 'toco_circuit_id';
-  const LS_STATION = 'toco_station_id';
+  const LS_CIRCUIT   = 'toco_circuit_id';
+  const LS_STATION   = 'toco_station_id';
+  const LS_FAVORITES = 'toco_favorites';
 
   let selectedCircuit = null;
   let selectedStation = null;
-  let countdownTimer = null;
+  let countdownTimer  = null;
+  let leafletMap      = null;
+  let busMarkers      = [];
+  let stopMarkers     = [];
+  let activeMapCircuits = new Set(CIRCUITS.map(c => c.id));
 
-  const views = {
-    circuit: document.getElementById('view-circuit'),
-    station: document.getElementById('view-station'),
-    timetable: document.getElementById('view-timetable'),
-  };
-
-  function showView(name) {
-    Object.values(views).forEach(v => v.hidden = true);
-    views[name].hidden = false;
-  }
-
-  // Parse "H:MM" → total minutes from midnight
+  // ── Helpers ───────────────────────────────────────────────
   function toMinutes(hhmm) {
     const [h, m] = hhmm.split(':').map(Number);
     return h * 60 + m;
@@ -30,18 +24,17 @@
   }
 
   function getUpcomingBuses(circuit, station) {
-    const now = new Date();
+    const now    = new Date();
     const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
     const results = [];
-
     for (const dep of circuit.departures) {
       const arrivalMin = toMinutes(dep) + station.offset;
-      if (arrivalMin > nowMin - 0.5) { // 30秒のバッファ
+      if (arrivalMin > nowMin - 0.5) {
         results.push({
-          time: minutesToHHMM(arrivalMin),
+          time:     minutesToHHMM(arrivalMin),
           totalMin: arrivalMin,
-          date: new Date(now.getFullYear(), now.getMonth(), now.getDate(),
-            Math.floor(arrivalMin / 60), arrivalMin % 60, 0),
+          date:     new Date(now.getFullYear(), now.getMonth(), now.getDate(),
+                      Math.floor(arrivalMin / 60), arrivalMin % 60, 0),
         });
       }
       if (results.length >= 5) break;
@@ -50,7 +43,7 @@
   }
 
   function formatCountdown(targetDate) {
-    const diff = targetDate - Date.now();
+    const diff     = targetDate - Date.now();
     if (diff < 0) return '発車済み';
     const totalSec = Math.floor(diff / 1000);
     const h = Math.floor(totalSec / 3600);
@@ -60,6 +53,64 @@
     if (m > 0) return `${m}分 ${s}秒`;
     return `${s}秒`;
   }
+
+  // 地球上の2点間の距離 (km, Haversine)
+  function calcDistance(lat1, lng1, lat2, lng2) {
+    const R  = 6371;
+    const dL = (lat2 - lat1) * Math.PI / 180;
+    const dG = (lng2 - lng1) * Math.PI / 180;
+    const a  = Math.sin(dL / 2) ** 2 +
+               Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+               Math.sin(dG / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  // ── Favorites CRUD ────────────────────────────────────────
+  function loadFavorites() {
+    try { return JSON.parse(localStorage.getItem(LS_FAVORITES)) || []; }
+    catch { return []; }
+  }
+
+  function saveFavorites(favs) {
+    localStorage.setItem(LS_FAVORITES, JSON.stringify(favs));
+  }
+
+  function isFavorite(circuitId, stationId) {
+    return loadFavorites().some(f => f.circuitId === circuitId && f.stationId === stationId);
+  }
+
+  function toggleFavorite(circuit, station) {
+    const favs = loadFavorites();
+    const idx  = favs.findIndex(f => f.circuitId === circuit.id && f.stationId === station.id);
+    if (idx >= 0) {
+      favs.splice(idx, 1);
+    } else {
+      favs.push({ circuitId: circuit.id, stationId: station.id,
+                  circuitName: circuit.name, stationName: station.name,
+                  color: circuit.color, bg: circuit.bg });
+    }
+    saveFavorites(favs);
+    renderFavButton();
+    renderFavTab();
+  }
+
+  // ── Tab switching ─────────────────────────────────────────
+  const tabs = document.querySelectorAll('.nav-btn');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+      tabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.toco-tab').forEach(el => {
+        el.classList.toggle('active', el.id === `tab-${tabId}`);
+      });
+      if (tabId === 'map') {
+        initMap();
+        if (leafletMap) setTimeout(() => leafletMap.invalidateSize(), 50);
+      }
+      if (tabId === 'fav') renderFavTab();
+    });
+  });
 
   // ── Circuit View ──────────────────────────────────────────
   function renderCircuitView() {
@@ -75,21 +126,27 @@
         selectedCircuit = c;
         localStorage.setItem(LS_CIRCUIT, c.id);
         renderStationView();
-        showView('station');
+        showTimetableView('station');
       });
       container.appendChild(btn);
     });
-    showView('circuit');
+    showTimetableView('circuit');
+  }
+
+  function showTimetableView(name) {
+    ['circuit', 'station', 'timetable'].forEach(v => {
+      document.getElementById(`view-${v}`).style.display = (v === name) ? '' : 'none';
+    });
   }
 
   // ── Station View ──────────────────────────────────────────
   function renderStationView() {
-    const title = document.getElementById('station-title');
-    const list = document.getElementById('station-list');
-    title.textContent = selectedCircuit.name + '循環　停留所を選択';
-    title.style.color = selectedCircuit.color;
-    list.innerHTML = '';
+    document.getElementById('station-title').textContent =
+      selectedCircuit.name + '循環　停留所を選択';
+    document.getElementById('station-title').style.color = selectedCircuit.color;
 
+    const list = document.getElementById('station-list');
+    list.innerHTML = '';
     selectedCircuit.stations.forEach(s => {
       const btn = document.createElement('button');
       btn.className = 'station-btn';
@@ -98,7 +155,7 @@
         selectedStation = s;
         localStorage.setItem(LS_STATION, s.id);
         renderTimetableView();
-        showView('timetable');
+        showTimetableView('timetable');
       });
       list.appendChild(btn);
     });
@@ -106,41 +163,50 @@
 
   // ── Timetable View ────────────────────────────────────────
   function renderTimetableView() {
-    document.getElementById('tt-circuit').textContent = selectedCircuit.name + '循環';
-    document.getElementById('tt-circuit').style.color = selectedCircuit.color;
-    document.getElementById('tt-station').textContent = selectedStation.name;
-    document.getElementById('tt-note').textContent = selectedCircuit.note;
+    document.getElementById('tt-circuit').textContent  = selectedCircuit.name + '循環';
+    document.getElementById('tt-circuit').style.color  = selectedCircuit.color;
+    document.getElementById('tt-station').textContent  = selectedStation.name;
+    document.getElementById('tt-note').textContent     = selectedCircuit.note;
+    renderFavButton();
     updateTimetable();
+  }
+
+  function renderFavButton() {
+    const btn = document.getElementById('btn-fav-toggle');
+    if (!selectedCircuit || !selectedStation) return;
+    const active = isFavorite(selectedCircuit.id, selectedStation.id);
+    btn.textContent = active ? '★ お気に入り済み' : '☆ お気に入り追加';
+    btn.classList.toggle('fav-active', active);
   }
 
   function updateTimetable() {
     if (!selectedCircuit || !selectedStation) return;
-    const buses = getUpcomingBuses(selectedCircuit, selectedStation);
+    const buses     = getUpcomingBuses(selectedCircuit, selectedStation);
     const container = document.getElementById('tt-buses');
     container.innerHTML = '';
 
     if (buses.length === 0) {
       const p = document.createElement('p');
-      p.className = 'no-bus';
+      p.className   = 'no-bus';
       p.textContent = '本日のバスは終了しました。';
       container.appendChild(p);
       return;
     }
 
     buses.forEach((bus, i) => {
-      const card = document.createElement('div');
+      const card  = document.createElement('div');
       card.className = 'bus-card' + (i === 0 ? ' bus-card--next' : '');
       card.style.setProperty('--c-color', selectedCircuit.color);
-      card.style.setProperty('--c-bg', selectedCircuit.bg);
+      card.style.setProperty('--c-bg',    selectedCircuit.bg);
 
       const timeEl = document.createElement('div');
-      timeEl.className = 'bus-time';
+      timeEl.className   = 'bus-time';
       timeEl.textContent = bus.time;
 
       const cdEl = document.createElement('div');
-      cdEl.className = 'bus-countdown';
-      cdEl.dataset.target = bus.date.getTime();
-      cdEl.textContent = formatCountdown(bus.date);
+      cdEl.className       = 'bus-countdown';
+      cdEl.dataset.target  = bus.date.getTime();
+      cdEl.textContent     = formatCountdown(bus.date);
 
       card.appendChild(timeEl);
       card.appendChild(cdEl);
@@ -151,44 +217,310 @@
   function startCountdown() {
     if (countdownTimer) clearInterval(countdownTimer);
     countdownTimer = setInterval(() => {
-      if (views.timetable.hidden) return;
+      if (!document.getElementById('tab-timetable').classList.contains('active')) return;
+      if (document.getElementById('view-timetable').style.display === 'none') return;
       document.querySelectorAll('.bus-countdown').forEach(el => {
         const target = new Date(Number(el.dataset.target));
-        const text = formatCountdown(target);
+        const text   = formatCountdown(target);
         el.textContent = text;
-        if (text === '発車済み') {
-          // 次のバスを再取得
-          updateTimetable();
-        }
+        if (text === '発車済み') updateTimetable();
       });
     }, 1000);
   }
 
-  // ── Event Bindings ────────────────────────────────────────
-  document.getElementById('btn-back-station').addEventListener('click', () => {
-    renderCircuitView();
+  // ── Favorites Tab ─────────────────────────────────────────
+  function renderFavTab() {
+    const favs    = loadFavorites();
+    const empty   = document.getElementById('fav-empty');
+    const list    = document.getElementById('fav-list');
+    list.innerHTML = '';
+    empty.hidden   = favs.length > 0;
+
+    favs.forEach(f => {
+      const circuit = CIRCUITS.find(c => c.id === f.circuitId);
+      const station = circuit && circuit.stations.find(s => s.id === f.stationId);
+      if (!circuit || !station) return;
+
+      const item = document.createElement('div');
+      item.className = 'fav-item';
+
+      const dot = document.createElement('div');
+      dot.className            = 'fav-dot';
+      dot.style.background     = f.color;
+
+      const info = document.createElement('div');
+      info.className = 'fav-info';
+      info.innerHTML =
+        `<div class="fav-station">${f.stationName}</div>
+         <div class="fav-circuit">${f.circuitName}循環</div>`;
+      info.addEventListener('click', () => {
+        selectedCircuit = circuit;
+        selectedStation = station;
+        renderTimetableView();
+        showTimetableView('timetable');
+        // 時刻表タブへ切り替え
+        document.querySelector('[data-tab="timetable"]').click();
+      });
+
+      const del = document.createElement('button');
+      del.className   = 'fav-delete';
+      del.textContent = '✕';
+      del.addEventListener('click', () => {
+        const all = loadFavorites().filter(
+          x => !(x.circuitId === f.circuitId && x.stationId === f.stationId)
+        );
+        saveFavorites(all);
+        renderFavTab();
+        renderFavButton();
+      });
+
+      item.appendChild(dot);
+      item.appendChild(info);
+      item.appendChild(del);
+      list.appendChild(item);
+    });
+  }
+
+  // ── Nearby Tab ────────────────────────────────────────────
+  document.getElementById('btn-locate').addEventListener('click', () => {
+    const status = document.getElementById('near-status');
+    status.textContent = '現在地を取得中...';
+    document.getElementById('near-list').innerHTML = '';
+
+    if (!navigator.geolocation) {
+      status.textContent = '位置情報はこのブラウザでは利用できません。';
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        const { latitude: lat, longitude: lng } = pos.coords;
+        status.textContent = '現在地から近い順に表示しています。';
+        renderNearbyStops(lat, lng);
+      },
+      () => {
+        status.textContent = '位置情報の取得に失敗しました。設定を確認してください。';
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
   });
+
+  function renderNearbyStops(userLat, userLng) {
+    const candidates = [];
+    CIRCUITS.forEach(circuit => {
+      circuit.stations.forEach(station => {
+        const dist = calcDistance(userLat, userLng, station.lat, station.lng);
+        candidates.push({ circuit, station, dist });
+      });
+    });
+    candidates.sort((a, b) => a.dist - b.dist);
+
+    // 重複停留所名を同路線内で除外し上位15件
+    const seen = new Set();
+    const results = candidates.filter(({ circuit, station }) => {
+      const key = `${circuit.id}-${station.id}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(0, 15);
+
+    const list = document.getElementById('near-list');
+    list.innerHTML = '';
+    results.forEach(({ circuit, station, dist }) => {
+      const distText = dist < 1
+        ? `${Math.round(dist * 1000)} m`
+        : `${dist.toFixed(1)} km`;
+
+      const buses = getUpcomingBuses(circuit, station);
+
+      const item = document.createElement('div');
+      item.className = 'near-item';
+      item.innerHTML =
+        `<div class="near-dot" style="background:${circuit.color}"></div>
+         <div class="near-info">
+           <div class="near-name">${station.name}</div>
+           <div class="near-circuit">${circuit.name}循環${buses.length > 0 ? ' — 次: ' + buses[0].time : ' — 本日終了'}</div>
+         </div>
+         <div class="near-dist">${distText}</div>`;
+      item.addEventListener('click', () => {
+        selectedCircuit = circuit;
+        selectedStation = station;
+        renderTimetableView();
+        showTimetableView('timetable');
+        document.querySelector('[data-tab="timetable"]').click();
+      });
+      list.appendChild(item);
+    });
+  }
+
+  // ── Map Tab ───────────────────────────────────────────────
+  function initMap() {
+    if (leafletMap) {
+      updateMapMarkers();
+      return;
+    }
+
+    leafletMap = L.map('map-container').setView([35.827, 139.673], 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(leafletMap);
+
+    // 路線フィルターボタン
+    const btnContainer = document.getElementById('map-circuit-buttons');
+    CIRCUITS.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'map-filter-btn active';
+      btn.style.setProperty('--c-color', c.color);
+      btn.style.setProperty('--c-bg',    c.bg);
+      btn.dataset.circuitId = c.id;
+      btn.textContent       = c.name;
+      btn.addEventListener('click', () => {
+        if (activeMapCircuits.has(c.id)) {
+          activeMapCircuits.delete(c.id);
+          btn.classList.remove('active');
+        } else {
+          activeMapCircuits.add(c.id);
+          btn.classList.add('active');
+        }
+        updateMapMarkers();
+      });
+      btnContainer.appendChild(btn);
+    });
+
+    updateMapMarkers();
+
+    // バス推定位置を30秒ごとに更新
+    setInterval(() => {
+      if (!document.getElementById('tab-map').hidden) updateBusMarkers();
+    }, 30000);
+  }
+
+  function updateMapMarkers() {
+    stopMarkers.forEach(m => m.remove());
+    stopMarkers = [];
+
+    const seen = new Map(); // key: "lat,lng" → 複数路線を集約
+
+    CIRCUITS.forEach(circuit => {
+      if (!activeMapCircuits.has(circuit.id)) return;
+      circuit.stations.forEach(station => {
+        const key = `${station.lat},${station.lng}`;
+        if (!seen.has(key)) seen.set(key, []);
+        seen.get(key).push({ circuit, station });
+      });
+    });
+
+    seen.forEach((entries, key) => {
+      const [lat, lng] = key.split(',').map(Number);
+      const primary    = entries[0];
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="width:10px;height:10px;border-radius:50%;background:${primary.circuit.color};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)"></div>`,
+        iconSize: [10, 10],
+        iconAnchor: [5, 5],
+      });
+
+      const marker = L.marker([lat, lng], { icon }).addTo(leafletMap);
+
+      const circuitLabels = entries.map(e =>
+        `<span style="color:${e.circuit.color};font-weight:700">${e.circuit.name}循環</span>`
+      ).join('・');
+      const nextBus = getUpcomingBuses(primary.circuit, primary.station);
+      const nextText = nextBus.length > 0 ? `次: ${nextBus[0].time}` : '本日終了';
+
+      marker.bindPopup(
+        `<div class="popup-title">${primary.station.name}</div>
+         <div class="popup-circuit">${circuitLabels}</div>
+         <div class="popup-next">${nextText}</div>`
+      );
+
+      marker.on('click', () => {
+        selectedCircuit = primary.circuit;
+        selectedStation = primary.station;
+        renderTimetableView();
+        showTimetableView('timetable');
+        document.querySelector('[data-tab="timetable"]').click();
+      });
+
+      stopMarkers.push(marker);
+    });
+
+    updateBusMarkers();
+  }
+
+  function updateBusMarkers() {
+    busMarkers.forEach(m => m.remove());
+    busMarkers = [];
+
+    const now    = new Date();
+    const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+
+    CIRCUITS.forEach(circuit => {
+      if (!activeMapCircuits.has(circuit.id)) return;
+      circuit.departures.forEach(dep => {
+        const depMin = toMinutes(dep);
+        // バスが今走っているか判定（出発から最後の停留所offset+3分以内）
+        const lastOffset = circuit.stations[circuit.stations.length - 1].offset;
+        if (nowMin < depMin || nowMin > depMin + lastOffset + 3) return;
+
+        // 現在地推定: elapsed minutes から最寄り区間を特定
+        const elapsed = nowMin - depMin;
+        const stations = circuit.stations;
+        let prevSt = stations[0], nextSt = stations[0];
+        for (let i = 0; i < stations.length - 1; i++) {
+          if (elapsed >= stations[i].offset && elapsed <= stations[i + 1].offset) {
+            prevSt = stations[i];
+            nextSt = stations[i + 1];
+            break;
+          }
+        }
+
+        // 区間内の進捗を線形補間
+        const segDuration = nextSt.offset - prevSt.offset || 1;
+        const progress    = Math.min((elapsed - prevSt.offset) / segDuration, 1);
+        const lat = prevSt.lat + (nextSt.lat - prevSt.lat) * progress;
+        const lng = prevSt.lng + (nextSt.lng - prevSt.lng) * progress;
+
+        const busIcon = L.divIcon({
+          className: '',
+          html: `<div style="background:${circuit.color};color:#fff;border-radius:20px;padding:2px 6px;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.3)">🚌 ${circuit.name}</div>`,
+          iconAnchor: [20, 10],
+        });
+        const m = L.marker([lat, lng], { icon: busIcon, zIndexOffset: 1000 }).addTo(leafletMap);
+        m.bindPopup(`<div class="popup-title">${circuit.name}循環</div><div class="popup-next">推定位置 (${dep} 発)</div>`);
+        busMarkers.push(m);
+      });
+    });
+  }
+
+  // ── Event Bindings ────────────────────────────────────────
+  document.getElementById('btn-back-station').addEventListener('click', renderCircuitView);
 
   document.getElementById('btn-back-timetable').addEventListener('click', () => {
     renderStationView();
-    showView('station');
+    showTimetableView('station');
   });
 
-  document.getElementById('btn-refresh').addEventListener('click', () => {
-    updateTimetable();
+  document.getElementById('btn-refresh').addEventListener('click', updateTimetable);
+
+  document.getElementById('btn-fav-toggle').addEventListener('click', () => {
+    if (selectedCircuit && selectedStation) {
+      toggleFavorite(selectedCircuit, selectedStation);
+    }
   });
 
   // ── Init ──────────────────────────────────────────────────
   renderCircuitView();
 
-  // 前回の選択を復元
   const lastCircuit = CIRCUITS.find(x => x.id === Number(localStorage.getItem(LS_CIRCUIT)));
-  const lastStation = lastCircuit && lastCircuit.stations.find(x => x.id === Number(localStorage.getItem(LS_STATION)));
+  const lastStation = lastCircuit && lastCircuit.stations.find(
+    x => x.id === Number(localStorage.getItem(LS_STATION))
+  );
   if (lastCircuit && lastStation) {
     selectedCircuit = lastCircuit;
     selectedStation = lastStation;
     renderTimetableView();
-    showView('timetable');
+    showTimetableView('timetable');
   }
 
   startCountdown();
