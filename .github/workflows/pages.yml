@@ -52,6 +52,9 @@ jobs:
         env:
           TZ: UTC
 
+      - name: Copy static apps (Hexo skip_render bypass)
+        run: cp -r _blog/source/toda-tocochan-bus/. _blog/public/toda-tocochan-bus/
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
