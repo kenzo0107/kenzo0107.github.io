@@ -53,15 +53,19 @@
       const actions = document.createElement('div');
       actions.className = 'circuit-actions';
 
-      const ttLink = document.createElement('a');
-      ttLink.href = 'timetable/?c=' + c.id;
+      const ttLink = document.createElement('button');
       ttLink.className = 'btn-link';
       ttLink.textContent = '🕐 時刻表';
+      ttLink.addEventListener('click', (id => () => {
+        window.location.href = '/toda-tocochan-bus/timetable/?c=' + id;
+      })(c.id));
 
-      const mapLink = document.createElement('a');
-      mapLink.href = 'map/?c=' + c.id;
+      const mapLink = document.createElement('button');
       mapLink.className = 'btn-link btn-link-gray';
       mapLink.textContent = '🗺️ マップ';
+      mapLink.addEventListener('click', (id => () => {
+        window.location.href = '/toda-tocochan-bus/map/?c=' + id;
+      })(c.id));
 
       actions.appendChild(ttLink);
       actions.appendChild(mapLink);

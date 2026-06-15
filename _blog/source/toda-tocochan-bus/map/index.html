@@ -16,10 +16,10 @@
   </header>
 
   <div class="page-header">
-    <a href="/toda-tocochan-bus/" class="btn-back">← 循環選択</a>
+    <button class="btn-back" id="btn-back-top">← 循環選択</button>
     <span class="page-title" id="circuit-label"></span>
     <div class="page-actions">
-      <a href="" id="timetable-link" class="btn-link">🕐 時刻表</a>
+      <button class="btn-link" id="timetable-link">🕐 時刻表</button>
     </div>
   </div>
 
@@ -35,7 +35,7 @@
     const circuitId = params.has('c') ? Number(params.get('c')) : null;
     const circuit = circuitId !== null ? CIRCUITS.find(c => c.id === circuitId) : null;
 
-    if (!circuit) { location.href = '/toda-tocochan-bus/'; }
+    if (!circuit) { window.location.href = '/toda-tocochan-bus/'; }
 
     document.body.style.setProperty('--c-color', circuit.color);
     document.body.style.setProperty('--c-bg', circuit.bg);
@@ -44,8 +44,14 @@
     label.textContent = circuit.name + '循環';
     label.style.color = circuit.color;
 
-    const ttLink = document.getElementById('timetable-link');
-    ttLink.href = '/toda-tocochan-bus/timetable/?c=' + circuit.id;
+    // ナビゲーション: <button> + window.location.href で pjax をバイパス
+    document.getElementById('btn-back-top').addEventListener('click', () => {
+      window.location.href = '/toda-tocochan-bus/';
+    });
+
+    document.getElementById('timetable-link').addEventListener('click', () => {
+      window.location.href = '/toda-tocochan-bus/timetable/?c=' + circuit.id;
+    });
 
     function toMinutes(hhmm) {
       const [h, m] = hhmm.split(':').map(Number);
@@ -67,9 +73,6 @@
     }
 
     // Map init
-    const lats = circuit.stations.map(s => s.lat);
-    const lngs = circuit.stations.map(s => s.lng);
-
     const map = L.map('map-container');
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -96,6 +99,7 @@
     circuit.stations.forEach(station => {
       const marker = L.marker([station.lat, station.lng], { icon: stopIcon(circuit.color) }).addTo(map);
       const nextTime = getNextTime(station);
+      const ttUrl = '/toda-tocochan-bus/timetable/?c=' + circuit.id + '&s=' + station.id;
 
       const popupDiv = document.createElement('div');
       const titleEl = document.createElement('div');
@@ -104,14 +108,20 @@
       const nextEl = document.createElement('div');
       nextEl.className = 'popup-next';
       nextEl.textContent = nextTime;
-      const linkEl = document.createElement('a');
-      linkEl.className = 'popup-link';
-      linkEl.href = '/toda-tocochan-bus/timetable/?c=' + circuit.id + '&s=' + station.id;
-      linkEl.textContent = '時刻表を見る →';
-      linkEl.style.color = circuit.color;
+      // ボタンで時刻表へ遷移 (pjax バイパス)
+      const linkBtn = document.createElement('button');
+      linkBtn.className = 'popup-link';
+      linkBtn.textContent = '時刻表を見る →';
+      linkBtn.style.color = circuit.color;
+      linkBtn.style.background = 'none';
+      linkBtn.style.border = 'none';
+      linkBtn.style.cursor = 'pointer';
+      linkBtn.style.fontFamily = 'inherit';
+      linkBtn.style.padding = '0';
+      linkBtn.addEventListener('click', () => { window.location.href = ttUrl; });
       popupDiv.appendChild(titleEl);
       popupDiv.appendChild(nextEl);
-      popupDiv.appendChild(linkEl);
+      popupDiv.appendChild(linkBtn);
 
       marker.bindPopup(popupDiv);
     });
@@ -170,7 +180,6 @@
     drawBusMarkers();
     setInterval(drawBusMarkers, 30000);
 
-    // Fit map to route
     map.fitBounds(routeCoords, { padding: [20, 20] });
   </script>
 </body>
