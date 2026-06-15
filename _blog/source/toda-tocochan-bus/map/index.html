@@ -16,7 +16,7 @@
   </header>
 
   <div class="page-header">
-    <a href="../" class="btn-back">← 循環選択</a>
+    <a href="/toda-tocochan-bus/" class="btn-back">← 循環選択</a>
     <span class="page-title" id="circuit-label"></span>
     <div class="page-actions">
       <a href="" id="timetable-link" class="btn-link">🕐 時刻表</a>
@@ -35,7 +35,7 @@
     const circuitId = params.has('c') ? Number(params.get('c')) : null;
     const circuit = circuitId !== null ? CIRCUITS.find(c => c.id === circuitId) : null;
 
-    if (!circuit) { location.href = '../'; }
+    if (!circuit) { location.href = '/toda-tocochan-bus/'; }
 
     document.body.style.setProperty('--c-color', circuit.color);
     document.body.style.setProperty('--c-bg', circuit.bg);
@@ -45,7 +45,7 @@
     label.style.color = circuit.color;
 
     const ttLink = document.getElementById('timetable-link');
-    ttLink.href = '../timetable/?c=' + circuit.id;
+    ttLink.href = '/toda-tocochan-bus/timetable/?c=' + circuit.id;
 
     function toMinutes(hhmm) {
       const [h, m] = hhmm.split(':').map(Number);
@@ -106,7 +106,7 @@
       nextEl.textContent = nextTime;
       const linkEl = document.createElement('a');
       linkEl.className = 'popup-link';
-      linkEl.href = '../timetable/?c=' + circuit.id + '&s=' + station.id;
+      linkEl.href = '/toda-tocochan-bus/timetable/?c=' + circuit.id + '&s=' + station.id;
       linkEl.textContent = '時刻表を見る →';
       linkEl.style.color = circuit.color;
       popupDiv.appendChild(titleEl);

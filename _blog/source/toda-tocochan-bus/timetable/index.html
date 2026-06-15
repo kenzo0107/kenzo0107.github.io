@@ -14,7 +14,7 @@
   </header>
 
   <div class="page-header">
-    <a href="../" class="btn-back">← 循環選択</a>
+    <a href="/toda-tocochan-bus/" class="btn-back">← 循環選択</a>
     <span class="page-title" id="circuit-label"></span>
     <div class="page-actions">
       <a href="" id="map-link" class="btn-link">🗺️ マップ</a>
@@ -99,9 +99,9 @@
 
     function render() {
       const { c, s } = getParams();
-      if (c === null) { location.href = '../'; return; }
+      if (c === null) { location.href = '/toda-tocochan-bus/'; return; }
       const circuit = CIRCUITS.find(x => x.id === c);
-      if (!circuit) { location.href = '../'; return; }
+      if (!circuit) { location.href = '/toda-tocochan-bus/'; return; }
 
       currentCircuit = circuit;
       document.body.style.setProperty('--c-color', circuit.color);
@@ -112,7 +112,7 @@
       label.style.color = circuit.color;
 
       const mapLink = document.getElementById('map-link');
-      mapLink.href = '../map/?c=' + circuit.id;
+      mapLink.href = '/toda-tocochan-bus/map/?c=' + circuit.id;
 
       if (s !== null) {
         const station = circuit.stations.find(x => x.id === s);
