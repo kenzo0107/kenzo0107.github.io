@@ -1,4 +1,4 @@
-const CACHE = 'tocochan-v3';
+const CACHE = 'tocochan-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -25,8 +25,15 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
+// ネットワーク優先: 常に最新を取得し、オフライン時のみキャッシュを使う
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request))
+    fetch(event.request)
+      .then(response => {
+        const clone = response.clone();
+        caches.open(CACHE).then(cache => cache.put(event.request, clone));
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
