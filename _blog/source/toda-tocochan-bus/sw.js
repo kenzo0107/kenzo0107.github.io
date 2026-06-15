@@ -1,4 +1,4 @@
-const CACHE = 'tocochan-v2';
+const CACHE = 'tocochan-v3';
 const ASSETS = [
   './',
   './index.html',
