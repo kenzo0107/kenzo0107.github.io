@@ -76,16 +76,15 @@
     const p = new URLSearchParams();
     if (c != null) p.set('c', c);
     if (s != null) p.set('s', s);
-    const hash = p.toString() ? '#' + p.toString() : location.pathname;
-    history.pushState({ c, s }, '', hash);
+    // 常に # を残してハッシュ遷移にする（pjax によるページリロードを防ぐ）
+    history.pushState({ c, s }, '', '#' + p.toString());
   }
 
   function replaceHash(c, s) {
     const p = new URLSearchParams();
     if (c != null) p.set('c', c);
     if (s != null) p.set('s', s);
-    const hash = p.toString() ? '#' + p.toString() : location.pathname;
-    history.replaceState({ c, s }, '', hash);
+    history.replaceState({ c, s }, '', '#' + p.toString());
   }
 
   // ハッシュの状態に応じてビューを描画
@@ -555,8 +554,8 @@
     history.replaceState({ c: circuitId, s: stationId }, '', location.hash);
     navigateFromHash();
   } else {
-    // URL なし → 循環選択画面を初期状態として登録
-    history.replaceState({ c: null, s: null }, '', location.href);
+    // URL なし → 循環選択画面を # 付きで登録（pjax のページリロードを防ぐ）
+    history.replaceState({ c: null, s: null }, '', location.pathname + '#');
     renderCircuitView();
   }
 
