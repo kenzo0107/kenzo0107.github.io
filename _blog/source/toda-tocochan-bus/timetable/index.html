@@ -56,22 +56,19 @@
       return h + ':' + String(m).padStart(2, '0');
     }
 
-    function getUpcomingBuses(circuit, station) {
+    function getAllBuses(circuit, station) {
       const now = new Date();
       const nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
-      const results = [];
-      for (const dep of circuit.departures) {
+      let foundNext = false;
+      return circuit.departures.map((dep, i) => {
         const arrMin = toMinutes(dep) + station.offset;
-        if (arrMin > nowMin - 0.5) {
-          results.push({
-            time: minutesToHHMM(arrMin),
-            date: new Date(now.getFullYear(), now.getMonth(), now.getDate(),
-              Math.floor(arrMin / 60), arrMin % 60, 0),
-          });
-        }
-        if (results.length >= 5) break;
-      }
-      return results;
+        const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(),
+          Math.floor(arrMin / 60), arrMin % 60, 0);
+        const isPast = arrMin <= nowMin - 0.5;
+        const isNext = !isPast && !foundNext;
+        if (isNext) foundNext = true;
+        return { index: i + 1, time: minutesToHHMM(arrMin), date, isPast, isNext };
+      });
     }
 
     function formatCountdown(targetDate) {
@@ -173,58 +170,77 @@
 
     function renderBuses() {
       if (!currentCircuit || !currentStation) return;
-      const buses = getUpcomingBuses(currentCircuit, currentStation);
-      const list = document.getElementById('bus-list');
-      list.textContent = '';
+      const buses = getAllBuses(currentCircuit, currentStation);
+      const container = document.getElementById('bus-list');
+      container.textContent = '';
 
-      if (buses.length === 0) {
+      const allPast = buses.every(b => b.isPast);
+      if (allPast) {
         const p = document.createElement('p');
         p.className = 'no-bus';
         p.textContent = '本日のバスは終了しました。';
-        list.appendChild(p);
+        container.appendChild(p);
         return;
       }
 
-      buses.forEach((bus, i) => {
-        const isNext = i === 0;
-        const card = document.createElement('div');
-        card.className = isNext ? 'bus-card bus-card--next' : 'bus-card';
+      const table = document.createElement('table');
+      table.className = 'tt-table';
 
-        const left = document.createElement('div');
-        left.className = 'bus-left';
-
-        const labelEl = document.createElement('div');
-        labelEl.className = 'bus-label';
-        labelEl.textContent = isNext ? '次のバス' : i + 1 + '本目';
-
-        const timeEl = document.createElement('div');
-        timeEl.className = 'bus-time';
-        timeEl.textContent = bus.time;
-
-        left.appendChild(labelEl);
-        left.appendChild(timeEl);
-
-        const right = document.createElement('div');
-        right.className = 'bus-right';
-
-        const cdEl = document.createElement('div');
-        cdEl.className = 'bus-countdown';
-        cdEl.dataset.target = bus.date.getTime();
-        cdEl.textContent = formatCountdown(bus.date);
-
-        right.appendChild(cdEl);
-
-        card.appendChild(left);
-        card.appendChild(right);
-        list.appendChild(card);
+      const thead = document.createElement('thead');
+      const hr = document.createElement('tr');
+      ['便', '時刻', '残り時間'].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        hr.appendChild(th);
       });
+      thead.appendChild(hr);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      buses.forEach(bus => {
+        const tr = document.createElement('tr');
+        tr.className = 'tt-row' +
+          (bus.isPast ? ' tt-row--past' : '') +
+          (bus.isNext ? ' tt-row--next' : '');
+
+        const numTd = document.createElement('td');
+        numTd.className = 'tt-num';
+        numTd.textContent = bus.index;
+
+        const timeTd = document.createElement('td');
+        timeTd.className = 'tt-time';
+        timeTd.textContent = bus.time;
+
+        const statusTd = document.createElement('td');
+        statusTd.className = 'tt-status';
+        if (bus.isPast) {
+          statusTd.textContent = '発車済';
+        } else if (bus.isNext) {
+          statusTd.dataset.target = bus.date.getTime();
+          statusTd.textContent = formatCountdown(bus.date);
+        } else {
+          statusTd.textContent = '—';
+        }
+
+        tr.appendChild(numTd);
+        tr.appendChild(timeTd);
+        tr.appendChild(statusTd);
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      container.appendChild(table);
+
+      const nextRow = tbody.querySelector('.tt-row--next');
+      if (nextRow) {
+        setTimeout(() => nextRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+      }
     }
 
     function startCountdown() {
       if (countdownTimer) clearInterval(countdownTimer);
       countdownTimer = setInterval(() => {
         let needsRefresh = false;
-        document.querySelectorAll('.bus-countdown').forEach(el => {
+        document.querySelectorAll('.tt-status[data-target]').forEach(el => {
           const t = new Date(Number(el.dataset.target));
           const text = formatCountdown(t);
           el.textContent = text;

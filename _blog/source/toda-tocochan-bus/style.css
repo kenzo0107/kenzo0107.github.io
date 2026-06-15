@@ -416,6 +416,98 @@ main {
   opacity: .4;
 }
 
+/* ── Timetable: Table ────────────────────────── */
+.tt-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: var(--surface-2);
+}
+
+.tt-table thead tr {
+  background: var(--c-bg, var(--gray-100));
+}
+
+.tt-table th {
+  padding: 11px 16px;
+  text-align: left;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--c-color, var(--gray-600));
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--c-color, var(--gray-200));
+}
+
+.tt-table th:last-child { text-align: right; }
+
+.tt-row td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: .95rem;
+  transition: background 150ms;
+}
+
+.tt-row:last-child td { border-bottom: none; }
+
+.tt-num {
+  color: var(--gray-400);
+  font-size: .8rem;
+  font-weight: 700;
+  width: 36px;
+}
+
+.tt-time {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+}
+
+.tt-status {
+  text-align: right;
+  font-size: .85rem;
+  color: var(--gray-600);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 発車済み行 */
+.tt-row--past td {
+  color: var(--gray-300);
+}
+
+.tt-row--past .tt-time {
+  font-weight: 400;
+}
+
+/* 次のバス行 */
+.tt-row--next {
+  background: var(--c-bg, var(--gray-50));
+}
+
+.tt-row--next td {
+  border-bottom-color: var(--c-color, var(--gray-200));
+}
+
+.tt-row--next .tt-num {
+  color: var(--c-color, var(--gray-600));
+  font-size: .78rem;
+}
+
+.tt-row--next .tt-time {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--c-color, var(--gray-800));
+}
+
+.tt-row--next .tt-status {
+  font-weight: 700;
+  color: var(--c-color, var(--gray-800));
+  font-size: .9rem;
+}
+
 /* ── Map Page ────────────────────────────────── */
 body.map-page { overflow: hidden; height: 100dvh; }
 
