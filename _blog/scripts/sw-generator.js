@@ -53,6 +53,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (url.origin !== location.origin) return;
+  // /toda-tocochan-bus/ は独自ファイルを頻繁に更新するためキャッシュしない
+  if (url.pathname.startsWith('/toda-tocochan-bus/')) return;
   if (/\\.(css|js|json|svg|png|jpg|jpeg|gif|webp|ico|woff2?)$/.test(url.pathname)) {
     e.respondWith(
       caches.match(e.request).then(cached => {

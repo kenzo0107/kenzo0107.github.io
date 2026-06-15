@@ -111,17 +111,5 @@
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js');
-      // SW が切り替わったら自動リロードして新しいキャッシュを反映
-      let _swRefreshing = false;
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (_swRefreshing) return;
-        _swRefreshing = true;
-        location.reload();
-      });
-    }
-  </script>
 </body>
 </html>
