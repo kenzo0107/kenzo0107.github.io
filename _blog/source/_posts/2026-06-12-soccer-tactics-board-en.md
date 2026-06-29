@@ -112,9 +112,14 @@ If you place speech bubbles on each step, you can leave the **coaching intent** 
 
 Since it's entirely self-contained with static files, you can put it straight onto GitHub Pages or any static hosting.
 
+## Did it actually get through to my kid?
+
+When I walked through the moves on this page, saying "this is how you should move," and repeated it a few times, my kid started saying "Oh, I get it!"
+Before long they were poking at it on their own phone too, and using it to talk tactics with friends — "How about this play?" That felt like a great turn of events.
+
 ## Closing
 
-I built it because I wanted to solve the things a physical board makes hard: "moving everyone simultaneously," "repeating as many times as you want," and "leaving a trace of the movement." Beyond explaining things to my kid, it's also useful for sharing tactics within a team and recording training drills.
+I built it because I wanted to solve the things a physical board makes hard: "moving everyone simultaneously," "repeating as many times as you want," and "leaving a trace of the movement." Beyond explaining things to my kid, it turned out to be useful for sharing tactics within a team and recording training drills too.
 
 The source is public, so please give it a try if you like.
 
