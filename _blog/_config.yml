@@ -30,6 +30,7 @@ i18n_dir: :lang
 skip_render:
   - soccer-tactics-board/**
   - toda-tocochan-bus/**
+  - game/**
   - visual-training.html
   - ads.txt
   - .nojekyll

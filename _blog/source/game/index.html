@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ゲーム一覧</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Hiragino Sans', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #fff;
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    p.lead {
+      color: rgba(255, 255, 255, 0.85);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    a.card {
+      display: block;
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      text-decoration: none;
+      color: #333;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    a.card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+    }
+
+    a.card h2 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      color: #4c3f91;
+    }
+
+    a.card p {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎮 ゲーム一覧</h1>
+    <p class="lead">ブラウザで遊べるミニゲーム集です</p>
+    <div class="grid">
+      <a class="card" href="basketball/">
+        <h2>3D バスケットボール</h2>
+        <p>Three.js と Cannon.js を使った3Dバスケットボールゲーム</p>
+      </a>
+      <a class="card" href="baybrade/">
+        <h2>ベイブレードバトル</h2>
+        <p>3D物理演算を使用したリアルタイムベイブレードバトル</p>
+      </a>
+      <a class="card" href="pilot/">
+        <h2>Pilot Wings</h2>
+        <p>パイロットウイングス風の3Dフライトシミュレーション</p>
+      </a>
+      <a class="card" href="minecraft/">
+        <h2>Ito2（マインクラフト風）</h2>
+        <p>TypeScript + Three.js で作った3Dボクセルゲーム</p>
+      </a>
+      <a class="card" href="nawabari/">
+        <h2>ナワバリバトル</h2>
+        <p>スプラトゥーン風の陣地取りゲーム</p>
+      </a>
+      <a class="card" href="soccer-throw-in/">
+        <h2>サッカー スローイン</h2>
+        <p>スローインでボールをどこまで飛ばせるか3Dチャレンジ</p>
+      </a>
+      <a class="card" href="penalty-kick/">
+        <h2>サッカー PK ゲーム</h2>
+        <p>ペナルティキックで得点を狙うゲーム</p>
+      </a>
+      <a class="card" href="jump-runner/">
+        <h2>ジャンプランナー</h2>
+        <p>ジャンプで障害物をかわして進むランゲーム</p>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
