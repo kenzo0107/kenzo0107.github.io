@@ -36,6 +36,7 @@ const ICON_DEFS = [
     ['.fa-moon',          '\\f186'],
     ['.fa-sun',           '\\f185'],
     ['.fa-rss',           '\\f09e'],
+    ['.fa-search',        '\\f002'],
     ['.fa-github',        '\\f09b'],
     ['.fa-x-twitter',     '\\e61b'],
     ['.fa-twitter',       '\\f099'],

@@ -30,7 +30,9 @@ class Navbar extends Component {
             links,
             categories,
             translations,
-            langIsInferred
+            langIsInferred,
+            showSearch,
+            searchTitle
         } = this.props;
 
         let navbarLogo = '';
@@ -114,6 +116,10 @@ class Navbar extends Component {
                             <i class="fas fa-moon theme-toggle-dark"></i>
                             <i class="fas fa-sun theme-toggle-light"></i>
                         </a>
+                        {/* 検索 */}
+                        {showSearch ? <a class="navbar-item search" title={searchTitle} href="javascript:;">
+                            <i class="fas fa-search"></i>
+                        </a> : null}
                     </div>
                 </div>
             </div>
@@ -123,8 +129,8 @@ class Navbar extends Component {
 
 module.exports = cacheComponent(Navbar, 'common.navbar', props => {
     const { site, config, helper, page } = props;
-    const { url_for, _p } = helper;
-    const { logo, title, navbar } = config;
+    const { url_for, _p, __ } = helper;
+    const { logo, title, navbar, search } = config;
 
     const pageUrl = typeof page.path !== 'undefined' ? url_for(page.path) : '';
 
@@ -215,6 +221,8 @@ module.exports = cacheComponent(Navbar, 'common.navbar', props => {
         categories,
         categoriesTitle: _p('common.category', Infinity),
         translations,
-        langIsInferred: !(page.translation_id && site)
+        langIsInferred: !(page.translation_id && site),
+        showSearch: Boolean(search && search.type),
+        searchTitle: __('search.search')
     };
 });
