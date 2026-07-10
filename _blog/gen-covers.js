@@ -53,6 +53,7 @@ const TOPIC_HUES = [
   ['docker', 205], ['kubernetes', 214], ['gke', 214], ['nginx', 110], ['mysql', 30], ['postgresql', 210], ['redis', 358],
   ['raspberrypi', 340], ['raspberry', 340], ['iot', 340], ['slack', 300], ['git', 18], ['github', 222],
   ['ssl', 162], ['ssh', 162], ['mac', 220], ['macosx', 220], ['centos', 250], ['ansible', 0], ['jenkins', 6],
+  ['google cloud', 217], ['gcp', 217], ['bigquery', 217],
 ];
 
 function hashHue(s) {
@@ -61,10 +62,12 @@ function hashHue(s) {
   return h;
 }
 
+// キーワードは単語境界で一致させる（例: "go" が "google" の部分文字列としてヒットしないように）
 function matchTopic(meta) {
   const hay = (meta.category + ' ' + meta.tags.join(' ') + ' ' + meta.title).toLowerCase();
   for (const [kw, hue] of TOPIC_HUES) {
-    if (hay.includes(kw)) return { kw, hue };
+    const re = new RegExp(`(?:^|[^a-z0-9])${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:[^a-z0-9]|$)`);
+    if (re.test(hay)) return { kw, hue };
   }
   return null;
 }
@@ -87,6 +90,7 @@ const DISPLAY = {
   raspberrypi: 'Raspberry Pi', raspberry: 'Raspberry Pi', iot: 'IoT', slack: 'Slack',
   git: 'Git', github: 'GitHub', ssl: 'SSL', ssh: 'SSH', mac: 'macOS', macosx: 'macOS',
   centos: 'CentOS', ansible: 'Ansible', jenkins: 'Jenkins',
+  'google cloud': 'Google Cloud', gcp: 'Google Cloud', bigquery: 'BigQuery',
 };
 
 // カバーの主役テキスト。タイトルは使わず、トピック/技術名・カテゴリを表示する。
