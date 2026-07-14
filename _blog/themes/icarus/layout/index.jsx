@@ -19,7 +19,7 @@ module.exports = class extends Component {
                     const catName = post.categories && post.categories.length ? post.categories.map(c => c.name)[0] : null;
                     const tagName = post.tags && post.tags.length ? post.tags.map(t => t.name)[0] : null;
                     const coverLabel = catName || tagName;
-                    return <div class="column is-half-tablet is-one-third-desktop is-one-quarter-widescreen">
+                    return <div class="column is-one-third-tablet">
                         <div class="card article-card">
                             <a href={link} class="card-image-link" aria-label={post.title}>
                                 <div class="card-image">
