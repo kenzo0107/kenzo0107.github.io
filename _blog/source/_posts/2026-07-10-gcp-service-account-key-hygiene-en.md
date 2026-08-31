@@ -48,12 +48,12 @@ Just deleting keys you find isn't enough — it'll happen again. I try to think 
 
 A service account key is a single JSON file that stays valid for a long time. Without rotation, it effectively becomes a "credential with no expiration."
 
-In AWS terms, **this is the equivalent of an IAM user's credentials (an AWS Access Key ID / Secret Access Key)**. The same reasoning that pushes AWS users to avoid long-lived IAM user access keys and prefer IAM roles (temporary credentials) applies here: GCP SA keys should likewise be avoided where possible, in favor of temporary credentials like impersonation or Workload Identity Federation.
+In AWS terms, **this is the equivalent of an IAM user's credentials (an AWS Access Key ID / Secret Access Key)**. The same reasoning that pushes AWS users to avoid long-lived IAM user access keys and prefer IAM roles (temporary credentials) — see [Security best practices in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html) — applies here: GCP SA keys should likewise be avoided where possible, in favor of temporary credentials like impersonation or Workload Identity Federation.
 
 - Downloaded JSON files tend to multiply in places nobody's watching — local machines, CI secret stores, accidentally committed to Git
 - If only the key is stolen, the access looks legitimate, which makes misuse much harder to detect
 
-Google Cloud's own documentation states plainly that "service account keys are powerful credentials, and improper management poses a security risk," and that using a key at all should be conditional on confirming there's no safer authentication method available.
+Google Cloud's own documentation ([Best practices for managing service account keys](https://docs.cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys)) states plainly that "service account keys are powerful credentials, and improper management poses a security risk," and that using a key at all should be conditional on confirming there's no safer authentication method available.
 
 ## Detection
 
@@ -68,7 +68,7 @@ gcloud iam service-accounts keys list \
   --managed-by=user
 ```
 
-`--created-before` narrows this down to keys created before a given date:
+`--created-before` narrows this down to keys created before a given date (see the [gcloud iam service-accounts keys list reference](https://docs.cloud.google.com/sdk/gcloud/reference/iam/service-accounts/keys/list)):
 
 ```bash
 # Only list user-managed keys created before July 19, 2015 (candidates for rotation)
@@ -77,7 +77,7 @@ gcloud iam service-accounts keys list \
   --managed-by=user --created-before=2015-07-19T12:00:00Z
 ```
 
-That command is scoped to a single service account, though. To sweep across an entire org or multiple projects, Cloud Asset Inventory's `search-all-resources` is more practical.
+That command is scoped to a single service account, though. To sweep across an entire org or multiple projects, Cloud Asset Inventory's [`search-all-resources`](https://docs.cloud.google.com/asset-inventory/docs/searching-resources) is more practical.
 
 ```bash
 # Search across every project under the org for SA keys created before a given date
@@ -96,7 +96,7 @@ Deleting what you find isn't a fix by itself, so the next step is to stop new ke
 
 ### Block key creation/upload with org policies
 
-Google Cloud has org policy constraints specifically for this:
+Google Cloud has org policy constraints specifically for this ([Restricting service account usage](https://docs.cloud.google.com/resource-manager/docs/organization-policy/restricting-service-accounts)):
 
 | Constraint | Effect |
 | --- | --- |
@@ -115,7 +115,7 @@ gcloud resource-manager org-policies enable-enforce \
 
 Once enforced, attempting to create a key fails with `Key creation is not allowed on this service account` — key creation is blocked outright.
 
-Note that **organizations created on or after May 3, 2024 have this constraint enforced by default**, so if your org is relatively new, key creation may already be blocked (worth checking when your org was created).
+Note that **organizations created on or after May 3, 2024 have this constraint enforced by default** (documented in [Secure by default organization policies](https://docs.cloud.google.com/resource-manager/docs/secure-by-default-organizations)), so if your org is relatively new, key creation may already be blocked (worth checking when your org was created).
 
 ### Defining exceptions for cases where a key is still unavoidable
 
@@ -124,7 +124,7 @@ Blocking key creation org-wide will inevitably run into cases that can't move to
 - **SDKs, client libraries, or tools that don't support the `external_account` credential type used by WIF**: Workload Identity Federation works by exchanging an external token via Security Token Service, but the calling library or tool has to support `external_account`-style credentials to use it at all. Older library versions, or third-party SaaS/BI tools whose only supported GCP connection method is "upload a service account JSON key," simply have no non-key option
 - **Execution environments that can't issue OIDC/SAML tokens**: Workload Identity Federation assumes an OIDC/SAML 2.0-compatible identity provider on the other end. Older on-prem infrastructure or batch servers that can't issue an external token in the first place can't use it
 
-Google Cloud's own documentation recommends that, in these cases, you "grant an exception to the policy constraint, as narrowly as possible." Enforcing the block at the org/folder level while overriding the parent policy only for the specific projects that need an exception keeps that scope narrow.
+Google Cloud's own documentation recommends applying the constraint at the root of the resource hierarchy to make "no keys" the default, then overriding it only for selected projects that need an exception ([Best practices for managing service account keys](https://docs.cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys)). Enforcing the block at the org/folder level while overriding the parent policy only for the specific projects that need an exception keeps that scope narrow.
 
 ```yaml
 # Block key creation org-wide (/tmp/org_policy.yaml)
@@ -151,7 +151,7 @@ gcloud org-policies describe iam.disableServiceAccountKeyCreation \
   --effective --project=PROJECT_ID
 ```
 
-For finer granularity than a whole project, tag-based conditional policies are also available — a condition expression like `resource.matchTag('ORGANIZATION_ID/TAG_KEY', 'TAG_VALUE')` can scope the exception to specific resources. The full steps for creating the tag keys/values themselves live in the tag-management docs, though, and I haven't verified those details for this post.
+For finer granularity than a whole project, tag-based conditional policies are also available — a condition expression like `resource.matchTag('ORGANIZATION_ID/TAG_KEY', 'TAG_VALUE')` can scope the exception to specific resources ([Setting an organization policy with tags](https://docs.cloud.google.com/resource-manager/docs/organization-policy/tags-organization-policy)). I haven't tried the full workflow including creating the tag keys/values themselves, though.
 
 Either way, keeping the default **"blocked by default, exceptions granted explicitly, one at a time"** prevents key creation from quietly spreading back out.
 
@@ -159,9 +159,9 @@ Either way, keeping the default **"blocked by default, exceptions granted explic
 
 Beyond blocking key creation, it's worth asking whether the use case that needed a key can be replaced with a keyless approach entirely.
 
-- **Workload Identity Federation**: lets you use credentials from an external identity provider — AWS, Azure, GitHub, GitLab, Kubernetes, Active Directory, or any OIDC/SAML 2.0-compatible IdP — to access Google Cloud directly. The external token is verified by Security Token Service and exchanged for a short-lived OAuth 2.0 access token, so there's no JSON key to issue or distribute
+- **[Workload Identity Federation](https://docs.cloud.google.com/iam/docs/workload-identity-federation)**: lets you use credentials from an external identity provider — AWS, Azure, GitHub, GitLab, Kubernetes, Active Directory, or any OIDC/SAML 2.0-compatible IdP — to access Google Cloud directly. The external token is verified by Security Token Service and exchanged for a short-lived OAuth 2.0 access token, so there's no JSON key to issue or distribute
 - **Workloads on GCE / GKE**: use the managed workload identity (an attached service account) so a key never needs to leave the environment
-- **Local developer environments**: use service account impersonation, borrowing permissions temporarily from the developer's own Google account credentials
+- **Local developer environments**: use [service account impersonation](https://docs.cloud.google.com/iam/docs/service-account-impersonation), borrowing permissions temporarily from the developer's own Google account credentials
 
 If you're using GitHub Actions for CI/CD, switching to Workload Identity Federation eliminates the entire pattern of storing a GCP JSON key as a repository secret — it's one of the highest-value places to prioritize.
 
@@ -169,7 +169,7 @@ If you're using GitHub Actions for CI/CD, switching to Workload Identity Federat
 
 Some use cases can't move to impersonation or Workload Identity Federation and still need a key. For those, stick to the following:
 
-- **Rotate every 90 days**: the official documentation recommends rotating keys "at least every 90 days to reduce the risk posed by leaked keys." The flow is: identify the key to rotate → create a new key for the same service account → replace the old key across all applications → disable the old key and confirm nothing breaks → delete the old key
+- **Rotate every 90 days**: the official documentation ([Rotate service account keys](https://docs.cloud.google.com/iam/docs/key-rotation)) recommends rotating keys "at least every 90 days to reduce the risk posed by leaked keys." The flow is: identify the key to rotate → create a new key for the same service account → replace the old key across all applications → disable the old key and confirm nothing breaks → delete the old key
 - **Keep audit logs for traceability**: enable data access logs for the IAM API and Security Token Service API, and correlate them with your CI/CD logs and Cloud Audit Logs, so that even key-based operations can be traced back to "which pipeline run did what, and when"
 
 ## Summary
@@ -183,7 +183,9 @@ I hope this helps.
 
 ## References
 
-- [Best practices for managing service account keys | IAM Documentation](https://cloud.google.com/iam/docs/best-practices-service-accounts)
+- [Best practices for managing service account keys | IAM Documentation](https://docs.cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys)
+- [Best practices for using service accounts | IAM Documentation](https://cloud.google.com/iam/docs/best-practices-service-accounts)
+- [Secure by default organization policies | Resource Manager Documentation](https://docs.cloud.google.com/resource-manager/docs/secure-by-default-organizations)
 - [Restricting service accounts | Resource Manager Documentation](https://cloud.google.com/resource-manager/docs/organization-policy/restricting-service-accounts)
 - [Workload identity federation | IAM Documentation](https://cloud.google.com/iam/docs/workload-identity-federation)
 - [Rotate service account keys | IAM Documentation](https://cloud.google.com/iam/docs/key-rotation)

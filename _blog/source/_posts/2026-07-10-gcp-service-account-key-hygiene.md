@@ -48,12 +48,12 @@ Terraform で管理している Google Cloud プロジェクトの棚卸しを�
 
 サービスアカウントキーは JSON ファイル1枚で長期間有効な認証情報です。ローテーションしなければ実質的に「有効期限のない鍵」として存在し続けます。
 
-AWS で言えば、**IAM User の credentials（AWS Access Key ID / Secret Access Key）と同等の存在**です。IAM User のアクセスキーが漏洩・放置のリスクから「極力使わず、IAM ロール（一時的な認証情報）に寄せる」ことが推奨されているのと同じ理由で、GCP の SA キーも極力使わずインパーソネーションや Workload Identity Federation のような一時的な認証情報に寄せるべき、という整理になります。
+AWS で言えば、**IAM User の credentials（AWS Access Key ID / Secret Access Key）と同等の存在**です。IAM User のアクセスキーが漏洩・放置のリスクから「極力使わず、IAM ロール（一時的な認証情報）に寄せる」ことが推奨されている（[Security best practices in IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)）のと同じ理由で、GCP の SA キーも極力使わずインパーソネーションや Workload Identity Federation のような一時的な認証情報に寄せるべき、という整理になります。
 
 - ダウンロードした JSON ファイルはローカル・CI のシークレットストア・Git 誤コミットなど、管理者の目が届かない場所に増殖しやすい
 - キーだけを盗まれた場合、正規の手段でアクセスされたように見えてしまい、不正利用の検知が難しい
 
-Google Cloud の公式ドキュメントでも「サービスアカウントキーは強力な認証情報であり、管理が不適切だとセキュリティリスクになる」と明記されており、キーを使う場合は「より安全な認証方法がない」ことの確認が前提とされています。
+Google Cloud の公式ドキュメント（[Best practices for managing service account keys](https://docs.cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys)）でも「サービスアカウントキーは強力な認証情報であり、管理が不適切だとセキュリティリスクになる」と明記されており、キーを使う場合は「より安全な認証方法がない」ことの確認が前提とされています。
 
 ## 棚卸し・検出
 
@@ -68,7 +68,7 @@ gcloud iam service-accounts keys list \
   --managed-by=user
 ```
 
-`--created-before` を使えば、一定期日より前に作られたキーだけに絞り込めます。
+`--created-before` を使えば、一定期日より前に作られたキーだけに絞り込めます（[gcloud iam service-accounts keys list リファレンス](https://docs.cloud.google.com/sdk/gcloud/reference/iam/service-accounts/keys/list)）。
 
 ```bash
 # 2015年7月19日より前に作られた user-managed キーだけ抽出（ローテーション対象の洗い出し）
@@ -77,7 +77,7 @@ gcloud iam service-accounts keys list \
   --managed-by=user --created-before=2015-07-19T12:00:00Z
 ```
 
-ただしこれはサービスアカウント単位のコマンドなので、組織・プロジェクト横断でキーを洗い出すには Cloud Asset Inventory の `search-all-resources` の方が使いやすいです。
+ただしこれはサービスアカウント単位のコマンドなので、組織・プロジェクト横断でキーを洗い出すには Cloud Asset Inventory の [`search-all-resources`](https://docs.cloud.google.com/asset-inventory/docs/searching-resources) の方が使いやすいです。
 
 ```bash
 # 組織配下の全プロジェクトから、指定日時より前に作られた SA キーを横断的に検索
@@ -96,7 +96,7 @@ gcloud asset search-all-resources \
 
 ### 組織ポリシーでキー作成・アップロードを禁止する
 
-Google Cloud には SA キーの作成・アップロードを禁止する組織ポリシー制約があります。
+Google Cloud には SA キーの作成・アップロードを禁止する組織ポリシー制約があります（[Restricting service account usage](https://docs.cloud.google.com/resource-manager/docs/organization-policy/restricting-service-accounts)）。
 
 | 制約 | 内容 |
 | --- | --- |
@@ -115,7 +115,7 @@ gcloud resource-manager org-policies enable-enforce \
 
 有効化した状態でキーを作ろうとすると `Key creation is not allowed on this service account` というエラーになり、そもそもキーが作れなくなります。
 
-なお、**2024年5月3日以降に作成された組織ではこの制約がデフォルトで有効**になっているとのことなので、比較的新しい組織であればすでに作成自体がブロックされている可能性があります（自分の環境がいつ作成された組織かは確認しておくとよさそうです）。
+なお、**2024年5月3日以降に作成された組織ではこの制約がデフォルトで有効**になっている（[Secure by default organization policies](https://docs.cloud.google.com/resource-manager/docs/secure-by-default-organizations) に明記）ため、比較的新しい組織であればすでに作成自体がブロックされている可能性があります（自分の環境がいつ作成された組織かは確認しておくとよさそうです）。
 
 ### それでもキーが必要な場合は例外を定義する
 
@@ -124,7 +124,7 @@ gcloud resource-manager org-policies enable-enforce \
 - **WIF の `external_account` 認証情報に対応していない SDK・クライアントライブラリ／ツールを使っている場合**: Workload Identity Federation は外部トークンを Security Token Service で交換する仕組みですが、これを利用するには呼び出し側のライブラリやツールが `external_account` 形式の認証情報に対応している必要があります。古いバージョンのライブラリや、GCP 接続手段として「サービスアカウントの JSON キーをアップロードする」形式しか用意されていないサードパーティの SaaS・BI ツールでは、原理的にキー以外の選択肢がありません
 - **OIDC/SAML トークンを発行できない実行基盤**: Workload Identity Federation は OIDC/SAML 2.0 に対応した ID プロバイダーが前提のため、そもそも外部トークンを発行できない古いオンプレミス基盤・バッチサーバーなどでは適用できません
 
-Google Cloud の公式ドキュメントでも、こうしたケースでは「ポリシー制約に対する例外を、可能な限り狭い範囲で許可する」ことが推奨されています。組織・フォルダ単位で禁止を強制しつつ、例外が必要なプロジェクトだけ親ポリシーをオーバーライドする形にすると、狭い範囲に絞りやすくなります。
+Google Cloud の公式ドキュメントでも、組織の階層ルートで制約を適用してキー作成を原則禁止とし、必要なプロジェクトに限って制約をオーバーライドする形が推奨されています（[Best practices for managing service account keys](https://docs.cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys)）。組織・フォルダ単位で禁止を強制しつつ、例外が必要なプロジェクトだけ親ポリシーをオーバーライドする形にすると、狭い範囲に絞りやすくなります。
 
 ```yaml
 # 組織全体でキー作成を禁止（/tmp/org_policy.yaml）
@@ -151,7 +151,7 @@ gcloud org-policies describe iam.disableServiceAccountKeyCreation \
   --effective --project=PROJECT_ID
 ```
 
-プロジェクト単位よりさらに細かく絞りたい場合は、タグを使った条件付きポリシー（`resource.matchTag('ORGANIZATION_ID/TAG_KEY', 'TAG_VALUE')` のような条件式で特定のリソースだけ対象にする書き方）も用意されています。ただしタグキー・タグ値の作成手順まで含めた詳細はタグ管理側のドキュメントを参照する必要があり、この記事では確認できていません。
+プロジェクト単位よりさらに細かく絞りたい場合は、タグを使った条件付きポリシー（`resource.matchTag('ORGANIZATION_ID/TAG_KEY', 'TAG_VALUE')` のような条件式で特定のリソースだけ対象にする書き方）も用意されています（[Setting an organization policy with tags](https://docs.cloud.google.com/resource-manager/docs/organization-policy/tags-organization-policy)）。ただしタグキー・タグ値の作成手順まで含めた運用は試せていません。
 
 いずれの方法でも、**「原則禁止・例外は個別に許可を明示する」**形にしておくことで、なし崩し的にキー作成が広がるのを防げます。
 
@@ -159,9 +159,9 @@ gcloud org-policies describe iam.disableServiceAccountKeyCreation \
 
 キーを作らせないようにするだけでなく、キーが必要だった用途自体をキーレスに置き換えられないかも検討します。
 
-- **Workload Identity Federation**: AWS・Azure・GitHub・GitLab・Kubernetes・Active Directory など、OIDC/SAML 2.0 に対応した外部 IdP の認証情報をそのまま使って Google Cloud にアクセスできる仕組み。外部 ID からのトークンを Security Token Service が検証し、短期の OAuth 2.0 アクセストークンに変換する流れなので、JSON キーを発行・配布する必要がなくなる
+- **[Workload Identity Federation](https://docs.cloud.google.com/iam/docs/workload-identity-federation)**: AWS・Azure・GitHub・GitLab・Kubernetes・Active Directory など、OIDC/SAML 2.0 に対応した外部 IdP の認証情報をそのまま使って Google Cloud にアクセスできる仕組み。外部 ID からのトークンを Security Token Service が検証し、短期の OAuth 2.0 アクセストークンに変換する流れなので、JSON キーを発行・配布する必要がなくなる
 - **GCE / GKE 上のワークロード**: マネージドなワークロード ID（アタッチされたサービスアカウント）を使い、そもそもキーを持ち出さない
-- **開発者のローカル環境**: サービスアカウントの権限借用（インパーソネーション）を使い、個人の Google アカウントの認証情報から一時的に権限を借りる形にする
+- **開発者のローカル環境**: サービスアカウントの権限借用（[インパーソネーション](https://docs.cloud.google.com/iam/docs/service-account-impersonation)）を使い、個人の Google アカウントの認証情報から一時的に権限を借りる形にする
 
 CI/CD で GitHub Actions を使っている場合は、Workload Identity Federation に置き換えるだけで「リポジトリに GCP の JSON キーを Secret として保存する」状態自体をなくせるので、優先的に置き換える価値があります。
 
@@ -169,7 +169,7 @@ CI/CD で GitHub Actions を使っている場合は、Workload Identity Federat
 
 インパーソネーションや Workload Identity Federation に寄せられず、キーを使わざるを得ない箇所も残ります。その場合は次を徹底します。
 
-- **90日ごとのローテーション**: 公式ドキュメントでも「漏えいのリスクを減らすため少なくとも90日ごとにローテーションすることを推奨」とされています。手順は「対象キーの特定 → 新しいキーの発行 → アプリケーション側の切り替え → 旧キーの無効化・動作確認 → 旧キーの削除」という流れです
+- **90日ごとのローテーション**: 公式ドキュメント（[Rotate service account keys](https://docs.cloud.google.com/iam/docs/key-rotation)）でも「漏えいのリスクを減らすため少なくとも90日ごとにローテーションすることを推奨」とされています。手順は「対象キーの特定 → 新しいキーの発行 → アプリケーション側の切り替え → 旧キーの無効化・動作確認 → 旧キーの削除」という流れです
 - **監査ログでの追跡性確保**: IAM API・Security Token Service API のデータアクセスログを有効化し、CI/CD のログと Cloud Audit Logs を相関させておくことで、キーを使った操作でも「いつ・どのパイプライン実行が・何をしたか」を追えるようにしておく
 
 ## まとめ
@@ -183,7 +183,9 @@ CI/CD で GitHub Actions を使っている場合は、Workload Identity Federat
 
 ## 参考
 
-- [Best practices for managing service account keys | IAM Documentation](https://cloud.google.com/iam/docs/best-practices-service-accounts)
+- [Best practices for managing service account keys | IAM Documentation](https://docs.cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys)
+- [Best practices for using service accounts | IAM Documentation](https://cloud.google.com/iam/docs/best-practices-service-accounts)
+- [Secure by default organization policies | Resource Manager Documentation](https://docs.cloud.google.com/resource-manager/docs/secure-by-default-organizations)
 - [Restricting service accounts | Resource Manager Documentation](https://cloud.google.com/resource-manager/docs/organization-policy/restricting-service-accounts)
 - [Workload identity federation | IAM Documentation](https://cloud.google.com/iam/docs/workload-identity-federation)
 - [Rotate service account keys | IAM Documentation](https://cloud.google.com/iam/docs/key-rotation)
