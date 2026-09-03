@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BigQuery 物理ストレージ課金 損益分岐点カルキュレーター</title>
+<meta name="description" content="BigQuery のストレージ課金モデルを LOGICAL から PHYSICAL に切り替えると何%削減できるかを、リージョン単価と INFORMATION_SCHEMA の実測値から試算します。">
+<style>
+:root{
+  --bg:#f6f7f9; --card:#fff; --fg:#1f2328; --muted:#6a737d; --line:#e1e4e8;
+  --accent:#4285f4; --accent-dark:#1a56c4; --good:#137333; --good-bg:#e6f4ea;
+  --bad:#c5221f; --bad-bg:#fce8e6; --code:#f2f4f7;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Yu Gothic',Meiryo,system-ui,sans-serif;
+  line-height:1.7;-webkit-text-size-adjust:100%}
+header{background:linear-gradient(135deg,hsl(217,62%,46%),hsl(255,64%,30%));color:#fff;padding:28px 20px 24px}
+.wrap{max-width:920px;margin:0 auto}
+header h1{margin:0 0 8px;font-size:1.5rem;line-height:1.4}
+header p{margin:0;opacity:.9;font-size:.9rem}
+.langs{margin-top:14px;display:flex;gap:8px}
+.langs button{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.4);
+  border-radius:999px;padding:4px 14px;font-size:.8rem;cursor:pointer}
+.langs button[aria-pressed=true]{background:#fff;color:var(--accent-dark);font-weight:700}
+main{max-width:920px;margin:0 auto;padding:20px 20px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:18px}
+.card h2{margin:0 0 4px;font-size:1.05rem}
+.card .hint{margin:0 0 14px;color:var(--muted);font-size:.83rem}
+pre{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;margin:0}
+code{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.78rem;line-height:1.6}
+.btn{background:var(--accent);color:#fff;border:0;border-radius:6px;padding:7px 14px;font-size:.83rem;cursor:pointer}
+.btn:hover{background:var(--accent-dark)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--code)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+label{display:block;font-size:.8rem;font-weight:700;margin-bottom:4px}
+label>span:first-child{display:block}
+label .sub{display:block;font-weight:400;color:var(--muted);font-size:.72rem;
+  font-family:'SFMono-Regular',Consolas,Menlo,monospace}
+input,select{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:6px;
+  font-size:.9rem;font-family:inherit;background:#fff;color:inherit}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.verdict{border-radius:8px;padding:14px 16px;margin-bottom:16px;font-weight:700}
+.verdict.good{background:var(--good-bg);color:var(--good)}
+.verdict.bad{background:var(--bad-bg);color:var(--bad)}
+.verdict small{display:block;font-weight:400;margin-top:4px;font-size:.8rem;opacity:.85}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--code);border-radius:8px;padding:12px}
+.kpi span{display:block;font-size:.75rem;color:var(--muted)}
+.kpi strong{display:block;font-size:1.3rem;line-height:1.3;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi em{display:block;font-size:.75rem;color:var(--muted);font-style:normal}
+.kpi.hl strong{color:var(--accent-dark)}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:right;font-variant-numeric:tabular-nums}
+th{background:var(--code);font-weight:700;text-align:right}
+th:first-child,td:first-child{text-align:left}
+.scroll{overflow-x:auto}
+.tall{max-height:340px;overflow-y:auto}
+tr.me td{background:#fff8e1;font-weight:700}
+footer{max-width:920px;margin:0 auto;padding:0 20px 40px;color:var(--muted);font-size:.78rem}
+footer ul{padding-left:1.2em;margin:8px 0}
+footer a{color:var(--accent-dark)}
+.copied{color:var(--good);font-size:.8rem;margin-left:8px}
+@media (max-width:600px){header h1{font-size:1.2rem}.card{padding:16px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1 data-ja="BigQuery 物理ストレージ課金 損益分岐点カルキュレーター"
+        data-en="BigQuery Physical Storage Billing Break-Even Calculator">BigQuery 物理ストレージ課金 損益分岐点カルキュレーター</h1>
+    <p data-ja="ストレージ課金モデルを LOGICAL から PHYSICAL に切り替えたとき、何%削減できるか（または増えるか）を試算します。"
+       data-en="Estimates how much you save — or lose — by switching a dataset's storage billing model from LOGICAL to PHYSICAL.">ストレージ課金モデルを LOGICAL から PHYSICAL に切り替えたとき、何%削減できるか（または増えるか）を試算します。</p>
+    <div class="langs">
+      <button id="btn-ja" aria-pressed="true" onclick="setLang('ja')">日本語</button>
+      <button id="btn-en" aria-pressed="false" onclick="setLang('en')">English</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="card">
+  <h2 data-ja="1. 自分のデータの数値を取得する" data-en="1. Get the numbers for your data">1. 自分のデータの数値を取得する</h2>
+  <p class="hint" data-ja="BigQuery で以下を実行し、対象データセットの行の値をそのまま下のフォームへ入力してください（単位 GiB）。TABLE_STORAGE が未有効の場合は先に有効化が必要です（統計が揃うまで約1日）。"
+     data-en="Run this in BigQuery and paste the row for your dataset into the form below (values in GiB). If TABLE_STORAGE is not enabled yet, enable it first — statistics take about a day to appear.">BigQuery で以下を実行し、対象データセットの行の値をそのまま下のフォームへ入力してください（単位 GiB）。TABLE_STORAGE が未有効の場合は先に有効化が必要です（統計が揃うまで約1日）。</p>
+<pre><code id="sql">-- 未有効なら先に: ALTER PROJECT `my-project`
+--   SET OPTIONS (`region-us.enable_info_schema_storage` = TRUE);
+
+SELECT
+  table_schema AS dataset,
+  ROUND(SUM(active_logical_bytes)         / POW(1024,3), 3) AS active_logical_gib,
+  ROUND(SUM(long_term_logical_bytes)      / POW(1024,3), 3) AS long_term_logical_gib,
+  ROUND(SUM(active_physical_bytes)        / POW(1024,3), 3) AS active_physical_gib,
+  ROUND(SUM(long_term_physical_bytes)     / POW(1024,3), 3) AS long_term_physical_gib,
+  ROUND(SUM(time_travel_physical_bytes)   / POW(1024,3), 3) AS time_travel_gib,
+  ROUND(SUM(fail_safe_physical_bytes)     / POW(1024,3), 3) AS fail_safe_gib
+FROM `my-project.region-us.INFORMATION_SCHEMA.TABLE_STORAGE`
+GROUP BY 1
+ORDER BY long_term_logical_gib DESC;</code></pre>
+  <div class="btnrow">
+    <button class="btn ghost" onclick="copySql(this)" data-ja="SQL をコピー" data-en="Copy SQL">SQL をコピー</button>
+    <span id="copied" class="copied" hidden data-ja="コピーしました" data-en="Copied">コピーしました</span>
+  </div>
+  <p class="hint" style="margin-top:12px" data-ja="注: active_physical_bytes には time_travel / fail_safe が含まれる定義ではありません。3つは別々に入力してください。"
+     data-en="Note: active_physical_bytes does not include time travel or fail-safe bytes. Enter all three separately.">注: active_physical_bytes には time_travel / fail_safe が含まれる定義ではありません。3つは別々に入力してください。</p>
+</section>
+
+<section class="card">
+  <h2 data-ja="2. 入力" data-en="2. Input">2. 入力</h2>
+  <p class="hint" data-ja="入力すると自動で再計算されます。" data-en="Results update as you type.">入力すると自動で再計算されます。</p>
+  <div class="grid">
+    <div>
+      <label><span data-ja="リージョン / マルチリージョン" data-en="Region / multi-region">リージョン / マルチリージョン</span></label>
+      <select id="region"></select>
+    </div>
+    <div>
+      <label><span data-ja="為替レート（表示用）" data-en="FX rate (for display)">為替レート（表示用）</span><span class="sub">JPY / USD</span></label>
+      <input id="fx" type="number" min="0" step="1" value="160">
+    </div>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div><label><span data-ja="論理バイト（Active）" data-en="Logical bytes (active)">論理バイト（Active）</span><span class="sub">active_logical_gib</span></label>
+      <input id="al" type="number" min="0" step="any" value="0"></div>
+    <div><label><span data-ja="論理バイト（長期 90日超）" data-en="Logical bytes (long-term)">論理バイト（長期 90日超）</span><span class="sub">long_term_logical_gib</span></label>
+      <input id="ll" type="number" min="0" step="any" value="8095"></div>
+    <div><label><span data-ja="物理バイト（Active）" data-en="Physical bytes (active)">物理バイト（Active）</span><span class="sub">active_physical_gib</span></label>
+      <input id="ap" type="number" min="0" step="any" value="0"></div>
+    <div><label><span data-ja="物理バイト（長期 90日超）" data-en="Physical bytes (long-term)">物理バイト（長期 90日超）</span><span class="sub">long_term_physical_gib</span></label>
+      <input id="lp" type="number" min="0" step="any" value="1296.3"></div>
+    <div><label><span data-ja="time travel バイト" data-en="Time travel bytes">time travel バイト</span><span class="sub">time_travel_physical_gib</span></label>
+      <input id="tt" type="number" min="0" step="any" value="4"></div>
+    <div><label><span data-ja="fail-safe バイト" data-en="Fail-safe bytes">fail-safe バイト</span><span class="sub">fail_safe_physical_gib</span></label>
+      <input id="fs" type="number" min="0" step="any" value="0"></div>
+  </div>
+  <div class="btnrow">
+    <button class="btn ghost" onclick="preset('case')" data-ja="実例を入れる（圧縮率6.2倍）" data-en="Load real example (6.2x)">実例を入れる（圧縮率6.2倍）</button>
+    <button class="btn ghost" onclick="preset('churn')" data-ja="逆ざや例を入れる" data-en="Load net-loss example">逆ざや例を入れる</button>
+    <button class="btn ghost" onclick="preset('zero')" data-ja="クリア" data-en="Clear">クリア</button>
+  </div>
+</section>
+
+<section class="card">
+  <h2 data-ja="3. 試算結果" data-en="3. Result">3. 試算結果</h2>
+  <div id="verdict" class="verdict good"></div>
+  <div class="kpis">
+    <div class="kpi"><span data-ja="現行 LOGICAL" data-en="Current (LOGICAL)">現行 LOGICAL</span><strong id="o-before">-</strong><em id="o-before-jpy">-</em></div>
+    <div class="kpi"><span data-ja="切替後 PHYSICAL" data-en="After (PHYSICAL)">切替後 PHYSICAL</span><strong id="o-after">-</strong><em id="o-after-jpy">-</em></div>
+    <div class="kpi hl"><span data-ja="削減額 / 月" data-en="Saving / month">削減額 / 月</span><strong id="o-save">-</strong><em id="o-save-jpy">-</em></div>
+    <div class="kpi hl"><span data-ja="削減率" data-en="Reduction">削減率</span><strong id="o-rate">-</strong><em id="o-year">-</em></div>
+  </div>
+  <div class="scroll">
+    <table>
+      <tbody>
+        <tr><th data-ja="実効圧縮率（論理 ÷ 課金対象物理）" data-en="Effective compression ratio (logical ÷ billed physical)">実効圧縮率（論理 ÷ 課金対象物理）</th><td id="o-ratio">-</td></tr>
+        <tr><th data-ja="この構成の損益分岐点（必要圧縮率）" data-en="Break-even compression ratio for this mix">この構成の損益分岐点（必要圧縮率）</th><td id="o-be">-</td></tr>
+        <tr><th data-ja="churn 比（time travel + fail-safe + Active物理 ÷ 長期物理）" data-en="Churn ratio (time travel + fail-safe + active physical ÷ long-term physical)">churn 比（time travel + fail-safe + Active物理 ÷ 長期物理）</th><td id="o-churn">-</td></tr>
+        <tr><th data-ja="churn を 0 にできた場合の削減率" data-en="Reduction if churn were zero">churn を 0 にできた場合の削減率</th><td id="o-nochurn">-</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <h2 data-ja="圧縮率ごとの削減率の目安" data-en="Reduction by compression ratio">圧縮率ごとの削減率の目安</h2>
+  <p class="hint" id="sens-note"></p>
+  <div class="scroll"><table id="sens"></table></div>
+</section>
+
+<section class="card">
+  <h2 data-ja="リージョン別の損益分岐点" data-en="Break-even by region">リージョン別の損益分岐点</h2>
+  <p class="hint" data-ja="churn 0 のときに必要な圧縮率。「圧縮率2倍」は US マルチリージョンの数字で、リージョンによって 1.23〜3.04倍 まで変わります。選択中のリージョンを黄色で表示します。"
+     data-en="Compression ratio required at zero churn. The familiar '2x' figure is specific to the US multi-region — across regions it ranges from 1.23x to 3.04x. The selected region is highlighted.">churn 0 のときに必要な圧縮率。「圧縮率2倍」は US マルチリージョンの数字で、リージョンによって 1.23〜3.04倍 まで変わります。選択中のリージョンを黄色で表示します。</p>
+  <div class="scroll tall"><table id="regions"></table></div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong data-ja="前提と注意" data-en="Assumptions and caveats">前提と注意</strong></p>
+  <ul>
+    <li data-ja="単価は Cloud Billing Catalog API から 2026-09-03 に取得した USD 定価です。値引き契約・通貨・単価改定は反映されません。"
+        data-en="Rates are USD list prices retrieved from the Cloud Billing Catalog API on 2026-09-03. Discounts, other currencies, and later price changes are not reflected.">単価は Cloud Billing Catalog API から 2026-09-03 に取得した USD 定価です。値引き契約・通貨・単価改定は反映されません。</li>
+    <li data-ja="time travel / fail-safe バイトは Active Physical 単価で計算しています（請求データ上の観測に基づく想定で、単価階層を明記した公式記述は確認できていません）。"
+        data-en="Time travel and fail-safe bytes are priced at the active physical rate. This is inferred from observed billing data; I could not find an official statement naming the tier.">time travel / fail-safe バイトは Active Physical 単価で計算しています（請求データ上の観測に基づく想定で、単価階層を明記した公式記述は確認できていません）。</li>
+    <li data-ja="毎月10GiBの無料枠、および PHYSICAL では課金されない項目の細部は考慮していません。概算用途に留めてください。"
+        data-en="The 10 GiB monthly free tier and finer billing details are not modeled. Treat the output as an estimate.">毎月10GiBの無料枠、および PHYSICAL では課金されない項目の細部は考慮していません。概算用途に留めてください。</li>
+    <li data-ja="切替後は14日間再変更できません。組織内に同一リージョンのレガシー flat-rate スロットコミットメントがあると登録できません。"
+        data-en="After switching you cannot change it again for 14 days. You cannot enroll at all if your organization holds legacy flat-rate slot commitments in the same region.">切替後は14日間再変更できません。組織内に同一リージョンのレガシー flat-rate スロットコミットメントがあると登録できません。</li>
+  </ul>
+  <p><a id="back" href="/2026/09/02/2026-09-03-bigquery-physical-storage-billing/" data-ja="解説記事へ戻る" data-en="Back to the article">解説記事へ戻る</a></p>
+</footer>
+
+<script>
+// [active_logical, long_term_logical, active_physical, long_term_physical] USD/GiB/month
+// Cloud Billing Catalog API (service 24E6-581D-38E5), retrieved 2026-09-03
+const RATES = {
+  "US": [0.02, 0.01, 0.04, 0.02],
+  "EU": [0.02, 0.01, 0.044, 0.022],
+  "asia-northeast1": [0.023, 0.016, 0.052, 0.026],
+  "asia-northeast2": [0.023, 0.016, 0.052, 0.026],
+  "asia-northeast3": [0.023, 0.016, 0.052, 0.026],
+  "asia-east1": [0.02, 0.01, 0.046, 0.023],
+  "asia-east2": [0.023, 0.016, 0.052, 0.026],
+  "asia-south1": [0.023, 0.016, 0.052, 0.026],
+  "asia-south2": [0.023, 0.016, 0.052, 0.026],
+  "asia-southeast1": [0.02, 0.01, 0.046, 0.023],
+  "asia-southeast2": [0.023, 0.016, 0.052, 0.026],
+  "asia-southeast3": [0.0276, 0.0192, 0.048, 0.024],
+  "asia-southeast4": [0.02415, 0.0168, 0.042, 0.021],
+  "australia-southeast1": [0.023, 0.016, 0.052, 0.026],
+  "australia-southeast2": [0.023, 0.016, 0.052, 0.026],
+  "us-central1": [0.023, 0.016, 0.04, 0.02],
+  "us-east1": [0.023, 0.016, 0.044, 0.022],
+  "us-east4": [0.023, 0.016, 0.05, 0.025],
+  "us-east5": [0.023, 0.016, 0.05, 0.025],
+  "us-east7": [0.023, 0.016, 0.05, 0.025],
+  "us-west1": [0.023, 0.016, 0.04, 0.02],
+  "us-west2": [0.023, 0.016, 0.05, 0.025],
+  "us-west3": [0.023, 0.016, 0.05, 0.025],
+  "us-west4": [0.023, 0.016, 0.05, 0.025],
+  "us-west8": [0.023, 0.016, 0.04, 0.02],
+  "us-south1": [0.0276, 0.0192, 0.05, 0.025],
+  "northamerica-northeast1": [0.023, 0.016, 0.05, 0.025],
+  "northamerica-northeast2": [0.023, 0.016, 0.05, 0.025],
+  "northamerica-south1": [0.0299, 0.0208, 0.052, 0.026],
+  "southamerica-east1": [0.023, 0.016, 0.07, 0.035],
+  "southamerica-west1": [0.03289, 0.02288, 0.06, 0.03],
+  "europe-west1": [0.02, 0.01, 0.044, 0.022],
+  "europe-west2": [0.023, 0.016, 0.052, 0.026],
+  "europe-west3": [0.023, 0.016, 0.052, 0.026],
+  "europe-west4": [0.02, 0.01, 0.044, 0.022],
+  "europe-west6": [0.025, 0.017, 0.056, 0.028],
+  "europe-west8": [0.023, 0.016, 0.052, 0.026],
+  "europe-west9": [0.023, 0.016, 0.052, 0.026],
+  "europe-west10": [0.023, 0.016, 0.052, 0.026],
+  "europe-west12": [0.023, 0.016, 0.0516, 0.0258],
+  "europe-central2": [0.023, 0.016, 0.052, 0.026],
+  "europe-north1": [0.02, 0.01, 0.046, 0.023],
+  "europe-north2": [0.02415, 0.0168, 0.042, 0.021],
+  "europe-southwest1": [0.02875, 0.02, 0.05, 0.025],
+  "me-central1": [0.02645, 0.0184, 0.046, 0.023],
+  "me-central2": [0.037, 0.026, 0.064, 0.032],
+  "me-west1": [0.023, 0.016, 0.05, 0.025],
+  "africa-south1": [0.02, 0.01, 0.044, 0.022]
+};
+
+// 日本語版はサイトのパーマリンクが JST 起点で1日前になる。英語版は permalink 指定なのでそのまま。
+const ARTICLE = {
+  ja: '/2026/09/02/2026-09-03-bigquery-physical-storage-billing/',
+  en: '/en/2026/09/03/bigquery-physical-storage-billing/'
+};
+
+const T = {
+  switchYes: {ja:'切り替えるべき', en:'Switch'},
+  switchNo:  {ja:'切り替えないほうがよい', en:'Do not switch'},
+  yesNote:   {ja:'実効圧縮率が損益分岐点を上回っています。', en:'The effective compression ratio is above the break-even point.'},
+  noNote:    {ja:'実効圧縮率が損益分岐点に届かず、切り替えるとコストが増えます。', en:'The effective compression ratio is below break-even, so switching would increase cost.'},
+  noData:    {ja:'論理バイトを入力してください。', en:'Enter the logical bytes to start.'},
+  perYear:   {ja:'年 %s', en:'%s / year'},
+  sensNote:  {ja:'%s の単価で、全て長期ストレージ・churn 0 とした場合の削減率です。網掛けが損益分岐点です。',
+              en:'Reduction at %s rates, assuming all long-term storage and zero churn. The shaded row is the break-even point.'},
+  thRatio:   {ja:'圧縮率', en:'Compression ratio'},
+  thRed:     {ja:'削減率', en:'Reduction'},
+  thRegion:  {ja:'リージョン', en:'Region'},
+  thBeLt:    {ja:'長期の分岐点', en:'Break-even (long-term)'},
+  thBeAct:   {ja:'Active の分岐点', en:'Break-even (active)'},
+  na:        {ja:'算出不可', en:'n/a'}
+};
+
+let lang = 'ja';
+const $ = id => document.getElementById(id);
+const IDS = ['al','ll','ap','lp','tt','fs'];
+const num = id => Math.max(0, parseFloat($(id).value) || 0);
+const usd = v => (v < 0 ? '-$' : '$') + Math.abs(v).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const jpy = v => (v < 0 ? '-¥' : '¥') + Math.round(Math.abs(v)).toLocaleString();
+const pct = v => (v * 100).toFixed(1) + '%';
+
+function setLang(l){
+  lang = l;
+  $('btn-ja').setAttribute('aria-pressed', l === 'ja');
+  $('btn-en').setAttribute('aria-pressed', l === 'en');
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-ja]').forEach(el => { el.textContent = el.dataset[l]; });
+  $('back').href = ARTICLE[l];
+  render();
+}
+
+function calc(){
+  const r = RATES[$('region').value];
+  const [aL, lL, aP, lP] = r;
+  const al = num('al'), ll = num('ll'), ap = num('ap'), lp = num('lp'), tt = num('tt'), fs = num('fs');
+  const logical = al + ll;
+  const churn = ap + tt + fs;                 // billed at active physical rate
+  const physical = lp + churn;
+  const before = al * aL + ll * lL;
+  const after  = lp * lP + churn * aP;
+  // before = wLog * logical, after = wPhy * physical  =>  reduction = 1 - (wPhy/wLog)/ratio
+  const wLog = logical ? before / logical : 0;
+  const wPhy = physical ? after / physical : 0;
+  const ratio = physical ? logical / physical : 0;
+  const breakEven = wLog ? wPhy / wLog : 0;
+  const noChurn = logical && lp ? 1 - (lp * lP) / before : 0;
+  return {before, after, save: before - after, rate: before ? 1 - after / before : 0,
+          ratio, breakEven, churnRatio: lp ? churn / lp : (churn ? Infinity : 0), noChurn, logical};
+}
+
+function render(){
+  const c = calc(), fx = Math.max(0, parseFloat($('fx').value) || 0), v = $('verdict');
+  if (!c.logical){
+    v.className = 'verdict bad'; v.textContent = T.noData[lang];
+    ['o-before','o-after','o-save','o-rate','o-ratio','o-be','o-churn','o-nochurn'].forEach(i => $(i).textContent = '-');
+    ['o-before-jpy','o-after-jpy','o-save-jpy','o-year'].forEach(i => $(i).textContent = '');
+    renderTables(); return;
+  }
+  const ok = c.save > 0;
+  v.className = 'verdict ' + (ok ? 'good' : 'bad');
+  v.innerHTML = '';
+  v.appendChild(document.createTextNode((ok ? T.switchYes : T.switchNo)[lang]));
+  const s = document.createElement('small');
+  s.textContent = (ok ? T.yesNote : T.noNote)[lang];
+  v.appendChild(s);
+
+  $('o-before').textContent = usd(c.before);
+  $('o-after').textContent  = usd(c.after);
+  $('o-save').textContent   = usd(c.save);
+  $('o-rate').textContent   = pct(c.rate);
+  $('o-before-jpy').textContent = fx ? jpy(c.before * fx) : '';
+  $('o-after-jpy').textContent  = fx ? jpy(c.after * fx) : '';
+  $('o-save-jpy').textContent   = fx ? jpy(c.save * fx) : '';
+  $('o-year').textContent = T.perYear[lang].replace('%s', usd(c.save * 12));
+  $('o-ratio').textContent = c.ratio ? c.ratio.toFixed(2) + 'x' : T.na[lang];
+  $('o-be').textContent = c.breakEven ? c.breakEven.toFixed(2) + 'x' : T.na[lang];
+  $('o-churn').textContent = isFinite(c.churnRatio) ? c.churnRatio.toFixed(3) : T.na[lang];
+  $('o-nochurn').textContent = c.noChurn ? pct(c.noChurn) : T.na[lang];
+  renderTables();
+}
+
+function renderTables(){
+  const key = $('region').value, r = RATES[key], beLt = r[3] / r[1];
+  $('sens-note').textContent = T.sensNote[lang].replace('%s', key);
+  const base = [1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 15, 20];
+  const ratios = base.concat([beLt]).filter(x => x >= beLt - 0.001)
+                     .filter((x, i, a) => a.findIndex(y => Math.abs(y - x) < 0.08) === i)
+                     .sort((a, b) => a - b);
+  let h = '<thead><tr><th>' + T.thRatio[lang] + '</th><th>' + T.thRed[lang] + '</th></tr></thead><tbody>';
+  ratios.forEach(x => {
+    const red = 1 - beLt / x;
+    const isBe = Math.abs(x - beLt) < 0.001;
+    h += '<tr' + (isBe ? ' class="me"' : '') + '><td>' + x.toFixed(2) + 'x</td><td>' +
+         pct(red) + '</td></tr>';
+  });
+  $('sens').innerHTML = h + '</tbody>';
+
+  const rows = Object.keys(RATES).map(k => [k, RATES[k][3] / RATES[k][1], RATES[k][2] / RATES[k][0]])
+                     .sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0]));
+  let g = '<thead><tr><th>' + T.thRegion[lang] + '</th><th>' + T.thBeLt[lang] + '</th><th>' + T.thBeAct[lang] + '</th></tr></thead><tbody>';
+  rows.forEach(([k, lt, act]) => {
+    g += '<tr' + (k === key ? ' class="me"' : '') + '><td>' + k + '</td><td>' +
+         lt.toFixed(2) + 'x</td><td>' + act.toFixed(2) + 'x</td></tr>';
+  });
+  $('regions').innerHTML = g + '</tbody>';
+}
+
+const PRESETS = {
+  case:  {al:0, ll:8095, ap:0, lp:1296.3, tt:4, fs:0, region:'US'},
+  churn: {al:20, ll:0, ap:5, lp:0, tt:8, fs:6, region:'US'},
+  zero:  {al:0, ll:0, ap:0, lp:0, tt:0, fs:0, region:'US'}
+};
+function preset(name){
+  const p = PRESETS[name];
+  IDS.forEach(i => $(i).value = p[i]);
+  $('region').value = p.region;
+  render();
+}
+
+function copySql(btn){
+  const text = $('sql').textContent;
+  const done = () => { $('copied').hidden = false; setTimeout(() => $('copied').hidden = true, 1800); };
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, () => {});
+  else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+}
+
+(function init(){
+  const sel = $('region');
+  Object.keys(RATES).forEach(k => {
+    const o = document.createElement('option');
+    o.value = k;
+    o.textContent = k + '  (long-term  $' + RATES[k][1] + ' → $' + RATES[k][3] + ')';
+    sel.appendChild(o);
+  });
+  sel.value = 'US';
+  sel.addEventListener('change', render);
+  IDS.concat(['fx']).forEach(i => $(i).addEventListener('input', render));
+  if ((navigator.language || '').slice(0,2) !== 'ja') setLang('en'); else render();
+})();
+</script>
+
+</body>
+</html>

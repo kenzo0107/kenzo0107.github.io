@@ -32,6 +32,7 @@ skip_render:
   - toda-tocochan-bus/**
   - game/**
   - visual-training.html
+  - bigquery-physical-billing-calculator.html
   - ads.txt
   - .nojekyll
 
