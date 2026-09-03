@@ -48,12 +48,12 @@ function parseMeta(fm) {
 // keyword -> hue (HSL). first match wins; checked against title+tags+category.
 const TOPIC_HUES = [
   ['aws', 28], ['lambda', 28], ['ec2', 28], ['ecs', 28], ['fargate', 28], ['s3', 28], ['rds', 28], ['aurora', 28], ['dynamodb', 28], ['cloudwatch', 28], ['vpc', 28],
+  ['google cloud', 217], ['gcp', 217], ['bigquery', 217],
   ['terraform', 264], ['datadog', 282], ['prometheus', 14], ['kibana', 200], ['elasticsearch', 52], ['fluentd', 130],
   ['go', 198], ['golang', 198], ['python', 211], ['ruby', 348], ['php', 240], ['node', 122],
   ['docker', 205], ['kubernetes', 214], ['gke', 214], ['nginx', 110], ['mysql', 30], ['postgresql', 210], ['redis', 358],
   ['raspberrypi', 340], ['raspberry', 340], ['iot', 340], ['slack', 300], ['git', 18], ['github', 222],
   ['ssl', 162], ['ssh', 162], ['mac', 220], ['macosx', 220], ['centos', 250], ['ansible', 0], ['jenkins', 6],
-  ['google cloud', 217], ['gcp', 217], ['bigquery', 217],
 ];
 
 function hashHue(s) {
